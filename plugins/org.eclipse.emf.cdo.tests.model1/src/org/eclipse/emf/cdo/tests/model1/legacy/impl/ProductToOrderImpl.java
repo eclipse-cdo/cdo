@@ -90,9 +90,7 @@ public class ProductToOrderImpl extends EObjectImpl implements BasicEMap.Entry<P
       if (key != oldKey)
       {
         if (eNotificationRequired())
-        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model1Package.PRODUCT_TO_ORDER__KEY, oldKey, key));
-        }
       }
     }
     return key;
@@ -116,9 +114,7 @@ public class ProductToOrderImpl extends EObjectImpl implements BasicEMap.Entry<P
     Product1 oldKey = key;
     key = newKey;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.PRODUCT_TO_ORDER__KEY, oldKey, key));
-    }
   }
 
   /**
@@ -134,9 +130,7 @@ public class ProductToOrderImpl extends EObjectImpl implements BasicEMap.Entry<P
       if (value != oldValue)
       {
         if (eNotificationRequired())
-        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model1Package.PRODUCT_TO_ORDER__VALUE, oldValue, value));
-        }
       }
     }
     return value;
@@ -160,9 +154,7 @@ public class ProductToOrderImpl extends EObjectImpl implements BasicEMap.Entry<P
     SalesOrder oldValue = value;
     value = newValue;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.PRODUCT_TO_ORDER__VALUE, oldValue, value));
-    }
   }
 
   /**
@@ -176,15 +168,11 @@ public class ProductToOrderImpl extends EObjectImpl implements BasicEMap.Entry<P
     {
     case Model1Package.PRODUCT_TO_ORDER__KEY:
       if (resolve)
-      {
         return getTypedKey();
-      }
       return basicGetTypedKey();
     case Model1Package.PRODUCT_TO_ORDER__VALUE:
       if (resolve)
-      {
         return getTypedValue();
-      }
       return basicGetTypedValue();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -261,7 +249,7 @@ public class ProductToOrderImpl extends EObjectImpl implements BasicEMap.Entry<P
     if (hash == -1)
     {
       Object theKey = getKey();
-      hash = theKey == null ? 0 : theKey.hashCode();
+      hash = (theKey == null ? 0 : theKey.hashCode());
     }
     return hash;
   }

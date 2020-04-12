@@ -2,26 +2,6 @@
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="model5" nsURI="http://www.eclipse.org/emf/CDO/tests/model5/1.0.0"
     nsPrefix="model5">
-  <eClassifiers xsi:type="ecore:EClass" name="TestFeatureMap">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="managers" upperBound="-1"
-        eType="#//Manager" transient="true">
-      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
-        <details key="group" value="#people"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="doctors" upperBound="-1"
-        eType="#//Doctor" transient="true">
-      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
-        <details key="group" value="#people"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="people" unique="false"
-        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFeatureMapEntry">
-      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
-        <details key="kind" value="group"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Manager"/>
   <eClassifiers xsi:type="ecore:EClass" name="Doctor"/>
   <eClassifiers xsi:type="ecore:EClass" name="GenListOfString">

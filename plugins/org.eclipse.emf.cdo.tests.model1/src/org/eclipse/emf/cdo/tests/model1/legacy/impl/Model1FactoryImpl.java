@@ -269,9 +269,7 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
   {
     VAT result = VAT.get(initialValue);
     if (result == null)
-    {
       throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
-    }
     return result;
   }
 

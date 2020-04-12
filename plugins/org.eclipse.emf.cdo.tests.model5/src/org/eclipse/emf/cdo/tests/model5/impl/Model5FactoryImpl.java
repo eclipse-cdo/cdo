@@ -29,7 +29,6 @@ import org.eclipse.emf.cdo.tests.model5.Manager;
 import org.eclipse.emf.cdo.tests.model5.Model5Factory;
 import org.eclipse.emf.cdo.tests.model5.Model5Package;
 import org.eclipse.emf.cdo.tests.model5.Parent;
-import org.eclipse.emf.cdo.tests.model5.TestFeatureMap;
 import org.eclipse.emf.cdo.tests.model5.WithCustomType;
 
 import org.eclipse.emf.ecore.EClass;
@@ -86,8 +85,6 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
   {
     switch (eClass.getClassifierID())
     {
-    case Model5Package.TEST_FEATURE_MAP:
-      return createTestFeatureMap();
     case Model5Package.MANAGER:
       return createManager();
     case Model5Package.DOCTOR:
@@ -159,17 +156,6 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
     default:
       throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public TestFeatureMap createTestFeatureMap()
-  {
-    TestFeatureMapImpl testFeatureMap = new TestFeatureMapImpl();
-    return testFeatureMap;
   }
 
   /**

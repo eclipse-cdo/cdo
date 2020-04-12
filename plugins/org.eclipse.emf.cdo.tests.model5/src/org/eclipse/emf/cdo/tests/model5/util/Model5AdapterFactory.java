@@ -27,7 +27,6 @@ import org.eclipse.emf.cdo.tests.model5.GenListOfString;
 import org.eclipse.emf.cdo.tests.model5.Manager;
 import org.eclipse.emf.cdo.tests.model5.Model5Package;
 import org.eclipse.emf.cdo.tests.model5.Parent;
-import org.eclipse.emf.cdo.tests.model5.TestFeatureMap;
 import org.eclipse.emf.cdo.tests.model5.WithCustomType;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -92,12 +91,6 @@ public class Model5AdapterFactory extends AdapterFactoryImpl
    */
   protected Model5Switch<Adapter> modelSwitch = new Model5Switch<Adapter>()
   {
-    @Override
-    public Adapter caseTestFeatureMap(TestFeatureMap object)
-    {
-      return createTestFeatureMapAdapter();
-    }
-
     @Override
     public Adapter caseManager(Manager object)
     {
@@ -212,19 +205,6 @@ public class Model5AdapterFactory extends AdapterFactoryImpl
   public Adapter createAdapter(Notifier target)
   {
     return modelSwitch.doSwitch((EObject)target);
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model5.TestFeatureMap <em>Test Feature Map</em>}'.
-   * <!-- begin-user-doc --> This default implementation returns null so that we can easily
-   * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.eclipse.emf.cdo.tests.model5.TestFeatureMap
-   * @generated
-   */
-  public Adapter createTestFeatureMapAdapter()
-  {
-    return null;
   }
 
   /**

@@ -25,7 +25,6 @@ import org.eclipse.emf.cdo.tests.model5.GenListOfShort;
 import org.eclipse.emf.cdo.tests.model5.GenListOfString;
 import org.eclipse.emf.cdo.tests.model5.Manager;
 import org.eclipse.emf.cdo.tests.model5.Parent;
-import org.eclipse.emf.cdo.tests.model5.TestFeatureMap;
 import org.eclipse.emf.cdo.tests.model5.WithCustomType;
 import org.eclipse.emf.cdo.tests.model5.legacy.Model5Package;
 
@@ -116,16 +115,6 @@ public class Model5Switch<T>
   {
     switch (classifierID)
     {
-    case Model5Package.TEST_FEATURE_MAP:
-    {
-      TestFeatureMap testFeatureMap = (TestFeatureMap)theEObject;
-      T result = caseTestFeatureMap(testFeatureMap);
-      if (result == null)
-      {
-        result = defaultCase(theEObject);
-      }
-      return result;
-    }
     case Model5Package.MANAGER:
     {
       Manager manager = (Manager)theEObject;
@@ -289,22 +278,6 @@ public class Model5Switch<T>
     default:
       return defaultCase(theEObject);
     }
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Test Feature Map</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Test Feature Map</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseTestFeatureMap(TestFeatureMap object)
-  {
-    return null;
   }
 
   /**

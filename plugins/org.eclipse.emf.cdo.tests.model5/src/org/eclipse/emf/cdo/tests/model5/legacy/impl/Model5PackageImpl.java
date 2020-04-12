@@ -26,7 +26,6 @@ import org.eclipse.emf.cdo.tests.model5.GenListOfShort;
 import org.eclipse.emf.cdo.tests.model5.GenListOfString;
 import org.eclipse.emf.cdo.tests.model5.Manager;
 import org.eclipse.emf.cdo.tests.model5.Parent;
-import org.eclipse.emf.cdo.tests.model5.TestFeatureMap;
 import org.eclipse.emf.cdo.tests.model5.WithCustomType;
 import org.eclipse.emf.cdo.tests.model5.legacy.Model5Factory;
 import org.eclipse.emf.cdo.tests.model5.legacy.Model5Package;
@@ -44,12 +43,6 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
  */
 public class Model5PackageImpl extends EPackageImpl implements Model5Package
 {
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass testFeatureMapEClass = null;
-
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
@@ -224,46 +217,6 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
     // Update the registry and return the package
     EPackage.Registry.INSTANCE.put(Model5Package.eNS_URI, theModel5Package);
     return theModel5Package;
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EClass getTestFeatureMap()
-  {
-    return testFeatureMapEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EReference getTestFeatureMap_Managers()
-  {
-    return (EReference)testFeatureMapEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EReference getTestFeatureMap_Doctors()
-  {
-    return (EReference)testFeatureMapEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EAttribute getTestFeatureMap_People()
-  {
-    return (EAttribute)testFeatureMapEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -668,11 +621,6 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
     isCreated = true;
 
     // Create classes and their features
-    testFeatureMapEClass = createEClass(TEST_FEATURE_MAP);
-    createEReference(testFeatureMapEClass, TEST_FEATURE_MAP__MANAGERS);
-    createEReference(testFeatureMapEClass, TEST_FEATURE_MAP__DOCTORS);
-    createEAttribute(testFeatureMapEClass, TEST_FEATURE_MAP__PEOPLE);
-
     managerEClass = createEClass(MANAGER);
 
     doctorEClass = createEClass(DOCTOR);
@@ -760,14 +708,6 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
     // Add supertypes to classes
 
     // Initialize classes and features; add operations and parameters
-    initEClass(testFeatureMapEClass, TestFeatureMap.class, "TestFeatureMap", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getTestFeatureMap_Managers(), getManager(), null, "managers", null, 0, -1, TestFeatureMap.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
-        !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getTestFeatureMap_Doctors(), getDoctor(), null, "doctors", null, 0, -1, TestFeatureMap.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
-        !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getTestFeatureMap_People(), ecorePackage.getEFeatureMapEntry(), "people", null, 0, -1, TestFeatureMap.class, !IS_TRANSIENT, !IS_VOLATILE,
-        IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
     initEClass(managerEClass, Manager.class, "Manager", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(doctorEClass, Doctor.class, "Doctor", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -842,24 +782,6 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
 
     // Create resource
     createResource(eNS_URI);
-
-    // Create annotations
-    // http:///org/eclipse/emf/ecore/util/ExtendedMetaData
-    createExtendedMetaDataAnnotations();
-  }
-
-  /**
-   * Initializes the annotations for <b>http:///org/eclipse/emf/ecore/util/ExtendedMetaData</b>.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected void createExtendedMetaDataAnnotations()
-  {
-    String source = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData";
-    addAnnotation(getTestFeatureMap_Managers(), source, new String[] { "group", "#people" });
-    addAnnotation(getTestFeatureMap_Doctors(), source, new String[] { "group", "#people" });
-    addAnnotation(getTestFeatureMap_People(), source, new String[] { "kind", "group" });
   }
 
 } // Model5PackageImpl

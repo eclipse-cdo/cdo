@@ -28,14 +28,6 @@ public interface Model5Factory extends EFactory
   Model5Factory eINSTANCE = org.eclipse.emf.cdo.tests.model5.impl.Model5FactoryImpl.init();
 
   /**
-   * Returns a new object of class '<em>Test Feature Map</em>'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @return a new object of class '<em>Test Feature Map</em>'.
-   * @generated
-   */
-  TestFeatureMap createTestFeatureMap();
-
-  /**
    * Returns a new object of class '<em>Manager</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return a new object of class '<em>Manager</em>'.

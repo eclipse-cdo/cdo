@@ -61,55 +61,13 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
   Model5Package eINSTANCE = org.eclipse.emf.cdo.tests.model5.legacy.impl.Model5PackageImpl.init();
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model5.legacy.impl.TestFeatureMapImpl <em>Test Feature Map</em>}' class.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.tests.model5.legacy.impl.TestFeatureMapImpl
-   * @see org.eclipse.emf.cdo.tests.model5.legacy.impl.Model5PackageImpl#getTestFeatureMap()
-   * @generated
-   */
-  int TEST_FEATURE_MAP = 0;
-
-  /**
-   * The feature id for the '<em><b>Managers</b></em>' reference list.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int TEST_FEATURE_MAP__MANAGERS = 0;
-
-  /**
-   * The feature id for the '<em><b>Doctors</b></em>' reference list.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int TEST_FEATURE_MAP__DOCTORS = 1;
-
-  /**
-   * The feature id for the '<em><b>People</b></em>' attribute list.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int TEST_FEATURE_MAP__PEOPLE = 2;
-
-  /**
-   * The number of structural features of the '<em>Test Feature Map</em>' class.
-   * <!-- begin-user-doc --> <!--
-   * end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int TEST_FEATURE_MAP_FEATURE_COUNT = 3;
-
-  /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model5.legacy.impl.ManagerImpl <em>Manager</em>}' class.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.tests.model5.legacy.impl.ManagerImpl
    * @see org.eclipse.emf.cdo.tests.model5.legacy.impl.Model5PackageImpl#getManager()
    * @generated
    */
-  int MANAGER = 1;
+  int MANAGER = 0;
 
   /**
    * The number of structural features of the '<em>Manager</em>' class.
@@ -126,7 +84,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    * @see org.eclipse.emf.cdo.tests.model5.legacy.impl.Model5PackageImpl#getDoctor()
    * @generated
    */
-  int DOCTOR = 2;
+  int DOCTOR = 1;
 
   /**
    * The number of structural features of the '<em>Doctor</em>' class.
@@ -143,7 +101,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    * @see org.eclipse.emf.cdo.tests.model5.legacy.impl.Model5PackageImpl#getGenListOfString()
    * @generated
    */
-  int GEN_LIST_OF_STRING = 3;
+  int GEN_LIST_OF_STRING = 2;
 
   /**
    * The feature id for the '<em><b>Elements</b></em>' attribute list.
@@ -169,7 +127,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    * @see org.eclipse.emf.cdo.tests.model5.legacy.impl.Model5PackageImpl#getGenListOfInt()
    * @generated
    */
-  int GEN_LIST_OF_INT = 4;
+  int GEN_LIST_OF_INT = 3;
 
   /**
    * The feature id for the '<em><b>Elements</b></em>' attribute list.
@@ -195,7 +153,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    * @see org.eclipse.emf.cdo.tests.model5.legacy.impl.Model5PackageImpl#getGenListOfInteger()
    * @generated
    */
-  int GEN_LIST_OF_INTEGER = 5;
+  int GEN_LIST_OF_INTEGER = 4;
 
   /**
    * The feature id for the '<em><b>Elements</b></em>' attribute list.
@@ -221,7 +179,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    * @see org.eclipse.emf.cdo.tests.model5.legacy.impl.Model5PackageImpl#getGenListOfLong()
    * @generated
    */
-  int GEN_LIST_OF_LONG = 6;
+  int GEN_LIST_OF_LONG = 5;
 
   /**
    * The feature id for the '<em><b>Elements</b></em>' attribute list.
@@ -247,7 +205,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    * @see org.eclipse.emf.cdo.tests.model5.legacy.impl.Model5PackageImpl#getGenListOfBoolean()
    * @generated
    */
-  int GEN_LIST_OF_BOOLEAN = 7;
+  int GEN_LIST_OF_BOOLEAN = 6;
 
   /**
    * The feature id for the '<em><b>Elements</b></em>' attribute list.
@@ -273,7 +231,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    * @see org.eclipse.emf.cdo.tests.model5.legacy.impl.Model5PackageImpl#getGenListOfShort()
    * @generated
    */
-  int GEN_LIST_OF_SHORT = 8;
+  int GEN_LIST_OF_SHORT = 7;
 
   /**
    * The feature id for the '<em><b>Elements</b></em>' attribute list.
@@ -299,7 +257,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    * @see org.eclipse.emf.cdo.tests.model5.legacy.impl.Model5PackageImpl#getGenListOfFloat()
    * @generated
    */
-  int GEN_LIST_OF_FLOAT = 9;
+  int GEN_LIST_OF_FLOAT = 8;
 
   /**
    * The feature id for the '<em><b>Elements</b></em>' attribute list.
@@ -325,7 +283,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    * @see org.eclipse.emf.cdo.tests.model5.legacy.impl.Model5PackageImpl#getGenListOfDouble()
    * @generated
    */
-  int GEN_LIST_OF_DOUBLE = 10;
+  int GEN_LIST_OF_DOUBLE = 9;
 
   /**
    * The feature id for the '<em><b>Elements</b></em>' attribute list.
@@ -351,7 +309,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    * @see org.eclipse.emf.cdo.tests.model5.legacy.impl.Model5PackageImpl#getGenListOfDate()
    * @generated
    */
-  int GEN_LIST_OF_DATE = 11;
+  int GEN_LIST_OF_DATE = 10;
 
   /**
    * The feature id for the '<em><b>Elements</b></em>' attribute list.
@@ -377,7 +335,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    * @see org.eclipse.emf.cdo.tests.model5.legacy.impl.Model5PackageImpl#getGenListOfChar()
    * @generated
    */
-  int GEN_LIST_OF_CHAR = 12;
+  int GEN_LIST_OF_CHAR = 11;
 
   /**
    * The feature id for the '<em><b>Elements</b></em>' attribute list.
@@ -403,7 +361,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    * @see org.eclipse.emf.cdo.tests.model5.legacy.impl.Model5PackageImpl#getGenListOfIntArray()
    * @generated
    */
-  int GEN_LIST_OF_INT_ARRAY = 13;
+  int GEN_LIST_OF_INT_ARRAY = 12;
 
   /**
    * The feature id for the '<em><b>Elements</b></em>' attribute list.
@@ -430,7 +388,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    * @see org.eclipse.emf.cdo.tests.model5.legacy.impl.Model5PackageImpl#getParent()
    * @generated
    */
-  int PARENT = 14;
+  int PARENT = 13;
 
   /**
    * The feature id for the '<em><b>Children</b></em>' containment reference list.
@@ -476,7 +434,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    * @see org.eclipse.emf.cdo.tests.model5.legacy.impl.Model5PackageImpl#getChild()
    * @generated
    */
-  int CHILD = 15;
+  int CHILD = 14;
 
   /**
    * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -522,7 +480,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    * @see org.eclipse.emf.cdo.tests.model5.legacy.impl.Model5PackageImpl#getWithCustomType()
    * @generated
    */
-  int WITH_CUSTOM_TYPE = 16;
+  int WITH_CUSTOM_TYPE = 15;
 
   /**
    * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -548,7 +506,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    * @see org.eclipse.emf.cdo.tests.model5.legacy.impl.Model5PackageImpl#getIntArray()
    * @generated
    */
-  int INT_ARRAY = 17;
+  int INT_ARRAY = 16;
 
   /**
    * The meta object id for the '<em>Custom Type</em>' data type.
@@ -558,53 +516,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    * @see org.eclipse.emf.cdo.tests.model5.legacy.impl.Model5PackageImpl#getCustomType()
    * @generated
    */
-  int CUSTOM_TYPE = 18;
-
-  @Override
-  /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model5.TestFeatureMap <em>Test Feature Map</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @return the meta object for class '<em>Test Feature Map</em>'.
-   * @see org.eclipse.emf.cdo.tests.model5.TestFeatureMap
-   * @generated
-   */
-  EClass getTestFeatureMap();
-
-  @Override
-  /**
-   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.model5.TestFeatureMap#getManagers <em>Managers</em>}'.
-   * <!-- begin-user-doc
-   * --> <!-- end-user-doc -->
-   * @return the meta object for the reference list '<em>Managers</em>'.
-   * @see org.eclipse.emf.cdo.tests.model5.TestFeatureMap#getManagers()
-   * @see #getTestFeatureMap()
-   * @generated
-   */
-  EReference getTestFeatureMap_Managers();
-
-  @Override
-  /**
-   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.model5.TestFeatureMap#getDoctors <em>Doctors</em>}'.
-   * <!-- begin-user-doc
-   * --> <!-- end-user-doc -->
-   * @return the meta object for the reference list '<em>Doctors</em>'.
-   * @see org.eclipse.emf.cdo.tests.model5.TestFeatureMap#getDoctors()
-   * @see #getTestFeatureMap()
-   * @generated
-   */
-  EReference getTestFeatureMap_Doctors();
-
-  @Override
-  /**
-   * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.tests.model5.TestFeatureMap#getPeople <em>People</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute list '<em>People</em>'.
-   * @see org.eclipse.emf.cdo.tests.model5.TestFeatureMap#getPeople()
-   * @see #getTestFeatureMap()
-   * @generated
-   */
-  EAttribute getTestFeatureMap_People();
+  int CUSTOM_TYPE = 17;
 
   @Override
   /**

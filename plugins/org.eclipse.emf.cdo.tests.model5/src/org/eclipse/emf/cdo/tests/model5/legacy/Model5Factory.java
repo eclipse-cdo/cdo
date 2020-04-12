@@ -25,7 +25,6 @@ import org.eclipse.emf.cdo.tests.model5.GenListOfShort;
 import org.eclipse.emf.cdo.tests.model5.GenListOfString;
 import org.eclipse.emf.cdo.tests.model5.Manager;
 import org.eclipse.emf.cdo.tests.model5.Parent;
-import org.eclipse.emf.cdo.tests.model5.TestFeatureMap;
 import org.eclipse.emf.cdo.tests.model5.WithCustomType;
 
 import org.eclipse.emf.ecore.EFactory;
@@ -46,15 +45,6 @@ public interface Model5Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    * @generated
    */
   Model5Factory eINSTANCE = org.eclipse.emf.cdo.tests.model5.legacy.impl.Model5FactoryImpl.init();
-
-  @Override
-  /**
-   * Returns a new object of class '<em>Test Feature Map</em>'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @return a new object of class '<em>Test Feature Map</em>'.
-   * @generated
-   */
-  TestFeatureMap createTestFeatureMap();
 
   @Override
   /**

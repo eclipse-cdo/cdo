@@ -48,14 +48,12 @@ public class AllTestsDBMysql extends DBConfigs
   protected void initConfigSuites(TestSuite parent)
   {
     addScenario(parent, new MysqlConfig(), JVM, NATIVE);
-    addScenario(parent, new MysqlConfig().idGenerationLocation(IDGenerationLocation.STORE), JVM, NATIVE);
+    addScenario(parent, new MysqlConfig().idGenerationLocation(IDGenerationLocation.CLIENT), JVM, NATIVE);
 
-    // addScenario(parent, new MysqlConfig().supportingAudits(true).withRanges(true), JVM, NATIVE);
-    // addScenario(parent, new
-    // MysqlConfig().supportingAudits(true).withRanges(true).idGenerationLocation(IDGenerationLocation.STORE), JVM,
-    // NATIVE);
+    addScenario(parent, new MysqlConfig().supportingAudits(true).withRanges(true), JVM, NATIVE);
+    addScenario(parent, new MysqlConfig().supportingAudits(true).withRanges(true).idGenerationLocation(IDGenerationLocation.CLIENT), JVM, NATIVE);
 
     addScenario(parent, new MysqlConfig().supportingBranches(true).withRanges(true), JVM, NATIVE);
-    addScenario(parent, new MysqlConfig().supportingBranches(true).withRanges(true).idGenerationLocation(IDGenerationLocation.STORE), JVM, NATIVE);
+    addScenario(parent, new MysqlConfig().supportingBranches(true).withRanges(true).idGenerationLocation(IDGenerationLocation.CLIENT), JVM, NATIVE);
   }
 }

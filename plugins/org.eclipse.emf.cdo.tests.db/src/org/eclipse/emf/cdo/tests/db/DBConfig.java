@@ -225,7 +225,12 @@ public abstract class DBConfig extends RepositoryConfig
   }
 
   @Override
-  protected String getMappingStrategySpecialization()
+  protected String getModeSuffix()
+  {
+    return super.getModeSuffix() + getMappingStrategySuffix();
+  }
+
+  protected String getMappingStrategySuffix()
   {
     return (withRanges ? "-ranges" : "") + (copyOnBranch ? "-copy" : "") + (inverseLists ? "-inverse" : "");
   }

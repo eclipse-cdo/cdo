@@ -315,13 +315,17 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   @Override
   public String getName()
   {
-    return super.getName() + (supportingBranches ? "-branching" : supportingAudits ? "-auditing" : "") + getMappingStrategySpecialization()
-        + (idGenerationLocation == IDGenerationLocation.CLIENT ? "-uuids" : "");
+    return super.getName() + getModeSuffix() + getUUIDSuffix();
   }
 
-  protected String getMappingStrategySpecialization()
+  protected String getModeSuffix()
   {
-    return "";
+    return supportingBranches ? "-branching" : supportingAudits ? "-auditing" : "";
+  }
+
+  protected String getUUIDSuffix()
+  {
+    return idGenerationLocation == IDGenerationLocation.CLIENT ? "-uuids" : "";
   }
 
   @Override

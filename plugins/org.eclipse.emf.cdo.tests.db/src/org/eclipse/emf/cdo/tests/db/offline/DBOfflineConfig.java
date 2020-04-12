@@ -153,7 +153,12 @@ public abstract class DBOfflineConfig extends OfflineConfig
   }
 
   @Override
-  protected String getMappingStrategySpecialization()
+  protected String getModeSuffix()
+  {
+    return super.getModeSuffix() + getMappingStrategySuffix();
+  }
+
+  protected String getMappingStrategySuffix()
   {
     return (withRanges ? "-ranges" : "") + (copyOnBranch ? "-copy" : "");
   }

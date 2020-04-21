@@ -276,7 +276,7 @@ public abstract class DBAdapter implements IDBAdapter
     ResultSet primaryKeys = metaData.getPrimaryKeys(null, schemaName, tableName);
     readIndices(connection, primaryKeys, table, 6, 0, 4, 5);
 
-    ResultSet indexInfo = metaData.getIndexInfo(null, schemaName, tableName, false, false);
+    ResultSet indexInfo = metaData.getIndexInfo(null, schemaName, tableName, false, true);
     readIndices(connection, indexInfo, table, 6, 4, 9, 8);
   }
 

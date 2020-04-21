@@ -105,12 +105,13 @@ public class SQLQueryHandler implements IQueryHandler
     boolean mapQuery = false;
 
     IIDHandler idHandler = accessor.getStore().getIDHandler();
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY,
-        ReuseProbability.MEDIUM);
+    IDBPreparedStatement stmt = null;
     ResultSet resultSet = null;
 
     try
     {
+      stmt = accessor.getDBConnection().prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY, ReuseProbability.MEDIUM);
+        
       for (String key : info.getParameters().keySet())
       {
         if (FIRST_RESULT.equalsIgnoreCase(key))

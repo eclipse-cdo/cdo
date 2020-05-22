@@ -47,6 +47,7 @@ public class AllConfigs extends ConfigTestSuite
     testClasses.add(ComplexTest.class);
     testClasses.add(AttributeTest.class);
     // testClasses.add(CommitPerformanceTest.class);
+    // testClasses.add(BigModelTest.class);
     testClasses.add(EnumTest.class);
     testClasses.add(EMapTest.class);
     testClasses.add(UnsetTest.class);

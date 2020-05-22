@@ -60,10 +60,12 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.BasicEObjectImpl;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EStoreEObjectImpl;
+import org.eclipse.emf.ecore.impl.EStoreEObjectImpl.BasicEStoreFeatureMap;
 import org.eclipse.emf.ecore.impl.MinimalEStoreEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Internal;
 import org.eclipse.emf.ecore.util.EcoreEMap;
+import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.spi.cdo.CDOStore;
 import org.eclipse.emf.spi.cdo.FSMUtil;
@@ -704,9 +706,16 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     if (result == null)
     {
       EStructuralFeature eStructuralFeature = eDynamicFeature(dynamicFeatureID);
-      if (classInfo.isPersistent(dynamicFeatureID) && eStructuralFeature.isMany())
+      if (classInfo.isPersistent(dynamicFeatureID))
       {
-        eSettings[index] = result = createList(eStructuralFeature);
+        if (classInfo.hasPersistentFeatureMaps() && FeatureMapUtil.isFeatureMap(eStructuralFeature))
+        {
+          eSettings[index] = result = new BasicEStoreFeatureMap(this, eStructuralFeature);
+        }
+        else if (eStructuralFeature.isMany())
+        {
+          eSettings[index] = result = createList(eStructuralFeature);
+        }
       }
     }
 

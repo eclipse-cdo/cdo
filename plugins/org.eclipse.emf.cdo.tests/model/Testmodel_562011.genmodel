@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipse.emf.cdo.tests/model" editDirectory=""
+    editorDirectory="" modelPluginID="org.eclipse.emf.cdo.tests" modelName="Testmodel_562011"
+    updateClasspath="false" rootExtendsInterface="org.eclipse.emf.cdo.CDOObject" rootExtendsClass="org.eclipse.emf.internal.cdo.CDOObjectImpl"
+    reflectiveDelegation="true" testsDirectory="" importerID="org.eclipse.xsd.ecore.importer"
+    featureDelegation="Reflective" complianceLevel="8.0" copyrightFields="false" providerRootExtendsClass="org.eclipse.emf.cdo.edit.CDOItemProviderAdapter"
+    operationReflection="true" importOrganizing="true" cleanup="true">
+  <foreignModel>Testmodel_562011.xsd</foreignModel>
+  <modelPluginVariables>CDO=org.eclipse.emf.cdo</modelPluginVariables>
+  <editPluginVariables>CDO_EDIT=org.eclipse.emf.cdo.edit</editPluginVariables>
+  <genPackages prefix="Testmodel562011" resource="XML" disposableProviderFactory="true"
+      ecorePackage="Testmodel_562011.ecore#/">
+    <genClasses ecoreClass="Testmodel_562011.ecore#//DocumentRoot">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EAttribute Testmodel_562011.ecore#//DocumentRoot/mixed"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Testmodel_562011.ecore#//DocumentRoot/xMLNSPrefixMap"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Testmodel_562011.ecore#//DocumentRoot/xSISchemaLocation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Testmodel_562011.ecore#//DocumentRoot/someContent"/>
+    </genClasses>
+    <genClasses ecoreClass="Testmodel_562011.ecore#//SomeContentType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Testmodel_562011.ecore#//SomeContentType/someElem"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

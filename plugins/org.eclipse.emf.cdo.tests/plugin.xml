@@ -35,4 +35,18 @@
     </package> 
   </extension>
 
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated Testmodel_562011 -->
+      <package
+            uri="platform:/resource/org.eclipse.emf.cdo.tests/model_562011/Testmodel_562011.xsd"
+            class="Testmodel562011.Testmodel562011Package"
+            genModel="model/Testmodel_562011.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated Testmodel_562011 -->
+      <parser
+            type="testmodel562011"
+            class="Testmodel562011.util.Testmodel562011ResourceFactoryImpl"/>
+   </extension>
 </plugin>

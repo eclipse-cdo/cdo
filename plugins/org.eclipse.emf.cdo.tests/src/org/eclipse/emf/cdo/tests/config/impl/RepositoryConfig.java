@@ -640,6 +640,13 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     super.tearDown();
   }
 
+  @Override
+  public void mainSuiteFinished() throws Exception
+  {
+    deactivateRepositories();
+    super.mainSuiteFinished();
+  }
+
   protected boolean isOptimizing()
   {
     return false;

@@ -282,6 +282,17 @@ public abstract class CDOTypeImpl implements CDOType
     }
 
     @Override
+    public Object convertToEMF(EClassifier feature, Object value)
+    {
+      if (value == CDORevisionData.NIL)
+      {
+        return null;
+      }
+
+      return super.convertToEMF(feature, value);
+    }
+
+    @Override
     public Object doAdjustReferences(CDOReferenceAdjuster adjuster, Object value, EStructuralFeature feature, int index)
     {
       return adjuster.adjustReference(value, feature, index);

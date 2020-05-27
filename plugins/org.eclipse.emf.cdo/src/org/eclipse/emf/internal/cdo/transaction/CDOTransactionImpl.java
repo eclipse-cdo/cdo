@@ -53,6 +53,7 @@ import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
@@ -3602,7 +3603,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   private List<CDOObjectReference> addXRefLocal(List<CDOObjectReference> refs, Set<CDOID> targetIDs, CDOObject object, EReference reference, int index,
       Object value)
   {
-    if (value != null)
+    if (value != null && value != CDORevisionData.NIL)
     {
       CDOID targetID = value instanceof CDOID ? (CDOID)value : getXRefID(CDOUtil.getCDOObject((EObject)value));
       if (!CDOIDUtil.isNull(targetID) && targetIDs.contains(targetID))

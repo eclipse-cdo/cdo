@@ -26,6 +26,9 @@ import org.eclipse.emf.ecore.impl.BasicEObjectImpl;
 public interface CDORevisionData
 {
   /**
+   * An object used to represent being set to <code>null</code>
+   * as opposed to having no value and hence being in the default state.
+   * <p>
    * The equivalent of <code>DynamicValueHolder.NIL</code> (i.e. explicit <code>null</code>).
    *
    * @since 3.0

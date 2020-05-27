@@ -98,6 +98,7 @@ import org.eclipse.net4j.util.container.SingleDeltaContainerEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.LifecycleException;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.ref.KeyedReference;
@@ -135,6 +136,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -153,6 +155,10 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   private static final String REPOSITORY_NAME_KEY = "cdo.repository.name";
 
   private static final String SAFE_RENAME = "~renamed";
+
+  private static final Set<String> LEGACY_MODELS = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.view.REPORT_LEGACY_MODELS")
+      ? Collections.synchronizedSet(new HashSet<>())
+      : null;
 
   private static final ThreadLocal<Lock> NEXT_VIEW_LOCK = new ThreadLocal<>();
 
@@ -2086,8 +2092,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
         object.cdoInternalSetRevision(revision);
 
         // Before setting the state to CLEAN (that can trigger a duplicate loading and instantiation of the current
-        // object)
-        // we make sure that object is registered - without throwing exception if it is already the case
+        // object) we make sure that object is registered - without throwing exception if it is already the case
         registerObjectIfNotRegistered(object);
 
         object.cdoInternalSetState(CDOState.CLEAN);
@@ -2412,6 +2417,15 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   @Override
   public void registerObject(InternalCDOObject object)
   {
+    if (LEGACY_MODELS != null && CDOUtil.isLegacyObject(object))
+    {
+      String nsURI = object.eClass().getEPackage().getNsURI();
+      if (LEGACY_MODELS.add(nsURI))
+      {
+        OM.LOG.info("Legacy model detected: " + nsURI);
+      }
+    }
+
     synchronized (getViewMonitor())
     {
       lockView();

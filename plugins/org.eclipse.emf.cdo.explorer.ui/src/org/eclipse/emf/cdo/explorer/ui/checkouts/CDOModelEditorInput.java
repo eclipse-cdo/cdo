@@ -43,7 +43,7 @@ import org.eclipse.ui.IPersistableElement;
 /**
  * @author Eike Stepper
  */
-public class CDOCheckoutEditorInput extends PlatformObject implements CDOEditorInput2, CDOEditorInput3, IPersistableElement
+public class CDOModelEditorInput extends PlatformObject implements CDOEditorInput2, CDOEditorInput3, IPersistableElement
 {
   protected static final String URI_TAG = "uri";
 
@@ -57,7 +57,7 @@ public class CDOCheckoutEditorInput extends PlatformObject implements CDOEditorI
 
   private CDOID objectID;
 
-  public CDOCheckoutEditorInput(URI uri)
+  public CDOModelEditorInput(URI uri)
   {
     CheckUtil.checkArg(uri, "uri is null");
     this.uri = uri;
@@ -241,7 +241,7 @@ public class CDOCheckoutEditorInput extends PlatformObject implements CDOEditorI
   @Override
   public boolean equals(Object o)
   {
-    return this == o || o instanceof CDOCheckoutEditorInput && uri.equals(((CDOCheckoutEditorInput)o).getURI());
+    return this == o || o instanceof CDOModelEditorInput && uri.equals(((CDOModelEditorInput)o).getURI());
   }
 
   protected void configureView(CDOView view)
@@ -254,7 +254,7 @@ public class CDOCheckoutEditorInput extends PlatformObject implements CDOEditorI
 
   protected void configureTransaction(CDOTransaction transaction)
   {
-    CDOCheckoutEditorOpener.addConflictResolver(transaction);
+    CDOModelEditorOpener.addConflictResolver(transaction);
   }
 
   /**
@@ -262,7 +262,7 @@ public class CDOCheckoutEditorInput extends PlatformObject implements CDOEditorI
    */
   public static class ElementFactory implements IElementFactory
   {
-    public static final String ID = "org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutEditorInput.ElementFactory";
+    public static final String ID = "org.eclipse.emf.cdo.explorer.ui.checkouts.CDOModelEditorInput.ElementFactory";
 
     public ElementFactory()
     {
@@ -272,7 +272,7 @@ public class CDOCheckoutEditorInput extends PlatformObject implements CDOEditorI
     public IAdaptable createElement(IMemento memento)
     {
       URI uri = URI.createURI(memento.getString(URI_TAG));
-      return new CDOCheckoutEditorInput(uri);
+      return new CDOModelEditorInput(uri);
     }
   }
 }

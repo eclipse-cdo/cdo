@@ -30,18 +30,18 @@ import org.eclipse.ui.PartInitException;
 /**
  * @author Eike Stepper
  */
-public class CDOCheckoutEditorOpener extends CDOEditorOpener.Default
+public class CDOModelEditorOpener extends CDOEditorOpener.Default
 {
   private static final boolean INTERACTIVE_CONFLICT_RESOLUTION = OMPlatform.INSTANCE.isProperty("cdo.interactive.conflict.resolution", true);
 
-  public CDOCheckoutEditorOpener()
+  public CDOModelEditorOpener()
   {
   }
 
   @Override
   protected IEditorPart doOpenEditor(IWorkbenchPage page, URI uri)
   {
-    CDOCheckoutEditorInput editorInput = new CDOCheckoutEditorInput(uri);
+    CDOModelEditorInput editorInput = new CDOModelEditorInput(uri);
     String editorID = CDOEditorUtil.getEditorID();
 
     try

@@ -80,6 +80,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Predicate;
 
 /**
  * @author Eike Stepper
@@ -557,7 +558,7 @@ public class CDOCheckoutContentProvider extends CDOContentProvider<CDOCheckout> 
     return PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
   }
 
-  public static TreeViewer createTreeViewer(Composite container)
+  public static TreeViewer createTreeViewer(Composite container, Predicate<Object> contentPredicate)
   {
     // TODO This is not lazy, async:
     CDOItemProvider parentItemProvider = new CDOItemProvider(null)
@@ -574,7 +575,7 @@ public class CDOCheckoutContentProvider extends CDOContentProvider<CDOCheckout> 
         List<Object> children = new ArrayList<>();
         for (Object child : doGetChildren(element))
         {
-          if (child instanceof CDOCheckout || child instanceof CDOResourceFolder)
+          if (contentPredicate.test(child))
           {
             children.add(child);
           }
@@ -614,6 +615,11 @@ public class CDOCheckoutContentProvider extends CDOContentProvider<CDOCheckout> 
     parentViewer.setLabelProvider(labelProvider);
     parentViewer.setInput(CDOExplorerUtil.getCheckoutManager());
     return parentViewer;
+  }
+
+  public static TreeViewer createTreeViewer(Composite container)
+  {
+    return createTreeViewer(container, child -> child instanceof CDOCheckout || child instanceof CDOResourceFolder);
   }
 
   public static final CDOCheckoutContentProvider getInstance(String viewerID)

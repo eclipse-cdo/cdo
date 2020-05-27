@@ -2152,6 +2152,23 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
               return CDOIDUtil.createExternal(uri);
             }
           }
+          else
+          {
+            URI proxyURI = eObject.eProxyURI();
+            if (proxyURI != null)
+            {
+              ResourceSet resourceSet = getResourceSet();
+              EObject resolvedObject = EcoreUtil.resolve(eObject, resourceSet);
+              if (resolvedObject == eObject)
+              {
+                // The proxy could NOT be resolved.
+                return CDOIDUtil.createExternal(proxyURI.toString());
+              }
+
+              // The proxy was resolved. Call this method again with the resolved object.
+              return provideCDOID(resolvedObject);
+            }
+          }
 
           throw new DanglingReferenceException(eObject);
         }

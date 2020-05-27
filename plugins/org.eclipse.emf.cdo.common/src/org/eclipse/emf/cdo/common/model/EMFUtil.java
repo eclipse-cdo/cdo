@@ -55,6 +55,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.function.Consumer;
 
 /**
  * Various static helper methods for dealing with EMF meta models.
@@ -372,7 +373,24 @@ public final class EMFUtil
    */
   public static EClass[] getConcreteClasses(EPackage ePackage)
   {
+    return getConcreteClasses(ePackage, false);
+  }
+
+  /**
+   * @since 4.10
+   */
+  public static EClass[] getConcreteClasses(EPackage ePackage, boolean includeSubPackages)
+  {
     List<EClass> result = new ArrayList<>(0);
+    forAllConcreteClasses(ePackage, includeSubPackages, c -> result.add(c));
+    return result.toArray(new EClass[result.size()]);
+  }
+
+  /**
+   * @since 4.10
+   */
+  public static void forAllConcreteClasses(EPackage ePackage, boolean includeSubPackages, Consumer<EClass> consumer)
+  {
     for (EClassifier classifier : ePackage.getEClassifiers())
     {
       if (classifier instanceof EClass)
@@ -380,12 +398,18 @@ public final class EMFUtil
         EClass eClass = (EClass)classifier;
         if (!eClass.isAbstract() && !eClass.isInterface())
         {
-          result.add(eClass);
+          consumer.accept(eClass);
         }
       }
     }
 
-    return result.toArray(new EClass[result.size()]);
+    if (includeSubPackages)
+    {
+      for (EPackage subPackage : ePackage.getESubpackages())
+      {
+        forAllConcreteClasses(subPackage, true, consumer);
+      }
+    }
   }
 
   public static EClass[] getPersistentClasses(EPackage ePackage)

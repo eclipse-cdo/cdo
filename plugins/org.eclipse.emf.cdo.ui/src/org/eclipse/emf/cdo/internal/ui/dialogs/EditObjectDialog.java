@@ -14,11 +14,6 @@ import org.eclipse.emf.cdo.internal.ui.CDOPropertyAdapterFactory;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.ui.view.swt.DefaultReferenceService;
-import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
-import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 
 import org.eclipse.jface.dialogs.TitleAreaDialog;
@@ -69,10 +64,16 @@ public class EditObjectDialog extends TitleAreaDialog
 
     try
     {
-      ViewModelContext viewModelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(ViewProviderHelper.getView(eObject, null), eObject,
-          new DefaultReferenceService());
+      org.eclipse.emf.ecp.view.spi.model.VView view = //
+          org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper.getView(eObject, null);
 
-      ECPSWTViewRenderer.INSTANCE.render(container, viewModelContext);
+      org.eclipse.emf.ecp.view.spi.context.ViewModelService viewModelService = //
+          new org.eclipse.emf.ecp.ui.view.swt.DefaultReferenceService();
+
+      org.eclipse.emf.ecp.view.spi.context.ViewModelContext viewModelContext = //
+          org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory.INSTANCE.createViewModelContext(view, eObject, viewModelService);
+
+      org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer.INSTANCE.render(container, viewModelContext);
     }
     catch (RuntimeException ex)
     {

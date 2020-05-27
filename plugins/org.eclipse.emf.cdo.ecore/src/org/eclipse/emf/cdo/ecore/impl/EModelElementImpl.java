@@ -35,6 +35,9 @@ import java.util.Iterator;
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>EModel Element</b></em>'.
+ * <p>
+ * <b>Important</b>:  In direct subclasses the generated <code>ESTATIC_FEATURE_COUNT</code> constant must be decreased from 1 to 0
+ * because the {@link #getEAnnotations() annotations} feature is implemented dynamically by this CDO-native class.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:

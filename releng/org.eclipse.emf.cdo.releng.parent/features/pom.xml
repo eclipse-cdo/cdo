@@ -64,6 +64,7 @@ Eike Stepper - initial API and implementation
     <module>../../../features/org.eclipse.net4j.util-feature</module>
     <module>../../../features/org.eclipse.net4j.util.doc-feature</module>
     <module>../../../features/org.eclipse.net4j.util.ui-feature</module>
+    <module>../../../features/org.eclipse.net4j.ws-feature</module>
   </modules>
 
   <build>

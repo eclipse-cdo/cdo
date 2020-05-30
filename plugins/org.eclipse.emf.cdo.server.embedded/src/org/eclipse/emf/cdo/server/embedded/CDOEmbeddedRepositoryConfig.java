@@ -55,6 +55,14 @@ public abstract class CDOEmbeddedRepositoryConfig extends Lifecycle
     this.repositoryName = repositoryName;
   }
 
+  /**
+   * @since 4.8
+   */
+  public final String getRepositoryName()
+  {
+    return repositoryName;
+  }
+
   public final IRepository getRepository()
   {
     return repository;

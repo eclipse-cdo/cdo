@@ -58,7 +58,7 @@ public class EmbeddedH2Repository extends CDOEmbeddedRepositoryConfig
     return branching;
   }
 
-  public File getDbFolder()
+  public File getDBFolder()
   {
     return dbFolder;
   }

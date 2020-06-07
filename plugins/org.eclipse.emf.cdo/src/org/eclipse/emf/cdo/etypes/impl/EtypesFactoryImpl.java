@@ -10,9 +10,12 @@
  */
 package org.eclipse.emf.cdo.etypes.impl;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPointRef;
+import org.eclipse.emf.cdo.common.branch.CDOBranchRef;
 import org.eclipse.emf.cdo.common.lob.CDOBlob;
 import org.eclipse.emf.cdo.common.lob.CDOClob;
 import org.eclipse.emf.cdo.common.lob.CDOLob;
+import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.etypes.Annotation;
 import org.eclipse.emf.cdo.etypes.EtypesFactory;
 import org.eclipse.emf.cdo.etypes.EtypesPackage;
@@ -112,6 +115,12 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
       return createBlobFromString(eDataType, initialValue);
     case EtypesPackage.CLOB:
       return createClobFromString(eDataType, initialValue);
+    case EtypesPackage.CLASSIFIER_REF:
+      return createClassifierRefFromString(eDataType, initialValue);
+    case EtypesPackage.BRANCH_REF:
+      return createBranchRefFromString(eDataType, initialValue);
+    case EtypesPackage.BRANCH_POINT_REF:
+      return createBranchPointRefFromString(eDataType, initialValue);
     default:
       throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
     }
@@ -131,6 +140,12 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
       return convertBlobToString(eDataType, instanceValue);
     case EtypesPackage.CLOB:
       return convertClobToString(eDataType, instanceValue);
+    case EtypesPackage.CLASSIFIER_REF:
+      return convertClassifierRefToString(eDataType, instanceValue);
+    case EtypesPackage.BRANCH_REF:
+      return convertBranchRefToString(eDataType, instanceValue);
+    case EtypesPackage.BRANCH_POINT_REF:
+      return convertBranchPointRefToString(eDataType, instanceValue);
     default:
       throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
     }
@@ -250,6 +265,72 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
     {
       throw new IORuntimeException(ex);
     }
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * @since 4.10
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public CDOClassifierRef createClassifierRefFromString(EDataType eDataType, String initialValue)
+  {
+    return initialValue == null ? null : new CDOClassifierRef(initialValue);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * @since 4.10
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public String convertClassifierRefToString(EDataType eDataType, Object instanceValue)
+  {
+    return instanceValue == null ? null : ((CDOClassifierRef)instanceValue).getURI();
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * @since 4.10
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public CDOBranchRef createBranchRefFromString(EDataType eDataType, String initialValue)
+  {
+    return initialValue == null ? null : new CDOBranchRef(initialValue);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * @since 4.10
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public String convertBranchRefToString(EDataType eDataType, Object instanceValue)
+  {
+    return instanceValue == null ? null : ((CDOBranchRef)instanceValue).getBranchPath();
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * @since 4.10
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public CDOBranchPointRef createBranchPointRefFromString(EDataType eDataType, String initialValue)
+  {
+    return initialValue == null ? null : new CDOBranchPointRef(initialValue);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * @since 4.10
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public String convertBranchPointRefToString(EDataType eDataType, Object instanceValue)
+  {
+    return instanceValue == null ? null : ((CDOBranchPointRef)instanceValue).getURI();
   }
 
   /**

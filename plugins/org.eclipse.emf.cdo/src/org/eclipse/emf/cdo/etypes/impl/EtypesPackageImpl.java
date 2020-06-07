@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.etypes.impl;
 import org.eclipse.emf.cdo.common.lob.CDOBlob;
 import org.eclipse.emf.cdo.common.lob.CDOClob;
 import org.eclipse.emf.cdo.common.lob.CDOLob;
+import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.etypes.Annotation;
 import org.eclipse.emf.cdo.etypes.EtypesFactory;
 import org.eclipse.emf.cdo.etypes.EtypesPackage;
@@ -28,6 +29,8 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 import java.io.InputStream;
 import java.io.Reader;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPointRef;
+import org.eclipse.emf.cdo.common.branch.CDOBranchRef;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Package</b>.
@@ -69,6 +72,27 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
    * @generated
    */
   private EDataType readerEDataType = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EDataType classifierRefEDataType = null;
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  private EDataType branchRefEDataType = null;
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  private EDataType branchPointRefEDataType = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -261,6 +285,39 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
   }
 
   /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EDataType getClassifierRef()
+  {
+    return classifierRefEDataType;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EDataType getBranchRef()
+  {
+    return branchRefEDataType;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EDataType getBranchPointRef()
+  {
+    return branchPointRefEDataType;
+  }
+
+  /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
@@ -325,6 +382,9 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
     lobEDataType = createEDataType(LOB);
     inputStreamEDataType = createEDataType(INPUT_STREAM);
     readerEDataType = createEDataType(READER);
+    classifierRefEDataType = createEDataType(CLASSIFIER_REF);
+    branchRefEDataType = createEDataType(BRANCH_REF);
+    branchPointRefEDataType = createEDataType(BRANCH_POINT_REF);
   }
 
   /**
@@ -384,6 +444,9 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
     initEDataType(lobEDataType, CDOLob.class, "Lob", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
     initEDataType(inputStreamEDataType, InputStream.class, "InputStream", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
     initEDataType(readerEDataType, Reader.class, "Reader", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+    initEDataType(classifierRefEDataType, CDOClassifierRef.class, "ClassifierRef", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+    initEDataType(branchRefEDataType, CDOBranchRef.class, "BranchRef", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+    initEDataType(branchPointRefEDataType, CDOBranchPointRef.class, "BranchPointRef", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
     // Create resource
     createResource(eNS_URI);

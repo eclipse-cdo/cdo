@@ -211,6 +211,39 @@ public interface EtypesPackage extends EPackage
   int READER = 6;
 
   /**
+   * The meta object id for the '<em>Classifier Ref</em>' data type.
+   * <!-- begin-user-doc -->
+   * @since 4.10
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.common.model.CDOClassifierRef
+   * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getClassifierRef()
+   * @generated
+   */
+  int CLASSIFIER_REF = 7;
+
+  /**
+  	 * The meta object id for the '<em>Branch Ref</em>' data type.
+  	 * <!-- begin-user-doc -->
+  	 * @since 4.10
+  	 * <!-- end-user-doc -->
+  	 * @see org.eclipse.emf.cdo.common.branch.CDOBranchRef
+  	 * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getBranchRef()
+  	 * @generated
+  	 */
+  int BRANCH_REF = 8;
+
+  /**
+  	 * The meta object id for the '<em>Branch Point Ref</em>' data type.
+  	 * <!-- begin-user-doc -->
+  	 * @since 4.10
+  	 * <!-- end-user-doc -->
+  	 * @see org.eclipse.emf.cdo.common.branch.CDOBranchPointRef
+  	 * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getBranchPointRef()
+  	 * @generated
+  	 */
+  int BRANCH_POINT_REF = 9;
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.etypes.ModelElement <em>Model Element</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
    *
@@ -351,11 +384,47 @@ public interface EtypesPackage extends EPackage
   EDataType getReader();
 
   /**
-   * Returns the factory that creates the instances of the model.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @return the factory that creates the instances of the model.
+   * Returns the meta object for data type '{@link org.eclipse.emf.cdo.common.model.CDOClassifierRef <em>Classifier Ref</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for data type '<em>Classifier Ref</em>'.
+   * @see org.eclipse.emf.cdo.common.model.CDOClassifierRef
+   * @model instanceClass="org.eclipse.emf.cdo.common.model.CDOClassifierRef"
    * @generated
+   * @since 4.10
    */
+  EDataType getClassifierRef();
+
+  /**
+  	 * Returns the meta object for data type '{@link org.eclipse.emf.cdo.common.branch.CDOBranchRef <em>Branch Ref</em>}'.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @return the meta object for data type '<em>Branch Ref</em>'.
+  	 * @see org.eclipse.emf.cdo.common.branch.CDOBranchRef
+  	 * @model instanceClass="org.eclipse.emf.cdo.common.branch.CDOBranchRef"
+  	 * @generated
+   * @since 4.10
+  	 */
+  EDataType getBranchRef();
+
+  /**
+  	 * Returns the meta object for data type '{@link org.eclipse.emf.cdo.common.branch.CDOBranchPointRef <em>Branch Point Ref</em>}'.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @return the meta object for data type '<em>Branch Point Ref</em>'.
+  	 * @see org.eclipse.emf.cdo.common.branch.CDOBranchPointRef
+  	 * @model instanceClass="org.eclipse.emf.cdo.common.branch.CDOBranchPointRef"
+  	 * @generated
+   * @since 4.10
+  	 */
+  EDataType getBranchPointRef();
+
+  /**
+  	 * Returns the factory that creates the instances of the model.
+  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+  	 * @return the factory that creates the instances of the model.
+  	 * @generated
+  	 */
   EtypesFactory getEtypesFactory();
 
   /**
@@ -368,7 +437,8 @@ public interface EtypesPackage extends EPackage
    * </ul>
    *
    * @noextend This interface is not intended to be extended by clients.
-   * @noimplement This interface is not intended to be implemented by clients. <!-- end-user-doc -->
+   * @noimplement This interface is not intended to be implemented by clients.
+   * <!-- end-user-doc -->
    * @generated
    */
   interface Literals
@@ -489,6 +559,39 @@ public interface EtypesPackage extends EPackage
      * @generated
      */
     EDataType READER = eINSTANCE.getReader();
+
+    /**
+    	 * The meta object literal for the '<em>Classifier Ref</em>' data type.
+    	 * <!-- begin-user-doc -->
+    	 * @since 4.10
+    	 * <!-- end-user-doc -->
+    	 * @see org.eclipse.emf.cdo.common.model.CDOClassifierRef
+    	 * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getClassifierRef()
+    	 * @generated
+    	 */
+    EDataType CLASSIFIER_REF = eINSTANCE.getClassifierRef();
+
+    /**
+    	 * The meta object literal for the '<em>Branch Ref</em>' data type.
+    	 * <!-- begin-user-doc -->
+    	 * @since 4.10
+    	 * <!-- end-user-doc -->
+    	 * @see org.eclipse.emf.cdo.common.branch.CDOBranchRef
+    	 * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getBranchRef()
+    	 * @generated
+    	 */
+    EDataType BRANCH_REF = eINSTANCE.getBranchRef();
+
+    /**
+    	 * The meta object literal for the '<em>Branch Point Ref</em>' data type.
+    	 * <!-- begin-user-doc -->
+    	 * @since 4.10
+    	 * <!-- end-user-doc -->
+    	 * @see org.eclipse.emf.cdo.common.branch.CDOBranchPointRef
+    	 * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getBranchPointRef()
+    	 * @generated
+    	 */
+    EDataType BRANCH_POINT_REF = eINSTANCE.getBranchPointRef();
 
   }
 

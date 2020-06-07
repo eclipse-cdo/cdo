@@ -20,6 +20,9 @@
     </genDataTypes>
     <genDataTypes ecoreDataType="etypes.ecore#//InputStream"/>
     <genDataTypes ecoreDataType="etypes.ecore#//Reader"/>
+    <genDataTypes ecoreDataType="etypes.ecore#//ClassifierRef"/>
+    <genDataTypes ecoreDataType="etypes.ecore#//BranchRef"/>
+    <genDataTypes ecoreDataType="etypes.ecore#//BranchPointRef"/>
     <genClasses image="false" ecoreClass="etypes.ecore#//ModelElement">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference etypes.ecore#//ModelElement/annotations"/>
       <genOperations ecoreOperation="etypes.ecore#//ModelElement/getAnnotation">

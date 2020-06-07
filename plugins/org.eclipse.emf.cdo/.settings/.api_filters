@@ -183,6 +183,24 @@
         <filter id="403767336">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.cdo.etypes.EtypesPackage.Literals"/>
+                <message_argument value="BRANCH_POINT_REF"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.etypes.EtypesPackage.Literals"/>
+                <message_argument value="BRANCH_REF"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.etypes.EtypesPackage.Literals"/>
+                <message_argument value="CLASSIFIER_REF"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.etypes.EtypesPackage.Literals"/>
                 <message_argument value="INPUT_STREAM"/>
             </message_arguments>
         </filter>

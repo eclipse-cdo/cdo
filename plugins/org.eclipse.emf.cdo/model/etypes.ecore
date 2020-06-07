@@ -32,4 +32,7 @@
       serializable="false"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Reader" instanceClassName="java.io.Reader"
       serializable="false"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="ClassifierRef" instanceClassName="org.eclipse.emf.cdo.common.model.CDOClassifierRef"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="BranchRef" instanceClassName="org.eclipse.emf.cdo.common.branch.CDOBranchRef"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="BranchPointRef" instanceClassName="org.eclipse.emf.cdo.common.branch.CDOBranchPointRef"/>
 </ecore:EPackage>

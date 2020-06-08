@@ -602,6 +602,11 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
     checkNull(mappingStrategy, Messages.getString("DBStore.2")); //$NON-NLS-1$
     checkNull(dbAdapter, Messages.getString("DBStore.1")); //$NON-NLS-1$
     checkNull(dbConnectionProvider, Messages.getString("DBStore.0")); //$NON-NLS-1$
+
+    if (properties == null)
+    {
+      properties = new HashMap<>();
+    }
   }
 
   @Override

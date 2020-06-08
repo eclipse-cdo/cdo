@@ -3845,7 +3845,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   private void invalidateNewChildrenOfRemotelyDetached(Set<CDOObject> remotelyDetachedObjects)
   {
     // Test EObject.eInternalContainer()/eDirectResource() implicit references to have them return null in legacy for
-    // objects in NEW state whose a direct/indirect parent has been remotelly detached
+    // objects in NEW state whose a direct/indirect parent has been remotely detached
     for (CDOObject referencer : getNewObjects().values())
     {
 

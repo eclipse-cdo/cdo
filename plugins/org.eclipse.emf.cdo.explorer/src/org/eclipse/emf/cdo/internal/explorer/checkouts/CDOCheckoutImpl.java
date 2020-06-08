@@ -214,7 +214,6 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
   {
     if (repository == fromCheckout.getRepository() && repository.isConnected())
     {
-
       CDOBranchManager branchManager = repository.getSession().getBranchManager();
       CDOBranch branch = branchManager.getBranch(fromCheckout.getBranchID());
       return branch.getPoint(fromCheckout.getTimeStamp());

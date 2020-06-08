@@ -233,7 +233,7 @@ public class Scenario implements IScenario
     }
     catch (Exception ex)
     {
-      IOUtil.print(ex);
+      currentTest.log(ex);
     }
 
     try
@@ -242,7 +242,7 @@ public class Scenario implements IScenario
     }
     catch (Exception ex)
     {
-      IOUtil.print(ex);
+      currentTest.log(ex);
     }
 
     try
@@ -251,7 +251,7 @@ public class Scenario implements IScenario
     }
     catch (Exception ex)
     {
-      IOUtil.print(ex);
+      currentTest.log(ex);
     }
   }
 

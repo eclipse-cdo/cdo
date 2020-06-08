@@ -837,7 +837,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
     }
     catch (Exception ex)
     {
-      IOUtil.print(ex);
+      log(ex);
     }
 
     try
@@ -846,7 +846,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
     }
     catch (Exception ex)
     {
-      IOUtil.print(ex);
+      log(ex);
     }
   }
 
@@ -880,5 +880,11 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   public @interface Skips
   {
     String[] value();
+  }
+
+  void log(Exception ex)
+  {
+    IOUtil.ERR().println("Error in " + getTestMethodName());
+    IOUtil.print(ex);
   }
 }

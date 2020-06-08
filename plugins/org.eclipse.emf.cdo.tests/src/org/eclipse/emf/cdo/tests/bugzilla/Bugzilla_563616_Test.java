@@ -14,7 +14,6 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model1.Customer;
-import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
@@ -60,7 +59,7 @@ public class Bugzilla_563616_Test extends AbstractCDOTest
     order = (SalesOrder)orderResource.getContents().get(0);
 
     // Assert that the customer is a proxy.
-    InternalEObject proxy = (InternalEObject)order.eGet(Model1Package.eINSTANCE.getSalesOrder_Customer(), false);
+    InternalEObject proxy = (InternalEObject)order.eGet(getModel1Package().getSalesOrder_Customer(), false);
     assertTrue(proxy.eProxyURI() != null);
 
     CDOSession session = openSession();

@@ -33,8 +33,10 @@ import org.eclipse.net4j.util.security.IUserAware;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -281,13 +283,13 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
     }
 
     long end = System.currentTimeMillis() + TIMEOUT_SCHEMA_ACCESS;
-    SchemaAccess activeSchemaAccess = null;
+    List<SchemaAccess> blockingAccesses = null;
 
     do
     {
       synchronized (schemaAccessQueue)
       {
-        activeSchemaAccess = schemaAccessQueue.getFirst();
+        SchemaAccess activeSchemaAccess = schemaAccessQueue.getFirst();
         if (activeSchemaAccess == schemaAccess)
         {
           if (write)
@@ -296,6 +298,17 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
           }
 
           return token;
+        }
+
+        blockingAccesses = new ArrayList<>();
+        for (SchemaAccess blockingAccess : schemaAccessQueue)
+        {
+          if (activeSchemaAccess == schemaAccess)
+          {
+            break;
+          }
+
+          blockingAccesses.add(blockingAccess);
         }
 
         try
@@ -311,7 +324,7 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
     } while (System.currentTimeMillis() < end);
 
     throw new TimeoutRuntimeException("Schema " + schema.getName() + " could not be locked for " + (write ? "write" : "read") + " access within "
-        + TIMEOUT_SCHEMA_ACCESS + " milliseconds. Active access: " + activeSchemaAccess);
+        + TIMEOUT_SCHEMA_ACCESS + " milliseconds. Blocking access(es): " + blockingAccesses);
   }
 
   public void endSchemaAccess(Object token)

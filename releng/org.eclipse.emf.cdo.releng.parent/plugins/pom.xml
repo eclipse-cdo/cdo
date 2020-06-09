@@ -249,7 +249,7 @@ Eike Stepper - initial API and implementation
             <groupId>org.eclipse.tycho</groupId>
             <artifactId>tycho-surefire-plugin</artifactId>
             <configuration>
-              <test>IntegrationTestsNonAudit*</test>
+              <test>${CDO_TESTS}*</test>
               <testFailureIgnore>true</testFailureIgnore>
               <systemProperties>
                 <disable.main.suite.finished>true</disable.main.suite.finished>

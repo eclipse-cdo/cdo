@@ -238,14 +238,21 @@ public final class ReflectUtil
     builder.append(StringUtil.NL);
 
     StackTraceElement[] stackTrace = thread.getStackTrace();
+    appendStackTrace(builder, stackTrace);
+    return builder.toString();
+  }
+
+  /**
+   * @since 3.11
+   */
+  public static void appendStackTrace(StringBuilder builder, StackTraceElement[] stackTrace)
+  {
     for (int i = 2; i < stackTrace.length; i++)
     {
       StackTraceElement stackTraceElement = stackTrace[i];
       builder.append("\tat " + stackTraceElement); //$NON-NLS-1$
       builder.append(StringUtil.NL);
     }
-
-    return builder.toString();
   }
 
   public static void printStackTrace(PrintStream out, StackTraceElement[] stackTrace)

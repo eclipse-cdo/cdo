@@ -137,43 +137,53 @@ public final class DBConnection extends DelegatingConnection implements IDBConne
   @Override
   public IDBPreparedStatement prepareStatement(String sql, int resultSetType, int resultSetConcurrency, ReuseProbability reuseProbability)
   {
-    database.beginSchemaAccess(false);
+    Object schemaAccessToken = database.beginSchemaAccess(false);
 
-    DBPreparedStatement preparedStatement;
-    synchronized (this)
+    try
     {
-      preparedStatement = cache.remove(sql);
-      if (preparedStatement == null)
+      DBPreparedStatement preparedStatement;
+      synchronized (this)
       {
-        try
+        preparedStatement = cache.remove(sql);
+        if (preparedStatement == null)
         {
-          PreparedStatement delegate = getDelegate().prepareStatement(sql, resultSetType, resultSetConcurrency);
-          preparedStatement = new DBPreparedStatement(this, sql, reuseProbability, delegate);
+          try
+          {
+            PreparedStatement delegate = getDelegate().prepareStatement(sql, resultSetType, resultSetConcurrency);
+            preparedStatement = new DBPreparedStatement(this, sql, reuseProbability, delegate);
+          }
+          catch (SQLException ex)
+          {
+            throw new DBException(ex);
+          }
         }
-        catch (SQLException ex)
+        else
         {
-          throw new DBException(ex);
-        }
-      }
-      else
-      {
-        --cacheSize;
+          --cacheSize;
 
-        DBPreparedStatement nextCached = preparedStatement.getNextCached();
-        if (nextCached != null)
+          DBPreparedStatement nextCached = preparedStatement.getNextCached();
+          if (nextCached != null)
+          {
+            cache.put(sql, nextCached);
+            preparedStatement.setNextCached(null);
+          }
+        }
+
+        if (VALIDATE_CHECKOUTS)
         {
-          cache.put(sql, nextCached);
-          preparedStatement.setNextCached(null);
+          checkOuts.add(preparedStatement);
         }
       }
 
-      if (VALIDATE_CHECKOUTS)
-      {
-        checkOuts.add(preparedStatement);
-      }
+      preparedStatement.setSchemaAccessToken(schemaAccessToken);
+
+      return preparedStatement;
     }
-
-    return preparedStatement;
+    catch (RuntimeException | Error ex)
+    {
+      database.endSchemaAccess(schemaAccessToken);
+      throw ex;
+    }
   }
 
   @Override
@@ -232,7 +242,8 @@ public final class DBConnection extends DelegatingConnection implements IDBConne
     }
     finally
     {
-      database.endSchemaAccess();
+      Object schemaAccessToken = preparedStatement.setSchemaAccessToken(null);
+      database.endSchemaAccess(schemaAccessToken);
     }
   }
 

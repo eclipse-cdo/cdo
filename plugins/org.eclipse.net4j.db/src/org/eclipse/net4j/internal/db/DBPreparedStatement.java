@@ -32,6 +32,8 @@ public class DBPreparedStatement extends DelegatingPreparedStatement implements 
 
   private DBPreparedStatement nextCached;
 
+  private Object schemaAccessToken;
+
   public DBPreparedStatement(DBConnection transaction, String sql, ReuseProbability reuseProbability, PreparedStatement delegate)
   {
     super(delegate, transaction);
@@ -150,5 +152,12 @@ public class DBPreparedStatement extends DelegatingPreparedStatement implements 
   public String convertString(DBResultSet resultSet, String columnLabel, String value) throws SQLException
   {
     return getConnection().convertString(resultSet, columnLabel, value);
+  }
+
+  Object setSchemaAccessToken(Object schemaAccessToken)
+  {
+    Object oldSchemaAccessToken = this.schemaAccessToken;
+    this.schemaAccessToken = schemaAccessToken;
+    return oldSchemaAccessToken;
   }
 }

@@ -21,6 +21,8 @@ import org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta;
 import org.eclipse.net4j.internal.db.ddl.delta.DBSchemaDelta;
 import org.eclipse.net4j.spi.db.DBAdapter;
 import org.eclipse.net4j.spi.db.ddl.InternalDBSchema;
+import org.eclipse.net4j.util.ReflectUtil;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.container.SetContainer;
@@ -31,7 +33,9 @@ import org.eclipse.net4j.util.security.IUserAware;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -41,6 +45,8 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
   private static final long TIMEOUT_SCHEMA_ACCESS = OMPlatform.INSTANCE.getProperty("org.eclipse.net4j.internal.db.DBDatabase.TIMEOUT_SCHEMA_ACCESS", 15000L);
 
   private static final boolean DEBUG_SCHEMA_ACCESS = OMPlatform.INSTANCE.isProperty("org.eclipse.net4j.internal.db.DBDatabase.DEBUG_SCHEMA_ACCESS");
+
+  private static final boolean TRACK_SCHEMA_ACCESS = true || OMPlatform.INSTANCE.isProperty("org.eclipse.net4j.internal.db.DBDatabase.TRACK_SCHEMA_ACCESS");
 
   private DBAdapter adapter;
 
@@ -52,7 +58,7 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
 
   private final LinkedList<SchemaAccess> schemaAccessQueue = new LinkedList<>();
 
-  private int schemaWriters;
+  private int waitingSchemaWriters;
 
   public DBDatabase(final DBAdapter adapter, IDBConnectionProvider connectionProvider, final String schemaName, final boolean fixNullableIndexColumns)
   {
@@ -117,9 +123,11 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
       return;
     }
 
+    Object schemaAccessToken = null;
+
     try
     {
-      beginSchemaAccess(true);
+      schemaAccessToken = beginSchemaAccess(true);
 
       for (IDBConnection transaction : getConnections())
       {
@@ -130,7 +138,7 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
     }
     finally
     {
-      endSchemaAccess();
+      endSchemaAccess(schemaAccessToken);
     }
   }
 
@@ -220,7 +228,7 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
     super.doDeactivate();
   }
 
-  public void beginSchemaAccess(boolean write)
+  public Object beginSchemaAccess(boolean write)
   {
     if (DEBUG_SCHEMA_ACCESS)
     {
@@ -234,24 +242,26 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
       }
     }
 
+    Object token = null;
     SchemaAccess schemaAccess = null;
     synchronized (schemaAccessQueue)
     {
       if (write)
       {
-        schemaAccess = new WriteSchemaAccess();
+        schemaAccess = createWriteSchemaAccess();
+        token = schemaAccess;
         schemaAccessQueue.addLast(schemaAccess);
-        ++schemaWriters;
+        ++waitingSchemaWriters;
       }
       else
       {
-        if (schemaWriters == 0 && !schemaAccessQueue.isEmpty())
+        if (waitingSchemaWriters == 0 && !schemaAccessQueue.isEmpty())
         {
           schemaAccess = schemaAccessQueue.getFirst();
           if (schemaAccess instanceof ReadSchemaAccess)
           {
             ReadSchemaAccess readSchemaAccess = (ReadSchemaAccess)schemaAccess;
-            readSchemaAccess.incrementReaders();
+            token = readSchemaAccess.addReader();
           }
           else
           {
@@ -261,7 +271,10 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
 
         if (schemaAccess == null)
         {
-          schemaAccess = new ReadSchemaAccess();
+          ReadSchemaAccess readSchemaAccess = createReadSchemaAccess();
+          token = readSchemaAccess.addReader();
+
+          schemaAccess = readSchemaAccess;
           schemaAccessQueue.addLast(schemaAccess);
         }
       }
@@ -279,10 +292,10 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
         {
           if (write)
           {
-            --schemaWriters;
+            --waitingSchemaWriters;
           }
 
-          return;
+          return token;
         }
 
         try
@@ -301,7 +314,7 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
         + TIMEOUT_SCHEMA_ACCESS + " milliseconds. Active access: " + activeSchemaAccess);
   }
 
-  public void endSchemaAccess()
+  public void endSchemaAccess(Object token)
   {
     if (DEBUG_SCHEMA_ACCESS)
     {
@@ -317,11 +330,11 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
 
     synchronized (schemaAccessQueue)
     {
-      SchemaAccess schemaAccess = schemaAccessQueue.getFirst();
-      if (schemaAccess instanceof ReadSchemaAccess)
+      SchemaAccess activeSchemaAccess = schemaAccessQueue.getFirst();
+      if (activeSchemaAccess instanceof ReadSchemaAccess)
       {
-        ReadSchemaAccess readSchemaAccess = (ReadSchemaAccess)schemaAccess;
-        if (readSchemaAccess.decrementReaders())
+        ReadSchemaAccess readSchemaAccess = (ReadSchemaAccess)activeSchemaAccess;
+        if (readSchemaAccess.removeReader(token))
         {
           return;
         }
@@ -347,6 +360,26 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
     return adapter.convertString(resultSet, columnLabel, value);
   }
 
+  private ReadSchemaAccess createReadSchemaAccess()
+  {
+    if (TRACK_SCHEMA_ACCESS)
+    {
+      return new ReadSchemaAccess.Tracked();
+    }
+
+    return new ReadSchemaAccess();
+  }
+
+  private WriteSchemaAccess createWriteSchemaAccess()
+  {
+    if (TRACK_SCHEMA_ACCESS)
+    {
+      return new WriteSchemaAccess.Tracked();
+    }
+
+    return new WriteSchemaAccess();
+  }
+
   /**
    * @author Eike Stepper
    */
@@ -357,16 +390,20 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
   /**
    * @author Eike Stepper
    */
-  private static final class ReadSchemaAccess implements SchemaAccess
+  private static class ReadSchemaAccess implements SchemaAccess
   {
-    private int readers = 1;
+    private int readers;
 
-    public void incrementReaders()
+    public Object addReader()
     {
       ++readers;
+      return this;
     }
 
-    public boolean decrementReaders()
+    /**
+     * @return <code>true</code> if at least one reader remains, <code>false</code> otherwise.
+     */
+    public boolean removeReader(Object token)
     {
       return --readers > 0;
     }
@@ -376,17 +413,103 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
     {
       return "READERS[" + readers + "]";
     }
+
+    /**
+     * @author Eike Stepper
+     */
+    private static final class Tracked extends ReadSchemaAccess
+    {
+      private final Map<Object, Exception> stackTraces = new LinkedHashMap<>();
+
+      public Tracked()
+      {
+      }
+
+      @Override
+      public Object addReader()
+      {
+        Object token = new Object();
+        Exception stackTrace;
+
+        try
+        {
+          throw new Exception();
+        }
+        catch (Exception ex)
+        {
+          stackTrace = ex;
+        }
+
+        stackTraces.put(token, stackTrace);
+        super.addReader();
+        return token;
+      }
+
+      @Override
+      public boolean removeReader(Object token)
+      {
+        stackTraces.remove(token);
+        return super.removeReader(token);
+      }
+
+      @Override
+      public String toString()
+      {
+        StringBuilder builder = new StringBuilder(super.toString());
+        builder.append(" --> Read access(es) started here:");
+        builder.append(StringUtil.NL);
+
+        for (Exception stackTrace : stackTraces.values())
+        {
+          ReflectUtil.appendStackTrace(builder, stackTrace.getStackTrace());
+          builder.append(StringUtil.NL);
+        }
+
+        return builder.toString();
+      }
+    }
   }
 
   /**
    * @author Eike Stepper
    */
-  private static final class WriteSchemaAccess implements SchemaAccess
+  private static class WriteSchemaAccess implements SchemaAccess
   {
     @Override
     public String toString()
     {
       return "WRITER";
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    private static final class Tracked extends WriteSchemaAccess
+    {
+      private final Exception stackTrace;
+
+      public Tracked()
+      {
+        try
+        {
+          throw new Exception();
+        }
+        catch (Exception ex)
+        {
+          stackTrace = ex;
+        }
+      }
+
+      @Override
+      public String toString()
+      {
+        StringBuilder builder = new StringBuilder(super.toString());
+        builder.append(" --> Write access started here:");
+        builder.append(StringUtil.NL);
+        ReflectUtil.appendStackTrace(builder, stackTrace.getStackTrace());
+        builder.append(StringUtil.NL);
+        return builder.toString();
+      }
     }
   }
 

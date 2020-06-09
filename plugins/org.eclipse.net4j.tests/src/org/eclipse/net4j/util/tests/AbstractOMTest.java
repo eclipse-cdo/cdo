@@ -10,6 +10,7 @@
  */
 package org.eclipse.net4j.util.tests;
 
+import org.eclipse.net4j.internal.util.test.CurrentTestName;
 import org.eclipse.net4j.internal.util.test.TestExecuter;
 import org.eclipse.net4j.tests.bundle.OM;
 import org.eclipse.net4j.util.ReflectUtil;
@@ -177,6 +178,7 @@ public abstract class AbstractOMTest extends TestCase
   public void setUp() throws Exception
   {
     testName = getClass().getName() + "." + getName() + "()";
+    CurrentTestName.set(testName);
     codeLink = null;
 
     PrintTraceHandler.CONSOLE.setShortContext(true);

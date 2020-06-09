@@ -268,12 +268,14 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
     }
 
     long end = System.currentTimeMillis() + TIMEOUT_SCHEMA_ACCESS;
+    SchemaAccess activeSchemaAccess = null;
 
     do
     {
       synchronized (schemaAccessQueue)
       {
-        if (schemaAccessQueue.getFirst() == schemaAccess)
+        activeSchemaAccess = schemaAccessQueue.getFirst();
+        if (activeSchemaAccess == schemaAccess)
         {
           if (write)
           {
@@ -295,8 +297,8 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
       }
     } while (System.currentTimeMillis() < end);
 
-    throw new TimeoutRuntimeException(
-        "Schema " + schema.getName() + " could not be locked for " + (write ? "write" : "read") + " access within " + TIMEOUT_SCHEMA_ACCESS + " milliseconds");
+    throw new TimeoutRuntimeException("Schema " + schema.getName() + " could not be locked for " + (write ? "write" : "read") + " access within "
+        + TIMEOUT_SCHEMA_ACCESS + " milliseconds. Active access: " + activeSchemaAccess);
   }
 
   public void endSchemaAccess()

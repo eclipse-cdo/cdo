@@ -101,7 +101,7 @@ public abstract class ConfigTestSuite implements IConstants
     for (Iterator<Class<?>> it = bundle.getClasses(); it.hasNext();)
     {
       Class<?> c = it.next();
-      if (ConfigTest.class.isAssignableFrom(c) && c.getName().startsWith(packageName + ".Bugzilla_4"))
+      if (ConfigTest.class.isAssignableFrom(c) && c.getName().startsWith(packageName))
       {
         @SuppressWarnings("unchecked")
         Class<? extends ConfigTest> configTest = (Class<? extends ConfigTest>)c;

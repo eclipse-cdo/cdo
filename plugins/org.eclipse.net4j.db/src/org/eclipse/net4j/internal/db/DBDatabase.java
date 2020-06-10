@@ -46,7 +46,7 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
 
   private static final boolean DEBUG_SCHEMA_ACCESS = OMPlatform.INSTANCE.isProperty("org.eclipse.net4j.internal.db.DBDatabase.DEBUG_SCHEMA_ACCESS");
 
-  private static final boolean TRACK_SCHEMA_ACCESS = true || OMPlatform.INSTANCE.isProperty("org.eclipse.net4j.internal.db.DBDatabase.TRACK_SCHEMA_ACCESS");
+  private static final boolean TRACK_SCHEMA_ACCESS = OMPlatform.INSTANCE.isProperty("org.eclipse.net4j.internal.db.DBDatabase.TRACK_SCHEMA_ACCESS");
 
   private DBAdapter adapter;
 
@@ -242,104 +242,92 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
       }
     }
 
-    boolean success = false;
     Object token = null;
     SchemaAccess schemaAccess = null;
 
-    try
+    synchronized (schemaAccessQueue)
     {
-      synchronized (schemaAccessQueue)
+      if (write)
       {
-        if (write)
-        {
-          schemaAccess = createWriteSchemaAccess();
-          token = schemaAccess;
-          schemaAccessQueue.addLast(schemaAccess);
-          ++waitingSchemaWriters;
-        }
-        else
-        {
-          if (waitingSchemaWriters == 0 && !schemaAccessQueue.isEmpty())
-          {
-            schemaAccess = schemaAccessQueue.getFirst();
-            if (schemaAccess instanceof ReadSchemaAccess)
-            {
-              ReadSchemaAccess readSchemaAccess = (ReadSchemaAccess)schemaAccess;
-              token = readSchemaAccess.addReader();
-            }
-            else
-            {
-              schemaAccess = null;
-            }
-          }
-
-          if (schemaAccess == null)
-          {
-            ReadSchemaAccess readSchemaAccess = createReadSchemaAccess();
-            token = readSchemaAccess.addReader();
-
-            schemaAccess = readSchemaAccess;
-            schemaAccessQueue.addLast(schemaAccess);
-          }
-        }
+        schemaAccess = createWriteSchemaAccess();
+        token = schemaAccess;
+        schemaAccessQueue.addLast(schemaAccess);
+        ++waitingSchemaWriters;
       }
-
-      long end = System.currentTimeMillis() + TIMEOUT_SCHEMA_ACCESS;
-
-      for (;;)
+      else
       {
-        synchronized (schemaAccessQueue)
+        if (waitingSchemaWriters == 0 && !schemaAccessQueue.isEmpty())
         {
-          SchemaAccess activeSchemaAccess = schemaAccessQueue.getFirst();
-          if (activeSchemaAccess == schemaAccess)
+          schemaAccess = schemaAccessQueue.getFirst();
+          if (schemaAccess instanceof ReadSchemaAccess)
           {
-            if (write)
-            {
-              --waitingSchemaWriters;
-            }
-
-            success = true;
-            return token;
+            ReadSchemaAccess readSchemaAccess = (ReadSchemaAccess)schemaAccess;
+            token = readSchemaAccess.addReader();
           }
-
-          try
+          else
           {
-            schemaAccessQueue.wait(1000L);
+            schemaAccess = null;
           }
-          catch (InterruptedException ex)
-          {
-            Thread.currentThread().interrupt();
-            throw WrappedException.wrap(ex);
-          }
+        }
 
-          if (System.currentTimeMillis() >= end)
-          {
-            StringBuilder builder = new StringBuilder("Schema " + schema.getName() + " could not be locked for " + (write ? "write" : "read")
-                + " access within " + TIMEOUT_SCHEMA_ACCESS + " milliseconds. Schema access queue:" + StringUtil.NL);
-            int i = 0;
+        if (schemaAccess == null)
+        {
+          ReadSchemaAccess readSchemaAccess = createReadSchemaAccess();
+          token = readSchemaAccess.addReader();
 
-            for (SchemaAccess blockingAccess : schemaAccessQueue)
-            {
-              if (blockingAccess == schemaAccess)
-              {
-                builder.append("--> ");
-              }
-
-              builder.append(i++);
-              builder.append(": ");
-              builder.append(blockingAccess);
-            }
-
-            throw new TimeoutRuntimeException(builder.toString());
-          }
+          schemaAccess = readSchemaAccess;
+          schemaAccessQueue.addLast(schemaAccess);
         }
       }
     }
-    finally
+
+    long end = System.currentTimeMillis() + TIMEOUT_SCHEMA_ACCESS;
+
+    for (;;)
     {
-      if (!success)
+      synchronized (schemaAccessQueue)
       {
-        schemaAccessQueue.remove(schemaAccess);
+        SchemaAccess activeSchemaAccess = schemaAccessQueue.getFirst();
+        if (activeSchemaAccess == schemaAccess)
+        {
+          if (write)
+          {
+            --waitingSchemaWriters;
+          }
+
+          return token;
+        }
+
+        try
+        {
+          schemaAccessQueue.wait(1000L);
+        }
+        catch (InterruptedException ex)
+        {
+          Thread.currentThread().interrupt();
+          throw WrappedException.wrap(ex);
+        }
+
+        if (System.currentTimeMillis() >= end)
+        {
+          StringBuilder builder = new StringBuilder("Schema " + schema.getName() + " could not be locked for " + (write ? "write" : "read") + " access within "
+              + TIMEOUT_SCHEMA_ACCESS + " milliseconds. Schema access queue:" + StringUtil.NL);
+          int i = 0;
+
+          for (SchemaAccess blockingAccess : schemaAccessQueue)
+          {
+            if (blockingAccess == schemaAccess)
+            {
+              builder.append("--> ");
+            }
+
+            builder.append(i++);
+            builder.append(": ");
+            builder.append(blockingAccess);
+          }
+
+          throw new TimeoutRuntimeException(builder.toString());
+        }
       }
     }
   }

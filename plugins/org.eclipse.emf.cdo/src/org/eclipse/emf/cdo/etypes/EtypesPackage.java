@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.etypes;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -91,6 +92,26 @@ public interface EtypesPackage extends EPackage
   int MODEL_ELEMENT_FEATURE_COUNT = 1;
 
   /**
+   * The operation id for the '<em>Get Annotation</em>' operation.
+   * <!-- begin-user-doc -->
+   * @since 4.11
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MODEL_ELEMENT___GET_ANNOTATION__STRING = 0;
+
+  /**
+  	 * The number of operations of the '<em>Model Element</em>' class.
+  	 * <!-- begin-user-doc -->
+  	 * @since 4.11
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int MODEL_ELEMENT_OPERATION_COUNT = 1;
+
+  /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.etypes.impl.AnnotationImpl <em>Annotation</em>}' class. <!--
    * begin-user-doc --> <!-- end-user-doc -->
    *
@@ -160,12 +181,32 @@ public interface EtypesPackage extends EPackage
   int ANNOTATION_FEATURE_COUNT = MODEL_ELEMENT_FEATURE_COUNT + 5;
 
   /**
-   * The meta object id for the '<em>Blob</em>' data type.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.common.lob.CDOBlob
-   * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getBlob()
+   * The operation id for the '<em>Get Annotation</em>' operation.
+   * <!-- begin-user-doc -->
+   * @since 4.11
+   * <!-- end-user-doc -->
    * @generated
+   * @ordered
    */
+  int ANNOTATION___GET_ANNOTATION__STRING = MODEL_ELEMENT___GET_ANNOTATION__STRING;
+
+  /**
+  	 * The number of operations of the '<em>Annotation</em>' class.
+  	 * <!-- begin-user-doc -->
+  	 * @since 4.11
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int ANNOTATION_OPERATION_COUNT = MODEL_ELEMENT_OPERATION_COUNT + 0;
+
+  /**
+  	 * The meta object id for the '<em>Blob</em>' data type.
+  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+  	 * @see org.eclipse.emf.cdo.common.lob.CDOBlob
+  	 * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getBlob()
+  	 * @generated
+  	 */
   int BLOB = 2;
 
   /**
@@ -222,25 +263,25 @@ public interface EtypesPackage extends EPackage
   int CLASSIFIER_REF = 7;
 
   /**
-  	 * The meta object id for the '<em>Branch Ref</em>' data type.
-  	 * <!-- begin-user-doc -->
+   * The meta object id for the '<em>Branch Ref</em>' data type.
+   * <!-- begin-user-doc -->
   	 * @since 4.10
   	 * <!-- end-user-doc -->
-  	 * @see org.eclipse.emf.cdo.common.branch.CDOBranchRef
-  	 * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getBranchRef()
-  	 * @generated
-  	 */
+   * @see org.eclipse.emf.cdo.common.branch.CDOBranchRef
+   * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getBranchRef()
+   * @generated
+   */
   int BRANCH_REF = 8;
 
   /**
-  	 * The meta object id for the '<em>Branch Point Ref</em>' data type.
-  	 * <!-- begin-user-doc -->
+   * The meta object id for the '<em>Branch Point Ref</em>' data type.
+   * <!-- begin-user-doc -->
   	 * @since 4.10
   	 * <!-- end-user-doc -->
-  	 * @see org.eclipse.emf.cdo.common.branch.CDOBranchPointRef
-  	 * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getBranchPointRef()
-  	 * @generated
-  	 */
+   * @see org.eclipse.emf.cdo.common.branch.CDOBranchPointRef
+   * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getBranchPointRef()
+   * @generated
+   */
   int BRANCH_POINT_REF = 9;
 
   /**
@@ -263,6 +304,17 @@ public interface EtypesPackage extends EPackage
    * @generated
    */
   EReference getModelElement_Annotations();
+
+  /**
+   * Returns the meta object for the '{@link org.eclipse.emf.cdo.etypes.ModelElement#getAnnotation(java.lang.String) <em>Get Annotation</em>}' operation.
+   * <!-- begin-user-doc -->
+   * @since 4.11
+   * <!-- end-user-doc -->
+   * @return the meta object for the '<em>Get Annotation</em>' operation.
+   * @see org.eclipse.emf.cdo.etypes.ModelElement#getAnnotation(java.lang.String)
+   * @generated
+   */
+  EOperation getModelElement__GetAnnotation__String();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.etypes.Annotation <em>Annotation</em>}'. <!--
@@ -391,40 +443,37 @@ public interface EtypesPackage extends EPackage
    * @see org.eclipse.emf.cdo.common.model.CDOClassifierRef
    * @model instanceClass="org.eclipse.emf.cdo.common.model.CDOClassifierRef"
    * @generated
-   * @since 4.10
    */
   EDataType getClassifierRef();
 
   /**
-  	 * Returns the meta object for data type '{@link org.eclipse.emf.cdo.common.branch.CDOBranchRef <em>Branch Ref</em>}'.
-  	 * <!-- begin-user-doc -->
+   * Returns the meta object for data type '{@link org.eclipse.emf.cdo.common.branch.CDOBranchRef <em>Branch Ref</em>}'.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @return the meta object for data type '<em>Branch Ref</em>'.
-  	 * @see org.eclipse.emf.cdo.common.branch.CDOBranchRef
-  	 * @model instanceClass="org.eclipse.emf.cdo.common.branch.CDOBranchRef"
-  	 * @generated
-   * @since 4.10
-  	 */
+   * @return the meta object for data type '<em>Branch Ref</em>'.
+   * @see org.eclipse.emf.cdo.common.branch.CDOBranchRef
+   * @model instanceClass="org.eclipse.emf.cdo.common.branch.CDOBranchRef"
+   * @generated
+   */
   EDataType getBranchRef();
 
   /**
-  	 * Returns the meta object for data type '{@link org.eclipse.emf.cdo.common.branch.CDOBranchPointRef <em>Branch Point Ref</em>}'.
-  	 * <!-- begin-user-doc -->
+   * Returns the meta object for data type '{@link org.eclipse.emf.cdo.common.branch.CDOBranchPointRef <em>Branch Point Ref</em>}'.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @return the meta object for data type '<em>Branch Point Ref</em>'.
-  	 * @see org.eclipse.emf.cdo.common.branch.CDOBranchPointRef
-  	 * @model instanceClass="org.eclipse.emf.cdo.common.branch.CDOBranchPointRef"
-  	 * @generated
-   * @since 4.10
-  	 */
+   * @return the meta object for data type '<em>Branch Point Ref</em>'.
+   * @see org.eclipse.emf.cdo.common.branch.CDOBranchPointRef
+   * @model instanceClass="org.eclipse.emf.cdo.common.branch.CDOBranchPointRef"
+   * @generated
+   */
   EDataType getBranchPointRef();
 
   /**
-  	 * Returns the factory that creates the instances of the model.
-  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-  	 * @return the factory that creates the instances of the model.
-  	 * @generated
-  	 */
+   * Returns the factory that creates the instances of the model.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @return the factory that creates the instances of the model.
+   * @generated
+   */
   EtypesFactory getEtypesFactory();
 
   /**
@@ -461,12 +510,21 @@ public interface EtypesPackage extends EPackage
     EReference MODEL_ELEMENT__ANNOTATIONS = eINSTANCE.getModelElement_Annotations();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.etypes.impl.AnnotationImpl <em>Annotation</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see org.eclipse.emf.cdo.etypes.impl.AnnotationImpl
-     * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getAnnotation()
+     * The meta object literal for the '<em><b>Get Annotation</b></em>' operation.
+     * <!-- begin-user-doc -->
+     * @since 4.11
+     * <!-- end-user-doc -->
      * @generated
      */
+    EOperation MODEL_ELEMENT___GET_ANNOTATION__STRING = eINSTANCE.getModelElement__GetAnnotation__String();
+
+    /**
+    	 * The meta object literal for the '{@link org.eclipse.emf.cdo.etypes.impl.AnnotationImpl <em>Annotation</em>}' class.
+    	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+    	 * @see org.eclipse.emf.cdo.etypes.impl.AnnotationImpl
+    	 * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getAnnotation()
+    	 * @generated
+    	 */
     EClass ANNOTATION = eINSTANCE.getAnnotation();
 
     /**
@@ -561,36 +619,36 @@ public interface EtypesPackage extends EPackage
     EDataType READER = eINSTANCE.getReader();
 
     /**
-    	 * The meta object literal for the '<em>Classifier Ref</em>' data type.
-    	 * <!-- begin-user-doc -->
+     * The meta object literal for the '<em>Classifier Ref</em>' data type.
+     * <!-- begin-user-doc -->
     	 * @since 4.10
     	 * <!-- end-user-doc -->
-    	 * @see org.eclipse.emf.cdo.common.model.CDOClassifierRef
-    	 * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getClassifierRef()
-    	 * @generated
-    	 */
+     * @see org.eclipse.emf.cdo.common.model.CDOClassifierRef
+     * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getClassifierRef()
+     * @generated
+     */
     EDataType CLASSIFIER_REF = eINSTANCE.getClassifierRef();
 
     /**
-    	 * The meta object literal for the '<em>Branch Ref</em>' data type.
-    	 * <!-- begin-user-doc -->
+     * The meta object literal for the '<em>Branch Ref</em>' data type.
+     * <!-- begin-user-doc -->
     	 * @since 4.10
     	 * <!-- end-user-doc -->
-    	 * @see org.eclipse.emf.cdo.common.branch.CDOBranchRef
-    	 * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getBranchRef()
-    	 * @generated
-    	 */
+     * @see org.eclipse.emf.cdo.common.branch.CDOBranchRef
+     * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getBranchRef()
+     * @generated
+     */
     EDataType BRANCH_REF = eINSTANCE.getBranchRef();
 
     /**
-    	 * The meta object literal for the '<em>Branch Point Ref</em>' data type.
-    	 * <!-- begin-user-doc -->
+     * The meta object literal for the '<em>Branch Point Ref</em>' data type.
+     * <!-- begin-user-doc -->
     	 * @since 4.10
     	 * <!-- end-user-doc -->
-    	 * @see org.eclipse.emf.cdo.common.branch.CDOBranchPointRef
-    	 * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getBranchPointRef()
-    	 * @generated
-    	 */
+     * @see org.eclipse.emf.cdo.common.branch.CDOBranchPointRef
+     * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getBranchPointRef()
+     * @generated
+     */
     EDataType BRANCH_POINT_REF = eINSTANCE.getBranchPointRef();
 
   }

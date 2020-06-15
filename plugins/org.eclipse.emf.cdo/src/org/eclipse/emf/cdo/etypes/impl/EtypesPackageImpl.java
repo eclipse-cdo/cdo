@@ -189,9 +189,20 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
+  @Override
+  public EOperation getModelElement__GetAnnotation__String()
+  {
+    return modelElementEClass.getEOperations().get(0);
+  }
+
+  /**
+  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+  	 * @generated
+  	 */
   @Override
   public EClass getAnnotation()
   {
@@ -368,6 +379,7 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
     // Create classes and their features
     modelElementEClass = createEClass(MODEL_ELEMENT);
     createEReference(modelElementEClass, MODEL_ELEMENT__ANNOTATIONS);
+    createEOperation(modelElementEClass, MODEL_ELEMENT___GET_ANNOTATION__STRING);
 
     annotationEClass = createEClass(ANNOTATION);
     createEAttribute(annotationEClass, ANNOTATION__SOURCE);
@@ -418,12 +430,12 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
     // Add supertypes to classes
     annotationEClass.getESuperTypes().add(this.getModelElement());
 
-    // Initialize classes and features; add operations and parameters
+    // Initialize classes, features, and operations; add parameters
     initEClass(modelElementEClass, ModelElement.class, "ModelElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
     initEReference(getModelElement_Annotations(), this.getAnnotation(), this.getAnnotation_ModelElement(), "annotations", null, 0, -1, ModelElement.class, //$NON-NLS-1$
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    EOperation op = addEOperation(modelElementEClass, this.getAnnotation(), "getAnnotation", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+    EOperation op = initEOperation(getModelElement__GetAnnotation__String(), this.getAnnotation(), "getAnnotation", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
     addEParameter(op, ecorePackage.getEString(), "source", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
     initEClass(annotationEClass, Annotation.class, "Annotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$

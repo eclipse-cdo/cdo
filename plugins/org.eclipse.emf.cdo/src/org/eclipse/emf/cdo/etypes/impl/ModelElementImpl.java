@@ -10,15 +10,20 @@
  */
 package org.eclipse.emf.cdo.etypes.impl;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.Collection;
 import org.eclipse.emf.cdo.etypes.Annotation;
 import org.eclipse.emf.cdo.etypes.EtypesPackage;
 import org.eclipse.emf.cdo.etypes.ModelElement;
 
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Model Element</b></em>'.
@@ -72,7 +77,7 @@ public abstract class ModelElementImpl extends CDOObjectImpl implements ModelEle
   @SuppressWarnings("unchecked")
   public EList<Annotation> getAnnotations()
   {
-    return (EList<Annotation>)eGet(EtypesPackage.Literals.MODEL_ELEMENT__ANNOTATIONS, true);
+    return (EList<Annotation>)eDynamicGet(EtypesPackage.MODEL_ELEMENT__ANNOTATIONS, EtypesPackage.Literals.MODEL_ELEMENT__ANNOTATIONS, true, true);
   }
 
   /**
@@ -142,6 +147,123 @@ public abstract class ModelElementImpl extends CDOObjectImpl implements ModelEle
     }
 
     return null;
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  @SuppressWarnings("unchecked")
+  @Override
+  public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+  {
+    switch (featureID)
+    {
+    case EtypesPackage.MODEL_ELEMENT__ANNOTATIONS:
+      return ((InternalEList<InternalEObject>)(InternalEList<?>)getAnnotations()).basicAdd(otherEnd, msgs);
+    }
+    return eDynamicInverseAdd(otherEnd, featureID, msgs);
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  @Override
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+  {
+    switch (featureID)
+    {
+    case EtypesPackage.MODEL_ELEMENT__ANNOTATIONS:
+      return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
+    }
+    return eDynamicInverseRemove(otherEnd, featureID, msgs);
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  @Override
+  public Object eGet(int featureID, boolean resolve, boolean coreType)
+  {
+    switch (featureID)
+    {
+    case EtypesPackage.MODEL_ELEMENT__ANNOTATIONS:
+      return getAnnotations();
+    }
+    return eDynamicGet(featureID, resolve, coreType);
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  @SuppressWarnings("unchecked")
+  @Override
+  public void eSet(int featureID, Object newValue)
+  {
+    switch (featureID)
+    {
+    case EtypesPackage.MODEL_ELEMENT__ANNOTATIONS:
+      getAnnotations().clear();
+      getAnnotations().addAll((Collection<? extends Annotation>)newValue);
+      return;
+    }
+    eDynamicSet(featureID, newValue);
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  @Override
+  public void eUnset(int featureID)
+  {
+    switch (featureID)
+    {
+    case EtypesPackage.MODEL_ELEMENT__ANNOTATIONS:
+      getAnnotations().clear();
+      return;
+    }
+    eDynamicUnset(featureID);
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  @Override
+  public boolean eIsSet(int featureID)
+  {
+    switch (featureID)
+    {
+    case EtypesPackage.MODEL_ELEMENT__ANNOTATIONS:
+      return !getAnnotations().isEmpty();
+    }
+    return eDynamicIsSet(featureID);
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  @Override
+  public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException
+  {
+    switch (operationID)
+    {
+    case EtypesPackage.MODEL_ELEMENT___GET_ANNOTATION__STRING:
+      return getAnnotation((String)arguments.get(0));
+    }
+    return eDynamicInvoke(operationID, arguments);
   }
 
 } // ModelElementImpl

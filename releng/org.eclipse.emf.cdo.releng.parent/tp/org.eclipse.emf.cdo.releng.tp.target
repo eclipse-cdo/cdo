@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde version="3.8"?>
-<target name="Generated from CDO" sequenceNumber="38">
+<target name="Generated from CDO" sequenceNumber="39">
   <locations>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
       <unit id="com.google.guava" version="0.0.0"/>
@@ -42,7 +42,7 @@
       <unit id="org.hsqldb" version="0.0.0"/>
       <unit id="org.postgresql" version="0.0.0"/>
       <unit id="org.slf4j.api" version="0.0.0"/>
-      <repository location="http://download.eclipse.org/releases/2020-06"/>
+      <repository location="http://download.eclipse.org/releases/2020-06/202006171000"/>
       <repository location="http://download.eclipse.org/eclipse/updates/latest"/>
       <repository location="http://download.eclipse.org/tools/orbit/downloads/latest-I"/>
       <repository location="http://download.eclipse.org/nebula/snapshot"/>
@@ -51,7 +51,6 @@
       <repository location="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
       <repository location="http://www.elver.org/eclipse/2.1.0/update"/>
       <repository location="http://download.eclipse.org/tools/ajdt/48/dev/update"/>
-      <repository location="http://download.eclipse.org/eclipse/updates/4.16-I-builds"/>
     </location>
   </locations>
 </target>

@@ -2302,7 +2302,9 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
           CDOID id = (CDOID)potentialID;
           if (id.isExternal())
           {
-            return getResourceSet().getEObject(URI.createURI(id.toURIFragment()), true);
+            ResourceSet resourceSet = getResourceSet();
+            URI uri = URI.createURI(id.toURIFragment());
+            return resourceSet.getEObject(uri, true);
           }
 
           InternalCDOObject result = getObject(id, true);

@@ -30,6 +30,8 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -159,7 +161,11 @@ public class CDOModelEditorInput extends PlatformObject implements CDOEditorInpu
 
       if (uri.hasFragment())
       {
-        CDOObject cdoObject = CDOUtil.getCDOObject(getView().getResourceSet().getEObject(uri, true));
+        CDOView view = getView();
+        ResourceSet resourceSet = view.getResourceSet();
+        EObject eObject = resourceSet.getEObject(uri, true);
+
+        CDOObject cdoObject = CDOUtil.getCDOObject(eObject);
         if (cdoObject != null)
         {
           objectID = cdoObject.cdoID();

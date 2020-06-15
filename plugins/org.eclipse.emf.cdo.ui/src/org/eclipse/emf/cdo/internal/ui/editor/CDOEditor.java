@@ -50,6 +50,7 @@ import org.eclipse.emf.internal.cdo.view.CDOStateMachine;
 import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.ui.actions.LongRunningAction;
 import org.eclipse.net4j.util.ui.actions.SafeAction;
@@ -229,6 +230,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   private static final Field PROPERTY_SHEET_PAGE_VIEWER_FIELD = getPropertySheetPageViewerField();
 
   private static final Field CONTENT_OUTLINE_PAGE_VIEWER_FIELD = getContentOutlinePageViewerField();
+
+  private static final boolean SHOW_BULK_ADD_ACTION = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.ui.editor.SHOW_BULK_ADD_ACTION");
 
   /**
    * @ADDED
@@ -1113,11 +1116,11 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
     CDOView view = editorInput.getView();
     String resourcePath = editorInput.getResourcePath();
-    CDOID objectID = editorInput instanceof CDOEditorInput2 ? ((CDOEditorInput2)editorInput).getObjectID() : null;
     IEditingDomainProvider domainProvider = AdapterUtil.adapt(editorInput, IEditingDomainProvider.class);
 
     if (view != null)
     {
+      CDOID objectID = editorInput instanceof CDOEditorInput2 ? ((CDOEditorInput2)editorInput).getObjectID() : null;
       createPages(view, resourcePath, objectID, domainProvider);
     }
     else if (editorInput instanceof CDOEditorInput3)
@@ -1165,6 +1168,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
                   removePage(0);
                   showTabs();
 
+                  CDOID objectID = editorInput instanceof CDOEditorInput2 ? ((CDOEditorInput2)editorInput).getObjectID() : null;
                   createPages(view, resourcePath, objectID, domainProvider);
 
                   handleActivate();
@@ -1297,7 +1301,6 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       }
       else
       {
-
         if (CDOIDUtil.isNull(objectID))
         {
           URI resourceURI = CDOURIUtil.createResourceURI(view, resourcePath);
@@ -1313,6 +1316,11 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
         {
           view.addObjectHandler(objectHandler);
         }
+      }
+
+      if (true)
+      {
+        viewerInput = resourceSet;
       }
 
       Tree tree = new Tree(getContainer(), SWT.MULTI);
@@ -2162,7 +2170,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
                 if (resource instanceof CDOResource)
                 {
                   CDOView resourceView = ((CDOResource)resource).cdoView();
-                  if (resourceView == view)
+                  if (resourceView == view || resourceView.isReadOnly())
                   {
                     continue;
                   }
@@ -2584,7 +2592,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
           }
         }
 
-        if (!features.isEmpty())
+        if (SHOW_BULK_ADD_ACTION && !features.isEmpty())
         {
           menuManager.insertBefore("edit", //$NON-NLS-1$
               new LongRunningAction(page, Messages.getString("CDOEditor.26") + SafeAction.INTERACTIVE) //$NON-NLS-1$
@@ -2705,7 +2713,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       invalidRootAgent = null;
     }
 
-    if (!view.isClosed())
+    if (view != null && !view.isClosed())
     {
       try
       {

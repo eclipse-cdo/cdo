@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreFactory;
+import org.eclipse.emf.cdo.server.IStoreFactory.ParameterAware;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.spi.server.RepositoryConfigurator;
@@ -35,8 +36,10 @@ import java.util.Properties;
 /**
  * @author Eike Stepper
  */
-public class DBStoreFactory implements IStoreFactory
+public class DBStoreFactory implements IStoreFactory, ParameterAware
 {
+  private Map<String, String> parameters;
+
   public DBStoreFactory()
   {
   }
@@ -45,6 +48,12 @@ public class DBStoreFactory implements IStoreFactory
   public String getStoreType()
   {
     return DBStore.TYPE;
+  }
+
+  @Override
+  public void setParameters(Map<String, String> parameters)
+  {
+    this.parameters = parameters;
   }
 
   @Override
@@ -60,7 +69,7 @@ public class DBStoreFactory implements IStoreFactory
     store.setDBAdapter(dbAdapter);
     store.setDBConnectionProvider(connectionProvider);
 
-    Map<String, String> storeProperties = RepositoryConfigurator.getProperties(storeConfig, 1);
+    Map<String, String> storeProperties = RepositoryConfigurator.getProperties(storeConfig, 1, parameters);
     store.setProperties(storeProperties);
 
     return store;
@@ -75,14 +84,14 @@ public class DBStoreFactory implements IStoreFactory
     }
 
     Element mappingStrategyConfig = (Element)mappingStrategyConfigs.item(0);
-    String mappingStrategyType = mappingStrategyConfig.getAttribute("type"); //$NON-NLS-1$
+    String mappingStrategyType = getAttribute(mappingStrategyConfig, "type"); //$NON-NLS-1$
     IMappingStrategy mappingStrategy = CDODBUtil.createMappingStrategy(mappingStrategyType);
     if (mappingStrategy == null)
     {
       throw new IllegalArgumentException("Unknown mapping strategy: " + mappingStrategyType); //$NON-NLS-1$
     }
 
-    Map<String, String> properties = RepositoryConfigurator.getProperties(mappingStrategyConfig, 1);
+    Map<String, String> properties = RepositoryConfigurator.getProperties(mappingStrategyConfig, 1, parameters);
     properties.put("repositoryName", repositoryName);
     properties.putAll(repositoryProperties);
     mappingStrategy.setProperties(properties);
@@ -99,7 +108,7 @@ public class DBStoreFactory implements IStoreFactory
     }
 
     Element dbAdapterConfig = (Element)dbAdapterConfigs.item(0);
-    String dbAdapterName = dbAdapterConfig.getAttribute("name"); //$NON-NLS-1$
+    String dbAdapterName = getAttribute(dbAdapterConfig, "name"); //$NON-NLS-1$
     IDBAdapter dbAdapter = DBUtil.getDBAdapter(dbAdapterName);
     if (dbAdapter == null)
     {
@@ -123,9 +132,20 @@ public class DBStoreFactory implements IStoreFactory
     for (int i = 0; i < attributes.getLength(); i++)
     {
       Attr attribute = (Attr)attributes.item(i);
-      properties.put(attribute.getName(), attribute.getValue());
+
+      String value = attribute.getValue();
+      value = RepositoryConfigurator.substituteParameters(value, parameters);
+
+      properties.put(attribute.getName(), value);
     }
 
     return DBUtil.createDataSource(properties);
+  }
+
+  private String getAttribute(Element element, String name)
+  {
+    String value = element.getAttribute(name);
+    value = RepositoryConfigurator.substituteParameters(value, parameters);
+    return value;
   }
 }

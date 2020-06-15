@@ -27,4 +27,15 @@ public interface IStoreFactory
    * @since 4.0
    */
   public IStore createStore(String repositoryName, Map<String, String> repositoryProperties, Element storeConfig);
+
+  /**
+   * An extension interface for {@link IStoreFactory store factories} that want to receive parameters.
+   *
+   * @author Eike Stepper
+   * @since 4.10
+   */
+  public interface ParameterAware
+  {
+    public void setParameters(Map<String, String> parameters);
+  }
 }

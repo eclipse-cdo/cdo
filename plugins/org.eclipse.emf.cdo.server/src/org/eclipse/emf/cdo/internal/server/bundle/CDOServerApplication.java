@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.internal.server.bundle;
 import org.eclipse.emf.cdo.internal.server.messages.Messages;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.spi.server.IAppExtension;
+import org.eclipse.emf.cdo.spi.server.IAppExtension3;
 import org.eclipse.emf.cdo.spi.server.RepositoryConfigurator;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -105,7 +106,15 @@ public class CDOServerApplication extends OSGiApplication
     {
       try
       {
-        extension.stop();
+        if (extension instanceof IAppExtension3)
+        {
+          IAppExtension3 extension3 = (IAppExtension3)extension;
+          extension3.stop(repositories);
+        }
+        else
+        {
+          extension.stop();
+        }
       }
       catch (Exception ex)
       {
@@ -139,7 +148,17 @@ public class CDOServerApplication extends OSGiApplication
         try
         {
           IAppExtension extension = (IAppExtension)element.createExecutableExtension("class"); //$NON-NLS-1$
-          extension.start(configFile);
+
+          if (extension instanceof IAppExtension3)
+          {
+            IAppExtension3 extension3 = (IAppExtension3)extension;
+            extension3.start(repositories, configFile);
+          }
+          else
+          {
+            extension.start(configFile);
+          }
+
           extensions.add(extension);
         }
         catch (Exception ex)

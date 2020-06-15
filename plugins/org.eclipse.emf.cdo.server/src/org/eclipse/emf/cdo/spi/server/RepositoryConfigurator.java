@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRepositoryFactory;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreFactory;
+import org.eclipse.emf.cdo.server.IStoreFactory.ParameterAware;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
@@ -58,6 +59,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * If the meaning of this type isn't clear, there really should be more of a description here...
@@ -69,11 +71,13 @@ public class RepositoryConfigurator
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_REPOSITORY, RepositoryConfigurator.class);
 
-  private IManagedContainer container;
+  private final IManagedContainer container;
 
-  private Map<String, IRepositoryFactory> repositoryFactories = new HashMap<>();
+  private final Map<String, IRepositoryFactory> repositoryFactories = new HashMap<>();
 
-  private Map<String, IStoreFactory> storeFactories = new HashMap<>();
+  private final Map<String, IStoreFactory> storeFactories = new HashMap<>();
+
+  private final Map<String, String> parameters = new HashMap<>();
 
   public RepositoryConfigurator()
   {
@@ -98,6 +102,27 @@ public class RepositoryConfigurator
   public Map<String, IStoreFactory> getStoreFactories()
   {
     return storeFactories;
+  }
+
+  /**
+   * @since 4.10
+   */
+  public String getParameter(String key)
+  {
+    return parameters.get(key);
+  }
+
+  /**
+   * @since 4.10
+   */
+  public String setParameter(String key, String value)
+  {
+    if (value == null)
+    {
+      return parameters.remove(key);
+    }
+
+    return parameters.put(key, value);
   }
 
   public IRepository[] configure(File configFile) throws ParserConfigurationException, SAXException, IOException, CoreException
@@ -178,7 +203,7 @@ public class RepositoryConfigurator
 
     if (factory == null)
     {
-      throw new IllegalStateException("CDORepositoryInfo factory not found: " + type); //$NON-NLS-1$
+      throw new IllegalStateException("Repository factory not found: " + type); //$NON-NLS-1$
     }
 
     return factory;
@@ -186,13 +211,13 @@ public class RepositoryConfigurator
 
   protected IRepository getRepository(Element repositoryConfig) throws CoreException
   {
-    String repositoryName = repositoryConfig.getAttribute("name"); //$NON-NLS-1$
+    String repositoryName = getAttribute(repositoryConfig, "name"); //$NON-NLS-1$
     if (StringUtil.isEmpty(repositoryName))
     {
-      throw new IllegalArgumentException("CDORepositoryInfo name is missing or empty"); //$NON-NLS-1$
+      throw new IllegalArgumentException("Repository name is missing or empty"); //$NON-NLS-1$
     }
 
-    String repositoryType = repositoryConfig.getAttribute("type"); //$NON-NLS-1$
+    String repositoryType = getAttribute(repositoryConfig, "type"); //$NON-NLS-1$
     if (StringUtil.isEmpty(repositoryType))
     {
       repositoryType = RepositoryFactory.TYPE;
@@ -203,7 +228,7 @@ public class RepositoryConfigurator
       TRACER.format("Configuring repository {0} (type={1})", repositoryName, repositoryType); //$NON-NLS-1$
     }
 
-    Map<String, String> properties = getProperties(repositoryConfig, 1);
+    Map<String, String> properties = getProperties(repositoryConfig, 1, parameters);
 
     Element storeConfig = getStoreConfig(repositoryConfig);
     IStore store = createStore(repositoryName, properties, storeConfig);
@@ -234,20 +259,13 @@ public class RepositoryConfigurator
 
   protected Element getUserManagerConfig(Element repositoryConfig)
   {
-    NodeList userManagerConfig = repositoryConfig.getElementsByTagName("userManager"); //$NON-NLS-1$
-    if (userManagerConfig.getLength() > 1)
-    {
-      String repositoryName = repositoryConfig.getAttribute("name"); //$NON-NLS-1$
-      throw new IllegalStateException("At most one user manager must be configured for repository " + repositoryName); //$NON-NLS-1$
-    }
-
-    return (Element)(userManagerConfig.getLength() > 0 ? userManagerConfig.item(0) : null);
+    return getChildElement(repositoryConfig, "userManager"); //$NON-NLS-1$
   }
 
   protected IUserManager getUserManager(Element userManagerConfig) throws CoreException
   {
-    String type = userManagerConfig.getAttribute("type"); //$NON-NLS-1$
-    String description = userManagerConfig.getAttribute("description"); //$NON-NLS-1$
+    String type = getAttribute(userManagerConfig, "type"); //$NON-NLS-1$
+    String description = getAttribute(userManagerConfig, "description"); //$NON-NLS-1$
     return getUserManager(type, description);
   }
 
@@ -291,14 +309,7 @@ public class RepositoryConfigurator
    */
   protected Element getAuthenticatorConfig(Element repositoryConfig)
   {
-    NodeList authenticatorConfig = repositoryConfig.getElementsByTagName("authenticator"); //$NON-NLS-1$
-    if (authenticatorConfig.getLength() > 1)
-    {
-      String repositoryName = repositoryConfig.getAttribute("name"); //$NON-NLS-1$
-      throw new IllegalStateException("At most one authenticator must be configured for repository " + repositoryName); //$NON-NLS-1$
-    }
-
-    return (Element)(authenticatorConfig.getLength() > 0 ? authenticatorConfig.item(0) : null);
+    return getChildElement(repositoryConfig, "authenticator"); //$NON-NLS-1$
   }
 
   /**
@@ -306,8 +317,8 @@ public class RepositoryConfigurator
    */
   protected IAuthenticator getAuthenticator(Element authenticatorConfig) throws CoreException
   {
-    String type = authenticatorConfig.getAttribute("type"); //$NON-NLS-1$
-    String description = authenticatorConfig.getAttribute("description"); //$NON-NLS-1$
+    String type = getAttribute(authenticatorConfig, "type"); //$NON-NLS-1$
+    String description = getAttribute(authenticatorConfig, "description"); //$NON-NLS-1$
     return getAuthenticator(type, description);
   }
 
@@ -353,17 +364,9 @@ public class RepositoryConfigurator
    */
   protected void setActivityLog(InternalRepository repository, Element repositoryConfig)
   {
-    NodeList activityLogConfig = repositoryConfig.getElementsByTagName("activityLog"); //$NON-NLS-1$
-    if (activityLogConfig.getLength() > 1)
+    Element activityLogElement = getChildElement(repositoryConfig, "activityLog"); //$NON-NLS-1$
+    if (activityLogElement != null)
     {
-      String repositoryName = repositoryConfig.getAttribute("name"); //$NON-NLS-1$
-      throw new IllegalStateException("At most one activity log must be configured for repository " + repositoryName); //$NON-NLS-1$
-    }
-
-    if (activityLogConfig.getLength() > 0)
-    {
-      Element activityLogElement = (Element)activityLogConfig.item(0);
-
       RepositoryActivityLog activityLog = getContainerElement(activityLogElement, RepositoryActivityLog.Rolling.Factory.TYPE);
       activityLog.setRepository(repository);
     }
@@ -373,23 +376,30 @@ public class RepositoryConfigurator
   {
     List<EPackage> result = new ArrayList<>();
 
-    NodeList initialPackagesConfig = repositoryConfig.getElementsByTagName("initialPackage"); //$NON-NLS-1$
-    for (int i = 0; i < initialPackagesConfig.getLength(); i++)
+    NodeList children = repositoryConfig.getChildNodes();
+    for (int i = 0; i < children.getLength(); i++)
     {
-      Element initialPackageConfig = (Element)initialPackagesConfig.item(i);
-      String nsURI = initialPackageConfig.getAttribute("nsURI"); //$NON-NLS-1$
-      if (nsURI == null)
+      Node child = children.item(i);
+      if (child.getNodeType() == Node.ELEMENT_NODE)
       {
-        throw new IllegalStateException("nsURI missing for initialPackage element"); //$NON-NLS-1$
-      }
+        Element childElement = (Element)child;
+        if (childElement.getNodeName().equalsIgnoreCase("initialPackage"))//$NON-NLS-1$
+        {
+          String nsURI = getAttribute(childElement, "nsURI"); //$NON-NLS-1$
+          if (nsURI == null)
+          {
+            throw new IllegalStateException("nsURI missing for initialPackage element"); //$NON-NLS-1$
+          }
 
-      EPackage initialPackage = EPackage.Registry.INSTANCE.getEPackage(nsURI);
-      if (initialPackage == null)
-      {
-        throw new IllegalStateException("Initial package not found in global package registry: " + nsURI); //$NON-NLS-1$
-      }
+          EPackage initialPackage = EPackage.Registry.INSTANCE.getEPackage(nsURI);
+          if (initialPackage == null)
+          {
+            throw new IllegalStateException("Initial package not found in global package registry: " + nsURI); //$NON-NLS-1$
+          }
 
-      result.add(initialPackage);
+          result.add(initialPackage);
+        }
+      }
     }
 
     return result.toArray(new EPackage[result.size()]);
@@ -397,14 +407,14 @@ public class RepositoryConfigurator
 
   protected Element getStoreConfig(Element repositoryConfig)
   {
-    NodeList storeConfigs = repositoryConfig.getElementsByTagName("store"); //$NON-NLS-1$
-    if (storeConfigs.getLength() == 0)
+    Element storeElement = getChildElement(repositoryConfig, "store"); //$NON-NLS-1$
+    if (storeElement == null)
     {
-      String repositoryName = repositoryConfig.getAttribute("name"); //$NON-NLS-1$
+      String repositoryName = getAttribute(repositoryConfig, "name"); //$NON-NLS-1$
       throw new IllegalStateException("A store must be configured for repository " + repositoryName); //$NON-NLS-1$
     }
 
-    return (Element)storeConfigs.item(0);
+    return storeElement;
   }
 
   protected IStoreFactory getStoreFactory(String type) throws CoreException
@@ -425,8 +435,14 @@ public class RepositoryConfigurator
 
   protected IStore createStore(String repositoryName, Map<String, String> repositoryProperties, Element storeConfig) throws CoreException
   {
-    String type = storeConfig.getAttribute("type"); //$NON-NLS-1$
+    String type = getAttribute(storeConfig, "type"); //$NON-NLS-1$
     IStoreFactory storeFactory = getStoreFactory(type);
+
+    if (storeFactory instanceof ParameterAware)
+    {
+      ((ParameterAware)storeFactory).setParameters(parameters);
+    }
+
     return storeFactory.createStore(repositoryName, repositoryProperties, storeConfig);
   }
 
@@ -435,16 +451,16 @@ public class RepositoryConfigurator
    */
   protected <T> T getContainerElement(Element element, String defaultType)
   {
-    String type = element.getAttribute("type"); //$NON-NLS-1$
+    String type = getAttribute(element, "type"); //$NON-NLS-1$
     if (StringUtil.isEmpty(type))
     {
       type = defaultType;
     }
 
-    String description = element.getAttribute("description"); //$NON-NLS-1$
+    String description = getAttribute(element, "description"); //$NON-NLS-1$
     if (StringUtil.isEmpty(description))
     {
-      Map<String, String> properties = getProperties(element, 1);
+      Map<String, String> properties = getProperties(element, 1, parameters);
       description = PropertiesFactory.createDescription(properties);
     }
 
@@ -454,19 +470,78 @@ public class RepositoryConfigurator
     return containerElement;
   }
 
+  /**
+   * @since 4.10
+   */
+  protected Element getChildElement(Element element, String name)
+  {
+    NodeList children = element.getChildNodes();
+    for (int i = 0; i < children.getLength(); i++)
+    {
+      Node child = children.item(i);
+      if (child.getNodeType() == Node.ELEMENT_NODE)
+      {
+        Element childElement = (Element)child;
+        if (childElement.getNodeName().equalsIgnoreCase(name))
+        {
+          return childElement;
+        }
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * @since 4.10
+   */
+  protected String getAttribute(Element element, String name)
+  {
+    String value = element.getAttribute(name);
+    value = substituteParameters(value, parameters);
+    return value;
+  }
+
+  /**
+   * @since 4.10
+   */
+  public static String substituteParameters(String value, Map<String, String> parameters)
+  {
+    if (value != null && parameters != null)
+    {
+      for (Entry<String, String> entry : parameters.entrySet())
+      {
+        value = value.replace(entry.getKey(), entry.getValue());
+      }
+    }
+
+    return value;
+  }
+
   public static Map<String, String> getProperties(Element element, int levels)
   {
+    return getProperties(element, levels, null);
+  }
+
+  /**
+   * @since 4.10
+   */
+  public static Map<String, String> getProperties(Element element, int levels, Map<String, String> parameters)
+  {
     Map<String, String> properties = new HashMap<>();
-    collectProperties(element, "", properties, levels); //$NON-NLS-1$
+    collectProperties(element, "", properties, levels, parameters); //$NON-NLS-1$
     return properties;
   }
 
-  private static void collectProperties(Element element, String prefix, Map<String, String> properties, int levels)
+  private static void collectProperties(Element element, String prefix, Map<String, String> properties, int levels, Map<String, String> parameters)
   {
     if ("property".equals(element.getNodeName())) //$NON-NLS-1$
     {
       String name = element.getAttribute("name"); //$NON-NLS-1$
       String value = element.getAttribute("value"); //$NON-NLS-1$
+
+      value = substituteParameters(value, parameters);
+
       properties.put(prefix + name, value);
       prefix += name + "."; //$NON-NLS-1$
     }
@@ -479,7 +554,7 @@ public class RepositoryConfigurator
         Node childNode = childNodes.item(i);
         if (childNode instanceof Element)
         {
-          collectProperties((Element)childNode, prefix, properties, levels - 1);
+          collectProperties((Element)childNode, prefix, properties, levels - 1, parameters);
         }
       }
     }

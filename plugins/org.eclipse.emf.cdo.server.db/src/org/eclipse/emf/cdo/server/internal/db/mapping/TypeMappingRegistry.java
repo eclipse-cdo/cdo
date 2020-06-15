@@ -64,6 +64,8 @@ import java.util.Set;
  */
 public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.Provider
 {
+  public static final EClass CUSTOM_DATA_TYPE = EcorePackage.Literals.EDATA_TYPE;
+
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, TypeMappingRegistry.class);
 
   /**
@@ -105,12 +107,12 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
       public DBType modify(Provider provider, IMappingStrategy mappingStrategy, EStructuralFeature feature, DBType dbType)
       {
         EClassifier classifier = feature.getEType();
-        if (classifier == EcorePackage.eINSTANCE.getEChar())
+        if (classifier == EcorePackage.Literals.ECHAR)
         {
           return DBType.INTEGER;
         }
 
-        if (classifier == EcorePackage.eINSTANCE.getECharacterObject())
+        if (classifier == EcorePackage.Literals.ECHARACTER_OBJECT)
         {
           return DBType.INTEGER;
         }
@@ -188,35 +190,35 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
     container.registerFactory(CoreTypeMappings.TMClob.FACTORY_VARCHAR);
     container.registerFactory(CoreTypeMappings.TMClob.FACTORY_LONG_VARCHAR);
 
-    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEDataType(), DBType.VARCHAR);
+    classifierDefaultMapping.put(CUSTOM_DATA_TYPE, DBType.VARCHAR);
 
-    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEBigDecimal(), DBType.VARCHAR);
-    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEBigInteger(), DBType.VARCHAR);
-    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEBoolean(), DBType.BOOLEAN);
-    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEBooleanObject(), DBType.BOOLEAN);
-    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEByte(), DBType.SMALLINT);
-    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEByteObject(), DBType.SMALLINT);
-    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEByteArray(), DBType.BLOB);
-    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEChar(), DBType.CHAR);
-    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getECharacterObject(), DBType.CHAR);
-    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEDate(), DBType.TIMESTAMP);
-    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEDouble(), DBType.DOUBLE);
-    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEDoubleObject(), DBType.DOUBLE);
-    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEEnum(), DBType.INTEGER);
-    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEFloat(), DBType.FLOAT);
-    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEFloatObject(), DBType.FLOAT);
-    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEInt(), DBType.INTEGER);
-    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEIntegerObject(), DBType.INTEGER);
-    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getELong(), DBType.BIGINT);
-    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getELongObject(), DBType.BIGINT);
-    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEShort(), DBType.SMALLINT);
-    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEShortObject(), DBType.SMALLINT);
-    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEString(), DBType.VARCHAR);
-    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEJavaClass(), DBType.VARCHAR);
-    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEJavaObject(), DBType.BLOB);
+    classifierDefaultMapping.put(EcorePackage.Literals.EBIG_DECIMAL, DBType.VARCHAR);
+    classifierDefaultMapping.put(EcorePackage.Literals.EBIG_INTEGER, DBType.VARCHAR);
+    classifierDefaultMapping.put(EcorePackage.Literals.EBOOLEAN, DBType.BOOLEAN);
+    classifierDefaultMapping.put(EcorePackage.Literals.EBOOLEAN_OBJECT, DBType.BOOLEAN);
+    classifierDefaultMapping.put(EcorePackage.Literals.EBYTE, DBType.SMALLINT);
+    classifierDefaultMapping.put(EcorePackage.Literals.EBYTE_OBJECT, DBType.SMALLINT);
+    classifierDefaultMapping.put(EcorePackage.Literals.EBYTE_ARRAY, DBType.BLOB);
+    classifierDefaultMapping.put(EcorePackage.Literals.ECHAR, DBType.CHAR);
+    classifierDefaultMapping.put(EcorePackage.Literals.ECHARACTER_OBJECT, DBType.CHAR);
+    classifierDefaultMapping.put(EcorePackage.Literals.EDATA_TYPE, DBType.TIMESTAMP);
+    classifierDefaultMapping.put(EcorePackage.Literals.EDOUBLE, DBType.DOUBLE);
+    classifierDefaultMapping.put(EcorePackage.Literals.EDOUBLE_OBJECT, DBType.DOUBLE);
+    classifierDefaultMapping.put(EcorePackage.Literals.EENUM, DBType.INTEGER);
+    classifierDefaultMapping.put(EcorePackage.Literals.EFLOAT, DBType.FLOAT);
+    classifierDefaultMapping.put(EcorePackage.Literals.EFLOAT_OBJECT, DBType.FLOAT);
+    classifierDefaultMapping.put(EcorePackage.Literals.EINT, DBType.INTEGER);
+    classifierDefaultMapping.put(EcorePackage.Literals.EINTEGER_OBJECT, DBType.INTEGER);
+    classifierDefaultMapping.put(EcorePackage.Literals.ELONG, DBType.BIGINT);
+    classifierDefaultMapping.put(EcorePackage.Literals.ELONG_OBJECT, DBType.BIGINT);
+    classifierDefaultMapping.put(EcorePackage.Literals.ESHORT, DBType.SMALLINT);
+    classifierDefaultMapping.put(EcorePackage.Literals.ESHORT_OBJECT, DBType.SMALLINT);
+    classifierDefaultMapping.put(EcorePackage.Literals.ESTRING, DBType.VARCHAR);
+    classifierDefaultMapping.put(EcorePackage.Literals.EJAVA_CLASS, DBType.VARCHAR);
+    classifierDefaultMapping.put(EcorePackage.Literals.EJAVA_OBJECT, DBType.BLOB);
 
-    classifierDefaultMapping.put(EtypesPackage.eINSTANCE.getBlob(), DBType.VARCHAR); // TODO Should be DBType.BLOB?
-    classifierDefaultMapping.put(EtypesPackage.eINSTANCE.getClob(), DBType.VARCHAR); // TODO Should be DBType.CLOB?
+    classifierDefaultMapping.put(EtypesPackage.Literals.BLOB, DBType.VARCHAR); // TODO Should be DBType.BLOB?
+    classifierDefaultMapping.put(EtypesPackage.Literals.CLOB, DBType.VARCHAR); // TODO Should be DBType.CLOB?
   }
 
   protected IManagedContainer getContainer()
@@ -318,12 +320,12 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
     EClassifier classifier = feature.getEType();
     if (classifier instanceof EEnum)
     {
-      return EcorePackage.eINSTANCE.getEEnum();
+      return EcorePackage.Literals.EENUM;
     }
 
     if (classifier instanceof EClass)
     {
-      return EcorePackage.eINSTANCE.getEClass();
+      return EcorePackage.Literals.ECLASS;
     }
 
     EPackage ePackage = classifier.getEPackage();
@@ -334,10 +336,19 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
 
     if (CDOModelUtil.isTypesPackage(ePackage))
     {
-      return classifier;
+      String name = classifier.getName();
+      if (CDOModelUtil.BLOB_CLASS_NAME.equals(name))
+      {
+        return classifier;
+      }
+
+      if (CDOModelUtil.CLOB_CLASS_NAME.equals(name))
+      {
+        return classifier;
+      }
     }
 
-    return EcorePackage.eINSTANCE.getEDataType();
+    return CUSTOM_DATA_TYPE;
   }
 
   private DBType getDBType(IMappingStrategy mappingStrategy, EStructuralFeature feature)

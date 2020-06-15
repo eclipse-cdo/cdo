@@ -338,8 +338,6 @@ public final class CDOModelUtil implements CDOModelConstants
       {
         return CDOType.CLOB;
       }
-
-      throw new IllegalArgumentException("Illegal data type: " + eDataType);
     }
 
     return CDOType.CUSTOM;

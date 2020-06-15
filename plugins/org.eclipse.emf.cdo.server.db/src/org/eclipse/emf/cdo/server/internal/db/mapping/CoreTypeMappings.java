@@ -982,13 +982,13 @@ public class CoreTypeMappings
   public static class TMCustom extends AbstractTypeMapping
   {
     public static final Factory FACTORY_VARCHAR = new Factory(
-        TypeMappingUtil.createDescriptor(ID_PREFIX + ".CustomVarchar", EcorePackage.eINSTANCE.getEDataType(), DBType.VARCHAR));
+        TypeMappingUtil.createDescriptor(ID_PREFIX + ".CustomVarchar", TypeMappingRegistry.CUSTOM_DATA_TYPE, DBType.VARCHAR));
 
     public static final Factory FACTORY_LONG_VARCHAR = new Factory(
-        TypeMappingUtil.createDescriptor(ID_PREFIX + ".CustomLongVarchar", EcorePackage.eINSTANCE.getEDataType(), DBType.LONGVARCHAR));
+        TypeMappingUtil.createDescriptor(ID_PREFIX + ".CustomLongVarchar", TypeMappingRegistry.CUSTOM_DATA_TYPE, DBType.LONGVARCHAR));
 
     public static final Factory FACTORY_CLOB = new Factory(
-        TypeMappingUtil.createDescriptor(ID_PREFIX + ".CustomClob", EcorePackage.eINSTANCE.getEDataType(), DBType.CLOB));
+        TypeMappingUtil.createDescriptor(ID_PREFIX + ".CustomClob", TypeMappingRegistry.CUSTOM_DATA_TYPE, DBType.CLOB));
 
     @Override
     protected Object getResultSetValue(ResultSet resultSet) throws SQLException

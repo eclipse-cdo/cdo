@@ -201,7 +201,7 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
     classifierDefaultMapping.put(EcorePackage.Literals.EBYTE_ARRAY, DBType.BLOB);
     classifierDefaultMapping.put(EcorePackage.Literals.ECHAR, DBType.CHAR);
     classifierDefaultMapping.put(EcorePackage.Literals.ECHARACTER_OBJECT, DBType.CHAR);
-    classifierDefaultMapping.put(EcorePackage.Literals.EDATA_TYPE, DBType.TIMESTAMP);
+    classifierDefaultMapping.put(EcorePackage.Literals.EDATE, DBType.TIMESTAMP);
     classifierDefaultMapping.put(EcorePackage.Literals.EDOUBLE, DBType.DOUBLE);
     classifierDefaultMapping.put(EcorePackage.Literals.EDOUBLE_OBJECT, DBType.DOUBLE);
     classifierDefaultMapping.put(EcorePackage.Literals.EENUM, DBType.INTEGER);

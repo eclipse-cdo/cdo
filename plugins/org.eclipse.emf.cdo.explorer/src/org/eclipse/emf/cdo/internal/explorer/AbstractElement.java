@@ -304,7 +304,7 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
       File file = new File(folder, fileName);
       out = new FileOutputStream(file);
 
-      properties.store(out, getClass().getSimpleName() + fileName);
+      properties.store(out, getClass().getSimpleName() + " " + fileName);
     }
     catch (IOException ex)
     {

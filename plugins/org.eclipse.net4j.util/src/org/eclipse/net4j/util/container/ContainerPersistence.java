@@ -38,7 +38,6 @@ public abstract class ContainerPersistence<E> implements Persistence<E>
     {
       out = openInputStream();
 
-      @SuppressWarnings("resource")
       ObjectInputStream oos = new ObjectInputStream(new BufferedInputStream(out));
 
       @SuppressWarnings("unchecked")
@@ -68,7 +67,6 @@ public abstract class ContainerPersistence<E> implements Persistence<E>
     {
       out = openOutputStream();
 
-      @SuppressWarnings("resource")
       ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(out));
       oos.writeObject(elements);
       oos.flush();

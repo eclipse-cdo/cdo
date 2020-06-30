@@ -110,6 +110,11 @@ public class CDOListImpl extends BasicEList<Object> implements InternalCDOList.C
     flags |= FROZEN_FLAG;
   }
 
+  public void unfreeze()
+  {
+    flags &= ~FROZEN_FLAG;
+  }
+
   private void checkFrozen()
   {
     if ((flags & FROZEN_FLAG) != 0)

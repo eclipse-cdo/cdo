@@ -1099,6 +1099,32 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   }
 
   /**
+   * @since 4.11
+   */
+  public void unfreeze()
+  {
+    flags &= ~FROZEN_FLAG;
+
+    if (isReadable())
+    {
+      EStructuralFeature[] features = getAllPersistentFeatures();
+      for (int i = 0; i < features.length; i++)
+      {
+        EStructuralFeature feature = features[i];
+        if (feature.isMany())
+        {
+          Object value = doGetValue(i);
+          if (value instanceof CDOListImpl)
+          {
+            CDOListImpl list = (CDOListImpl)value;
+            list.unfreeze();
+          }
+        }
+      }
+    }
+  }
+
+  /**
    * @since 4.2
    */
   @Override

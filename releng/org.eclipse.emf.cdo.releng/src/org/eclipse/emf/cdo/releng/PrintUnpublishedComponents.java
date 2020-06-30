@@ -64,7 +64,6 @@ public class PrintUnpublishedComponents
 
     try
     {
-      @SuppressWarnings("resource")
       BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
 
       String line;

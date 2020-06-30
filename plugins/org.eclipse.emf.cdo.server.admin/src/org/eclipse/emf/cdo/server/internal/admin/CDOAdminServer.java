@@ -51,6 +51,10 @@ import java.util.Set;
  */
 public class CDOAdminServer extends AbstractCDOAdmin
 {
+  public static final String PROP_IGNORE = "org.eclipse.emf.cdo.server.admin.ignore";
+
+  private static final String TRUE = Boolean.TRUE.toString();
+
   private static Class<?> IJVMCHANNEL_CLASS;
 
   private final IManagedContainer container;
@@ -227,9 +231,7 @@ public class CDOAdminServer extends AbstractCDOAdmin
     {
       if (element instanceof IRepository)
       {
-        IRepository delegate = (IRepository)element;
-        CDOAdminServerRepository repository = new CDOAdminServerRepository(this, delegate);
-        addElement(repository);
+        addDelegate((IRepository)element);
       }
     }
 
@@ -243,10 +245,35 @@ public class CDOAdminServer extends AbstractCDOAdmin
     super.doDeactivate();
   }
 
+  protected boolean validateDelegate(IRepository delegate)
+  {
+    String ignore = delegate.getProperties().get(PROP_IGNORE);
+    if (TRUE.equalsIgnoreCase(ignore))
+    {
+      return false;
+    }
+
+    return true;
+  }
+
+  protected CDOAdminServerRepository addDelegate(IRepository delegate)
+  {
+    if (validateDelegate(delegate))
+    {
+      CDOAdminServerRepository repository = new CDOAdminServerRepository(this, delegate);
+      if (addElement(repository))
+      {
+        return repository;
+      }
+    }
+
+    return null;
+  }
+
   protected void repositoryAdded(IRepository delegate)
   {
-    CDOAdminServerRepository repository = new CDOAdminServerRepository(this, delegate);
-    if (addElement(repository))
+    CDOAdminServerRepository repository = addDelegate(delegate);
+    if (repository != null)
     {
       for (CDOAdminServerProtocol protocol : getProtocols())
       {
@@ -267,7 +294,7 @@ public class CDOAdminServer extends AbstractCDOAdmin
     String name = delegate.getName();
     CDOAdminServerRepository repository = (CDOAdminServerRepository)getRepository(name);
 
-    if (removeElement(repository))
+    if (repository != null && removeElement(repository))
     {
       repository.dispose();
       for (CDOAdminServerProtocol protocol : getProtocols())
@@ -435,5 +462,4 @@ public class CDOAdminServer extends AbstractCDOAdmin
       }
     }
   }
-
 }

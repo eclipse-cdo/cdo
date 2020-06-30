@@ -223,8 +223,9 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
      *          The transaction that is going to be committed.
      * @param commitContext
      *          The context of the commit operation that is to be executed against the backend store. The context can be
-     *          used to introspect all aspects of the current commit operation. <b>Note that you must not alter the
-     *          internal state of the commit context in any way!</b>
+     *          used to introspect all aspects of the current commit operation. <b>Note that you must call
+     *          {@link IStoreAccessor.CommitContext#modify(java.util.function.Consumer) commitContext.modify()} if you plan to alter the
+     *          internal state of the commit context!</b>
      * @param monitor
      *          A monitor that should be used by the implementor to avoid timeouts.
      * @throws TransactionValidationException

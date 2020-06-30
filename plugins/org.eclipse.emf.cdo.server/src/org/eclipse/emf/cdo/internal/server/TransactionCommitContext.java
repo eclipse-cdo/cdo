@@ -60,6 +60,7 @@ import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
+import org.eclipse.emf.cdo.spi.common.revision.BaseCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.CDOFeatureDeltaVisitorImpl;
 import org.eclipse.emf.cdo.spi.common.revision.CDOIDMapper;
 import org.eclipse.emf.cdo.spi.common.revision.CDOReferenceAdjuster;
@@ -103,6 +104,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Consumer;
 
 /**
  * @author Simon McDuff
@@ -209,6 +212,8 @@ public class TransactionCommitContext implements InternalCommitContext
   private CDOLockChangeInfo lockChangeInfo;
 
   private final List<LockState<Object, IView>> postCommitLockStates = new ArrayList<>();
+
+  private boolean allowModify;
 
   public TransactionCommitContext(InternalTransaction transaction)
   {
@@ -546,7 +551,15 @@ public class TransactionCommitContext implements InternalCommitContext
 
   protected void notifyBeforeCommitting(OMMonitor monitor)
   {
-    repository.notifyWriteAccessHandlers(transaction, this, true, monitor.fork());
+    try
+    {
+      allowModify = true;
+      repository.notifyWriteAccessHandlers(transaction, this, true, monitor.fork());
+    }
+    finally
+    {
+      allowModify = false;
+    }
   }
 
   @Override
@@ -1332,6 +1345,75 @@ public class TransactionCommitContext implements InternalCommitContext
     }
   }
 
+  @Override
+  public void modify(Consumer<ModificationContext> modifier)
+  {
+    if (!allowModify)
+    {
+      throw new UnsupportedOperationException("Commit modification not allowed");
+    }
+
+    List<CDOIDAndVersion> _newObjects = new ArrayList<>();
+    if (newObjects != null)
+    {
+      for (InternalCDORevision revision : newObjects)
+      {
+        InternalCDORevision copy = revision.copy();
+        if (copy instanceof BaseCDORevision)
+        {
+          ((BaseCDORevision)copy).unfreeze();
+        }
+
+        _newObjects.add(copy);
+      }
+    }
+
+    List<CDORevisionKey> _changedObjects = new ArrayList<>();
+    if (dirtyObjectDeltas != null)
+    {
+      for (InternalCDORevisionDelta revisionDelta : dirtyObjectDeltas)
+      {
+        _changedObjects.add(revisionDelta.copy());
+      }
+    }
+
+    List<CDOIDAndVersion> _detachedObjects = new ArrayList<>();
+    if (detachedObjects != null)
+    {
+      for (int i = 0; i < detachedObjects.length; i++)
+      {
+        CDOID id = detachedObjects[i];
+        CDOBranchVersion branchVersion = detachedObjectVersions[i];
+        _detachedObjects.add(CDOIDUtil.createIDAndVersion(id, branchVersion.getVersion()));
+      }
+    }
+
+    CDOChangeSetData changeSetData = CDORevisionUtil.createChangeSetData(_newObjects, _changedObjects, _detachedObjects);
+    AtomicBoolean canceled = new AtomicBoolean();
+
+    ModificationContext modificationContext = new ModificationContext()
+    {
+      @Override
+      public CDOChangeSetData getChangeSetData()
+      {
+        return changeSetData;
+      }
+
+      @Override
+      public void cancelModification()
+      {
+        canceled.set(true);
+      }
+    };
+
+    modifier.accept(modificationContext);
+
+    if (!canceled.get())
+    {
+      overrideCommitData(changeSetData, true);
+    }
+  }
+
   /**
    * When this method is called, the oldRevisions map is filled with the latest valid revisions, chunks ensured.
    */
@@ -1343,94 +1425,102 @@ public class TransactionCommitContext implements InternalCommitContext
       CDOChangeSetData result = commitConflictResolver.resolveConflicts(this, conflicts);
       if (result != null)
       {
-        originalCommmitData = new CommitData(newObjects, dirtyObjectDeltas, detachedObjects);
+        overrideCommitData(result, false);
+      }
+    }
+  }
 
-        // Apply new objects.
+  protected void overrideCommitData(CDOChangeSetData newChangeSetData, boolean force)
+  {
+    if (originalCommmitData == null)
+    {
+      originalCommmitData = new CommitData(newObjects, dirtyObjectDeltas, detachedObjects);
+    }
+
+    // Apply new objects.
+    {
+      List<InternalCDORevision> newObjectsList = new ArrayList<>();
+
+      List<CDOIDAndVersion> idAndVersions = newChangeSetData.getNewObjects();
+      if (idAndVersions != null)
+      {
+        for (CDOIDAndVersion idAndVersion : idAndVersions)
         {
-          List<InternalCDORevision> newObjectsList = new ArrayList<>();
-
-          List<CDOIDAndVersion> idAndVersions = result.getNewObjects();
-          if (idAndVersions != null)
+          if (idAndVersion instanceof InternalCDORevision)
           {
-            for (CDOIDAndVersion idAndVersion : idAndVersions)
+            InternalCDORevision newObject = (InternalCDORevision)idAndVersion;
+            if (force || newObject.getID().isTemporary())
             {
-              if (idAndVersion instanceof InternalCDORevision)
-              {
-                InternalCDORevision newObject = (InternalCDORevision)idAndVersion;
-                if (newObject.getID().isTemporary())
-                {
-                  newObjectsList.add(newObject);
-                }
-              }
+              newObjectsList.add(newObject);
             }
           }
-
-          newObjects = newObjectsList.toArray(new InternalCDORevision[newObjectsList.size()]);
-        }
-
-        // Apply detached objects.
-        {
-          List<CDOID> detachedObjectsList = new ArrayList<>();
-          List<CDOBranchVersion> detachedObjectVersionsList = new ArrayList<>();
-          detachedObjectTypes = new HashMap<>();
-
-          List<CDOIDAndVersion> idAndVersions = result.getDetachedObjects();
-          if (idAndVersions != null)
-          {
-            for (CDOIDAndVersion idAndVersion : idAndVersions)
-            {
-              CDOID id = idAndVersion.getID();
-
-              InternalCDORevision oldObject = (InternalCDORevision)transaction.getRevision(id);
-              if (oldObject != null)
-              {
-                detachedObjectsList.add(id);
-                detachedObjectVersionsList.add(oldObject.getBranch().getVersion(oldObject.getVersion()));
-                detachedObjectTypes.put(id, oldObject.getEClass());
-              }
-            }
-          }
-
-          detachedObjects = detachedObjectsList.toArray(new CDOID[detachedObjectsList.size()]);
-          detachedObjectVersions = detachedObjectVersionsList.toArray(new CDOBranchVersion[detachedObjectVersionsList.size()]);
-        }
-
-        // Apply changed objects.
-        {
-          List<InternalCDORevisionDelta> dirtyObjectDeltasList = new ArrayList<>();
-          List<InternalCDORevision> dirtyObjectsList = new ArrayList<>();
-          InternalCDORevisionManager revisionManager = repository.getRevisionManager();
-
-          List<CDORevisionKey> revisionKeys = result.getChangedObjects();
-          if (revisionKeys != null)
-          {
-            for (CDORevisionKey revisionKey : revisionKeys)
-            {
-              if (revisionKey instanceof InternalCDORevisionDelta)
-              {
-                InternalCDORevisionDelta ancestorDelta = (InternalCDORevisionDelta)revisionKey;
-                CDOID id = ancestorDelta.getID();
-
-                InternalCDORevision ancestorRevision = revisionManager.getRevisionByVersion(id, ancestorDelta, CDORevision.UNCHUNKED, true);
-                InternalCDORevision newRevision = ancestorRevision.copy();
-                ancestorDelta.applyTo(newRevision);
-
-                InternalCDORevision oldRevision = (InternalCDORevision)transaction.getRevision(id);
-
-                newRevision.setVersion(oldRevision.getVersion()); // Needed in adjustForCommit().
-                newRevision.adjustForCommit(branch, timeStamp);
-
-                InternalCDORevisionDelta dirtyObjectDelta = newRevision.compare(oldRevision);
-                dirtyObjectDeltasList.add(dirtyObjectDelta);
-                dirtyObjectsList.add(newRevision);
-              }
-            }
-          }
-
-          dirtyObjectDeltas = dirtyObjectDeltasList.toArray(new InternalCDORevisionDelta[dirtyObjectDeltasList.size()]);
-          dirtyObjects = dirtyObjectsList.toArray(new InternalCDORevision[dirtyObjectsList.size()]);
         }
       }
+
+      newObjects = newObjectsList.toArray(new InternalCDORevision[newObjectsList.size()]);
+    }
+
+    // Apply detached objects.
+    {
+      List<CDOID> detachedObjectsList = new ArrayList<>();
+      List<CDOBranchVersion> detachedObjectVersionsList = new ArrayList<>();
+      detachedObjectTypes = new HashMap<>();
+
+      List<CDOIDAndVersion> idAndVersions = newChangeSetData.getDetachedObjects();
+      if (idAndVersions != null)
+      {
+        for (CDOIDAndVersion idAndVersion : idAndVersions)
+        {
+          CDOID id = idAndVersion.getID();
+
+          InternalCDORevision oldObject = (InternalCDORevision)transaction.getRevision(id);
+          if (oldObject != null)
+          {
+            detachedObjectsList.add(id);
+            detachedObjectVersionsList.add(oldObject.getBranch().getVersion(oldObject.getVersion()));
+            detachedObjectTypes.put(id, oldObject.getEClass());
+          }
+        }
+      }
+
+      detachedObjects = detachedObjectsList.toArray(new CDOID[detachedObjectsList.size()]);
+      detachedObjectVersions = detachedObjectVersionsList.toArray(new CDOBranchVersion[detachedObjectVersionsList.size()]);
+    }
+
+    // Apply changed objects.
+    {
+      List<InternalCDORevisionDelta> dirtyObjectDeltasList = new ArrayList<>();
+      List<InternalCDORevision> dirtyObjectsList = new ArrayList<>();
+      InternalCDORevisionManager revisionManager = repository.getRevisionManager();
+
+      List<CDORevisionKey> revisionKeys = newChangeSetData.getChangedObjects();
+      if (revisionKeys != null)
+      {
+        for (CDORevisionKey revisionKey : revisionKeys)
+        {
+          if (revisionKey instanceof InternalCDORevisionDelta)
+          {
+            InternalCDORevisionDelta ancestorDelta = (InternalCDORevisionDelta)revisionKey;
+            CDOID id = ancestorDelta.getID();
+
+            InternalCDORevision ancestorRevision = revisionManager.getRevisionByVersion(id, ancestorDelta, CDORevision.UNCHUNKED, true);
+            InternalCDORevision newRevision = ancestorRevision.copy();
+            ancestorDelta.applyTo(newRevision);
+
+            InternalCDORevision oldRevision = (InternalCDORevision)transaction.getRevision(id);
+
+            newRevision.setVersion(oldRevision.getVersion()); // Needed in adjustForCommit().
+            newRevision.adjustForCommit(branch, timeStamp);
+
+            InternalCDORevisionDelta dirtyObjectDelta = newRevision.compare(oldRevision);
+            dirtyObjectDeltasList.add(dirtyObjectDelta);
+            dirtyObjectsList.add(newRevision);
+          }
+        }
+      }
+
+      dirtyObjectDeltas = dirtyObjectDeltasList.toArray(new InternalCDORevisionDelta[dirtyObjectDeltasList.size()]);
+      dirtyObjects = dirtyObjectsList.toArray(new InternalCDORevision[dirtyObjectsList.size()]);
     }
   }
 

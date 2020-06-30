@@ -79,7 +79,7 @@ public abstract class StoreAccessor extends StoreAccessorBase
 
     try
     {
-      monitor.begin(1 + newPackageUnits.length + 2 + newObjects.length + detachedObjects.length + dirtyCount + postProcessCount + 1);
+      monitor.begin(4 + newPackageUnits.length + newObjects.length + detachedObjects.length + dirtyCount + postProcessCount);
 
       writeCommitInfo(branch, timeStamp, previousTimeStamp, userID, commitComment, mergeSource, monitor.fork());
       writePackageUnits(newPackageUnits, monitor.fork(newPackageUnits.length));
@@ -90,7 +90,24 @@ public abstract class StoreAccessor extends StoreAccessorBase
         addIDMappings(context, monitor.fork());
       }
 
+      // At the end of the ID mapping process the attached write access handler are given a chance to modify the
+      // committed change set via CommitContext.modify(). If that happens the various changes set variables need to be
+      // re-initialized. See below...
       applyIDMappings(context, monitor);
+
+      if (context.getOriginalCommmitData() != null)
+      {
+        // The various changes set variables need to be re-initialized because the attached write access handler have
+        // modified the committed change set via CommitContext.modify().
+
+        newObjects = context.getNewObjects();
+        detachedObjects = context.getDetachedObjects();
+        dirtyObjectDeltas = context.getDirtyObjectDeltas();
+        dirtyObjects = context.getDirtyObjects();
+
+        dirtyCount = deltas ? dirtyObjectDeltas.length : dirtyObjects.length;
+        postProcessCount = needsRevisionPostProcessing() ? newObjects.length + detachedObjects.length + dirtyCount : 0;
+      }
 
       if (detachedObjects.length != 0)
       {

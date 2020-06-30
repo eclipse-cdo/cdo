@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.server;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
+import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDReference;
@@ -62,6 +63,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Consumer;
 
 /**
  * Represents a <i>connection</i> to a physical data storage back-end.
@@ -483,6 +485,24 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      * @since 4.3
      */
     public <T> T setData(Object key, T data);
+
+    /**
+     * @since 4.10
+     */
+    public void modify(Consumer<ModificationContext> modifier);
+
+    /**
+     * A data and result context for the modifications in {@link CommitContext#modify(Consumer)}.
+     *
+     * @author Eike Stepper
+     * @since 4.10
+     */
+    public interface ModificationContext
+    {
+      public CDOChangeSetData getChangeSetData();
+
+      public void cancelModification();
+    }
   }
 
   /**

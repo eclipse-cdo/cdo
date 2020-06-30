@@ -274,6 +274,7 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
   protected void doConnect()
   {
     boolean connected = false;
+    CDOSession newSession = null;
 
     synchronized (this)
     {
@@ -290,7 +291,8 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
             @Override
             protected void onDeactivated(ILifecycle lifecycle)
             {
-              disconnect();
+              explicitlyConnected = false;
+              doDisconnect(true);
             }
           });
 
@@ -300,14 +302,10 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
           CDOBranch mainBranch = branchManager.getMainBranch();
           mainBranch.addListener(mainBranchListener);
 
+          newSession = session;
           state = State.Connected;
         }
-        catch (RuntimeException ex)
-        {
-          state = State.Disconnected;
-          throw ex;
-        }
-        catch (Error ex)
+        catch (RuntimeException | Error ex)
         {
           state = State.Disconnected;
           throw ex;
@@ -322,7 +320,7 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
       CDORepositoryManagerImpl manager = getManager();
       if (manager != null)
       {
-        manager.fireRepositoryConnectionEvent(this, session, true);
+        manager.fireRepositoryConnectionEvent(this, newSession, true);
       }
     }
   }
@@ -361,6 +359,7 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
         finally
         {
           session = null;
+          sessionRefCount = 0;
           state = State.Disconnected;
         }
 

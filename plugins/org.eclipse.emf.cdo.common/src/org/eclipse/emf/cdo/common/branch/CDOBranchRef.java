@@ -36,7 +36,7 @@ public final class CDOBranchRef implements Serializable
 
   public CDOBranchRef(CDOBranch branch)
   {
-    this(branch.getBranch().getPathName());
+    this(branch.getPathName());
   }
 
   public CDOBranchRef(String branchPath)

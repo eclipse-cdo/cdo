@@ -158,6 +158,7 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
   {
   }
 
+  @Override
   public IManagedContainer getContainer()
   {
     return IPluginContainer.INSTANCE;

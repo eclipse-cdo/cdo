@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutViewerSorter;
 import org.eclipse.emf.cdo.explorer.ui.repositories.CDORepositoryItemProvider;
@@ -349,7 +350,7 @@ public class CheckoutRootObjectPage extends CheckoutWizardPage
   {
     if (rootID != null)
     {
-      properties.setProperty(CDOCheckoutImpl.PROP_ROOT_ID, CDOCheckoutImpl.getCDOIDString(rootID));
+      properties.setProperty(CDOCheckoutImpl.PROP_ROOT_ID, CDOExplorerUtil.getCDOIDString(rootID));
     }
   }
 

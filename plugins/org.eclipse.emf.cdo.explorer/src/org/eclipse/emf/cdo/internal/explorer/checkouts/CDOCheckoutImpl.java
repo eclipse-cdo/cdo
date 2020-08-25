@@ -391,7 +391,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     properties.setProperty(PROP_BRANCH_ID, Integer.toString(getBranchID()));
     properties.setProperty(PROP_TIME_STAMP, Long.toString(getTimeStamp()));
     properties.setProperty(PROP_READ_ONLY, Boolean.toString(isReadOnly()));
-    properties.setProperty(PROP_ROOT_ID, getCDOIDString(getRootID()));
+    properties.setProperty(PROP_ROOT_ID, CDOExplorerUtil.getCDOIDString(getRootID()));
   }
 
   @Override
@@ -745,7 +745,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
       Properties properties = AbstractManager.loadProperties(getFolder(), EDITOR_PROPERTIES);
       if (properties != null)
       {
-        String idString = getCDOIDString(objectID);
+        String idString = CDOExplorerUtil.getCDOIDString(objectID);
         return properties.getProperty(idString);
       }
 
@@ -770,7 +770,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
         properties = new Properties();
       }
 
-      String idString = getCDOIDString(objectID);
+      String idString = CDOExplorerUtil.getCDOIDString(objectID);
       properties.setProperty(idString, editorID);
 
       saveProperties(EDITOR_PROPERTIES, properties);
@@ -836,7 +836,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     repository = OM.getRepositoryManager().getElement(repositoryID);
     if (repository == null)
     {
-      throw new IllegalStateException("Repository not found: " + repositoryID);
+      throw new IllegalStateException("Repository " + repositoryID + " not found: " + this);
     }
 
     branchID = Integer.parseInt(properties.getProperty(PROP_BRANCH_ID));
@@ -876,7 +876,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
 
     if (!CDOIDUtil.isNull(rootID))
     {
-      String string = getCDOIDString(rootID);
+      String string = CDOExplorerUtil.getCDOIDString(rootID);
       properties.setProperty(PROP_ROOT_ID, string);
     }
   }
@@ -902,12 +902,5 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
   protected void closeView()
   {
     view.close();
-  }
-
-  public static String getCDOIDString(CDOID id)
-  {
-    StringBuilder builder = new StringBuilder();
-    CDOIDUtil.write(builder, id);
-    return builder.toString();
   }
 }

@@ -24,7 +24,6 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.lifecycle.LifecycleException;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
-import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.views.ItemProvider;
 
 import org.eclipse.emf.ecore.EObject;
@@ -39,13 +38,10 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TreeItem;
 
 import java.lang.reflect.Method;
@@ -153,8 +149,8 @@ public abstract class CDOContentProvider<CONTEXT> implements ITreeContentProvide
 
       if (object instanceof CDOElement)
       {
-        CDOElement checkoutElement = (CDOElement)object;
-        return checkoutElement.hasChildren();
+        CDOElement element = (CDOElement)object;
+        return element.hasChildren();
       }
 
       if (GET_CHILDREN_FEATURES_METHOD != null && object instanceof EObject)
@@ -218,8 +214,8 @@ public abstract class CDOContentProvider<CONTEXT> implements ITreeContentProvide
 
       if (object instanceof CDOElement)
       {
-        CDOElement checkoutElement = (CDOElement)object;
-        return checkoutElement.getChildren();
+        CDOElement element = (CDOElement)object;
+        return element.getChildren();
       }
 
       final Object originalObject = object;
@@ -229,7 +225,7 @@ public abstract class CDOContentProvider<CONTEXT> implements ITreeContentProvide
         return children;
       }
 
-      CONTEXT openingCheckout = null;
+      CONTEXT openingContext = null;
       if (isContext(object))
       {
         @SuppressWarnings("unchecked")
@@ -241,7 +237,7 @@ public abstract class CDOContentProvider<CONTEXT> implements ITreeContentProvide
           return ViewerUtil.NO_CHILDREN;
 
         case Opening:
-          openingCheckout = context;
+          openingContext = context;
           break;
 
         case Open:
@@ -251,7 +247,7 @@ public abstract class CDOContentProvider<CONTEXT> implements ITreeContentProvide
       }
 
       final Object finalObject = object;
-      final CONTEXT finalOpeningContext = openingCheckout;
+      final CONTEXT finalOpeningContext = openingContext;
 
       final ITreeContentProvider contentProvider = getContentProvider(finalObject);
       if (contentProvider == null)
@@ -333,30 +329,30 @@ public abstract class CDOContentProvider<CONTEXT> implements ITreeContentProvide
 
               OM.LOG.error(ex);
 
-              final Control control = viewer.getControl();
-              if (!control.isDisposed())
-              {
-                UIUtil.getDisplay().asyncExec(new Runnable()
-                {
-                  @Override
-                  public void run()
-                  {
-                    try
-                    {
-                      if (!control.isDisposed())
-                      {
-                        Shell shell = control.getShell();
-                        String title = (finalOpeningContext != null ? "Open" : "Load") + " Error";
-                        MessageDialog.openError(shell, title, ex.getMessage());
-                      }
-                    }
-                    catch (Exception ex)
-                    {
-                      OM.LOG.error(ex);
-                    }
-                  }
-                });
-              }
+              // final Control control = viewer.getControl();
+              // if (!control.isDisposed())
+              // {
+              // UIUtil.getDisplay().asyncExec(new Runnable()
+              // {
+              // @Override
+              // public void run()
+              // {
+              // try
+              // {
+              // if (!control.isDisposed())
+              // {
+              // Shell shell = control.getShell();
+              // String title = (finalOpeningContext != null ? "Open" : "Load") + " Error";
+              // MessageDialog.openError(shell, title, ex.getMessage());
+              // }
+              // }
+              // catch (Exception ex)
+              // {
+              // OM.LOG.error(ex);
+              // }
+              // }
+              // });
+              // }
             }
 
             RunnableViewerRefresh viewerRefresh = getViewerRefresh();
@@ -449,8 +445,8 @@ public abstract class CDOContentProvider<CONTEXT> implements ITreeContentProvide
 
       if (object instanceof CDOElement)
       {
-        CDOElement checkoutElement = (CDOElement)object;
-        return checkoutElement.getParent();
+        CDOElement element = (CDOElement)object;
+        return element.getParent();
       }
 
       if (object instanceof EObject)

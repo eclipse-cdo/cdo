@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransactionOpener;
 import org.eclipse.emf.cdo.view.CDOViewOpener;
 
 import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.security.IPasswordCredentials;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider2;
 
@@ -46,6 +47,11 @@ public interface CDORepository
   public boolean isClone();
 
   public boolean isLocal();
+
+  /**
+   * @since 4.7
+   */
+  public IManagedContainer getContainer();
 
   public String getConnectorType();
 

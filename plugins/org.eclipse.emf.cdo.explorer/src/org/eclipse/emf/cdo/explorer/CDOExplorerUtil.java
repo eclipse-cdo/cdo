@@ -11,6 +11,8 @@
 package org.eclipse.emf.cdo.explorer;
 
 import org.eclipse.emf.cdo.CDOElement;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager;
@@ -171,5 +173,15 @@ public final class CDOExplorerUtil
     }
 
     return null;
+  }
+
+  /**
+   * @since 4.7
+   */
+  public static String getCDOIDString(CDOID id)
+  {
+    StringBuilder builder = new StringBuilder();
+    CDOIDUtil.write(builder, id);
+    return builder.toString();
   }
 }

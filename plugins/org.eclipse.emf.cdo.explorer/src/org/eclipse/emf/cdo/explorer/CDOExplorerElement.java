@@ -17,6 +17,7 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.core.runtime.IAdaptable;
 
 import java.io.File;
+import java.util.Properties;
 
 /**
  * A CDO server independent representation of a repository.
@@ -44,6 +45,16 @@ public interface CDOExplorerElement extends INotifier, IAdaptable, Adapter, Comp
    * @since 4.5
    */
   public File getStateFolder(String path);
+
+  /**
+   * @since 4.7
+   */
+  public File getStateFolder(String path, boolean createOnDemand);
+
+  /**
+   * @since 4.7
+   */
+  public Properties getProperties();
 
   public void delete(boolean deleteContents);
 }

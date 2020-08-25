@@ -55,24 +55,48 @@ public abstract class OM
   {
     disposeManagers();
 
-    repositoryManager = new CDORepositoryManagerImpl(new File(stateLocation, "rp"));
-    LifecycleUtil.activate(repositoryManager);
+    if (repositoryManager == null)
+    {
+      repositoryManager = new CDORepositoryManagerImpl(new File(stateLocation, "rp"));
+      Exception exception = LifecycleUtil.activateSilent(repositoryManager);
+      if (exception != null)
+      {
+        LOG.error(exception);
+      }
+    }
 
-    checkoutManager = new CDOCheckoutManagerImpl(new File(stateLocation, "co"));
-    LifecycleUtil.activate(checkoutManager);
+    if (checkoutManager == null)
+    {
+      checkoutManager = new CDOCheckoutManagerImpl(new File(stateLocation, "co"));
+      Exception exception = LifecycleUtil.activateSilent(checkoutManager);
+      if (exception != null)
+      {
+        LOG.error(exception);
+      }
+    }
   }
 
   public static void disposeManagers()
   {
     if (checkoutManager != null)
     {
-      LifecycleUtil.deactivate(checkoutManager);
+      Exception exception = LifecycleUtil.deactivate(checkoutManager);
+      if (exception != null)
+      {
+        LOG.error(exception);
+      }
+
       checkoutManager = null;
     }
 
     if (repositoryManager != null)
     {
-      LifecycleUtil.deactivate(repositoryManager);
+      Exception exception = LifecycleUtil.deactivate(repositoryManager);
+      if (exception != null)
+      {
+        LOG.error(exception);
+      }
+
       repositoryManager = null;
     }
   }

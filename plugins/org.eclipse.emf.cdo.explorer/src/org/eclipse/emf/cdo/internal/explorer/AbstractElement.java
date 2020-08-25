@@ -258,9 +258,20 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
   @Override
   public File getStateFolder(String path)
   {
+    return getStateFolder(path, true);
+  }
+
+  @Override
+  public File getStateFolder(String path, boolean createOnDemand)
+  {
     File stateFolder = new File(folder, path);
     if (!stateFolder.exists())
     {
+      if (!createOnDemand)
+      {
+        return null;
+      }
+
       stateFolder.mkdirs();
     }
 
@@ -286,11 +297,17 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
 
   public void save()
   {
+    String propertiesFileName = getManager().getPropertiesFileName();
+    Properties properties = getProperties();
+    saveProperties(propertiesFileName, properties);
+  }
+
+  @Override
+  public Properties getProperties()
+  {
     Properties properties = new Properties();
     collectProperties(properties);
-
-    String propertiesFileName = getManager().getPropertiesFileName();
-    saveProperties(propertiesFileName, properties);
+    return properties;
   }
 
   protected final void saveProperties(String fileName, Properties properties)

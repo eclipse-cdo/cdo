@@ -54,6 +54,19 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/common/branch/CDOBranchRef.java" type="org.eclipse.emf.cdo.common.branch.CDOBranchRef">
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.common.branch.CDOBranchRef"/>
+                <message_argument value="resolve(CDOBranchManager)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="resolve(CDOBranchManager)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/common/commit/CDOCommitHistory.java" type="org.eclipse.emf.cdo.common.commit.CDOCommitHistory$TriggerLoadElement">
         <filter id="576778288">
             <message_arguments>

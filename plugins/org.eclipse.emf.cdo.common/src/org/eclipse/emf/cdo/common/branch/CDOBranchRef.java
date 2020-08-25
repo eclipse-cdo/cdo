@@ -64,7 +64,7 @@ public final class CDOBranchRef implements Serializable
     return CDOBranch.MAIN_BRANCH_NAME.equals(branchPath);
   }
 
-  public CDOBranchPoint resolve(CDOBranchManager branchManager)
+  public CDOBranch resolve(CDOBranchManager branchManager)
   {
     return branchManager.getBranch(branchPath);
   }

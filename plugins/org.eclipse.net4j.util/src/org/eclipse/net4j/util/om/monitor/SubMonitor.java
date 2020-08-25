@@ -44,7 +44,7 @@ import org.eclipse.core.runtime.OperationCanceledException;
  * <li> It reduces the need to specify <code>work</code> arguments by using the default value {@link #DEFAULT_WORK 1} with the overloaded
  *      {@link #worked()}, {@link #skipped()} and {@link #newChild()} calls.
  *
- * <li> Basically all methods of this class can implicitely check for cancelation, thereby ensuring that the monitored code is always cancelable by the user
+ * <li> Basically all methods of this class can implicitly check for cancelation, thereby ensuring that the monitored code is always cancelable by the user
  *      without cluttering the code with repetitions of the following idiom:
  *      <pre>
 if (monitor.isCanceled())
@@ -56,7 +56,7 @@ if (monitor.isCanceled())
  *
  * <li> It is normally very challenging to find out how much time a program really spends in the different parts of the monitored methods or how often these
  *      parts get executed. Stepping through the program with a debugger obviously leads to distortion that renders the observations meaningless and adding
- *      extra code to measure a runtime scenario realisticly is not nice from a maintenance point of view.
+ *      extra code to measure a runtime scenario realistically is not nice from a maintenance point of view.
  *      <p>
  *      As a solution to this problem this class offers the possibility to transparently instrument {@link SubMonitor} instances such that they automatically
  *      collect and report all kinds of statistics that may help to enhance the user experience. Sometimes it would even indicate to remove some progress monitoring
@@ -93,6 +93,7 @@ public void recurse(IContainer container, IProgressMonitor monitor) throws Excep
  * @author Eike Stepper
  * @since 3.4
  */
+@SuppressWarnings("deprecation")
 public class SubMonitor implements IProgressMonitorWithBlocking
 {
   /**
@@ -104,7 +105,7 @@ public class SubMonitor implements IProgressMonitorWithBlocking
 
   /**
    * The RootInfo holds information about the root progress monitor. A SubMonitor and
-   * its active descendents share the same RootInfo.
+   * its active descendants share the same RootInfo.
    */
   // Can't be private because ProbingSubMonitor uses it.
   static final class RootInfo

@@ -256,6 +256,15 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   /**
    * @category Repository
    */
+  public boolean isRestartable()
+  {
+    IRepositoryConfig repositoryConfig = getRepositoryConfig();
+    return repositoryConfig.isRestartable();
+  }
+
+  /**
+   * @category Repository
+   */
   public InternalRepository restartRepository()
   {
     return restartRepository(IRepositoryConfig.REPOSITORY_NAME);

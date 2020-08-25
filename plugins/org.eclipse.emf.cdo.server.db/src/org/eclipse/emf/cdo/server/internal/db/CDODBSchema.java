@@ -28,7 +28,7 @@ import org.eclipse.net4j.spi.db.ddl.InternalDBSchema;
  */
 public class CDODBSchema
 {
-  public static final IDBSchema INSTANCE = DBUtil.createSchema("CDO");
+  public static final IDBSchema INSTANCE = DBUtil.createSchema("CDO"); //$NON-NLS-1$
 
   /**
    * DBTable cdo_properties
@@ -133,6 +133,35 @@ public class CDODBSchema
   public static final String SQL_LOAD_BRANCHES = "SELECT " + BRANCHES_ID + ", " + BRANCHES_NAME + ", " + //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
       BRANCHES_BASE_BRANCH_ID + ", " + BRANCHES_BASE_TIMESTAMP //$NON-NLS-1$
       + " FROM " + BRANCHES + " WHERE " + BRANCHES_ID + " BETWEEN ? AND ? ORDER BY " + BRANCHES_ID; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+
+  /**
+   * DBTable cdo_tags
+   */
+  public static final IDBTable TAGS = INSTANCE.addTable("cdo_tags"); //$NON-NLS-1$
+
+  public static final IDBField TAGS_NAME = //
+      TAGS.addField("name", DBType.VARCHAR, true); //$NON-NLS-1$
+
+  public static final IDBField TAGS_BRANCH = //
+      TAGS.addField("branch", DBType.INTEGER); //$NON-NLS-1$
+
+  public static final IDBField TAGS__TIMESTAMP = //
+      TAGS.addField("timestamp", DBType.BIGINT); //$NON-NLS-1$
+
+  public static final IDBIndex INDEX_TAGS_NAME = //
+      TAGS.addIndex(IDBIndex.Type.PRIMARY_KEY, TAGS_NAME);
+
+  public static final String SQL_CREATE_TAG = "INSERT INTO " + TAGS + " (" + TAGS_NAME + ", " + TAGS_BRANCH + ", " + TAGS__TIMESTAMP + ") VALUES (?, ?, ?)"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+
+  public static final String SQL_RENAME_TAG = "UPDATE " + TAGS + " SET " + TAGS_NAME + "=?" + " WHERE " + TAGS_NAME + "=?"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+
+  public static final String SQL_MOVE_TAG = "UPDATE " + TAGS + " SET " + TAGS_BRANCH + "=?, " + TAGS__TIMESTAMP + "=? WHERE " + TAGS_NAME + "=?"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+
+  public static final String SQL_DELETE_TAG = "DELETE FROM " + TAGS + " WHERE " + TAGS_NAME + "=?"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+
+  public static final String SQL_LOAD_TAGS = "SELECT " + TAGS_NAME + ", " + TAGS_BRANCH + ", " + TAGS__TIMESTAMP + " FROM " + TAGS; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+
+  public static final String SQL_LOAD_TAG = "SELECT " + TAGS_BRANCH + ", " + TAGS__TIMESTAMP + " FROM " + TAGS + " WHERE " + TAGS_NAME + "=?"; //$NON-NLS-1$ //$NON-NLS-2$
 
   /**
    * DBTable cdo_lobs

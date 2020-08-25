@@ -18,6 +18,7 @@ package org.eclipse.emf.cdo.internal.server;
 import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchHandler;
+import org.eclipse.emf.cdo.common.branch.CDOBranchManager.CDOTagList;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPointRange;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
@@ -65,11 +66,13 @@ import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
+import org.eclipse.emf.cdo.server.StoreThreadLocal.NoSessionRegisteredException;
 import org.eclipse.emf.cdo.spi.common.CDOReplicationContext;
 import org.eclipse.emf.cdo.spi.common.CDOReplicationInfo;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader3;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader4;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.commit.CDOCommitInfoUtil;
 import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
@@ -146,6 +149,8 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
 
 /**
  * @author Eike Stepper
@@ -234,6 +239,9 @@ public class Repository extends Container<Object> implements InternalRepository,
   @ExcludeFromDump
   private final transient Object createBranchLock = new Object();
 
+  @ExcludeFromDump
+  private final transient Object changeTagLock = new Object();
+
   private boolean skipInitialization;
 
   private EPackage[] initialPackages;
@@ -241,6 +249,12 @@ public class Repository extends Container<Object> implements InternalRepository,
   private CDOID rootResourceID;
 
   private long lastTreeRestructuringCommit = -1;
+
+  /**
+   * This strong reference is only kept to avoid frequent tag loading.
+   */
+  @SuppressWarnings("unused")
+  private CDOTagList tagList;
 
   public Repository()
   {
@@ -544,6 +558,67 @@ public class Repository extends Container<Object> implements InternalRepository,
     synchronized (createBranchLock)
     {
       ((BranchLoader3)accessor).renameBranch(branchID, oldName, newName);
+    }
+  }
+
+  @Override
+  public CDOBranchPoint changeTag(AtomicInteger modCount, String oldName, String newName, CDOBranchPoint branchPoint)
+  {
+    if (isSupportingAudits())
+    {
+      IStoreAccessor accessor = StoreThreadLocal.getAccessor();
+      if (accessor instanceof BranchLoader4)
+      {
+        synchronized (changeTagLock)
+        {
+          if (oldName == null && branchPoint == null)
+          {
+            // Augment missing tag creation branch point.
+            branchPoint = branchManager.getMainBranch().getHead();
+          }
+
+          if (branchPoint != null && branchPoint.getTimeStamp() == CDOBranchPoint.UNSPECIFIED_DATE)
+          {
+            // Augment missing time stamp.
+            branchPoint = branchPoint.getBranch().getPoint(getTimeStamp());
+          }
+
+          ((BranchLoader4)accessor).changeTag(modCount, oldName, newName, branchPoint);
+
+          InternalSession sender = null;
+
+          try
+          {
+            sender = StoreThreadLocal.getSession();
+          }
+          catch (NoSessionRegisteredException ignore)
+          {
+            //$FALL-THROUGH$
+          }
+
+          // The branch manager's modCount will be bumped later by the caller of this method.
+          int newModCount = modCount.get() + 1;
+
+          sessionManager.sendTagNotification(sender, newModCount, oldName, newName, branchPoint);
+
+          return branchPoint;
+        }
+      }
+    }
+
+    throw new UnsupportedOperationException("Branch tagging is not supported by " + this);
+  }
+
+  @Override
+  public void loadTags(String name, Consumer<BranchInfo> handler)
+  {
+    if (isSupportingAudits())
+    {
+      IStoreAccessor accessor = StoreThreadLocal.getAccessor();
+      if (accessor instanceof BranchLoader4)
+      {
+        ((BranchLoader4)accessor).loadTags(name, handler);
+      }
     }
   }
 
@@ -2637,6 +2712,24 @@ public class Repository extends Container<Object> implements InternalRepository,
         initSystemPackages(false);
         readPackageUnits();
         readRootResource();
+      }
+
+      branchManager.setTagModCount(0);
+
+      if (supportingAudits)
+      {
+        // Load all tags and keep a strong reference to avoid frequent tag loading.
+        IStoreAccessor reader = store.getReader(null);
+        StoreThreadLocal.setAccessor(reader);
+
+        try
+        {
+          tagList = branchManager.getTagList();
+        }
+        finally
+        {
+          StoreThreadLocal.release();
+        }
       }
     }
 

@@ -197,4 +197,5 @@ public interface CDOBranch extends CDOBranchPoint, CDONameProvider, IContainer<C
    */
   @Deprecated
   public void rename(String newName);
+
 }

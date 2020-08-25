@@ -52,6 +52,8 @@ public interface IRepositoryConfig extends IConfig, IRepositoryProvider
 
   public boolean hasServerContainer();
 
+  public boolean isRestartable();
+
   public boolean supportingAudits();
 
   public boolean supportingBranches();

@@ -82,6 +82,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
 
 /**
  * @author Eike Stepper
@@ -195,6 +197,18 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
   public void renameBranch(int branchID, String oldName, String newName)
   {
     send(new RenameBranchRequest(this, branchID, oldName, newName));
+  }
+
+  @Override
+  public CDOBranchPoint changeTag(AtomicInteger modCount, String oldName, String newName, CDOBranchPoint branchPoint)
+  {
+    return send(new ChangeTagRequest(this, modCount, oldName, newName, branchPoint));
+  }
+
+  @Override
+  public void loadTags(String name, Consumer<BranchInfo> handler)
+  {
+    send(new LoadTagsRequest(this, name, handler));
   }
 
   @Override
@@ -650,6 +664,9 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
 
     case SIGNAL_CREDENTIALS_CHALLENGE:
       return new CredentialsChallengeIndication(this);
+
+    case SIGNAL_TAG_NOTIFICATION:
+      return new TagNotificationIndication(this);
 
     default:
       return super.createSignalReactor(signalID);

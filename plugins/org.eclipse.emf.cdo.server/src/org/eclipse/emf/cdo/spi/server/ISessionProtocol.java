@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.spi.server;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
@@ -64,6 +65,11 @@ public interface ISessionProtocol extends CDOProtocol, IAuthenticationProtocol, 
    * @since 4.3
    */
   public void sendBranchNotification(InternalCDOBranch branch, ChangeKind changeKind) throws Exception;
+
+  /**
+   * @since 4.10
+   */
+  public void sendTagNotification(int modCount, String oldName, String newName, CDOBranchPoint branchPoint) throws Exception;
 
   /**
    * @deprecated As of 4.2 use {@link #sendCommitNotification(CDOCommitInfo, boolean)}.

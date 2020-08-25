@@ -16,8 +16,15 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent;
 import org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind;
 import org.eclipse.emf.cdo.common.branch.CDOBranchHandler;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
+import org.eclipse.emf.cdo.common.branch.CDOBranchManager.CDOTagList.TagListEvent;
+import org.eclipse.emf.cdo.common.branch.CDOBranchManager.CDOTagList.TagRenamedEvent;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.branch.CDOBranchTag;
+import org.eclipse.emf.cdo.common.branch.CDOBranchTag.TagEvent;
+import org.eclipse.emf.cdo.common.branch.CDOBranchTag.TagMovedEvent;
+import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader.BranchInfo;
@@ -26,10 +33,17 @@ import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.ref.ReferenceValueMap;
-import org.eclipse.net4j.util.ref.ReferenceValueMap.Soft;
 
+import java.lang.ref.Reference;
+import java.lang.ref.SoftReference;
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.ConcurrentModificationException;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author Eike Stepper
@@ -42,7 +56,15 @@ public class CDOBranchManagerImpl extends Container<CDOBranch> implements Intern
 
   private InternalCDOBranch mainBranch;
 
-  private Map<Integer, InternalCDOBranch> branches = createMap();
+  private Map<Integer, InternalCDOBranch> branches = createBranchMap();
+
+  private Map<String, CDOBranchTagImpl> tags = createTagMap();
+
+  private Reference<CDOTagListImpl> tagListReference;
+
+  private List<TagChange> tagChangeQueue = new ArrayList<>();
+
+  private int tagModCount = -1;
 
   public CDOBranchManagerImpl()
   {
@@ -272,6 +294,328 @@ public class CDOBranchManagerImpl extends Container<CDOBranch> implements Intern
   }
 
   @Override
+  public int getTagModCount()
+  {
+    return tagModCount;
+  }
+
+  @Override
+  public void setTagModCount(int tagModCount)
+  {
+    synchronized (tags)
+    {
+      boolean initial = this.tagModCount == -1;
+      this.tagModCount = tagModCount;
+
+      if (initial)
+      {
+        executeTagChanges();
+      }
+    }
+  }
+
+  @Override
+  public void handleTagChanged(int modCount, String oldName, String newName, CDOBranchPoint branchPoint)
+  {
+    synchronized (tags)
+    {
+      tagChangeQueue.add(new TagChange(modCount, oldName, newName, branchPoint));
+      tagChangeQueue.sort(null);
+      executeTagChanges();
+    }
+  }
+
+  protected void executeTagChanges()
+  {
+    while (!tagChangeQueue.isEmpty() && tagModCount != -1)
+    {
+      TagChange tagChange = tagChangeQueue.get(0);
+      int newModCount = tagModCount + 1;
+
+      if (tagChange.getModCount() == newModCount)
+      {
+        tagModCount = newModCount;
+        executeTagChange(tagChange.getOldName(), tagChange.getNewName(), tagChange.getBranchPoint());
+        tagChangeQueue.remove(0);
+      }
+    }
+  }
+
+  protected void executeTagChange(String oldName, String newName, CDOBranchPoint branchPoint)
+  {
+    switch (InternalCDOBranchManager.getTagChangeKind(oldName, newName, branchPoint))
+    {
+    case CREATED:
+      createTagInternal(newName, branchPoint);
+      break;
+
+    case RENAMED:
+      renameTagInternal(oldName, newName);
+      break;
+
+    case MOVED:
+      moveTagInternal(oldName, branchPoint);
+      break;
+
+    case DELETED:
+      deleteTagInternal(oldName);
+      break;
+    }
+  }
+
+  @Override
+  public CDOBranchPoint changeTagWithModCount(AtomicInteger modCount, String oldName, String newName, CDOBranchPoint branchPoint)
+  {
+    synchronized (tags)
+    {
+      if (modCount != null)
+      {
+        if (modCount.get() != tagModCount)
+        {
+          throw new ConcurrentModificationException();
+        }
+      }
+
+      CDOBranchPoint result = null;
+
+      switch (InternalCDOBranchManager.getTagChangeKind(oldName, newName, branchPoint))
+      {
+      case CREATED:
+      {
+        CDOBranchTagImpl tag = tags.get(newName);
+        if (tag != null)
+        {
+          throw new CDOException("Tag name exists: " + newName);
+        }
+
+        boolean success = false;
+        if (branchLoader instanceof BranchLoader4)
+        {
+          result = ((BranchLoader4)branchLoader).changeTag(modCount, null, newName, branchPoint);
+          if (result != null)
+          {
+            branchPoint = result;
+            result = null;
+          }
+
+          success = true;
+        }
+
+        if (success)
+        {
+          result = createTagInternal(newName, branchPoint);
+        }
+
+        break;
+      }
+
+      case RENAMED:
+      {
+        ((BranchLoader4)branchLoader).changeTag(modCount, oldName, newName, null);
+        renameTagInternal(oldName, newName);
+        break;
+      }
+
+      case MOVED:
+      {
+        result = ((BranchLoader4)branchLoader).changeTag(modCount, oldName, null, branchPoint);
+        if (result != null)
+        {
+          branchPoint = result;
+          result = null;
+        }
+
+        moveTagInternal(oldName, branchPoint);
+        break;
+      }
+
+      case DELETED:
+      {
+        ((BranchLoader4)branchLoader).changeTag(modCount, oldName, null, null);
+        deleteTagInternal(oldName);
+        break;
+      }
+      }
+
+      ++tagModCount;
+      if (modCount != null)
+      {
+        modCount.set(tagModCount);
+      }
+
+      return result;
+    }
+  }
+
+  @Override
+  public CDOBranchTag createTag(String name, CDOBranchPoint branchPoint)
+  {
+    synchronized (tags)
+    {
+      AtomicInteger modCount = new AtomicInteger(tagModCount);
+      return (CDOBranchTag)changeTagWithModCount(modCount, null, name, branchPoint);
+    }
+  }
+
+  @Override
+  public void renameTag(String oldName, String newName)
+  {
+    synchronized (tags)
+    {
+      AtomicInteger modCount = new AtomicInteger(tagModCount);
+      changeTagWithModCount(modCount, oldName, newName, null);
+    }
+  }
+
+  @Override
+  public void moveTag(CDOBranchTag tag, CDOBranchPoint branchPoint)
+  {
+    synchronized (tags)
+    {
+      String name = tag.getName();
+
+      AtomicInteger modCount = new AtomicInteger(tagModCount);
+      changeTagWithModCount(modCount, name, null, branchPoint);
+    }
+  }
+
+  @Override
+  public void deleteTag(CDOBranchTag tag)
+  {
+    synchronized (tags)
+    {
+      String name = tag.getName();
+
+      AtomicInteger modCount = new AtomicInteger(tagModCount);
+      changeTagWithModCount(modCount, name, null, null);
+    }
+  }
+
+  private CDOBranchTagImpl createTagInternal(String name, CDOBranchPoint branchPoint)
+  {
+    CDOBranchTagImpl tag = new CDOBranchTagImpl(name, branchPoint.getBranch(), branchPoint.getTimeStamp());
+    tags.put(name, tag);
+
+    CDOTagListImpl tagList = getTagListOrNull();
+    if (tagList != null)
+    {
+      tagList.addTag(tag);
+    }
+
+    return tag;
+  }
+
+  private void renameTagInternal(String oldName, String newName)
+  {
+    CDOBranchTagImpl tag = tags.remove(oldName);
+    tag.setNameInternal(newName);
+    tags.put(newName, tag);
+
+    CDOTagListImpl tagList = getTagListOrNull();
+    if (tagList != null)
+    {
+      tagList.fireTagRenamedEvent(tag, oldName, newName);
+    }
+
+    tag.fireTagRenamedEvent(oldName, newName);
+  }
+
+  private void moveTagInternal(String name, CDOBranchPoint branchPoint)
+  {
+    CDOBranchTagImpl tag = tags.get(name);
+    CDOBranchPoint oldBranchPoint = CDOBranchUtil.copyBranchPoint(tag);
+    tag.moveInternal(branchPoint.getBranch(), branchPoint.getTimeStamp());
+
+    CDOTagListImpl tagList = getTagListOrNull();
+    if (tagList != null)
+    {
+      tagList.fireTagMovedEvent(tag, oldBranchPoint, branchPoint);
+    }
+
+    tag.fireTagMovedEvent(oldBranchPoint, branchPoint);
+  }
+
+  private void deleteTagInternal(String name)
+  {
+    CDOBranchTagImpl tag = tags.remove(name);
+    tag.deleteInternal();
+
+    CDOTagListImpl tagList = getTagListOrNull();
+    if (tagList != null)
+    {
+      tagList.removeTag(tag);
+    }
+
+    tag.fireTagDeletedEvent();
+  }
+
+  @Override
+  public CDOBranchTag getTag(String name)
+  {
+    synchronized (tags)
+    {
+      CDOBranchTagImpl tag = tags.get(name);
+      if (tag == null && branchLoader instanceof BranchLoader4)
+      {
+        AtomicReference<BranchInfo> result = new AtomicReference<>();
+        ((BranchLoader4)branchLoader).loadTags(name, branchInfo -> result.set(branchInfo));
+
+        BranchInfo branchInfo = result.get();
+        if (branchInfo != null)
+        {
+          int branchID = branchInfo.getBaseBranchID();
+          long timeStamp = branchInfo.getBaseTimeStamp();
+
+          InternalCDOBranch branch = getBranch(branchID);
+          tag = new CDOBranchTagImpl(name, branch, timeStamp);
+          tags.put(name, tag);
+        }
+      }
+
+      return tag;
+    }
+  }
+
+  @Override
+  public CDOTagList getTagList()
+  {
+    synchronized (tags)
+    {
+      CDOTagListImpl tagList = getTagListOrNull();
+      if (tagList != null)
+      {
+        return tagList;
+      }
+
+      if (branchLoader instanceof BranchLoader4)
+      {
+        CDOTagListImpl newTagList = new CDOTagListImpl();
+        ((BranchLoader4)branchLoader).loadTags(null, branchInfo -> newTagList.addTag(branchInfo));
+        tagListReference = createTagListReference(newTagList);
+
+        newTagList.activate();
+        return newTagList;
+      }
+
+      return null;
+    }
+  }
+
+  private CDOTagListImpl getTagListOrNull()
+  {
+    if (tagListReference != null)
+    {
+      CDOTagListImpl tagList = tagListReference.get();
+      if (tagList != null)
+      {
+        return tagList;
+      }
+    }
+
+    return null;
+  }
+
+  @Override
   public String toString()
   {
     return MessageFormat.format("BranchManager[loader={0}]", branchLoader);
@@ -292,9 +636,19 @@ public class CDOBranchManagerImpl extends Container<CDOBranch> implements Intern
     return true;
   }
 
-  protected Soft<Integer, InternalCDOBranch> createMap()
+  protected Map<Integer, InternalCDOBranch> createBranchMap()
   {
     return new ReferenceValueMap.Soft<>();
+  }
+
+  protected Map<String, CDOBranchTagImpl> createTagMap()
+  {
+    return new ReferenceValueMap.Soft<>();
+  }
+
+  protected Reference<CDOTagListImpl> createTagListReference(CDOTagListImpl tagList)
+  {
+    return new SoftReference<>(tagList);
   }
 
   @Override
@@ -303,6 +657,283 @@ public class CDOBranchManagerImpl extends Container<CDOBranch> implements Intern
     super.doBeforeActivate();
     checkState(repository, "repository"); //$NON-NLS-1$
     checkState(branchLoader, "branchLoader"); //$NON-NLS-1$
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public final class CDOTagListImpl extends Container<CDOBranchTag> implements CDOTagList
+  {
+    private final List<CDOBranchTag> list = new ArrayList<>();
+
+    private CDOBranchTag[] array;
+
+    public CDOTagListImpl()
+    {
+    }
+
+    @Override
+    public CDOBranchManager getBranchManager()
+    {
+      return CDOBranchManagerImpl.this;
+    }
+
+    @Override
+    public CDOBranchTag[] getElements()
+    {
+      return getTags();
+    }
+
+    @Override
+    public CDOBranchTag[] getTags()
+    {
+      synchronized (list)
+      {
+        if (array == null)
+        {
+          array = list.toArray(new CDOBranchTag[list.size()]);
+          Arrays.sort(array);
+        }
+
+        return array;
+      }
+    }
+
+    @Override
+    public CDOBranchTag[] getTags(CDOBranch branch)
+    {
+      List<CDOBranchTag> result = new ArrayList<>();
+
+      synchronized (list)
+      {
+        for (CDOBranchTag tag : list)
+        {
+          if (tag.getBranch() == branch)
+          {
+            result.add(tag);
+          }
+        }
+      }
+
+      return result.toArray(new CDOBranchTag[result.size()]);
+    }
+
+    private void addTag(BranchInfo branchInfo)
+    {
+      String name = branchInfo.getName();
+      CDOBranchTagImpl tag = tags.get(name);
+      if (tag == null)
+      {
+        int branchID = branchInfo.getBaseBranchID();
+        long timeStamp = branchInfo.getBaseTimeStamp();
+
+        InternalCDOBranch branch = getBranch(branchID);
+        tag = new CDOBranchTagImpl(name, branch, timeStamp);
+        tags.put(name, tag);
+      }
+
+      addTag(tag);
+    }
+
+    private void addTag(CDOBranchTag tag)
+    {
+      synchronized (list)
+      {
+        list.add(tag);
+        array = null;
+      }
+
+      if (isActive())
+      {
+        fireElementAddedEvent(tag);
+      }
+    }
+
+    private void removeTag(CDOBranchTag tag)
+    {
+      synchronized (list)
+      {
+        if (list.remove(tag))
+        {
+          array = null;
+        }
+        else
+        {
+          tag = null;
+        }
+      }
+
+      if (tag != null)
+      {
+        fireElementRemovedEvent(tag);
+      }
+    }
+
+    private void fireTagRenamedEvent(CDOBranchTagImpl tag, String oldName, String newName)
+    {
+      fireEvent(new TagRenamedEventImpl(this, tag, oldName, newName));
+    }
+
+    private void fireTagMovedEvent(CDOBranchTagImpl tag, CDOBranchPoint oldBranchPoint, CDOBranchPoint newBranchPoint)
+    {
+      fireEvent(new TagMovedEventImpl(this, tag, oldBranchPoint, newBranchPoint));
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static abstract class TagListEventImpl extends Event implements TagListEvent, TagEvent
+  {
+    private static final long serialVersionUID = 1L;
+
+    private final CDOBranchTagImpl tag;
+
+    public TagListEventImpl(CDOTagListImpl tagList, CDOBranchTagImpl tag)
+    {
+      super(tagList);
+      this.tag = tag;
+    }
+
+    @Override
+    public CDOTagList getTagList()
+    {
+      return (CDOTagList)getSource();
+    }
+
+    @Override
+    public CDOBranchTagImpl getTag()
+    {
+      return tag;
+    }
+
+    @Override
+    protected String formatAdditionalParameters()
+    {
+      return "tag=" + tag;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class TagRenamedEventImpl extends TagListEventImpl implements TagRenamedEvent
+  {
+    private static final long serialVersionUID = 1L;
+
+    private final String oldName;
+
+    private final String newName;
+
+    public TagRenamedEventImpl(CDOTagListImpl tagList, CDOBranchTagImpl tag, String oldName, String newName)
+    {
+      super(tagList, tag);
+      this.oldName = oldName;
+      this.newName = newName;
+    }
+
+    @Override
+    public String getOldName()
+    {
+      return oldName;
+    }
+
+    @Override
+    public String getNewName()
+    {
+      return newName;
+    }
+
+    @Override
+    protected String formatAdditionalParameters()
+    {
+      return super.formatAdditionalParameters() + ", oldName=" + oldName + ", newName=" + newName;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class TagMovedEventImpl extends TagListEventImpl implements TagMovedEvent
+  {
+    private static final long serialVersionUID = 1L;
+
+    private final CDOBranchPoint oldBranchPoint;
+
+    private final CDOBranchPoint newBranchPoint;
+
+    public TagMovedEventImpl(CDOTagListImpl tagList, CDOBranchTagImpl tag, CDOBranchPoint oldBranchPoint, CDOBranchPoint newBranchPoint)
+    {
+      super(tagList, tag);
+      this.oldBranchPoint = oldBranchPoint;
+      this.newBranchPoint = newBranchPoint;
+    }
+
+    @Override
+    public CDOBranchPoint getOldBranchPoint()
+    {
+      return oldBranchPoint;
+    }
+
+    @Override
+    public CDOBranchPoint getNewBranchPoint()
+    {
+      return newBranchPoint;
+    }
+
+    @Override
+    protected String formatAdditionalParameters()
+    {
+      return super.formatAdditionalParameters() + ", oldBranchPoint=" + oldBranchPoint + ", newBranchPoint=" + newBranchPoint;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class TagChange implements Comparable<TagChange>
+  {
+    private final int modCount;
+
+    private final String oldName;
+
+    private final String newName;
+
+    private final CDOBranchPoint branchPoint;
+
+    public TagChange(int modCount, String oldName, String newName, CDOBranchPoint branchPoint)
+    {
+      this.modCount = modCount;
+      this.oldName = oldName;
+      this.newName = newName;
+      this.branchPoint = branchPoint;
+    }
+
+    public int getModCount()
+    {
+      return modCount;
+    }
+
+    public String getOldName()
+    {
+      return oldName;
+    }
+
+    public String getNewName()
+    {
+      return newName;
+    }
+
+    public CDOBranchPoint getBranchPoint()
+    {
+      return branchPoint;
+    }
+
+    @Override
+    public int compareTo(TagChange o)
+    {
+      return Integer.compare(modCount, o.modCount);
+    }
   }
 
   /**

@@ -237,6 +237,7 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
       branchManager.setRepository(repository);
       branchManager.setBranchLoader(sessionProtocol);
       branchManager.initMainBranch(isMainBranchLocal(), repository.getCreationTime());
+      branchManager.setTagModCount(result.getTagModCount());
       branchManager.activate();
     }
 

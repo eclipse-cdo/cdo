@@ -41,7 +41,7 @@ import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.common.CDORawReplicationContext;
 import org.eclipse.emf.cdo.spi.common.CDOReplicationContext;
-import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader3;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader4;
 import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager.CommitInfoLoader;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.PackageLoader;
@@ -84,7 +84,7 @@ import java.util.Set;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLoader3, RevisionLoader2, CommitInfoLoader
+public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLoader4, RevisionLoader2, CommitInfoLoader
 {
   public RepositoryTimeResult getRepositoryTime();
 
@@ -382,6 +382,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
     private long lastUpdateTime;
 
+    private int tagModCount;
+
     private RepositoryTimeResult repositoryTimeResult;
 
     private CDOID rootResourceID;
@@ -427,6 +429,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
       repositoryCreationTime = in.readXLong();
       lastUpdateTime = in.readXLong();
+      tagModCount = in.readXInt();
       rootResourceID = in.readCDOID();
       authenticating = in.readBoolean();
       supportingAudits = in.readBoolean();
@@ -623,6 +626,14 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     public CommitInfoStorage getCommitInfoStorage()
     {
       return commitInfoStorage;
+    }
+
+    /**
+     * @since 4.11
+     */
+    public int getTagModCount()
+    {
+      return tagModCount;
     }
 
     /**

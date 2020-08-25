@@ -14,6 +14,8 @@ import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind;
 import org.eclipse.emf.cdo.common.branch.CDOBranchHandler;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.branch.CDOBranchTag;
 import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
 import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
@@ -21,6 +23,8 @@ import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader.BranchInfo;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Eike Stepper
@@ -119,6 +123,66 @@ public class ClientBranchManager extends AbstractClientManager<InternalCDOBranch
   public int getBranches(int startID, int endID, CDOBranchHandler handler)
   {
     return delegate.getBranches(startID, endID, handler);
+  }
+
+  @Override
+  public int getTagModCount()
+  {
+    return delegate.getTagModCount();
+  }
+
+  @Override
+  public void setTagModCount(int tagModCount)
+  {
+    delegate.setTagModCount(tagModCount);
+  }
+
+  @Override
+  public void handleTagChanged(int modCount, String oldName, String newName, CDOBranchPoint branchPoint)
+  {
+    delegate.handleTagChanged(modCount, oldName, newName, branchPoint);
+  }
+
+  @Override
+  public CDOBranchPoint changeTagWithModCount(AtomicInteger modCount, String oldName, String newName, CDOBranchPoint branchPoint)
+  {
+    return delegate.changeTagWithModCount(modCount, oldName, newName, branchPoint);
+  }
+
+  @Override
+  public CDOBranchTag createTag(String name, CDOBranchPoint branchPoint)
+  {
+    return delegate.createTag(name, branchPoint);
+  }
+
+  @Override
+  public void renameTag(String oldName, String newName)
+  {
+    delegate.renameTag(oldName, newName);
+  }
+
+  @Override
+  public void moveTag(CDOBranchTag tag, CDOBranchPoint branchPoint)
+  {
+    delegate.moveTag(tag, branchPoint);
+  }
+
+  @Override
+  public void deleteTag(CDOBranchTag tag)
+  {
+    delegate.deleteTag(tag);
+  }
+
+  @Override
+  public CDOBranchTag getTag(String name)
+  {
+    return delegate.getTag(name);
+  }
+
+  @Override
+  public CDOTagList getTagList()
+  {
+    return delegate.getTagList();
   }
 
   @Override

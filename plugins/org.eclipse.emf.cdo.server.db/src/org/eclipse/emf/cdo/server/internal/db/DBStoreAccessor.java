@@ -54,7 +54,7 @@ import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.AbstractHorizon
 import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.UnitMappingTable;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
-import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader3;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader4;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
@@ -79,6 +79,7 @@ import org.eclipse.net4j.db.IDBSchemaTransaction;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.internal.db.ddl.DBField;
 import org.eclipse.net4j.spi.db.DBAdapter;
+import org.eclipse.net4j.util.ConsumerWithException;
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
@@ -114,11 +115,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
 
 /**
  * @author Eike Stepper
  */
-public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, BranchLoader3, DurableLocking2
+public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, BranchLoader4, DurableLocking2
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, DBStoreAccessor.class);
 
@@ -1061,6 +1064,38 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     }
   }
 
+  private void execSQL(String sql, ConsumerWithException<IDBPreparedStatement, SQLException> preparer)
+  {
+    IDBPreparedStatement stmt = connection.prepareStatement(sql, ReuseProbability.LOW);
+
+    try
+    {
+      if (preparer != null)
+      {
+        preparer.accept(stmt);
+      }
+
+      DBUtil.update(stmt, true);
+      getConnection().commit();
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      DBUtil.close(stmt);
+    }
+  }
+
+  private void checkAuditingSupport()
+  {
+    if (!getStore().getMappingStrategy().hasAuditSupport())
+    {
+      throw new UnsupportedOperationException("Mapping strategy does not support auditing"); //$NON-NLS-1$
+    }
+  }
+
   private void checkBranchingSupport()
   {
     if (!getStore().getMappingStrategy().hasBranchingSupport())
@@ -1145,6 +1180,106 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     }
     finally
     {
+      DBUtil.close(stmt);
+    }
+  }
+
+  @Override
+  public CDOBranchPoint changeTag(AtomicInteger modCount, String oldName, String newName, CDOBranchPoint branchPoint)
+  {
+    checkAuditingSupport();
+
+    switch (InternalCDOBranchManager.getTagChangeKind(oldName, newName, branchPoint))
+    {
+    case CREATED:
+    {
+      // CREATE
+      execSQL(CDODBSchema.SQL_CREATE_TAG, stmt -> {
+        stmt.setString(1, newName);
+        stmt.setInt(2, branchPoint.getBranch().getID());
+        stmt.setLong(3, branchPoint.getTimeStamp());
+      });
+
+      break;
+    }
+
+    case RENAMED:
+    {
+      // RENAME
+      execSQL(CDODBSchema.SQL_RENAME_TAG, stmt -> {
+        stmt.setString(1, newName);
+        stmt.setString(2, oldName);
+      });
+
+      break;
+    }
+
+    case MOVED:
+    {
+      // MOVE
+      execSQL(CDODBSchema.SQL_MOVE_TAG, stmt -> {
+        stmt.setInt(1, branchPoint.getBranch().getID());
+        stmt.setLong(2, branchPoint.getTimeStamp());
+        stmt.setString(3, oldName);
+      });
+
+      break;
+    }
+
+    case DELETED:
+    {
+      // DELETE
+      execSQL(CDODBSchema.SQL_DELETE_TAG, stmt -> {
+        stmt.setString(1, oldName);
+      });
+
+      break;
+    }
+    }
+
+    // Repository.changeTag() takes care of the proper result value;
+    return null;
+  }
+
+  @Override
+  public void loadTags(String name, Consumer<BranchInfo> handler)
+  {
+    checkAuditingSupport();
+
+    boolean single = name != null;
+    String sql = single ? CDODBSchema.SQL_LOAD_TAG : CDODBSchema.SQL_LOAD_TAGS;
+    IDBPreparedStatement stmt = connection.prepareStatement(sql, ReuseProbability.LOW);
+    ResultSet resultSet = null;
+
+    try
+    {
+      if (single)
+      {
+        stmt.setString(1, name);
+      }
+
+      resultSet = stmt.executeQuery();
+      while (resultSet.next())
+      {
+        int c = 0;
+
+        if (!single)
+        {
+          name = resultSet.getString(++c);
+        }
+
+        int branchID = resultSet.getInt(++c);
+        long timeStamp = resultSet.getLong(++c);
+        handler.accept(new BranchInfo(name, branchID, timeStamp));
+      }
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      DBUtil.close(resultSet);
       DBUtil.close(stmt);
     }
   }

@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind;
 import org.eclipse.emf.cdo.common.branch.CDOBranchHandler;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.branch.CDOBranchTag;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
@@ -24,6 +26,8 @@ import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 
 import java.io.IOException;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
 
 /**
  * If the meaning of this type isn't clear, there really should be more of a description here...
@@ -89,6 +93,73 @@ public interface InternalCDOBranchManager extends CDOBranchManager, ILifecycle
    * @since 4.3
    */
   public void handleBranchChanged(InternalCDOBranch branch, ChangeKind changeKind);
+
+  /**
+   * @since 4.11
+   */
+  public int getTagModCount();
+
+  /**
+   * @since 4.11
+   */
+  public void setTagModCount(int tagModCount);
+
+  /**
+   * @since 4.11
+   */
+  public void renameTag(String oldName, String newName);
+
+  /**
+   * @since 4.11
+   */
+  public void moveTag(CDOBranchTag tag, CDOBranchPoint branchPoint);
+
+  /**
+   * @since 4.11
+   */
+  public void deleteTag(CDOBranchTag tag);
+
+  /**
+   * @since 4.11
+   */
+  public CDOBranchPoint changeTagWithModCount(AtomicInteger modCount, String oldName, String newName, CDOBranchPoint branchPoint);
+
+  /**
+   * @since 4.11
+   */
+  public void handleTagChanged(int modCount, String oldName, String newName, CDOBranchPoint branchPoint);
+
+  /**
+   * @since 4.11
+   */
+  public static TagChangeKind getTagChangeKind(String oldName, String newName, CDOBranchPoint branchPoint)
+  {
+    if (oldName == null)
+    {
+      return TagChangeKind.CREATED;
+    }
+
+    if (branchPoint == null)
+    {
+      if (newName == null)
+      {
+        return TagChangeKind.DELETED;
+      }
+
+      return TagChangeKind.RENAMED;
+    }
+
+    return TagChangeKind.MOVED;
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 4.11
+   */
+  public enum TagChangeKind
+  {
+    CREATED, RENAMED, MOVED, DELETED;
+  }
 
   /**
    * If the meaning of this type isn't clear, there really should be more of a description here...
@@ -275,5 +346,23 @@ public interface InternalCDOBranchManager extends CDOBranchManager, ILifecycle
   public interface BranchLoader3 extends BranchLoader2
   {
     public void renameBranch(int branchID, String oldName, String newName);
+  }
+
+  /**
+   * If the meaning of this type isn't clear, there really should be more of a description here...
+   *
+   * @author Eike Stepper
+   * @since 4.11
+   */
+  public interface BranchLoader4 extends BranchLoader3
+  {
+    // public CDOBranchPoint changeTag(AtomicInteger modCount, String oldName, String newName, CDOBranchPoint
+    // branchPoint);
+    //
+    // public void loadTags(AtomicInteger modCount, String name, Consumer<BranchInfo> handler);
+
+    public CDOBranchPoint changeTag(AtomicInteger modCount, String oldName, String newName, CDOBranchPoint branchPoint);
+
+    public void loadTags(String name, Consumer<BranchInfo> handler);
   }
 }

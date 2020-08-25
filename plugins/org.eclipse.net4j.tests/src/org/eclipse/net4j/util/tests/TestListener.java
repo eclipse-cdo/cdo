@@ -12,6 +12,7 @@ package org.eclipse.net4j.util.tests;
 
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.event.INotifier;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,11 @@ public class TestListener implements IListener
 
   public TestListener()
   {
+  }
+
+  public TestListener(INotifier notifier)
+  {
+    notifier.addListener(this);
   }
 
   public <T extends IEvent> void assertEvent(final Class<?> eventType, final EventAssertion<T> assertion) throws Exception
@@ -96,6 +102,7 @@ public class TestListener implements IListener
   /**
    * @author Eike Stepper
    */
+  @FunctionalInterface
   public interface EventAssertion<T extends IEvent>
   {
     public void execute(T event);

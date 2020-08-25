@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.spi.server;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
@@ -149,6 +150,11 @@ public interface InternalSessionManager extends ISessionManager
    * @since 4.3
    */
   public void sendBranchNotification(InternalSession sender, InternalCDOBranch branch, ChangeKind changeKind);
+
+  /**
+   * @since 4.10
+   */
+  public void sendTagNotification(InternalSession sender, int modCount, String oldName, String newName, CDOBranchPoint branchPoint);
 
   /**
    * @deprecated As of 4.2 use {@link #sendCommitNotification(InternalSession, CDOCommitInfo, boolean)}.

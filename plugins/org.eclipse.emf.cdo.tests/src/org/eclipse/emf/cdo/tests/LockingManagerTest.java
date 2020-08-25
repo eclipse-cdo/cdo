@@ -31,10 +31,12 @@ import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 import org.eclipse.emf.cdo.util.StaleRevisionLockException;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.signal.ISignalProtocol;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.concurrent.RWOLockManager;
 import org.eclipse.net4j.util.concurrent.RWOLockManager.LockState;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
+import org.eclipse.net4j.util.io.IOUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -432,6 +434,56 @@ public class LockingManagerTest extends AbstractLockingTest
 
     company2.setCity("Ottawa");
     commitAndTimeout(transaction2);
+  }
+
+  public void _testWriteLock_LongTimeout() throws Exception
+  {
+    Company company = getModel1Factory().createCompany();
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource res = transaction.createResource(getResourcePath("/res1"));
+    res.getContents().add(company);
+    transaction.commit();
+
+    CDOTransaction transaction2 = session.openTransaction();
+    Company company2 = (Company)transaction2.getResource(getResourcePath("/res1")).getContents().get(0);
+
+    CDOObject cdoCompany = CDOUtil.getCDOObject(company);
+    CDOObject cdoCompany2 = CDOUtil.getCDOObject(company2);
+
+    cdoCompany.cdoWriteLock().lock();
+    IOUtil.OUT().println("Lock acquired by transaction 1");
+
+    Thread thread = new Thread()
+    {
+      @Override
+      public void run()
+      {
+        try
+        {
+          cdoCompany2.cdoWriteLock().lock(3 * ISignalProtocol.DEFAULT_TIMEOUT);
+          IOUtil.OUT().println("Lock acquired by transaction 2");
+
+          company2.setCity("Ottawa");
+          commitAndSync(transaction2, transaction);
+          IOUtil.OUT().println("Lock released by transaction 2");
+        }
+        catch (Exception ex)
+        {
+          ex.printStackTrace();
+        }
+      }
+    };
+
+    thread.start();
+
+    sleep(2 * ISignalProtocol.DEFAULT_TIMEOUT);
+    cdoCompany.cdoWriteLock().unlock();
+    IOUtil.OUT().println("Lock released by transaction 1");
+
+    thread.join(DEFAULT_TIMEOUT);
+    assertEquals("Ottawa", company.getCity());
   }
 
   public void testWriteLockViaObject() throws Exception

@@ -74,6 +74,8 @@ public abstract class SessionConfig extends Config implements ISessionConfig
 
   public static final String PROP_TEST_CREDENTIALS_PROVIDER = "test.session.CredentialsProvider";
 
+  public static final String PROP_TEST_BRANCH_MANAGER = "test.session.BranchManager";
+
   public static final String PROP_TEST_FETCH_RULE_MANAGER = "test.session.FetchRuleManager";
 
   private static final EPackage.Registry GLOBAL_REGISTRY = EPackage.Registry.INSTANCE;
@@ -192,6 +194,12 @@ public abstract class SessionConfig extends Config implements ISessionConfig
       configuration.setCredentialsProvider(credentialsProvider);
     }
 
+    CDOBranchManager branchManager = getTestBranchManager();
+    if (branchManager != null)
+    {
+      configuration.setBranchManager(branchManager);
+    }
+
     return openSession(configuration);
   }
 
@@ -287,6 +295,11 @@ public abstract class SessionConfig extends Config implements ISessionConfig
   protected IPasswordCredentialsProvider getTestCredentialsProvider()
   {
     return (IPasswordCredentialsProvider)getTestProperty(PROP_TEST_CREDENTIALS_PROVIDER);
+  }
+
+  protected CDOBranchManager getTestBranchManager()
+  {
+    return (CDOBranchManager)getTestProperty(PROP_TEST_BRANCH_MANAGER);
   }
 
   protected CDOFetchRuleManager getTestFetchRuleManager()

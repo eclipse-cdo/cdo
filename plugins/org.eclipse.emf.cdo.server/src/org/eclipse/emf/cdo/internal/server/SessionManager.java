@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.CDOCommonSession;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode;
 import org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
@@ -336,6 +337,25 @@ public class SessionManager extends Container<ISession> implements InternalSessi
         try
         {
           session.sendBranchNotification(branch, changeKind);
+        }
+        catch (Exception ex)
+        {
+          handleNotificationProblem(session, ex);
+        }
+      }
+    }
+  }
+
+  @Override
+  public void sendTagNotification(InternalSession sender, int modCount, String oldName, String newName, CDOBranchPoint branchPoint)
+  {
+    for (InternalSession session : getSessions())
+    {
+      if (session != sender)
+      {
+        try
+        {
+          session.sendTagNotification(modCount, oldName, newName, branchPoint);
         }
         catch (Exception ex)
         {

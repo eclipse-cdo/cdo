@@ -43,7 +43,7 @@ import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.mem.IMEMStore;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
-import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader3;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader4;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.commit.CDOCommitInfoUtil;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
@@ -92,12 +92,14 @@ import java.util.ListIterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 /**
  * @author Simon McDuff
  */
-public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, DurableLocking2
+public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader4, DurableLocking2
 {
   public static final String TYPE = "mem"; //$NON-NLS-1$
 
@@ -292,6 +294,24 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
     {
       branchInfo.setName(newName);
     }
+  }
+
+  @Override
+  public CDOBranchPoint changeTag(AtomicInteger modCount, String oldName, String newName, CDOBranchPoint branchPoint)
+  {
+    // This store is not persistent.
+    // The accessor will initially be asked to load stored tags and return none.
+    // Later the repository will only serve and modify the cached tags.
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public void loadTags(String name, Consumer<BranchInfo> handler)
+  {
+    // This store is not persistent.
+    // The accessor will initially be asked to load stored tags and return none.
+    // Later the repository will only serve and modify the cached tags.
+    throw new UnsupportedOperationException();
   }
 
   public synchronized void loadCommitInfos(final CDOBranch branch, long startTime, final long endTime, CDOCommitInfoHandler handler)

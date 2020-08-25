@@ -74,6 +74,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
 
 /**
  * @author Eike Stepper
@@ -650,6 +652,41 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
       try
       {
         delegate.renameBranch(branchID, oldName, newName);
+        return;
+      }
+      catch (Exception ex)
+      {
+        handleException(++attempt, ex);
+      }
+    }
+  }
+
+  @Override
+  public CDOBranchPoint changeTag(AtomicInteger modCount, String oldName, String newName, CDOBranchPoint branchPoint)
+  {
+    int attempt = 0;
+    for (;;)
+    {
+      try
+      {
+        return delegate.changeTag(modCount, oldName, newName, branchPoint);
+      }
+      catch (Exception ex)
+      {
+        handleException(++attempt, ex);
+      }
+    }
+  }
+
+  @Override
+  public void loadTags(String name, Consumer<BranchInfo> handler)
+  {
+    int attempt = 0;
+    for (;;)
+    {
+      try
+      {
+        delegate.loadTags(name, handler);
         return;
       }
       catch (Exception ex)

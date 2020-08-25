@@ -17,6 +17,7 @@ package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
@@ -162,6 +163,19 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     if (LifecycleUtil.isActive(getChannel()))
     {
       new BranchNotificationRequest(this, branch, changeKind).sendAsync();
+    }
+    else
+    {
+      handleInactiveSession();
+    }
+  }
+
+  @Override
+  public void sendTagNotification(int modCount, String oldName, String newName, CDOBranchPoint branchPoint) throws Exception
+  {
+    if (LifecycleUtil.isActive(getChannel()))
+    {
+      new TagNotificationRequest(this, modCount, oldName, newName, branchPoint).sendAsync();
     }
     else
     {
@@ -417,6 +431,12 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
 
     case SIGNAL_UNIT:
       return new UnitIndication(this);
+
+    case SIGNAL_CHANGE_TAG:
+      return new ChangeTagIndication(this);
+
+    case SIGNAL_LOAD_TAGS:
+      return new LoadTagsIndication(this);
 
     default:
       return super.createSignalReactor(signalID);

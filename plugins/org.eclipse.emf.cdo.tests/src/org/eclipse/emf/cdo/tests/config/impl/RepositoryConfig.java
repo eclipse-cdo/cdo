@@ -223,6 +223,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
   protected abstract String getStoreName();
 
+  @Override
   public boolean isRestartable()
   {
     return true;

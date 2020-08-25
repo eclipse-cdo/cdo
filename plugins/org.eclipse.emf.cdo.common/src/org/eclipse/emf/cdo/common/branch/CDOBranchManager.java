@@ -12,6 +12,8 @@ package org.eclipse.emf.cdo.common.branch;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
 
+import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.INotifier;
 
 /**
@@ -82,4 +84,57 @@ public interface CDOBranchManager extends INotifier
    * This is a blocking call.
    */
   public int getBranches(int startID, int endID, CDOBranchHandler handler);
+
+  /**
+   * @since 4.11
+   */
+  public CDOBranchTag createTag(String name, CDOBranchPoint branchPoint);
+
+  /**
+   * @since 4.11
+   */
+  public CDOBranchTag getTag(String name);
+
+  /**
+   * @since 4.11
+   */
+  public CDOTagList getTagList();
+
+  /**
+   * @author Eike Stepper
+   * @since 4.11
+   */
+  public interface CDOTagList extends IContainer<CDOBranchTag>
+  {
+    /**
+     * Returns the {@link CDOBranchManager branch manager} that manages this {@link CDOTagList tag list}, never <code>null</code>.
+     */
+    public CDOBranchManager getBranchManager();
+
+    public CDOBranchTag[] getTags();
+
+    public CDOBranchTag[] getTags(CDOBranch branch);
+
+    /**
+     * @author Eike Stepper
+     */
+    public interface TagListEvent extends IEvent
+    {
+      public CDOTagList getTagList();
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    public interface TagRenamedEvent extends TagListEvent, CDOBranchTag.TagRenamedEvent
+    {
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    public interface TagMovedEvent extends TagListEvent, CDOBranchTag.TagRenamedEvent
+    {
+    }
+  }
 }

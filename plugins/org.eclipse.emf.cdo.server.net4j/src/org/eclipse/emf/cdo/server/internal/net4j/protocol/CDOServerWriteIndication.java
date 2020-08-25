@@ -31,16 +31,21 @@ public abstract class CDOServerWriteIndication extends CDOServerIndication
   {
     try
     {
-      // Allocate a store writer
-      IStoreAccessor accessor = getStore().getWriter(null);
-
-      // Make the store writer available in a ThreadLocal variable
-      StoreThreadLocal.setAccessor(accessor);
+      prepareStoreThreadLocal();
       super.execute(in, out);
     }
     finally
     {
       StoreThreadLocal.release();
     }
+  }
+
+  protected void prepareStoreThreadLocal()
+  {
+    // Allocate a store writer
+    IStoreAccessor accessor = getStore().getWriter(null);
+
+    // Make the store writer available in a ThreadLocal variable
+    StoreThreadLocal.setAccessor(accessor);
   }
 }

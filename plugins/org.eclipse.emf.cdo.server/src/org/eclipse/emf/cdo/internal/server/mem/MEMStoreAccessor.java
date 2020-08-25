@@ -31,7 +31,7 @@ import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreAccessor.DurableLocking2;
 import org.eclipse.emf.cdo.server.IStoreAccessor.Raw2;
 import org.eclipse.emf.cdo.server.ITransaction;
-import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader3;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader4;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -59,11 +59,13 @@ import java.util.ConcurrentModificationException;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
 
 /**
  * @author Simon McDuff
  */
-public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw2, DurableLocking2, BranchLoader3
+public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw2, DurableLocking2, BranchLoader4
 {
   private final MEMStore store;
 
@@ -257,6 +259,23 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw2, Durab
   public void renameBranch(int branchID, String oldName, String newName)
   {
     store.renameBranch(branchID, oldName, newName);
+  }
+
+  @Override
+  public CDOBranchPoint changeTag(AtomicInteger modCount, String oldName, String newName, CDOBranchPoint branchPoint)
+  {
+    // This store is not persistent.
+    // The accessor will initially be asked to load stored tags and return none.
+    // Later the repository will only serve and modify the cached tags.
+    return null;
+  }
+
+  @Override
+  public void loadTags(String name, Consumer<BranchInfo> handler)
+  {
+    // This store is not persistent.
+    // The accessor will initially be asked to load stored tags and return none.
+    // Later the repository will only serve and modify the cached tags.
   }
 
   @Override

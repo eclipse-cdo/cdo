@@ -513,6 +513,15 @@ public class Session extends Container<IView> implements InternalSession
   }
 
   @Override
+  public void sendTagNotification(int modCount, String oldName, String newName, CDOBranchPoint branchPoint) throws Exception
+  {
+    if (protocol != null)
+    {
+      protocol.sendTagNotification(modCount, oldName, newName, branchPoint);
+    }
+  }
+
+  @Override
   @Deprecated
   public void sendCommitNotification(CDOCommitInfo commitInfo) throws Exception
   {

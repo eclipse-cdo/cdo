@@ -12,6 +12,8 @@ package org.eclipse.emf.cdo.common.branch;
 
 import org.eclipse.emf.cdo.common.util.CDONameProvider;
 
+import org.eclipse.net4j.util.event.IEvent;
+
 /**
  * A persistent, named {@link CDOBranchPoint branch point}.
  *
@@ -20,11 +22,77 @@ import org.eclipse.emf.cdo.common.util.CDONameProvider;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface CDOBranchTag extends CDOBranchPoint, CDONameProvider
+public interface CDOBranchTag extends CDOBranchPoint, CDONameProvider, Comparable<CDOBranchTag>
 {
+  /**
+   * Returns the branch manager that manages this branch, never <code>null</code>.
+   *
+   * @since 4.11
+   */
+  public CDOBranchManager getBranchManager();
+
   /**
    * Returns the name of this branch tag.
    */
   @Override
   public String getName();
+
+  /**
+   * @since 4.11
+   */
+  public void setName(String name);
+
+  /**
+   * @since 4.11
+   */
+  public void move(CDOBranchPoint branchPoint);
+
+  /**
+   * @since 4.11
+   */
+  public void delete();
+
+  /**
+   * @since 4.11
+   */
+  public boolean isDeleted();
+
+  /**
+   * @author Eike Stepper
+   * @since 4.11
+   */
+  public interface TagEvent extends IEvent
+  {
+    public CDOBranchTag getTag();
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 4.11
+   */
+  public interface TagRenamedEvent extends TagEvent
+  {
+    public String getOldName();
+
+    public String getNewName();
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 4.11
+   */
+  public interface TagMovedEvent extends TagEvent
+  {
+    public CDOBranchPoint getOldBranchPoint();
+
+    public CDOBranchPoint getNewBranchPoint();
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 4.11
+   */
+  public interface TagDeletedEvent extends TagEvent
+  {
+  }
 }

@@ -115,6 +115,11 @@ public interface InternalSession extends ISession, CDOIDProvider, CDOPermissionP
   public void sendBranchNotification(InternalCDOBranch branch, ChangeKind changeKind) throws Exception;
 
   /**
+   * @since 4.10
+   */
+  public void sendTagNotification(int modCount, String oldName, String newName, CDOBranchPoint branchPoint) throws Exception;
+
+  /**
    * @deprecated As of 4.2 use {@link #sendCommitNotification(CDOCommitInfo, boolean)}.
    */
   @Deprecated

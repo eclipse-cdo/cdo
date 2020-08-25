@@ -11,24 +11,29 @@
 package org.eclipse.emf.cdo.server.internal.embedded;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchHandler;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.ISessionManager;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader3;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader4;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 
 import org.eclipse.net4j.util.collection.Pair;
 
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
+
 /**
  * @author Eike Stepper
  */
-public final class ServerBranchLoader implements BranchLoader3
+public final class ServerBranchLoader implements BranchLoader4
 {
-  private final BranchLoader3 delegate;
+  private final BranchLoader4 delegate;
 
   private final ISessionManager sessionManager;
 
-  public ServerBranchLoader(BranchLoader3 delegate)
+  public ServerBranchLoader(BranchLoader4 delegate)
   {
     this.delegate = delegate;
     sessionManager = ((IRepository)delegate).getSessionManager();
@@ -133,6 +138,46 @@ public final class ServerBranchLoader implements BranchLoader3
     else
     {
       delegate.renameBranch(branchID, oldName, newName);
+    }
+  }
+
+  @Override
+  public CDOBranchPoint changeTag(AtomicInteger modCount, String oldName, String newName, CDOBranchPoint branchPoint)
+  {
+    if (!StoreThreadLocal.hasSession())
+    {
+      try
+      {
+        StoreThreadLocal.setSession(getServerSession());
+        return delegate.changeTag(modCount, oldName, newName, branchPoint);
+      }
+      finally
+      {
+        StoreThreadLocal.release();
+      }
+    }
+
+    return delegate.changeTag(modCount, oldName, newName, branchPoint);
+  }
+
+  @Override
+  public void loadTags(String name, Consumer<BranchInfo> handler)
+  {
+    if (!StoreThreadLocal.hasSession())
+    {
+      try
+      {
+        StoreThreadLocal.setSession(getServerSession());
+        delegate.loadTags(name, handler);
+      }
+      finally
+      {
+        StoreThreadLocal.release();
+      }
+    }
+    else
+    {
+      delegate.loadTags(name, handler);
     }
   }
 

@@ -32,8 +32,9 @@ public interface CDOProtocolConstants
    * @since 4.2
    * @noreference This field is not intended to be referenced by clients.
    */
-  public static final int PROTOCOL_VERSION = 37; // SIGNAL_ACKNOWLEDGE_COMPRESSED_STRINGS
+  public static final int PROTOCOL_VERSION = 38; // CDOBranchTag support
 
+  // public static final int PROTOCOL_VERSION = 37; // SIGNAL_ACKNOWLEDGE_COMPRESSED_STRINGS
   // public static final int PROTOCOL_VERSION = 36; // CDOID.NIL
   // public static final int PROTOCOL_VERSION = 35; // DiffieHellman.Server.Challenge.getSecretAlgorithmKeyLen()
   // public static final int PROTOCOL_VERSION = 34; // CDOSessionProtocol.loadMergeData2()
@@ -332,6 +333,21 @@ public interface CDOProtocolConstants
    * @since 4.5
    */
   public static final short SIGNAL_UNIT = 62;
+
+  /**
+   * @since 4.11
+   */
+  public static final short SIGNAL_LOAD_TAGS = 63;
+
+  /**
+   * @since 4.11
+   */
+  public static final short SIGNAL_CHANGE_TAG = 64;
+
+  /**
+   * @since 4.11
+   */
+  public static final short SIGNAL_TAG_NOTIFICATION = 65;
 
   // //////////////////////////////////////////////////////////////////////
   // Session Refresh

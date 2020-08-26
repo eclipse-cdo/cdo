@@ -77,6 +77,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Consumer;
 
 /**
@@ -2504,6 +2505,41 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     {
       checkListForReading();
       return size == 0;
+    }
+
+    @Override
+    public Object get(Object key)
+    {
+      checkListForReading();
+      return super.get(key);
+    }
+
+    @Override
+    public Set<Object> keySet()
+    {
+      checkListForReading();
+      return super.keySet();
+    }
+
+    @Override
+    public Collection<Object> values()
+    {
+      checkListForReading();
+      return super.values();
+    }
+
+    @Override
+    public Set<java.util.Map.Entry<Object, Object>> entrySet()
+    {
+      checkListForReading();
+      return super.entrySet();
+    }
+
+    @Override
+    public Map<Object, Object> map()
+    {
+      checkListForReading();
+      return super.map();
     }
 
     @Override

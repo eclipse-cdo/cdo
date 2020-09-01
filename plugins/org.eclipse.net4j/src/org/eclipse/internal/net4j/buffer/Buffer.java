@@ -727,33 +727,33 @@ public class Buffer implements InternalBuffer
   /**
    * See https://github.com/apache/felix/pull/114
    */
-  private static void _clear(ByteBuffer byteBuffer)
+  private static void _clear(java.nio.Buffer buffer)
   {
-    ((java.nio.Buffer)byteBuffer).clear();
+    buffer.clear();
   }
 
   /**
    * See https://github.com/apache/felix/pull/114
    */
-  private static void _position(ByteBuffer byteBuffer, int position)
+  private static void _position(java.nio.Buffer buffer, int position)
   {
-    ((java.nio.Buffer)byteBuffer).position(position);
+    buffer.position(position);
   }
 
   /**
    * See https://github.com/apache/felix/pull/114
    */
-  private static void _limit(ByteBuffer byteBuffer, int limit)
+  private static void _limit(java.nio.Buffer buffer, int limit)
   {
-    ((java.nio.Buffer)byteBuffer).limit(limit);
+    buffer.limit(limit);
   }
 
   /**
    * See https://github.com/apache/felix/pull/114
    */
-  private static void _flip(ByteBuffer byteBuffer)
+  private static void _flip(java.nio.Buffer buffer)
   {
-    ((java.nio.Buffer)byteBuffer).flip();
+    buffer.flip();
   }
 
   public static void main(String[] args) throws Exception

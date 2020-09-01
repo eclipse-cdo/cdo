@@ -57,6 +57,7 @@ Eike Stepper - initial API and implementation
     <module>../../../plugins/org.eclipse.emf.cdo.expressions</module>
     <module>../../../plugins/org.eclipse.emf.cdo.expressions.edit</module>
     <module>../../../plugins/org.eclipse.emf.cdo.expressions.editor</module>
+    <module>../../../plugins/org.eclipse.emf.cdo.genmodel</module>
     <module>../../../plugins/org.eclipse.emf.cdo.gmf.notation</module>
     <module>../../../plugins/org.eclipse.emf.cdo.migrator</module>
     <module>../../../plugins/org.eclipse.emf.cdo.net4j</module>

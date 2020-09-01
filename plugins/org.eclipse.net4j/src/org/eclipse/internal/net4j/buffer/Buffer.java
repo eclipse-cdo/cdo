@@ -170,7 +170,7 @@ public class Buffer implements InternalBuffer
     state = BufferState.INITIAL;
     channelID = NO_CHANNEL;
     flags = 0;
-    byteBuffer.clear();
+    _clear(byteBuffer);
   }
 
   @Override
@@ -222,7 +222,7 @@ public class Buffer implements InternalBuffer
 
       if (state == BufferState.INITIAL)
       {
-        byteBuffer.limit(HEADER_SIZE);
+        _limit(byteBuffer, HEADER_SIZE);
         state = BufferState.READING_HEADER;
       }
 
@@ -253,7 +253,7 @@ public class Buffer implements InternalBuffer
 
         try
         {
-          byteBuffer.limit(HEADER_SIZE + payloadSize);
+          _limit(byteBuffer, HEADER_SIZE + payloadSize);
         }
         catch (IllegalArgumentException ex)
         {
@@ -286,7 +286,7 @@ public class Buffer implements InternalBuffer
             + (isEOS() ? " (EOS)" : "") + StringUtil.NL + formatContent(false)); //$NON-NLS-1$ //$NON-NLS-2$
       }
 
-      byteBuffer.position(HEADER_SIZE);
+      _position(byteBuffer, HEADER_SIZE);
       state = BufferState.GETTING;
       return byteBuffer;
     }
@@ -328,8 +328,8 @@ public class Buffer implements InternalBuffer
         state = BufferState.PUTTING;
         this.channelID = channelID;
 
-        byteBuffer.clear();
-        byteBuffer.position(HEADER_SIZE);
+        _clear(byteBuffer);
+        _position(byteBuffer, HEADER_SIZE);
       }
 
       return byteBuffer;
@@ -379,10 +379,10 @@ public class Buffer implements InternalBuffer
               + (eos ? " (EOS)" : "") + StringUtil.NL + formatContent(false)); //$NON-NLS-1$ //$NON-NLS-2$
         }
 
-        byteBuffer.flip();
+        _flip(byteBuffer);
         byteBuffer.putShort(channelID);
         byteBuffer.putShort((short)payloadSize);
-        byteBuffer.position(0);
+        _position(byteBuffer, 0);
         state = BufferState.WRITING;
       }
 
@@ -427,8 +427,8 @@ public class Buffer implements InternalBuffer
         throw new IllegalStateException(toString());
       }
 
-      byteBuffer.flip();
-      byteBuffer.position(HEADER_SIZE);
+      _flip(byteBuffer);
+      _position(byteBuffer, HEADER_SIZE);
       state = BufferState.GETTING;
     }
     catch (RuntimeException ex)
@@ -458,7 +458,7 @@ public class Buffer implements InternalBuffer
   @Override
   public void setPosition(int position)
   {
-    byteBuffer.position(position);
+    _position(byteBuffer, position);
   }
 
   @Override
@@ -470,7 +470,7 @@ public class Buffer implements InternalBuffer
   @Override
   public void setLimit(int limit)
   {
-    byteBuffer.limit(limit);
+    _limit(byteBuffer, limit);
   }
 
   @Override
@@ -544,12 +544,12 @@ public class Buffer implements InternalBuffer
     {
       if (state != BufferState.GETTING)
       {
-        byteBuffer.flip();
+        _flip(byteBuffer);
       }
 
       if (state == BufferState.PUTTING && !showHeader)
       {
-        byteBuffer.position(HEADER_SIZE);
+        _position(byteBuffer, HEADER_SIZE);
       }
 
       StringBuilder builder = new StringBuilder();
@@ -564,8 +564,8 @@ public class Buffer implements InternalBuffer
     }
     finally
     {
-      byteBuffer.position(oldPosition);
-      byteBuffer.limit(oldLimit);
+      _position(byteBuffer, oldPosition);
+      _limit(byteBuffer, oldLimit);
     }
   }
 
@@ -697,7 +697,7 @@ public class Buffer implements InternalBuffer
       int capacity = byteBuffer.capacity();
       if (limit < capacity)
       {
-        byteBuffer.limit(capacity);
+        _limit(byteBuffer, capacity);
 
         try
         {
@@ -709,7 +709,7 @@ public class Buffer implements InternalBuffer
         }
         finally
         {
-          byteBuffer.limit(limit);
+          _limit(byteBuffer, limit);
         }
       }
     }
@@ -722,6 +722,38 @@ public class Buffer implements InternalBuffer
     int b = byteBuffer.get(i) & 0xFF; // Dump unsigned int instead of signed byte.
     builder.append('\u00A0'); // NO-BREAK SPACE. A bug in JDT's detail formatter hates normal spaces.
     builder.append(b);
+  }
+
+  /**
+   * See https://github.com/apache/felix/pull/114
+   */
+  private static void _clear(ByteBuffer byteBuffer)
+  {
+    ((java.nio.Buffer)byteBuffer).clear();
+  }
+
+  /**
+   * See https://github.com/apache/felix/pull/114
+   */
+  private static void _position(ByteBuffer byteBuffer, int position)
+  {
+    ((java.nio.Buffer)byteBuffer).position(position);
+  }
+
+  /**
+   * See https://github.com/apache/felix/pull/114
+   */
+  private static void _limit(ByteBuffer byteBuffer, int limit)
+  {
+    ((java.nio.Buffer)byteBuffer).limit(limit);
+  }
+
+  /**
+   * See https://github.com/apache/felix/pull/114
+   */
+  private static void _flip(ByteBuffer byteBuffer)
+  {
+    ((java.nio.Buffer)byteBuffer).flip();
   }
 
   public static void main(String[] args) throws Exception

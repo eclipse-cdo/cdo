@@ -127,6 +127,13 @@
          unpack="false"/>
 
    <plugin
+         id="org.eclipse.emf.cdo.genmodel"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
          id="org.eclipse.net4j.trace"
          download-size="0"
          install-size="0"

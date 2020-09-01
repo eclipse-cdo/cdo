@@ -358,7 +358,7 @@ public class SQLQueryHandler implements IQueryHandler
             paramMap.put(name, indexList);
           }
 
-          indexList.add(new Integer(index));
+          indexList.add(Integer.valueOf(index));
           index++;
         }
       }

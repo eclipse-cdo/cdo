@@ -58,7 +58,7 @@ public class CDOBranchPointImpl implements CDOBranchPoint, Comparable<CDOBranchP
   @Override
   public int hashCode()
   {
-    return branch.hashCode() ^ new Long(timeStamp).hashCode();
+    return branch.hashCode() ^ Long.valueOf(timeStamp).hashCode();
   }
 
   @Override

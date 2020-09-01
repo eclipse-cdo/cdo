@@ -53,7 +53,7 @@ public class SetFeatureTest extends AbstractCDOTest
 
   public void testNotUnsettableBooleanNoDefault2() throws Exception
   {
-    testIsSet(getModel2Factory().createNotUnsettable(), getModel2Package().getNotUnsettable_NotUnsettableBoolean(), new Boolean(false));
+    testIsSet(getModel2Factory().createNotUnsettable(), getModel2Package().getNotUnsettable_NotUnsettableBoolean(), Boolean.valueOf(false));
   }
 
   public void testNotUnsettableBooleanNoDefault_SetDefault() throws Exception
@@ -69,7 +69,7 @@ public class SetFeatureTest extends AbstractCDOTest
 
   public void testNotUnsettableByteNoDefault2() throws Exception
   {
-    testIsSet(getModel2Factory().createNotUnsettable(), getModel2Package().getNotUnsettable_NotUnsettableByte(), new Byte((byte)25));
+    testIsSet(getModel2Factory().createNotUnsettable(), getModel2Package().getNotUnsettable_NotUnsettableByte(), Byte.valueOf((byte)25));
   }
 
   public void testNotUnsettableByteNoDefault_SetDefault() throws Exception
@@ -85,7 +85,7 @@ public class SetFeatureTest extends AbstractCDOTest
 
   public void testNotUnsettableCharNoDefault_SetDefault() throws Exception
   {
-    testIsSet(getModel2Factory().createNotUnsettable(), getModel2Package().getNotUnsettable_NotUnsettableChar(), new Character('c'));
+    testIsSet(getModel2Factory().createNotUnsettable(), getModel2Package().getNotUnsettable_NotUnsettableChar(), Character.valueOf('c'));
   }
 
   public void testNotUnsettableCharNoDefault2() throws Exception
@@ -112,7 +112,7 @@ public class SetFeatureTest extends AbstractCDOTest
 
   public void testNotUnsettableDoubleNoDefault_SetDefault() throws Exception
   {
-    testIsSet(getModel2Factory().createNotUnsettable(), getModel2Package().getNotUnsettable_NotUnsettableDouble(), new Double(19.79));
+    testIsSet(getModel2Factory().createNotUnsettable(), getModel2Package().getNotUnsettable_NotUnsettableDouble(), Double.valueOf(19.79));
   }
 
   public void testNotUnsettableDoubleNoDefault2() throws Exception
@@ -128,7 +128,7 @@ public class SetFeatureTest extends AbstractCDOTest
 
   public void testNotUnsettableFloatNoDefault2() throws Exception
   {
-    testIsSet(getModel2Factory().createNotUnsettable(), getModel2Package().getNotUnsettable_NotUnsettableFloat(), new Float(19.79f));
+    testIsSet(getModel2Factory().createNotUnsettable(), getModel2Package().getNotUnsettable_NotUnsettableFloat(), Float.valueOf(19.79f));
   }
 
   public void testNotUnsettableFloatNoDefault_SetDefault() throws Exception
@@ -144,7 +144,7 @@ public class SetFeatureTest extends AbstractCDOTest
 
   public void testNotUnsettableIntNoDefault2() throws Exception
   {
-    testIsSet(getModel2Factory().createNotUnsettable(), getModel2Package().getNotUnsettable_NotUnsettableInt(), new Integer(15));
+    testIsSet(getModel2Factory().createNotUnsettable(), getModel2Package().getNotUnsettable_NotUnsettableInt(), Integer.valueOf(15));
   }
 
   public void testNotUnsettableIntNoDefault_SetDefault() throws Exception
@@ -160,7 +160,7 @@ public class SetFeatureTest extends AbstractCDOTest
 
   public void testNotUnsettableLongNoDefault2() throws Exception
   {
-    testIsSet(getModel2Factory().createNotUnsettable(), getModel2Package().getNotUnsettable_NotUnsettableLong(), new Long(15031979L));
+    testIsSet(getModel2Factory().createNotUnsettable(), getModel2Package().getNotUnsettable_NotUnsettableLong(), Long.valueOf(15031979L));
   }
 
   public void testNotUnsettableLongNoDefault_SetDefault() throws Exception
@@ -176,7 +176,7 @@ public class SetFeatureTest extends AbstractCDOTest
 
   public void testNotUnsettableShortNoDefault2() throws Exception
   {
-    testIsSet(getModel2Factory().createNotUnsettable(), getModel2Package().getNotUnsettable_NotUnsettableShort(), new Short((short)15));
+    testIsSet(getModel2Factory().createNotUnsettable(), getModel2Package().getNotUnsettable_NotUnsettableShort(), Short.valueOf((short)15));
   }
 
   public void testNotUnsettableShortNoDefault_SetDefault() throws Exception
@@ -219,7 +219,8 @@ public class SetFeatureTest extends AbstractCDOTest
 
   public void testNotUnsettableWithDefaultBoolean2() throws Exception
   {
-    testIsSet(getModel2Factory().createNotUnsettableWithDefault(), getModel2Package().getNotUnsettableWithDefault_NotUnsettableBoolean(), new Boolean(false));
+    testIsSet(getModel2Factory().createNotUnsettableWithDefault(), getModel2Package().getNotUnsettableWithDefault_NotUnsettableBoolean(),
+        Boolean.valueOf(false));
   }
 
   public void testNotUnsettableWithDefaultBoolean_SetDefault() throws Exception
@@ -235,7 +236,7 @@ public class SetFeatureTest extends AbstractCDOTest
 
   public void testNotUnsettableWithDefaultByte2() throws Exception
   {
-    testIsSet(getModel2Factory().createNotUnsettableWithDefault(), getModel2Package().getNotUnsettableWithDefault_NotUnsettableByte(), new Byte((byte)25));
+    testIsSet(getModel2Factory().createNotUnsettableWithDefault(), getModel2Package().getNotUnsettableWithDefault_NotUnsettableByte(), Byte.valueOf((byte)25));
   }
 
   public void testNotUnsettableWithDefaultByte_SetDefault() throws Exception
@@ -251,7 +252,7 @@ public class SetFeatureTest extends AbstractCDOTest
 
   public void testNotUnsettableWithDefaultChart2() throws Exception
   {
-    testIsSet(getModel2Factory().createNotUnsettableWithDefault(), getModel2Package().getNotUnsettableWithDefault_NotUnsettableChar(), new Character('c'));
+    testIsSet(getModel2Factory().createNotUnsettableWithDefault(), getModel2Package().getNotUnsettableWithDefault_NotUnsettableChar(), Character.valueOf('c'));
   }
 
   public void testNotUnsettableWithDefaultChar_SetDefault() throws Exception
@@ -278,7 +279,8 @@ public class SetFeatureTest extends AbstractCDOTest
 
   public void testNotUnsettableWithDefaultDouble2() throws Exception
   {
-    testIsSet(getModel2Factory().createNotUnsettableWithDefault(), getModel2Package().getNotUnsettableWithDefault_NotUnsettableDouble(), new Double(15.03d));
+    testIsSet(getModel2Factory().createNotUnsettableWithDefault(), getModel2Package().getNotUnsettableWithDefault_NotUnsettableDouble(),
+        Double.valueOf(15.03d));
   }
 
   public void testNotUnsettableWithDefaultDouble_SetDefault() throws Exception
@@ -305,7 +307,7 @@ public class SetFeatureTest extends AbstractCDOTest
 
   public void testUnsettableBooleanNoDefault2() throws Exception
   {
-    testIsSet(getModel2Factory().createUnsettable1(), getModel2Package().getUnsettable1_UnsettableBoolean(), new Boolean(false));
+    testIsSet(getModel2Factory().createUnsettable1(), getModel2Package().getUnsettable1_UnsettableBoolean(), Boolean.valueOf(false));
   }
 
   public void testUnsettableBooleanNoDefault_SetDefault() throws Exception
@@ -321,7 +323,7 @@ public class SetFeatureTest extends AbstractCDOTest
 
   public void testUnsettableByteNoDefault2() throws Exception
   {
-    testIsSet(getModel2Factory().createUnsettable1(), getModel2Package().getUnsettable1_UnsettableByte(), new Byte((byte)25));
+    testIsSet(getModel2Factory().createUnsettable1(), getModel2Package().getUnsettable1_UnsettableByte(), Byte.valueOf((byte)25));
   }
 
   public void testUnsettableByteNoDefault_SetDefault() throws Exception
@@ -337,7 +339,7 @@ public class SetFeatureTest extends AbstractCDOTest
 
   public void testUnsettableCharNoDefault2() throws Exception
   {
-    testIsSet(getModel2Factory().createUnsettable1(), getModel2Package().getUnsettable1_UnsettableChar(), new Character('c'));
+    testIsSet(getModel2Factory().createUnsettable1(), getModel2Package().getUnsettable1_UnsettableChar(), Character.valueOf('c'));
   }
 
   public void testUnsettableCharNoDefault_SetDefault() throws Exception
@@ -358,7 +360,7 @@ public class SetFeatureTest extends AbstractCDOTest
 
   public void testUnsettableDoubleNoDefault2() throws Exception
   {
-    testIsSet(getModel2Factory().createUnsettable1(), getModel2Package().getUnsettable1_UnsettableDouble(), new Double(19.79));
+    testIsSet(getModel2Factory().createUnsettable1(), getModel2Package().getUnsettable1_UnsettableDouble(), Double.valueOf(19.79));
   }
 
   public void testUnsettableDoubleNoDefault_SetDefault() throws Exception
@@ -374,7 +376,7 @@ public class SetFeatureTest extends AbstractCDOTest
 
   public void testUnsettableFloatNoDefault2() throws Exception
   {
-    testIsSet(getModel2Factory().createUnsettable1(), getModel2Package().getUnsettable1_UnsettableFloat(), new Float(19.79f));
+    testIsSet(getModel2Factory().createUnsettable1(), getModel2Package().getUnsettable1_UnsettableFloat(), Float.valueOf(19.79f));
   }
 
   public void testUnsettableFloatNoDefault_SetDefault() throws Exception
@@ -390,7 +392,7 @@ public class SetFeatureTest extends AbstractCDOTest
 
   public void testUnsettableIntNoDefault2() throws Exception
   {
-    testIsSet(getModel2Factory().createUnsettable1(), getModel2Package().getUnsettable1_UnsettableInt(), new Integer(15));
+    testIsSet(getModel2Factory().createUnsettable1(), getModel2Package().getUnsettable1_UnsettableInt(), Integer.valueOf(15));
   }
 
   public void testUnsettableIntNoDefault_SetDefault() throws Exception
@@ -411,7 +413,7 @@ public class SetFeatureTest extends AbstractCDOTest
 
   public void testUnsettableShortNoDefault2() throws Exception
   {
-    testIsSet(getModel2Factory().createUnsettable1(), getModel2Package().getUnsettable1_UnsettableShort(), new Short((short)15));
+    testIsSet(getModel2Factory().createUnsettable1(), getModel2Package().getUnsettable1_UnsettableShort(), Short.valueOf((short)15));
   }
 
   public void testUnsettableShortNoDefault_SetDefault() throws Exception
@@ -448,7 +450,7 @@ public class SetFeatureTest extends AbstractCDOTest
 
   public void testUnsettableWithDefaultBoolean2() throws Exception
   {
-    testIsSet(getModel2Factory().createUnsettable2WithDefault(), getModel2Package().getUnsettable2WithDefault_UnsettableBoolean(), new Boolean(false));
+    testIsSet(getModel2Factory().createUnsettable2WithDefault(), getModel2Package().getUnsettable2WithDefault_UnsettableBoolean(), Boolean.valueOf(false));
   }
 
   public void testUnsettableWithDefaultByte() throws Exception
@@ -458,7 +460,7 @@ public class SetFeatureTest extends AbstractCDOTest
 
   public void testUnsettableWithDefaultByte2() throws Exception
   {
-    testIsSet(getModel2Factory().createUnsettable2WithDefault(), getModel2Package().getUnsettable2WithDefault_UnsettableByte(), new Byte((byte)25));
+    testIsSet(getModel2Factory().createUnsettable2WithDefault(), getModel2Package().getUnsettable2WithDefault_UnsettableByte(), Byte.valueOf((byte)25));
   }
 
   public void testUnsettableWithDefaultByte_SetDefault() throws Exception
@@ -474,7 +476,7 @@ public class SetFeatureTest extends AbstractCDOTest
 
   public void testUnsettableWithDefaultCharNo() throws Exception
   {
-    testIsSet(getModel2Factory().createUnsettable2WithDefault(), getModel2Package().getUnsettable2WithDefault_UnsettableChar(), new Character('c'));
+    testIsSet(getModel2Factory().createUnsettable2WithDefault(), getModel2Package().getUnsettable2WithDefault_UnsettableChar(), Character.valueOf('c'));
   }
 
   public void testUnsettableWithDefaultChar_SetDefault() throws Exception
@@ -501,7 +503,7 @@ public class SetFeatureTest extends AbstractCDOTest
 
   public void testUnsettableWithDefaultDouble2() throws Exception
   {
-    testIsSet(getModel2Factory().createUnsettable2WithDefault(), getModel2Package().getUnsettable2WithDefault_UnsettableDouble(), new Double(19.79));
+    testIsSet(getModel2Factory().createUnsettable2WithDefault(), getModel2Package().getUnsettable2WithDefault_UnsettableDouble(), Double.valueOf(19.79));
   }
 
   public void testUnsettableWithDefaultDouble_SetDefault() throws Exception
@@ -517,7 +519,7 @@ public class SetFeatureTest extends AbstractCDOTest
 
   public void testUnsettableWithDefaultFloat2() throws Exception
   {
-    testIsSet(getModel2Factory().createUnsettable2WithDefault(), getModel2Package().getUnsettable2WithDefault_UnsettableFloat(), new Float(19.79f));
+    testIsSet(getModel2Factory().createUnsettable2WithDefault(), getModel2Package().getUnsettable2WithDefault_UnsettableFloat(), Float.valueOf(19.79f));
   }
 
   public void testUnsettableWithDefaultFloat_SetDefault() throws Exception
@@ -533,7 +535,7 @@ public class SetFeatureTest extends AbstractCDOTest
 
   public void testUnsettableWithDefaultInt2() throws Exception
   {
-    testIsSet(getModel2Factory().createUnsettable2WithDefault(), getModel2Package().getUnsettable2WithDefault_UnsettableInt(), new Integer(15));
+    testIsSet(getModel2Factory().createUnsettable2WithDefault(), getModel2Package().getUnsettable2WithDefault_UnsettableInt(), Integer.valueOf(15));
   }
 
   public void testUnsettableWithDefaultInt_SetDefault() throws Exception
@@ -554,7 +556,7 @@ public class SetFeatureTest extends AbstractCDOTest
 
   public void testUnsettableWithDefaultShort2() throws Exception
   {
-    testIsSet(getModel2Factory().createUnsettable2WithDefault(), getModel2Package().getUnsettable2WithDefault_UnsettableShort(), new Short((short)15));
+    testIsSet(getModel2Factory().createUnsettable2WithDefault(), getModel2Package().getUnsettable2WithDefault_UnsettableShort(), Short.valueOf((short)15));
   }
 
   public void testUnsettableWithDefaultShort_SetDefault() throws Exception

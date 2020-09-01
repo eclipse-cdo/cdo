@@ -114,7 +114,7 @@ public class Bugzilla_314264_Test extends AbstractCDOTest
       {
         if (counter != 0)
         {
-          result.setResult(new Boolean(notification.getPosition() == 0));
+          result.setResult(Boolean.valueOf(notification.getPosition() == 0));
         }
 
         counter++;

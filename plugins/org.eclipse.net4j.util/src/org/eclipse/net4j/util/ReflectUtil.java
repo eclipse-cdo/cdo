@@ -22,6 +22,8 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.lang.reflect.AccessibleObject;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -95,11 +97,7 @@ public final class ReflectUtil
 
   public static Object invokeMethod(Method method, Object target, Object... arguments)
   {
-    boolean accessible = method.isAccessible();
-    if (!accessible)
-    {
-      method.setAccessible(true);
-    }
+    makeAccessible(method);
 
     try
     {
@@ -108,13 +106,6 @@ public final class ReflectUtil
     catch (Exception ex)
     {
       throw WrappedException.wrap(ex);
-    }
-    finally
-    {
-      if (!accessible)
-      {
-        method.setAccessible(false);
-      }
     }
   }
 
@@ -194,10 +185,7 @@ public final class ReflectUtil
 
   public static Object getValue(Field field, Object target)
   {
-    if (!field.isAccessible())
-    {
-      field.setAccessible(true);
-    }
+    makeAccessible(field);
 
     try
     {
@@ -211,10 +199,7 @@ public final class ReflectUtil
 
   public static void setValue(Field field, Object target, Object value)
   {
-    if (!field.isAccessible())
-    {
-      field.setAccessible(true);
-    }
+    makeAccessible(field);
 
     try
     {
@@ -483,7 +468,18 @@ public final class ReflectUtil
     }
 
     Class<?> c = classLoader.loadClass(className);
-    Object instance = c.newInstance();
+    Constructor<?> constructor;
+
+    try
+    {
+      constructor = c.getConstructor();
+    }
+    catch (NoSuchMethodException | SecurityException ex)
+    {
+      throw new RuntimeException(ex);
+    }
+
+    Object instance = constructor.newInstance();
     Method[] methods = c.getMethods();
     for (Method method : methods)
     {
@@ -654,12 +650,20 @@ public final class ReflectUtil
       throw new AssertionError();
     }
 
-    if (!method.isAccessible())
-    {
-      method.setAccessible(true);
-    }
-
+    makeAccessible(method);
     return method;
+  }
+
+  /**
+   * @since 3.12
+   */
+  @SuppressWarnings("deprecation")
+  public static <T> void makeAccessible(AccessibleObject accessibleObject)
+  {
+    if (!accessibleObject.isAccessible())
+    {
+      accessibleObject.setAccessible(true);
+    }
   }
 
   /**

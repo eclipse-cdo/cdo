@@ -46,7 +46,7 @@ public class Bugzilla_258933_Test extends AbstractCDOTest
   public void testBugzilla_258933_SetToDefaultValue() throws Exception
   {
     // Set level to it's default (10). Because 'level' is NOT unsettable we expect isSet==false
-    testWithValue("level", new Integer(10), false);
+    testWithValue("level", Integer.valueOf(10), false);
   }
 
   public void testBugzilla_258933_String_SetToDefaultValue() throws Exception
@@ -194,7 +194,7 @@ public class Bugzilla_258933_Test extends AbstractCDOTest
       level.setName("level");
       level.setEType(epackage.getEInt());
       level.setUnsettable(false);
-      level.setDefaultValue(new Integer(10));
+      level.setDefaultValue(Integer.valueOf(10));
       schoolBookEClass.getEStructuralFeatures().add(level);
 
       EAttribute settable = efactory.createEAttribute();

@@ -74,21 +74,21 @@ public abstract class CDOTypeImpl implements CDOType
 
   private static final short SHORT_DEFAULT_PRIMITIVE = 0;
 
-  public static final Boolean BOOLEAN_DEFAULT = new Boolean(false);
+  public static final Boolean BOOLEAN_DEFAULT = Boolean.valueOf(false);
 
-  public static final Byte BYTE_DEFAULT = new Byte(BOOLEAN_DEFAULT_PRIMITIVE);
+  public static final Byte BYTE_DEFAULT = Byte.valueOf(BOOLEAN_DEFAULT_PRIMITIVE);
 
-  public static final Character CHARACTER_DEFAULT = new Character(CHARACTER_DEFAULT_PRIMITIVE);
+  public static final Character CHARACTER_DEFAULT = Character.valueOf(CHARACTER_DEFAULT_PRIMITIVE);
 
-  public static final Double DOUBLE_DEFAULT = new Double(0.0);
+  public static final Double DOUBLE_DEFAULT = Double.valueOf(0.0);
 
-  public static final Float FLOAT_DEFAULT = new Float(0.0);
+  public static final Float FLOAT_DEFAULT = Float.valueOf(0.0f);
 
-  public static final Integer INTEGER_DEFAULT = new Integer(0);
+  public static final Integer INTEGER_DEFAULT = Integer.valueOf(0);
 
-  public static final Long LONG_DEFAULT = new Long(0L);
+  public static final Long LONG_DEFAULT = Long.valueOf(0L);
 
-  public static final Short SHORT_DEFAULT = new Short(SHORT_DEFAULT_PRIMITIVE);
+  public static final Short SHORT_DEFAULT = Short.valueOf(SHORT_DEFAULT_PRIMITIVE);
 
   public static final CDOType BOOLEAN = new CDOTypeImpl("BOOLEAN", EcorePackage.EBOOLEAN, false, BOOLEAN_DEFAULT) //$NON-NLS-1$
   {

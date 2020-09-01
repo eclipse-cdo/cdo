@@ -596,9 +596,9 @@ public class MapTest extends AbstractCDOTest
     dummyData.put(theCorePackage.getEBoolean(), data);
 
     data = new ArrayList();
-    data.add(new Boolean(true));
-    data.add(new Boolean("false"));
-    data.add(new Boolean(true));
+    data.add(Boolean.valueOf(true));
+    data.add(Boolean.valueOf("false"));
+    data.add(Boolean.valueOf(true));
     dummyData.put(theCorePackage.getEBooleanObject(), data);
 
     data = new ArrayList();
@@ -611,9 +611,9 @@ public class MapTest extends AbstractCDOTest
     // dummyData.put(theCorePackage.getEByteArray(), data);
 
     data = new ArrayList();
-    data.add(new Byte((byte)1));
-    data.add(new Byte("2"));
-    data.add(new Byte((byte)3));
+    data.add(Byte.valueOf((byte)1));
+    data.add(Byte.valueOf("2"));
+    data.add(Byte.valueOf((byte)3));
     dummyData.put(theCorePackage.getEByteObject(), data);
 
     data = new ArrayList();
@@ -623,9 +623,9 @@ public class MapTest extends AbstractCDOTest
     dummyData.put(theCorePackage.getEChar(), data);
 
     data = new ArrayList();
-    data.add(new Character('a'));
-    data.add(new Character((char)99));
-    data.add(new Character('c'));
+    data.add(Character.valueOf('a'));
+    data.add(Character.valueOf((char)99));
+    data.add(Character.valueOf('c'));
     dummyData.put(theCorePackage.getECharacterObject(), data);
 
     data = new ArrayList();
@@ -644,9 +644,9 @@ public class MapTest extends AbstractCDOTest
     dummyData.put(theCorePackage.getEDouble(), data);
 
     data = new ArrayList();
-    data.add(new Double(444.444));
-    data.add(new Double("555.555"));
-    data.add(new Double(666.666));
+    data.add(Double.valueOf(444.444));
+    data.add(Double.valueOf("555.555"));
+    data.add(Double.valueOf(666.666));
     dummyData.put(theCorePackage.getEDoubleObject(), data);
 
     data = new ArrayList();
@@ -656,9 +656,9 @@ public class MapTest extends AbstractCDOTest
     dummyData.put(theCorePackage.getEFloat(), data);
 
     data = new ArrayList();
-    data.add(new Float(444.0004f));
-    data.add(new Float(555.0005d));
-    data.add(new Float("666.0006"));
+    data.add(Float.valueOf(444.0004f));
+    data.add(Float.valueOf((float)555.0005d));
+    data.add(Float.valueOf("666.0006"));
     dummyData.put(theCorePackage.getEFloatObject(), data);
 
     data = new ArrayList();
@@ -668,15 +668,15 @@ public class MapTest extends AbstractCDOTest
     dummyData.put(theCorePackage.getEInt(), data);
 
     data = new ArrayList();
-    data.add(new Integer(44));
-    data.add(new Integer("55"));
-    data.add(new Integer(66));
+    data.add(Integer.valueOf(44));
+    data.add(Integer.valueOf("55"));
+    data.add(Integer.valueOf(66));
     dummyData.put(theCorePackage.getEIntegerObject(), data);
 
     data = new ArrayList();
-    data.add(new Long(1));
+    data.add(Long.valueOf(1));
     data.add(new Date());
-    data.add(new Integer(2));
+    data.add(Integer.valueOf(2));
     dummyData.put(theCorePackage.getEJavaObject(), data);
 
     data = new ArrayList();
@@ -692,9 +692,9 @@ public class MapTest extends AbstractCDOTest
     dummyData.put(theCorePackage.getELong(), data);
 
     data = new ArrayList();
-    data.add(new Long(40404040404L));
-    data.add(new Long("5050505050505"));
-    data.add(new Long(6060606060606L));
+    data.add(Long.valueOf(40404040404L));
+    data.add(Long.valueOf("5050505050505"));
+    data.add(Long.valueOf(6060606060606L));
     dummyData.put(theCorePackage.getELongObject(), data);
 
     data = new ArrayList();
@@ -720,9 +720,9 @@ public class MapTest extends AbstractCDOTest
     dummyData.put(theCorePackage.getEShort(), data);
 
     data = new ArrayList();
-    data.add(new Short((short)111));
-    data.add(new Short((short)222));
-    data.add(new Short((short)333));
+    data.add(Short.valueOf((short)111));
+    data.add(Short.valueOf((short)222));
+    data.add(Short.valueOf((short)333));
     dummyData.put(theCorePackage.getEShortObject(), data);
   }
 }

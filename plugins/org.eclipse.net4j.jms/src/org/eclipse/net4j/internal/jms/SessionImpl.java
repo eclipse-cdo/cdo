@@ -43,7 +43,6 @@ import javax.jms.TemporaryTopic;
 import javax.jms.TextMessage;
 import javax.jms.Topic;
 import javax.jms.TopicSubscriber;
-import javax.transaction.TransactionRolledbackException;
 
 import java.io.Serializable;
 import java.text.MessageFormat;
@@ -289,7 +288,10 @@ public class SessionImpl extends QueueWorker<MessageConsumerImpl> implements Ses
         String[] messageIDs = new JMSCommitRequest(connection.getProtocol(), id, messages).send();
         if (messageIDs == null)
         {
-          throw new TransactionRolledbackException(Messages.getString("SessionImpl_0")); //$NON-NLS-1$
+          // TransactionRolledbackException has been removed from JRE ;-(
+          // throw new TransactionRolledbackException(Messages.getString("SessionImpl_0")); //$NON-NLS-1$
+
+          throw new java.rmi.RemoteException(Messages.getString("SessionImpl_0")); //$NON-NLS-1$
         }
 
         for (int i = 0; i < messageIDs.length; i++)

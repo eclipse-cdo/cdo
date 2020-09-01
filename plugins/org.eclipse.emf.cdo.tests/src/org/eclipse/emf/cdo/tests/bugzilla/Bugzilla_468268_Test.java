@@ -13,6 +13,8 @@ package org.eclipse.emf.cdo.tests.bugzilla;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model6.ContainmentObject;
 
+import org.eclipse.net4j.util.ReflectUtil;
+
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -65,20 +67,8 @@ public class Bugzilla_468268_Test extends AbstractCDOTest
 
   private Object getValue(Field field, EObject eObject) throws Exception
   {
-    Object value;
-    final boolean oldAccessible = field.isAccessible();
-
-    try
-    {
-      field.setAccessible(true);
-      value = field.get(eObject);
-    }
-    finally
-    {
-      field.setAccessible(oldAccessible);
-    }
-
-    return value;
+    ReflectUtil.makeAccessible(field);
+    return field.get(eObject);
   }
 
   private Set<Field> getFields(EObject eObject)

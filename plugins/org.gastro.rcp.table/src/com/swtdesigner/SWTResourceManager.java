@@ -431,12 +431,12 @@ public class SWTResourceManager
           {
             if (strikeout)
             {
-              logFontClass.getField("lfStrikeOut").set(logFont, new Byte((byte)1)); //$NON-NLS-1$
+              logFontClass.getField("lfStrikeOut").set(logFont, Byte.valueOf((byte)1)); //$NON-NLS-1$
             }
 
             if (underline)
             {
-              logFontClass.getField("lfUnderline").set(logFont, new Byte((byte)1)); //$NON-NLS-1$
+              logFontClass.getField("lfUnderline").set(logFont, Byte.valueOf((byte)1)); //$NON-NLS-1$
             }
           }
         }

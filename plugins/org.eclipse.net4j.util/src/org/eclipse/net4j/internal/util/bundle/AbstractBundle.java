@@ -507,11 +507,7 @@ public abstract class AbstractBundle implements OMBundle, OMBundle.DebugSupport,
     try
     {
       Method method = accessor.getDeclaredMethod(name, ReflectUtil.NO_PARAMETERS);
-      if (!method.isAccessible())
-      {
-        method.setAccessible(true);
-      }
-
+      ReflectUtil.makeAccessible(method);
       method.invoke(null, ReflectUtil.NO_ARGUMENTS);
     }
     catch (NoSuchMethodException ignore)

@@ -198,8 +198,8 @@ public class Net4jDBTest extends AbstractCDOTest
   {
     registerColumn(DBType.TINYINT, Byte.MAX_VALUE);
     registerColumn(DBType.TINYINT, Byte.MIN_VALUE);
-    registerColumn(DBType.TINYINT, new Byte("0"));
-    registerColumn(DBType.TINYINT, new Integer(42).byteValue());
+    registerColumn(DBType.TINYINT, Byte.valueOf("0"));
+    registerColumn(DBType.TINYINT, Integer.valueOf(42).byteValue());
     doTest(getName());
   }
 
@@ -256,10 +256,10 @@ public class Net4jDBTest extends AbstractCDOTest
   {
     if (!isDB("oracle"))
     {
-      registerColumn(DBType.DOUBLE, new Double(Double.MAX_VALUE));
+      registerColumn(DBType.DOUBLE, Double.valueOf(Double.MAX_VALUE));
     }
 
-    // registerColumn(DBType.DOUBLE, new Double(Double.MIN_VALUE));
+    // registerColumn(DBType.DOUBLE, Double.valueOf(Double.MIN_VALUE));
     registerColumn(DBType.DOUBLE, -.1d);
     registerColumn(DBType.DOUBLE, 3.33333d);
     doTest(getName());

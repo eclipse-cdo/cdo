@@ -14,6 +14,7 @@ import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.AbstractQueue;
 import java.util.ArrayList;
@@ -488,7 +489,8 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
     {
       try
       {
-        return (BlockingQueue<Runnable>)LINKED_BLOCKING_DEQUE_CLASS.newInstance();
+        Constructor<?> constructor = LINKED_BLOCKING_DEQUE_CLASS.getConstructor();
+        return (BlockingQueue<Runnable>)constructor.newInstance();
       }
       catch (Throwable ex)
       {

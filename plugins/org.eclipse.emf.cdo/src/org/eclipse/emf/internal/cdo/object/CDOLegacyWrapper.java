@@ -38,7 +38,6 @@ import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.view.CDOStateMachine;
 
 import org.eclipse.net4j.util.ReflectUtil;
-import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -1172,19 +1171,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
   protected static int getEFlagMask(Class<?> instanceClass, String flagName)
   {
     Field field = ReflectUtil.getField(instanceClass, flagName);
-    if (!field.isAccessible())
-    {
-      field.setAccessible(true);
-    }
-
-    try
-    {
-      return (Integer)field.get(null);
-    }
-    catch (IllegalAccessException ex)
-    {
-      throw WrappedException.wrap(ex);
-    }
+    return (Integer)ReflectUtil.getValue(field, null);
   }
 
   /**

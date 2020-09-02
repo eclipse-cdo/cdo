@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTreeViewer;
@@ -59,19 +60,43 @@ public class ObjectDeleteHandler extends AbstractObjectHandler
   @Override
   protected boolean doExecute(ExecutionEvent event, List<EObject> transactionalElements, IProgressMonitor monitor)
   {
-    for (EObject eObject : transactionalElements)
+    try
     {
-      try
+      for (EObject eObject : transactionalElements)
       {
         EcoreUtil.remove(eObject);
       }
-      catch (Exception ex)
+    }
+    catch (Throwable ex)
+    {
+      // TODO Exceptions due to deleting children of already deleted parents are expected, but hard to detect.
+      // It would be better to determine the set of top-most objects plus all their transitive children.
+      // This should happen in a ProgressRunnable before the DeleteObjectsDialog is even shown.
+
+      Shell shell = HandlerUtil.getActiveShell(event);
+      if (!shell.isDisposed())
       {
-        // TODO Exceptions due to deleting children of already deleted parents are expected, but hard to detect.
-        // It would be better to determine the set of top-most objects plus all their transitive children.
-        // This should happen in a ProgressRunnable before the DeleteObjectsDialog is even shown.
-        // ex.printStackTrace();
+        shell.getDisplay().asyncExec(new Runnable()
+        {
+          @Override
+          public void run()
+          {
+            try
+            {
+              if (!shell.isDisposed())
+              {
+                MessageDialog.openError(shell, "Error", ex.getMessage());
+              }
+            }
+            catch (Exception ex)
+            {
+              OM.LOG.error(ex);
+            }
+          }
+        });
       }
+
+      return false;
     }
 
     return true;

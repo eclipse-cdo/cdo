@@ -878,7 +878,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     boolean movedWithinView = oldView != null && oldView == newView;
 
     boolean oldAttached = viewAndState.state != CDOState.TRANSIENT;
-    boolean newAttached = newContainer != null && newView != null ? FSMUtil.adapt(newContainer, newView).cdoState() != CDOState.TRANSIENT : true;
+    boolean newAttached = newContainer != null && newView != null ? FSMUtil.adapt(newContainer, newView).cdoState() != CDOState.TRANSIENT : false;
 
     if (newAttached)
     {

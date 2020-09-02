@@ -960,6 +960,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   {
     if (resourcePathCache != null)
     {
+      path = CDOURIUtil.sanitizePath(path);
       return resourcePathCache.get(path);
     }
 
@@ -970,6 +971,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   {
     if (resourcePathCache != null)
     {
+      path = CDOURIUtil.sanitizePath(path);
       if (id == null)
       {
         resourcePathCache.remove(path);
@@ -1066,7 +1068,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
             for (String name : names)
             {
-              path = path.length() == 0 ? name : path + "/" + name;
+              path += CDOURIUtil.SEGMENT_SEPARATOR + name;
 
               CDOID cached = getCachedResourceNodeID(path);
               if (cached != null)
@@ -2019,6 +2021,12 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
       {
         getStore().getResource(object);
       }
+
+      if (CDOModelUtil.isResourceNode(eClass))
+      {
+        String path = getResourcePath(revision);
+        setCachedResourceNodeID(path, id);
+      }
     }
 
     return object;
@@ -2063,7 +2071,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
         return CDOURIUtil.SEGMENT_SEPARATOR;
       }
 
-      return name;
+      return CDOURIUtil.SEGMENT_SEPARATOR + name;
     }
 
     InternalCDOObject object = getObject(folderID, true);

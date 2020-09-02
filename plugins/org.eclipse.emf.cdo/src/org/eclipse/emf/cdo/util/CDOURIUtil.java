@@ -139,7 +139,7 @@ public final class CDOURIUtil
           String path = viewProvider.getPath(uri);
           if (path != null && !StringUtil.isEmpty(path))
           {
-            return path;
+            return sanitizePath(path);
           }
         }
       }
@@ -148,16 +148,10 @@ public final class CDOURIUtil
     if (!PROTOCOL_NAME.equals(uri.scheme()))
     {
       CDOURIData data = new CDOURIData(uri);
-      return data.getResourcePath().toPortableString();
+      return sanitizePath(data.getResourcePath().toPortableString());
     }
 
-    String path = uri.path();
-    if (path == null)
-    {
-      return SEGMENT_SEPARATOR;
-    }
-
-    return path;
+    return sanitizePath(uri.path());
   }
 
   /**
@@ -231,10 +225,15 @@ public final class CDOURIUtil
   public static List<String> analyzePath(URI uri)
   {
     String path = extractResourcePath(uri);
-    return analyzePath(path);
+    return analyzeSanitizedPath(path);
   }
 
   public static List<String> analyzePath(String path)
+  {
+    return analyzeSanitizedPath(sanitizePath(path));
+  }
+
+  private static List<String> analyzeSanitizedPath(String path)
   {
     List<String> segments = new ArrayList<>();
     StringTokenizer tokenizer = new StringTokenizer(path, CDOURIUtil.SEGMENT_SEPARATOR);
@@ -248,6 +247,24 @@ public final class CDOURIUtil
     }
 
     return segments;
+  }
+
+  /**
+   * @since 4.11
+   */
+  public static String sanitizePath(String path)
+  {
+    if (path == null || path.length() == 0)
+    {
+      return SEGMENT_SEPARATOR;
+    }
+
+    if (path.charAt(0) != SEGMENT_SEPARATOR_CHAR)
+    {
+      return SEGMENT_SEPARATOR + path;
+    }
+
+    return path;
   }
 
   /**

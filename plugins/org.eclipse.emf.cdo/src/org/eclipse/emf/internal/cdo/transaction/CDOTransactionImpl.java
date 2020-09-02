@@ -1381,26 +1381,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   }
 
   /**
-   * @since 2.0
-   */
-  public void detach(CDOResourceImpl cdoResource)
-  {
-    synchronized (getViewMonitor())
-    {
-      lockView();
-
-      try
-      {
-        CDOStateMachine.INSTANCE.detach(cdoResource);
-      }
-      finally
-      {
-        unlockView();
-      }
-    }
-  }
-
-  /**
    * @since 4.1
    */
   @Override

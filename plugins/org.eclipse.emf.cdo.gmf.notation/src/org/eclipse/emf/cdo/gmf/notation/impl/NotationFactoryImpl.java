@@ -139,7 +139,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   /**
    * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    */
   public NotationFactoryImpl()
@@ -459,6 +459,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   public SortingStyle createSortingStyle()
   {
     SortingStyleImpl sortingStyle = new SortingStyleImpl();
+    sortingStyle.setSortingKeysGen(SortingStyleImpl.SORTING_KEYS_EDEFAULT);
     return sortingStyle;
   }
 
@@ -547,6 +548,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   public RelativeBendpoints createRelativeBendpoints()
   {
     RelativeBendpointsImpl relativeBendpoints = new RelativeBendpointsImpl();
+    relativeBendpoints.setPointsGen(RelativeBendpointsImpl.POINTS_EDEFAULT);
     return relativeBendpoints;
   }
 
@@ -667,6 +669,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   public FilteringStyle createFilteringStyle()
   {
     FilteringStyleImpl filteringStyle = new FilteringStyleImpl();
+    filteringStyle.setFilteringKeysGen(FilteringStyleImpl.FILTERING_KEYS_EDEFAULT);
     return filteringStyle;
   }
 
@@ -996,6 +999,8 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   public ListCompartment createListCompartment()
   {
     ListCompartmentImpl listCompartment = new ListCompartmentImpl();
+    listCompartment.setSortingKeys(ListCompartmentImpl.SORTING_KEYS_EDEFAULT);
+    listCompartment.setFilteringKeys(ListCompartmentImpl.FILTERING_KEYS_EDEFAULT);
     return listCompartment;
   }
 
@@ -1388,7 +1393,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public List createRelativeBendpointListFromString(EDataType eDataType, String initialValue)
@@ -1404,7 +1409,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public String convertRelativeBendpointListToString(EDataType eDataType, Object instanceValue)
@@ -1424,7 +1429,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public List createFilterKeyListFromString(EDataType eDataType, String initialValue)
@@ -1440,7 +1445,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public String convertFilterKeyListToString(EDataType eDataType, Object instanceValue)
@@ -1460,7 +1465,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public Map createSortKeyMapFromString(EDataType eDataType, String initialValue)
@@ -1480,7 +1485,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public String convertSortKeyMapToString(EDataType eDataType, Object instanceValue)
@@ -1502,7 +1507,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public GradientData createGradientDataFromString(EDataType eDataType, String initialValue)
@@ -1552,7 +1557,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public String convertGradientDataToString(EDataType eDataType, Object instanceValue)

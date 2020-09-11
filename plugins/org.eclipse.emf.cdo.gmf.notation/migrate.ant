@@ -240,6 +240,17 @@
 		</replaceregexp>
 
 		<!--
+		  GMF's hand-modified default value constants are not applied in models generated with feature delegation.
+		  Apply them explicitly in CDO's NotationFactoryImpl.
+		-->
+		<replace file="${impl}/NotationFactoryImpl.java">
+			<replacefilter token="new SortingStyleImpl();" value="new SortingStyleImpl(); sortingStyle.setSortingKeysGen(SortingStyleImpl.SORTING_KEYS_EDEFAULT);" />
+			<replacefilter token="new RelativeBendpointsImpl();" value="new RelativeBendpointsImpl(); relativeBendpoints.setPointsGen(RelativeBendpointsImpl.POINTS_EDEFAULT);" />
+			<replacefilter token="new FilteringStyleImpl();" value="new FilteringStyleImpl(); filteringStyle.setFilteringKeysGen(FilteringStyleImpl.FILTERING_KEYS_EDEFAULT);" />
+			<replacefilter token="new ListCompartmentImpl();" value="new ListCompartmentImpl(); listCompartment.setSortingKeys(ListCompartmentImpl.SORTING_KEYS_EDEFAULT); listCompartment.setFilteringKeys(ListCompartmentImpl.FILTERING_KEYS_EDEFAULT);" />
+		</replace>
+
+		<!--
 		  Apply source cleanup to the 'org.eclipse.emf.cdo.gmf.notation' project.
 		  This ensures that only relevant changes appear in the Git history.
 		-->

@@ -59,6 +59,7 @@ public class RelativeBendpointsImpl extends CDOObjectImpl implements RelativeBen
   protected RelativeBendpointsImpl()
   {
     super();
+    setPointsGen(POINTS_EDEFAULT);
   }
 
   /**

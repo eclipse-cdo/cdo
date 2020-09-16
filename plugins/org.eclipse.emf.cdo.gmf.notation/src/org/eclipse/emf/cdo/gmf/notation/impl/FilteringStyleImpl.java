@@ -72,6 +72,7 @@ public class FilteringStyleImpl extends CDOObjectImpl implements FilteringStyle
   protected FilteringStyleImpl()
   {
     super();
+    setFilteringKeysGen(FILTERING_KEYS_EDEFAULT);
   }
 
   /**

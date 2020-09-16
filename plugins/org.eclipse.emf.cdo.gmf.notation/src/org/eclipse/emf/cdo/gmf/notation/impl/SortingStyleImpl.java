@@ -73,6 +73,7 @@ public class SortingStyleImpl extends CDOObjectImpl implements SortingStyle
   protected SortingStyleImpl()
   {
     super();
+    setSortingKeysGen(SORTING_KEYS_EDEFAULT);
   }
 
   /**

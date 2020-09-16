@@ -241,14 +241,24 @@
 
 		<!--
 		  GMF's hand-modified default value constants are not applied in models generated with feature delegation.
-		  Apply them explicitly in CDO's NotationFactoryImpl.
+		  Apply them explicitly in the constructors of CDO's XyzImpl classes.
 		-->
-		<replace file="${impl}/NotationFactoryImpl.java">
-			<replacefilter token="new SortingStyleImpl();" value="new SortingStyleImpl(); sortingStyle.setSortingKeysGen(SortingStyleImpl.SORTING_KEYS_EDEFAULT);" />
-			<replacefilter token="new RelativeBendpointsImpl();" value="new RelativeBendpointsImpl(); relativeBendpoints.setPointsGen(RelativeBendpointsImpl.POINTS_EDEFAULT);" />
-			<replacefilter token="new FilteringStyleImpl();" value="new FilteringStyleImpl(); filteringStyle.setFilteringKeysGen(FilteringStyleImpl.FILTERING_KEYS_EDEFAULT);" />
-			<replacefilter token="new ListCompartmentImpl();" value="new ListCompartmentImpl(); listCompartment.setSortingKeys(ListCompartmentImpl.SORTING_KEYS_EDEFAULT); listCompartment.setFilteringKeys(ListCompartmentImpl.FILTERING_KEYS_EDEFAULT);" />
-		</replace>
+    <replaceregexp file="${impl}/SortingStyleImpl.java" flags="gs" byline="false">
+      <regexp pattern="(protected SortingStyleImpl\(\)\s*\{\s*super\(\);)(\s*\})" />
+      <substitution expression="\1 setSortingKeysGen(SORTING_KEYS_EDEFAULT);\2" />
+    </replaceregexp>
+    <replaceregexp file="${impl}/RelativeBendpointsImpl.java" flags="gs" byline="false">
+      <regexp pattern="(protected RelativeBendpointsImpl\(\)\s*\{\s*super\(\);)(\s*\})" />
+      <substitution expression="\1 setPointsGen(POINTS_EDEFAULT);\2" />
+    </replaceregexp>
+    <replaceregexp file="${impl}/FilteringStyleImpl.java" flags="gs" byline="false">
+      <regexp pattern="(protected FilteringStyleImpl\(\)\s*\{\s*super\(\);)(\s*\})" />
+      <substitution expression="\1 setFilteringKeysGen(FILTERING_KEYS_EDEFAULT);\2" />
+    </replaceregexp>
+    <replaceregexp file="${impl}/ListCompartmentImpl.java" flags="gs" byline="false">
+      <regexp pattern="(protected ListCompartmentImpl\(\)\s*\{\s*super\(\);)(\s*\})" />
+      <substitution expression="\1 setSortingKeys(SORTING_KEYS_EDEFAULT); setFilteringKeys(FILTERING_KEYS_EDEFAULT);\2" />
+    </replaceregexp>
 
 		<!--
 		  Apply source cleanup to the 'org.eclipse.emf.cdo.gmf.notation' project.

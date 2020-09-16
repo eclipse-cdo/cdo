@@ -103,6 +103,8 @@ public class ListCompartmentImpl extends BasicCompartmentImpl implements ListCom
   protected ListCompartmentImpl()
   {
     super();
+    setSortingKeys(SORTING_KEYS_EDEFAULT);
+    setFilteringKeys(FILTERING_KEYS_EDEFAULT);
   }
 
   /**

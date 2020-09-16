@@ -11,7 +11,8 @@ ignored.paths = target,\
                 org.eclipse.net4j.jms.api/src,\
                 org/eclipse/net4j/util/ui/proposals,\
                 org.eclipse.emf.cdo.examples.installer/examples,\
-                org.eclipse.net4j.examples.installer/examples
+                org.eclipse.net4j.examples.installer/examples,\
+                org.eclipse.emf.cdo.gmf.notation/src/org/eclipse/emf/cdo/gmf/notation/impl
 
 check.files = *.java,\
               *.ant,\

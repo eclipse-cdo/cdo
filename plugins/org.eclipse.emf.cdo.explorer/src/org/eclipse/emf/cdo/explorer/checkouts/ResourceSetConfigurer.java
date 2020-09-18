@@ -19,14 +19,18 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 /**
  * @author Eike Stepper
  * @since 4.7
+ * @deprecated As of 4.7.1 use org.eclipse.emf.cdo.common.util.ResourceSetConfigurer
  */
+@Deprecated
 public interface ResourceSetConfigurer
 {
   public boolean configureResourceSet(ResourceSet resourceSet, CDOCheckout checkout);
 
   /**
    * @author Eike Stepper
+   * @deprecated As of 4.7.1 use org.eclipse.emf.cdo.common.util.ResourceSetConfigurer.Factory
    */
+  @Deprecated
   public static abstract class Factory extends org.eclipse.net4j.util.factory.Factory
   {
     public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.explorer.ResourceSetConfigurers";
@@ -42,7 +46,9 @@ public interface ResourceSetConfigurer
 
   /**
    * @author Eike Stepper
+   * @deprecated As of 4.7.1 use org.eclipse.emf.cdo.common.util.ResourceSetConfigurer.Registry
    */
+  @Deprecated
   public static final class Registry
   {
     public static final Registry INSTANCE = new Registry();

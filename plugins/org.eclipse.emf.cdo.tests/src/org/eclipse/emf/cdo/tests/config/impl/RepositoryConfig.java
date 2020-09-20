@@ -600,8 +600,16 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
     if (enableServerBrowser || Boolean.TRUE.equals(getTestProperty(PROP_TEST_ENABLE_SERVER_BROWSER)) || getCurrentTest().hasDefaultScenario())
     {
-      serverBrowser = new CDOServerBrowser(repositories);
-      serverBrowser.activate();
+      try
+      {
+        serverBrowser = new CDOServerBrowser(repositories);
+        serverBrowser.activate();
+      }
+      catch (Exception ex)
+      {
+        ex.printStackTrace();
+        serverBrowser = null;
+      }
     }
   }
 

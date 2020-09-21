@@ -33,6 +33,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -58,8 +59,28 @@ public class CDOURIHandler implements URIHandler
   @Override
   public boolean canHandle(URI uri)
   {
+    CDOViewProvider provider = view.getProvider();
+    if (provider == null)
+    {
+      if (Objects.equals(uri.scheme(), CDO_URI_SCHEME))
+      {
+        String repositoryUUID = PluginContainerViewProvider.getRepositoryUUID(uri);
+        return Objects.equals(repositoryUUID, view.getSession().getRepositoryInfo().getUUID());
+      }
+
+      return false;
+    }
+
     CDOViewProvider[] viewProviders = CDOViewProviderRegistry.INSTANCE.getViewProviders(uri);
-    return viewProviders.length != 0;
+    for (CDOViewProvider viewProvider : viewProviders)
+    {
+      if (viewProvider == provider)
+      {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   @Override

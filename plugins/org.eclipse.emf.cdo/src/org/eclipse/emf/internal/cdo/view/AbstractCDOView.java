@@ -2909,11 +2909,6 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   @Override
   public String toString()
   {
-    if (!isActive())
-    {
-      return super.toString();
-    }
-
     StringBuilder builder = new StringBuilder();
     if (isReadOnly())
     {
@@ -2927,36 +2922,43 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     builder.append(" "); //$NON-NLS-1$
     builder.append(getViewID());
 
-    CDOBranchPoint bp = branchPoint;
-    if (bp != null)
+    if (!isActive())
     {
-      boolean brackets = false;
-      if (getSession().getRepositoryInfo().isSupportingBranches())
+      builder.append(" [closed]");
+    }
+    else
+    {
+      CDOBranchPoint bp = branchPoint;
+      if (bp != null)
       {
-        brackets = true;
-        builder.append(" ["); //$NON-NLS-1$
-        builder.append(bp.getBranch().getPathName()); // Do not synchronize on this view!
-      }
+        boolean brackets = false;
+        if (getSession().getRepositoryInfo().isSupportingBranches())
+        {
+          brackets = true;
+          builder.append(" ["); //$NON-NLS-1$
+          builder.append(bp.getBranch().getPathName()); // Do not synchronize on this view!
+        }
 
-      long timeStamp = bp.getTimeStamp(); // Do not synchronize on this view!
-      if (timeStamp != CDOView.UNSPECIFIED_DATE)
-      {
+        long timeStamp = bp.getTimeStamp(); // Do not synchronize on this view!
+        if (timeStamp != CDOView.UNSPECIFIED_DATE)
+        {
+          if (brackets)
+          {
+            builder.append(", "); //$NON-NLS-1$
+          }
+          else
+          {
+            builder.append(" ["); //$NON-NLS-1$
+            brackets = true;
+          }
+
+          builder.append(CDOCommonUtil.formatTimeStamp(timeStamp));
+        }
+
         if (brackets)
         {
-          builder.append(", "); //$NON-NLS-1$
+          builder.append("]"); //$NON-NLS-1$
         }
-        else
-        {
-          builder.append(" ["); //$NON-NLS-1$
-          brackets = true;
-        }
-
-        builder.append(CDOCommonUtil.formatTimeStamp(timeStamp));
-      }
-
-      if (brackets)
-      {
-        builder.append("]"); //$NON-NLS-1$
       }
     }
 

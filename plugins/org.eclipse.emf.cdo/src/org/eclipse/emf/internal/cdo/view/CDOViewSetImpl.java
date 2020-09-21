@@ -44,8 +44,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -60,7 +60,7 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
 {
   public static final String KEY_VIEW_URI = "org.eclipse.emf.cdo.viewURI";
 
-  private Set<InternalCDOView> views = new HashSet<>();
+  private Set<InternalCDOView> views = new LinkedHashSet<>();
 
   private Map<URI, InternalCDOView> mapOfViews = new HashMap<>();
 
@@ -403,24 +403,6 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
     }
   }
 
-  private List<CDOResource> getDirtyResources(List<CDOResource> resources)
-  {
-    List<CDOResource> dirtyResources = new ArrayList<>();
-    for (CDOResource resource : resources)
-    {
-      switch (resource.cdoState())
-      {
-      case NEW:
-      case DIRTY:
-      case CONFLICT:
-      case INVALID_CONFLICT:
-        dirtyResources.addAll(resources);
-      }
-    }
-
-    return dirtyResources;
-  }
-
   private Map<CDOView, List<CDOResource>> getResourcesPerView(Collection<?> potentialResources)
   {
     Map<CDOView, List<CDOResource>> resourcesPerView = new HashMap<>();
@@ -449,7 +431,25 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
     return resourcesPerView;
   }
 
-  private URI getViewURI(InternalCDOView view)
+  private static List<CDOResource> getDirtyResources(List<CDOResource> resources)
+  {
+    List<CDOResource> dirtyResources = new ArrayList<>();
+    for (CDOResource resource : resources)
+    {
+      switch (resource.cdoState())
+      {
+      case NEW:
+      case DIRTY:
+      case CONFLICT:
+      case INVALID_CONFLICT:
+        dirtyResources.addAll(resources);
+      }
+    }
+  
+    return dirtyResources;
+  }
+
+  private static URI getViewURI(InternalCDOView view)
   {
     Object value = view.properties().get(KEY_VIEW_URI);
     if (value instanceof String)

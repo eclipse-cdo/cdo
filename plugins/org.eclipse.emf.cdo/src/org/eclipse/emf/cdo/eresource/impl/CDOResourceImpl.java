@@ -647,7 +647,8 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
   @Override
   public void setTrackingModification(boolean newTrackingModification)
   {
-    if (cdoView().isReadOnly())
+    InternalCDOView view = cdoView();
+    if (view != null && view.isReadOnly())
     {
       return;
     }

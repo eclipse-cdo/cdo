@@ -71,6 +71,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewAdaptersNotifiedEvent;
 import org.eclipse.emf.cdo.view.CDOViewEvent;
 import org.eclipse.emf.cdo.view.CDOViewProvider;
+import org.eclipse.emf.cdo.view.CDOViewProvider.CDOViewProvider2;
 import org.eclipse.emf.cdo.view.CDOViewTargetChangedEvent;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
@@ -584,6 +585,11 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     if (viewSet != null)
     {
       viewSet.remapView(this);
+    }
+
+    if (provider instanceof CDOViewProvider2)
+    {
+      uriHandler.setViewProvider2((CDOViewProvider2)provider);
     }
   }
 

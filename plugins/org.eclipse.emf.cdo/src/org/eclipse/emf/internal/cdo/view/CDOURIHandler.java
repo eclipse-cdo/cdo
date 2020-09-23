@@ -42,9 +42,13 @@ import java.util.Set;
  */
 public class CDOURIHandler implements URIHandler
 {
-  private static final String CDO_URI_SCHEME = "cdo"; //$NON-NLS-1$
+  private static final String CDO_URI_SCHEME = CDOURIUtil.PROTOCOL_NAME;
 
   private InternalCDOView view;
+
+  private CDOViewProvider2 viewProvider2;
+
+  private URI viewURI;
 
   public CDOURIHandler(InternalCDOView view)
   {
@@ -59,24 +63,28 @@ public class CDOURIHandler implements URIHandler
   @Override
   public boolean canHandle(URI uri)
   {
-    CDOViewProvider provider = view.getProvider();
-    if (provider == null)
+    if (CDO_URI_SCHEME.equals(uri.scheme()))
     {
-      if (Objects.equals(uri.scheme(), CDO_URI_SCHEME))
-      {
-        String repositoryUUID = PluginContainerViewProvider.getRepositoryUUID(uri);
-        return Objects.equals(repositoryUUID, view.getSession().getRepositoryInfo().getUUID());
-      }
-
-      return false;
+      String repositoryUUID = PluginContainerViewProvider.getRepositoryUUID(uri);
+      return Objects.equals(repositoryUUID, view.getSession().getRepositoryInfo().getUUID());
     }
 
-    CDOViewProvider[] viewProviders = CDOViewProviderRegistry.INSTANCE.getViewProviders(uri);
-    for (CDOViewProvider viewProvider : viewProviders)
+    if (viewURI != null)
     {
-      if (viewProvider == provider)
+      URI uri2 = viewProvider2.getViewURI(uri);
+      return viewURI == uri2;
+    }
+
+    CDOViewProvider provider = view.getProvider();
+    if (provider != null)
+    {
+      CDOViewProvider[] viewProviders = CDOViewProviderRegistry.INSTANCE.getViewProviders(uri);
+      for (CDOViewProvider viewProvider : viewProviders)
       {
-        return true;
+        if (viewProvider == provider)
+        {
+          return true;
+        }
       }
     }
 
@@ -188,5 +196,11 @@ public class CDOURIHandler implements URIHandler
     }
 
     return null;
+  }
+
+  void setViewProvider2(CDOViewProvider2 viewProvider2)
+  {
+    this.viewProvider2 = viewProvider2;
+    viewURI = viewProvider2.getViewURI(view);
   }
 }

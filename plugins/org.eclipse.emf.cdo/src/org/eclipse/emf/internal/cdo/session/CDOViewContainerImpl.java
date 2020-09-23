@@ -265,23 +265,25 @@ public abstract class CDOViewContainerImpl extends Container<CDOView> implements
    */
   protected void initView(InternalCDOView view, ResourceSet resourceSet)
   {
-    CDOViewProvider viewProvider = VIEW_PROVIDER.get();
-    if (viewProvider != null)
-    {
-      view.setProvider(viewProvider);
-    }
-
     InternalCDOViewSet viewSet = SessionUtil.prepareResourceSet(resourceSet);
+
     synchronized (views)
     {
       view.setViewID(++lastViewID);
-      initViewSynced(view);
+      initViewSynced(view); // Must be called before setting the view provider!
+
+      CDOViewProvider viewProvider = VIEW_PROVIDER.get();
+      if (viewProvider != null)
+      {
+        view.setProvider(viewProvider);
+      }
+
+      // Link ViewSet with View
+      view.setViewSet(viewSet);
+      viewSet.add(view);
+
       views.add(view); // From now the view.invalidate() method can be called!
     }
-
-    // Link ViewSet with View
-    view.setViewSet(viewSet);
-    viewSet.add(view);
 
     try
     {

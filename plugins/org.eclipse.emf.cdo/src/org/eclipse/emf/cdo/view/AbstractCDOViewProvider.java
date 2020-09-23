@@ -108,7 +108,18 @@ public abstract class AbstractCDOViewProvider implements CDOViewProvider2
   @Override
   public final URI getViewURI(CDOView view)
   {
-    return getResourceURI(view, null);
+    URI resourceURI = getResourceURI(view, null);
+    if (resourceURI != null)
+    {
+      String string = resourceURI.toString();
+      if (string.endsWith("/"))
+      {
+        string = string.substring(0, string.length() - 1);
+        resourceURI = URI.createURI(string);
+      }
+    }
+
+    return resourceURI;
   }
 
   /**

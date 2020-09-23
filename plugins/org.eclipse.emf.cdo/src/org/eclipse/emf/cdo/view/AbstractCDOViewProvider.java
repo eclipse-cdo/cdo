@@ -111,11 +111,18 @@ public abstract class AbstractCDOViewProvider implements CDOViewProvider2
     URI resourceURI = getResourceURI(view, null);
     if (resourceURI != null)
     {
-      String string = resourceURI.toString();
-      if (string.endsWith("/"))
+      if (resourceURI.isHierarchical())
       {
-        string = string.substring(0, string.length() - 1);
-        resourceURI = URI.createURI(string);
+        resourceURI = URI.createHierarchicalURI(resourceURI.scheme(), resourceURI.authority(), null, null, null);
+      }
+      else
+      {
+        String string = resourceURI.toString();
+        if (string.endsWith("/"))
+        {
+          string = string.substring(0, string.length() - 1);
+          resourceURI = URI.createURI(string);
+        }
       }
     }
 

@@ -49,6 +49,7 @@ import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitData;
+import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
@@ -4745,7 +4746,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           ((InternalCDOPackageUnit)newPackageUnit).setState(CDOPackageUnit.State.LOADED);
         }
 
-        CDOLockChangeInfo lockChangeInfo = makeUnlockChangeInfo(result);
+        CDOLockChangeInfo lockChangeInfo = makeUnlockChangeInfo(result, branchChanged ? branch : null);
         CDOCommitInfo commitInfo = null;
 
         CommitData newCommitData = result.getNewCommitData();
@@ -4870,7 +4871,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       return commitInfoManager.createCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, mergeSource, commitData);
     }
 
-    private CDOLockChangeInfo makeUnlockChangeInfo(CommitTransactionResult result)
+    private CDOLockChangeInfo makeUnlockChangeInfo(CommitTransactionResult result, CDOBranch newBranch)
     {
       Map<CDOObject, CDOLockState> lockStates = getLockStates();
       if (lockStates.isEmpty())
@@ -4879,21 +4880,62 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       }
 
       List<CDOLockState> objectsToUnlock = new ArrayList<>();
+      Map<CDOObject, CDOLockState> newLockStates = new HashMap<>();
+      Map<CDOID, CDOID> idMappings = result.getIDMappings();
 
       for (Map.Entry<CDOObject, CDOLockState> entry : lockStates.entrySet())
       {
         CDOObject object = entry.getKey();
+        InternalCDOLockState lockState = (InternalCDOLockState)entry.getValue();
+
+        Object lockedObject = lockState.getLockedObject();
+        if (lockedObject instanceof CDOID)
+        {
+          CDOID id = (CDOID)lockedObject;
+          CDOID newID = idMappings.get(id);
+          if (newID == null)
+          {
+            newID = id;
+          }
+
+          if (newID != id)
+          {
+            lockState = (InternalCDOLockState)CDOLockUtil.copyLockState(lockState, newID);
+            newLockStates.put(object, lockState);
+          }
+        }
+        else
+        {
+          CDOIDAndBranch idAndBranch = (CDOIDAndBranch)lockedObject;
+          CDOID id = idAndBranch.getID();
+          CDOBranch branch = idAndBranch.getBranch();
+
+          CDOID newID = idMappings.get(id);
+          if (newID == null)
+          {
+            newID = id;
+          }
+
+          if (newID != id || newBranch != null && newBranch != branch)
+          {
+            CDOIDAndBranch newLockedObject = CDOIDUtil.createIDAndBranch(newID, newBranch != null ? newBranch : branch);
+
+            lockState = (InternalCDOLockState)CDOLockUtil.copyLockState(lockState, newLockedObject);
+            newLockStates.put(object, lockState);
+          }
+        }
+
         if (options().isEffectiveAutoReleaseLock(object))
         {
-          InternalCDOLockState lockState = (InternalCDOLockState)entry.getValue();
           lockState.updateFrom(InternalCDOLockState.UNLOCKED);
-
           objectsToUnlock.add(lockState);
         }
       }
 
-      CDOLockState[] newLockStates = objectsToUnlock.toArray(new CDOLockState[objectsToUnlock.size()]);
-      return makeLockChangeInfo(CDOLockChangeInfo.Operation.UNLOCK, null, result.getTimeStamp(), newLockStates);
+      lockStates.putAll(newLockStates);
+
+      CDOLockState[] array = objectsToUnlock.toArray(new CDOLockState[objectsToUnlock.size()]);
+      return makeLockChangeInfo(CDOLockChangeInfo.Operation.UNLOCK, null, result.getTimeStamp(), array);
     }
 
     private void preCommit(Map<CDOID, CDOObject> objects, Map<ByteArrayWrapper, CDOLob<?>> lobs)

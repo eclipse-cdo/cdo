@@ -50,8 +50,16 @@ public final class CDOLockUtil
 
   public static CDOLockState copyLockState(CDOLockState lockState)
   {
+    return copyLockState(lockState, lockState.getLockedObject());
+  }
+
+  /**
+   * @since 4.12
+   */
+  public static CDOLockState copyLockState(CDOLockState lockState, Object lockedObject)
+  {
     CheckUtil.checkArg(lockState instanceof CDOLockStateImpl, "lockState instanceof CDOLockStateImpl");
-    return ((CDOLockStateImpl)lockState).copy();
+    return ((CDOLockStateImpl)lockState).copy(lockedObject);
   }
 
   public static CDOLockState createLockState(Object target)

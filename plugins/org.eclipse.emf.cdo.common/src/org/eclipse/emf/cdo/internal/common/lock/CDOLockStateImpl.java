@@ -47,6 +47,11 @@ public class CDOLockStateImpl implements InternalCDOLockState
 
   public CDOLockStateImpl copy()
   {
+    return copy(lockedObject);
+  }
+
+  public CDOLockStateImpl copy(Object lockedObject)
+  {
     checkNotDisposed();
     CDOLockStateImpl newLockState = new CDOLockStateImpl(lockedObject);
 

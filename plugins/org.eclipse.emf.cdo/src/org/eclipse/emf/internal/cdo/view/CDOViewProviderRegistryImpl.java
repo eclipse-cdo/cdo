@@ -304,7 +304,9 @@ public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider> impl
    */
   public static final class CDOViewProviderDescriptor extends AbstractCDOViewProvider
   {
-    private IConfigurationElement element;
+    private final IConfigurationElement element;
+
+    private CDOViewProvider delegate;
 
     public CDOViewProviderDescriptor(IConfigurationElement element)
     {
@@ -355,13 +357,21 @@ public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider> impl
 
     private CDOViewProvider getViewProvider()
     {
-      try
+      synchronized (element)
       {
-        return (CDOViewProvider)element.createExecutableExtension("class"); //$NON-NLS-1$
-      }
-      catch (CoreException ex)
-      {
-        throw WrappedException.wrap(ex);
+        if (delegate == null)
+        {
+          try
+          {
+            delegate = (CDOViewProvider)element.createExecutableExtension("class"); //$NON-NLS-1$
+          }
+          catch (CoreException ex)
+          {
+            throw WrappedException.wrap(ex);
+          }
+        }
+
+        return delegate;
       }
     }
 

@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.net4j.CDONet4jViewProvider;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
@@ -21,6 +22,7 @@ import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.util.CommitException;
 
 import org.eclipse.emf.internal.cdo.session.CDOSessionFactory;
+import org.eclipse.emf.internal.cdo.view.PluginContainerViewProvider;
 
 import org.eclipse.net4j.util.container.IPluginContainer;
 
@@ -113,6 +115,69 @@ public class ViewProviderTest extends AbstractCDOTest
     assertEquals(true, xmi.indexOf(uri.toString()) != -1);
   }
 
+  public void testPluginViewProvider() throws Exception
+  {
+    PluginContainerViewProvider vp = new PluginContainerViewProvider();
+
+    assertEquals("cdo://repo1/", vp.getResourceURI("repo1", null).toString());
+    assertEquals("cdo://repo1/", vp.getResourceURI("repo1", "").toString());
+    assertEquals("cdo://repo1/", vp.getResourceURI("repo1", "/").toString());
+    assertEquals("cdo://repo1/", vp.getResourceURI("repo1", "//").toString());
+    assertEquals("cdo://repo1/a", vp.getResourceURI("repo1", "/a").toString());
+    assertEquals("cdo://repo1/a", vp.getResourceURI("repo1", "//a").toString());
+    assertEquals("cdo://repo1/a", vp.getResourceURI("repo1", "/a/").toString());
+    assertEquals("cdo://repo1/a", vp.getResourceURI("repo1", "a").toString());
+    assertEquals("cdo://repo1/a", vp.getResourceURI("repo1", "a/").toString());
+    assertEquals("cdo://repo1/a/b", vp.getResourceURI("repo1", "a/b").toString());
+    assertEquals("cdo://repo1/a/b", vp.getResourceURI("repo1", "a//b").toString());
+  }
+
+  public void testNet4jViewProvider() throws Exception
+  {
+    CDONet4jViewProvider vp = new CDONet4jViewProvider("xyz", 5000)
+    {
+    };
+
+    assertEquals("cdo.net4j.xyz://localhost/repo1/?branch=MAIN/branch1&time=4711",
+        vp.getResourceURI("xyz", "localhost", "repo1", null, "MAIN/branch1", 4711L, true).toString());
+
+    assertEquals("cdo.net4j.xyz://localhost/repo1/?branch=MAIN/branch1&time=4711",
+        vp.getResourceURI("xyz", "localhost", "repo1", "", "MAIN/branch1", 4711L, true).toString());
+
+    assertEquals("cdo.net4j.xyz://localhost/repo1/?branch=MAIN/branch1&time=4711",
+        vp.getResourceURI("xyz", "localhost", "repo1", "/", "MAIN/branch1", 4711L, true).toString());
+
+    assertEquals("cdo.net4j.xyz://localhost/repo1/?branch=MAIN/branch1&time=4711",
+        vp.getResourceURI("xyz", "localhost", "repo1", "//", "MAIN/branch1", 4711L, true).toString());
+
+    assertEquals("cdo.net4j.xyz://localhost/repo1/a?branch=MAIN/branch1&time=4711",
+        vp.getResourceURI("xyz", "localhost", "repo1", "/a", "MAIN/branch1", 4711L, true).toString());
+
+    assertEquals("cdo.net4j.xyz://localhost/repo1/a?branch=MAIN/branch1&time=4711",
+        vp.getResourceURI("xyz", "localhost", "repo1", "//a", "MAIN/branch1", 4711L, true).toString());
+
+    assertEquals("cdo.net4j.xyz://localhost/repo1/a?branch=MAIN/branch1&time=4711",
+        vp.getResourceURI("xyz", "localhost", "repo1", "/a/", "MAIN/branch1", 4711L, true).toString());
+
+    assertEquals("cdo.net4j.xyz://localhost/repo1/a?branch=MAIN/branch1&time=4711",
+        vp.getResourceURI("xyz", "localhost", "repo1", "a", "MAIN/branch1", 4711L, true).toString());
+
+    assertEquals("cdo.net4j.xyz://localhost/repo1/a?branch=MAIN/branch1&time=4711",
+        vp.getResourceURI("xyz", "localhost", "repo1", "a/", "MAIN/branch1", 4711L, true).toString());
+
+    assertEquals("cdo.net4j.xyz://localhost/repo1/a/b?branch=MAIN/branch1&time=4711",
+        vp.getResourceURI("xyz", "localhost", "repo1", "a/b", "MAIN/branch1", 4711L, true).toString());
+
+    assertEquals("cdo.net4j.xyz://localhost/repo1/a/b?branch=MAIN/branch1&time=4711",
+        vp.getResourceURI("xyz", "localhost", "repo1", "a//b", "MAIN/branch1", 4711L, true).toString());
+
+    // Test getViewURI(URI):
+
+    URI resourceURI = URI.createURI("cdo.net4j.xyz://localhost/repo1/a/b?branch=MAIN/branch1&time=4711");
+    assertEquals("cdo.net4j.xyz://localhost/repo1?branch=MAIN/branch1&time=4711", vp.getViewURI(resourceURI).toString());
+
+  }
+
   public void testURIs() throws Exception
   {
     checkURI("cdo.net4j.tcp://eike:passw@127.0.0.1:2042/repo/folder/resource", true);
@@ -121,17 +186,16 @@ public class ViewProviderTest extends AbstractCDOTest
     checkURI("cdo.net4j.tcp://127.0.0.1:2042/repo/resource", true);
     checkURI("cdo.net4j.tcp://127.0.0.1/repo/resource", true);
     checkURI("cdo.net4j.xyz://127.0.0.1/repo/resource", true);
-  
+
     checkURI("cdo.net4j.tcp://127.0.0.1/repo/resource?branch=MAIN/team1", true);
     checkURI("cdo.net4j.tcp://127.0.0.1/repo/resource?branch=MAIN/team1&time=12345678987", true);
     checkURI("cdo.net4j.tcp://127.0.0.1/repo/resource?branch=MAIN/team1&transactional=true", true);
-  
+
     checkURI("cdo.net4j.tcp://127.0.0.1/repo/resource?branch=MAIN/team1&time=12345&transactional=false", false);
     checkURI("cdo.net4j.tcp://127.0.0.1/repo/resource?branch=MAIN/team1&transactional=false", false);
     checkURI("cdo.net4j.tcp://127.0.0.1/repo/resource?branch=MAIN/team1&time=HEAD", false);
     checkURI("cdo.net4j.tcp://127.0.0.1/repo/resource?branch=MAIN", false);
     checkURI("cdo.net4j.tcp://127.0.0.1/repo/resource?branch=MAIN&time=HEAD", false);
-  
   }
 
   private static void checkURI(String uri, boolean valid)

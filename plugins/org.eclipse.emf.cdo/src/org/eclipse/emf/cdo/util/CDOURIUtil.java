@@ -30,7 +30,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -86,32 +86,6 @@ public final class CDOURIUtil
   {
   }
 
-  /**
-   * @deprecated
-   */
-  @Deprecated
-  public static void validateURI(URI uri) throws InvalidURIException
-  {
-    // if (!CDOProtocolConstants.PROTOCOL_NAME.equals(uri.scheme()))
-    // {
-    // throw new InvalidURIException(uri);
-    // }
-    //
-    // if (!uri.isHierarchical())
-    // {
-    // throw new InvalidURIException(uri);
-    // }
-  }
-
-  /**
-   * @deprecated
-   */
-  @Deprecated
-  public static String extractRepositoryUUID(URI uri)
-  {
-    return PluginContainerViewProvider.getRepositoryUUID(uri);
-  }
-
   public static String[] extractResourceFolderAndName(URI uri) throws InvalidURIException
   {
     String path = extractResourcePath(uri);
@@ -154,56 +128,9 @@ public final class CDOURIUtil
     return sanitizePath(uri.path());
   }
 
-  /**
-   * <p>
-   * cdo://repositoryUUID/path
-   * <p>
-   * The path is added at the end of "cdo://repositoryUUID". If path doesn't start with '/', it will be added
-   * automatically. <br>
-   * e.g.: /resA or resA will give the same result &rarr; cdo://repositoryUUID/resA <br>
-   * authority = repositoryUUID <br>
-   * path = /resA
-   *
-   * @deprecated This method is subject to removal in a future release.
-   */
-  @Deprecated
-  public static URI createResourceURI(String repositoryUUID, String path)
-  {
-    StringBuilder stringBuilder = new StringBuilder();
-    stringBuilder.append(PROTOCOL_NAME);
-    stringBuilder.append(":"); //$NON-NLS-1$
-
-    if (repositoryUUID != null)
-    {
-      stringBuilder.append("//"); //$NON-NLS-1$
-      stringBuilder.append(repositoryUUID);
-    }
-
-    if (!SEGMENT_SEPARATOR.equals(path))
-    {
-      if (path.charAt(0) != SEGMENT_SEPARATOR_CHAR)
-      {
-        stringBuilder.append(SEGMENT_SEPARATOR_CHAR);
-      }
-
-      stringBuilder.append(path);
-    }
-
-    return URI.createURI(stringBuilder.toString());
-  }
-
   public static URI createResourceURI(CDOView view, String path)
   {
     return view == null ? null : view.createResourceURI(path);
-  }
-
-  /**
-   * @deprecated This method is subject to removal in a future release.
-   */
-  @Deprecated
-  public static URI createResourceURI(CDOSession session, String path)
-  {
-    return createResourceURI(session == null ? null : session.getRepositoryInfo().getUUID(), path);
   }
 
   /**
@@ -222,6 +149,40 @@ public final class CDOURIUtil
     return CDOIDUtil.createExternal(baseURI.toString());
   }
 
+  /**
+   * @since 4.11
+   */
+  public static String sanitizePath(String path)
+  {
+    if (path == null || path.length() == 0)
+    {
+      return SEGMENT_SEPARATOR;
+    }
+  
+    if (path.charAt(0) != SEGMENT_SEPARATOR_CHAR)
+    {
+      return SEGMENT_SEPARATOR + path;
+    }
+  
+    return path;
+  }
+
+  private static List<String> analyzeSanitizedPath(String path)
+  {
+    List<String> segments = new ArrayList<>();
+    StringTokenizer tokenizer = new StringTokenizer(path, SEGMENT_SEPARATOR);
+    while (tokenizer.hasMoreTokens())
+    {
+      String name = tokenizer.nextToken();
+      if (name != null)
+      {
+        segments.add(name);
+      }
+    }
+  
+    return segments;
+  }
+
   public static List<String> analyzePath(URI uri)
   {
     String path = extractResourcePath(uri);
@@ -233,46 +194,13 @@ public final class CDOURIUtil
     return analyzeSanitizedPath(sanitizePath(path));
   }
 
-  private static List<String> analyzeSanitizedPath(String path)
-  {
-    List<String> segments = new ArrayList<>();
-    StringTokenizer tokenizer = new StringTokenizer(path, CDOURIUtil.SEGMENT_SEPARATOR);
-    while (tokenizer.hasMoreTokens())
-    {
-      String name = tokenizer.nextToken();
-      if (name != null)
-      {
-        segments.add(name);
-      }
-    }
-
-    return segments;
-  }
-
-  /**
-   * @since 4.11
-   */
-  public static String sanitizePath(String path)
-  {
-    if (path == null || path.length() == 0)
-    {
-      return SEGMENT_SEPARATOR;
-    }
-
-    if (path.charAt(0) != SEGMENT_SEPARATOR_CHAR)
-    {
-      return SEGMENT_SEPARATOR + path;
-    }
-
-    return path;
-  }
-
   /**
    * @since 4.0
    */
   public static Map<String, String> getParameters(String query)
   {
-    Map<String, String> result = new HashMap<>();
+    Map<String, String> parameters = new LinkedHashMap<>();
+
     StringTokenizer tokenizer = new StringTokenizer(query, "&"); //$NON-NLS-1$
     while (tokenizer.hasMoreTokens())
     {
@@ -283,17 +211,169 @@ public final class CDOURIUtil
         if (pos == -1)
         {
           String key = parameter.trim();
-          result.put(key, ""); //$NON-NLS-1$
+          parameters.put(key, ""); //$NON-NLS-1$
         }
         else
         {
           String key = parameter.substring(0, pos).trim();
           String value = parameter.substring(pos + 1);
-          result.put(key, value);
+          parameters.put(key, value);
         }
       }
     }
 
-    return result;
+    return parameters;
+  }
+
+  /**
+   * @since 4.12
+   */
+  public static String formatQuery(Map<String, String> parameters)
+  {
+    StringBuilder query = new StringBuilder();
+
+    for (Map.Entry<String, String> entry : parameters.entrySet())
+    {
+      appendQueryParameter(query, entry.getKey(), entry.getValue());
+    }
+
+    if (query.length() == 0)
+    {
+      return null;
+    }
+
+    return query.toString();
+  }
+
+  /**
+   * @since 4.12
+   */
+  public static void appendQueryParameter(StringBuilder query, String parameter, String value)
+  {
+    if (query.length() != 0)
+    {
+      query.append("&");
+    }
+
+    query.append(parameter);
+    query.append("=");
+    query.append(value);
+  }
+
+  /**
+   * @since 4.12
+   */
+  public static URI appendResourcePath(URI uri, String path)
+  {
+    boolean pathIsEmpty = true;
+    if (path != null)
+    {
+      StringTokenizer tokenizer = new StringTokenizer(path, SEGMENT_SEPARATOR);
+      while (tokenizer.hasMoreTokens())
+      {
+        String segment = tokenizer.nextToken();
+        uri = uri.appendSegment(segment);
+        pathIsEmpty = false;
+      }
+    }
+
+    if (pathIsEmpty)
+    {
+      uri = uri.appendSegment("");
+    }
+
+    return uri;
+  }
+
+  /**
+   * @since 4.12
+   */
+  public static URI trimResourceInfos(URI uri)
+  {
+    String query = uri.query();
+    if (query != null && query.length() != 0)
+    {
+      Map<String, String> parameters = getParameters(query);
+      if (parameters.containsKey(CDOResource.PREFETCH_PARAMETER))
+      {
+        parameters.remove(CDOResource.PREFETCH_PARAMETER);
+        query = formatQuery(parameters);
+      }
+    }
+
+    return URI.createHierarchicalURI(uri.scheme(), uri.authority(), uri.device(), query, uri.fragment());
+  }
+
+  /**
+   * @deprecated
+   */
+  @Deprecated
+  public static void validateURI(URI uri) throws InvalidURIException
+  {
+    // if (!CDOProtocolConstants.PROTOCOL_NAME.equals(uri.scheme()))
+    // {
+    // throw new InvalidURIException(uri);
+    // }
+    //
+    // if (!uri.isHierarchical())
+    // {
+    // throw new InvalidURIException(uri);
+    // }
+  }
+
+  /**
+   * @deprecated
+   */
+  @Deprecated
+  public static String extractRepositoryUUID(URI uri)
+  {
+    return PluginContainerViewProvider.getRepositoryUUID(uri);
+  }
+
+  /**
+   * <p>
+   * cdo://repositoryUUID/path
+   * <p>
+   * The path is added at the end of "cdo://repositoryUUID". If path doesn't start with '/', it will be added
+   * automatically. <br>
+   * e.g.: /resA or resA will give the same result &rarr; cdo://repositoryUUID/resA <br>
+   * authority = repositoryUUID <br>
+   * path = /resA
+   *
+   * @deprecated This method is subject to removal in a future release.
+   */
+  @Deprecated
+  public static URI createResourceURI(String repositoryUUID, String path)
+  {
+    StringBuilder stringBuilder = new StringBuilder();
+    stringBuilder.append(PROTOCOL_NAME);
+    stringBuilder.append(":"); //$NON-NLS-1$
+  
+    if (repositoryUUID != null)
+    {
+      stringBuilder.append("//"); //$NON-NLS-1$
+      stringBuilder.append(repositoryUUID);
+    }
+  
+    if (!SEGMENT_SEPARATOR.equals(path))
+    {
+      if (path.charAt(0) != SEGMENT_SEPARATOR_CHAR)
+      {
+        stringBuilder.append(SEGMENT_SEPARATOR_CHAR);
+      }
+  
+      stringBuilder.append(path);
+    }
+  
+    return URI.createURI(stringBuilder.toString());
+  }
+
+  /**
+   * @deprecated This method is subject to removal in a future release.
+   */
+  @Deprecated
+  public static URI createResourceURI(CDOSession session, String path)
+  {
+    return createResourceURI(session == null ? null : session.getRepositoryInfo().getUUID(), path);
   }
 }

@@ -11,8 +11,10 @@
  */
 package org.eclipse.emf.cdo.view;
 
+import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.view.CDOViewProvider.CDOViewProvider2;
 
+import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 
 import org.eclipse.emf.common.util.URI;
@@ -92,56 +94,44 @@ public abstract class AbstractCDOViewProvider implements CDOViewProvider2
   }
 
   /**
-   * Must be overwritten for non-canonical URI formats!
+   * Must be overridden for non-canonical URI formats!
    *
    * @since 4.0
    */
   @Override
   public URI getResourceURI(CDOView view, String path)
   {
-    return null;
+    throw new UnsupportedOperationException("Must be overridden in subclasses!");
   }
 
   /**
    * @since 4.4
    */
   @Override
-  public final URI getViewURI(CDOView view)
+  public URI getViewURI(CDOView view)
   {
-    URI resourceURI = getResourceURI(view, null);
-    if (resourceURI != null)
+    URI uri = getResourceURI(view, null);
+    if (uri != null)
     {
-      if (resourceURI.isHierarchical())
-      {
-        resourceURI = URI.createHierarchicalURI(resourceURI.scheme(), resourceURI.authority(), null, null, null);
-      }
-      else
-      {
-        String string = resourceURI.toString();
-        if (string.endsWith("/"))
-        {
-          string = string.substring(0, string.length() - 1);
-          resourceURI = URI.createURI(string);
-        }
-      }
+      return getViewURI(uri);
     }
 
-    return resourceURI;
+    return null;
   }
 
   /**
-   * Should be overwritten for non-canonical URI formats!
+   * Should be overridden for non-canonical URI formats!
    *
    * @since 4.4
    */
   @Override
   public URI getViewURI(URI uri)
   {
-    return URI.createHierarchicalURI(uri.scheme(), uri.authority(), uri.device(), null, null);
+    return CDOURIUtil.trimResourceInfos(uri);
   }
 
   /**
-   * Should be overwritten for non-canonical URI formats!
+   * Should be overridden for non-canonical URI formats!
    *
    * @since 4.4
    */
@@ -154,6 +144,6 @@ public abstract class AbstractCDOViewProvider implements CDOViewProvider2
   @Override
   public String toString()
   {
-    return "CDOViewProviderDescriptor[" + getPriority() + " --> " + getRegex() + "]";
+    return "CDOViewProvider[" + getRegex() + " --> " + ReflectUtil.getSimpleClassName(this) + ", " + getPriority() + "]";
   }
 }

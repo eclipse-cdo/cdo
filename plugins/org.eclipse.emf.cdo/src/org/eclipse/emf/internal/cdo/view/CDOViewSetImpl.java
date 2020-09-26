@@ -445,7 +445,7 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
         dirtyResources.addAll(resources);
       }
     }
-  
+
     return dirtyResources;
   }
 
@@ -467,7 +467,6 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
       }
     }
 
-    String uuid = view.getSession().getRepositoryInfo().getUUID();
-    return URI.createURI(CDOURIUtil.PROTOCOL_NAME + "://" + uuid);
+    return PluginContainerViewProvider.INSTANCE.getViewURI(view);
   }
 }

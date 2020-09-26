@@ -1230,7 +1230,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
         if (query != null && query.length() != 0)
         {
           Map<String, String> parameters = CDOURIUtil.getParameters(query);
-          String value = parameters.get(CDOResource.PREFETCH_PARAMETER);
+          String value = parameters.get(PREFETCH_PARAMETER);
           if (value != null)
           {
             boolean prefetch = Boolean.parseBoolean(value);

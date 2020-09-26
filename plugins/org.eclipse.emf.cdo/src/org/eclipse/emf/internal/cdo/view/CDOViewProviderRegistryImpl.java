@@ -58,7 +58,19 @@ public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider> impl
 
   private static final String EXT_POINT = "viewProviders"; //$NON-NLS-1$
 
-  private List<CDOViewProvider> viewProviders = new ArrayList<>();
+  /**
+   * Sort highest priority first.
+   */
+  private static final Comparator<CDOViewProvider> COMPARATOR = new Comparator<CDOViewProvider>()
+  {
+    @Override
+    public int compare(CDOViewProvider vp1, CDOViewProvider vp2)
+    {
+      return -Integer.compare(vp1.getPriority(), vp2.getPriority());
+    }
+  };
+
+  private final List<CDOViewProvider> viewProviders = new ArrayList<>();
 
   public CDOViewProviderRegistryImpl()
   {
@@ -73,26 +85,15 @@ public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider> impl
       return null;
     }
 
-    CDOViewSet viewSet = CDOUtil.getViewSet(resourceSet);
-    // if (viewSet != null)
-    // {
-    // try
-    // {
-    // String uuid = CDOURIUtil.extractRepositoryUUID(uri);
-    // CDOView view = viewSet.resolveView(uuid);
-    // if (view != null)
-    // {
-    // return view;
-    // }
-    // }
-    // catch (Exception ignore)
-    // {
-    // // Do nothing
-    // }
-    // }
+    CDOViewSet viewSet = null;
 
     for (CDOViewProvider viewProvider : getViewProviders(uri))
     {
+      if (viewSet == null)
+      {
+        viewSet = CDOUtil.getViewSet(resourceSet);
+      }
+
       InternalCDOView view = provideView(uri, resourceSet, viewSet, viewProvider);
       if (view != null)
       {
@@ -197,14 +198,7 @@ public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider> impl
     }
 
     // Sort highest priority first
-    Collections.sort(result, new Comparator<CDOViewProvider>()
-    {
-      @Override
-      public int compare(CDOViewProvider o1, CDOViewProvider o2)
-      {
-        return -Integer.valueOf(o1.getPriority()).compareTo(o2.getPriority());
-      }
-    });
+    Collections.sort(result, COMPARATOR);
 
     return result.toArray(new CDOViewProvider[result.size()]);
   }

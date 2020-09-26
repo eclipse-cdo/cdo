@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.internal.net4j.protocol.LoadRevisionsRequest;
 import org.eclipse.emf.cdo.internal.net4j.protocol.LockStateRequest;
 import org.eclipse.emf.cdo.internal.net4j.protocol.QueryCancelRequest;
 import org.eclipse.emf.cdo.internal.net4j.protocol.QueryRequest;
+import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model1.Category;
@@ -90,7 +91,7 @@ public class Bugzilla_439337_Test extends AbstractCDOTest
   private void testCDOLockState(CDOView view, boolean cdoLockStatePrefetchEnabled)
   {
     view.getResourceSet().eAdapters().add(new EContentAdapterQueringCDOLockState());
-    ISignalProtocol<?> protocol = ((org.eclipse.emf.cdo.net4j.CDONet4jSession)view.getSession()).options().getNet4jProtocol();
+    ISignalProtocol<?> protocol = ((CDONet4jSession)view.getSession()).options().getNet4jProtocol();
     SignalCounter signalCounter = new SignalCounter(protocol);
     view.getResource(getResourcePath(RESOURCE_NAME + "?" + CDOResource.PREFETCH_PARAMETER + "=" + Boolean.TRUE));
 

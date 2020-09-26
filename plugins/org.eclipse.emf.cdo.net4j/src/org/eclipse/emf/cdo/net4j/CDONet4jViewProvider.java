@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.net4j;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.util.CDOURIData;
+import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.util.InvalidURIException;
 import org.eclipse.emf.cdo.view.AbstractCDOViewProvider;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -34,9 +35,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 /**
  * A {@link CDOViewProvider view provider} that uses Net4j-specific CDO {@link CDONet4jSession sessions} to open views.
  *
@@ -57,12 +55,22 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
   }
 
   @Override
+  public String getPath(URI uri)
+  {
+    return new Path(uri.path()).makeAbsolute().removeFirstSegments(1).toString();
+  }
+
+  @Override
   public CDOView getView(URI uri, ResourceSet resourceSet)
   {
     CDOURIData data = createURIData(uri);
+    String authority = data.getAuthority();
+    String userName = data.getUserName();
+    String passWord = data.getPassWord();
+    String repositoryName = data.getRepositoryName();
 
-    IConnector connector = getConnector(data.getAuthority());
-    CDONet4jSession session = getNet4jSession(connector, data.getUserName(), data.getPassWord(), data.getRepositoryName());
+    IConnector connector = getConnector(authority);
+    CDONet4jSession session = getNet4jSession(connector, userName, passWord, repositoryName);
 
     String viewID = data.getViewID();
     if (viewID != null)
@@ -77,58 +85,36 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
 
     String branchPath = data.getBranchPath().toPortableString();
     CDOBranch branch = session.getBranchManager().getBranch(branchPath);
-    long timeStamp = data.getTimeStamp();
 
     if (data.isTransactional())
     {
       return session.openTransaction(branch, resourceSet);
     }
 
+    long timeStamp = data.getTimeStamp();
     return session.openView(branch, timeStamp, resourceSet);
-  }
-
-  @Override
-  public String getPath(URI uri)
-  {
-    return new Path(uri.path()).makeAbsolute().removeFirstSegments(1).toString();
   }
 
   @Override
   public URI getViewURI(URI uri)
   {
-    CDOURIData uriData = createURIData(uri);
-    uriData.setResourcePath(null);
-    uriData.setExtraParameters(null);
-    return uriData.toURI();
+    // Remove all (resource path) segments and leave only the repository name segment.
+    return uri.trimSegments(uri.segmentCount() - 1);
+
+    // CDOURIData uriData = createURIData(uri);
+    // uriData.setResourcePath(null);
+    // uriData.setExtraParameters(null);
+    // return uriData.toURI();
   }
 
   @Override
   public URI getResourceURI(CDOView view, String path)
   {
-    StringBuilder builder = new StringBuilder();
-    builder.append("cdo.net4j.");
-    builder.append(transport);
-    builder.append("://");
+    String branchPath = view.getBranch().getPathName();
+    long timeStamp = view.getTimeStamp();
+    boolean readOnly = view.isReadOnly();
 
     CDONet4jSession session = (CDONet4jSession)view.getSession();
-
-    // CDOAuthenticator authenticator = ((InternalCDOSession)session).getAuthenticator();
-    // IPasswordCredentialsProvider credentialsProvider = authenticator.getCredentialsProvider();
-    // if (credentialsProvider != null)
-    // {
-    // IPasswordCredentials credentials = credentialsProvider.getCredentials();
-    // builder.append(credentials.getUserID());
-    //
-    // char[] password = credentials.getPassword();
-    // if (password != null)
-    // {
-    // builder.append(":");
-    // builder.append(password);
-    // }
-    //
-    // builder.append("@");
-    // }
-
     IChannel channel = session.options().getNet4jProtocol().getChannel();
     if (channel == null)
     {
@@ -136,47 +122,36 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
     }
 
     IConnector connector = (IConnector)channel.getMultiplexer();
+    String authority = getURIAuthority(connector);
     String repositoryName = session.getRepositoryInfo().getName();
-    append(builder, connector, repositoryName);
 
-    if (path != null)
-    {
-      if (!path.startsWith("/"))
-      {
-        builder.append("/");
-      }
+    return getResourceURI(transport, authority, repositoryName, path, branchPath, timeStamp, readOnly);
+  }
 
-      builder.append(path);
-    }
+  /**
+   * @since 4.4
+   */
+  public URI getResourceURI(String transport, String authority, String repositoryName, String resourcePath, String branchPath, long timeStamp, boolean readOnly)
+  {
+    StringBuilder query = new StringBuilder();
 
-    int params = 0;
-
-    String branchPath = view.getBranch().getPathName();
     if (!CDOBranch.MAIN_BRANCH_NAME.equalsIgnoreCase(branchPath))
     {
-      builder.append(params++ == 0 ? "?" : "&");
-      builder.append(CDOURIData.BRANCH_PARAMETER);
-      builder.append("=");
-      builder.append(branchPath);
+      CDOURIUtil.appendQueryParameter(query, CDOURIData.BRANCH_PARAMETER, branchPath);
     }
 
-    long timeStamp = view.getTimeStamp();
     if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
     {
-      builder.append(params++ == 0 ? "?" : "&");
-      builder.append(CDOURIData.TIME_PARAMETER);
-      builder.append("=");
-      builder.append(new SimpleDateFormat().format(new Date(timeStamp)));
+      CDOURIUtil.appendQueryParameter(query, CDOURIData.TIME_PARAMETER, Long.toString(timeStamp));
     }
 
-    if (!view.isReadOnly())
+    if (!readOnly)
     {
-      builder.append(params++ == 0 ? "?" : "&");
-      builder.append(CDOURIData.TRANSACTIONAL_PARAMETER);
-      builder.append("=true");
+      CDOURIUtil.appendQueryParameter(query, CDOURIData.TRANSACTIONAL_PARAMETER, "true");
     }
 
-    return URI.createURI(builder.toString());
+    URI uri = URI.createHierarchicalURI("cdo.net4j." + transport, authority, null, query.toString(), null).appendSegment(repositoryName);
+    return CDOURIUtil.appendResourcePath(uri, resourcePath);
   }
 
   /**
@@ -218,9 +193,8 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
     }
     else
     {
-      StringBuilder builder = new StringBuilder();
-      append(builder, connector, repositoryName);
-      String resource = builder.toString();
+      String authority = getURIAuthority(connector);
+      String resource = authority + CDOURIUtil.SEGMENT_SEPARATOR + repositoryName;
 
       try
       {
@@ -285,15 +259,6 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
     return authority;
   }
 
-  private void append(StringBuilder builder, IConnector connector, String repositoryName)
-  {
-    String authority = getURIAuthority(connector);
-    builder.append(authority);
-
-    builder.append("/");
-    builder.append(repositoryName);
-  }
-
   /**
    * A JVM-based {@link CDONet4jViewProvider view provider}.
    *
@@ -328,7 +293,6 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
     {
       this(DEFAULT_PRIORITY);
     }
-
   }
 
   /**
@@ -347,7 +311,6 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
     {
       this(DEFAULT_PRIORITY);
     }
-
   }
 
   /**

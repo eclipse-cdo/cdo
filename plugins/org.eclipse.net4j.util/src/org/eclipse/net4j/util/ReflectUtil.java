@@ -354,7 +354,8 @@ public final class ReflectUtil
       return null;
     }
 
-    return getSimpleName(object.getClass());
+    String name = object.getClass().getName();
+    return getSimpleClassName(name);
   }
 
   public static String getLabel(Object object)

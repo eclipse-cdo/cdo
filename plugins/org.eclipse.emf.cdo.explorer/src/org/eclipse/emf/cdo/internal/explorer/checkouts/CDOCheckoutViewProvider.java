@@ -88,7 +88,7 @@ public class CDOCheckoutViewProvider extends AbstractCDOViewProvider
       return checkout.createResourceURI(path);
     }
 
-    return super.getResourceURI(view, path);
+    return null;
   }
 
   public static void disposeResourceSet(ResourceSet resourceSet)

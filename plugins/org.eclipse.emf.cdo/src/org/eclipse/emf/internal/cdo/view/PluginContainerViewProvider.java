@@ -13,14 +13,11 @@ package org.eclipse.emf.internal.cdo.view;
 
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
-import org.eclipse.emf.cdo.util.InvalidURIException;
 import org.eclipse.emf.cdo.view.CDOView;
-import org.eclipse.emf.cdo.view.CDOViewProvider;
 import org.eclipse.emf.cdo.view.ManagedContainerViewProvider;
 
 import org.eclipse.emf.internal.cdo.session.CDOSessionFactory;
 
-import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 
@@ -28,13 +25,15 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
 /**
- * Provides <code>CDOView</code> from <code>CDOSession</code> registered in IPluginContainer
+ * Provides views from sessions registered in a {@link #getContainer() managed container}.
+ * <p>
+ * The URI format of this view provider is <code>cdo://{repository-uuid}[/{resource-path}]</code>.
  *
  * @author Victor Roldan Betancort
  */
 public class PluginContainerViewProvider extends ManagedContainerViewProvider
 {
-  public static final CDOViewProvider INSTANCE = new PluginContainerViewProvider();
+  public static final PluginContainerViewProvider INSTANCE = new PluginContainerViewProvider();
 
   private static final String REGEX = "cdo:.*"; //$NON-NLS-1$
 
@@ -55,10 +54,16 @@ public class PluginContainerViewProvider extends ManagedContainerViewProvider
     }
 
     String repoUUID = getRepositoryUUID(uri);
+    if (repoUUID == null)
+    {
+      return null;
+    }
+
     for (Object element : container.getElements(CDOSessionFactory.PRODUCT_GROUP))
     {
       CDOSession session = (CDOSession)element;
       String uuid = session.getRepositoryInfo().getUUID();
+
       if (repoUUID.equals(uuid))
       {
         CDOView view = openView(session, resourceSet);
@@ -75,23 +80,14 @@ public class PluginContainerViewProvider extends ManagedContainerViewProvider
   @Override
   public URI getResourceURI(CDOView view, String path)
   {
-    if (StringUtil.isEmpty(path))
-    {
-      path = "";
-    }
-    else if (!path.startsWith("/"))
-    {
-      path = "/" + path;
-    }
-
-    String authority = view.getSession().getRepositoryInfo().getUUID();
-    return URI.createURI(CDOURIUtil.PROTOCOL_NAME + "://" + authority + path);
+    String repositoryUUID = getRepositoryUUID(view);
+    return getResourceURI(repositoryUUID, path);
   }
 
-  @Override
-  protected IManagedContainer getContainer()
+  public URI getResourceURI(String repositoryUUID, String path)
   {
-    return IPluginContainer.INSTANCE;
+    URI uri = URI.createHierarchicalURI(CDOURIUtil.PROTOCOL_NAME, repositoryUUID, null, null, null);
+    return CDOURIUtil.appendResourcePath(uri, path);
   }
 
   protected CDOView openView(CDOSession session, ResourceSet resourceSet)
@@ -99,20 +95,13 @@ public class PluginContainerViewProvider extends ManagedContainerViewProvider
     return session.openTransaction(resourceSet);
   }
 
+  public static String getRepositoryUUID(CDOView view)
+  {
+    return view.getSession().getRepositoryInfo().getUUID();
+  }
+
   public static String getRepositoryUUID(URI uri)
   {
-    try
-    {
-      if (!uri.hasAuthority())
-      {
-        throw new InvalidURIException(uri);
-      }
-
-      return uri.authority();
-    }
-    catch (InvalidURIException ex)
-    {
-      return null;
-    }
+    return uri.authority();
   }
 }

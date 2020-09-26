@@ -26,8 +26,8 @@ public interface CDOViewProvider
   public static final int DEFAULT_PRIORITY = 500;
 
   /**
-   * Returns the priority of this provider. Usually used to choose between several <code>CDOViewProvider</code> that
-   * match the same repository URI.
+   * Returns the priority of this provider. Usually used to choose between several <code>CDOViewProviders</code> that
+   * match the same repository URI. A higher priority value is preferred in that decision.
    */
   public int getPriority();
 
@@ -42,10 +42,7 @@ public interface CDOViewProvider
   public boolean matchesRegex(URI uri);
 
   /**
-   * Receives a URI and returns an opened <code>CDOView</code> against the repository. The implementer is responsible to
-   * do the UUID to physical host map in case necessary.
-   *
-   * @return a wired-up and opened <code>CDOView</code>
+   * Receives a URI and returns an opened <code>CDOView</code> against the repository.
    */
   public CDOView getView(URI uri, ResourceSet resourceSet);
 

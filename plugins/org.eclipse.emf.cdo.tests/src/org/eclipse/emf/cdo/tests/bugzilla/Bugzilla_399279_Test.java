@@ -34,17 +34,8 @@ public class Bugzilla_399279_Test extends AbstractCDOTest
     resource.getContents().add(getModel5Factory().createParent());
     transaction.commit();
 
-    try
-    {
-      resourceSet.eAdapters().clear();
-      fail("Did not throw IllegalArgumentException on attempt to remove CDOViewSet from adapter list.");
-    }
-    catch (IllegalArgumentException expected)
-    {
-      // pass
-    }
-
-    assertEquals(true, resourceSet.eAdapters().contains(transaction.getViewSet()));
+    resourceSet.eAdapters().clear(); // Should not throw an exception.
+    assertTrue(resourceSet.eAdapters().contains(transaction.getViewSet()));
   }
 
   public void testRemoveAdapterWhileViewStillOpen() throws Exception
@@ -60,17 +51,8 @@ public class Bugzilla_399279_Test extends AbstractCDOTest
     resource.unload();
     resourceSet.getResources().remove(resource);
 
-    try
-    {
-      resourceSet.eAdapters().clear();
-      fail("Did not throw IllegalArgumentException on attempt to remove CDOViewSet from adapter list.");
-    }
-    catch (IllegalArgumentException expected)
-    {
-      // pass
-    }
-
-    assertEquals(true, resourceSet.eAdapters().contains(transaction.getViewSet()));
+    resourceSet.eAdapters().clear(); // Should not throw an exception.
+    assertTrue(resourceSet.eAdapters().contains(transaction.getViewSet()));
   }
 
   public void testRemoveAdapterViewsClosedAndResourcesRemoved() throws Exception
@@ -87,6 +69,7 @@ public class Bugzilla_399279_Test extends AbstractCDOTest
     resourceSet.getResources().remove(resource);
 
     transaction.close();
-    resourceSet.eAdapters().clear(); // Should not throw a RuntimeException
+    resourceSet.eAdapters().clear(); // Should not throw an exception.
+    assertFalse(resourceSet.eAdapters().contains(transaction.getViewSet()));
   }
 }

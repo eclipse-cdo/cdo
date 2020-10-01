@@ -27,10 +27,12 @@ import org.eclipse.emf.internal.cdo.messages.Messages;
 
 import org.eclipse.net4j.util.WrappedException;
 
+import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.NotificationImpl;
 import org.eclipse.emf.common.notify.impl.NotifierImpl;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -114,10 +116,6 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
     return resolveView(CDOURIUtil.PROTOCOL_NAME + "://" + repositoryUUID);
   }
 
-  /**
-   * @throws IllegalArgumentException
-   *           if repositoryUUID doesn't match any CDOView.
-   */
   @Override
   public InternalCDOView resolveView(URI viewURI)
   {
@@ -196,13 +194,9 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
 
         for (Resource resource : getResourceSet().getResources())
         {
-          if (resource instanceof CDOResource)
+          if (resource instanceof CDOResource && ((CDOResource)resource).cdoView() == view)
           {
-            CDOResource cdoRes = (CDOResource)resource;
-            if (cdoRes.cdoView() == view)
-            {
-              resToRemove.add(resource);
-            }
+            resToRemove.add(resource);
           }
         }
       }
@@ -250,30 +244,22 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
       return;
     }
 
-    if (newTarget == null && resourceSet != null)
+    if (newTarget == null)
     {
-      if (!resourceSet.getResources().isEmpty())
+      // UNINSTALL
+      EList<Adapter> adapters = resourceSet.eAdapters();
+      if (!adapters.contains(this))
       {
-        if (!resourceSet.eAdapters().contains(this))
+        if (hasActiveView())
         {
-          resourceSet.eAdapters().add(this); // add me back to the resource set's adapters
+          adapters.add(this); // Add me back to the resource set's list of adapters.
+          return;
         }
-
-        throw new IllegalArgumentException(Messages.getString("CDOViewSetImpl.5")); //$NON-NLS-1$
-      }
-
-      if (getViews().length > 0)
-      {
-        if (!resourceSet.eAdapters().contains(this))
-        {
-          resourceSet.eAdapters().add(this); // add me back to the resource set's adapters
-        }
-
-        throw new IllegalArgumentException(Messages.getString("CDOViewSetImpl.6")); //$NON-NLS-1$
       }
     }
     else
     {
+      // INSTALL
       if (!isAdapterForType(newTarget))
       {
         throw new IllegalArgumentException(MessageFormat.format(Messages.getString("CDOViewSetImpl.3"), newTarget)); //$NON-NLS-1$
@@ -429,6 +415,19 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
     }
 
     return resourcesPerView;
+  }
+
+  private boolean hasActiveView()
+  {
+    for (CDOView view : getViews())
+    {
+      if (!view.isClosed())
+      {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   private static List<CDOResource> getDirtyResources(List<CDOResource> resources)

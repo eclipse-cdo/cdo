@@ -1674,9 +1674,15 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     InternalCDOViewSet viewSet = getViewSet();
     viewSet.remove(this);
 
-    if (options.getClearAdapterPolicy() == null)
+    CDOAdapterPolicy clearAdapterPolicy = options.getClearAdapterPolicy();
+    if (clearAdapterPolicy == null)
     {
-      options.setClearAdapterPolicy(viewSet.getDefaultClearAdapterPolicy());
+      clearAdapterPolicy = viewSet.getDefaultClearAdapterPolicy();
+    }
+
+    if (clearAdapterPolicy != null && clearAdapterPolicy != CDOAdapterPolicy.NONE)
+    {
+      clearAdapters(clearAdapterPolicy);
     }
 
     super.doBeforeDeactivate();
@@ -1688,7 +1694,6 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
   @Override
   protected void doDeactivate() throws Exception
   {
-    clearAdapters();
     unitManager.deactivate();
 
     CDOViewRegistryImpl.INSTANCE.deregister(this);
@@ -1753,14 +1758,8 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     super.doDeactivate();
   }
 
-  private void clearAdapters()
+  private void clearAdapters(CDOAdapterPolicy adapterPolicy)
   {
-    CDOAdapterPolicy adapterPolicy = options.getClearAdapterPolicy();
-    if (adapterPolicy == null || adapterPolicy == CDOAdapterPolicy.NONE)
-    {
-      return;
-    }
-
     for (CDOObject object : getModifiableObjects().values())
     {
       EList<Adapter> adapters = object.eAdapters();

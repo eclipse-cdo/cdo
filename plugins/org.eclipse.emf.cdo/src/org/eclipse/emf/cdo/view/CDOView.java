@@ -853,6 +853,16 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
     public void setFeatureAnalyzer(CDOFeatureAnalyzer featureAnalyzer);
 
     /**
+     * @since 4.12
+     */
+    public CDOAdapterPolicy getClearAdapterPolicy();
+
+    /**
+     * @since 4.12
+     */
+    public void setClearAdapterPolicy(CDOAdapterPolicy policy);
+
+    /**
      * An {@link IOptionsEvent options event} fired from view {@link CDOView#options() options} when the
      * {@link Options#setLoadNotificationEnabled(boolean) load notification enabled} option has changed.
      *
@@ -990,6 +1000,20 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
      * @since 4.1
      */
     public interface FeatureAnalyzerEvent extends IOptionsEvent
+    {
+    }
+
+    /**
+     * An {@link IOptionsEvent options event} fired from view {@link CDOView#options() options} when the
+     * {@link Options#setClearAdapterPolicy(CDOAdapterPolicy) clear adapter policy} option has
+     * changed.
+     *
+     * @author Eike Stepper
+     * @noextend This interface is not intended to be extended by clients.
+     * @noimplement This interface is not intended to be implemented by clients.
+     * @since 4.12
+     */
+    public interface ClearAdapterPolicyEvent extends IOptionsEvent
     {
     }
   }

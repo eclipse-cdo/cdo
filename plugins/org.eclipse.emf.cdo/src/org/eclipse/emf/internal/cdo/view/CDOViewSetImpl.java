@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
+import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewProvider;
 import org.eclipse.emf.cdo.view.CDOViewProvider.CDOViewProvider2;
@@ -70,6 +71,8 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
 
   private ResourceSet resourceSet;
 
+  private CDOAdapterPolicy defaultClearAdapterPolicy;
+
   private ThreadLocal<Boolean> ignoreNotifications = new InheritableThreadLocal<>();
 
   public CDOViewSetImpl()
@@ -92,6 +95,18 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
   public CDOResourceFactory getResourceFactory()
   {
     return resourceFactory;
+  }
+
+  @Override
+  public CDOAdapterPolicy getDefaultClearAdapterPolicy()
+  {
+    return defaultClearAdapterPolicy;
+  }
+
+  @Override
+  public void setDefaultClearAdapterPolicy(CDOAdapterPolicy defaultClearAdapterPolicy)
+  {
+    this.defaultClearAdapterPolicy = defaultClearAdapterPolicy;
   }
 
   @Override

@@ -68,6 +68,7 @@ import org.eclipse.emf.internal.cdo.messages.Messages;
 import org.eclipse.emf.internal.cdo.object.CDODeltaNotificationImpl;
 import org.eclipse.emf.internal.cdo.object.CDOInvalidationNotificationImpl;
 import org.eclipse.emf.internal.cdo.object.CDONotificationBuilder;
+import org.eclipse.emf.internal.cdo.object.CDOObjectWrapperBase;
 import org.eclipse.emf.internal.cdo.session.SessionUtil;
 import org.eclipse.emf.internal.cdo.util.DefaultLocksChangedEvent;
 
@@ -99,6 +100,7 @@ import org.eclipse.net4j.util.ref.ReferenceValueMap;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -1672,6 +1674,11 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     InternalCDOViewSet viewSet = getViewSet();
     viewSet.remove(this);
 
+    if (options.getClearAdapterPolicy() == null)
+    {
+      options.setClearAdapterPolicy(viewSet.getDefaultClearAdapterPolicy());
+    }
+
     super.doBeforeDeactivate();
   }
 
@@ -1681,6 +1688,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
   @Override
   protected void doDeactivate() throws Exception
   {
+    clearAdapters();
     unitManager.deactivate();
 
     CDOViewRegistryImpl.INSTANCE.deregister(this);
@@ -1743,6 +1751,49 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
 
     changeSubscriptionManager = null;
     super.doDeactivate();
+  }
+
+  private void clearAdapters()
+  {
+    CDOAdapterPolicy adapterPolicy = options.getClearAdapterPolicy();
+    if (adapterPolicy == null || adapterPolicy == CDOAdapterPolicy.NONE)
+    {
+      return;
+    }
+
+    for (CDOObject object : getModifiableObjects().values())
+    {
+      EList<Adapter> adapters = object.eAdapters();
+      if (!adapters.isEmpty())
+      {
+        for (Iterator<Adapter> it = adapters.iterator(); it.hasNext();)
+        {
+          Adapter adapter = it.next();
+          if (adapter instanceof CDOObjectWrapperBase)
+          {
+            // Don't remove a legacy adapter because otherwise references to this CDOObject will break.
+            continue;
+          }
+
+          boolean validAdapter;
+
+          try
+          {
+            validAdapter = adapterPolicy.isValid(object, adapter);
+          }
+          catch (Exception ex)
+          {
+            OM.LOG.error(ex);
+            continue;
+          }
+
+          if (validAdapter)
+          {
+            it.remove();
+          }
+        }
+      }
+    }
   }
 
   @Override
@@ -3065,6 +3116,8 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
 
     private CDOAdapterPolicy strongReferencePolicy = CDOAdapterPolicy.ALL;
 
+    private CDOAdapterPolicy clearAdapterPolicy;
+
     public OptionsImpl()
     {
     }
@@ -3742,6 +3795,50 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
       return true;
     }
 
+    @Override
+    public CDOAdapterPolicy getClearAdapterPolicy()
+    {
+      synchronized (getViewMonitor())
+      {
+        lockView();
+
+        try
+        {
+          return clearAdapterPolicy;
+        }
+        finally
+        {
+          unlockView();
+        }
+      }
+    }
+
+    @Override
+    public void setClearAdapterPolicy(CDOAdapterPolicy policy)
+    {
+      checkActive();
+
+      synchronized (getViewMonitor())
+      {
+        lockView();
+
+        try
+        {
+          clearAdapterPolicy = policy;
+        }
+        finally
+        {
+          unlockView();
+        }
+      }
+
+      IListener[] listeners = getListeners();
+      if (listeners != null)
+      {
+        fireEvent(new ClearAdapterPolicyEventImpl(), listeners);
+      }
+    }
+
     /**
      * @author Eike Stepper
      */
@@ -3909,6 +4006,19 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
       private static final long serialVersionUID = 1L;
 
       public StaleReferencePolicyEventImpl()
+      {
+        super(OptionsImpl.this);
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    private final class ClearAdapterPolicyEventImpl extends OptionsEvent implements ClearAdapterPolicyEvent
+    {
+      private static final long serialVersionUID = 1L;
+
+      public ClearAdapterPolicyEventImpl()
       {
         super(OptionsImpl.this);
       }

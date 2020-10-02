@@ -537,6 +537,18 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
   }
 
   @Override
+  public CDOAdapterPolicy getClearAdapterPolicy()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public void setClearAdapterPolicy(CDOAdapterPolicy policy)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
   public CDOLockState[] getLockStates(Collection<CDOID> ids)
   {
     throw new UnsupportedOperationException();

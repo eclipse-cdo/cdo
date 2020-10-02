@@ -49,4 +49,14 @@ public interface CDOViewSet extends Notifier
   public EPackage.Registry getPackageRegistry();
 
   public ResourceSet getResourceSet();
+
+  /**
+   * @since 4.12
+   */
+  public CDOAdapterPolicy getDefaultClearAdapterPolicy();
+
+  /**
+   * @since 4.12
+   */
+  public void setDefaultClearAdapterPolicy(CDOAdapterPolicy defaultClearAdapterPolicy);
 }

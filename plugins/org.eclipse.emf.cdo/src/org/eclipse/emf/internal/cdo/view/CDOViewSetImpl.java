@@ -27,12 +27,10 @@ import org.eclipse.emf.internal.cdo.messages.Messages;
 
 import org.eclipse.net4j.util.WrappedException;
 
-import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.NotificationImpl;
 import org.eclipse.emf.common.notify.impl.NotifierImpl;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -247,14 +245,10 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
     if (newTarget == null)
     {
       // UNINSTALL
-      EList<Adapter> adapters = resourceSet.eAdapters();
-      if (!adapters.contains(this))
+      if (hasActiveView())
       {
-        if (hasActiveView())
-        {
-          adapters.add(this); // Add me back to the resource set's list of adapters.
-          return;
-        }
+        resourceSet.eAdapters().add(this); // Add me back to the resource set's list of adapters.
+        return;
       }
     }
     else

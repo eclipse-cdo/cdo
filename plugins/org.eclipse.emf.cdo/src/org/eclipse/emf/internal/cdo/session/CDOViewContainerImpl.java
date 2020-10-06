@@ -276,6 +276,7 @@ public abstract class CDOViewContainerImpl extends Container<CDOView> implements
       if (viewProvider != null)
       {
         view.setProvider(viewProvider);
+        VIEW_PROVIDER.remove();
       }
 
       // Link ViewSet with View

@@ -95,88 +95,100 @@ public interface ResourceSetConfigurer
     public static final class ResourceSetConfiguration extends AdapterImpl implements IDeactivateable
     {
       private final ResourceSet resourceSet;
-    
+
       private final Object context;
-    
+
       private final IManagedContainer container;
-    
+
       private final Map<String, Object> configurerResults = new HashMap<>();
-    
+
+      private boolean active = true;
+
       private ResourceSetConfiguration(ResourceSet resourceSet, Object context, IManagedContainer container)
       {
         this.resourceSet = resourceSet;
         this.context = context;
         this.container = container;
-    
+
         resourceSet.eAdapters().add(this);
       }
-    
+
       public ResourceSet getResourceSet()
       {
         return resourceSet;
       }
-    
+
       public Object getContext()
       {
         return context;
       }
-    
+
       public IManagedContainer getContainer()
       {
         return container;
       }
-    
+
       public Map<String, Object> getConfigurerResults()
       {
         return Collections.unmodifiableMap(configurerResults);
       }
-    
+
+      public boolean isActive()
+      {
+        return active;
+      }
+
       @Override
       public Exception deactivate()
       {
-        resourceSet.eAdapters().remove(this);
-    
         Exception exception = null;
-    
-        try
+
+        if (active)
         {
-          for (Object configurerResult : configurerResults.values())
+          active = false;
+
+          try
           {
-            Exception ex = LifecycleUtil.deactivate(configurerResult);
-            if (ex != null)
+            resourceSet.eAdapters().remove(this);
+
+            for (Object configurerResult : configurerResults.values())
             {
-              OM.LOG.error(ex);
-    
-              if (exception == null)
+              Exception ex = LifecycleUtil.deactivate(configurerResult);
+              if (ex != null)
               {
-                exception = ex;
+                OM.LOG.error(ex);
+
+                if (exception == null)
+                {
+                  exception = ex;
+                }
               }
             }
           }
-        }
-        catch (Exception ex)
-        {
-          OM.LOG.error(ex);
-    
-          if (exception == null)
+          catch (Exception ex)
           {
-            exception = ex;
+            OM.LOG.error(ex);
+
+            if (exception == null)
+            {
+              exception = ex;
+            }
+          }
+          finally
+          {
+            configurerResults.clear();
           }
         }
-        finally
-        {
-          configurerResults.clear();
-        }
-    
+
         return exception;
       }
-    
+
       @Override
       public boolean isAdapterForType(Object type)
       {
         return type == ResourceSetConfiguration.class;
       }
-    
+
       public static ResourceSetConfiguration of(ResourceSet resourceSet)
       {
         return (ResourceSetConfiguration)EcoreUtil.getAdapter(resourceSet.eAdapters(), ResourceSetConfiguration.class);

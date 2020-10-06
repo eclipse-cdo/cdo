@@ -144,6 +144,22 @@ public abstract class AbstractCDOViewProvider implements CDOViewProvider2
   @Override
   public String toString()
   {
-    return "CDOViewProvider[" + getRegex() + " --> " + ReflectUtil.getSimpleClassName(this) + ", " + getPriority() + "]";
+    return getDeclaredName() + "[" + getRegex() + " --> " + getActualName() + ", " + getPriority() + "]";
+  }
+
+  /**
+   * @since 4.12
+   */
+  protected String getDeclaredName()
+  {
+    return "CDOViewProvider";
+  }
+
+  /**
+   * @since 4.12
+   */
+  protected String getActualName()
+  {
+    return ReflectUtil.getSimpleClassName(this);
   }
 }

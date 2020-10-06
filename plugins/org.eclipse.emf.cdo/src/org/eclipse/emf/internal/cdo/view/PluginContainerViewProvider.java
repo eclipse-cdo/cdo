@@ -90,6 +90,28 @@ public class PluginContainerViewProvider extends ManagedContainerViewProvider
     return CDOURIUtil.appendResourcePath(uri, path);
   }
 
+  @Override
+  public URI getViewURI(URI uri)
+  {
+    if (uri == null)
+    {
+      return null;
+    }
+
+    String scheme = uri.scheme();
+    if (scheme == null)
+    {
+      return null;
+    }
+
+    if (!scheme.equals(CDOURIUtil.PROTOCOL_NAME))
+    {
+      return null;
+    }
+
+    return super.getViewURI(uri);
+  }
+
   protected CDOView openView(CDOSession session, ResourceSet resourceSet)
   {
     return session.openTransaction(resourceSet);

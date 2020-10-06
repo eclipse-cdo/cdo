@@ -48,10 +48,13 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
    */
   protected final String transport;
 
+  private final String protocol;
+
   public CDONet4jViewProvider(String transport, int priority)
   {
     super("cdo\\.net4j\\." + transport + "://.*", priority);
     this.transport = transport;
+    protocol = "cdo.net4j." + transport;
   }
 
   @Override
@@ -98,13 +101,24 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
   @Override
   public URI getViewURI(URI uri)
   {
+    if (uri == null)
+    {
+      return null;
+    }
+
+    String scheme = uri.scheme();
+    if (scheme == null)
+    {
+      return null;
+    }
+
+    if (!scheme.equals(protocol))
+    {
+      return null;
+    }
+
     // Remove all (resource path) segments and leave only the repository name segment.
     return uri.trimSegments(uri.segmentCount() - 1);
-
-    // CDOURIData uriData = createURIData(uri);
-    // uriData.setResourcePath(null);
-    // uriData.setExtraParameters(null);
-    // return uriData.toURI();
   }
 
   @Override

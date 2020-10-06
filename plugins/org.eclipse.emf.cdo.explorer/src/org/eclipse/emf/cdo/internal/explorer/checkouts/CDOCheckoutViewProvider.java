@@ -22,6 +22,7 @@ import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.ref.ReferenceMonitor;
 
 import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -29,6 +30,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -91,12 +93,38 @@ public class CDOCheckoutViewProvider extends AbstractCDOViewProvider
     return null;
   }
 
+  @Override
+  public URI getViewURI(URI uri)
+  {
+    if (uri == null)
+    {
+      return null;
+    }
+
+    String scheme = uri.scheme();
+    if (scheme == null)
+    {
+      return null;
+    }
+
+    if (!scheme.equals(SCHEME))
+    {
+      return null;
+    }
+
+    return super.getViewURI(uri);
+  }
+
   public static void disposeResourceSet(ResourceSet resourceSet)
   {
-    CheckoutViewProviderAdapter adapter = CheckoutViewProviderAdapter.get(resourceSet);
-    if (adapter != null)
+    for (Iterator<Adapter> it = resourceSet.eAdapters().iterator(); it.hasNext();)
     {
-      adapter.dispose();
+      Adapter adapter = it.next();
+      if (adapter.getClass() == CheckoutViewProviderAdapter.class)
+      {
+        it.remove();
+        break;
+      }
     }
   }
 
@@ -182,22 +210,35 @@ public class CDOCheckoutViewProvider extends AbstractCDOViewProvider
       return (ResourceSet)super.getTarget();
     }
 
-    public void dispose()
+    @Override
+    public void setTarget(Notifier newTarget)
     {
-      CDOView[] array;
-      synchronized (views)
-      {
-        array = views.values().toArray(new CDOView[views.size()]);
-        views.clear();
-      }
-
-      for (CDOView view : array)
-      {
-        view.close();
-      }
-
       ResourceSet resourceSet = getTarget();
-      resourceSet.eAdapters().remove(this);
+      if (newTarget == resourceSet)
+      {
+        return;
+      }
+
+      if (newTarget == null)
+      {
+        CDOView[] array;
+        synchronized (views)
+        {
+          array = views.values().toArray(new CDOView[views.size()]);
+          views.clear();
+        }
+
+        for (CDOView view : array)
+        {
+          view.close();
+        }
+      }
+      else if (resourceSet != null)
+      {
+        throw new IllegalStateException("Illegal attempt to retarget CheckoutViewProviderAdapter to " + newTarget);
+      }
+
+      super.setTarget(newTarget);
     }
 
     public static CheckoutViewProviderAdapter get(ResourceSet resourceSet)

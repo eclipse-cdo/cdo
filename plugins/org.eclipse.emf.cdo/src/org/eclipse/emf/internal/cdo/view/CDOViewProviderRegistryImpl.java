@@ -23,6 +23,7 @@ import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.messages.Messages;
 import org.eclipse.emf.internal.cdo.session.CDOViewContainerImpl;
 
+import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.Pair;
@@ -353,6 +354,24 @@ public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider> impl
       }
 
       return super.getPath(uri);
+    }
+
+    @Override
+    protected String getDeclaredName()
+    {
+      return "CDOViewProviderDescriptor";
+    }
+
+    @Override
+    protected String getActualName()
+    {
+      CDOViewProvider actualProvider = delegate;
+      if (actualProvider != null)
+      {
+        return ReflectUtil.getSimpleClassName(actualProvider);
+      }
+
+      return element.getAttribute("class");
     }
 
     private CDOViewProvider getViewProvider()

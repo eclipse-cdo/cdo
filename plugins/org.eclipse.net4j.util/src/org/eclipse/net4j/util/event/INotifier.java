@@ -51,4 +51,21 @@ public interface INotifier
    * @since 3.0
    */
   public IListener[] getListeners();
+
+  /**
+   * @author Eike Stepper
+   * @since 3.13
+   */
+  public interface INotifier2 extends INotifier
+  {
+    /**
+     * Returns <code>true</code> if this notifier contains the listener, <code>false</code> otherwise.
+     */
+    public boolean hasListener(IListener listener);
+
+    /**
+     * Adds a listener to this notifier unless this notifier already {@link #hasListener(IListener) contains} the listener.
+     */
+    public boolean addUniqueListener(IListener listener);
+  }
 }

@@ -38,11 +38,35 @@ public abstract class ConcurrentArray<E>
     return result == null ? EMPTY : result;
   }
 
-  public synchronized void add(E element)
+  /**
+   * @since 3.13
+   */
+  public synchronized boolean contains(E element)
+  {
+    if (elements == null)
+    {
+      return false;
+    }
+
+    int length = elements.length;
+
+    for (int i = 0; i < length; i++)
+    {
+      E e = elements[i];
+      if (equals(element, e))
+      {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  private boolean add(E element, boolean unique)
   {
     if (!validate(element))
     {
-      return;
+      return false;
     }
 
     if (elements == null)
@@ -51,15 +75,41 @@ public abstract class ConcurrentArray<E>
       array[0] = element;
       elements = array;
       firstElementAdded();
+      return true;
     }
-    else
+
+    int length = elements.length;
+
+    if (unique)
     {
-      int length = elements.length;
-      E[] array = newArray(length + 1);
-      System.arraycopy(elements, 0, array, 0, length);
-      array[length] = element;
-      elements = array;
+      for (int i = 0; i < length; i++)
+      {
+        E e = elements[i];
+        if (equals(element, e))
+        {
+          return false;
+        }
+      }
     }
+
+    E[] array = newArray(length + 1);
+    System.arraycopy(elements, 0, array, 0, length);
+    array[length] = element;
+    elements = array;
+    return true;
+  }
+
+  /**
+   * @since 3.13
+   */
+  public synchronized boolean addUnique(E element)
+  {
+    return add(element, true);
+  }
+
+  public synchronized void add(E element)
+  {
+    add(element, false);
   }
 
   public synchronized boolean remove(E element)
@@ -69,7 +119,7 @@ public abstract class ConcurrentArray<E>
       int length = elements.length;
       if (length == 1)
       {
-        if (elements[0] == element)
+        if (equals(elements[0], element))
         {
           elements = null;
           lastElementRemoved();
@@ -81,7 +131,7 @@ public abstract class ConcurrentArray<E>
         for (int i = 0; i < length; i++)
         {
           E e = elements[i];
-          if (e == element)
+          if (equals(e, element))
           {
             E[] array = newArray(length - 1);
 
@@ -111,6 +161,14 @@ public abstract class ConcurrentArray<E>
   protected boolean validate(E element)
   {
     return true;
+  }
+
+  /**
+   * @since 3.13
+   */
+  protected boolean equals(E e1, E e2)
+  {
+    return e1 == e2;
   }
 
   /**
@@ -162,6 +220,7 @@ public abstract class ConcurrentArray<E>
     /**
      * Synchronized through {@link #add(Object)}.
      */
+    @Override
     protected boolean equals(E e1, E e2)
     {
       return e1 == e2;
@@ -214,6 +273,7 @@ public abstract class ConcurrentArray<E>
       return true;
     }
 
+    @Override
     protected boolean equals(E e1, E e2)
     {
       return e1 == e2;

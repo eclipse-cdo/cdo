@@ -13,6 +13,7 @@ package org.eclipse.net4j.util.event;
 import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.collection.ConcurrentArray;
+import org.eclipse.net4j.util.event.INotifier.INotifier2;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.util.concurrent.ExecutorService;
@@ -23,7 +24,7 @@ import java.util.concurrent.ExecutorService;
  * @author Eike Stepper
  * @since 3.0
  */
-public class Notifier implements INotifier
+public class Notifier implements INotifier2
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, Notifier.class);
 
@@ -53,6 +54,13 @@ public class Notifier implements INotifier
   }
 
   @Override
+  public boolean addUniqueListener(IListener listener)
+  {
+    CheckUtil.checkArg(listener, "listener"); //$NON-NLS-1$
+    return listeners.addUnique(listener);
+  }
+
+  @Override
   public void addListener(IListener listener)
   {
     CheckUtil.checkArg(listener, "listener"); //$NON-NLS-1$
@@ -64,6 +72,13 @@ public class Notifier implements INotifier
   {
     CheckUtil.checkArg(listener, "listener"); //$NON-NLS-1$
     listeners.remove(listener);
+  }
+
+  @Override
+  public boolean hasListener(IListener listener)
+  {
+    CheckUtil.checkArg(listener, "listener"); //$NON-NLS-1$
+    return listeners.contains(listener);
   }
 
   @Override

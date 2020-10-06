@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.util.ResourceSetConfigurer;
+import org.eclipse.emf.cdo.common.util.ResourceSetConfigurer.Registry.ResourceSetConfiguration;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
@@ -40,6 +42,8 @@ import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent.Kind;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.registry.IRegistry;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -58,6 +62,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.WeakHashMap;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author Eike Stepper
@@ -81,6 +86,8 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
   public static final String EDITOR_PROPERTIES = "editor.properties";
 
   public static final String CHECKOUT_KEY = CDOCheckout.class.getName();
+
+  public static final ThreadLocal<CDOCheckout> VIEW_CHECKOUT = new ThreadLocal<>();
 
   private static final CDOBranchPoint[] NO_BRANCH_POINTS = {};
 
@@ -434,7 +441,17 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
             prepareOpen();
             CDOSession session = ((CDORepositoryImpl)repository).openCheckout(this);
 
-            view = openView(session);
+            VIEW_CHECKOUT.set(this);
+
+            try
+            {
+              view = openView(session);
+            }
+            finally
+            {
+              VIEW_CHECKOUT.remove();
+            }
+
             view.addListener(new LifecycleEventAdapter()
             {
               @Override
@@ -448,7 +465,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
               }
             });
 
-            configureView(view);
+            configureViewAndResourceSet(view, view.getResourceSet());
 
             rootObject = loadRootObject();
             rootObject.eAdapters().add(this);
@@ -638,13 +655,45 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
 
   private CDOView openAndConfigureView(boolean readOnly, ResourceSet resourceSet)
   {
-    CDOView view = doOpenView(readOnly, resourceSet);
-    view = configureView(view);
+    VIEW_CHECKOUT.set(this);
+    CDOView view;
+
+    try
+    {
+      view = doOpenView(readOnly, resourceSet);
+    }
+    finally
+    {
+      VIEW_CHECKOUT.remove();
+    }
+
+    view = configureViewAndResourceSet(view, resourceSet);
 
     EObject object = view.getObject(rootObject);
     object.eAdapters().add(this);
 
     return view;
+  }
+
+  private CDOView configureViewAndResourceSet(CDOView view, ResourceSet resourceSet)
+  {
+    AtomicReference<ResourceSetConfiguration> resourceSetConfiguration = new AtomicReference<>();
+    view = configureView(view, () -> unconfigureResourceSet(resourceSetConfiguration.get()));
+
+    resourceSetConfiguration.set(configureResourceSet(resourceSet));
+
+    return view;
+  }
+
+  private ResourceSetConfiguration configureResourceSet(ResourceSet resourceSet)
+  {
+    IManagedContainer container = getContainer();
+    return ResourceSetConfigurer.Registry.INSTANCE.configureResourceSet(resourceSet, this, container);
+  }
+
+  private void unconfigureResourceSet(ResourceSetConfiguration resourceSetConfiguration)
+  {
+    LifecycleUtil.deactivate(resourceSetConfiguration);
   }
 
   protected CDOView doOpenView(boolean readOnly, ResourceSet resourceSet)
@@ -667,13 +716,14 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     return session.openTransaction(head, resourceSet);
   }
 
-  protected CDOView configureView(final CDOView view)
+  protected CDOView configureView(CDOView view, Runnable deactivationHandler)
   {
     CDOUtil.configureView(view);
     ((InternalCDOView)view).setRepositoryName(repository.getLabel());
 
-    view.properties().put(CDOView.PROP_TIME_MACHINE_DISABLED, !isReadOnly());
-    view.properties().put(CHECKOUT_KEY, this);
+    IRegistry<String, Object> properties = view.properties();
+    properties.put(CDOView.PROP_TIME_MACHINE_DISABLED, !isReadOnly());
+    properties.put(CHECKOUT_KEY, this);
 
     view.addListener(new IListener()
     {
@@ -703,6 +753,18 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
           ILifecycleEvent e = (ILifecycleEvent)event;
           if (e.getKind() == Kind.DEACTIVATED)
           {
+            if (deactivationHandler != null)
+            {
+              try
+              {
+                deactivationHandler.run();
+              }
+              catch (Exception ex)
+              {
+                OM.LOG.error(ex);
+              }
+            }
+
             removeView(view);
           }
         }

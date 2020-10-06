@@ -106,7 +106,8 @@ public class OnlineCDOCheckout extends CDOCheckoutImpl
 
   private CDOView openView(CDOSession session, CDOBranch branch)
   {
-    return session.openView(branch, getTimeStamp());
+    long timeStamp = getTimeStamp();
+    return session.openView(branch, timeStamp);
   }
 
   @Override

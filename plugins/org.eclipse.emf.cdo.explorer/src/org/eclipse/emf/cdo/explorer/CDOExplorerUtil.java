@@ -56,7 +56,7 @@ public final class CDOExplorerUtil
       CDOView view = (CDOView)object;
       if (view.isClosed())
       {
-        return null;
+        return CDOCheckoutImpl.VIEW_CHECKOUT.get();
       }
 
       return (CDOCheckout)view.properties().get(CDOCheckoutImpl.CHECKOUT_KEY);

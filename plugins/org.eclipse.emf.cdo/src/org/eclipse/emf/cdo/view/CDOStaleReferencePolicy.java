@@ -258,12 +258,16 @@ public interface CDOStaleReferencePolicy
       Class<?>[] interfaces = null;
 
       // Be sure to have only interface
-      if (instanceClass.isInterface())
+      if (instanceClass != null && instanceClass.isInterface())
       {
         interfaces = new Class<?>[] { InternalEObject.class, CDOStaleObject.class, instanceClass };
       }
       else
       {
+        if (instanceClass == null)
+        {
+          instanceClass = InternalEObject.class;
+        }
         interfaces = new Class<?>[] { InternalEObject.class, CDOStaleObject.class };
       }
 

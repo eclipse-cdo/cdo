@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.examples.server;
 
 import org.eclipse.emf.cdo.security.SecurityPackage;
+import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.mapping.AbstractTypeMapping;
 import org.eclipse.emf.cdo.server.db.mapping.DelegatingTypeMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
@@ -18,6 +19,7 @@ import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping.Provider;
 
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.factory.IFactory;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.security.SecurityUtil;
 
@@ -26,6 +28,24 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import javax.crypto.Cipher;
 
 /**
+ * This is an example on how to use a custom {@link org.eclipse.emf.cdo.server.db.mapping.ITypeMapping.Provider type mapping provider} for the
+ * {@link IMappingStrategy mapping strategy} of a {@link IDBStore DB store}.
+ * <p>
+ * This {@link IFactory factory} is registered in the <code>plugin.xml</code> as follows:
+ * <pre>
+ *    &lt;extension point="org.eclipse.net4j.util.factories">
+ *       &lt;factory
+ *          productGroup="org.eclipse.emf.cdo.server.db.typeMappingProviders"
+ *          type="encryptedPassword"
+ *          class="org.eclipse.emf.cdo.examples.server.EncryptedPasswordFactory"/>
+ *    &lt;/extension></pre>
+ * <p>
+ * Then it can be used in the <code>cdo-server.xml</code> as follows:
+ * <pre>
+ *    &lt;mappingStrategy type="horizontal">
+ *       &lt;property name="typeMappingProvider" value="encryptedPassword"/>
+ *    &lt;/mappingStrategy></pre>
+ *
  * @author Eike Stepper
  */
 public class EncryptedPasswordFactory extends ITypeMapping.Provider.Factory

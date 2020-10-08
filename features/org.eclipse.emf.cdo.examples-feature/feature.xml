@@ -12,7 +12,7 @@
 <feature
       id="org.eclipse.emf.cdo.examples"
       label="%featureName"
-      version="4.4.2.qualifier"
+      version="4.4.3.qualifier"
       provider-name="%providerName"
       image="eclipse_update_120.jpg"
       license-feature="org.eclipse.emf.cdo.license"

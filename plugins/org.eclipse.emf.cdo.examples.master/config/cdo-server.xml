@@ -80,6 +80,7 @@
         <property name="qualifiedNames" value="true"/>
         <property name="withRanges" value="false"/>
         <property name="eagerTableCreation" value="false"/>
+        <property name="typeMappingProvider" value="registry"/>
 
         <!--
           Per default, the objectTypeCache is in-memory and contains

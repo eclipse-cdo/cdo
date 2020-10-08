@@ -445,6 +445,25 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
   }
 
   /**
+   * @author Eike Stepper
+   */
+  public static final class Factory extends ITypeMapping.Provider.Factory
+  {
+    private static final String TYPE = "registry";
+
+    public Factory()
+    {
+      super(TYPE);
+    }
+
+    @Override
+    public ITypeMapping.Provider create(String description) throws ProductCreationException
+    {
+      return ITypeMapping.Provider.INSTANCE;
+    }
+  }
+
+  /**
    * Keeps the {@link TypeMappingRegistry} in sync with {@link IManagedContainer#getFactoryRegistry()}.
    *
    * @author Stefan Winkler

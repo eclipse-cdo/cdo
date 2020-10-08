@@ -52,6 +52,7 @@ import org.eclipse.net4j.spi.db.DBAdapter;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.CloseableIterator;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -109,6 +110,8 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
   private IDBStore store;
 
   private Map<String, String> properties;
+
+  private ITypeMapping.Provider typeMappingProvider = ITypeMapping.Provider.INSTANCE;
 
   private ConcurrentMap<EClass, IClassMapping> classMappings;
 
@@ -707,7 +710,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
   protected ITypeMapping.Provider getTypeMappingProvider()
   {
-    return ITypeMapping.Provider.INSTANCE;
+    return typeMappingProvider;
   }
 
   @Override
@@ -718,6 +721,21 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
   }
 
   public abstract IListMapping doCreateListMapping(EClass containingClass, EStructuralFeature feature);
+
+  @Override
+  protected void doBeforeActivate() throws Exception
+  {
+    super.doBeforeActivate();
+
+    String factoryType = getProperties().get(Props.TYPE_MAPPING_PROVIDER);
+    if (factoryType != null)
+    {
+      InternalRepository repository = (InternalRepository)getStore().getRepository();
+      IManagedContainer container = repository.getContainer();
+
+      typeMappingProvider = (ITypeMapping.Provider)container.getElement(ITypeMapping.Provider.Factory.PRODUCT_GROUP, factoryType, null);
+    }
+  }
 
   @Override
   protected void doDeactivate() throws Exception

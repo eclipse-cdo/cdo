@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.view.CDOUnit;
 
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.ddl.IDBField;
+import org.eclipse.net4j.util.factory.IFactory;
 
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -411,6 +412,21 @@ public class Doc01_ConfiguringRepositories
      * Specifies the name of a {@link ColumnTypeModifier}.
      */
     public class Property_columnTypeModifier
+    {
+    }
+
+    /**
+     * Property typeMappingProvider
+     * <p>
+     * Specifies the type name of the {@link IFactory factory} for a custom type mapping provider. Possible values:
+     * <ul>
+     * <li> "registry" (default)
+     * <li> the type name of a custom {@link IFactory factory}, which is contributed to the product group "org.eclipse.emf.cdo.server.db.typeMappingProviders".
+     * </ul>
+     * <p>
+     * This property is optional.
+     */
+    public class Property_typeMappingProvider
     {
     }
 

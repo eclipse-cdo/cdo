@@ -20,6 +20,7 @@ import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.factory.IFactory;
+import org.eclipse.net4j.util.factory.ProductCreationException;
 
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -254,6 +255,28 @@ public interface ITypeMapping
      * @return the newly created {@link ITypeMapping} instance
      */
     public ITypeMapping createTypeMapping(IMappingStrategy mappingStrategy, EStructuralFeature feature);
+
+    /**
+     * A factory for typeMappingProviders. This is a regular Net4j factory registered by the respective extension point.
+     *
+     * @author Eike Stepper
+     * @since 4.10
+     */
+    public static abstract class Factory extends org.eclipse.net4j.util.factory.Factory
+    {
+      /**
+       * The Net4j factory product group for type mapping providers
+       */
+      public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.db.typeMappingProviders";
+
+      public Factory(String type)
+      {
+        super(PRODUCT_GROUP, type);
+      }
+
+      @Override
+      public abstract Provider create(String description) throws ProductCreationException;
+    }
   }
 
   /**

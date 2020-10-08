@@ -18,6 +18,10 @@
             productGroup="org.eclipse.emf.cdo.server.queryHandlerFactories"
             type="user_roles"
             class="org.eclipse.emf.cdo.examples.server.UserRolesQueryHandlerFactory"/>
+      <factory
+            productGroup="org.eclipse.emf.cdo.server.db.typeMappingProviders"
+            type="encryptedPassword"
+            class="org.eclipse.emf.cdo.examples.server.EncryptedPasswordFactory"/>
    </extension>
 
 </plugin>

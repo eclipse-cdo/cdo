@@ -18,10 +18,13 @@
    <extension
          point="org.eclipse.net4j.util.factories">
       <factory
-            class="org.eclipse.emf.cdo.server.internal.db.DBBrowserPage$Factory"
             productGroup="org.eclipse.emf.cdo.server.browserPages"
-            type="db">
-      </factory>
+            type="db"
+            class="org.eclipse.emf.cdo.server.internal.db.DBBrowserPage$Factory"/>
+      <factory
+            productGroup="org.eclipse.emf.cdo.server.db.typeMappingProviders"
+            type="registry"
+            class="org.eclipse.emf.cdo.server.internal.db.mapping.TypeMappingRegistry$Factory"/>
    </extension>
 
    <extension

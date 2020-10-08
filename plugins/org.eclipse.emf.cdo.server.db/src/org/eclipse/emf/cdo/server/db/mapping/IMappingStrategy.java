@@ -29,6 +29,7 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.util.collection.CloseableIterator;
+import org.eclipse.net4j.util.factory.IFactory;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import org.eclipse.emf.ecore.EClass;
@@ -438,5 +439,12 @@ public interface IMappingStrategy
      * @since 4.6
      */
     public static final String EAGER_TABLE_CREATION = "eagerTableCreation"; //$NON-NLS-1$
+
+    /**
+     * Name of an optional String property that specifies the {@link IFactory factory type} for a custom {@link ITypeMapping.Provider type mapping provider}.
+     *
+     * @since 4.10
+     */
+    public static final String TYPE_MAPPING_PROVIDER = "typeMappingProvider"; //$NON-NLS-1$
   }
 }

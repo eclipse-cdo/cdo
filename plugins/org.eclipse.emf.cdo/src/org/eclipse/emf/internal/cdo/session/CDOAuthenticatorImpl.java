@@ -103,7 +103,7 @@ public class CDOAuthenticatorImpl implements org.eclipse.emf.cdo.common.protocol
   {
     try
     {
-      return SecurityUtil.encrypt(token, password, encryptionAlgorithmName, encryptionSaltBytes, encryptionIterationCount);
+      return SecurityUtil.pbeEncrypt(token, password, encryptionAlgorithmName, encryptionSaltBytes, encryptionIterationCount);
     }
     catch (RuntimeException ex)
     {

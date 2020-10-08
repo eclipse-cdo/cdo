@@ -46,9 +46,9 @@ public final class SecurityUtil
   }
 
   /**
-   * @since 2.0
+   * @since 3.13
    */
-  public static byte[] encrypt(byte[] data, char[] password, String algorithmName, byte[] salt, int count) throws NoSuchAlgorithmException,
+  public static byte[] pbe(byte[] data, char[] password, String algorithmName, byte[] salt, int count, int mode) throws NoSuchAlgorithmException,
       InvalidKeySpecException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException
   {
     // Create PBE parameter set
@@ -61,8 +61,37 @@ public final class SecurityUtil
     Cipher pbeCipher = Cipher.getInstance(algorithmName);
 
     // Initialize PBE Cipher with key and parameters
-    pbeCipher.init(Cipher.ENCRYPT_MODE, pbeKey, pbeParamSpec);
+    pbeCipher.init(mode, pbeKey, pbeParamSpec);
 
     return pbeCipher.doFinal(data);
+  }
+
+  /**
+   * @since 3.13
+   */
+  public static byte[] pbeDecrypt(byte[] data, char[] password, String algorithmName, byte[] salt, int count) throws NoSuchAlgorithmException,
+      InvalidKeySpecException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException
+  {
+    return pbe(data, password, algorithmName, salt, count, Cipher.DECRYPT_MODE);
+  }
+
+  /**
+   * @since 3.13
+   */
+  public static byte[] pbeEncrypt(byte[] data, char[] password, String algorithmName, byte[] salt, int count) throws NoSuchAlgorithmException,
+      InvalidKeySpecException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException
+  {
+    return pbe(data, password, algorithmName, salt, count, Cipher.ENCRYPT_MODE);
+  }
+
+  /**
+   * @since 2.0
+   * @deprecated As of 3.3. use {@link #pbeEncrypt(byte[], char[], String, byte[], int)}.
+   */
+  @Deprecated
+  public static byte[] encrypt(byte[] data, char[] password, String algorithmName, byte[] salt, int count) throws NoSuchAlgorithmException,
+      InvalidKeySpecException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException
+  {
+    return pbeEncrypt(data, password, algorithmName, salt, count);
   }
 }

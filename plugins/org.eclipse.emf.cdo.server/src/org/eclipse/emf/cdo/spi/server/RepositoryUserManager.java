@@ -69,7 +69,7 @@ public abstract class RepositoryUserManager extends Lifecycle implements IUserMa
     try
     {
       char[] password = getPassword(userID);
-      return SecurityUtil.encrypt(data, password, algorithmName, salt, count);
+      return SecurityUtil.pbeEncrypt(data, password, algorithmName, salt, count);
     }
     catch (RuntimeException ex)
     {

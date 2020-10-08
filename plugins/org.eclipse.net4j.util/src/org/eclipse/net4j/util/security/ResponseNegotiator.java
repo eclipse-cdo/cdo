@@ -84,7 +84,7 @@ public class ResponseNegotiator extends ChallengeResponseNegotiator
   {
     try
     {
-      return SecurityUtil.encrypt(token, password, getEncryptionAlgorithmName(), getEncryptionSaltBytes(), getEncryptionIterationCount());
+      return SecurityUtil.pbeEncrypt(token, password, getEncryptionAlgorithmName(), getEncryptionSaltBytes(), getEncryptionIterationCount());
     }
     catch (RuntimeException ex)
     {

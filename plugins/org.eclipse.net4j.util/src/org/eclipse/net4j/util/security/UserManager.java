@@ -96,7 +96,7 @@ public class UserManager extends Lifecycle implements IUserManager, IAuthenticat
 
     try
     {
-      return SecurityUtil.encrypt(data, password, algorithmName, salt, count);
+      return SecurityUtil.pbeEncrypt(data, password, algorithmName, salt, count);
     }
     catch (RuntimeException ex)
     {

@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOClearFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
-import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOMoveFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
@@ -156,7 +155,7 @@ public class CDONotificationBuilder extends CDOFeatureDeltaVisitorImpl
     EStructuralFeature feature = delta.getFeature();
 
     Object oldValue = delta.getOldValue();
-    if (oldValue == null || oldValue == CDOFeatureDelta.UNKNOWN_VALUE)
+    if (oldValue == null)
     {
       oldValue = getOldValue(feature);
     }

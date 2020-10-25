@@ -18,6 +18,8 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
@@ -40,6 +42,7 @@ import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.lock.InternalCDOLockState;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -72,8 +75,10 @@ import org.eclipse.emf.internal.cdo.object.CDOObjectWrapperBase;
 import org.eclipse.emf.internal.cdo.session.SessionUtil;
 import org.eclipse.emf.internal.cdo.util.DefaultLocksChangedEvent;
 
+import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.collection.ConcurrentArray;
 import org.eclipse.net4j.util.collection.HashBag;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
@@ -86,6 +91,7 @@ import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.Notifier;
 import org.eclipse.net4j.util.event.ThrowableEvent;
+import org.eclipse.net4j.util.lifecycle.IDeactivateable;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleException;
@@ -131,6 +137,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.WeakHashMap;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -149,6 +156,8 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
   private String durableLockingID;
 
   private final CDOUnitManagerImpl unitManager = new CDOUnitManagerImpl();
+
+  private final CommitInfoDistributor commitInfoDistributor = new CommitInfoDistributor();
 
   private ChangeSubscriptionManager changeSubscriptionManager = new ChangeSubscriptionManager();
 
@@ -1209,18 +1218,29 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
 
   protected void doInvalidate(ViewInvalidationData invalidationData)
   {
-    synchronized (getViewMonitor())
-    {
-      lockView();
+    long timeStamp = invalidationData.getLastUpdateTime();
 
-      try
+    try
+    {
+      synchronized (getViewMonitor())
       {
-        doInvalidateSynced(invalidationData);
+        lockView();
+
+        try
+        {
+          doInvalidateSynced(invalidationData);
+        }
+        finally
+        {
+          unlockView();
+        }
       }
-      finally
-      {
-        unlockView();
-      }
+
+      commitInfoDistributor.distribute(timeStamp);
+    }
+    catch (RuntimeException | Error ex)
+    {
+      commitInfoDistributor.error(timeStamp, ex);
     }
   }
 
@@ -1589,6 +1609,26 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     return changeSubscriptionManager;
   }
 
+  @Override
+  protected void listenerAdded(IListener listener)
+  {
+    if (listener instanceof CDOCommitInfoHandler)
+    {
+      CDOCommitInfoHandler handler = (CDOCommitInfoHandler)listener;
+      commitInfoDistributor.register(handler);
+    }
+  }
+
+  @Override
+  protected void listenerRemoved(IListener listener)
+  {
+    if (listener instanceof CDOCommitInfoHandler)
+    {
+      CDOCommitInfoHandler handler = (CDOCommitInfoHandler)listener;
+      commitInfoDistributor.deregister(handler);
+    }
+  }
+
   /**
    * @since 2.0
    */
@@ -1695,6 +1735,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
   protected void doDeactivate() throws Exception
   {
     unitManager.deactivate();
+    commitInfoDistributor.deactivate();
 
     CDOViewRegistryImpl.INSTANCE.deregister(this);
     LifecycleUtil.deactivate(invalidator, OMLogger.Level.WARN);
@@ -3043,6 +3084,91 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     protected String formatEventName()
     {
       return "CDOViewLocksChangedEvent";
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class CommitInfoDistributor implements IListener, IDeactivateable
+  {
+    private final ConcurrentArray<CDOCommitInfoHandler> handlers = new ConcurrentArray<CDOCommitInfoHandler>()
+    {
+      @Override
+      protected CDOCommitInfoHandler[] newArray(int length)
+      {
+        return new CDOCommitInfoHandler[length];
+      }
+
+      @Override
+      protected void firstElementAdded()
+      {
+        getSession().addListener(CommitInfoDistributor.this);
+      }
+
+      @Override
+      protected void lastElementRemoved()
+      {
+        getSession().removeListener(CommitInfoDistributor.this);
+        deactivate();
+      }
+    };
+
+    private final Map<Long, CDOCommitInfo> commitInfos = new ConcurrentHashMap<>();
+
+    public CommitInfoDistributor()
+    {
+    }
+
+    @Override
+    public Exception deactivate()
+    {
+      commitInfos.clear();
+      return null;
+    }
+
+    public void register(CDOCommitInfoHandler handler)
+    {
+      CheckUtil.checkArg(handler, "handler"); //$NON-NLS-1$
+      handlers.add(handler);
+    }
+
+    public void deregister(CDOCommitInfoHandler handler)
+    {
+      CheckUtil.checkArg(handler, "handler"); //$NON-NLS-1$
+      handlers.remove(handler);
+    }
+
+    @Override
+    public void notifyEvent(IEvent event)
+    {
+      if (event instanceof CDOSessionInvalidationEvent)
+      {
+        CDOSessionInvalidationEvent e = (CDOSessionInvalidationEvent)event;
+        commitInfos.put(e.getTimeStamp(), e);
+      }
+    }
+
+    public void error(long timeStamp, Throwable t)
+    {
+      commitInfos.remove(timeStamp);
+    }
+
+    public void distribute(long timeStamp)
+    {
+      CDOCommitInfo commitInfo = commitInfos.remove(timeStamp);
+      if (commitInfo != null)
+      {
+        distributeSafe(commitInfo, handlers.get());
+      }
+    }
+
+    private void distributeSafe(CDOCommitInfo commitInfo, CDOCommitInfoHandler[] handlers)
+    {
+      if (handlers != null)
+      {
+        ObjectUtil.forEachSafe(handlers, handler -> handler.handleCommitInfo(commitInfo));
+      }
     }
   }
 

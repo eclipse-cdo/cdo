@@ -207,11 +207,11 @@ public final class ObjectUtil
   {
     if (array != null)
     {
-      for (T object : array)
+      for (int i = 0; i < array.length; i++)
       {
         try
         {
-          consumer.accept(object);
+          consumer.accept(array[i]);
         }
         catch (RuntimeException | Error ex)
         {

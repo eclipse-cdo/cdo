@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.internal.explorer;
 import org.eclipse.emf.cdo.common.util.CDONameProvider;
 import org.eclipse.emf.cdo.explorer.CDOExplorerElement;
 import org.eclipse.emf.cdo.explorer.CDOExplorerManager.ElementsChangedEvent;
-import org.eclipse.emf.cdo.internal.explorer.bundle.OM;
 
 import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.ObjectUtil;
@@ -25,9 +24,6 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -312,25 +308,7 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
 
   protected final void saveProperties(String fileName, Properties properties)
   {
-    OutputStream out = null;
-
-    try
-    {
-      folder.mkdirs();
-
-      File file = new File(folder, fileName);
-      out = new FileOutputStream(file);
-
-      properties.store(out, getClass().getSimpleName() + " " + fileName);
-    }
-    catch (IOException ex)
-    {
-      OM.LOG.error(ex);
-    }
-    finally
-    {
-      IOUtil.close(out);
-    }
+    AbstractManager.saveProperties(folder, fileName, properties, getClass().getSimpleName() + " " + fileName);
   }
 
   protected void init(File folder, String type, Properties properties)

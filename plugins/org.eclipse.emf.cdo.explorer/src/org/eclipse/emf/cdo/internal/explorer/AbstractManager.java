@@ -28,6 +28,9 @@ import org.eclipse.emf.ecore.EObject;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -206,6 +209,29 @@ public abstract class AbstractManager<T extends CDOExplorerElement> extends SetC
     }
 
     fireEvent(new ElementsChangedImpl(this, StructuralImpact.NONE, objects));
+  }
+
+  public static void saveProperties(File folder, String fileName, Properties properties, String comment)
+  {
+    OutputStream out = null;
+
+    try
+    {
+      folder.mkdirs();
+
+      File file = new File(folder, fileName);
+      out = new FileOutputStream(file);
+
+      properties.store(out, comment);
+    }
+    catch (IOException ex)
+    {
+      OM.LOG.error(ex);
+    }
+    finally
+    {
+      IOUtil.close(out);
+    }
   }
 
   public static Properties loadProperties(File folder, String fileName)

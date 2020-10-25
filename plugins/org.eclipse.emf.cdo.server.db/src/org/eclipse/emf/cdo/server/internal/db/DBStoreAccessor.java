@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lob.CDOLobHandler;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockArea.Handler;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
@@ -536,7 +537,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     {
       CDOID id = revision.getID();
 
-      if (adjustMaxID && idHandler.compare(id, maxID) > 0)
+      if (adjustMaxID && (CDOIDUtil.isNull(maxID) || idHandler.compare(id, maxID) > 0))
       {
         maxID = id;
       }

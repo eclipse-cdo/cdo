@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.transfer;
 
 import org.eclipse.emf.cdo.spi.transfer.ResourceFactoryRegistryWithoutDefaults;
 
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
@@ -35,7 +36,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Path;
 
 import java.io.InputStream;
@@ -271,11 +271,7 @@ public class CDOTransfer implements INotifier
 
   protected void validate(CDOTransferMapping mapping, IProgressMonitor monitor)
   {
-    if (monitor.isCanceled())
-    {
-      throw new OperationCanceledException();
-    }
-
+    ConcurrencyUtil.checkCancelation(monitor);
     if (mapping.getStatus() == CDOTransferMapping.Status.CONFLICT)
     {
       throw new IllegalStateException("Conflict: " + mapping);
@@ -284,6 +280,7 @@ public class CDOTransfer implements INotifier
     monitor.worked(1);
     for (CDOTransferMapping child : mapping.getChildren())
     {
+      ConcurrencyUtil.checkCancelation(monitor);
       validate(child, monitor);
     }
   }
@@ -315,10 +312,7 @@ public class CDOTransfer implements INotifier
   protected void perform(CDOTransferMapping mapping, IProgressMonitor monitor)
   {
     monitor.subTask("Transferring " + mapping);
-    if (monitor.isCanceled())
-    {
-      throw new OperationCanceledException();
-    }
+    ConcurrencyUtil.checkCancelation(monitor);
 
     CDOTransferType transferType = mapping.getTransferType();
     if (transferType == CDOTransferType.FOLDER)

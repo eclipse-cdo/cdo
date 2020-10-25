@@ -28,12 +28,24 @@ public class Notifier implements INotifier2
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, Notifier.class);
 
-  private ConcurrentArray<IListener> listeners = new ConcurrentArray<IListener>()
+  private final ConcurrentArray<IListener> listeners = new ConcurrentArray<IListener>()
   {
     @Override
     protected IListener[] newArray(int length)
     {
       return new IListener[length];
+    }
+
+    @Override
+    protected void elementAdded(IListener element)
+    {
+      listenerAdded(element);
+    }
+
+    @Override
+    protected void elementRemoved(IListener element)
+    {
+      listenerRemoved(element);
     }
 
     @Override
@@ -162,10 +174,27 @@ public class Notifier implements INotifier2
   }
 
   /**
+   * @since 3.13
+   */
+  protected void listenerAdded(IListener listener)
+  {
+    // Do nothing.
+  }
+
+  /**
+   * @since 3.13
+   */
+  protected void listenerRemoved(IListener listener)
+  {
+    // Do nothing.
+  }
+
+  /**
    * @since 3.0
    */
   protected void firstListenerAdded()
   {
+    // Do nothing.
   }
 
   /**
@@ -173,6 +202,7 @@ public class Notifier implements INotifier2
    */
   protected void lastListenerRemoved()
   {
+    // Do nothing.
   }
 
   private static void fireEventSafe(IEvent event, IListener[] listeners)

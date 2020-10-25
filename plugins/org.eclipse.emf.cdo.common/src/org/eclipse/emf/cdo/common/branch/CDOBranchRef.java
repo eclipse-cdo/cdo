@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.common.branch;
 
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 
 import org.eclipse.net4j.util.ObjectUtil;
 
@@ -28,11 +29,7 @@ public final class CDOBranchRef implements Serializable
 {
   private static final long serialVersionUID = 1L;
 
-  private String branchPath;
-
-  public CDOBranchRef()
-  {
-  }
+  private final String branchPath;
 
   public CDOBranchRef(CDOBranch branch)
   {
@@ -41,7 +38,7 @@ public final class CDOBranchRef implements Serializable
 
   public CDOBranchRef(String branchPath)
   {
-    this.branchPath = branchPath.intern();
+    this.branchPath = CDOBranchUtil.sanitizePathName(branchPath).intern();
   }
 
   public CDOBranchRef(CDODataInput in) throws IOException

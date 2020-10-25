@@ -11,11 +11,13 @@
  */
 package org.eclipse.net4j.util;
 
+import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.util.collection.Closeable;
 
 import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Map;
+import java.util.function.Consumer;
 
 /**
  * Various static helper methods.
@@ -175,5 +177,47 @@ public final class ObjectUtil
     }
 
     return null;
+  }
+
+  /**
+   * @since 3.13
+   */
+  public static <T> void forEachSafe(Iterable<T> iterable, Consumer<T> consumer)
+  {
+    if (iterable != null)
+    {
+      for (T object : iterable)
+      {
+        try
+        {
+          consumer.accept(object);
+        }
+        catch (RuntimeException | Error ex)
+        {
+          OM.LOG.error(ex);
+        }
+      }
+    }
+  }
+
+  /**
+   * @since 3.13
+   */
+  public static <T> void forEachSafe(T[] array, Consumer<T> consumer)
+  {
+    if (array != null)
+    {
+      for (T object : array)
+      {
+        try
+        {
+          consumer.accept(object);
+        }
+        catch (RuntimeException | Error ex)
+        {
+          OM.LOG.error(ex);
+        }
+      }
+    }
   }
 }

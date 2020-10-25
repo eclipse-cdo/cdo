@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.internal.explorer.checkouts;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPointRef;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.util.ResourceSetConfigurer;
@@ -217,6 +218,14 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
   }
 
   @Override
+  public void setBranchPoint(CDOBranchPointRef branchPointRef)
+  {
+    CDOBranchManager branchManager = view.getSession().getBranchManager();
+    CDOBranchPoint branchPoint = branchPointRef.resolve(branchManager);
+    setBranchPoint(branchPoint);
+  }
+
+  @Override
   public final CDOBranchPoint getBranchPoint(CDOCheckout fromCheckout)
   {
     if (repository == fromCheckout.getRepository() && repository.isConnected())
@@ -231,7 +240,8 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
 
   protected String doSetBranchPoint(int branchID, long timeStamp)
   {
-    CDOBranch branch = view.getSession().getBranchManager().getBranch(branchID);
+    CDOBranchManager branchManager = view.getSession().getBranchManager();
+    CDOBranch branch = branchManager.getBranch(branchID);
     view.setBranchPoint(branch.getPoint(timeStamp));
     return branch.getPathName();
   }

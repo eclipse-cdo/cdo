@@ -54,7 +54,21 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/common/branch/CDOBranchPointRef.java" type="org.eclipse.emf.cdo.common.branch.CDOBranchPointRef">
+        <filter id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.common.branch.CDOBranchPointRef"/>
+                <message_argument value="CDOBranchPointRef()"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/common/branch/CDOBranchRef.java" type="org.eclipse.emf.cdo.common.branch.CDOBranchRef">
+        <filter id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.common.branch.CDOBranchRef"/>
+                <message_argument value="CDOBranchRef()"/>
+            </message_arguments>
+        </filter>
         <filter id="338792546">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.cdo.common.branch.CDOBranchRef"/>

@@ -13,6 +13,9 @@ package org.eclipse.net4j.util.concurrent;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.io.IOUtil;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.OperationCanceledException;
+
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 
@@ -139,5 +142,16 @@ public final class ConcurrencyUtil
   public static void log(String msg)
   {
     IOUtil.OUT().println(Thread.currentThread().getName() + ": " + msg);
+  }
+
+  /**
+   * @since 3.13
+   */
+  public static void checkCancelation(IProgressMonitor monitor) throws OperationCanceledException
+  {
+    if (monitor.isCanceled())
+    {
+      throw new OperationCanceledException();
+    }
   }
 }

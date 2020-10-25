@@ -19,7 +19,6 @@ import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 import org.eclipse.net4j.util.ui.security.InteractiveCredentialsProvider;
 
 import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.fieldassist.FieldDecoration;
 import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -172,48 +171,43 @@ public final class UIUtil
    */
   public static Shell getShell()
   {
-    final Shell[] shell = { null };
+    Shell[] shell = { null };
+    Display display = getDisplay();
 
-    final Display display = getDisplay();
-    display.syncExec(new Runnable()
-    {
-      @Override
-      public void run()
+    syncExec(display, () -> {
+      shell[0] = display.getActiveShell();
+
+      if (shell[0] == null)
       {
-        shell[0] = display.getActiveShell();
-
-        if (shell[0] == null)
+        try
         {
-          try
+          IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+          if (window == null)
           {
-            IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-            if (window == null)
+            IWorkbenchWindow[] windows = PlatformUI.getWorkbench().getWorkbenchWindows();
+            if (windows.length != 0)
             {
-              IWorkbenchWindow[] windows = PlatformUI.getWorkbench().getWorkbenchWindows();
-              if (windows.length != 0)
-              {
-                window = windows[0];
-              }
-            }
-
-            if (window != null)
-            {
-              shell[0] = window.getShell();
+              window = windows[0];
             }
           }
-          catch (Throwable ignore)
+
+          if (window != null)
           {
-            //$FALL-THROUGH$
+            shell[0] = window.getShell();
           }
         }
-
-        if (shell[0] == null)
+        catch (Throwable ignore)
         {
-          Shell[] shells = display.getShells();
-          if (shells.length > 0)
-          {
-            shell[0] = shells[0];
-          }
+          //$FALL-THROUGH$
+        }
+      }
+
+      if (shell[0] == null)
+      {
+        Shell[] shells = display.getShells();
+        if (shells.length > 0)
+        {
+          shell[0] = shells[0];
         }
       }
     });
@@ -565,9 +559,9 @@ public final class UIUtil
   /**
    * @since 3.5
    */
-  public static void syncExec(final Runnable runnable)
+  public static void syncExec(Runnable runnable)
   {
-    final Display display = getDisplay();
+    Display display = getDisplay();
     if (Display.getCurrent() == display || display == null)
     {
       runnable.run();
@@ -581,7 +575,39 @@ public final class UIUtil
   /**
    * @since 3.5
    */
-  public static void syncExec(final Display display, final Runnable runnable)
+  public static void syncExec(Display display, Runnable runnable)
+  {
+    exec(display, true, runnable);
+  }
+
+  /**
+   * @since 3.9
+   */
+  public static void asyncExec(Runnable runnable)
+  {
+    Display display = getDisplay();
+    if (Display.getCurrent() == display || display == null)
+    {
+      runnable.run();
+    }
+    else
+    {
+      asyncExec(display, runnable);
+    }
+  }
+
+  /**
+   * @since 3.9
+   */
+  public static void asyncExec(Display display, Runnable runnable)
+  {
+    exec(display, false, runnable);
+  }
+
+  /**
+   * @since 3.9
+   */
+  public static void exec(Display display, boolean sync, Runnable runnable)
   {
     try
     {
@@ -590,31 +616,35 @@ public final class UIUtil
         return;
       }
 
-      display.syncExec(new Runnable()
-      {
-        @Override
-        public void run()
+      Runnable safeRunnable = () -> {
+        if (display.isDisposed())
         {
-          if (display.isDisposed())
-          {
-            return;
-          }
-
-          try
-          {
-            runnable.run();
-          }
-          catch (SWTException ex)
-          {
-            if (ex.code != SWT.ERROR_WIDGET_DISPOSED)
-            {
-              throw ex;
-            }
-
-            //$FALL-THROUGH$
-          }
+          return;
         }
-      });
+
+        try
+        {
+          runnable.run();
+        }
+        catch (SWTException ex)
+        {
+          if (ex.code != SWT.ERROR_WIDGET_DISPOSED)
+          {
+            throw ex;
+          }
+
+          //$FALL-THROUGH$
+        }
+      };
+
+      if (sync)
+      {
+        display.syncExec(safeRunnable);
+      }
+      else
+      {
+        display.asyncExec(safeRunnable);
+      }
     }
     catch (SWTException ex)
     {
@@ -630,19 +660,11 @@ public final class UIUtil
   /**
    * @since 3.3
    */
-  public static void runWithProgress(final IRunnableWithProgress runnable)
+  public static void runWithProgress(IRunnableWithProgress runnable)
   {
     try
     {
-      IRunnableWithProgress op = new IRunnableWithProgress()
-      {
-        @Override
-        public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException
-        {
-          ModalContext.run(runnable, true, monitor, PlatformUI.getWorkbench().getDisplay());
-        }
-      };
-
+      IRunnableWithProgress op = monitor -> ModalContext.run(runnable, true, monitor, PlatformUI.getWorkbench().getDisplay());
       PlatformUI.getWorkbench().getProgressService().run(false, true, op);
     }
     catch (InvocationTargetException ex)
@@ -658,41 +680,36 @@ public final class UIUtil
   /**
    * @since 3.3
    */
-  public static void preserveViewerState(final Viewer viewer, final Runnable runnable)
+  public static void preserveViewerState(Viewer viewer, Runnable runnable)
   {
     try
     {
-      viewer.getControl().getDisplay().asyncExec(new Runnable()
-      {
-        @Override
-        public void run()
-        {
-          ISelection selection = viewer.getSelection();
+      asyncExec(viewer.getControl().getDisplay(), () -> {
+        ISelection selection = viewer.getSelection();
 
-          // TreePath[] paths = null;
-          // if (viewer instanceof TreeViewer)
+        // TreePath[] paths = null;
+        // if (viewer instanceof TreeViewer)
+        // {
+        // TreeViewer treeViewer = (TreeViewer)viewer;
+        // paths = treeViewer.getExpandedTreePaths();
+        // }
+
+        try
+        {
+          runnable.run();
+        }
+        catch (RuntimeException ignore)
+        {
+          // Do nothing
+        }
+        finally
+        {
+          // if (paths != null)
           // {
-          // TreeViewer treeViewer = (TreeViewer)viewer;
-          // paths = treeViewer.getExpandedTreePaths();
+          // ((TreeViewer)viewer).setExpandedElements(paths);
           // }
 
-          try
-          {
-            runnable.run();
-          }
-          catch (RuntimeException ignore)
-          {
-            // Do nothing
-          }
-          finally
-          {
-            // if (paths != null)
-            // {
-            // ((TreeViewer)viewer).setExpandedElements(paths);
-            // }
-
-            viewer.setSelection(selection);
-          }
+          viewer.setSelection(selection);
         }
       });
     }
@@ -705,83 +722,66 @@ public final class UIUtil
   /**
    * @since 2.0
    */
-  public static void refreshViewer(final Viewer viewer)
+  public static void refreshViewer(Viewer viewer)
   {
-    preserveViewerState(viewer, new Runnable()
-    {
-      @Override
-      public void run()
-      {
-        viewer.refresh();
-      }
-    });
+    preserveViewerState(viewer, () -> viewer.refresh());
   }
 
   /**
    * @since 3.3
    */
-  public static void refreshElement(final StructuredViewer viewer, final Object element, final boolean updateLabels)
+  public static void refreshElement(StructuredViewer viewer, Object element, boolean updateLabels)
   {
-    preserveViewerState(viewer, new Runnable()
-    {
-      @Override
-      public void run()
+    preserveViewerState(viewer, () -> {
+      try
       {
-        try
-        {
-          doRefresh(viewer, element, updateLabels);
-        }
-        catch (RuntimeException ex)
-        {
-          // An element may have been deactivated - refresh the entire tree
-          doRefresh(viewer, null, updateLabels);
-        }
+        doRefresh(viewer, element, updateLabels);
       }
-
-      private void doRefresh(final StructuredViewer viewer, final Object element, final boolean updateLabels)
+      catch (RuntimeException ex)
       {
-        if (element != null && element != viewer.getInput())
-        {
-          viewer.refresh(element, updateLabels);
-        }
-        else
-        {
-          viewer.refresh(updateLabels);
-        }
+        // An element may have been deactivated - refresh the entire tree
+        doRefresh(viewer, null, updateLabels);
       }
     });
+  }
+
+  private static void doRefresh(StructuredViewer viewer, Object element, boolean updateLabels)
+  {
+    if (element != null && element != viewer.getInput())
+    {
+      viewer.refresh(element, updateLabels);
+    }
+    else
+    {
+      viewer.refresh(updateLabels);
+    }
   }
 
   /**
    * @since 3.5
    */
-  public static void updateElements(final StructuredViewer viewer, final Object element)
+  public static void updateElements(StructuredViewer viewer, Object element)
   {
     try
     {
       Control control = viewer.getControl();
       if (!control.isDisposed())
       {
-        control.getDisplay().asyncExec(new Runnable()
-        {
-          @Override
-          public void run()
+        asyncExec(control.getDisplay(), () -> {
+          try
           {
-            try
+            if (element instanceof Object[])
             {
-              if (element instanceof Object[])
-              {
-                Object[] elements = (Object[])element;
-                viewer.update(elements, null);
-              }
-              else
-              {
-                viewer.update(element, null);
-              }
+              Object[] elements = (Object[])element;
+              viewer.update(elements, null);
             }
-            catch (Exception ignore)
+            else
             {
+              viewer.update(element, null);
             }
+          }
+          catch (Exception ignore)
+          {
           }
         });
       }
@@ -796,29 +796,24 @@ public final class UIUtil
    *
    * @since 2.0
    */
-  public static void setStatusBarMessage(final String message, final Image image)
+  public static void setStatusBarMessage(String message, Image image)
   {
-    getDisplay().syncExec(new Runnable()
-    {
-      @Override
-      public void run()
+    syncExec(getDisplay(), () -> {
+      try
       {
-        try
+        IViewSite site = (IViewSite)PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActivePart().getSite();
+        if (image == null)
         {
-          IViewSite site = (IViewSite)PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActivePart().getSite();
-          if (image == null)
-          {
-            site.getActionBars().getStatusLineManager().setMessage(message);
-          }
-          else
-          {
-            site.getActionBars().getStatusLineManager().setMessage(image, message);
-          }
+          site.getActionBars().getStatusLineManager().setMessage(message);
         }
-        catch (RuntimeException ignore)
+        else
         {
-          // Do nothing
+          site.getActionBars().getStatusLineManager().setMessage(image, message);
         }
+      }
+      catch (RuntimeException ignore)
+      {
+        // Do nothing
       }
     });
   }
@@ -826,7 +821,7 @@ public final class UIUtil
   /**
    * @since 3.5
    */
-  public static void addDragSupport(final StructuredViewer viewer)
+  public static void addDragSupport(StructuredViewer viewer)
   {
     viewer.addDragSupport(DND.DROP_LINK | DND.DROP_MOVE | DND.DROP_COPY, new Transfer[] { LocalSelectionTransfer.getTransfer() }, new DragSourceAdapter()
     {

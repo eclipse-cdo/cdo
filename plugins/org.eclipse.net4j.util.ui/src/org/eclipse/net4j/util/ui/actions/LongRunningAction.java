@@ -10,12 +10,12 @@
  */
 package org.eclipse.net4j.util.ui.actions;
 
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.internal.ui.bundle.OM;
 import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -228,9 +228,6 @@ public abstract class LongRunningAction extends SafeAction
 
   protected final void checkCancelation(IProgressMonitor monitor)
   {
-    if (monitor.isCanceled())
-    {
-      throw new OperationCanceledException();
-    }
+    ConcurrencyUtil.checkCancelation(monitor);
   }
 }

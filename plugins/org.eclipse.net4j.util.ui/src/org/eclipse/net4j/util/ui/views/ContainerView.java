@@ -12,6 +12,7 @@ package org.eclipse.net4j.util.ui.views;
 
 import org.eclipse.net4j.ui.shared.SharedIcons;
 import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.internal.ui.actions.IntrospectAction;
 import org.eclipse.net4j.util.internal.ui.bundle.OM;
@@ -21,7 +22,6 @@ import org.eclipse.net4j.util.ui.actions.SafeAction;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IContributionManager;
-import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
@@ -29,18 +29,16 @@ import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.DecoratingStyledCellLabelProvider;
-import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IBaseLabelProvider;
 import org.eclipse.jface.viewers.IContentProvider;
-import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ILabelDecorator;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.ITreeSelection;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
@@ -59,6 +57,9 @@ import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.eclipse.ui.views.properties.PropertySheetPage;
 
+/**
+ * @since 3.9
+ */
 public abstract class ContainerView extends ViewPart implements ISelectionProvider, ISetSelectionTarget
 {
   private Shell shell;
@@ -67,15 +68,10 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
 
   private TreeViewer viewer;
 
-  private ISelectionChangedListener selectionListener = new ISelectionChangedListener()
-  {
-    @Override
-    public void selectionChanged(SelectionChangedEvent event)
-    {
-      ITreeSelection selection = (ITreeSelection)event.getSelection();
-      IActionBars bars = getViewSite().getActionBars();
-      ContainerView.this.selectionChanged(bars, selection);
-    }
+  private ISelectionChangedListener selectionListener = event -> {
+    ITreeSelection selection = (ITreeSelection)event.getSelection();
+    IActionBars bars = getViewSite().getActionBars();
+    selectionChanged(bars, selection);
   };
 
   private Action refreshAction = new RefreshAction();
@@ -93,6 +89,14 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
     return shell;
   }
 
+  /**
+   * @since 3.9
+   */
+  public ContainerItemProvider<IContainer<Object>> getItemProvider()
+  {
+    return itemProvider;
+  }
+
   public TreeViewer getViewer()
   {
     return viewer;
@@ -108,18 +112,13 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
   {
     final IContainer<?> container = getContainer();
 
-    Runnable runnable = new Runnable()
-    {
-      @Override
-      public void run()
+    Runnable runnable = () -> {
+      try
       {
-        try
-        {
-          viewer.setInput(container);
-        }
-        catch (RuntimeException ignore)
-        {
-        }
+        viewer.setInput(container);
+      }
+      catch (RuntimeException ignore)
+      {
       }
     };
 
@@ -238,10 +237,33 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
   protected void initViewer()
   {
     itemProvider = createContainerItemProvider();
-    viewer.setContentProvider(createContentProvider());
-    viewer.setLabelProvider(createLabelProvider());
-    viewer.setSorter(createViewerSorter());
+
+    IContentProvider contentProvider = createContentProvider();
+    viewer.setContentProvider(contentProvider);
+
+    IBaseLabelProvider labelProvider = createLabelProvider();
+    viewer.setLabelProvider(labelProvider);
+
+    ViewerComparator viewerComparator = createViewerComparator();
+    if (viewerComparator != null)
+    {
+      viewer.setComparator(viewerComparator);
+    }
+    else
+    {
+      org.eclipse.jface.viewers.ViewerSorter viewerSorter = createViewerSorter();
+      viewer.setSorter(viewerSorter);
+    }
+
     resetInput();
+  }
+
+  /**
+   * @since 3.9
+   */
+  protected ViewerComparator createViewerComparator()
+  {
+    return null;
   }
 
   /**
@@ -278,70 +300,21 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
     return PlatformUI.getWorkbench().getDecoratorManager().getLabelDecorator();
   }
 
+  /**
+   * @since 3.9
+   */
   protected ContainerItemProvider<IContainer<Object>> createContainerItemProvider()
   {
-    return new ContainerItemProvider<IContainer<Object>>(getRootElementFilter())
-    {
-      @Override
-      public Image getImage(Object obj)
-      {
-        Image image = getElementImage(obj);
-        if (image == null)
-        {
-          image = super.getImage(obj);
-        }
+    IElementFilter rootElementFilter = getRootElementFilter();
+    return new ContainerViewItemProvider(rootElementFilter);
+  }
 
-        return image;
-      }
-
-      @Override
-      public String getText(Object obj)
-      {
-        String text = getElementText(obj);
-        if (text == null)
-        {
-          text = super.getText(obj);
-        }
-
-        return text;
-      }
-
-      @Override
-      public Color getForeground(Object obj)
-      {
-        Color color = getElementForeground(obj);
-        if (color == null)
-        {
-          color = super.getForeground(obj);
-        }
-
-        return color;
-      }
-
-      @Override
-      public Color getBackground(Object obj)
-      {
-        Color color = getElementBackground(obj);
-        if (color == null)
-        {
-          color = super.getBackground(obj);
-        }
-
-        return color;
-      }
-
-      @Override
-      public Font getFont(Object obj)
-      {
-        Font font = getElementFont(obj);
-        if (font == null)
-        {
-          font = super.getFont(obj);
-        }
-
-        return font;
-      }
-    };
+  /**
+   * @since 3.9
+   */
+  protected void handleElementEvent(IEvent event)
+  {
+    // Do nothing.
   }
 
   protected String getElementText(Object element)
@@ -387,15 +360,10 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
 
   protected void hookDoubleClick()
   {
-    viewer.addDoubleClickListener(new IDoubleClickListener()
-    {
-      @Override
-      public void doubleClick(DoubleClickEvent event)
-      {
-        ITreeSelection selection = (ITreeSelection)viewer.getSelection();
-        Object object = selection.getFirstElement();
-        doubleClicked(object);
-      }
+    viewer.addDoubleClickListener(event -> {
+      ITreeSelection selection = (ITreeSelection)viewer.getSelection();
+      Object object = selection.getFirstElement();
+      doubleClicked(object);
     });
   }
 
@@ -403,14 +371,9 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
   {
     MenuManager menuMgr = new MenuManager("#PopupMenu"); //$NON-NLS-1$
     menuMgr.setRemoveAllWhenShown(true);
-    menuMgr.addMenuListener(new IMenuListener()
-    {
-      @Override
-      public void menuAboutToShow(IMenuManager manager)
-      {
-        ITreeSelection selection = (ITreeSelection)viewer.getSelection();
-        fillContextMenu(manager, selection);
-      }
+    menuMgr.addMenuListener(manager -> {
+      ITreeSelection selection = (ITreeSelection)viewer.getSelection();
+      fillContextMenu(manager, selection);
     });
 
     Menu menu = menuMgr.createContextMenu(viewer.getControl());
@@ -514,27 +477,10 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
 
   protected void closeView()
   {
-    try
-    {
-      getDisplay().syncExec(new Runnable()
-      {
-        @Override
-        public void run()
-        {
-          try
-          {
-            getSite().getPage().hideView(ContainerView.this);
-            ContainerView.this.dispose();
-          }
-          catch (Exception ignore)
-          {
-          }
-        }
-      });
-    }
-    catch (Exception ignore)
-    {
-    }
+    UIUtil.syncExec(getDisplay(), () -> {
+      getSite().getPage().hideView(ContainerView.this);
+      dispose();
+    });
   }
 
   protected void showMessage(String message)
@@ -673,6 +619,84 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
   public static ImageDescriptor getCollapseAllImageDescriptor()
   {
     return SharedIcons.getDescriptor(SharedIcons.ETOOL_COLLAPSE_ALL);
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 3.9
+   */
+  public class ContainerViewItemProvider extends ContainerItemProvider<IContainer<Object>>
+  {
+    public ContainerViewItemProvider(IElementFilter rootElementFilter)
+    {
+      super(rootElementFilter);
+    }
+
+    @Override
+    public Image getImage(Object obj)
+    {
+      Image image = getElementImage(obj);
+      if (image == null)
+      {
+        image = super.getImage(obj);
+      }
+
+      return image;
+    }
+
+    @Override
+    public String getText(Object obj)
+    {
+      String text = getElementText(obj);
+      if (text == null)
+      {
+        text = super.getText(obj);
+      }
+
+      return text;
+    }
+
+    @Override
+    public Color getForeground(Object obj)
+    {
+      Color color = getElementForeground(obj);
+      if (color == null)
+      {
+        color = super.getForeground(obj);
+      }
+
+      return color;
+    }
+
+    @Override
+    public Color getBackground(Object obj)
+    {
+      Color color = getElementBackground(obj);
+      if (color == null)
+      {
+        color = super.getBackground(obj);
+      }
+
+      return color;
+    }
+
+    @Override
+    public Font getFont(Object obj)
+    {
+      Font font = getElementFont(obj);
+      if (font == null)
+      {
+        font = super.getFont(obj);
+      }
+
+      return font;
+    }
+
+    @Override
+    protected void handleElementEvent(IEvent event)
+    {
+      ContainerView.this.handleElementEvent(event);
+    }
   }
 
   protected static enum MessageType

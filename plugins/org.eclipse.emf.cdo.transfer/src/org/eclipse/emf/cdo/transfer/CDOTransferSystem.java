@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.transfer;
 
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.io.IORuntimeException;
 
 import org.eclipse.emf.common.util.EList;
@@ -19,7 +20,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Path;
 
 import java.io.IOException;
@@ -97,11 +97,7 @@ public abstract class CDOTransferSystem
 
       for (Resource resource : resources)
       {
-        if (monitor.isCanceled())
-        {
-          throw new OperationCanceledException();
-        }
-
+        ConcurrencyUtil.checkCancelation(monitor);
         monitor.subTask("Saving " + resource.getURI());
         resource.save(null);
         monitor.worked(1);

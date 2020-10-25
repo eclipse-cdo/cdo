@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 /**
  * A {@link CDOChangeKindProvider change kind provider} with detailed information about {@link #getNewObjects() new},
@@ -75,4 +76,32 @@ public interface CDOChangeSetData extends CDOChangeKindProvider
    * @since 4.1
    */
   public Map<CDOID, CDOChangeKind> getChangeKinds();
+
+  /**
+   * @since 4.12
+   */
+  default void forEachRevision(Consumer<CDORevision> consumer)
+  {
+    for (CDOIDAndVersion idAndVersion : getNewObjects())
+    {
+      if (idAndVersion instanceof CDORevision)
+      {
+        consumer.accept((CDORevision)idAndVersion);
+      }
+    }
+  }
+
+  /**
+   * @since 4.12
+   */
+  default void forEachRevisionDelta(Consumer<CDORevisionDelta> consumer)
+  {
+    for (CDORevisionKey revisionKey : getChangedObjects())
+    {
+      if (revisionKey instanceof CDORevisionDelta)
+      {
+        consumer.accept((CDORevisionDelta)revisionKey);
+      }
+    }
+  }
 }

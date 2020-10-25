@@ -16,7 +16,7 @@ package org.eclipse.net4j.util.collection;
  */
 public abstract class ConcurrentArray<E>
 {
-  protected E[] elements;
+  protected volatile E[] elements;
 
   private final E[] EMPTY = newArray(0);
 
@@ -62,18 +62,25 @@ public abstract class ConcurrentArray<E>
     return false;
   }
 
-  private boolean add(E element, boolean unique)
+  private boolean validateAndAdd(E element, boolean unique)
   {
     if (!validate(element))
     {
       return false;
     }
 
+    return add(element, unique);
+  }
+
+  private synchronized boolean add(E element, boolean unique)
+  {
     if (elements == null)
     {
       E[] array = newArray(1);
       array[0] = element;
+
       elements = array;
+      elementAdded(element);
       firstElementAdded();
       return true;
     }
@@ -96,6 +103,7 @@ public abstract class ConcurrentArray<E>
     System.arraycopy(elements, 0, array, 0, length);
     array[length] = element;
     elements = array;
+    elementAdded(element);
     return true;
   }
 
@@ -104,12 +112,12 @@ public abstract class ConcurrentArray<E>
    */
   public synchronized boolean addUnique(E element)
   {
-    return add(element, true);
+    return validateAndAdd(element, true);
   }
 
   public synchronized void add(E element)
   {
-    add(element, false);
+    validateAndAdd(element, false);
   }
 
   public synchronized boolean remove(E element)
@@ -122,6 +130,7 @@ public abstract class ConcurrentArray<E>
         if (equals(elements[0], element))
         {
           elements = null;
+          elementRemoved(element);
           lastElementRemoved();
           return true;
         }
@@ -146,6 +155,7 @@ public abstract class ConcurrentArray<E>
             }
 
             elements = array;
+            elementRemoved(element);
             return true;
           }
         }
@@ -155,9 +165,6 @@ public abstract class ConcurrentArray<E>
     return false;
   }
 
-  /**
-   * Synchronized through {@link #add(Object)}.
-   */
   protected boolean validate(E element)
   {
     return true;
@@ -173,9 +180,30 @@ public abstract class ConcurrentArray<E>
 
   /**
    * Synchronized through {@link #add(Object)}.
+   *
+   * @since 3.13
+   */
+  protected void elementAdded(E element)
+  {
+    // Do nothing.
+  }
+
+  /**
+   * Synchronized through {@link #remove(Object)}.
+   *
+   * @since 3.13
+   */
+  protected void elementRemoved(E element)
+  {
+    // Do nothing.
+  }
+
+  /**
+   * Synchronized through {@link #add(Object)}.
    */
   protected void firstElementAdded()
   {
+    // Do nothing.
   }
 
   /**
@@ -183,6 +211,7 @@ public abstract class ConcurrentArray<E>
    */
   protected void lastElementRemoved()
   {
+    // Do nothing.
   }
 
   /**

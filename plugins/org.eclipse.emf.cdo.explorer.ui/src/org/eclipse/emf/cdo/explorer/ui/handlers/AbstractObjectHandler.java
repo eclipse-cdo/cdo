@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.handlers.AbstractBaseHandler;
 
@@ -22,7 +23,6 @@ import org.eclipse.emf.ecore.EObject;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 
@@ -118,10 +118,7 @@ public abstract class AbstractObjectHandler extends AbstractBaseHandler<EObject>
       List<EObject> transactionalElements = new ArrayList<>();
       for (EObject element : elements)
       {
-        if (monitor.isCanceled())
-        {
-          throw new OperationCanceledException();
-        }
+        ConcurrencyUtil.checkCancelation(monitor);
 
         EObject transactionalElement = transaction.getObject(element);
         transactionalElements.add(transactionalElement);

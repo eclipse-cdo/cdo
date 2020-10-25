@@ -141,6 +141,28 @@ public final class StringUtil
     return str;
   }
 
+  /**
+   * @since 3.13
+   */
+  public static String safe(Object object)
+  {
+    return safe(object, EMPTY);
+  }
+
+  /**
+   * @since 3.13
+   */
+  public static String safe(Object object, String def)
+  {
+    if (object == null)
+    {
+      return def;
+    }
+
+    String str = object.toString();
+    return safe(str, def);
+  }
+
   public static int compare(String s1, String s2)
   {
     if (s1 == null)

@@ -223,10 +223,12 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
 
   protected void elementAdded(Object element, Object parent)
   {
+    // Do nothing.
   }
 
   protected void elementRemoved(Object element, Object parent)
   {
+    // Do nothing.
   }
 
   /**
@@ -234,6 +236,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
    */
   protected void handleElementEvent(IEvent event)
   {
+    // Do nothing.
   }
 
   /**
@@ -508,6 +511,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
     @Override
     public void disposeChildren()
     {
+      // Do nothing.
     }
 
     @Override

@@ -91,8 +91,13 @@ import java.util.Set;
  * @author Eike Stepper
  * @since 4.2
  */
-public class CDOCompareEditorUtil
+public final class CDOCompareEditorUtil
 {
+  /**
+   * @since 4.6
+   */
+  public static final Image COMPARE_IMAGE = OM.getImage("icons/compare.gif");
+
   /**
    * @since 4.4
    */
@@ -110,6 +115,10 @@ public class CDOCompareEditorUtil
   private static final ThreadLocal<Boolean> SUPPRESS_COMMIT = new ThreadLocal<>();
 
   private static final ThreadLocal<List<Runnable>> DISPOSE_RUNNABLES = new ThreadLocal<>();
+
+  private CDOCompareEditorUtil()
+  {
+  }
 
   /**
    * @since 4.4
@@ -756,8 +765,6 @@ public class CDOCompareEditorUtil
   @SuppressWarnings("restriction")
   public static final class Input extends org.eclipse.emf.compare.ide.ui.internal.editor.ComparisonEditorInput
   {
-    private static final Image COMPARE_IMAGE = OM.getImage("icons/compare.gif");
-
     private final CDOView sourceView;
 
     private final CDOView targetView;

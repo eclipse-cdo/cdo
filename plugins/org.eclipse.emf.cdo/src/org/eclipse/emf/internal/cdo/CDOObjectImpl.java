@@ -1274,7 +1274,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   @Override
   public String toString()
   {
-    if (EMF_TO_STRING)
+    if (emfToString())
     {
       return super.toString();
     }
@@ -1294,6 +1294,14 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     }
 
     return str;
+  }
+
+  /**
+   * @since 4.12
+   */
+  protected boolean emfToString()
+  {
+    return EMF_TO_STRING;
   }
 
   /**

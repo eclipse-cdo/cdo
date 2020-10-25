@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.emf.cdo.ui.compare" version="2">
     <resource path="src/org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.java" type="org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil">
+        <filter id="337768515">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil"/>
+            </message_arguments>
+        </filter>
+        <filter id="354463860">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil"/>
+                <message_argument value="CDOCompareEditorUtil()"/>
+            </message_arguments>
+        </filter>
         <filter id="571519004">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil"/>

@@ -33,6 +33,8 @@ import java.util.List;
  */
 public final class CDOBranchUtil
 {
+  private static final char PATH_SEPARATOR_CHAR = CDOBranch.PATH_SEPARATOR.charAt(0);
+
   /**
    * @since 4.6
    */
@@ -270,6 +272,23 @@ public final class CDOBranchUtil
       result.add(point);
       getPath(branch.getBase(), result);
     }
+  }
+
+  /**
+   * @since 4.12
+   */
+  public static String sanitizePathName(String pathName)
+  {
+    pathName = pathName.trim();
+    int length = pathName.length();
+
+    int i = 0;
+    while (i < length && pathName.charAt(i) == PATH_SEPARATOR_CHAR)
+    {
+      ++i;
+    }
+
+    return i == 0 ? pathName : pathName.substring(i);
   }
 
   /**

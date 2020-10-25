@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.common.branch;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 
 import org.eclipse.net4j.util.ObjectUtil;
 
@@ -35,13 +36,9 @@ public final class CDOBranchPointRef implements Serializable
 
   public static final String HEAD = "HEAD";
 
-  private String branchPath;
+  private final String branchPath;
 
-  private long timeStamp;
-
-  public CDOBranchPointRef()
-  {
-  }
+  private final long timeStamp;
 
   public CDOBranchPointRef(CDOBranchPoint branchPoint)
   {
@@ -50,7 +47,7 @@ public final class CDOBranchPointRef implements Serializable
 
   public CDOBranchPointRef(String branchPath, long timeStamp)
   {
-    this.branchPath = branchPath.intern();
+    this.branchPath = CDOBranchUtil.sanitizePathName(branchPath).intern();
     this.timeStamp = timeStamp;
   }
 
@@ -61,16 +58,16 @@ public final class CDOBranchPointRef implements Serializable
       throw new IllegalArgumentException(Messages.getString("CDOClassifierRef.1") + uri); //$NON-NLS-1$
     }
 
-    int hash = uri.lastIndexOf(URI_SEPARATOR);
-    if (hash == -1)
+    int fragmentSeparator = uri.lastIndexOf(URI_SEPARATOR);
+    if (fragmentSeparator == -1)
     {
-      branchPath = uri;
+      branchPath = CDOBranchUtil.sanitizePathName(uri).intern();
       timeStamp = CDOBranchPoint.UNSPECIFIED_DATE;
       return;
     }
 
-    branchPath = uri.substring(0, hash);
-    String timeStampSpec = uri.substring(hash + 1);
+    branchPath = CDOBranchUtil.sanitizePathName(uri.substring(0, fragmentSeparator)).intern();
+    String timeStampSpec = uri.substring(fragmentSeparator + 1);
 
     if (HEAD.equals(timeStampSpec))
     {

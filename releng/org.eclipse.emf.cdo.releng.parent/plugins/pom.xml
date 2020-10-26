@@ -97,6 +97,7 @@ Eike Stepper - initial API and implementation
     <module>../../../plugins/org.eclipse.emf.cdo.ui</module>
     <module>../../../plugins/org.eclipse.emf.cdo.ui.admin</module>
     <module>../../../plugins/org.eclipse.emf.cdo.ui.compare</module>
+    <module>../../../plugins/org.eclipse.emf.cdo.ui.jdt</module>
     <module>../../../plugins/org.eclipse.emf.cdo.ui.shared</module>
     <module>../../../plugins/org.eclipse.emf.cdo.ui.team</module>
     <module>../../../plugins/org.eclipse.emf.cdo.workspace</module>

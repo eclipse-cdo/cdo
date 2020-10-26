@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.internal.ui;
+package org.eclipse.emf.cdo.internal.ui.editor;
 
 import org.eclipse.emf.cdo.common.lob.CDOBlob;
 import org.eclipse.emf.cdo.common.lob.CDOClob;
@@ -31,6 +31,7 @@ import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.ui.texteditor.AbstractDocumentProvider;
+import org.eclipse.ui.texteditor.IDocumentProvider;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -47,7 +48,17 @@ public class CDOLobStorage extends AbstractDocumentProvider
 {
   private static final String CHARSET_UTF_8 = "UTF-8"; //$NON-NLS-1$
 
+  private static CDOLobStorage instance;
+
   public CDOLobStorage()
+  {
+    instance = this;
+  }
+
+  /**
+   * Avoids initialization of the "instances" field.
+   */
+  private CDOLobStorage(boolean dummy)
   {
   }
 
@@ -218,5 +229,15 @@ public class CDOLobStorage extends AbstractDocumentProvider
     }
 
     return encoding;
+  }
+
+  public static IDocumentProvider getInstance()
+  {
+    if (instance != null)
+    {
+      return instance;
+    }
+
+    return new CDOLobStorage(true);
   }
 }

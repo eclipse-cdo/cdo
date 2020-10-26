@@ -26,7 +26,9 @@ Require-Bundle: org.eclipse.core.expressions;bundle-version="[3.4.0,4.0.0)";reso
  org.eclipse.emf.cdo.ui.shared;bundle-version="[4.0.0,5.0.0)",
  org.eclipse.emf.ecp.edit;bundle-version="[1.5.0,2.0.0)";resolution:=optional;x-installation:=greedy,
  org.eclipse.emf.ecp.edit.swt;bundle-version="[1.5.0,2.0.0)";resolution:=optional;x-installation:=greedy,
- org.eclipse.emf.ecp.ui.view.swt;bundle-version="[1.5.0,2.0.0)";resolution:=optional;x-installation:=greedy
+ org.eclipse.emf.ecp.ui.view.swt;bundle-version="[1.5.0,2.0.0)";resolution:=optional;x-installation:=greedy,
+ org.eclipse.jdt.ui;bundle-version="[3.5.0,4.0.0)";resolution:=optional,
+ org.eclipse.ui.editors;bundle-version="[3.5.0,4.0.0)";resolution:=optional
 Export-Package: org.eclipse.emf.cdo.internal.ui;version="4.9.0";
   x-friends:="org.eclipse.emf.cdo.ui.ide,
    org.eclipse.emf.cdo.ui.location,

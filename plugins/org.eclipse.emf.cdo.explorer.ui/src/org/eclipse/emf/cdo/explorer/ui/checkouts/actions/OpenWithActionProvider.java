@@ -17,13 +17,16 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceLeaf;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
+import org.eclipse.emf.cdo.eresource.CDOTextResource;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.ui.dialogs.EditObjectDialog;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.ui.CDOEditorOpener;
+import org.eclipse.emf.cdo.ui.CDOEditorUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.ui.UIUtil;
@@ -43,7 +46,12 @@ import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.navigator.CommonActionProvider;
 import org.eclipse.ui.navigator.ICommonActionConstants;
 import org.eclipse.ui.navigator.ICommonActionExtensionSite;
@@ -372,6 +380,64 @@ public class OpenWithActionProvider extends CommonActionProvider
           // }
           //
           // openEditor(page, cdoObject, resourceLeaf, editorOpenerID, key);
+        }
+      }
+    }
+    else if (resourceLeaf instanceof CDOTextResource)
+    {
+      String editorID = CDOEditorUtil.getEffectiveEditorID(resourceLeaf);
+      if (editorID != null)
+      {
+        CDOView view = resourceLeaf.cdoView();
+        CDOCheckout checkout = CDOExplorerUtil.getCheckout(view);
+        CDOTransaction transaction = checkout != null ? checkout.openTransaction() : view.getSession().openTransaction(view.getBranch());
+        CDOResourceLeaf txLeaf = transaction.getObject(resourceLeaf);
+
+        try
+        {
+          IEditorInput editorInput = CDOEditorUtil.createLobEditorInput(txLeaf, true);
+          IEditorPart editor = page.openEditor(editorInput, editorID);
+
+          page.addPartListener(new IPartListener()
+          {
+            @Override
+            public void partClosed(IWorkbenchPart part)
+            {
+              if (part == editor)
+              {
+                transaction.close();
+                editor.getSite().getPage().removePartListener(this);
+              }
+            }
+
+            @Override
+            public void partActivated(IWorkbenchPart part)
+            {
+              // Do nothing.
+            }
+
+            @Override
+            public void partBroughtToTop(IWorkbenchPart part)
+            {
+              // Do nothing.
+            }
+
+            @Override
+            public void partDeactivated(IWorkbenchPart part)
+            {
+              // Do nothing.
+            }
+
+            @Override
+            public void partOpened(IWorkbenchPart part)
+            {
+              // Do nothing.
+            }
+          });
+        }
+        catch (PartInitException ex)
+        {
+          OM.LOG.error(ex);
         }
       }
     }

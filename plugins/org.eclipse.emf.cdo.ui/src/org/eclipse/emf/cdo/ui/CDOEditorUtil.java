@@ -15,15 +15,18 @@ package org.eclipse.emf.cdo.ui;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceLeaf;
-import org.eclipse.emf.cdo.internal.ui.CDOEditorInputImpl;
-import org.eclipse.emf.cdo.internal.ui.CDOLobEditorInput;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
+import org.eclipse.emf.cdo.internal.ui.editor.CDOEditorInputImpl;
+import org.eclipse.emf.cdo.internal.ui.editor.CDOLobEditorInput;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
+import org.eclipse.net4j.util.ui.UIUtil;
 
+import org.eclipse.emf.common.CommonPlugin;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 
@@ -40,10 +43,14 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.WeakHashMap;
 
 /**
@@ -65,6 +72,8 @@ public final class CDOEditorUtil
   public static final String TEXT_EDITOR_ID = "org.eclipse.ui.DefaultTextEditor";
 
   private static final IEditorRegistry EDITOR_REGISTRY = PlatformUI.getWorkbench().getEditorRegistry();
+
+  private static final Map<String, String> EDITOR_MAPPINGS = initEditorMappings();
 
   private static final Map<CDOResourceLeaf, String> EDITOR_OVERRIDES = new WeakHashMap<>();
 
@@ -174,29 +183,24 @@ public final class CDOEditorUtil
   public static void openEditor(final IWorkbenchPage page, final CDOView view, final String resourcePath)
   {
     Display display = page.getWorkbenchWindow().getShell().getDisplay();
-    display.asyncExec(new Runnable()
-    {
-      @Override
-      public void run()
+    UIUtil.asyncExec(display, () -> {
+      try
       {
-        try
+        IEditorReference[] references = findEditor(page, view, resourcePath);
+        if (references.length != 0)
         {
-          IEditorReference[] references = findEditor(page, view, resourcePath);
-          if (references.length != 0)
-          {
-            IEditorPart editor = references[0].getEditor(true);
-            page.activate(editor);
-          }
-          else
-          {
-            IEditorInput input = createCDOEditorInput(view, resourcePath, false);
-            page.openEditor(input, editorID);
-          }
+          IEditorPart editor = references[0].getEditor(true);
+          page.activate(editor);
         }
-        catch (Exception ex)
+        else
         {
-          OM.LOG.error(ex);
+          IEditorInput input = createCDOEditorInput(view, resourcePath, false);
+          page.openEditor(input, editorID);
         }
+      }
+      catch (Exception ex)
+      {
+        OM.LOG.error(ex);
       }
     });
   }
@@ -296,7 +300,10 @@ public final class CDOEditorUtil
   public static void populateMenu(IMenuManager manager, CDOResourceLeaf resource, IWorkbenchPage page)
   {
     String effectiveEditorID = getEffectiveEditorID(resource);
-    manager.add(new OpenEditorAction(page, effectiveEditorID, resource, false));
+    if (effectiveEditorID != null)
+    {
+      manager.add(new OpenEditorAction(page, effectiveEditorID, resource, false));
+    }
 
     String[] editorIDs = getAllEditorIDs(resource);
     if (editorIDs.length > 1 || editorIDs.length == 1 && !editorIDs[0].equals(effectiveEditorID))
@@ -321,25 +328,16 @@ public final class CDOEditorUtil
    */
   public static String getEffectiveEditorID(CDOResourceLeaf resource)
   {
-    String editorID = EDITOR_OVERRIDES.get(resource);
-    if (editorID != null)
+    String id = EDITOR_OVERRIDES.get(resource);
+    if (id != null)
     {
-      return editorID;
+      return id;
     }
 
-    if (resource instanceof CDOResource)
-    {
-      return EDITOR_ID;
-    }
+    id = computeEffectiveEditorID(resource);
+    id = mapEditorID(id);
 
-    String name = resource.getName();
-    IEditorDescriptor editorDescriptor = EDITOR_REGISTRY.getDefaultEditor(name);
-    if (editorDescriptor != null)
-    {
-      return editorDescriptor.getId();
-    }
-
-    return TEXT_EDITOR_ID;
+    return id;
   }
 
   /**
@@ -347,25 +345,23 @@ public final class CDOEditorUtil
    */
   public static String[] getAllEditorIDs(CDOResourceLeaf resource)
   {
-    List<String> editorIDs = new ArrayList<>();
+    Set<String> editorIDs = new HashSet<>();
     if (resource instanceof CDOResource)
     {
-      editorIDs.add(EDITOR_ID);
+      addMappedEditorID(editorIDs, EDITOR_ID);
     }
+
+    addMappedEditorID(editorIDs, TEXT_EDITOR_ID);
 
     String name = resource.getName();
     for (IEditorDescriptor editorDescriptor : EDITOR_REGISTRY.getEditors(name))
     {
-      editorIDs.add(editorDescriptor.getId());
+      addMappedEditorID(editorIDs, editorDescriptor.getId());
     }
 
-    if (!editorIDs.contains(TEXT_EDITOR_ID) && EDITOR_REGISTRY.findEditor(TEXT_EDITOR_ID) != null)
-    {
-      editorIDs.add(TEXT_EDITOR_ID);
-    }
-
-    Collections.sort(editorIDs);
-    return editorIDs.toArray(new String[editorIDs.size()]);
+    String[] array = editorIDs.toArray(new String[editorIDs.size()]);
+    Arrays.sort(array);
+    return array;
   }
 
   /**
@@ -383,6 +379,14 @@ public final class CDOEditorUtil
       }
     }
 
+    return createLobEditorInput(resource, lobCommitOnSave);
+  }
+
+  /**
+   * @since 4.9
+   */
+  public static IEditorInput createLobEditorInput(CDOResourceLeaf resource, boolean lobCommitOnSave)
+  {
     return new CDOLobEditorInput(resource, lobCommitOnSave);
   }
 
@@ -432,20 +436,15 @@ public final class CDOEditorUtil
   public static void openEditor(IWorkbenchPage page, String editorID, CDOResourceLeaf resource)
   {
     Display display = page.getWorkbenchWindow().getShell().getDisplay();
-    display.asyncExec(new Runnable()
-    {
-      @Override
-      public void run()
+    UIUtil.asyncExec(display, () -> {
+      try
       {
-        try
-        {
-          IEditorInput editorInput = createEditorInput(editorID, resource);
-          page.openEditor(editorInput, editorID);
-        }
-        catch (Exception ex)
-        {
-          OM.LOG.error(ex);
-        }
+        IEditorInput editorInput = createEditorInput(editorID, resource);
+        page.openEditor(editorInput, editorID);
+      }
+      catch (Exception ex)
+      {
+        OM.LOG.error(ex);
       }
     });
   }
@@ -468,6 +467,73 @@ public final class CDOEditorUtil
       {
         editor.refreshViewer(null);
       }
+    }
+  }
+
+  private static String computeEffectiveEditorID(CDOResourceLeaf resource)
+  {
+    if (resource instanceof CDOResource)
+    {
+      return EDITOR_ID;
+    }
+
+    String name = resource.getName();
+    IEditorDescriptor editorDescriptor = EDITOR_REGISTRY.getDefaultEditor(name);
+    if (editorDescriptor != null)
+    {
+      return editorDescriptor.getId();
+    }
+
+    return TEXT_EDITOR_ID;
+  }
+
+  private static void addMappedEditorID(Set<String> editorIDs, String id)
+  {
+    id = mapEditorID(id);
+    if (id != null)
+    {
+      editorIDs.add(id);
+    }
+  }
+
+  private static String mapEditorID(String id)
+  {
+    if (id != null && EDITOR_MAPPINGS.containsKey(id))
+    {
+      // The containsKey() check is necessary because the value can be null;
+      id = EDITOR_MAPPINGS.get(id);
+    }
+
+    if (id != null && EDITOR_REGISTRY.findEditor(TEXT_EDITOR_ID) == null)
+    {
+      id = null;
+    }
+
+    return id;
+  }
+
+  private static Map<String, String> initEditorMappings()
+  {
+    Map<String, String> mappings = new HashMap<>();
+
+    // JDT's PropertiesFileEditor hides our CDOLobStorage by setting AbstractTextEditor.fExplicitDocumentProvider,
+    // so map it to our CDOPropertiesFileEditor, or to null to disable the editor if it's not available.
+    mappings.put("org.eclipse.jdt.ui.PropertiesFileEditor", getCDOPropertiesFileEditorID());
+
+    return mappings;
+  }
+
+  private static String getCDOPropertiesFileEditorID()
+  {
+    try
+    {
+      Class<?> c = CommonPlugin.loadClass("org.eclipse.emf.cdo.ui.jdt", "org.eclipse.emf.cdo.ui.jdt.CDOPropertiesFileEditor");
+      Field field = ReflectUtil.getField(c, "ID");
+      return (String)ReflectUtil.getValue(field, null);
+    }
+    catch (Throwable ex)
+    {
+      return null;
     }
   }
 

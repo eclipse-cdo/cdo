@@ -1,0 +1,1533 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.cdo.ui.jdt" version="2">
+    <resource path="META-INF/MANIFEST.MF">
+        <filter id="923795461">
+            <message_arguments>
+                <message_argument value="4.2.0"/>
+                <message_argument value="4.1.0"/>
+            </message_arguments>
+        </filter>
+        <filter id="923795461">
+            <message_arguments>
+                <message_argument value="4.2.0"/>
+                <message_argument value="4.2.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.edit.ui.celleditor.AdapterFactoryTableTreeEditor">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.edit.ui.celleditor.AdapterFactoryTableTreeEditor"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.6.100"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.IContributorResourceAdapter">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.IContributorResourceAdapter"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.IFileEditorInput">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.IFileEditorInput"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.IMarkerActionFilter">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.IMarkerActionFilter"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.IMarkerHelpRegistry">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.IMarkerHelpRegistry"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.IMarkerResolution">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.IMarkerResolution"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.IMarkerResolution2">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.IMarkerResolution2"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.IMarkerResolutionGenerator">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.IMarkerResolutionGenerator"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.IMarkerResolutionGenerator2">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.IMarkerResolutionGenerator2"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.IProjectActionFilter">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.IProjectActionFilter"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.IResourceActionFilter">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.IResourceActionFilter"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.IStorageEditorInput">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.IStorageEditorInput"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.IURIEditorInput">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.IURIEditorInput"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.ResourceWorkingSetFilter">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.ResourceWorkingSetFilter"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.actions.AddBookmarkAction">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.actions.AddBookmarkAction"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.actions.AddTaskAction">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.actions.AddTaskAction"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.actions.BuildAction">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.actions.BuildAction"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.actions.CloseResourceAction">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.actions.CloseResourceAction"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.actions.CloseUnrelatedProjectsAction">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.actions.CloseUnrelatedProjectsAction"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.actions.CopyFilesAndFoldersOperation">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.actions.CopyFilesAndFoldersOperation"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.actions.CopyProjectAction">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.actions.CopyProjectAction"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.actions.CopyProjectOperation">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.actions.CopyProjectOperation"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.actions.CopyResourceAction">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.actions.CopyResourceAction"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.actions.CreateFileAction">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.actions.CreateFileAction"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.actions.CreateFolderAction">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.actions.CreateFolderAction"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.actions.DeleteResourceAction">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.actions.DeleteResourceAction"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.actions.GlobalBuildAction">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.actions.GlobalBuildAction"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.actions.MoveFilesAndFoldersOperation">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.actions.MoveFilesAndFoldersOperation"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.actions.MoveProjectAction">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.actions.MoveProjectAction"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.actions.MoveResourceAction">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.actions.MoveResourceAction"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.actions.NewExampleAction">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.actions.NewExampleAction"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.actions.NewProjectAction">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.actions.NewProjectAction"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.actions.NewWizardMenu">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.actions.NewWizardMenu"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.actions.OpenFileAction">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.actions.OpenFileAction"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.actions.OpenResourceAction">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.actions.OpenResourceAction"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.actions.OpenSystemEditorAction">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.actions.OpenSystemEditorAction"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.actions.OpenWithMenu">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.actions.OpenWithMenu"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.actions.QuickStartAction">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.actions.QuickStartAction"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.actions.ReadOnlyStateChecker">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.actions.ReadOnlyStateChecker"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.actions.RefreshAction">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.actions.RefreshAction"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.actions.RenameResourceAction">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.actions.RenameResourceAction"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.actions.ScrubLocalAction">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.actions.ScrubLocalAction"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.actions.SelectionListenerAction">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.actions.SelectionListenerAction"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.actions.TextActionHandler">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.actions.TextActionHandler"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.actions.WorkspaceAction">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.actions.WorkspaceAction"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.actions.WorkspaceModifyDelegatingOperation">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.actions.WorkspaceModifyDelegatingOperation"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.actions.WorkspaceModifyOperation">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.actions.WorkspaceModifyOperation"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.dialogs.ContainerGenerator">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.dialogs.ContainerGenerator"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.dialogs.ContainerSelectionDialog">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.dialogs.ContainerSelectionDialog"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.dialogs.FileSelectionDialog">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.dialogs.FileSelectionDialog"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.dialogs.FilteredResourcesSelectionDialog">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.dialogs.FilteredResourcesSelectionDialog"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.dialogs.MarkerResolutionSelectionDialog">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.dialogs.MarkerResolutionSelectionDialog"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.dialogs.NewFolderDialog">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.dialogs.NewFolderDialog"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.dialogs.ProjectLocationMoveDialog">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.dialogs.ProjectLocationMoveDialog"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.dialogs.ProjectLocationSelectionDialog">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.dialogs.ProjectLocationSelectionDialog"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.dialogs.ResourceListSelectionDialog">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.dialogs.ResourceListSelectionDialog"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.dialogs.ResourceSelectionDialog">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.dialogs.ResourceSelectionDialog"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.dialogs.SaveAsDialog">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.dialogs.SaveAsDialog"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.dialogs.WizardDataTransferPage">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.dialogs.WizardDataTransferPage"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.dialogs.WizardExportPage">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.dialogs.WizardExportPage"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.dialogs.WizardExportResourcesPage">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.dialogs.WizardExportResourcesPage"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.dialogs.WizardImportPage">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.dialogs.WizardImportPage"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.dialogs.WizardNewFileCreationPage">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.dialogs.WizardNewFileCreationPage"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.dialogs.WizardNewFolderMainPage">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.dialogs.WizardNewFolderMainPage"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.dialogs.WizardNewLinkPage">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.dialogs.WizardNewLinkPage"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.dialogs.WizardNewProjectCreationPage">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.dialogs.WizardNewProjectCreationPage"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.dialogs.WizardNewProjectReferencePage">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.dialogs.WizardNewProjectReferencePage"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.dialogs.WizardResourceImportPage">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.dialogs.WizardResourceImportPage"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.ide.FileStoreEditorInput">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.ide.FileStoreEditorInput"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.ide.FileStoreEditorInputFactory">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.ide.FileStoreEditorInputFactory"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.ide.IContributorResourceAdapter2">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.ide.IContributorResourceAdapter2"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.ide.IDE">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.ide.IDE"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.ide.IDEActionFactory">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.ide.IDEActionFactory"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.ide.IDEEncoding">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.ide.IDEEncoding"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.ide.IEditorAssociationOverride">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.ide.IEditorAssociationOverride"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.ide.IGotoMarker">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.ide.IGotoMarker"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.ide.IIDEActionConstants">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.ide.IIDEActionConstants"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.ide.ResourceSelectionUtil">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.ide.ResourceSelectionUtil"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.ide.ResourceUtil">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.ide.ResourceUtil"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.ide.dialogs.AbstractEncodingFieldEditor">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.ide.dialogs.AbstractEncodingFieldEditor"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.ide.dialogs.EncodingFieldEditor">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.ide.dialogs.EncodingFieldEditor"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.ide.dialogs.ImportTypeDialog">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.ide.dialogs.ImportTypeDialog"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.ide.dialogs.PathVariableSelectionDialog">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.ide.dialogs.PathVariableSelectionDialog"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.ide.dialogs.ResourceEncodingFieldEditor">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.ide.dialogs.ResourceEncodingFieldEditor"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.ide.dialogs.UIResourceFilterDescription">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.ide.dialogs.UIResourceFilterDescription"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.ide.fileSystem.FileSystemContributor">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.ide.fileSystem.FileSystemContributor"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.ide.undo.AbstractWorkspaceOperation">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.ide.undo.AbstractWorkspaceOperation"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.ide.undo.CopyProjectOperation">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.ide.undo.CopyProjectOperation"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.ide.undo.CopyResourcesOperation">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.ide.undo.CopyResourcesOperation"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.ide.undo.CreateFileOperation">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.ide.undo.CreateFileOperation"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.ide.undo.CreateFolderOperation">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.ide.undo.CreateFolderOperation"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.ide.undo.CreateMarkersOperation">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.ide.undo.CreateMarkersOperation"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.ide.undo.CreateProjectOperation">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.ide.undo.CreateProjectOperation"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.ide.undo.DeleteMarkersOperation">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.ide.undo.DeleteMarkersOperation"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.ide.undo.DeleteResourcesOperation">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.ide.undo.DeleteResourcesOperation"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.ide.undo.MoveProjectOperation">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.ide.undo.MoveProjectOperation"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.ide.undo.MoveResourcesOperation">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.ide.undo.MoveResourcesOperation"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.ide.undo.ResourceDescription">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.ide.undo.ResourceDescription"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.ide.undo.UpdateMarkersOperation">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.ide.undo.UpdateMarkersOperation"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.ide.undo.WorkspaceUndoUtil">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.ide.undo.WorkspaceUndoUtil"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.internal.cocoa.AbstractWindowHandler">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.internal.cocoa.AbstractWindowHandler"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.2.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.internal.cocoa.ArrangeWindowsHandler">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.internal.cocoa.ArrangeWindowsHandler"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.2.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.internal.cocoa.CloseDialogHandler">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.internal.cocoa.CloseDialogHandler"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.2.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.internal.cocoa.CocoaTitlePathUpdater">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.internal.cocoa.CocoaTitlePathUpdater"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.2.0"/>
+            </message_arguments>
+        </filter>
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.internal.cocoa.CocoaTitlePathUpdater"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.3.0"/>
+            </message_arguments>
+        </filter>
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.internal.cocoa.CocoaTitlePathUpdater"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.4.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.internal.cocoa.CocoaUIEnhancer">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.internal.cocoa.CocoaUIEnhancer"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.2.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.internal.cocoa.CocoaUtil">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.internal.cocoa.CocoaUtil"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.2.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.internal.cocoa.FullscreenWindowHandler">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.internal.cocoa.FullscreenWindowHandler"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.2.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.internal.cocoa.MinimizeWindowHandler">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.internal.cocoa.MinimizeWindowHandler"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.2.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.internal.cocoa.SWTCocoaEnhancerDelegate">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.internal.cocoa.SWTCocoaEnhancerDelegate"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.2.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.internal.cocoa.ZoomWindowHandler">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.internal.cocoa.ZoomWindowHandler"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.2.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.model.WorkbenchContentProvider">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.model.WorkbenchContentProvider"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.part.FileEditorInput">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.part.FileEditorInput"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.part.FileEditorInputFactory">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.part.FileEditorInputFactory"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.part.FileInPlaceEditorInput">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.part.FileInPlaceEditorInput"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.part.MarkerTransfer">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.part.MarkerTransfer"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.part.ResourceTransfer">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.part.ResourceTransfer"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.bookmarkexplorer.BookmarkNavigator">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.bookmarkexplorer.BookmarkNavigator"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.bookmarkexplorer.BookmarkPropertiesDialog">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.bookmarkexplorer.BookmarkPropertiesDialog"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.framelist.BackAction">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.framelist.BackAction"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.framelist.ForwardAction">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.framelist.ForwardAction"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.framelist.Frame">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.framelist.Frame"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.framelist.FrameAction">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.framelist.FrameAction"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.framelist.FrameList">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.framelist.FrameList"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.framelist.GoIntoAction">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.framelist.GoIntoAction"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.framelist.IFrameSource">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.framelist.IFrameSource"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.framelist.TreeFrame">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.framelist.TreeFrame"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.framelist.TreeViewerFrameSource">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.framelist.TreeViewerFrameSource"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.framelist.UpAction">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.framelist.UpAction"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.markers.FilterConfigurationArea">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.markers.FilterConfigurationArea"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.markers.FiltersContributionParameters">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.markers.FiltersContributionParameters"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.markers.MarkerField">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.markers.MarkerField"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.markers.MarkerFieldFilter">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.markers.MarkerFieldFilter"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.markers.MarkerItem">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.markers.MarkerItem"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.markers.MarkerSupportConstants">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.markers.MarkerSupportConstants"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.markers.MarkerSupportView">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.markers.MarkerSupportView"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.markers.MarkerViewHandler">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.markers.MarkerViewHandler"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.markers.MarkerViewUtil">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.markers.MarkerViewUtil"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.markers.WorkbenchMarkerResolution">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.markers.WorkbenchMarkerResolution"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.navigator.CollapseAllAction">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.CollapseAllAction"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.navigator.FilterSelectionAction">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.FilterSelectionAction"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.navigator.GotoActionGroup">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.GotoActionGroup"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.navigator.GotoResourceAction">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.GotoResourceAction"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.navigator.IResourceNavigator">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.IResourceNavigator"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.navigator.LocalSelectionTransfer">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.LocalSelectionTransfer"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.navigator.MainActionGroup">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.MainActionGroup"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.navigator.NavigatorDragAdapter">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.NavigatorDragAdapter"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.navigator.NavigatorDropAdapter">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.NavigatorDropAdapter"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.navigator.NavigatorFrameSource">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.NavigatorFrameSource"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.navigator.OpenActionGroup">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.OpenActionGroup"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.navigator.RefactorActionGroup">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.RefactorActionGroup"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.navigator.ResourceComparator">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.ResourceComparator"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.navigator.ResourceNavigator">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.ResourceNavigator"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.navigator.ResourceNavigatorAction">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.ResourceNavigatorAction"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.navigator.ResourceNavigatorActionGroup">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.ResourceNavigatorActionGroup"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.navigator.ResourceNavigatorMessages">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.ResourceNavigatorMessages"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.navigator.ResourceNavigatorMoveAction">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.ResourceNavigatorMoveAction"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.navigator.ResourceNavigatorRenameAction">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.ResourceNavigatorRenameAction"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.navigator.ResourcePatternFilter">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.ResourcePatternFilter"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.navigator.ResourceSelectionUtil">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.ResourceSelectionUtil"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.navigator.ResourceSorter">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.ResourceSorter"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.navigator.ShowInNavigatorAction">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.ShowInNavigatorAction"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.navigator.SortAndFilterActionGroup">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.SortAndFilterActionGroup"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.navigator.SortViewAction">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.SortViewAction"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.navigator.ToggleLinkingAction">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.ToggleLinkingAction"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.navigator.WorkspaceActionGroup">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.WorkspaceActionGroup"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.properties.FilePropertySource">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.properties.FilePropertySource"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.properties.IResourcePropertyConstants">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.properties.IResourcePropertyConstants"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.properties.ResourcePropertySource">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.properties.ResourcePropertySource"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.tasklist.ITaskListResourceAdapter">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.tasklist.ITaskListResourceAdapter"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.tasklist.TaskList">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.tasklist.TaskList"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.tasklist.TaskPropertiesDialog">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.tasklist.TaskPropertiesDialog"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.wizards.datatransfer.ExternalProjectImportWizard">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.wizards.datatransfer.ExternalProjectImportWizard"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.wizards.datatransfer.FileStoreStructureProvider">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.wizards.datatransfer.FileStoreStructureProvider"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.wizards.datatransfer.FileSystemExportWizard">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.wizards.datatransfer.FileSystemExportWizard"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.wizards.datatransfer.FileSystemImportWizard">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.wizards.datatransfer.FileSystemImportWizard"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.wizards.datatransfer.FileSystemStructureProvider">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.wizards.datatransfer.FileSystemStructureProvider"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.wizards.datatransfer.IImportStructureProvider">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.wizards.datatransfer.IImportStructureProvider"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.wizards.datatransfer.ImportOperation">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.wizards.datatransfer.ImportOperation"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.wizards.datatransfer.PopulateRootOperation">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.wizards.datatransfer.PopulateRootOperation"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.wizards.datatransfer.SelectFilesOperation">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.wizards.datatransfer.SelectFilesOperation"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.wizards.datatransfer.WizardExternalProjectImportPage">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.wizards.datatransfer.WizardExternalProjectImportPage"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.wizards.datatransfer.ZipFileExportWizard">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.wizards.datatransfer.ZipFileExportWizard"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.wizards.datatransfer.ZipFileImportWizard">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.wizards.datatransfer.ZipFileImportWizard"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.wizards.datatransfer.ZipFileStructureProvider">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.wizards.datatransfer.ZipFileStructureProvider"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.wizards.newresource.BasicNewFileResourceWizard">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.wizards.newresource.BasicNewFileResourceWizard"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.wizards.newresource.BasicNewFolderResourceWizard">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.wizards.newresource.BasicNewFolderResourceWizard"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.wizards.newresource.BasicNewProjectResourceWizard">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.wizards.newresource.BasicNewProjectResourceWizard"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.wizards.newresource.BasicNewResourceWizard">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.wizards.newresource.BasicNewResourceWizard"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

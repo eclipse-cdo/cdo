@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <!--
-	Copyright (c) 2007-2013, 2015, 2016, 2018 Eike Stepper (Loehne, Germany) and others.
-	All rights reserved. This program and the accompanying materials
-	are made available under the terms of the Eclipse Public License v1.0
-	which accompanies this distribution, and is available at
-	http://www.eclipse.org/legal/epl-v10.html
+  Copyright (c) 2007-2013, 2015, 2016, 2018 Eike Stepper (Loehne, Germany) and others.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
 
-	Contributors:
-	  Eike Stepper - initial API and implementation
-	  Christian W. Damus (CEA LIST) - bug 420528
+  Contributors:
+    Eike Stepper - initial API and implementation
+    Christian W. Damus (CEA LIST) - bug 420528
 -->
 
 <plugin>
@@ -19,7 +19,7 @@
    <extension
         point="org.eclipse.net4j.util.elementProcessors">
      <elementProcessor class="org.eclipse.emf.cdo.ui.CDOInteractiveExceptionHandler"/>
-	 </extension>
+   </extension>
 
    <extension
          point="org.eclipse.net4j.util.factories">
@@ -161,7 +161,7 @@
         <enablement>
            <and>
               <objectClass name="org.eclipse.emf.cdo.session.CDOSession"/>
-  						<test property="org.eclipse.emf.cdo.session.repositoryState" value="OFFLINE"/>
+              <test property="org.eclipse.emf.cdo.session.repositoryState" value="OFFLINE"/>
            </and>
         </enablement>
      </decorator>
@@ -202,21 +202,21 @@
      </factory>
   </extension>
 
-	<!--
+  <!--
    <extension
          id="org.eclipse.core.filesystem.cdo.workspace"
          point="org.eclipse.core.filesystem.filesystems">
       <filesystem scheme="cdo.lob">
-         <run class="org.eclipse.emf.cdo.internal.ui.CDOLobEditorInput$LobFileSystem"/>
+         <run class="org.eclipse.emf.cdo.internal.ui.editor.CDOLobEditorInput$LobFileSystem"/>
       </filesystem>
    </extension>
-	-->
+  -->
 
    <extension
          point="org.eclipse.ui.editors.documentProviders">
       <provider
-            class="org.eclipse.emf.cdo.internal.ui.CDOLobStorage"
-            inputTypes="org.eclipse.emf.cdo.internal.ui.CDOLobEditorInput"
+            class="org.eclipse.emf.cdo.internal.ui.editor.CDOLobStorage"
+            inputTypes="org.eclipse.emf.cdo.internal.ui.editor.CDOLobEditorInput"
             id="org.eclipse.emf.cdo.ui.CDOLobStorage">
       </provider>
    </extension>
@@ -234,12 +234,12 @@
                label="%action.label.2"
                tooltip="%action.tooltip.1">
          </action>
-	       <enablement>
+         <enablement>
               <and>
                  <test property="org.eclipse.emf.cdo.object.permissionContainer" value="WRITE"/>
                  <test property="org.eclipse.emf.cdo.object.viewHistorical" value="false"/>
               </and>
-	       </enablement>
+         </enablement>
       </objectContribution>
       <objectContribution
             adaptable="true"
@@ -251,12 +251,12 @@
                label="%action.label.13"
                tooltip="%action.tooltip.11">
          </action>
-	       <enablement>
+         <enablement>
               <and>
                  <test property="org.eclipse.emf.cdo.object.permission" value="WRITE"/>
                  <test property="org.eclipse.emf.cdo.object.viewHistorical" value="false"/>
               </and>
-	       </enablement>
+         </enablement>
       </objectContribution>
       <objectContribution
             adaptable="true"
@@ -290,12 +290,12 @@
                label="%action.label.4"
                tooltip="%action.tooltip.3">
          </action>
-	       <enablement>
+         <enablement>
               <and>
                  <test property="org.eclipse.emf.cdo.object.permission" value="WRITE"/>
                  <test property="org.eclipse.emf.cdo.object.viewHistorical" value="false"/>
               </and>
-	       </enablement>
+         </enablement>
       </objectContribution>
       <objectContribution
             adaptable="false"
@@ -308,9 +308,9 @@
                label="%action.label.10"
                tooltip="%action.tooltip.14">
          </action>
-	       <enablement>
-	        		<test property="org.eclipse.emf.cdo.object.readable" value="true"/>
-	       </enablement>
+         <enablement>
+              <test property="org.eclipse.emf.cdo.object.readable" value="true"/>
+         </enablement>
       </objectContribution>
    </extension-->
 

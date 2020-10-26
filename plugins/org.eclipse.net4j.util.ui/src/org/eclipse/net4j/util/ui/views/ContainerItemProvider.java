@@ -10,6 +10,7 @@
  */
 package org.eclipse.net4j.util.ui.views;
 
+import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.ui.shared.SharedIcons;
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.IContainer;
@@ -19,7 +20,6 @@ import org.eclipse.net4j.util.container.SetContainer;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
-import org.eclipse.net4j.util.internal.ui.bundle.OM;
 import org.eclipse.net4j.util.lifecycle.LifecycleState;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.ui.UIUtil;
@@ -42,7 +42,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * @author Eike Stepper
@@ -452,11 +451,6 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
    */
   public interface Node
   {
-    /**
-     * @since 3.9
-     */
-    public static final List<Node> NO_CHILDREN = Collections.emptyList();
-
     public boolean isDisposed();
 
     public void dispose();
@@ -553,20 +547,14 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
     {
       if (disposed)
       {
-        throw new IllegalStateException("Node is already disposed"); //$NON-NLS-1$
+        throw new IllegalStateException("Node is already disposed of"); //$NON-NLS-1$
       }
     }
 
     protected Node addChild(Collection<Node> children, Object element)
     {
-      Node existing = nodes.get(element);
-      if (existing != null)
+      if (nodes.containsKey(element))
       {
-        if (!Objects.equals(existing.getParent(), this))
-        {
-          OM.LOG.warn("Duplicate node rejected: " + element);
-        }
-
         return null;
       }
 
@@ -857,7 +845,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
     public List<Node> getChildren()
     {
       checkNotDisposed();
-      return NO_CHILDREN;
+      return Collections.emptyList();
     }
 
     @Override
@@ -865,72 +853,6 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
     {
       updateLabels(event.getSource());
       handleElementEvent(event);
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   * @since 3.9
-   */
-  public class FixedChildrenNode extends LeafNode
-  {
-    private List<Node> children = null;
-
-    public FixedChildrenNode(Node parent, Object element, Object[] childElements)
-    {
-      super(parent, element);
-
-      for (Object childElement : childElements)
-      {
-        addChild(childElement);
-      }
-    }
-
-    public FixedChildrenNode(Node parent, Object element, Iterable<?> childElements)
-    {
-      super(parent, element);
-
-      for (Object childElement : childElements)
-      {
-        addChild(childElement);
-      }
-    }
-
-    @Override
-    public void dispose()
-    {
-      if (!isDisposed())
-      {
-        children = null;
-        super.dispose();
-      }
-    }
-
-    /**
-     * @since 3.4
-     */
-    @Override
-    public boolean hasChildren()
-    {
-      checkNotDisposed();
-      return children == null ? false : !children.isEmpty();
-    }
-
-    @Override
-    public List<Node> getChildren()
-    {
-      checkNotDisposed();
-      return children == null ? NO_CHILDREN : children;
-    }
-
-    private void addChild(Object childElement)
-    {
-      if (children == null)
-      {
-        children = new ArrayList<>();
-      }
-
-      addChild(children, childElement);
     }
   }
 

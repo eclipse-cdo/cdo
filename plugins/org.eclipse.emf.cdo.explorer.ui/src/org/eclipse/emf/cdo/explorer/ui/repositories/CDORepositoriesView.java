@@ -73,6 +73,8 @@ public class CDORepositoriesView extends ContainerView
 {
   public static final String ID = "org.eclipse.emf.cdo.explorer.ui.CDORepositoriesView";
 
+  public static final String SHOW_IN_MENU_ID = ID + ".ShowInMenu";
+
   private final ActivityDetector activityDetector = new ActivityDetector();
 
   private CDORepositoryItemProvider itemProvider;
@@ -229,13 +231,13 @@ public class CDORepositoriesView extends ContainerView
     IWorkbenchPage page = getSite().getPage();
     Object selectedElement = selection.size() == 1 ? selection.getFirstElement() : null;
 
-    IMenuManager subMenu = new MenuManager(ShowInActionProvider.TITLE, ICommonMenuConstants.GROUP_OPEN_WITH);
-    subMenu.add(new GroupMarker(ICommonMenuConstants.GROUP_TOP));
+    IMenuManager showInMenu = new MenuManager(ShowInActionProvider.TITLE, SHOW_IN_MENU_ID);
+    showInMenu.add(new GroupMarker(ICommonMenuConstants.GROUP_TOP));
 
-    if (ShowInActionProvider.fillMenu(page, null, subMenu, selectedElement))
+    if (ShowInActionProvider.fillMenu(page, null, showInMenu, selectedElement))
     {
-      subMenu.add(new GroupMarker(ICommonMenuConstants.GROUP_ADDITIONS));
-      manager.appendToGroup(ICommonMenuConstants.GROUP_OPEN, subMenu);
+      showInMenu.add(new GroupMarker(ICommonMenuConstants.GROUP_ADDITIONS));
+      manager.appendToGroup(ICommonMenuConstants.GROUP_OPEN, showInMenu);
     }
   }
 

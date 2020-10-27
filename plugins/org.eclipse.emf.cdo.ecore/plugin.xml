@@ -17,6 +17,12 @@
     <factory
       uri="http://www.eclipse.org/emf/2002/Ecore"
       class="org.eclipse.emf.cdo.ecore.impl.CDOEcoreFactoryImpl" />
-  </extension>
+    <factory
+      uri="http://www.eclipse.org/emf/2003/XMLType"
+      class="org.eclipse.emf.cdo.ecore.xml.type.impl.CDOXMLTypeFactoryImpl" />
+    <factory
+      uri="http://www.w3.org/XML/1998/namespace"
+      class="org.eclipse.emf.cdo.ecore.xml.namespace.impl.CDOXMLNamespaceFactoryImpl" />
+  </extension> 
 
 </plugin>

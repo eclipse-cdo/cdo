@@ -2,11 +2,13 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emf.cdo.ecore;singleton:=true
-Bundle-Version: 1.1.1.qualifier
+Bundle-Version: 1.1.2.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.emf.ecore;bundle-version="[2.13.0,3.0.0)";visibility:=reexport,
  org.eclipse.emf.cdo;bundle-version="[4.6.0,5.0.0)";visibility:=reexport
-Export-Package: org.eclipse.emf.cdo.ecore.impl;version="1.1.1"
+Export-Package: org.eclipse.emf.cdo.ecore.impl;version="1.1.2",
+ org.eclipse.emf.cdo.ecore.xml.namespace.impl;version="1.1.2",
+ org.eclipse.emf.cdo.ecore.xml.type.impl;version="1.1.2"
 Bundle-Vendor: %providerName
 Automatic-Module-Name: org.eclipse.emf.cdo.ecore
 Bundle-ClassPath: .

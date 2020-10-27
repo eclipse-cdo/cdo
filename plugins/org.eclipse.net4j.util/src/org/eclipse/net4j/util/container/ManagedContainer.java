@@ -44,6 +44,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
  * A default implementation of a {@link IManagedContainer managed container}.
@@ -458,6 +460,42 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     }
 
     return element;
+  }
+
+  @Override
+  public <T> void forEachElement(String productGroup, Class<T> productType, Function<String, String> descriptionProvider, Consumer<T> consumer)
+  {
+    for (String type : getFactoryTypes(productGroup))
+    {
+      String description = descriptionProvider == null ? null : descriptionProvider.apply(type);
+
+      try
+      {
+        @SuppressWarnings("unchecked")
+        T element = (T)getElement(productGroup, type, description);
+        consumer.accept(element);
+      }
+      catch (FactoryNotFoundException ex)
+      {
+        // Should not happen.
+      }
+      catch (ProductCreationException ex)
+      {
+        OM.LOG.error(ex);
+      }
+    }
+  }
+
+  @Override
+  public <T> void forEachElement(String productGroup, Class<T> productType, String description, Consumer<T> consumer)
+  {
+    forEachElement(productGroup, productType, type -> description, consumer);
+  }
+
+  @Override
+  public <T> void forEachElement(String productGroup, Class<T> productType, Consumer<T> consumer)
+  {
+    forEachElement(productGroup, productType, type -> null, consumer);
   }
 
   @Override

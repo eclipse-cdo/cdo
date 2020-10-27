@@ -41,11 +41,13 @@ import org.eclipse.emf.internal.cdo.session.CDOSessionFactory;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.ui.MenuFiller;
 
 import org.eclipse.emf.ecore.EObject;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -83,7 +85,7 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
 
   public static final String HISTORY_VIEW_ID = "org.eclipse.team.ui.GenericHistoryView";
 
-  private static final String ID = ShowInActionProvider.class.getName();
+  public static final String ID = ShowInActionProvider.class.getName();
 
   private static final boolean PROPERTIES_SUPPORT_AVAILABLE = Support.PROPERTIES.isAvailable();
 
@@ -236,7 +238,13 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
       filled = true;
     }
 
-    return filled;
+    menu.add(new Separator(ICommonMenuConstants.GROUP_ADDITIONS));
+
+    boolean[] finalFilled = { filled };
+    IPluginContainer.INSTANCE.forEachElement(MenuFiller.Factory.PRODUCT_GROUP, MenuFiller.class,
+        filler -> finalFilled[0] |= filler.fillMenu(page, viewer, menu, selectedElement));
+
+    return finalFilled[0];
   }
 
   private static boolean addAction(IMenuManager subMenu, Object selectedElement, ShowInViewAction action)
@@ -425,7 +433,7 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
   /**
    * @author Eike Stepper
    */
-  private static class ShowInViewAction extends Action
+  public static class ShowInViewAction extends Action
   {
     private final IWorkbenchPage page;
 
@@ -499,7 +507,7 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
   /**
    * @author Eike Stepper
    */
-  private static final class ShowInProjectExplorerAction extends ShowInViewAction
+  public static final class ShowInProjectExplorerAction extends ShowInViewAction
   {
     private final CDOCheckout[] checkouts;
 
@@ -523,7 +531,7 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
   /**
    * @author Eike Stepper
    */
-  private static final class ShowInSessionsViewAction extends ShowInViewAction
+  public static final class ShowInSessionsViewAction extends ShowInViewAction
   {
     private final CDORepository repository;
 
@@ -622,7 +630,7 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
   /**
    * @author Eike Stepper
    */
-  private static final class ShowInSystemExplorerAction extends Action
+  public static final class ShowInSystemExplorerAction extends Action
   {
     private final File folder;
 

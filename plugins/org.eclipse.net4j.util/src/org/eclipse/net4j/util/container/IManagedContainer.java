@@ -21,6 +21,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
  * A {@link IContainer container} that populates itself by means of element {@link #getFactoryRegistry() factories} and
@@ -81,6 +83,21 @@ public interface IManagedContainer extends IContainer<Object>, ILifecycle
       throws FactoryNotFoundException, ProductCreationException;
 
   public Object removeElement(String productGroup, String factoryType, String description);
+
+  /**
+   * @since 3.13
+   */
+  public <T> void forEachElement(String productGroup, Class<T> productType, Function<String, String> descriptionProvider, Consumer<T> consumer);
+
+  /**
+   * @since 3.13
+   */
+  public <T> void forEachElement(String productGroup, Class<T> productType, String description, Consumer<T> consumer);
+
+  /**
+   * @since 3.13
+   */
+  public <T> void forEachElement(String productGroup, Class<T> productType, Consumer<T> consumer);
 
   public void clearElements();
 

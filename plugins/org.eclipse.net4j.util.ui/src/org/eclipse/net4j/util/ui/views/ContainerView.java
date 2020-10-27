@@ -360,25 +360,18 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
 
   protected void hookDoubleClick()
   {
-    viewer.addDoubleClickListener(event -> {
-      ITreeSelection selection = (ITreeSelection)viewer.getSelection();
-      Object object = selection.getFirstElement();
-      doubleClicked(object);
-    });
+    viewer.addDoubleClickListener(e -> doubleClicked(((ITreeSelection)viewer.getSelection()).getFirstElement()));
   }
 
   protected void hookContextMenu()
   {
-    MenuManager menuMgr = new MenuManager("#PopupMenu"); //$NON-NLS-1$
-    menuMgr.setRemoveAllWhenShown(true);
-    menuMgr.addMenuListener(manager -> {
-      ITreeSelection selection = (ITreeSelection)viewer.getSelection();
-      fillContextMenu(manager, selection);
-    });
+    MenuManager manager = new MenuManager("#PopupMenu"); //$NON-NLS-1$
+    manager.setRemoveAllWhenShown(true);
+    manager.addMenuListener(m -> fillContextMenu(m, (ITreeSelection)viewer.getSelection()));
 
-    Menu menu = menuMgr.createContextMenu(viewer.getControl());
+    Menu menu = manager.createContextMenu(viewer.getControl());
     viewer.getControl().setMenu(menu);
-    getSite().registerContextMenu(menuMgr, viewer);
+    getSite().registerContextMenu(manager, viewer);
   }
 
   protected void contributeToActionBars()
@@ -406,10 +399,28 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
 
   /**
    * @since 3.5
+   * @deprecated As of 3.9 use {@link #addMenuGroupAdditions(IContributionManager)}.
    */
+  @Deprecated
   protected void addSeparator(IContributionManager manager)
   {
-    manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+    addMenuGroupAdditions(manager);
+  }
+
+  /**
+   * @since 3.9
+   */
+  protected void addMenuGroupAdditions(IContributionManager manager)
+  {
+    addMenuGroup(manager, IWorkbenchActionConstants.MB_ADDITIONS);
+  }
+
+  /**
+   * @since 3.9
+   */
+  protected void addMenuGroup(IContributionManager manager, String groupName)
+  {
+    manager.add(new Separator(groupName));
   }
 
   /**

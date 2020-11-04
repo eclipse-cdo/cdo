@@ -249,7 +249,7 @@
       <repositoryList
           name="2020-12">
         <repository
-            url="http://download.eclipse.org/releases/2020-09"/>
+            url="http://download.eclipse.org/releases/2020-12"/>
         <repository
             url="http://download.eclipse.org/eclipse/updates/latest"/>
         <repository

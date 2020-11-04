@@ -1788,6 +1788,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
   protected InternalCDOObject getObjectUnsynced(CDOID id, boolean loadOnDemand)
   {
+    checkActive();
     if (rootResource != null && rootResource.cdoID() == id)
     {
       return rootResource;

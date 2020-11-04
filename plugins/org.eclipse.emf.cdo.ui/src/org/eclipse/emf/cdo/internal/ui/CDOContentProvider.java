@@ -26,9 +26,12 @@ import org.eclipse.net4j.util.lifecycle.LifecycleException;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.ui.views.ItemProvider;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
@@ -218,7 +221,7 @@ public abstract class CDOContentProvider<CONTEXT> implements ITreeContentProvide
         return element.getChildren();
       }
 
-      final Object originalObject = object;
+      Object originalObject = object;
       Object[] children = childrenCache.remove(originalObject);
       if (children != null)
       {
@@ -246,17 +249,17 @@ public abstract class CDOContentProvider<CONTEXT> implements ITreeContentProvide
         }
       }
 
-      final Object finalObject = object;
-      final CONTEXT finalOpeningContext = openingContext;
+      Object finalObject = object;
+      CONTEXT finalOpeningContext = openingContext;
 
-      final ITreeContentProvider contentProvider = getContentProvider(finalObject);
+      ITreeContentProvider contentProvider = getContentProvider(finalObject);
       if (contentProvider == null)
       {
         return ItemProvider.NO_ELEMENTS;
       }
 
-      final List<CDORevision> loadedRevisions = new ArrayList<>();
-      final List<CDOID> missingIDs = new ArrayList<>();
+      List<CDORevision> loadedRevisions = new ArrayList<>();
+      List<CDOID> missingIDs = new ArrayList<>();
 
       if (finalOpeningContext == null)
       {
@@ -318,7 +321,7 @@ public abstract class CDOContentProvider<CONTEXT> implements ITreeContentProvide
               children = modifyChildren(finalObject, children);
               childrenCache.put(originalObject, children);
             }
-            catch (final Exception ex)
+            catch (Exception ex)
             {
               childrenCache.remove(originalObject);
 
@@ -511,40 +514,48 @@ public abstract class CDOContentProvider<CONTEXT> implements ITreeContentProvide
 
   private Object[] determineChildRevisions(Object object, List<CDORevision> loadedRevisions, List<CDOID> missingIDs)
   {
-    if (GET_CHILDREN_FEATURES_METHOD != null && object instanceof EObject)
+    if (object instanceof EObject)
     {
-      EObject eObject = (EObject)object;
-
-      InternalCDOObject cdoObject = getCDOObject(eObject);
-      if (cdoObject != null)
+      if (GET_CHILDREN_FEATURES_METHOD != null)
       {
-        InternalCDORevision revision = cdoObject.cdoRevision(false);
-        if (revision != null)
-        {
-          try
-          {
-            ITreeItemContentProvider provider = (ITreeItemContentProvider)adapt(object, ITreeItemContentProvider.class);
-            if (provider instanceof ItemProviderAdapter)
-            {
-              determineChildRevisions(cdoObject, revision, (ItemProviderAdapter)provider, loadedRevisions, missingIDs);
+        EObject eObject = (EObject)object;
 
-              if (missingIDs.isEmpty())
+        InternalCDOObject cdoObject = getCDOObject(eObject);
+        if (cdoObject != null)
+        {
+          InternalCDORevision revision = cdoObject.cdoRevision(false);
+          if (revision != null)
+          {
+            try
+            {
+              ITreeItemContentProvider provider = (ITreeItemContentProvider)adapt(object, ITreeItemContentProvider.class);
+              if (provider instanceof ItemProviderAdapter)
               {
-                // All revisions are cached. Just return the objects without server round-trips.
-                ITreeContentProvider contentProvider = getContentProvider(object);
-                if (contentProvider != null)
+                determineChildRevisions(cdoObject, revision, (ItemProviderAdapter)provider, loadedRevisions, missingIDs);
+
+                if (missingIDs.isEmpty())
                 {
-                  return contentProvider.getChildren(object);
+                  // All revisions are cached. Just return the objects without server round-trips.
+                  ITreeContentProvider contentProvider = getContentProvider(object);
+                  if (contentProvider != null)
+                  {
+                    return contentProvider.getChildren(object);
+                  }
                 }
               }
             }
-          }
-          catch (Exception ex)
-          {
-            //$FALL-THROUGH$
+            catch (Exception ex)
+            {
+              //$FALL-THROUGH$
+            }
           }
         }
       }
+    }
+    else if (object instanceof ResourceSet)
+    {
+      EList<Resource> resources = ((ResourceSet)object).getResources();
+      return resources.toArray(new Resource[resources.size()]);
     }
 
     return null;

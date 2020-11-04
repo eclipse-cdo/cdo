@@ -72,7 +72,10 @@ public class CDOCompare
     EMFCompare comparator = createComparator(matcher, comparisonFactory);
 
     Comparison comparison = comparator.compare(scope);
+
+    // TODO See EMFCompare.java, line 316
     comparison.eAdapters().add(new ComparisonScopeAdapter(scope));
+
     return comparison;
   }
 

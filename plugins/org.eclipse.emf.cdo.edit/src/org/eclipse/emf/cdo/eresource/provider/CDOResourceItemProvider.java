@@ -14,16 +14,22 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 //import org.eclipse.emf.cdo.eresource.EresourceFactory;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.command.UnexecutableCommand;
 //import org.eclipse.emf.cdo.etypes.EtypesFactory;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.edit.command.CopyCommand.Helper;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -268,6 +274,25 @@ public class CDOResourceItemProvider extends CDOResourceLeafItemProvider
   @Override
   protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
   {
+  }
+
+  @Override
+  public Collection<?> getNewChildDescriptors(Object object, EditingDomain editingDomain, Object sibling)
+  {
+    return new ArrayList<>();
+  }
+
+  @Override
+  protected Command createRemoveCommand(EditingDomain domain, EObject owner, EStructuralFeature feature, Collection<?> collection)
+  {
+    return UnexecutableCommand.INSTANCE;
+  }
+
+  @Override
+  protected Command createCopyCommand(EditingDomain domain, EObject owner, Helper helper)
+  {
+    // As a resource can't be pasted anywhere, copying it doesn't make much sense in the first place.
+    return UnexecutableCommand.INSTANCE;
   }
 
 }

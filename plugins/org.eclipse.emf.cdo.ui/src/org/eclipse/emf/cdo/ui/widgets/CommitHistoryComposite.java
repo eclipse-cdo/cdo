@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
+import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.ui.history.NetRenderer;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
@@ -31,11 +32,14 @@ import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
+import org.eclipse.net4j.util.container.FactoryNotFoundException;
 import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.Notifier;
+import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent.Kind;
@@ -339,56 +343,88 @@ public class CommitHistoryComposite extends Composite
 
     public Input(Object delegate) throws IllegalInputException
     {
-      CDOSession sessionAdapter = AdapterUtil.adapt(delegate, CDOSession.class);
-      if (sessionAdapter != null)
+      for (;;)
       {
-        session = sessionAdapter;
-        offline = determineOffline();
-        branch = null;
-        object = null;
-        return;
-      }
-
-      CDOBranch branchAdapter = AdapterUtil.adapt(delegate, CDOBranch.class);
-      if (branchAdapter != null)
-      {
-        branch = branchAdapter;
-        session = (CDOSession)((CDOSessionProtocol)((InternalCDOBranchManager)branch.getBranchManager()).getBranchLoader()).getSession();
-        offline = determineOffline();
-        object = null;
-        return;
-      }
-
-      CDOView viewAdapter = AdapterUtil.adapt(delegate, CDOView.class);
-      if (viewAdapter != null)
-      {
-        CDOView view = viewAdapter;
-        session = view.getSession();
-        offline = determineOffline();
-        branch = offline ? null : view.getBranch();
-        object = null;
-        return;
-      }
-
-      if (delegate instanceof EObject)
-      {
-        EObject eObject = (EObject)delegate;
-        CDOObject cdoObject = CDOUtil.getCDOObject(eObject);
-        if (cdoObject != null)
+        CDOSession sessionAdapter = AdapterUtil.adapt(delegate, CDOSession.class);
+        if (sessionAdapter != null)
         {
-          CDOView view = cdoObject.cdoView();
-          if (view != null && cdoObject.cdoState() != CDOState.NEW)
+          session = sessionAdapter;
+          offline = determineOffline();
+          branch = null;
+          object = null;
+          return;
+        }
+
+        CDOBranch branchAdapter = AdapterUtil.adapt(delegate, CDOBranch.class);
+        if (branchAdapter != null)
+        {
+          branch = branchAdapter;
+          session = (CDOSession)((CDOSessionProtocol)((InternalCDOBranchManager)branch.getBranchManager()).getBranchLoader()).getSession();
+          offline = determineOffline();
+          object = null;
+          return;
+        }
+
+        CDOView viewAdapter = AdapterUtil.adapt(delegate, CDOView.class);
+        if (viewAdapter != null)
+        {
+          CDOView view = viewAdapter;
+          session = view.getSession();
+          offline = determineOffline();
+          branch = offline ? null : view.getBranch();
+          object = null;
+          return;
+        }
+
+        if (delegate instanceof EObject)
+        {
+          EObject eObject = (EObject)delegate;
+          Object modifiedObject = null;
+
+          for (String type : IPluginContainer.INSTANCE.getFactoryTypes(ObjectModifier.Factory.PRODUCT_GROUP))
           {
-            session = view.getSession();
-            offline = determineOffline();
-            branch = offline ? null : view.getBranch();
-            object = offline ? null : cdoObject;
-            return;
+            try
+            {
+              ObjectModifier modifier = (ObjectModifier)IPluginContainer.INSTANCE.getElement(ObjectModifier.Factory.PRODUCT_GROUP, type, null);
+              modifiedObject = modifier.modifyObject(eObject);
+              if (modifiedObject != null)
+              {
+                break;
+              }
+            }
+            catch (FactoryNotFoundException ex)
+            {
+              // Should not happen.
+            }
+            catch (ProductCreationException ex)
+            {
+              OM.LOG.error(ex);
+            }
+          }
+
+          if (modifiedObject != null && modifiedObject != eObject)
+          {
+            delegate = modifiedObject;
+            continue;
+          }
+
+          CDOObject cdoObject = CDOUtil.getCDOObject(eObject);
+          if (cdoObject != null)
+          {
+            CDOView view = cdoObject.cdoView();
+            if (view != null && cdoObject.cdoState() != CDOState.NEW)
+            {
+              session = view.getSession();
+              offline = determineOffline();
+              branch = offline ? null : view.getBranch();
+              object = offline ? null : cdoObject;
+              return;
+            }
           }
         }
-      }
 
-      throw new IllegalInputException("Illegal input: " + delegate);
+        throw new IllegalInputException("Illegal input: " + delegate);
+      }
     }
 
     public Input(CDOSession session, CDOBranch branch, CDOObject object)
@@ -544,6 +580,31 @@ public class CommitHistoryComposite extends Composite
     {
       IRegistry<String, Object> properties = session.properties();
       return properties.containsKey("org.eclipse.emf.cdo.workspace.CDOWorkspace");
+    }
+
+    /**
+     * @author Eike Stepper
+     * @since 4.9
+     */
+    public interface ObjectModifier
+    {
+      public Object modifyObject(EObject object);
+
+      /**
+       * @author Eike Stepper
+       */
+      public static abstract class Factory extends org.eclipse.net4j.util.factory.Factory
+      {
+        public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.ui.historyInputObjectModifiers";
+
+        public Factory(String type)
+        {
+          super(PRODUCT_GROUP, type);
+        }
+
+        @Override
+        public abstract ObjectModifier create(String description) throws ProductCreationException;
+      }
     }
 
     /**

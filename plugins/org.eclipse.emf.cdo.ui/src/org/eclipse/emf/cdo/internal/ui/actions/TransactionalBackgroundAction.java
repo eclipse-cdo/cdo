@@ -75,7 +75,7 @@ public abstract class TransactionalBackgroundAction extends LongRunningAction
       progressMonitor.worked(5);
 
       doRun(transaction, transactionalObject, new SubProgressMonitor(progressMonitor, 5));
-      commitInfo = transaction.commit(new SubProgressMonitor(progressMonitor, 90));
+      commitInfo = transaction.commit(new SubProgressMonitor(progressMonitor, 80));
     }
     finally
     {
@@ -88,11 +88,16 @@ public abstract class TransactionalBackgroundAction extends LongRunningAction
     {
       CDOView view = object.cdoView();
       view.waitForUpdate(commitInfo.getTimeStamp(), 5000);
-      postRun(view, object);
+      postRun(view, object, new SubProgressMonitor(progressMonitor, 10));
     }
   }
 
   protected abstract void doRun(CDOTransaction transaction, CDOObject object, IProgressMonitor progressMonitor) throws Exception;
+
+  protected void postRun(CDOView view, CDOObject object, IProgressMonitor progressMonitor)
+  {
+    postRun(view, object);
+  }
 
   protected void postRun(CDOView view, CDOObject object)
   {

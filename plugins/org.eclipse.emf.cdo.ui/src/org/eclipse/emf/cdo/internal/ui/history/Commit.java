@@ -206,22 +206,22 @@ public final class Commit
     long lastMergeTime = lastMergeTarget.getTime();
 
     Net net = getNet();
-    Track track = getTrack();
-    Branch branch = getBranch();
+    // Track track = getTrack();
+    // Branch branch = getBranch();
     long commitTime = getTime();
 
-    if (isLastInBranch() && !track.hasSegment(commitTime + 1, lastMergeTime))
-    {
-      mergeSegment = new Segment(track, branch, this);
-      mergeSegment.adjustCommitTimes(commitTime + 1);
-      mergeSegment.adjustCommitTimes(lastMergeTime);
-      track.addSegment(mergeSegment, true);
-    }
-    else // if (net.hasBranchCommitBetween(mergeTarget.getBranch(), commitTime, lastMergeTime))
-    {
-      mergeSegment = net.createMergeSegment(this, lastMergeTime);
-      mergeSegment.adjustCommitTimes(commitTime);
-      mergeSegment.adjustCommitTimes(lastMergeTime);
-    }
+    // if (isLastInBranch() && !track.hasSegment(commitTime + 1, lastMergeTime))
+    // {
+    // mergeSegment = new Segment(track, branch, this);
+    // mergeSegment.adjustCommitTimes(commitTime + 1);
+    // mergeSegment.adjustCommitTimes(lastMergeTime);
+    // track.addSegment(mergeSegment, true);
+    // }
+    // else // if (net.hasBranchCommitBetween(mergeTarget.getBranch(), commitTime, lastMergeTime))
+    // {
+    mergeSegment = net.createMergeSegment(this, lastMergeTime);
+    mergeSegment.adjustCommitTimes(commitTime);
+    mergeSegment.adjustCommitTimes(lastMergeTime);
+    // }
   }
 }

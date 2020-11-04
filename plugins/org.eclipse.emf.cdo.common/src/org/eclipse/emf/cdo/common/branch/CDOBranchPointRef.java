@@ -45,6 +45,14 @@ public final class CDOBranchPointRef implements Serializable
     this(branchPoint.getBranch().getPathName(), branchPoint.getTimeStamp());
   }
 
+  /**
+   * @since 4.12
+   */
+  public CDOBranchPointRef(CDOBranchRef branchRef, long timeStamp)
+  {
+    this(branchRef.getBranchPath(), timeStamp);
+  }
+
   public CDOBranchPointRef(String branchPath, long timeStamp)
   {
     this.branchPath = CDOBranchUtil.sanitizePathName(branchPath).intern();
@@ -97,6 +105,14 @@ public final class CDOBranchPointRef implements Serializable
   public String getURI()
   {
     return branchPath + URI_SEPARATOR + getTimeStampSpec();
+  }
+
+  /**
+   * @since 4.12
+   */
+  public CDOBranchRef getBranchRef()
+  {
+    return new CDOBranchRef(branchPath);
   }
 
   public String getBranchPath()

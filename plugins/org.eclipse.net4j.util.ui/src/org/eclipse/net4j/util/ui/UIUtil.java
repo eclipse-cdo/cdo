@@ -57,6 +57,7 @@ import org.eclipse.ui.PlatformUI;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * @author Eike Stepper
@@ -844,5 +845,48 @@ public final class UIUtil
         }
       }
     });
+  }
+
+  /**
+   * @since 3.9
+   */
+  public static boolean isParent(Composite parent, Control controlToCheck)
+  {
+    if (parent == null || controlToCheck == null)
+    {
+      throw new IllegalArgumentException("Neither parent nor controlToCheck must be null");
+    }
+
+    if (controlToCheck == parent)
+    {
+      return true;
+    }
+
+    Composite tmpParent = controlToCheck.getParent();
+
+    while (tmpParent != parent && tmpParent != null)
+    {
+      tmpParent = tmpParent.getParent();
+    }
+
+    return tmpParent == parent;
+  }
+
+  /**
+   * @since 3.9
+   */
+  public static void forEachChild(Composite composite, Consumer<Control> consumer)
+  {
+    Control[] children = composite.getChildren();
+    for (int i = 0; i < children.length; i++)
+    {
+      Control child = children[i];
+      consumer.accept(child);
+
+      if (child instanceof Composite)
+      {
+        forEachChild((Composite)child, consumer);
+      }
+    }
   }
 }

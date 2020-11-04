@@ -84,6 +84,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Consumer;
 
 /**
  * Static methods to open an EMF Compare dialog.
@@ -112,6 +113,8 @@ public final class CDOCompareEditorUtil
 
   private static final ThreadLocal<Boolean> ACTIVATE_EDITOR = new ThreadLocal<>();
 
+  private static final ThreadLocal<Consumer<Input>> INPUT_CONSUMER = new ThreadLocal<>();
+
   private static final ThreadLocal<Boolean> SUPPRESS_COMMIT = new ThreadLocal<>();
 
   private static final ThreadLocal<List<Runnable>> DISPOSE_RUNNABLES = new ThreadLocal<>();
@@ -123,7 +126,7 @@ public final class CDOCompareEditorUtil
   /**
    * @since 4.4
    */
-  public static void closeTransactionAfterCommit(final CDOTransaction transaction)
+  public static void closeTransactionAfterCommit(CDOTransaction transaction)
   {
     transaction.addTransactionHandler(new CDODefaultTransactionHandler2()
     {
@@ -139,7 +142,7 @@ public final class CDOCompareEditorUtil
         closeTransaction(transaction);
       }
 
-      private void closeTransaction(final CDOTransaction transaction)
+      private void closeTransaction(CDOTransaction transaction)
       {
         UIUtil.getDisplay().asyncExec(new Runnable()
         {
@@ -156,12 +159,12 @@ public final class CDOCompareEditorUtil
   /**
    * @since 4.4
    */
-  public static void closeEditorWithTransaction(final CDOTransaction transaction)
+  public static void closeEditorWithTransaction(CDOTransaction transaction)
   {
-    final IEditorPart[] result = { null };
+    IEditorPart[] result = { null };
 
-    final IWorkbenchPage page = UIUtil.getActiveWorkbenchPage();
-    final IPartListener listener = new IPartListener()
+    IWorkbenchPage page = UIUtil.getActiveWorkbenchPage();
+    IPartListener listener = new IPartListener()
     {
       @Override
       @SuppressWarnings("restriction")
@@ -340,8 +343,8 @@ public final class CDOCompareEditorUtil
   public static boolean openDialog(CDOViewOpener viewOpener, CDOTransactionOpener transactionOpener, CDOBranchPoint leftPoint, CDOBranchPoint rightPoint,
       CDOView[] originView)
   {
-    final Boolean activateEditor = ACTIVATE_EDITOR.get();
-    final CDOView[] leftAndRightView = { null, null };
+    Boolean activateEditor = ACTIVATE_EDITOR.get();
+    CDOView[] leftAndRightView = { null, null };
 
     addDisposeRunnables(new Runnable()
     {
@@ -355,7 +358,8 @@ public final class CDOCompareEditorUtil
 
     try
     {
-      leftAndRightView[0] = viewOpener.openView(leftPoint, new ResourceSetImpl());
+      ResourceSet leftResourceSet = new ResourceSetImpl();
+      leftAndRightView[0] = viewOpener.openView(leftPoint, leftResourceSet);
 
       ResourceSet rightResourceSet = new ResourceSetImpl();
       if (transactionOpener != null)
@@ -368,7 +372,7 @@ public final class CDOCompareEditorUtil
         leftAndRightView[1] = viewOpener.openView(rightPoint, rightResourceSet);
       }
 
-      return openDialog(leftAndRightView[0], leftAndRightView[1], originView);
+      return openDialog(leftAndRightView[0], leftAndRightView[1], originView, viewOpener);
     }
     finally
     {
@@ -426,7 +430,7 @@ public final class CDOCompareEditorUtil
   /**
    * @since 4.4
    */
-  public static boolean openDialog(final Input input, final CDOView rightView)
+  public static boolean openDialog(Input input, CDOView rightView)
   {
     if (input == null)
     {
@@ -443,7 +447,7 @@ public final class CDOCompareEditorUtil
       return false;
     }
 
-    final Boolean activateEditor = ACTIVATE_EDITOR.get();
+    Boolean activateEditor = ACTIVATE_EDITOR.get();
     if (activateEditor != null)
     {
       List<Runnable> disposeRunnables = removeDisposeRunnables();
@@ -460,7 +464,7 @@ public final class CDOCompareEditorUtil
     }
     else
     {
-      final EList<Diff> differences = new BasicEList<>();
+      EList<Diff> differences = new BasicEList<>();
 
       UIUtil.getDisplay().syncExec(new Runnable()
       {
@@ -648,6 +652,21 @@ public final class CDOCompareEditorUtil
   }
 
   /**
+   * @since 4.6
+   */
+  public static void setInputConsumer(Consumer<Input> consumer)
+  {
+    if (consumer != null)
+    {
+      INPUT_CONSUMER.set(consumer);
+    }
+    else
+    {
+      INPUT_CONSUMER.remove();
+    }
+  }
+
+  /**
    * @since 4.3
    */
   public static boolean isSuppressCommit()
@@ -773,9 +792,11 @@ public final class CDOCompareEditorUtil
 
     private List<Runnable> disposeRunnables;
 
-    private boolean ok;
-
     private boolean suppressCommit;
+
+    private CDOCommitInfo commitInfo;
+
+    private boolean ok;
 
     private Input(CDOView sourceView, CDOView targetView, CompareConfiguration configuration, Comparison comparison, ICompareEditingDomain editingDomain,
         AdapterFactory adapterFactory)
@@ -787,6 +808,14 @@ public final class CDOCompareEditorUtil
 
       suppressCommit = isSuppressCommit();
       SUPPRESS_COMMIT.remove();
+
+      Consumer<Input> consumer = INPUT_CONSUMER.get();
+      INPUT_CONSUMER.remove();
+
+      if (consumer != null)
+      {
+        consumer.accept(this);
+      }
     }
 
     private void dispose()
@@ -879,7 +908,7 @@ public final class CDOCompareEditorUtil
                 : sourceView.getBranch().getPoint(sourceView.getLastUpdateTime());
 
             transaction.setCommitMergeSource(mergeSource);
-            transaction.commit(monitor);
+            commitInfo = transaction.commit(monitor);
             setDirty(false);
           }
         }
@@ -888,6 +917,14 @@ public final class CDOCompareEditorUtil
           OM.BUNDLE.coreException(ex);
         }
       }
+    }
+
+    /**
+     * @since 4.6
+     */
+    public CDOCommitInfo getCommitInfo()
+    {
+      return commitInfo;
     }
 
     public boolean isOK()
@@ -920,6 +957,30 @@ public final class CDOCompareEditorUtil
       {
         dispose();
       }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 4.6
+   */
+  public static class InputHolder implements Consumer<Input>
+  {
+    private Input input;
+
+    public InputHolder()
+    {
+    }
+
+    public Input getInput()
+    {
+      return input;
+    }
+
+    @Override
+    public void accept(Input input)
+    {
+      this.input = input;
     }
   }
 

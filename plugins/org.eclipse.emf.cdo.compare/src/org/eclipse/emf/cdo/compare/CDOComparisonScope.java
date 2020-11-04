@@ -98,11 +98,6 @@ public abstract class CDOComparisonScope extends AbstractComparisonScope
 
     if (originView != null)
     {
-      if (originView.length != 1)
-      {
-        throw new IllegalArgumentException("originView.length != 1");
-      }
-
       if (originView[0] != null)
       {
         throw new IllegalArgumentException("originView[0] != null");

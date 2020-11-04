@@ -11,15 +11,20 @@
 package org.eclipse.emf.cdo.eresource.provider;
 
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
-import org.eclipse.emf.cdo.eresource.EresourceFactory;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.command.UnexecutableCommand;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.edit.command.CopyCommand.Helper;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -146,23 +151,33 @@ public class CDOResourceFolderItemProvider extends CDOResourceNodeItemProvider
   }
 
   /**
-   * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
-   * that can be created under this object.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @generated
+   * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children that can be created under
+   * this object. <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
+   * @generated NOT
    */
   @Override
   protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
   {
-    super.collectNewChildDescriptors(newChildDescriptors, object);
+  }
 
-    newChildDescriptors.add(createChildParameter(EresourcePackage.Literals.CDO_RESOURCE_FOLDER__NODES, EresourceFactory.eINSTANCE.createCDOResourceFolder()));
+  @Override
+  public Collection<?> getNewChildDescriptors(Object object, EditingDomain editingDomain, Object sibling)
+  {
+    return new ArrayList<>();
+  }
 
-    newChildDescriptors.add(createChildParameter(EresourcePackage.Literals.CDO_RESOURCE_FOLDER__NODES, EresourceFactory.eINSTANCE.createCDOResource()));
+  @Override
+  protected Command createRemoveCommand(EditingDomain domain, EObject owner, EStructuralFeature feature, Collection<?> collection)
+  {
+    return UnexecutableCommand.INSTANCE;
+  }
 
-    newChildDescriptors.add(createChildParameter(EresourcePackage.Literals.CDO_RESOURCE_FOLDER__NODES, EresourceFactory.eINSTANCE.createCDOBinaryResource()));
-
-    newChildDescriptors.add(createChildParameter(EresourcePackage.Literals.CDO_RESOURCE_FOLDER__NODES, EresourceFactory.eINSTANCE.createCDOTextResource()));
+  @Override
+  protected Command createCopyCommand(EditingDomain domain, EObject owner, Helper helper)
+  {
+    // As a folder can't be pasted anywhere, copying it doesn't make much sense in the first place.
+    return UnexecutableCommand.INSTANCE;
   }
 
 }

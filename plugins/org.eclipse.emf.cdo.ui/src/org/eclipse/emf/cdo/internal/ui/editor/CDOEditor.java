@@ -81,6 +81,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.edit.EMFEditPlugin;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -3230,7 +3231,10 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
         }
 
         // TODO Use a command!
-        resource.getContents().add(newObject);
+        InternalEList<EObject> contents = (InternalEList<EObject>)resource.getContents();
+        contents.addUnique(newObject);
+
+        setSelectionToViewer(Collections.singleton(newObject));
       }
     }
   }

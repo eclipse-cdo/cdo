@@ -24,6 +24,9 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.ui.UIUtil;
 
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.InternalEList;
+
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -122,11 +125,13 @@ public abstract class NewWizard extends Wizard implements INewWizard
           CDOResourceNode txParent = transaction.getObject(parentResourceNode);
           if (txParent instanceof CDOResourceFolder)
           {
-            ((CDOResourceFolder)txParent).getNodes().add(newResourceNode);
+            InternalEList<CDOResourceNode> nodes = (InternalEList<CDOResourceNode>)((CDOResourceFolder)txParent).getNodes();
+            nodes.addUnique(newResourceNode);
           }
           else
           {
-            transaction.getRootResource().getContents().add(newResourceNode);
+            InternalEList<EObject> contents = (InternalEList<EObject>)transaction.getRootResource().getContents();
+            contents.addUnique(newResourceNode);
           }
 
           commitInfo = transaction.commit();

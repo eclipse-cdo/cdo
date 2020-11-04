@@ -48,6 +48,7 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.io.IOException;
+import java.util.Set;
 
 /**
  * Provides I/O methods for writing various CDO data types and concepts to streams.
@@ -176,6 +177,11 @@ public interface CDODataOutput extends ExtendedDataOutput
    * @since 4.1
    */
   public void writeCDOLockChangeInfo(CDOLockChangeInfo lockChangeInfo) throws IOException;
+
+  /**
+   * @since 4.12
+   */
+  public void writeCDOLockChangeInfo(CDOLockChangeInfo lockChangeInfo, Set<CDOID> filter) throws IOException;
 
   /**
    * @since 4.1

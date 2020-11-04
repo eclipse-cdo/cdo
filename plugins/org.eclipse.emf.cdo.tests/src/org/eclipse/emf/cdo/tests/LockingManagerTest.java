@@ -55,7 +55,7 @@ public class LockingManagerTest extends AbstractLockingTest
 {
   public void testUnlockAll() throws Exception
   {
-    final RWOLockManager<Integer, Integer> lockingManager = new RWOLockManager<>();
+    RWOLockManager<Integer, Integer> lockingManager = new RWOLockManager<>();
 
     Set<Integer> keys = new HashSet<>();
     keys.add(1);
@@ -68,7 +68,7 @@ public class LockingManagerTest extends AbstractLockingTest
 
   public void testWriteOptions() throws Exception
   {
-    final RWOLockManager<Integer, Integer> lockingManager = new RWOLockManager<>();
+    RWOLockManager<Integer, Integer> lockingManager = new RWOLockManager<>();
 
     Set<Integer> keys = new HashSet<>();
     keys.add(1);
@@ -166,7 +166,7 @@ public class LockingManagerTest extends AbstractLockingTest
 
   public void testBasicUpgradeFromReadToWriteLock() throws Exception
   {
-    final RWOLockManager<Integer, Integer> lockingManager = new RWOLockManager<>();
+    RWOLockManager<Integer, Integer> lockingManager = new RWOLockManager<>();
 
     Runnable step1 = new Runnable()
     {
@@ -256,7 +256,7 @@ public class LockingManagerTest extends AbstractLockingTest
 
   public void testBasicWrongUnlock() throws Exception
   {
-    final RWOLockManager<Integer, Integer> lockingManager = new RWOLockManager<>();
+    RWOLockManager<Integer, Integer> lockingManager = new RWOLockManager<>();
     Set<Integer> keys = new HashSet<>();
     keys.add(1);
     lockingManager.lock(LockType.READ, 1, keys, 10000);
@@ -303,7 +303,7 @@ public class LockingManagerTest extends AbstractLockingTest
     readLock(company);
 
     CDOTransaction transaction2 = session.openTransaction();
-    final Company company2 = (Company)transaction2.getResource(getResourcePath("/res1")).getContents().get(0);
+    Company company2 = (Company)transaction2.getResource(getResourcePath("/res1")).getContents().get(0);
 
     new PollingTimeOuter()
     {
@@ -336,7 +336,7 @@ public class LockingManagerTest extends AbstractLockingTest
     transaction.commit();
 
     CDOTransaction transaction2 = session.openTransaction();
-    final Company company2 = (Company)transaction2.getResource(getResourcePath("/res1")).getContents().get(0);
+    Company company2 = (Company)transaction2.getResource(getResourcePath("/res1")).getContents().get(0);
     res.getContents().remove(0);
 
     transaction.commit();
@@ -383,7 +383,7 @@ public class LockingManagerTest extends AbstractLockingTest
     writeLock(company);
 
     CDOTransaction transaction2 = session.openTransaction();
-    final Company company2 = (Company)transaction2.getResource(getResourcePath("/res1")).getContents().get(0);
+    Company company2 = (Company)transaction2.getResource(getResourcePath("/res1")).getContents().get(0);
 
     new PollingTimeOuter()
     {
@@ -1045,7 +1045,7 @@ public class LockingManagerTest extends AbstractLockingTest
 
   public void testWriteLockPerformance() throws Exception
   {
-    final int ITERATION = 100;
+    int ITERATION = 100;
     Company company = getModel1Factory().createCompany();
 
     CDOSession session = openSession();
@@ -1184,15 +1184,15 @@ public class LockingManagerTest extends AbstractLockingTest
 
     readLock(category1);
     writeLock(category2);
-    writeOption(category3);
+    optionLock(category3);
 
     assertReadLock(true, category1);
     assertWriteLock(true, category2);
-    assertWriteOption(true, category3);
+    assertOptionLock(true, category3);
 
     readUnlock(category1);
     writeUnlock(category2);
-    writeUnoption(category3);
+    optionUnlock(category3);
 
     assertReadLock(false, category1);
     assertWriteLock(false, category2);
@@ -1200,7 +1200,7 @@ public class LockingManagerTest extends AbstractLockingTest
 
     readLock(category1);
     writeLock(category2);
-    writeOption(category3);
+    optionLock(category3);
 
     transaction.commit();
 
@@ -1208,9 +1208,9 @@ public class LockingManagerTest extends AbstractLockingTest
     controlView.options().setLockNotificationEnabled(true);
     CDOResource r = controlView.getResource(getResourcePath("/res1"));
 
-    final CDOObject category1cv = CDOUtil.getCDOObject(r.getContents().get(0));
-    final CDOObject category2cv = CDOUtil.getCDOObject(r.getContents().get(1));
-    final CDOObject category3cv = CDOUtil.getCDOObject(r.getContents().get(2));
+    CDOObject category1cv = CDOUtil.getCDOObject(r.getContents().get(0));
+    CDOObject category2cv = CDOUtil.getCDOObject(r.getContents().get(1));
+    CDOObject category3cv = CDOUtil.getCDOObject(r.getContents().get(2));
 
     new PollingTimeOuter()
     {
@@ -1233,7 +1233,7 @@ public class LockingManagerTest extends AbstractLockingTest
 
     readUnlock(category1);
     writeUnlock(category2);
-    writeUnoption(category3);
+    optionUnlock(category3);
 
     new PollingTimeOuter()
     {
@@ -1362,6 +1362,65 @@ public class LockingManagerTest extends AbstractLockingTest
     category1.setName("NewName2");
     transaction.commit();
     assertEquals(false, writeLock.isLocked());
+  }
+
+  public void testLockRefreshForHeldLock() throws Exception
+  {
+    // Client 1 creates and read-locks a resource.
+    CDOTransaction tx1 = openSession().openTransaction();
+    CDOResource resource1 = tx1.createResource(getResourcePath("/res1"));
+    tx1.commit();
+    resource1.cdoReadLock().lock();
+
+    // Client 2 gets the resource created and read-locked by Client 1.
+    CDOTransaction tx2 = openSession().openTransaction();
+    CDOResource resource2 = tx2.getResource(getResourcePath("/res1"));
+
+    // Get the lock and lock it.
+    CDOLock readLockBeforeClose = resource2.cdoReadLock();
+    readLockBeforeClose.lock(DEFAULT_TIMEOUT);
+
+    boolean isLockedByOthersBeforeClose = readLockBeforeClose.isLockedByOthers();
+    assertTrue(isLockedByOthersBeforeClose);
+
+    tx1.close(); // Client 1 release read lock.
+
+    new PollingTimeOuter()
+    {
+      @Override
+      protected boolean successful()
+      {
+        CDOLock readLockAfterClose = resource2.cdoReadLock();
+        boolean isLockedByOthersAfterClose = readLockAfterClose.isLockedByOthers();
+        return isLockedByOthersAfterClose == false;
+      }
+    }.assertNoTimeOut();
+  }
+
+  public void testRefreshLockStates() throws Exception
+  {
+    // Client 1 creates and read-locks a resource.
+    CDOTransaction tx1 = openSession().openTransaction();
+    CDOResource resource1 = tx1.createResource(getResourcePath("/res1"));
+    tx1.commit();
+    resource1.cdoReadLock().lock();
+
+    // Client 2 gets the resource created and read-locked by Client 1.
+    CDOTransaction tx2 = openSession().openTransaction();
+    CDOResource resource2 = tx2.getResource(getResourcePath("/res1"));
+
+    // Get the lock and DON'T lock it.
+    CDOLock readLockBeforeClose = resource2.cdoReadLock();
+    boolean isLockedByOthersBeforeClose = readLockBeforeClose.isLockedByOthers();
+    assertTrue(isLockedByOthersBeforeClose);
+
+    tx1.close(); // Client 1 release read lock.
+
+    tx2.refreshLockStates(null);
+
+    CDOLock readLockAfterClose = resource2.cdoReadLock();
+    boolean isLockedByOthersAfterClose = readLockAfterClose.isLockedByOthers();
+    assertTrue(isLockedByOthersAfterClose);
   }
 
   private void commitAndTimeout(CDOTransaction transaction)

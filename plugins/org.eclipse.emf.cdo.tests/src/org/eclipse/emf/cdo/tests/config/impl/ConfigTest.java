@@ -12,6 +12,8 @@ package org.eclipse.emf.cdo.tests.config.impl;
 
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.internal.net4j.CDONet4jSessionConfigurationImpl;
+import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
@@ -417,6 +419,11 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
     }
 
     return openSession();
+  }
+
+  protected CDONet4jSessionConfiguration createNet4jSessionConfiguration(String repositoryName)
+  {
+    return new CDONet4jSessionConfigurationImpl();
   }
 
   // /////////////////////////////////////////////////////////////////////////

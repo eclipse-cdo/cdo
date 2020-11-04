@@ -10,11 +10,13 @@
  */
 package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 
 import java.io.IOException;
+import java.util.Set;
 
 /**
  * @author Caspar De Groot
@@ -23,15 +25,18 @@ public class LockNotificationRequest extends CDOServerRequest
 {
   private CDOLockChangeInfo lockChangeInfo;
 
-  public LockNotificationRequest(CDOServerProtocol serverProtocol, CDOLockChangeInfo lockChangeInfo)
+  private Set<CDOID> filter;
+
+  public LockNotificationRequest(CDOServerProtocol serverProtocol, CDOLockChangeInfo lockChangeInfo, Set<CDOID> filter)
   {
     super(serverProtocol, CDOProtocolConstants.SIGNAL_LOCK_NOTIFICATION);
     this.lockChangeInfo = lockChangeInfo;
+    this.filter = filter;
   }
 
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
-    out.writeCDOLockChangeInfo(lockChangeInfo);
+    out.writeCDOLockChangeInfo(lockChangeInfo, filter);
   }
 }

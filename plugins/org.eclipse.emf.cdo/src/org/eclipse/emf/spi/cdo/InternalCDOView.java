@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
+import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
@@ -190,6 +191,11 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle
   public void unsubscribe(EObject eObject, Adapter adapter);
 
   public boolean hasSubscription(CDOID id);
+
+  /**
+   * @since 4.12
+   */
+  public CDOLockOwner getLockOwner();
 
   /**
    * @since 4.1

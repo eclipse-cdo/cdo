@@ -42,6 +42,8 @@ import org.eclipse.net4j.util.security.CredentialsUpdateOperation;
 import org.eclipse.net4j.util.security.DiffieHellman.Client.Response;
 import org.eclipse.net4j.util.security.DiffieHellman.Server.Challenge;
 
+import java.util.Set;
+
 /**
  * @author Eike Stepper
  */
@@ -236,12 +238,19 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     }
   }
 
+  @Deprecated
   @Override
   public void sendLockNotification(CDOLockChangeInfo lockChangeInfo) throws Exception
   {
+    sendLockNotification(lockChangeInfo, null);
+  }
+
+  @Override
+  public void sendLockNotification(CDOLockChangeInfo lockChangeInfo, Set<CDOID> filter) throws Exception
+  {
     if (LifecycleUtil.isActive(getChannel()))
     {
-      new LockNotificationRequest(this, lockChangeInfo).sendAsync();
+      new LockNotificationRequest(this, lockChangeInfo, filter).sendAsync();
     }
     else
     {

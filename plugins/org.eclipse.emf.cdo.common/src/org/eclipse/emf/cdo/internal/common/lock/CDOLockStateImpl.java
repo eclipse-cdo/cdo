@@ -100,6 +100,11 @@ public class CDOLockStateImpl implements InternalCDOLockState
       return false;
     }
 
+    if (lockType == null)
+    {
+      return isReadLocked(lockOwner, others) || isWriteLocked(lockOwner, others) || isOptionLocked(lockOwner, others);
+    }
+
     switch (lockType)
     {
     case READ:
@@ -128,7 +133,15 @@ public class CDOLockStateImpl implements InternalCDOLockState
       return false;
     }
 
-    return readLockOwners.contains(by) ^ others;
+    boolean contained = readLockOwners.contains(by);
+
+    if (others)
+    {
+      int ownCount = contained ? 1 : 0;
+      return n > ownCount;
+    }
+
+    return contained;
   }
 
   private boolean isWriteLocked(CDOLockOwner by, boolean others)

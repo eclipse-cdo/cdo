@@ -11,20 +11,13 @@
 package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.internal.net4j.CDONet4jSessionConfigurationImpl;
-import org.eclipse.emf.cdo.internal.net4j.CDONet4jSessionImpl;
-import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.session.CDOSessionLocksChangedEvent;
-import org.eclipse.emf.cdo.tests.AbstractCDOTest;
-import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
-import org.eclipse.emf.cdo.tests.config.impl.SessionConfig;
+import org.eclipse.emf.cdo.tests.AbstractLockingTest;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
-import org.eclipse.emf.cdo.util.CommitException;
-import org.eclipse.emf.cdo.util.ConcurrentAccessException;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewInvalidationEvent;
 import org.eclipse.emf.cdo.view.CDOViewLocksChangedEvent;
@@ -32,8 +25,6 @@ import org.eclipse.emf.cdo.view.CDOViewLocksChangedEvent;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.tests.TestListener2;
-
-import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,9 +34,15 @@ import java.util.List;
  *
  * @author Eike Stepper
  */
-public class Bugzilla_387564_Test extends AbstractCDOTest
+public class Bugzilla_387564_Test extends AbstractLockingTest
 {
   private static final boolean DEBUG = true;
+
+  @Override
+  protected long getInvalidationDelay()
+  {
+    return 1000L;
+  }
 
   public void testLockEventAfterInvalidationEventSameSession() throws Exception
   {
@@ -60,7 +57,7 @@ public class Bugzilla_387564_Test extends AbstractCDOTest
     runTest(session, controlSession);
   }
 
-  private void runTest(CDOSession session, CDOSession controlSession) throws ConcurrentAccessException, CommitException
+  private void runTest(CDOSession session, CDOSession controlSession) throws Exception
   {
     Company company = getModel1Factory().createCompany();
     company.setName("Initial");
@@ -71,32 +68,8 @@ public class Bugzilla_387564_Test extends AbstractCDOTest
     transaction.commit();
 
     CDOUtil.getCDOObject(company).cdoWriteLock().lock();
+    waitForActiveLockNotifications();
     company.setName("Changed");
-
-    CDONet4jSessionConfiguration template = (CDONet4jSessionConfiguration)((SessionConfig)getSessionConfig())
-        .createSessionConfiguration(IRepositoryConfig.REPOSITORY_NAME);
-
-    CDONet4jSessionConfiguration configuration = new CDONet4jSessionConfigurationImpl()
-    {
-      @Override
-      public InternalCDOSession createSession()
-      {
-        return new CDONet4jSessionImpl()
-        {
-          @Override
-          public void invalidate(InvalidationData invalidationData)
-          {
-            sleep(1000); // Delay the invalidation handling to give lock notifications a chance to overtake.
-            super.invalidate(invalidationData);
-          }
-        };
-      }
-    };
-
-    configuration.setConnector(template.getConnector());
-    configuration.setRepositoryName(template.getRepositoryName());
-    configuration.setRevisionManager(template.getRevisionManager());
-    getTestProperties().put(SessionConfig.PROP_TEST_SESSION_CONFIGURATION, configuration);
 
     TestListener2 controlSessionListener = createControlListener("SESSION");
     controlSession.addListener(controlSessionListener);
@@ -111,18 +84,19 @@ public class Bugzilla_387564_Test extends AbstractCDOTest
     IOUtil.OUT().println(controlObject.getName());
     ((CDOTransaction)CDOUtil.getView(company)).commit();
 
-    controlSessionListener.waitFor(2);
-    assertInstanceOf(CDOSessionInvalidationEvent.class, controlSessionListener.getEvents().get(0));
-    assertInstanceOf(CDOSessionLocksChangedEvent.class, controlSessionListener.getEvents().get(1));
+    IEvent[] events = controlSessionListener.waitFor(2);
+
+    assertEquals(1, TestListener2.countEvents(events, CDOSessionInvalidationEvent.class));
+    assertEquals(1, TestListener2.countEvents(events, CDOSessionLocksChangedEvent.class));
     if (DEBUG)
     {
       IOUtil.OUT().println(controlSessionListener);
       IOUtil.OUT().println(controlSessionListener.formatEvents("   ", "\n"));
     }
 
-    controlViewListener.waitFor(2);
-    assertInstanceOf(CDOViewInvalidationEvent.class, controlViewListener.getEvents().get(0));
-    assertInstanceOf(CDOViewLocksChangedEvent.class, controlViewListener.getEvents().get(1));
+    events = controlViewListener.waitFor(2);
+    assertEquals(1, TestListener2.countEvents(events, CDOViewInvalidationEvent.class));
+    assertEquals(1, TestListener2.countEvents(events, CDOViewLocksChangedEvent.class));
     if (DEBUG)
     {
       IOUtil.OUT().println(controlViewListener);

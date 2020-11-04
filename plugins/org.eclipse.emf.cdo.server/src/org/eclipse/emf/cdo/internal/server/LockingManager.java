@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
@@ -34,6 +35,7 @@ import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider;
 import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
+import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.spi.server.InternalStore;
 import org.eclipse.emf.cdo.spi.server.InternalView;
 
@@ -515,7 +517,14 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
   {
     super.doActivate();
     loadLocks();
-    getRepository().getSessionManager().addListener(sessionManagerListener);
+
+    InternalSessionManager sessionManager = getRepository().getSessionManager();
+    sessionManager.addListener(sessionManagerListener);
+
+    for (ISession session : sessionManager.getSessions())
+    {
+      session.addListener(sessionListener);
+    }
   }
 
   @Override
@@ -523,6 +532,7 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
   {
     ISessionManager sessionManager = getRepository().getSessionManager();
     sessionManager.removeListener(sessionManagerListener);
+
     for (ISession session : sessionManager.getSessions())
     {
       session.removeListener(sessionListener);
@@ -595,17 +605,13 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
   @Override
   public CDOID getLockKeyID(Object key)
   {
-    if (key instanceof CDOID)
+    CDOID id = CDOLockUtil.getLockedObjectID(key);
+    if (id == null)
     {
-      return (CDOID)key;
+      throw new ImplementationError("Unexpected lock object: " + key);
     }
 
-    if (key instanceof CDOIDAndBranch)
-    {
-      return ((CDOIDAndBranch)key).getID();
-    }
-
-    throw new ImplementationError("Unexpected lock object: " + key);
+    return id;
   }
 
   @Override

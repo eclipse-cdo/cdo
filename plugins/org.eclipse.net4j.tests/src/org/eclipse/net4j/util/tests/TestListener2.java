@@ -38,13 +38,13 @@ public class TestListener2 implements IListener
 
   private static final long DEFAULT_TIMEOUT = 3000; // 3 seconds
 
-  private final Map<IEvent, Long> events = new LinkedHashMap<>();
-
   private final Collection<Class<? extends IEvent>> eventClasses;
 
-  private long timeout;
+  private final Map<IEvent, Long> events = new LinkedHashMap<>();
 
-  private String name;
+  private final String name;
+
+  private long timeout;
 
   public TestListener2(Collection<Class<? extends IEvent>> eventClasses)
   {
@@ -114,6 +114,26 @@ public class TestListener2 implements IListener
     }
   }
 
+  public <E extends IEvent> List<E> getEvents(Class<E> eventClass)
+  {
+    List<E> result = new ArrayList<>();
+    synchronized (this)
+    {
+      for (IEvent event : events.keySet())
+      {
+        if (eventClass.isInstance(event))
+        {
+          @SuppressWarnings("unchecked")
+          E e = (E)event;
+
+          result.add(e);
+        }
+      }
+    }
+
+    return result;
+  }
+
   public long getTimeStamp(IEvent event)
   {
     Long timeStamp;
@@ -135,7 +155,7 @@ public class TestListener2 implements IListener
     this.timeout = timeout;
   }
 
-  public synchronized void waitFor(int n, long timeout)
+  public synchronized IEvent[] waitFor(int n, long timeout)
   {
     long t = 0;
 
@@ -160,12 +180,14 @@ public class TestListener2 implements IListener
 
         timeout -= System.currentTimeMillis() - t;
       }
+
+      return events.keySet().toArray(new IEvent[events.size()]);
     }
   }
 
-  public void waitFor(int i)
+  public IEvent[] waitFor(int i)
   {
-    waitFor(i, timeout);
+    return waitFor(i, timeout);
   }
 
   public void clearEvents()
@@ -239,6 +261,21 @@ public class TestListener2 implements IListener
 
     builder.append(']');
     return builder.toString();
+  }
+
+  public static <E extends IEvent> int countEvents(IEvent[] events, Class<E> eventClass)
+  {
+    int count = 0;
+    for (int i = 0; i < events.length; i++)
+    {
+      IEvent event = events[i];
+      if (eventClass.isInstance(event))
+      {
+        ++count;
+      }
+    }
+
+    return count;
   }
 
   private static Set<Class<? extends IEvent>> singleton(Class<? extends IEvent> eventClass)

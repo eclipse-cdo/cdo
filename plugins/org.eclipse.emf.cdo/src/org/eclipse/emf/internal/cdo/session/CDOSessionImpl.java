@@ -1063,8 +1063,28 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     }
   }
 
+  @Deprecated
   @Override
   public void handleLockNotification(CDOLockChangeInfo lockChangeInfo, InternalCDOView sender)
+  {
+    handleLockNotification(lockChangeInfo, sender, false);
+  }
+
+  @Override
+  public void handleLockNotification(CDOLockChangeInfo lockChangeInfo, InternalCDOView sender, boolean async)
+  {
+    if (async)
+    {
+      ExecutorService executorService = getExecutorService();
+      executorService.submit(() -> doHandleLockNotification(lockChangeInfo, sender));
+    }
+    else
+    {
+      doHandleLockNotification(lockChangeInfo, sender);
+    }
+  }
+
+  protected void doHandleLockNotification(CDOLockChangeInfo lockChangeInfo, InternalCDOView sender)
   {
     for (InternalCDOView view : getViews())
     {

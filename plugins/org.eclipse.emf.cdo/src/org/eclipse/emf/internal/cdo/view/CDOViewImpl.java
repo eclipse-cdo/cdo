@@ -141,6 +141,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
 
 /**
  * @author Eike Stepper
@@ -491,70 +492,83 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
   }
 
   /**
-   * Updates the lock states of objects held in this view
+   * Updates the lock states of objects held in this view.
    */
   protected void updateLockStates(CDOLockState[] newLockStates)
   {
-    updateLockStates(newLockStates, false);
+    updateLockStates(newLockStates, false, null);
   }
 
   /**
    * Updates the lock states of objects held in this view
    *
    * @param newLockStates new {@link CDOLockState lockStates} to integrate in cache
-   * @param loadOnDemand true to load corresponding {@link CDOObject} if not already loaded to be able to store lockState in cache, false otherwise
+   * @param loadObjectsOnDemand true to load corresponding {@link CDOObject} if not already loaded to be able to store lockState in cache, false otherwise
    * @since 4.5
    */
-  protected void updateLockStates(CDOLockState[] newLockStates, boolean loadOnDemand)
+  protected void updateLockStates(CDOLockState[] newLockStates, boolean loadObjectsOnDemand, Consumer<CDOLockState> consumer)
   {
-    for (CDOLockState lockState : newLockStates)
+    synchronized (getViewMonitor())
     {
-      Object lockedObject = lockState.getLockedObject();
-      CDOID id;
+      lockView();
 
-      if (lockedObject instanceof CDOID)
+      try
       {
-        id = (CDOID)lockedObject;
-      }
-      else if (lockedObject instanceof CDOIDAndBranch)
-      {
-        id = ((CDOIDAndBranch)lockedObject).getID();
-      }
-      else if (lockedObject instanceof EObject)
-      {
-        CDOObject newObj = CDOUtil.getCDOObject((EObject)lockedObject);
-        id = newObj.cdoID();
-      }
-      else
-      {
-        throw new IllegalStateException("Unexpected: " + lockedObject.getClass().getSimpleName());
-      }
+        for (CDOLockState lockState : newLockStates)
+        {
+          Object lockedObject = lockState.getLockedObject();
+          CDOID id = CDOLockUtil.getLockedObjectID(lockedObject);
 
-      InternalCDOObject object = getObject(id, loadOnDemand);
-      if (object != null)
+          if (id == null && lockedObject instanceof EObject)
+          {
+            CDOObject newObj = CDOUtil.getCDOObject((EObject)lockedObject);
+            id = newObj.cdoID();
+          }
+
+          if (id == null)
+          {
+            throw new IllegalStateException("Unexpected: " + lockedObject.getClass().getSimpleName());
+          }
+
+          InternalCDOObject object = getObject(id, loadObjectsOnDemand);
+          if (object != null)
+          {
+            InternalCDOLockState existingLockState = (InternalCDOLockState)lockStates.get(object);
+            if (existingLockState != null)
+            {
+              existingLockState.updateFrom(lockState);
+              lockState = existingLockState;
+            }
+            else
+            {
+              lockStates.put(object, lockState);
+            }
+
+            if (consumer != null)
+            {
+              consumer.accept(lockState);
+            }
+          }
+        }
+      }
+      finally
       {
-        InternalCDOLockState existingLockState = (InternalCDOLockState)lockStates.get(object);
-        if (existingLockState != null)
-        {
-          existingLockState.updateFrom(lockState);
-        }
-        else
-        {
-          lockStates.put(object, lockState);
-        }
+        unlockView();
       }
     }
   }
 
   /**
-   * Notifies other views of lock changes performed in this view
+   * Notifies other views of lock changes performed in this view.
    */
   protected void notifyOtherViewsAboutLockChanges(Operation op, LockType type, long timestamp, CDOLockState[] lockStates)
   {
     if (lockStates.length > 0)
     {
       CDOLockChangeInfo lockChangeInfo = makeLockChangeInfo(op, type, timestamp, lockStates);
-      session.handleLockNotification(lockChangeInfo, this);
+
+      // Do not call out from the current thread to other views while this view is holding its view lock!
+      session.handleLockNotification(lockChangeInfo, this, true);
 
       if (isActive())
       {
@@ -575,38 +589,43 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
 
     try
     {
-      synchronized (lockStates)
+      synchronized (getViewMonitor())
       {
-        if (!options().isLockNotificationEnabled())
-        {
-          return;
-        }
+        lockView();
 
-        if (lockChangeInfo.isInvalidateAll())
+        try
         {
-          lockStates.clear();
-          event = lockChangeInfo;
-          return;
-        }
+          if (lockChangeInfo.isInvalidateAll())
+          {
+            lockStates.clear();
+            event = lockChangeInfo;
+            return;
+          }
 
-        // If lockChangeInfo pertains to a different view, do nothing.
-        CDOBranch lockChangeBranch = lockChangeInfo.getBranch();
-        CDOBranch viewBranch = getBranch();
-        if (lockChangeBranch != viewBranch)
+          // If lockChangeInfo pertains to a different view, do nothing.
+          CDOBranch lockChangeBranch = lockChangeInfo.getBranch();
+          CDOBranch viewBranch = getBranch();
+          if (lockChangeBranch != viewBranch)
+          {
+            return;
+          }
+
+          if (lockChangeInfo.getLockOwner().equals(lockOwner))
+          {
+            return;
+          }
+
+          updateLockStates(lockChangeInfo.getLockStates());
+
+          if (options().isLockNotificationEnabled())
+          {
+            event = lockChangeInfo;
+          }
+        }
+        finally
         {
-          return;
+          unlockView();
         }
-
-        if (lockChangeInfo.getLockOwner().equals(lockOwner))
-        {
-          return;
-        }
-
-        // TODO (CD) I know it is Eike's desideratum that this be done asynchronously.. but beware,
-        // this will require the tests to be fixed to listen for the view events instead of the
-        // session events.
-        updateLockStates(lockChangeInfo.getLockStates());
-        event = lockChangeInfo;
       }
     }
     finally
@@ -813,6 +832,9 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
             durableLockingID = sessionProtocol.changeLockArea(this, true);
           }
 
+          // Recreate lockOwner with new durableLockingID.
+          lockOwner = CDOLockUtil.createLockOwner(this);
+
           return durableLockingID;
         }
         finally
@@ -845,6 +867,9 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
           {
             sessionProtocol.changeLockArea(this, false);
             durableLockingID = null;
+
+            // Recreate lockOwner without durableLockingID.
+            lockOwner = CDOLockUtil.createLockOwner(this);
 
             if (releaseLocks)
             {
@@ -981,6 +1006,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
       try
       {
         InternalCDOObject object = getObject(oldID, false);
+
         InternalCDOLockState oldLockState = (InternalCDOLockState)lockStates.remove(object);
         if (oldLockState != null)
         {
@@ -1012,11 +1038,61 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     unitManager.addObject(object);
   }
 
+  /**
+   * The caller must synchronize on this view!
+   */
   @Override
   protected void objectDeregistered(InternalCDOObject object)
   {
-    removeLockState(object);
+    lockStates.remove(object);
     super.objectDeregistered(object);
+  }
+
+  @Override
+  public CDOLockOwner getLockOwner()
+  {
+    return lockOwner;
+  }
+
+  @Override
+  public void refreshLockStates(Consumer<CDOLockState> consumer)
+  {
+    checkActive();
+    checkState(getTimeStamp() == UNSPECIFIED_DATE, "Locking not supported for historial views");
+
+    synchronized (getViewMonitor())
+    {
+      lockView();
+
+      try
+      {
+        if (options().isLockNotificationEnabled())
+        {
+          return;
+        }
+
+        List<CDOID> ids = new ArrayList<>();
+        for (CDOObject object : lockStates.keySet())
+        {
+          ids.add(object.cdoID());
+        }
+
+        if (!ids.isEmpty())
+        {
+          CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
+          CDOLockState[] loadedLockStates = sessionProtocol.getLockStates(viewID, ids, CDOLockState.DEPTH_NONE);
+
+          if (loadedLockStates != null && loadedLockStates.length != 0)
+          {
+            updateLockStates(loadedLockStates);
+          }
+        }
+      }
+      finally
+      {
+        unlockView();
+      }
+    }
   }
 
   @Override
@@ -1116,16 +1192,9 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     }
   }
 
-  protected CDOLockState removeLockState(CDOObject object)
-  {
-    return lockStates.remove(object);
-  }
-
-  protected CDOLockState getLockState(CDOObject object)
-  {
-    return lockStates.get(object);
-  }
-
+  /**
+   * The caller must synchronize on this view!
+   */
   protected Map<CDOObject, CDOLockState> getLockStates()
   {
     return lockStates;
@@ -1754,34 +1823,43 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     }
     finally
     {
-      synchronized (lockStates)
+      if (options.lockStatePrefetcher != null)
       {
-        if (options.lockStatePrefetcher != null)
-        {
-          options.lockStatePrefetcher.dispose();
-          options.lockStatePrefetcher = null;
-        }
+        options.lockStatePrefetcher.dispose();
+        options.lockStatePrefetcher = null;
+      }
 
-        if (session.isActive() && !lockStates.isEmpty())
+      synchronized (getViewMonitor())
+      {
+        lockView();
+
+        try
         {
-          List<CDOLockState> result = new ArrayList<>();
-          for (CDOLockState lockState : lockStates.values())
+          if (session.isActive() && !lockStates.isEmpty())
           {
-            if (((InternalCDOLockState)lockState).removeOwner(lockOwner))
+            List<CDOLockState> result = new ArrayList<>();
+            for (CDOLockState lockState : lockStates.values())
             {
-              result.add(lockState);
+              if (((InternalCDOLockState)lockState).removeOwner(lockOwner))
+              {
+                result.add(lockState);
+              }
             }
-          }
 
-          if (!result.isEmpty())
-          {
-            CDOLockState[] deactivateLockStates = result.toArray(new CDOLockState[result.size()]);
-            long timeStamp = session.getLastUpdateTime();
-            notifyOtherViewsAboutLockChanges(Operation.UNLOCK, null, timeStamp, deactivateLockStates);
-          }
+            if (!result.isEmpty())
+            {
+              CDOLockState[] deactivateLockStates = result.toArray(new CDOLockState[result.size()]);
+              long timeStamp = session.getLastUpdateTime();
+              notifyOtherViewsAboutLockChanges(Operation.UNLOCK, null, timeStamp, deactivateLockStates);
+            }
 
-          lockStates.clear();
-          lockOwner = null;
+            lockStates.clear();
+            lockOwner = null;
+          }
+        }
+        finally
+        {
+          unlockView();
         }
       }
     }
@@ -2831,83 +2909,95 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
       Set<CDOID> ids = new HashSet<>();
       CDOLockStateLoadingPolicy lockStateLoadingPolicy = options().getLockStateLoadingPolicy();
 
-      for (CDORevision revision : revisionsLoadedEvent.getPrimaryLoadedRevisions())
+      synchronized (getViewMonitor())
       {
-        // Bug 466721 : Check null if it is a about a DetachedRevision
-        if (revision != null)
+        lockView();
+
+        try
         {
-          CDOID id = revision.getID();
-          if (id != null && lockStateLoadingPolicy.loadLockState(id))
+          for (CDORevision revision : revisionsLoadedEvent.getPrimaryLoadedRevisions())
           {
-            // - Don't ask to create an object for CDOResource as the caller of ResourceSet.getResource()
-            // can have created it but not yet registered in CDOView.
-            // - Don't ask others CDOResourceNode either as it will create some load revisions request
-            // in addition to mode without lock state prefetch
-            boolean isResourceNode = revision.isResourceNode();
-            InternalCDOObject object = getObject(id, !isResourceNode);
-            if (object != null)
+            // Bug 466721 : Check null if it is a about a DetachedRevision
+            if (revision != null)
             {
-              ids.add(id);
-            }
-          }
-        }
-      }
-
-      if (!ids.isEmpty())
-      {
-        // direct call the session protocol
-        CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
-        CDOLockState[] lockStates = sessionProtocol.getLockStates(viewID, ids, revisionsLoadedEvent.getPrefetchDepth());
-
-        updateLockStatesForAllViews(lockStates, true);
-
-        // add missing lock states
-        List<CDOLockState> missingLockStates = new ArrayList<>();
-        for (CDOID id : ids)
-        {
-          InternalCDOObject object = getObject(id, false);
-
-          if (object != null && CDOViewImpl.this.lockStates.get(object) == null)
-          {
-            Object lockedObject = getLockTarget(object); // CDOID or CDOIDAndBranch
-            if (lockedObject != null)
-            {
-              missingLockStates.add(CDOLockUtil.createLockState(lockedObject));
-            }
-          }
-        }
-
-        for (CDORevision revision : revisionsLoadedEvent.getAdditionalLoadedRevisions())
-        {
-          CDOID id = revision.getID();
-          if (id != null && lockStateLoadingPolicy.loadLockState(id))
-          {
-            boolean isResourceNode = revision.isResourceNode();
-            InternalCDOObject object = getObject(id, !isResourceNode);
-            if (object != null && CDOViewImpl.this.lockStates.get(object) == null)
-            {
-              Object lockedObject = getLockTarget(object); // CDOID or CDOIDAndBranch
-              if (lockedObject != null)
+              CDOID id = revision.getID();
+              if (id != null && lockStateLoadingPolicy.loadLockState(id))
               {
-                missingLockStates.add(CDOLockUtil.createLockState(lockedObject));
+                // - Don't ask to create an object for CDOResource as the caller of ResourceSet.getResource()
+                // can have created it but not yet registered in CDOView.
+                // - Don't ask others CDOResourceNode either as it will create some load revisions request
+                // in addition to mode without lock state prefetch
+                boolean isResourceNode = revision.isResourceNode();
+                InternalCDOObject object = getObject(id, !isResourceNode);
+                if (object != null)
+                {
+                  ids.add(id);
+                }
               }
             }
           }
-        }
 
-        updateLockStatesForAllViews(missingLockStates.toArray(new CDOLockState[missingLockStates.size()]), false);
+          if (!ids.isEmpty())
+          {
+            // direct call the session protocol
+            CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
+            CDOLockState[] loadedLockStates = sessionProtocol.getLockStates(viewID, ids, revisionsLoadedEvent.getPrefetchDepth());
+
+            updateLockStatesForAllViews(loadedLockStates, true);
+
+            // add missing lock states
+            List<CDOLockState> missingLockStates = new ArrayList<>();
+            for (CDOID id : ids)
+            {
+              InternalCDOObject object = getObject(id, false);
+
+              if (object != null && lockStates.get(object) == null)
+              {
+                Object lockedObject = getLockTarget(object); // CDOID or CDOIDAndBranch
+                if (lockedObject != null)
+                {
+                  missingLockStates.add(CDOLockUtil.createLockState(lockedObject));
+                }
+              }
+            }
+
+            for (CDORevision revision : revisionsLoadedEvent.getAdditionalLoadedRevisions())
+            {
+              CDOID id = revision.getID();
+              if (id != null && lockStateLoadingPolicy.loadLockState(id))
+              {
+                boolean isResourceNode = revision.isResourceNode();
+                InternalCDOObject object = getObject(id, !isResourceNode);
+                if (object != null && lockStates.get(object) == null)
+                {
+                  Object lockedObject = getLockTarget(object); // CDOID or CDOIDAndBranch
+                  if (lockedObject != null)
+                  {
+                    missingLockStates.add(CDOLockUtil.createLockState(lockedObject));
+                  }
+                }
+              }
+            }
+
+            updateLockStatesForAllViews(missingLockStates.toArray(new CDOLockState[missingLockStates.size()]), false);
+          }
+        }
+        finally
+        {
+          unlockView();
+        }
       }
     }
 
     private void updateLockStatesForAllViews(CDOLockState[] lockStates, boolean loadOnDemand)
     {
-      updateLockStates(lockStates, loadOnDemand);
+      updateLockStates(lockStates, loadOnDemand, null);
 
       for (CDOCommonView view : getSession().getViews())
       {
         if (view != CDOViewImpl.this && view.getBranch() == getBranch())
         {
-          ((CDOViewImpl)view).updateLockStates(lockStates, loadOnDemand);
+          ((CDOViewImpl)view).updateLockStates(lockStates, loadOnDemand, null);
         }
       }
     }

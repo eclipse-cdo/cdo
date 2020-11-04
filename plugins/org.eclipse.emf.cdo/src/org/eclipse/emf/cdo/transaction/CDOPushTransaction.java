@@ -74,6 +74,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.locks.Lock;
+import java.util.function.Consumer;
 
 /**
  * A {@link CDOTransaction transaction} that persists changes to the object graph locally on commit and can later load
@@ -876,6 +877,15 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
   public boolean isObjectRegistered(CDOID id)
   {
     return delegate.isObjectRegistered(id);
+  }
+
+  /**
+   * @since 4.12
+   */
+  @Override
+  public void refreshLockStates(Consumer<CDOLockState> consumer)
+  {
+    delegate.refreshLockStates(consumer);
   }
 
   /**

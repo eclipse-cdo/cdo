@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
+import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockArea;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockGrade;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
@@ -66,7 +67,9 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -286,6 +289,12 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
   @Override
   public void writeCDOLockChangeInfo(CDOLockChangeInfo lockChangeInfo) throws IOException
   {
+    writeCDOLockChangeInfo(lockChangeInfo, null);
+  }
+
+  @Override
+  public void writeCDOLockChangeInfo(CDOLockChangeInfo lockChangeInfo, Set<CDOID> filter) throws IOException
+  {
     if (lockChangeInfo.isInvalidateAll())
     {
       writeBoolean(true);
@@ -299,10 +308,33 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
       writeCDOLockType(lockChangeInfo.getLockType());
 
       CDOLockState[] lockStates = lockChangeInfo.getLockStates();
-      writeXInt(lockStates.length);
-      for (CDOLockState lockState : lockStates)
+
+      if (filter != null)
       {
-        writeCDOLockState(lockState);
+        List<CDOLockState> filtered = new ArrayList<>(lockStates.length);
+        for (CDOLockState lockState : lockStates)
+        {
+          Object lockedObject = lockState.getLockedObject();
+          CDOID id = CDOLockUtil.getLockedObjectID(lockedObject);
+          if (filter.contains(id))
+          {
+            filtered.add(lockState);
+          }
+        }
+
+        writeXInt(filtered.size());
+        for (CDOLockState lockState : filtered)
+        {
+          writeCDOLockState(lockState);
+        }
+      }
+      else
+      {
+        writeXInt(lockStates.length);
+        for (CDOLockState lockState : lockStates)
+        {
+          writeCDOLockState(lockState);
+        }
       }
     }
   }

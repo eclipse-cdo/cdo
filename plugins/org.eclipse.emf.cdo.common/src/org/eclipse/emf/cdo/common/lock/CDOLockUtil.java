@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo.Operation;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockArea;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockGrade;
+import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
 import org.eclipse.emf.cdo.internal.common.lock.CDOLockAreaImpl;
 import org.eclipse.emf.cdo.internal.common.lock.CDOLockChangeInfoImpl;
 import org.eclipse.emf.cdo.internal.common.lock.CDOLockOwnerImpl;
@@ -46,6 +47,37 @@ public final class CDOLockUtil
 
   private CDOLockUtil()
   {
+  }
+
+  /**
+   * @since 4.12
+   */
+  public static CDOID getLockedObjectID(Object lockedObject)
+  {
+    if (lockedObject instanceof CDOID)
+    {
+      return (CDOID)lockedObject;
+    }
+
+    if (lockedObject instanceof CDOIDAndBranch)
+    {
+      return ((CDOIDAndBranch)lockedObject).getID();
+    }
+
+    return null;
+  }
+
+  /**
+   * @since 4.12
+   */
+  public static CDOBranch getLockedObjectBranch(Object lockedObject)
+  {
+    if (lockedObject instanceof CDOIDAndBranch)
+    {
+      return ((CDOIDAndBranch)lockedObject).getBranch();
+    }
+
+    return null;
   }
 
   public static CDOLockState copyLockState(CDOLockState lockState)
@@ -112,8 +144,9 @@ public final class CDOLockUtil
 
   public static CDOLockOwner createLockOwner(CDOCommonView view)
   {
-    CDOCommonSession session = view.getSession();
     String durableLockingID = view.getDurableLockingID();
+
+    CDOCommonSession session = view.getSession();
     if (session != null)
     {
       int sessionID = session.getSessionID();

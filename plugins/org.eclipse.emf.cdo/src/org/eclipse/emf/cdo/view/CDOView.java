@@ -61,6 +61,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.locks.Lock;
+import java.util.function.Consumer;
 
 /**
  * A read-only view to the state of the object graph in the repository of the underlying {@link CDOSession session} at a
@@ -474,6 +475,15 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
    */
   @Deprecated
   public int reload(CDOObject... objects);
+
+  /**
+   * Refreshes the {@link #getLockStates(Collection) lock states} of this {@link CDOView view} with the latest states from the repository.
+   *
+   * If a lock state consumer is passed it is called for each resulting new lock state.
+   *
+   * @since 4.12
+   */
+  public void refreshLockStates(Consumer<CDOLockState> consumer);
 
   /**
    * Get an array of {@link CDOLockState lock states} corresponding to the specified collection of {@link CDOID ids}.

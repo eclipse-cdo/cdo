@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
  * @author Esteban Dugueperoux
  * @since 4.4
  */
+@FunctionalInterface
 public interface CDOLockStateLoadingPolicy
 {
   /**
@@ -37,5 +38,5 @@ public interface CDOLockStateLoadingPolicy
    * @param id the of the loaded revision
    * @return true to have lock state loaded for the specified revision's id for the current view
    */
-  boolean loadLockState(CDOID id);
+  public boolean loadLockState(CDOID id);
 }

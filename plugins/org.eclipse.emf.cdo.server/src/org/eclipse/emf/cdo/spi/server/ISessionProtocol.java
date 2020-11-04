@@ -25,6 +25,8 @@ import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.net4j.util.event.INotifier;
 import org.eclipse.net4j.util.security.DiffieHellman.Server.Challenge;
 
+import java.util.Set;
+
 /**
  * If the meaning of this type isn't clear, there really should be more of a description here...
  *
@@ -95,6 +97,13 @@ public interface ISessionProtocol extends CDOProtocol, IAuthenticationProtocol, 
 
   /**
    * @since 4.1
+   * @deprecated As of 4.11 use {@link #sendLockNotification(CDOLockChangeInfo, Set)}.
    */
+  @Deprecated
   public void sendLockNotification(CDOLockChangeInfo lockChangeInfo) throws Exception;
+
+  /**
+   * @since 4.11
+   */
+  public void sendLockNotification(CDOLockChangeInfo lockChangeInfo, Set<CDOID> filter) throws Exception;
 }

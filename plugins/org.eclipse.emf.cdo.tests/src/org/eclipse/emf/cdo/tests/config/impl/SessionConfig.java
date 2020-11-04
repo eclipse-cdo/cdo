@@ -422,7 +422,7 @@ public abstract class SessionConfig extends Config implements ISessionConfig
     @Override
     public CDOSessionConfiguration createSessionConfiguration(String repositoryName)
     {
-      CDONet4jSessionConfiguration configuration = CDONet4jUtil.createNet4jSessionConfiguration();
+      CDONet4jSessionConfiguration configuration = getCurrentTest().createNet4jSessionConfiguration(repositoryName);
       configuration.setConnector(getConnector());
       configuration.setRepositoryName(repositoryName);
       configuration.setRevisionManager(new TestRevisionManager());

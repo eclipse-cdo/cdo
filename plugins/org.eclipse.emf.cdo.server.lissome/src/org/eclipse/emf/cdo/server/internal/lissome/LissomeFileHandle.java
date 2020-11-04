@@ -68,6 +68,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -806,6 +807,12 @@ public class LissomeFileHandle extends DataInputOutputFile implements CDODataInp
   public void writeCDOLockChangeInfo(CDOLockChangeInfo lockChangeInfo) throws IOException
   {
     out().writeCDOLockChangeInfo(lockChangeInfo);
+  }
+
+  @Override
+  public void writeCDOLockChangeInfo(CDOLockChangeInfo lockChangeInfo, Set<CDOID> filter) throws IOException
+  {
+    out().writeCDOLockChangeInfo(lockChangeInfo, filter);
   }
 
   @Override

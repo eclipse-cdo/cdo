@@ -273,12 +273,12 @@ public class LockingManagerRestartTransactionTest extends AbstractLockingTest
     transaction.commit();
 
     String durableLockingID = transaction.enableDurableLocking();
-    writeOption(company);
+    optionLock(company);
 
     restart(durableLockingID);
 
     company = (Company)resource.getContents().get(0);
-    assertWriteOption(true, company);
+    assertOptionLock(true, company);
   }
 
   public void testWriteOptionBeforeEnable() throws Exception
@@ -287,13 +287,13 @@ public class LockingManagerRestartTransactionTest extends AbstractLockingTest
     resource.getContents().add(company);
     transaction.commit();
 
-    writeOption(company);
+    optionLock(company);
     String durableLockingID = transaction.enableDurableLocking();
 
     restart(durableLockingID);
 
     company = (Company)resource.getContents().get(0);
-    assertWriteOption(true, company);
+    assertOptionLock(true, company);
   }
 
   public void testLockUpgradeAfterEnable() throws Exception

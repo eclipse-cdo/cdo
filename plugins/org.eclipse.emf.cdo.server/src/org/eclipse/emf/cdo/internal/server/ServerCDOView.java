@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDGenerator;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lob.CDOLobStore;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
+import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
@@ -94,6 +95,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Consumer;
 
 /**
  * @author Eike Stepper
@@ -544,6 +546,18 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
 
   @Override
   public void setClearAdapterPolicy(CDOAdapterPolicy policy)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public CDOLockOwner getLockOwner()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public void refreshLockStates(Consumer<CDOLockState> consumer)
   {
     throw new UnsupportedOperationException();
   }
@@ -1269,8 +1283,15 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
       throw new UnsupportedOperationException();
     }
 
+    @Deprecated
     @Override
     public void handleLockNotification(CDOLockChangeInfo lockChangeInfo, InternalCDOView sender)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void handleLockNotification(CDOLockChangeInfo lockChangeInfo, InternalCDOView sender, boolean async)
     {
       throw new UnsupportedOperationException();
     }

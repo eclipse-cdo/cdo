@@ -2727,13 +2727,14 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   private void cleanUp(CDOCommitContext commitContext)
   {
+    Map<CDOObject, CDOLockState> lockStates = getLockStates();
     if (commitContext == null || !commitContext.isPartialCommit())
     {
       if (commitContext != null)
       {
         for (CDOObject object : commitContext.getDetachedObjects().values())
         {
-          cleanUpLockState(object);
+          cleanUpLockState(lockStates, object);
         }
       }
 
@@ -2760,7 +2761,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       for (CDOObject object : commitContext.getDetachedObjects().values())
       {
         cleanRevisions.remove(object);
-        cleanUpLockState(object);
+        cleanUpLockState(lockStates, object);
       }
 
       for (CDOObject object : commitContext.getDirtyObjects().values())
@@ -2773,9 +2774,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     committables = null;
   }
 
-  private void cleanUpLockState(CDOObject object)
+  private void cleanUpLockState(Map<CDOObject, CDOLockState> lockStates, CDOObject object)
   {
-    InternalCDOLockState lockState = (InternalCDOLockState)removeLockState(object);
+    InternalCDOLockState lockState = (InternalCDOLockState)lockStates.remove(object);
     if (lockState != null)
     {
       lockState.dispose();
@@ -2813,6 +2814,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
       try
       {
+        @SuppressWarnings("resource")
         CDODataOutput out = new CDODataOutputImpl(new ExtendedDataOutputStream(stream))
         {
           @Override
@@ -4177,7 +4179,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     CheckUtil.checkState(FSMUtil.isNew(object), "Object is not in NEW state");
     CheckUtil.checkArg(lockType, "lockType");
 
-    InternalCDOLockState lockState = (InternalCDOLockState)getLockState(object);
+    Map<CDOObject, CDOLockState> lockStates = getLockStates();
+    InternalCDOLockState lockState = (InternalCDOLockState)lockStates.get(object);
     if (lockState == null)
     {
       CheckUtil.checkArg(on == true, "on != true");
@@ -4439,12 +4442,20 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       List<CDOPackageUnit> newPackageUnits = analyzeNewPackages();
 
       newObjects = filterCommittables(transaction.getNewObjects());
+      revisionDeltas = filterCommittables(transaction.getRevisionDeltas());
+      detachedObjects = filterCommittables(transaction.getDetachedObjects());
+      dirtyObjects = filterCommittables(transaction.getDirtyObjects());
+
       List<CDOIDAndVersion> revisions = new ArrayList<>(newObjects.size());
+      List<CDORevisionKey> deltas = new ArrayList<>(revisionDeltas.size());
+      List<CDOIDAndVersion> detached = new ArrayList<>(detachedObjects.size());
+
+      Map<CDOObject, CDOLockState> lockStates = getLockStates();
       for (CDOObject newObject : newObjects.values())
       {
         revisions.add(newObject.cdoRevision());
 
-        CDOLockState lockState = getLockState(newObject);
+        CDOLockState lockState = lockStates.get(newObject);
         if (lockState != null)
         {
           if (!options.isEffectiveAutoReleaseLock(newObject))
@@ -4454,15 +4465,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         }
       }
 
-      revisionDeltas = filterCommittables(transaction.getRevisionDeltas());
-      List<CDORevisionKey> deltas = new ArrayList<>(revisionDeltas.size());
       for (CDORevisionDelta delta : revisionDeltas.values())
       {
         deltas.add(delta);
       }
 
-      detachedObjects = filterCommittables(transaction.getDetachedObjects());
-      List<CDOIDAndVersion> detached = new ArrayList<>(detachedObjects.size());
       for (Entry<CDOID, CDOObject> entry : detachedObjects.entrySet())
       {
         CDOObject object = entry.getValue();
@@ -4483,9 +4490,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         }
       }
 
-      dirtyObjects = filterCommittables(transaction.getDirtyObjects());
-
-      for (CDOObject lockedObject : getLockStates().keySet())
+      for (CDOObject lockedObject : lockStates.keySet())
       {
         if (!FSMUtil.isTransient(lockedObject))
         {
@@ -4873,13 +4878,15 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     private CDOLockChangeInfo makeUnlockChangeInfo(CommitTransactionResult result, CDOBranch newBranch)
     {
+      List<CDOLockState> objectsToUnlock;
+
       Map<CDOObject, CDOLockState> lockStates = getLockStates();
       if (lockStates.isEmpty())
       {
         return null;
       }
 
-      List<CDOLockState> objectsToUnlock = new ArrayList<>();
+      objectsToUnlock = new ArrayList<>();
       Map<CDOObject, CDOLockState> newLockStates = new HashMap<>();
       Map<CDOID, CDOID> idMappings = result.getIDMappings();
 

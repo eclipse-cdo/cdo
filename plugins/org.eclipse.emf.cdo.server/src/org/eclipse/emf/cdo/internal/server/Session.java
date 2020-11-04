@@ -24,6 +24,9 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
+import org.eclipse.emf.cdo.common.lock.CDOLockState;
+import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
+import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockGrade;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
@@ -42,6 +45,7 @@ import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.server.ISessionProtocol;
+import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
@@ -66,6 +70,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.text.MessageFormat;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -597,17 +602,15 @@ public class Session extends Container<IView> implements InternalSession
       Object lockNotificationRequired = isLockNotificationRequired(lockChangeInfo);
       if (lockNotificationRequired == Boolean.TRUE)
       {
-        protocol.sendLockNotification(lockChangeInfo);
-        return;
+        protocol.sendLockNotification(lockChangeInfo, null);
       }
-
-      if (lockNotificationRequired instanceof InternalView)
+      else if (lockNotificationRequired instanceof InternalView)
       {
         InternalView view = (InternalView)lockNotificationRequired;
 
         try
         {
-          protocol.sendLockNotification(lockChangeInfo);
+          protocol.sendLockNotification(lockChangeInfo, null);
         }
         catch (Exception ex)
         {
@@ -616,6 +619,12 @@ public class Session extends Container<IView> implements InternalSession
             OM.LOG.warn("A problem occured while notifying view " + view, ex);
           }
         }
+      }
+      else if (lockNotificationRequired instanceof Set)
+      {
+        @SuppressWarnings("unchecked")
+        Set<CDOID> lockedIDs = (Set<CDOID>)lockNotificationRequired;
+        protocol.sendLockNotification(lockChangeInfo, lockedIDs);
       }
     }
   }
@@ -636,12 +645,41 @@ public class Session extends Container<IView> implements InternalSession
         if (view.options().isLockNotificationEnabled())
         {
           CDOBranch affectedBranch = lockChangeInfo.getBranch();
-          if (view.getBranch() == affectedBranch || affectedBranch == null)
+          if (affectedBranch == null || affectedBranch == view.getBranch())
           {
             return view;
           }
         }
       }
+    }
+
+    Set<CDOID> lockedIDs = new HashSet<>();
+    InternalLockManager lockingManager = getManager().getRepository().getLockingManager();
+
+    for (InternalView view : getViews())
+    {
+      CDOBranch affectedBranch = lockChangeInfo.getBranch();
+      if (affectedBranch == null || affectedBranch == view.getBranch())
+      {
+        Map<CDOID, LockGrade> locks = lockingManager.getLocks(view);
+
+        for (CDOLockState lockState : lockChangeInfo.getLockStates())
+        {
+          Object lockedObject = lockState.getLockedObject();
+          CDOID id = CDOLockUtil.getLockedObjectID(lockedObject);
+
+          LockGrade lockGrade = locks.get(id);
+          if (lockGrade != null && lockGrade != LockGrade.NONE)
+          {
+            lockedIDs.add(id);
+          }
+        }
+      }
+    }
+
+    if (!lockedIDs.isEmpty())
+    {
+      return lockedIDs;
     }
 
     return null;

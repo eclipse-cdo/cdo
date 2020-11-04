@@ -232,8 +232,15 @@ public interface InternalCDOSession extends CDOSession, PackageProcessor, Packag
 
   /**
    * @since 4.1
+   * @deprecated As of 4.12 use {@link #handleLockNotification(CDOLockChangeInfo, InternalCDOView, boolean)}.
    */
+  @Deprecated
   public void handleLockNotification(CDOLockChangeInfo lockChangeInfo, InternalCDOView sender);
+
+  /**
+   * @since 4.12
+   */
+  public void handleLockNotification(CDOLockChangeInfo lockChangeInfo, InternalCDOView sender, boolean async);
 
   /**
    * @since 4.3

@@ -10,69 +10,181 @@
  */
 package org.eclipse.emf.cdo.tests;
 
+import org.eclipse.emf.cdo.CDOLock;
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
+import org.eclipse.emf.cdo.internal.net4j.CDONet4jSessionConfigurationImpl;
+import org.eclipse.emf.cdo.internal.net4j.CDONet4jSessionImpl;
+import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.spi.cdo.InternalCDOSession;
+import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Eike Stepper
  */
 public class AbstractLockingTest extends AbstractCDOTest
 {
-  protected static void readLock(EObject object) throws InterruptedException
+  public static final long NO_DELAY = -1L;
+
+  private final AtomicInteger activeLockNotifications = new AtomicInteger();
+
+  public AbstractLockingTest()
   {
-    CDOObject cdoObject = CDOUtil.getCDOObject(object);
-    assertEquals(true, cdoObject.cdoReadLock().tryLock(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS));
   }
 
-  protected static void readUnlock(EObject object) throws InterruptedException
+  protected long getInvalidationDelay()
   {
-    CDOObject cdoObject = CDOUtil.getCDOObject(object);
-    cdoObject.cdoReadLock().unlock();
+    return NO_DELAY;
   }
 
-  protected static void writeLock(EObject object) throws InterruptedException
+  @Override
+  protected CDONet4jSessionConfiguration createNet4jSessionConfiguration(String repositoryName)
   {
-    CDOObject cdoObject = CDOUtil.getCDOObject(object);
-    assertEquals(true, cdoObject.cdoWriteLock().tryLock(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS));
+    return new LockingSessionConfiguration();
   }
 
-  protected static void writeUnlock(EObject object) throws InterruptedException
+  protected final void waitForActiveLockNotifications() throws InterruptedException
   {
-    CDOObject cdoObject = CDOUtil.getCDOObject(object);
-    cdoObject.cdoWriteLock().unlock();
+    long end = System.currentTimeMillis() + DEFAULT_TIMEOUT;
+
+    while (System.currentTimeMillis() < end)
+    {
+      synchronized (activeLockNotifications)
+      {
+        if (activeLockNotifications.get() == 0)
+        {
+          return;
+        }
+
+        activeLockNotifications.wait(100L);
+      }
+    }
   }
 
-  protected static void writeOption(EObject object) throws InterruptedException
+  protected static CDOLock readLock(EObject object) throws InterruptedException
   {
     CDOObject cdoObject = CDOUtil.getCDOObject(object);
-    assertEquals(true, cdoObject.cdoWriteOption().tryLock(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS));
+    CDOLock lock = cdoObject.cdoReadLock();
+    assertEquals(true, lock.tryLock(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS));
+    return lock;
   }
 
-  protected static void writeUnoption(EObject object) throws InterruptedException
+  protected static CDOLock readUnlock(EObject object) throws InterruptedException
   {
     CDOObject cdoObject = CDOUtil.getCDOObject(object);
-    cdoObject.cdoWriteOption().unlock();
+    CDOLock lock = cdoObject.cdoReadLock();
+    lock.unlock();
+    return lock;
   }
 
-  protected static void assertReadLock(boolean expected, EObject object)
+  protected static CDOLock writeLock(EObject object) throws InterruptedException
   {
     CDOObject cdoObject = CDOUtil.getCDOObject(object);
-    assertEquals(expected, cdoObject.cdoReadLock().isLocked());
+    CDOLock lock = cdoObject.cdoWriteLock();
+    assertEquals(true, lock.tryLock(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS));
+    return lock;
   }
 
-  protected static void assertWriteLock(boolean expected, EObject object)
+  protected static CDOLock writeUnlock(EObject object) throws InterruptedException
   {
     CDOObject cdoObject = CDOUtil.getCDOObject(object);
-    assertEquals(expected, cdoObject.cdoWriteLock().isLocked());
+    CDOLock lock = cdoObject.cdoWriteLock();
+    lock.unlock();
+    return lock;
   }
 
-  protected static void assertWriteOption(boolean expected, EObject object)
+  protected static CDOLock optionLock(EObject object) throws InterruptedException
   {
     CDOObject cdoObject = CDOUtil.getCDOObject(object);
-    assertEquals(expected, cdoObject.cdoWriteOption().isLocked());
+    CDOLock lock = cdoObject.cdoWriteOption();
+    assertEquals(true, lock.tryLock(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS));
+    return lock;
+  }
+
+  protected static CDOLock optionUnlock(EObject object) throws InterruptedException
+  {
+    CDOObject cdoObject = CDOUtil.getCDOObject(object);
+    CDOLock lock = cdoObject.cdoWriteOption();
+    lock.unlock();
+    return lock;
+  }
+
+  protected static CDOLock assertReadLock(boolean expected, EObject object)
+  {
+    CDOObject cdoObject = CDOUtil.getCDOObject(object);
+    CDOLock lock = cdoObject.cdoReadLock();
+    assertEquals(expected, lock.isLocked());
+    return lock;
+  }
+
+  protected static CDOLock assertWriteLock(boolean expected, EObject object)
+  {
+    CDOObject cdoObject = CDOUtil.getCDOObject(object);
+    CDOLock lock = cdoObject.cdoWriteLock();
+    assertEquals(expected, lock.isLocked());
+    return lock;
+  }
+
+  protected static void assertOptionLock(boolean expected, EObject object)
+  {
+    CDOObject cdoObject = CDOUtil.getCDOObject(object);
+    CDOLock lock = cdoObject.cdoWriteOption();
+    assertEquals(expected, lock.isLocked());
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  protected class LockingSessionConfiguration extends CDONet4jSessionConfigurationImpl
+  {
+    @Override
+    public InternalCDOSession createSession()
+    {
+      return new CDONet4jSessionImpl()
+      {
+        @Override
+        public void handleLockNotification(CDOLockChangeInfo lockChangeInfo, InternalCDOView sender, boolean async)
+        {
+          synchronized (activeLockNotifications)
+          {
+            activeLockNotifications.incrementAndGet();
+            activeLockNotifications.notifyAll();
+          }
+
+          super.handleLockNotification(lockChangeInfo, sender, async);
+        }
+
+        @Override
+        protected void doHandleLockNotification(CDOLockChangeInfo lockChangeInfo, InternalCDOView sender)
+        {
+          super.doHandleLockNotification(lockChangeInfo, sender);
+
+          synchronized (activeLockNotifications)
+          {
+            activeLockNotifications.decrementAndGet();
+            activeLockNotifications.notifyAll();
+          }
+        }
+
+        @Override
+        public void invalidate(InvalidationData invalidationData)
+        {
+          long delay = getInvalidationDelay();
+          if (delay != NO_DELAY)
+          {
+            sleep(delay); // Delay the invalidation handling to give lock notifications a chance to overtake.
+          }
+
+          super.invalidate(invalidationData);
+        }
+
+      };
+    }
   }
 }

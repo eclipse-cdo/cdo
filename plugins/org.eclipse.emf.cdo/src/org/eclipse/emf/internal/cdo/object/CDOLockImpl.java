@@ -14,13 +14,14 @@ package org.eclipse.emf.internal.cdo.object;
 import org.eclipse.emf.cdo.CDOLock;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
-import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
+import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.util.LockTimeoutException;
 
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
+import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.text.MessageFormat;
 import java.util.Collections;
@@ -40,13 +41,10 @@ public class CDOLockImpl implements CDOLock
 
   private final LockType type;
 
-  private final CDOLockOwner owner;
-
   public CDOLockImpl(InternalCDOObject object, LockType type)
   {
     this.object = object;
     this.type = type;
-    owner = CDOLockUtil.createLockOwner(object.cdoView());
   }
 
   @Override
@@ -64,7 +62,7 @@ public class CDOLockImpl implements CDOLock
   @Override
   public boolean isLocked()
   {
-    return object.cdoLockState().isLocked(type, owner, false);
+    return isLocked(false);
   }
 
   /**
@@ -73,7 +71,7 @@ public class CDOLockImpl implements CDOLock
   @Override
   public boolean isLockedByOthers()
   {
-    return object.cdoLockState().isLocked(type, owner, true);
+    return isLocked(true);
   }
 
   @Override
@@ -81,7 +79,8 @@ public class CDOLockImpl implements CDOLock
   {
     try
     {
-      object.cdoView().lockObjects(Collections.singletonList(object), type, WAIT);
+      InternalCDOView view = object.cdoView();
+      view.lockObjects(Collections.singletonList(object), type, WAIT);
     }
     catch (InterruptedException ex)
     {
@@ -134,7 +133,8 @@ public class CDOLockImpl implements CDOLock
   {
     try
     {
-      object.cdoView().lockObjects(Collections.singletonList(object), type, NO_WAIT);
+      InternalCDOView view = object.cdoView();
+      view.lockObjects(Collections.singletonList(object), type, NO_WAIT);
       return true;
     }
     catch (LockTimeoutException ex)
@@ -152,7 +152,8 @@ public class CDOLockImpl implements CDOLock
   {
     try
     {
-      object.cdoView().lockObjects(Collections.singletonList(object), type, unit.toMillis(time));
+      InternalCDOView view = object.cdoView();
+      view.lockObjects(Collections.singletonList(object), type, unit.toMillis(time));
       return true;
     }
     catch (LockTimeoutException ex)
@@ -164,13 +165,21 @@ public class CDOLockImpl implements CDOLock
   @Override
   public void unlock()
   {
-    object.cdoView().unlockObjects(Collections.singletonList(object), type);
+    InternalCDOView view = object.cdoView();
+    view.unlockObjects(Collections.singletonList(object), type);
   }
 
   @Override
   public String toString()
   {
     return MessageFormat.format("CDOLock[object={0}, type={1}]", object, type);
+  }
+
+  private boolean isLocked(boolean others)
+  {
+    CDOLockState lockState = object.cdoLockState();
+    CDOLockOwner owner = object.cdoView().getLockOwner();
+    return lockState.isLocked(type, owner, others);
   }
 
   /**

@@ -31,14 +31,7 @@ public class Bugzilla_278900_Test extends AbstractCDOTest
     CDOResource res = tx.getOrCreateResource(getResourcePath("/resource1"));
     tx.commit();
 
-    try
-    {
-      res.getEObject("ABBSBD");
-      fail("Throwable expected");
-    }
-    catch (Throwable expected)
-    {
-      // SUCCESS
-    }
+    // Must not throw exceptions:
+    res.getEObject("ABBSBD");
   }
 }

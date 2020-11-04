@@ -53,6 +53,13 @@ public class UIActivator extends AbstractUIPlugin
     return imageDescriptorFromPlugin(omBundle.getBundleID(), path);
   }
 
+  @Override
+  @SuppressWarnings("deprecation")
+  public IDialogSettings getDialogSettings()
+  {
+    return super.getDialogSettings();
+  }
+
   /**
    * @since 3.4
    */

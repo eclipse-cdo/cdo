@@ -2814,7 +2814,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
       try
       {
-        @SuppressWarnings("resource")
+        @SuppressWarnings("all")
         CDODataOutput out = new CDODataOutputImpl(new ExtendedDataOutputStream(stream))
         {
           @Override

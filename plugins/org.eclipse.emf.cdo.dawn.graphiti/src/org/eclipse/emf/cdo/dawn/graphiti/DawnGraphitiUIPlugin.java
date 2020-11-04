@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.dawn.graphiti;
 
+import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 import org.osgi.framework.BundleContext;
@@ -44,5 +45,12 @@ public class DawnGraphitiUIPlugin extends AbstractUIPlugin
   public static DawnGraphitiUIPlugin getDefault()
   {
     return plugin;
+  }
+
+  @Override
+  @SuppressWarnings("deprecation")
+  public IDialogSettings getDialogSettings()
+  {
+    return super.getDialogSettings();
   }
 }

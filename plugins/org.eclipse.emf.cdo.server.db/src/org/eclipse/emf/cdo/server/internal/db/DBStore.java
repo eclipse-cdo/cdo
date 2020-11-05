@@ -56,6 +56,7 @@ import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
+import org.eclipse.net4j.util.om.monitor.ProgressDistributor.Geometric;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -119,9 +120,9 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
 
   private IIDHandler idHandler;
 
-  private IMetaDataManager metaDataManager = new MetaDataManager(this);
+  private IMetaDataManager metaDataManager = createMetaDataManager();
 
-  private DurableLockingManager durableLockingManager = new DurableLockingManager(this);
+  private DurableLockingManager durableLockingManager = createDurableLockingManager();
 
   private CommitInfoTable commitInfoTable;
 
@@ -136,26 +137,13 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
   private IDBConnectionProvider dbConnectionProvider;
 
   @ExcludeFromDump
-  private transient ProgressDistributor accessorWriteDistributor = new ProgressDistributor.Geometric()
-  {
-    @Override
-    public String toString()
-    {
-      String result = "accessorWriteDistributor"; //$NON-NLS-1$
-      if (getRepository() != null)
-      {
-        result += ": " + getRepository().getName(); //$NON-NLS-1$
-      }
-
-      return result;
-    }
-  };
+  private transient ProgressDistributor accessorWriteDistributor = createProgressDistributor();
 
   @ExcludeFromDump
-  private transient StoreAccessorPool readerPool = new StoreAccessorPool(this, null);
+  private transient StoreAccessorPool readerPool = createReaderPool();
 
   @ExcludeFromDump
-  private transient StoreAccessorPool writerPool = new StoreAccessorPool(this, null);
+  private transient StoreAccessorPool writerPool = createWriterPool();
 
   @ExcludeFromDump
   private transient Timer connectionKeepAliveTimer;
@@ -941,6 +929,44 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
     {
       DBUtil.close(connection);
     }
+  }
+
+  protected IMetaDataManager createMetaDataManager()
+  {
+    return new MetaDataManager(this);
+  }
+
+  protected DurableLockingManager createDurableLockingManager()
+  {
+    return new DurableLockingManager(this);
+  }
+
+  protected Geometric createProgressDistributor()
+  {
+    return new ProgressDistributor.Geometric()
+    {
+      @Override
+      public String toString()
+      {
+        String result = "accessorWriteDistributor"; //$NON-NLS-1$
+        if (getRepository() != null)
+        {
+          result += ": " + getRepository().getName(); //$NON-NLS-1$
+        }
+  
+        return result;
+      }
+    };
+  }
+
+  protected StoreAccessorPool createReaderPool()
+  {
+    return createWriterPool();
+  }
+
+  protected StoreAccessorPool createWriterPool()
+  {
+    return new StoreAccessorPool(this, null);
   }
 
   protected void configureAccessorPool(StoreAccessorPool pool, String property)

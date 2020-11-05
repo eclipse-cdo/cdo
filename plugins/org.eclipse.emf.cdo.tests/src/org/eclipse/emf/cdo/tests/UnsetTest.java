@@ -541,6 +541,15 @@ public class UnsetTest extends AbstractCDOTest
     assertEquals(true, unsettable.isSetUnsettableElement());
   }
 
+  public void testIsSetElement() throws Exception
+  {
+    Unsettable1 unsettable = getModel2Factory().createUnsettable1();
+    unsettable.setUnsettableElement(null);
+
+    Unsettable1 result = commitAndLoad(unsettable);
+    assertEquals(true, result.isSetUnsettableElement());
+  }
+
   @Override
   protected void doTearDown() throws Exception
   {
@@ -551,6 +560,7 @@ public class UnsetTest extends AbstractCDOTest
 
   private <T extends EObject> T commitAndLoad(T object) throws Exception
   {
+    msg("Committing...");
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(getResourcePath("/test1"));
@@ -561,6 +571,7 @@ public class UnsetTest extends AbstractCDOTest
 
     clearCache(getRepository().getRevisionManager());
 
+    msg("Loading...");
     session = openSession();
     CDOView view = session.openView();
     resource = view.getResource(getResourcePath("/test1"));

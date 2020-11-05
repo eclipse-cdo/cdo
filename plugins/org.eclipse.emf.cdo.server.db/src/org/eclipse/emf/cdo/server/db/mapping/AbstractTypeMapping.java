@@ -194,7 +194,7 @@ public abstract class AbstractTypeMapping implements ITypeMapping
   public final Object readValue(ResultSet resultSet) throws SQLException
   {
     Object value = getResultSetValue(resultSet);
-    if (resultSet.wasNull())
+    if (value != CDORevisionData.NIL && resultSet.wasNull())
     {
       if (feature.isMany())
       {

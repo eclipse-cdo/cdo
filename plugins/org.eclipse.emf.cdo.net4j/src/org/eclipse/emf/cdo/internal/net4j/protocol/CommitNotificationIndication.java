@@ -12,7 +12,6 @@
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
-import org.eclipse.emf.cdo.common.protocol.CDOProtocol;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 
@@ -33,7 +32,7 @@ public class CommitNotificationIndication extends CDOClientIndication
   @Override
   protected void indicating(CDODataInput in) throws IOException
   {
-    CommitNotificationInfo info = new CDOProtocol.CommitNotificationInfo(in);
+    CommitNotificationInfo info = new CommitNotificationInfo(in);
 
     InternalCDOSession session = getSession();
     session.handleCommitNotification(info);

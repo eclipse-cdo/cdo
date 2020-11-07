@@ -421,9 +421,22 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
     return openSession();
   }
 
+  /**
+   * @category Session
+   */
   protected CDONet4jSessionConfiguration createNet4jSessionConfiguration(String repositoryName)
   {
     return new CDONet4jSessionConfigurationImpl();
+  }
+
+  /**
+   * @category Session
+   */
+  public void closeAllSessions()
+  {
+    determineCodeLink();
+    ISessionConfig sessionConfig = getSessionConfig();
+    sessionConfig.closeAllSessions();
   }
 
   // /////////////////////////////////////////////////////////////////////////

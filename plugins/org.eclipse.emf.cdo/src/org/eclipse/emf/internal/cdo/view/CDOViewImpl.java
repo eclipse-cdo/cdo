@@ -514,9 +514,9 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
 
       try
       {
-        for (CDOLockState lockState : newLockStates)
+        for (CDOLockState newLockState : newLockStates)
         {
-          Object lockedObject = lockState.getLockedObject();
+          Object lockedObject = newLockState.getLockedObject();
           CDOID id = CDOLockUtil.getLockedObjectID(lockedObject);
 
           if (id == null && lockedObject instanceof EObject)
@@ -533,20 +533,21 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
           InternalCDOObject object = getObject(id, loadObjectsOnDemand);
           if (object != null)
           {
-            InternalCDOLockState existingLockState = (InternalCDOLockState)lockStates.get(object);
-            if (existingLockState != null)
+            InternalCDOLockState oldLockState = (InternalCDOLockState)lockStates.get(object);
+            if (oldLockState != null)
             {
-              existingLockState.updateFrom(lockState);
-              lockState = existingLockState;
+              oldLockState.updateFrom(newLockState);
+              newLockState = oldLockState;
             }
             else
             {
-              lockStates.put(object, lockState);
+              newLockState = CDOLockUtil.copyLockState(newLockState);
+              lockStates.put(object, newLockState);
             }
 
             if (consumer != null)
             {
-              consumer.accept(lockState);
+              consumer.accept(newLockState);
             }
           }
         }
@@ -2993,6 +2994,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     {
       updateLockStates(lockStates, loadOnDemand, null);
 
+      // TODO Should this be done via ExecutorServide.submit() ?!
       for (CDOCommonView view : getSession().getViews())
       {
         if (view != CDOViewImpl.this && view.getBranch() == getBranch())

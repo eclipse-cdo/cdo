@@ -202,13 +202,35 @@ public final class HexUtil
 
   public static String longToHex(long v)
   {
-    final String hex = Long.toHexString(v);
+    String hex = Long.toHexString(v);
     if (hex.length() < 8)
     {
       return "00000000".substring(hex.length()) + hex; //$NON-NLS-1$
     }
 
     return hex;
+  }
+
+  /**
+   * @since 3.13
+   */
+  public static String intToHex(int v)
+  {
+    String hex = Integer.toHexString(v);
+    if (hex.length() < 8)
+    {
+      return "00000000".substring(hex.length()) + hex; //$NON-NLS-1$
+    }
+
+    return hex;
+  }
+
+  /**
+   * @since 3.13
+   */
+  public static String identityHashCode(Object object)
+  {
+    return intToHex(System.identityHashCode(object));
   }
 
   @Deprecated

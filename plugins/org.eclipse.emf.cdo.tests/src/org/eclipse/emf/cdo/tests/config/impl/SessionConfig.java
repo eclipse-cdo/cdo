@@ -219,6 +219,30 @@ public abstract class SessionConfig extends Config implements ISessionConfig
   }
 
   @Override
+  public void closeAllSessions()
+  {
+    if (sessions != null)
+    {
+      CDOSession[] array;
+      synchronized (sessions)
+      {
+        array = sessions.toArray(new CDOSession[sessions.size()]);
+      }
+
+      for (CDOSession session : array)
+      {
+        session.removeListener(sessionListener);
+        LifecycleUtil.deactivate(session);
+      }
+
+      synchronized (sessions)
+      {
+        sessions.clear();
+      }
+    }
+  }
+
+  @Override
   public void setUp() throws Exception
   {
     super.setUp();
@@ -247,26 +271,7 @@ public abstract class SessionConfig extends Config implements ISessionConfig
   {
     try
     {
-      if (sessions != null)
-      {
-        CDOSession[] array;
-        synchronized (sessions)
-        {
-          array = sessions.toArray(new CDOSession[sessions.size()]);
-        }
-
-        for (CDOSession session : array)
-        {
-          session.removeListener(sessionListener);
-          LifecycleUtil.deactivate(session);
-        }
-
-        synchronized (sessions)
-        {
-          sessions.clear();
-        }
-      }
-
+      closeAllSessions();
       sessions = null;
       sessionListener = null;
 

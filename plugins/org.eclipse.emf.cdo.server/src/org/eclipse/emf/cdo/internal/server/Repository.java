@@ -1419,7 +1419,7 @@ public class Repository extends Container<Object> implements InternalRepository,
   {
     CDOCommitInfo commitInfo = info.getCommitInfo();
     boolean isFailureCommitInfo = commitInfo.getBranch() == null;
-    if (isFailureCommitInfo || !commitInfo.isEmpty())
+    if (isFailureCommitInfo || !commitInfo.isEmpty() || info.getLockChangeInfo() != null)
     {
       sessionManager.sendCommitNotification(info);
       commitInfoManager.notifyCommitInfoHandlers(commitInfo);

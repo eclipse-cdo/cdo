@@ -51,4 +51,6 @@ public interface ISessionConfig extends IConfig
   public CDOSession openSession(String repositoryName);
 
   public CDOSession openSession(CDOSessionConfiguration configuration);
+
+  public void closeAllSessions();
 }

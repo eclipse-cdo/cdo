@@ -11,12 +11,13 @@
 package org.eclipse.emf.cdo.internal.common.lock;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
+import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
 import org.eclipse.emf.cdo.spi.common.lock.InternalCDOLockState;
 
-import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 
 import java.util.Collections;
@@ -40,8 +41,8 @@ public class CDOLockStateImpl implements InternalCDOLockState
 
   public CDOLockStateImpl(Object lockedObject)
   {
-    CheckUtil.checkArg(lockedObject, "lockedObject");
-    CheckUtil.checkState(lockedObject instanceof CDOID || lockedObject instanceof CDOIDAndBranch, "lockedObject is of wrong type");
+    assert lockedObject instanceof CDOID || lockedObject instanceof CDOIDAndBranch : "lockedObject is of wrong type";
+    assert !CDOIDUtil.isNull(CDOLockUtil.getLockedObjectID(lockedObject)) : "lockedObject is null";
     this.lockedObject = lockedObject;
   }
 
@@ -52,7 +53,6 @@ public class CDOLockStateImpl implements InternalCDOLockState
 
   public CDOLockStateImpl copy(Object lockedObject)
   {
-    checkNotDisposed();
     CDOLockStateImpl newLockState = new CDOLockStateImpl(lockedObject);
 
     if (readLockOwners != null)
@@ -178,8 +178,6 @@ public class CDOLockStateImpl implements InternalCDOLockState
   @Override
   public void addReadLockOwner(CDOLockOwner lockOwner)
   {
-    checkNotDisposed();
-
     if (readLockOwners == null)
     {
       readLockOwners = new HashSet<>();
@@ -191,8 +189,6 @@ public class CDOLockStateImpl implements InternalCDOLockState
   @Override
   public boolean removeReadLockOwner(CDOLockOwner lockOwner)
   {
-    checkNotDisposed();
-
     if (readLockOwners == null)
     {
       return false;
@@ -216,7 +212,6 @@ public class CDOLockStateImpl implements InternalCDOLockState
   @Override
   public void setWriteLockOwner(CDOLockOwner lockOwner)
   {
-    checkNotDisposed();
     writeLockOwner = lockOwner;
   }
 
@@ -229,7 +224,6 @@ public class CDOLockStateImpl implements InternalCDOLockState
   @Override
   public void setWriteOptionOwner(CDOLockOwner lockOwner)
   {
-    checkNotDisposed();
     writeOptionOwner = lockOwner;
   }
 
@@ -356,6 +350,7 @@ public class CDOLockStateImpl implements InternalCDOLockState
     builder.append(", writeOptionOwner=");
     builder.append(writeOptionOwner != null ? writeOptionOwner : "NONE");
 
+    builder.append("]");
     return builder.toString();
   }
 
@@ -365,13 +360,5 @@ public class CDOLockStateImpl implements InternalCDOLockState
     readLockOwners = null;
     writeLockOwner = null;
     writeOptionOwner = null;
-  }
-
-  private void checkNotDisposed()
-  {
-    if (lockedObject == null)
-    {
-      throw new IllegalStateException("Lock state is disposed");
-    }
   }
 }

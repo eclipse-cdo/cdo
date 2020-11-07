@@ -648,7 +648,7 @@ public final class ReflectUtil
     catch (Exception ex)
     {
       // This can really not happen
-      throw new AssertionError();
+      throw new AssertionError(ex);
     }
 
     makeAccessible(method);

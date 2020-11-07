@@ -954,6 +954,10 @@ public class TransactionCommitContext implements InternalCommitContext
     return timeStamp;
   }
 
+  /**
+   * @deprecated Does not seem to be used.
+   */
+  @Deprecated
   protected void setTimeStamp(long timeStamp)
   {
     repository.forceCommitTimeStamp(timeStamp, new Monitor());
@@ -984,7 +988,7 @@ public class TransactionCommitContext implements InternalCommitContext
     try
     {
       // Send notifications (in particular FailureCommitInfos) only if timeStamp had been allocated
-      if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
+      if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE || lockChangeInfo != null)
       {
         sendCommitNotifications(success);
       }

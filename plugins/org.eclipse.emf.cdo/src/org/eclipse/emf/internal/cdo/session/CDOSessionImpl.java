@@ -1040,15 +1040,15 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       CDOCommitInfo commitInfo = info.getCommitInfo();
       registerPackageUnits(commitInfo.getNewPackageUnits());
 
-      InvalidationData invalidationData = new InvalidationData();
-      invalidationData.setCommitInfo(commitInfo);
-      invalidationData.setSender(null);
-      invalidationData.setClearResourcePathCache(info.isClearResourcePathCache());
-      invalidationData.setSecurityImpact(info.getSecurityImpact());
-      invalidationData.setNewPermissions(info.getNewPermissions());
-      invalidationData.setLockChangeInfo(info.getLockChangeInfo());
+      InvalidationData sessionInvalidationData = new InvalidationData();
+      sessionInvalidationData.setCommitInfo(commitInfo);
+      sessionInvalidationData.setSender(null);
+      sessionInvalidationData.setClearResourcePathCache(info.isClearResourcePathCache());
+      sessionInvalidationData.setSecurityImpact(info.getSecurityImpact());
+      sessionInvalidationData.setNewPermissions(info.getNewPermissions());
+      sessionInvalidationData.setLockChangeInfo(info.getLockChangeInfo());
 
-      invalidate(invalidationData);
+      invalidate(sessionInvalidationData);
     }
     catch (RuntimeException ex)
     {

@@ -4751,7 +4751,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           ((InternalCDOPackageUnit)newPackageUnit).setState(CDOPackageUnit.State.LOADED);
         }
 
-        CDOLockChangeInfo lockChangeInfo = makeUnlockChangeInfo(result, branchChanged ? branch : null);
+        CDOLockChangeInfo unlockChangeInfo = makeUnlockChangeInfo(result, branchChanged ? branch : null);
         CDOCommitInfo commitInfo = null;
 
         CommitData newCommitData = result.getNewCommitData();
@@ -4776,15 +4776,24 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           commitInfo = makeCommitInfo(timeStamp, previousTimeStamp);
           if (!commitInfo.isEmpty())
           {
-            InvalidationData invalidationData = new InvalidationData();
-            invalidationData.setCommitInfo(commitInfo);
-            invalidationData.setSender(transaction);
-            invalidationData.setClearResourcePathCache(clearResourcePathCache);
-            invalidationData.setSecurityImpact(result.getSecurityImpact());
-            invalidationData.setNewPermissions(result.getNewPermissions());
-            invalidationData.setLockChangeInfo(lockChangeInfo);
+            InvalidationData sessionInvalidationData = new InvalidationData();
+            sessionInvalidationData.setCommitInfo(commitInfo);
+            sessionInvalidationData.setSender(transaction);
+            sessionInvalidationData.setClearResourcePathCache(clearResourcePathCache);
+            sessionInvalidationData.setSecurityImpact(result.getSecurityImpact());
+            sessionInvalidationData.setNewPermissions(result.getNewPermissions());
+            sessionInvalidationData.setLockChangeInfo(unlockChangeInfo);
 
-            session.invalidate(invalidationData);
+            session.invalidate(sessionInvalidationData);
+          }
+          else
+          {
+            CDOLockState[] newLockStates = result.getNewLockStates();
+            if (newLockStates != null)
+            {
+              CDOLockChangeInfo lockChangeInfo = makeLockChangeInfo(CDOLockChangeInfo.Operation.UNLOCK, null, result.getTimeStamp(), newLockStates);
+              session.handleLockNotification(lockChangeInfo, transaction, true);
+            }
           }
 
           // Bug 290032 - Sticky views
@@ -4849,9 +4858,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           fireEvent(new FinishedEvent(idMappings), listeners);
         }
 
-        if (lockChangeInfo != null && isActive())
+        if (unlockChangeInfo != null && isActive())
         {
-          fireLocksChangedEvent(CDOTransactionImpl.this, lockChangeInfo);
+          // session.handleLockNotification(unlockChangeInfo, transaction, true);
+          fireLocksChangedEvent(CDOTransactionImpl.this, unlockChangeInfo);
         }
       }
       catch (RuntimeException ex)
@@ -4934,7 +4944,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
         if (options().isEffectiveAutoReleaseLock(object))
         {
-          lockState.updateFrom(InternalCDOLockState.UNLOCKED);
+          lockState.dispose();
           objectsToUnlock.add(lockState);
         }
       }

@@ -1,41 +1,41 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.jdt.junit.launchconfig">
-<booleanAttribute key="com.mountainminds.eclemma.core.INPLACE_INSTRUMENTATION" value="true"/>
-<listAttribute key="com.mountainminds.eclemma.core.INSTRUMENTATION_PATHS">
-<listEntry value="/org.eclipse.net4j.db.h2/bin"/>
-<listEntry value="/org.eclipse.net4j.http.server/bin"/>
-<listEntry value="/org.eclipse.emf.cdo.common/bin"/>
-<listEntry value="/org.eclipse.net4j.http/bin"/>
-<listEntry value="/org.eclipse.emf.cdo.net4j/bin"/>
-<listEntry value="/org.eclipse.emf.cdo/bin"/>
-<listEntry value="/org.eclipse.emf.cdo.common.db/bin"/>
-<listEntry value="/org.eclipse.net4j.tcp/bin"/>
-<listEntry value="/org.eclipse.net4j/bin"/>
-<listEntry value="/org.eclipse.net4j.util/bin"/>
-<listEntry value="/org.eclipse.net4j.jvm/bin"/>
-<listEntry value="/org.eclipse.net4j.db/bin"/>
-<listEntry value="/org.eclipse.emf.cdo.server/bin"/>
-<listEntry value="/org.eclipse.net4j.http.common/bin"/>
-<listEntry value="/org.eclipse.net4j.db.derby/bin"/>
-<listEntry value="/org.eclipse.emf.cdo.server.net4j/bin"/>
-</listAttribute>
-<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
-<listEntry value="/org.eclipse.emf.cdo.tests/src/org/eclipse/emf/cdo/tests/AllTests.java"/>
-</listAttribute>
-<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
-<listEntry value="1"/>
-</listAttribute>
-<listAttribute key="org.eclipse.debug.ui.favoriteGroups">
-<listEntry value="org.eclipse.debug.ui.launchGroup.debug"/>
-<listEntry value="org.eclipse.debug.ui.launchGroup.run"/>
-</listAttribute>
-<stringAttribute key="org.eclipse.jdt.junit.CONTAINER" value=""/>
-<booleanAttribute key="org.eclipse.jdt.junit.KEEPRUNNING_ATTR" value="false"/>
-<stringAttribute key="org.eclipse.jdt.junit.TESTNAME" value=""/>
-<stringAttribute key="org.eclipse.jdt.junit.TEST_KIND" value="org.eclipse.jdt.junit.loader.junit3"/>
-<booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_CLASSPATH_ONLY_JAR" value="false"/>
-<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.eclipse.emf.cdo.tests.AllTests"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="org.eclipse.emf.cdo.tests"/>
-<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xms40m&#13;&#10;-Xmx4g&#13;&#10;-Dorg.eclipse.net4j.util.om.trace.disable=true&#13;&#10;-Dorg.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.enableServerBrowser=false&#13;&#10;-Dorg.eclipse.net4j.db.close.noisy=true"/>
-<stringAttribute key="yk-options" value="&#13;&#10;additional-options=&#13;&#10;snapshots-dir=&#13;&#10;"/>
+    <booleanAttribute key="com.mountainminds.eclemma.core.INPLACE_INSTRUMENTATION" value="true"/>
+    <listAttribute key="com.mountainminds.eclemma.core.INSTRUMENTATION_PATHS">
+        <listEntry value="/org.eclipse.net4j.db.h2/bin"/>
+        <listEntry value="/org.eclipse.net4j.http.server/bin"/>
+        <listEntry value="/org.eclipse.emf.cdo.common/bin"/>
+        <listEntry value="/org.eclipse.net4j.http/bin"/>
+        <listEntry value="/org.eclipse.emf.cdo.net4j/bin"/>
+        <listEntry value="/org.eclipse.emf.cdo/bin"/>
+        <listEntry value="/org.eclipse.emf.cdo.common.db/bin"/>
+        <listEntry value="/org.eclipse.net4j.tcp/bin"/>
+        <listEntry value="/org.eclipse.net4j/bin"/>
+        <listEntry value="/org.eclipse.net4j.util/bin"/>
+        <listEntry value="/org.eclipse.net4j.jvm/bin"/>
+        <listEntry value="/org.eclipse.net4j.db/bin"/>
+        <listEntry value="/org.eclipse.emf.cdo.server/bin"/>
+        <listEntry value="/org.eclipse.net4j.http.common/bin"/>
+        <listEntry value="/org.eclipse.net4j.db.derby/bin"/>
+        <listEntry value="/org.eclipse.emf.cdo.server.net4j/bin"/>
+    </listAttribute>
+    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+        <listEntry value="/org.eclipse.emf.cdo.tests/src/org/eclipse/emf/cdo/tests/AllTests.java"/>
+    </listAttribute>
+    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+        <listEntry value="1"/>
+    </listAttribute>
+    <listAttribute key="org.eclipse.debug.ui.favoriteGroups">
+        <listEntry value="org.eclipse.debug.ui.launchGroup.debug"/>
+        <listEntry value="org.eclipse.debug.ui.launchGroup.run"/>
+    </listAttribute>
+    <stringAttribute key="org.eclipse.jdt.junit.CONTAINER" value=""/>
+    <booleanAttribute key="org.eclipse.jdt.junit.KEEPRUNNING_ATTR" value="false"/>
+    <stringAttribute key="org.eclipse.jdt.junit.TESTNAME" value=""/>
+    <stringAttribute key="org.eclipse.jdt.junit.TEST_KIND" value="org.eclipse.jdt.junit.loader.junit3"/>
+    <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_CLASSPATH_ONLY_JAR" value="false"/>
+    <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.eclipse.emf.cdo.tests.AllTests"/>
+    <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="org.eclipse.emf.cdo.tests"/>
+    <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-ea&#13;&#10;-Xms40m&#13;&#10;-Xmx4g&#13;&#10;-Dorg.eclipse.net4j.util.om.trace.disable=true&#13;&#10;-Dorg.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.enableServerBrowser=false&#13;&#10;-Dorg.eclipse.net4j.db.close.noisy=true"/>
+    <stringAttribute key="yk-options" value="&#13;&#10;additional-options=&#13;&#10;snapshots-dir=&#13;&#10;"/>
 </launchConfiguration>

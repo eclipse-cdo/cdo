@@ -1880,38 +1880,52 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
 
   private void clearAdapters(CDOAdapterPolicy adapterPolicy)
   {
-    for (CDOObject object : getModifiableObjects().values())
+    try
     {
-      EList<Adapter> adapters = object.eAdapters();
-      if (!adapters.isEmpty())
+      for (CDOObject object : getModifiableObjects().values())
       {
-        for (Iterator<Adapter> it = adapters.iterator(); it.hasNext();)
+        EList<Adapter> adapters = object.eAdapters();
+        if (!adapters.isEmpty())
         {
-          Adapter adapter = it.next();
-          if (adapter instanceof CDOObjectWrapperBase)
+          for (Iterator<Adapter> it = adapters.iterator(); it.hasNext();)
           {
-            // Don't remove a legacy adapter because otherwise references to this CDOObject will break.
-            continue;
-          }
+            Adapter adapter = it.next();
+            if (adapter instanceof CDOObjectWrapperBase)
+            {
+              // Don't remove a legacy adapter because otherwise references to this CDOObject will break.
+              continue;
+            }
 
-          boolean validAdapter;
+            boolean validAdapter;
 
-          try
-          {
-            validAdapter = adapterPolicy.isValid(object, adapter);
-          }
-          catch (Exception ex)
-          {
-            OM.LOG.error(ex);
-            continue;
-          }
+            try
+            {
+              validAdapter = adapterPolicy.isValid(object, adapter);
+            }
+            catch (Exception ex)
+            {
+              OM.LOG.error(ex);
+              continue;
+            }
 
-          if (validAdapter)
-          {
-            it.remove();
+            if (validAdapter)
+            {
+              try
+              {
+                it.remove();
+              }
+              catch (Exception ex)
+              {
+                OM.LOG.error(ex);
+              }
+            }
           }
         }
       }
+    }
+    catch (Exception ex)
+    {
+      OM.LOG.error(ex);
     }
   }
 

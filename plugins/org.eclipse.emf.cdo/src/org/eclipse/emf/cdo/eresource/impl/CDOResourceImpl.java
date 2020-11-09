@@ -1664,12 +1664,16 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
   @Override
   public NotificationChain basicSetResourceSet(ResourceSet resourceSet, NotificationChain notifications)
   {
-    final ResourceSet oldResourceSet = getResourceSet();
+    ResourceSet oldResourceSet = getResourceSet();
     if (oldResourceSet != null)
     {
-      final NotificationChain finalNotifications = notifications;
-
       InternalCDOViewSet viewSet = (InternalCDOViewSet)CDOUtil.getViewSet(oldResourceSet);
+      if (viewSet == null)
+      {
+        return notifications;
+      }
+
+      NotificationChain finalNotifications = notifications;
       notifications = viewSet.executeWithoutNotificationHandling(new Callable<NotificationChain>()
       {
         @Override

@@ -28,6 +28,12 @@ public abstract class AbstractFilteredIterator<T> extends AbstractIterator<T>
   }
 
   @Override
+  public void remove()
+  {
+    delegate.remove();
+  }
+
+  @Override
   protected Object computeNextElement()
   {
     while (delegate.hasNext())

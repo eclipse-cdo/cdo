@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.internal.explorer.checkouts;
 
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
+import org.eclipse.emf.cdo.internal.explorer.bundle.OM;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.AbstractCDOViewProvider;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -230,7 +231,14 @@ public class CDOCheckoutViewProvider extends AbstractCDOViewProvider
 
         for (CDOView view : array)
         {
-          view.close();
+          try
+          {
+            view.close();
+          }
+          catch (Exception ex)
+          {
+            OM.LOG.error(ex);
+          }
         }
       }
       else if (resourceSet != null)

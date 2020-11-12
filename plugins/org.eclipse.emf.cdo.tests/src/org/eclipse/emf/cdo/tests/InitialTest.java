@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.tests.config.IModelConfig;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
@@ -724,6 +725,7 @@ public class InitialTest extends AbstractCDOTest
     }
   }
 
+  @Skips(IModelConfig.CAPABILITY_LEGACY) // Legacy DOES eagerly load all references!
   public void testReferenceIntoDifferentResource() throws Exception
   {
     CDOSession session = openSession();

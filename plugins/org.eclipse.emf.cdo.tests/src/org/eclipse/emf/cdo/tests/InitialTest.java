@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 import org.eclipse.emf.cdo.tests.model1.Category;
+import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.OrderAddress;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.tests.model1.Product1;
@@ -28,6 +29,7 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.session.SessionUtil;
+import org.eclipse.emf.internal.cdo.view.AbstractCDOView;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -41,8 +43,10 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceImpl;
+import org.eclipse.emf.spi.cdo.InternalCDOObject;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Eike Stepper
@@ -718,5 +722,42 @@ public class InitialTest extends AbstractCDOTest
     {
       assertEquals(supplier, supplierAfterCommit2);
     }
+  }
+
+  public void testReferenceIntoDifferentResource() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+
+    CDOResource resource1 = transaction.createResource(getResourcePath("/test1"));
+    OrderDetail orderDetail = getModel1Factory().createOrderDetail();
+    resource1.getContents().add(orderDetail);
+
+    CDOResource resource2 = transaction.createResource(getResourcePath("/test2"));
+    Company company = getModel1Factory().createCompany();
+    resource2.getContents().add(company);
+    Category category = getModel1Factory().createCategory();
+    company.getCategories().add(category);
+    Product1 product = getModel1Factory().createProduct1();
+    product.getOrderDetails().add(orderDetail);
+    category.getProducts().add(product);
+
+    transaction.commit();
+    transaction.close();
+    session.close();
+
+    session = openSession();
+    // session.getRevisionManager().addListener(e -> System.out.println(e));
+
+    CDOView view = session.openView();
+    resource1 = view.getResource(getResourcePath("/test1"));
+    orderDetail = (OrderDetail)resource1.getContents().get(0);
+
+    List<InternalCDOObject> objectsBefore = ((AbstractCDOView)view).getObjectsList();
+    product = orderDetail.getProduct(); // Load revision.
+    List<InternalCDOObject> objectsAfter = ((AbstractCDOView)view).getObjectsList();
+
+    // Assert that no container objects are loaded.
+    assertEquals(objectsBefore.size() + 1, objectsAfter.size());
   }
 }

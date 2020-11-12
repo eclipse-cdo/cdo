@@ -680,5 +680,12 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
     {
       return prefetchDepth;
     }
+
+    @Override
+    protected String formatAdditionalParameters()
+    {
+      return "prefetchDepth=" + prefetchDepth + ", primaryLoadedRevisions=" + primaryLoadedRevisions + ", additionalLoadedRevisions="
+          + additionalLoadedRevisions;
+    }
   }
 }

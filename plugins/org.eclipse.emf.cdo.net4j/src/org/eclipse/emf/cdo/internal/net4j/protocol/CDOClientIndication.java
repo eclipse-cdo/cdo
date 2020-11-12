@@ -72,66 +72,56 @@ public abstract class CDOClientIndication extends Indication
       throw new LifecycleException(session + " is inactive in " + getClass().getName(), ex);
     }
 
-    try
+    indicating(new CDODataInputImpl(in)
     {
-      indicating(new CDODataInputImpl(in)
+      @Override
+      public CDOPackageRegistry getPackageRegistry()
       {
-        @Override
-        public CDOPackageRegistry getPackageRegistry()
-        {
-          return session.getPackageRegistry();
-        }
-
-        @Override
-        protected boolean isXCompression()
-        {
-          return CDOProtocolConstants.X_COMPRESSION;
-        }
-
-        @Override
-        protected StringIO getPackageURICompressor()
-        {
-          return getProtocol().getPackageURICompressor();
-        }
-
-        @Override
-        protected CDOListFactory getListFactory()
-        {
-          return CDOListWithElementProxiesImpl.FACTORY;
-        }
-
-        @Override
-        protected CDOBranchManager getBranchManager()
-        {
-          return session.getBranchManager();
-        }
-
-        @Override
-        protected CDOCommitInfoManager getCommitInfoManager()
-        {
-          return session.getCommitInfoManager();
-        }
-
-        @Override
-        protected CDORevisionFactory getRevisionFactory()
-        {
-          return session.getRevisionManager().getFactory();
-        }
-
-        @Override
-        protected CDOLobStore getLobStore()
-        {
-          return session.getLobStore();
-        }
-      });
-    }
-    catch (IOException | RuntimeException ex)
-    {
-      if (session.isActive())
-      {
-        throw ex;
+        return session.getPackageRegistry();
       }
-    }
+
+      @Override
+      protected boolean isXCompression()
+      {
+        return CDOProtocolConstants.X_COMPRESSION;
+      }
+
+      @Override
+      protected StringIO getPackageURICompressor()
+      {
+        return getProtocol().getPackageURICompressor();
+      }
+
+      @Override
+      protected CDOListFactory getListFactory()
+      {
+        return CDOListWithElementProxiesImpl.FACTORY;
+      }
+
+      @Override
+      protected CDOBranchManager getBranchManager()
+      {
+        return session.getBranchManager();
+      }
+
+      @Override
+      protected CDOCommitInfoManager getCommitInfoManager()
+      {
+        return session.getCommitInfoManager();
+      }
+
+      @Override
+      protected CDORevisionFactory getRevisionFactory()
+      {
+        return session.getRevisionManager().getFactory();
+      }
+
+      @Override
+      protected CDOLobStore getLobStore()
+      {
+        return session.getLobStore();
+      }
+    });
   }
 
   protected abstract void indicating(CDODataInput in) throws IOException;

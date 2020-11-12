@@ -1090,7 +1090,20 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     {
       if (view != sender)
       {
-        view.handleLockNotification(sender, lockChangeInfo);
+        try
+        {
+          if (view.isActive())
+          {
+            view.handleLockNotification(sender, lockChangeInfo);
+          }
+        }
+        catch (Exception ex)
+        {
+          if (view.isActive())
+          {
+            OM.LOG.error(ex);
+          }
+        }
       }
     }
 

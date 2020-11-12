@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
+import org.eclipse.emf.cdo.common.security.NoPermissionException;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceNodeImpl;
 import org.eclipse.emf.cdo.internal.common.model.CDOClassInfoImpl;
@@ -581,7 +582,14 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     EStructuralFeature[] allPersistentFeatures = classInfo.getAllPersistentFeatures();
     for (EStructuralFeature eFeature : allPersistentFeatures)
     {
-      revisionToInstanceFeature(this, revision, eFeature);
+      try
+      {
+        revisionToInstanceFeature(this, revision, eFeature);
+      }
+      catch (NoPermissionException ex)
+      {
+        //$FALL-THROUGH$
+      }
     }
   }
 

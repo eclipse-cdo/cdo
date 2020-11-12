@@ -64,6 +64,8 @@ public class Bugzilla_417483_Test extends AbstractCDOTest
 {
   private static final SecurityFactory SF = SecurityFactory.eINSTANCE;
 
+  private static final String REALM_PATH = "/security";
+
   private static final IPasswordCredentials CREDENTIALS = new PasswordCredentials("Stepper", "12345");
 
   private static final IPasswordCredentials CREDENTIALS_READ_ONLY = new PasswordCredentials("Lagarde", "54321");
@@ -73,7 +75,7 @@ public class Bugzilla_417483_Test extends AbstractCDOTest
   {
     super.doSetUp();
 
-    ISecurityManager securityManager = SecurityManagerUtil.createSecurityManager("/security", getServerContainer());
+    ISecurityManager securityManager = SecurityManagerUtil.createSecurityManager(REALM_PATH, getServerContainer());
 
     // Start repository
     getTestProperties().put(RepositoryConfig.PROP_TEST_SECURITY_MANAGER, securityManager);
@@ -168,7 +170,7 @@ public class Bugzilla_417483_Test extends AbstractCDOTest
     category.getProducts().add(getModel1Factory().createProduct1());
     category.setName("RENAMED");
 
-    final CountDownLatch latch = new CountDownLatch(1);
+    CountDownLatch latch = new CountDownLatch(1);
     transactionReadOnly.addListener(new IListener()
     {
       @Override
@@ -217,8 +219,8 @@ public class Bugzilla_417483_Test extends AbstractCDOTest
 
   public void testLoad_NoPermission() throws Exception
   {
-    final IPasswordCredentials credentials = new PasswordCredentials("user", "password");
-    final String protectedResource = getResourcePath("/protected");
+    IPasswordCredentials credentials = new PasswordCredentials("user", "password");
+    String protectedResource = getResourcePath("/protected");
 
     getSecurityManager().modify(new ISecurityManager.RealmOperation()
     {
@@ -256,8 +258,8 @@ public class Bugzilla_417483_Test extends AbstractCDOTest
 
   public void testLoad_ReadPermission() throws Exception
   {
-    final IPasswordCredentials credentials = new PasswordCredentials("user", "password");
-    final String protectedResource = getResourcePath("/protected");
+    IPasswordCredentials credentials = new PasswordCredentials("user", "password");
+    String protectedResource = getResourcePath("/protected");
 
     getSecurityManager().modify(new ISecurityManager.RealmOperation()
     {
@@ -295,8 +297,8 @@ public class Bugzilla_417483_Test extends AbstractCDOTest
 
   public void testCommit_NoPermission() throws Exception
   {
-    final IPasswordCredentials credentials = new PasswordCredentials("user", "password");
-    final String protectedResource = getResourcePath("/protected");
+    IPasswordCredentials credentials = new PasswordCredentials("user", "password");
+    String protectedResource = getResourcePath("/protected");
 
     getSecurityManager().modify(new ISecurityManager.RealmOperation()
     {
@@ -328,8 +330,8 @@ public class Bugzilla_417483_Test extends AbstractCDOTest
 
   public void testCommit_ReadPermission() throws Exception
   {
-    final IPasswordCredentials credentials = new PasswordCredentials("user", "password");
-    final String protectedResource = getResourcePath("/protected");
+    IPasswordCredentials credentials = new PasswordCredentials("user", "password");
+    String protectedResource = getResourcePath("/protected");
 
     getSecurityManager().modify(new ISecurityManager.RealmOperation()
     {
@@ -363,8 +365,8 @@ public class Bugzilla_417483_Test extends AbstractCDOTest
 
   public void testCommit_WritePermission() throws Exception
   {
-    final IPasswordCredentials credentials = new PasswordCredentials("user", "password");
-    final String protectedResource = getResourcePath("/protected");
+    IPasswordCredentials credentials = new PasswordCredentials("user", "password");
+    String protectedResource = getResourcePath("/protected");
 
     getSecurityManager().modify(new ISecurityManager.RealmOperation()
     {
@@ -392,6 +394,29 @@ public class Bugzilla_417483_Test extends AbstractCDOTest
 
     transaction.commit();
     assertEquals(CDOPermission.WRITE, CDOUtil.getCDOObject(company).cdoPermission());
+  }
+
+  public void testRemoveUser() throws Exception
+  {
+    IPasswordCredentials admin = new PasswordCredentials(User.ADMINISTRATOR, "0000");
+    CDOSession session = openSession(admin);
+
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.getResource(REALM_PATH);
+
+    Realm realm = (Realm)resource.getContents().get(0);
+    realm.removeUser(CREDENTIALS.getUserID());
+
+    transaction.commit();
+
+    session.close();
+    session = openSession(admin);
+    transaction = session.openTransaction();
+    resource = transaction.getResource(REALM_PATH);
+    realm = (Realm)resource.getContents().get(0);
+
+    User user = realm.getUser(CREDENTIALS.getUserID());
+    assertEquals(null, user);
   }
 
   private ISecurityManager getSecurityManager()

@@ -119,6 +119,8 @@ public final class RealmUtil
         User user = (User)item;
         if (ObjectUtil.equals(user.getId(), userID))
         {
+          user.getRoles().clear();
+          user.getGroups().clear();
           it.remove();
           return user;
         }
@@ -150,6 +152,8 @@ public final class RealmUtil
         Group group = (Group)item;
         if (ObjectUtil.equals(group.getId(), groupID))
         {
+          group.getRoles().clear();
+          group.getUsers().clear();
           it.remove();
           return group;
         }
@@ -181,6 +185,7 @@ public final class RealmUtil
         Role role = (Role)item;
         if (ObjectUtil.equals(role.getId(), roleID))
         {
+          role.getAssignees().clear();
           it.remove();
           return role;
         }

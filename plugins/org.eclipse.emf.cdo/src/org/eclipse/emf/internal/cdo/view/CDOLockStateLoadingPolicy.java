@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.view.CDOView;
+import org.eclipse.emf.cdo.view.CDOLockStatePrefetcher;
 
 import org.eclipse.emf.internal.cdo.view.CDOViewImpl.OptionsImpl;
 
@@ -28,7 +29,9 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
  * @see OptionsImpl#setLockStatePrefetchEnabled(boolean)
  * @author Esteban Dugueperoux
  * @since 4.4
+ * @deprecated As of 4.12 use {@link CDOLockStatePrefetcher#setObjectFilter(java.util.function.Predicate)}.
  */
+@Deprecated
 @FunctionalInterface
 public interface CDOLockStateLoadingPolicy
 {

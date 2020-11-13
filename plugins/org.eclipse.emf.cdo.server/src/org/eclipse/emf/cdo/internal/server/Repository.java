@@ -110,7 +110,6 @@ import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.MoveableList;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
-import org.eclipse.net4j.util.concurrent.IExecutorServiceProvider;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.concurrent.RWOLockManager.LockState;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
@@ -156,7 +155,7 @@ import java.util.function.Consumer;
  * @author Eike Stepper
  * @since 2.0
  */
-public class Repository extends Container<Object> implements InternalRepository, IExecutorServiceProvider
+public class Repository extends Container<Object> implements InternalRepository
 {
   private static final int UNCHUNKED = CDORevision.UNCHUNKED;
 

@@ -26,6 +26,8 @@ import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
+import org.eclipse.net4j.util.concurrent.IExecutorServiceProvider;
+
 import java.util.List;
 import java.util.Set;
 
@@ -37,7 +39,7 @@ import java.util.Set;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface InternalSession extends ISession, CDOIDProvider, CDOPermissionProvider, CDOCommonSession.Options
+public interface InternalSession extends ISession, CDOIDProvider, CDOPermissionProvider, CDOCommonSession.Options, IExecutorServiceProvider
 {
   public static final int TEMP_VIEW_ID = 0;
 

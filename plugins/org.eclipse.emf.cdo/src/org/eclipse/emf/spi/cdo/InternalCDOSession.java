@@ -37,6 +37,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLocker;
 import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 
+import org.eclipse.net4j.util.concurrent.IExecutorServiceProvider;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 
@@ -56,8 +57,15 @@ import java.util.Set;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface InternalCDOSession extends CDOSession, PackageProcessor, PackageLoader, RevisionLocker, CDORevisionUnchunker, ILifecycle
+public interface InternalCDOSession
+    extends CDOSession, PackageProcessor, PackageLoader, RevisionLocker, CDORevisionUnchunker, ILifecycle, IExecutorServiceProvider
 {
+  /**
+   * @since 4.12
+   */
+  @Override
+  public InternalCDOView[] getViews();
+
   public CDOSessionProtocol getSessionProtocol();
 
   /**

@@ -57,6 +57,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -116,6 +117,12 @@ public class SessionManager extends Container<ISession> implements InternalSessi
   {
     checkInactive();
     this.repository = repository;
+  }
+
+  @Override
+  public ExecutorService getExecutorService()
+  {
+    return repository.getExecutorService();
   }
 
   @Override

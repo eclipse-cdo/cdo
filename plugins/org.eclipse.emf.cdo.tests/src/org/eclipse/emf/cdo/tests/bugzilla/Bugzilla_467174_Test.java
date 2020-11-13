@@ -20,8 +20,7 @@ import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
-
-import org.eclipse.emf.internal.cdo.view.CDOViewImpl.OptionsImpl;
+import org.eclipse.emf.cdo.view.CDOLockStatePrefetcher;
 
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 
@@ -45,10 +44,8 @@ public class Bugzilla_467174_Test extends AbstractCDOTest
   {
     CDOSession session1 = openSession();
     CDOTransaction transaction1 = session1.openTransaction();
-
-    OptionsImpl options = (OptionsImpl)transaction1.options();
-    options.setLockNotificationEnabled(true);
-    options.setLockStatePrefetchEnabled(true);
+    transaction1.options().setLockNotificationEnabled(true);
+    new CDOLockStatePrefetcher(transaction1, false);
 
     CDOResource resource1 = transaction1.createResource(getResourcePath("test1.model1"));
     Company company = getModel1Factory().createCompany();
@@ -79,7 +76,7 @@ public class Bugzilla_467174_Test extends AbstractCDOTest
 
     CDOTransaction transaction2 = session2.openTransaction(resourceSet);
     transaction2.options().setLockNotificationEnabled(true);
-    ((OptionsImpl)transaction2.options()).setLockStatePrefetchEnabled(true);
+    new CDOLockStatePrefetcher(transaction2, false);
 
     transaction1.lockObjects(Collections.singletonList(categoryCDOObject), LockType.WRITE, 1);
     transaction1.lockObjects(Collections.singletonList(companyCDOObject), LockType.WRITE, 1);

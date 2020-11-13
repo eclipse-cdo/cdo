@@ -58,7 +58,6 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.session.SessionUtil;
 import org.eclipse.emf.internal.cdo.view.AbstractCDOView;
-import org.eclipse.emf.internal.cdo.view.CDOLockStateLoadingPolicy;
 
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.event.IListener;
@@ -95,6 +94,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
 
 /**
@@ -135,6 +135,12 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
   public InternalCDOSession getSession()
   {
     return session;
+  }
+
+  @Override
+  public ExecutorService getExecutorService()
+  {
+    return session.getExecutorService();
   }
 
   @Override
@@ -326,6 +332,12 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
   }
 
   @Override
+  public void updateLockStates(CDOLockState[] newLockStates, boolean loadObjectsOnDemand, Consumer<CDOLockState> consumer)
+  {
+    // Do nothing
+  }
+
+  @Override
   public void resourceLoaded(CDOResourceImpl resource, boolean loaded)
   {
     // Do nothing
@@ -445,26 +457,30 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     return false;
   }
 
-  public boolean isLockStatePrefetchEnabled()
-  {
-    return false;
-  }
-
   @Override
   public void setLockNotificationEnabled(boolean enabled)
   {
     throw new UnsupportedOperationException();
   }
 
-  public CDOLockStateLoadingPolicy getLockStateLoadingPolicy()
+  @Deprecated
+  public org.eclipse.emf.internal.cdo.view.CDOLockStateLoadingPolicy getLockStateLoadingPolicy()
   {
     return null;
   }
 
-  public void setLockStateLoadingPolicy(CDOLockStateLoadingPolicy lockStateLoadingPolicy)
+  @Deprecated
+  public void setLockStateLoadingPolicy(org.eclipse.emf.internal.cdo.view.CDOLockStateLoadingPolicy lockStateLoadingPolicy)
   {
   }
 
+  @Deprecated
+  public boolean isLockStatePrefetchEnabled()
+  {
+    return false;
+  }
+
+  @Deprecated
   public void setLockStatePrefetchEnabled(boolean enabled)
   {
     throw new UnsupportedOperationException();
@@ -631,6 +647,12 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     }
 
     @Override
+    public ExecutorService getExecutorService()
+    {
+      return internalSession.getExecutorService();
+    }
+
+    @Override
     public InternalCDOTransaction getTransaction(int viewID)
     {
       return null;
@@ -660,9 +682,9 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     }
 
     @Override
-    public CDOView[] getViews()
+    public InternalCDOView[] getViews()
     {
-      return getElements();
+      return (InternalCDOView[])getElements();
     }
 
     @Override

@@ -15,7 +15,6 @@ package org.eclipse.emf.internal.cdo.view;
 import org.eclipse.emf.cdo.CDOLocalAdapter;
 import org.eclipse.emf.cdo.CDONotification;
 import org.eclipse.emf.cdo.CDOObject;
-import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
@@ -35,7 +34,6 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
-import org.eclipse.emf.cdo.common.revision.CDORevisionsLoadedEvent;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.common.util.CDOException;
@@ -57,6 +55,7 @@ import org.eclipse.emf.cdo.util.StaleRevisionLockException;
 import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 import org.eclipse.emf.cdo.view.CDOFeatureAnalyzer;
 import org.eclipse.emf.cdo.view.CDOInvalidationPolicy;
+import org.eclipse.emf.cdo.view.CDOLockStatePrefetcher;
 import org.eclipse.emf.cdo.view.CDORevisionPrefetchingPolicy;
 import org.eclipse.emf.cdo.view.CDOStaleReferencePolicy;
 import org.eclipse.emf.cdo.view.CDOUnit;
@@ -82,7 +81,6 @@ import org.eclipse.net4j.util.collection.ConcurrentArray;
 import org.eclipse.net4j.util.collection.HashBag;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
-import org.eclipse.net4j.util.concurrent.IExecutorServiceProvider;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.concurrent.RunnableWithName;
 import org.eclipse.net4j.util.concurrent.SerializingExecutor;
@@ -99,7 +97,6 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.monitor.EclipseMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
-import org.eclipse.net4j.util.options.IOptionsEvent;
 import org.eclipse.net4j.util.options.OptionsEvent;
 import org.eclipse.net4j.util.ref.ReferenceType;
 import org.eclipse.net4j.util.ref.ReferenceValueMap;
@@ -142,11 +139,12 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 /**
  * @author Eike Stepper
  */
-public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProvider
+public class CDOViewImpl extends AbstractCDOView
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_VIEW, CDOViewImpl.class);
 
@@ -506,7 +504,8 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
    * @param loadObjectsOnDemand true to load corresponding {@link CDOObject} if not already loaded to be able to store lockState in cache, false otherwise
    * @since 4.5
    */
-  protected void updateLockStates(CDOLockState[] newLockStates, boolean loadObjectsOnDemand, Consumer<CDOLockState> consumer)
+  @Override
+  public void updateLockStates(CDOLockState[] newLockStates, boolean loadObjectsOnDemand, Consumer<CDOLockState> consumer)
   {
     synchronized (getViewMonitor())
     {
@@ -1006,7 +1005,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
 
       try
       {
-        InternalCDOObject object = getObject(oldID, false);
+        InternalCDOObject object = remapObjectSynced(oldID);
 
         InternalCDOLockState oldLockState = (InternalCDOLockState)lockStates.remove(object);
         if (oldLockState != null)
@@ -1016,14 +1015,6 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
           newLockState.updateFrom(oldLockState);
           lockStates.put(object, newLockState);
         }
-        else if (options().isLockStatePrefetchEnabled())
-        {
-          Object lockedObject = getLockTarget(object); // CDOID or CDOIDAndBranch
-          CDOLockState newLockState = CDOLockUtil.createLockState(lockedObject);
-          lockStates.put(object, newLockState);
-        }
-
-        super.remapObject(oldID);
       }
       finally
       {
@@ -1196,7 +1187,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
   /**
    * The caller must synchronize on this view!
    */
-  protected Map<CDOObject, CDOLockState> getLockStates()
+  public Map<CDOObject, CDOLockState> getLockStates()
   {
     return lockStates;
   }
@@ -1824,12 +1815,6 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     }
     finally
     {
-      if (options.lockStatePrefetcher != null)
-      {
-        options.lockStatePrefetcher.dispose();
-        options.lockStatePrefetcher = null;
-      }
-
       synchronized (getViewMonitor())
       {
         lockView();
@@ -2068,28 +2053,6 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     return true;
   }
 
-  protected static Object getLockTarget(CDOObject object)
-  {
-    CDOView view = object.cdoView();
-    if (view == null)
-    {
-      return null;
-    }
-
-    CDOID id = object.cdoID();
-    return getLockTarget(view, id);
-  }
-
-  protected static Object getLockTarget(CDOView view, CDOID id)
-  {
-    if (view.getSession().getRepositoryInfo().isSupportingBranches())
-    {
-      return CDOIDUtil.createIDAndBranch(id, view.getBranch());
-    }
-
-    return id;
-  }
-
   @Override
   public void resourceLoaded(CDOResourceImpl resource, boolean loaded)
   {
@@ -2103,6 +2066,28 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
   public final CDOUnitManagerImpl getUnitManager()
   {
     return unitManager;
+  }
+
+  public static Object getLockTarget(CDOObject object)
+  {
+    CDOView view = object.cdoView();
+    if (view == null)
+    {
+      return null;
+    }
+
+    CDOID id = object.cdoID();
+    return getLockTarget(view, id);
+  }
+
+  public static Object getLockTarget(CDOView view, CDOID id)
+  {
+    if (view.getSession().getRepositoryInfo().isSupportingBranches())
+    {
+      return CDOIDUtil.createIDAndBranch(id, view.getBranch());
+    }
+
+    return id;
   }
 
   /**
@@ -2897,134 +2882,6 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
   }
 
   /**
-   * A {@link IListener} to prefetch {@link CDOLockState lock states} when {@link CDORevision revisions} are loaded,
-   * according to {@link Options#setLockStatePrefetchEnabled(boolean)} option.
-   *
-   * @author Esteban Dugueperoux
-   */
-  private final class LockStatePrefetcher implements IListener
-  {
-    public LockStatePrefetcher()
-    {
-      session.getRevisionManager().addListener(this);
-    }
-
-    @Override
-    public void notifyEvent(IEvent event)
-    {
-      if (event instanceof CDORevisionsLoadedEvent)
-      {
-        CDORevisionsLoadedEvent revisionsLoadedEvent = (CDORevisionsLoadedEvent)event;
-        updateCDOViewObjectsCache(revisionsLoadedEvent);
-      }
-    }
-
-    private void updateCDOViewObjectsCache(CDORevisionsLoadedEvent revisionsLoadedEvent)
-    {
-      Set<CDOID> ids = new HashSet<>();
-      CDOLockStateLoadingPolicy lockStateLoadingPolicy = options().getLockStateLoadingPolicy();
-
-      synchronized (getViewMonitor())
-      {
-        lockView();
-
-        try
-        {
-          for (CDORevision revision : revisionsLoadedEvent.getPrimaryLoadedRevisions())
-          {
-            // Bug 466721 : Check null if it is a about a DetachedRevision
-            if (revision != null)
-            {
-              CDOID id = revision.getID();
-              if (id != null && lockStateLoadingPolicy.loadLockState(id))
-              {
-                // - Don't ask to create an object for CDOResource as the caller of ResourceSet.getResource()
-                // can have created it but not yet registered in CDOView.
-                // - Don't ask others CDOResourceNode either as it will create some load revisions request
-                // in addition to mode without lock state prefetch
-                boolean isResourceNode = revision.isResourceNode();
-                InternalCDOObject object = getObject(id, !isResourceNode);
-                if (object != null)
-                {
-                  ids.add(id);
-                }
-              }
-            }
-          }
-
-          if (!ids.isEmpty())
-          {
-            // direct call the session protocol
-            CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
-            CDOLockState[] loadedLockStates = sessionProtocol.getLockStates(viewID, ids, revisionsLoadedEvent.getPrefetchDepth());
-
-            updateLockStatesForAllViews(loadedLockStates, true);
-
-            // add missing lock states
-            List<CDOLockState> missingLockStates = new ArrayList<>();
-            for (CDOID id : ids)
-            {
-              InternalCDOObject object = getObject(id, false);
-
-              if (object != null && lockStates.get(object) == null)
-              {
-                Object lockedObject = getLockTarget(object); // CDOID or CDOIDAndBranch
-                if (lockedObject != null)
-                {
-                  missingLockStates.add(CDOLockUtil.createLockState(lockedObject));
-                }
-              }
-            }
-
-            for (CDORevision revision : revisionsLoadedEvent.getAdditionalLoadedRevisions())
-            {
-              CDOID id = revision.getID();
-              if (id != null && lockStateLoadingPolicy.loadLockState(id))
-              {
-                boolean isResourceNode = revision.isResourceNode();
-                InternalCDOObject object = getObject(id, !isResourceNode);
-                if (object != null && lockStates.get(object) == null)
-                {
-                  Object lockedObject = getLockTarget(object); // CDOID or CDOIDAndBranch
-                  if (lockedObject != null)
-                  {
-                    missingLockStates.add(CDOLockUtil.createLockState(lockedObject));
-                  }
-                }
-              }
-            }
-
-            updateLockStatesForAllViews(missingLockStates.toArray(new CDOLockState[missingLockStates.size()]), false);
-          }
-        }
-        finally
-        {
-          unlockView();
-        }
-      }
-    }
-
-    private void updateLockStatesForAllViews(CDOLockState[] lockStates, boolean loadOnDemand)
-    {
-      updateLockStates(lockStates, loadOnDemand, null);
-
-      // TODO Should this be done via ExecutorServide.submit() ?!
-      for (CDOCommonView view : getSession().getViews())
-      {
-        if (view != CDOViewImpl.this && view.getBranch() == getBranch())
-        {
-          ((CDOViewImpl)view).updateLockStates(lockStates, loadOnDemand, null);
-        }
-      }
-    }
-
-    public void dispose()
-    {
-      session.getRevisionManager().removeListener(this);
-    }
-  }
-
-  /**
    * @author Eike Stepper
    */
   private final class ViewInvalidator extends SerializingExecutor
@@ -3333,9 +3190,11 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
 
     private boolean lockNotificationsEnabled;
 
-    private CDOLockStateLoadingPolicy lockStateLoadingPolicy = new CDODefaultLockStateLoadingPolicy();
-
-    private LockStatePrefetcher lockStatePrefetcher;
+    /**
+     * See bug 568778.
+     */
+    @Deprecated
+    private CDOLockStatePrefetcher lockStatePrefetcher;
 
     private CDORevisionPrefetchingPolicy revisionPrefetchingPolicy = CDOUtil.createRevisionPrefetchingPolicy(NO_REVISION_PREFETCHING);
 
@@ -3574,82 +3433,71 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
       fireEvent(event);
     }
 
+    /**
+     * @deprecated As of 4.12 use {@link CDOLockStatePrefetcher}, see bug 568778.
+     */
+    @Deprecated
     public boolean isLockStatePrefetchEnabled()
     {
       return lockStatePrefetcher != null;
     }
 
+    /**
+     * @deprecated As of 4.12 use {@link CDOLockStatePrefetcher}, see bug 568778.
+     */
+    @Deprecated
     public void setLockStatePrefetchEnabled(boolean enabled)
     {
       checkActive();
 
-      IEvent event = null;
-      synchronized (getViewMonitor())
+      if (enabled)
       {
-        lockView();
-
-        try
+        if (lockStatePrefetcher == null)
         {
-          if (enabled)
-          {
-            if (lockStatePrefetcher == null)
-            {
-              lockStatePrefetcher = new LockStatePrefetcher();
-              event = new LockStatePrefetchEventImpl();
-            }
-          }
-          else
-          {
-            if (lockStatePrefetcher != null)
-            {
-              lockStatePrefetcher.dispose();
-              lockStatePrefetcher = null;
-              event = new LockStatePrefetchEventImpl();
-            }
-          }
-        }
-        finally
-        {
-          unlockView();
+          lockStatePrefetcher = new CDOLockStatePrefetcher(CDOViewImpl.this, false);
         }
       }
-
-      fireEvent(event);
+      else
+      {
+        if (lockStatePrefetcher != null)
+        {
+          lockStatePrefetcher.dispose();
+          lockStatePrefetcher = null;
+        }
+      }
     }
 
+    /**
+     * @deprecated As of 4.12 use {@link CDOLockStatePrefetcher#getObjectFilter()}, see bug 568778.
+     */
+    @Deprecated
     public CDOLockStateLoadingPolicy getLockStateLoadingPolicy()
     {
-      synchronized (getViewMonitor())
+      return new CDOLockStateLoadingPolicy()
       {
-        lockView();
-
-        try
+        @Override
+        public boolean loadLockState(CDOID id)
         {
-          return lockStateLoadingPolicy;
+          Predicate<CDOID> filter = lockStatePrefetcher == null ? CDOLockStatePrefetcher.DEFAULT_OBJECT_FILTER : lockStatePrefetcher.getObjectFilter();
+          return filter.test(id);
         }
-        finally
-        {
-          unlockView();
-        }
-      }
+      };
     }
 
+    /**
+     * @deprecated As of 4.12 use {@link CDOLockStatePrefetcher#setObjectFilter(java.util.function.Predicate)}, see bug 568778.
+     */
+    @Deprecated
+    @SuppressWarnings("deprecation")
     public void setLockStateLoadingPolicy(CDOLockStateLoadingPolicy lockStateLoadingPolicy)
     {
       checkActive();
-      synchronized (getViewMonitor())
+      if (lockStatePrefetcher == null)
       {
-        lockView();
-
-        try
-        {
-          this.lockStateLoadingPolicy = lockStateLoadingPolicy;
-        }
-        finally
-        {
-          unlockView();
-        }
+        lockStatePrefetcher = new CDOLockStatePrefetcher(CDOViewImpl.this, false);
       }
+
+      lockStatePrefetcher.setObjectFilter(id -> lockStateLoadingPolicy.loadLockState(id));
     }
 
     public boolean hasChangeSubscriptionPolicies()
@@ -4167,25 +4015,6 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
       public boolean getEnabled()
       {
         return enabled;
-      }
-    }
-
-    /**
-     * An {@link IOptionsEvent options event} fired from common view {@link CDOCommonView#options() options} when the
-     * {@link OptionsImpl#setLockStatePrefetchEnabled(boolean) lock state prefetch enabled} option has changed.
-     *
-     * @author Esteban Dugueperoux
-     * @noextend This interface is not intended to be extended by clients.
-     * @noimplement This interface is not intended to be implemented by clients.
-     * @since 4.4
-     */
-    private final class LockStatePrefetchEventImpl extends OptionsEvent
-    {
-      private static final long serialVersionUID = 1L;
-
-      public LockStatePrefetchEventImpl()
-      {
-        super(OptionsImpl.this);
       }
     }
 

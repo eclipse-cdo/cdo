@@ -22,10 +22,10 @@ import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.view.CDOLockStatePrefetcher;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
-import org.eclipse.emf.internal.cdo.view.CDOViewImpl.OptionsImpl;
 
 import java.util.Collections;
 
@@ -86,7 +86,12 @@ public class Bugzilla_541003_Test extends AbstractCDOTest
   private CDOView openView(CDOSession session, boolean lockStatePrefetchEnabled)
   {
     CDOView view = session.openView();
-    ((OptionsImpl)view.options()).setLockStatePrefetchEnabled(lockStatePrefetchEnabled);
+
+    if (lockStatePrefetchEnabled)
+    {
+      new CDOLockStatePrefetcher(view, false);
+    }
+
     return view;
   }
 

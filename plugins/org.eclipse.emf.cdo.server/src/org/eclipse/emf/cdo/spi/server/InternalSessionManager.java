@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.server.ISessionManager;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 
+import org.eclipse.net4j.util.concurrent.IExecutorServiceProvider;
 import org.eclipse.net4j.util.security.DiffieHellman;
 import org.eclipse.net4j.util.security.IAuthenticator;
 import org.eclipse.net4j.util.security.IUserManager;
@@ -38,7 +39,7 @@ import java.util.List;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface InternalSessionManager extends ISessionManager
+public interface InternalSessionManager extends ISessionManager, IExecutorServiceProvider
 {
   @Override
   public InternalRepository getRepository();

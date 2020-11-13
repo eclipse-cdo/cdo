@@ -82,7 +82,8 @@ public class Bugzilla_387564_Test extends AbstractLockingTest
     // Load the company into the control view, so that the view emits invalidation events for it.
     Company controlObject = controlView.getObject(company);
     IOUtil.OUT().println(controlObject.getName());
-    ((CDOTransaction)CDOUtil.getView(company)).commit();
+    transaction.commit();
+    waitForActiveLockNotifications();
 
     IEvent[] events = controlSessionListener.waitFor(2);
 

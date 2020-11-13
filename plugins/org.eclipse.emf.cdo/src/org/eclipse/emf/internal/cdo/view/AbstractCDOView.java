@@ -2601,28 +2601,34 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
       try
       {
-        CDOID newID;
-        InternalCDOObject object = objects.remove(oldID);
-        newID = object.cdoID();
-
-        objects.put(newID, object);
-
-        if (lastLookupID == oldID)
-        {
-          lastLookupID = null;
-          lastLookupObject = null;
-        }
-
-        if (TRACER.isEnabled())
-        {
-          TRACER.format("Remapping {0} --> {1}", oldID, newID); //$NON-NLS-1$
-        }
+        remapObjectSynced(oldID);
       }
       finally
       {
         unlockView();
       }
     }
+  }
+
+  protected InternalCDOObject remapObjectSynced(CDOID oldID)
+  {
+    InternalCDOObject object = objects.remove(oldID);
+    CDOID newID = object.cdoID();
+
+    objects.put(newID, object);
+
+    if (lastLookupID == oldID)
+    {
+      lastLookupID = newID;
+      lastLookupObject = object;
+    }
+
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Remapping {0} --> {1}", oldID, newID); //$NON-NLS-1$
+    }
+
+    return object;
   }
 
   @Override

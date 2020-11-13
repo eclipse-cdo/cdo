@@ -19,9 +19,8 @@ import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
+import org.eclipse.emf.cdo.view.CDOLockStatePrefetcher;
 import org.eclipse.emf.cdo.view.CDOView;
-
-import org.eclipse.emf.internal.cdo.view.CDOViewImpl.OptionsImpl;
 
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.log.OMLogHandler;
@@ -48,7 +47,8 @@ public class Bugzilla_466721_Test extends AbstractCDOTest
   {
     CDOSession session1 = openSession();
     CDOTransaction transaction1 = session1.openTransaction();
-    ((OptionsImpl)transaction1.options()).setLockStatePrefetchEnabled(true);
+    new CDOLockStatePrefetcher(transaction1, false);
+
     CDOResource resource1 = transaction1.createResource(getResourcePath(RESOURCE_NAME));
     Company company = getModel1Factory().createCompany();
     resource1.getContents().add(company);

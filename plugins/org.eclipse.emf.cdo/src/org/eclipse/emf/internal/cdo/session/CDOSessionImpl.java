@@ -97,7 +97,6 @@ import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
-import org.eclipse.net4j.util.concurrent.IExecutorServiceProvider;
 import org.eclipse.net4j.util.concurrent.IRWLockManager;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.concurrent.IRWOLockManager;
@@ -160,11 +159,12 @@ import java.util.concurrent.ExecutorService;
 /**
  * @author Eike Stepper
  */
-public abstract class CDOSessionImpl extends CDOTransactionContainerImpl implements InternalCDOSession, IExecutorServiceProvider
+public abstract class CDOSessionImpl extends CDOTransactionContainerImpl implements InternalCDOSession
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SESSION, CDOSessionImpl.class);
 
-  private static final boolean DEBUG_INVALIDATION = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.internal.cdo.session.CDOSessionImpl.DEBUG_INVALIDATION");
+  private static final boolean DEBUG_INVALIDATION = OMPlatform.INSTANCE.isProperty( //
+      "org.eclipse.emf.internal.cdo.session.CDOSessionImpl.DEBUG_INVALIDATION");
 
   private ExceptionHandler exceptionHandler;
 

@@ -13,13 +13,16 @@ package org.eclipse.emf.internal.cdo.view;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.view.CDOLockStatePrefetcher;
 
 /**
  * The default {@link CDOLockStateLoadingPolicy lock state loading policy} which ask to load {@link CDOLockState lock state} for each loaded {@link CDORevision revision} with the same number of request to server as for revisions requests.
  *
  * @author Esteban Dugueperoux
  * @since 4.4
+ * @deprecated As of 4.12 use {@link CDOLockStatePrefetcher#setObjectFilter(java.util.function.Predicate)}.
  */
+@Deprecated
 public class CDODefaultLockStateLoadingPolicy implements CDOLockStateLoadingPolicy
 {
   @Override

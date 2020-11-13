@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
+import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
@@ -27,6 +28,7 @@ import org.eclipse.emf.cdo.view.CDOFeatureAnalyzer;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewProvider;
 
+import org.eclipse.net4j.util.concurrent.IExecutorServiceProvider;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 
@@ -35,6 +37,7 @@ import org.eclipse.emf.ecore.EObject;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 /**
  * If the meaning of this type isn't clear, there really should be more of a description here...
@@ -44,7 +47,7 @@ import java.util.Map;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle
+public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle, IExecutorServiceProvider
 {
   public void setViewID(int viewId);
 
@@ -201,6 +204,11 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle
    * @since 4.1
    */
   public void handleLockNotification(InternalCDOView sender, CDOLockChangeInfo lockChangeInfo);
+
+  /**
+   * @since 4.12
+   */
+  public void updateLockStates(CDOLockState[] newLockStates, boolean loadObjectsOnDemand, Consumer<CDOLockState> consumer);
 
   /**
    * @since 4.2

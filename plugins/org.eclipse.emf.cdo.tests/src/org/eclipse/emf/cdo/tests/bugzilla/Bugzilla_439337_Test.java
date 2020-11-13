@@ -21,13 +21,14 @@ import org.eclipse.emf.cdo.internal.net4j.protocol.QueryRequest;
 import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.config.ISessionConfig;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.view.CDOLockStatePrefetcher;
 import org.eclipse.emf.cdo.view.CDOView;
-
-import org.eclipse.emf.internal.cdo.view.CDOViewImpl.OptionsImpl;
 
 import org.eclipse.net4j.signal.ISignalProtocol;
 import org.eclipse.net4j.signal.SignalCounter;
@@ -42,6 +43,7 @@ import org.eclipse.emf.ecore.util.EContentAdapter;
  *
  * @author Esteban Dugueperoux
  */
+@Requires(ISessionConfig.CAPABILITY_NET4J)
 public class Bugzilla_439337_Test extends AbstractCDOTest
 {
   private static final String RESOURCE_NAME = "test1.model1";
@@ -63,6 +65,7 @@ public class Bugzilla_439337_Test extends AbstractCDOTest
       category.setName("Category n°" + i);
       company.getCategories().add(category);
     }
+
     resource.getContents().add(company);
     transaction.commit();
   }
@@ -72,9 +75,7 @@ public class Bugzilla_439337_Test extends AbstractCDOTest
    */
   public void testCDOLockStateWithoutPrefetch() throws Exception
   {
-    CDOSession session = openSession();
-    CDOView view = session.openView();
-    testCDOLockState(view, false);
+    testCDOLockState(false);
   }
 
   /**
@@ -82,44 +83,57 @@ public class Bugzilla_439337_Test extends AbstractCDOTest
    */
   public void testCDOLockStateWithPrefetch() throws Exception
   {
-    CDOSession session = openSession();
-    CDOView view = session.openView();
-    ((OptionsImpl)view.options()).setLockStatePrefetchEnabled(true);
-    testCDOLockState(view, true);
+    testCDOLockState(true);
   }
 
-  private void testCDOLockState(CDOView view, boolean cdoLockStatePrefetchEnabled)
+  private void testCDOLockState(boolean lockStatePrefetchEnabled)
   {
-    view.getResourceSet().eAdapters().add(new EContentAdapterQueringCDOLockState());
-    ISignalProtocol<?> protocol = ((CDONet4jSession)view.getSession()).options().getNet4jProtocol();
+    CDONet4jSession session = (CDONet4jSession)openSession();
+    CDOView view = session.openView();
+
+    if (lockStatePrefetchEnabled)
+    {
+      new CDOLockStatePrefetcher(view, false);
+    }
+
+    ISignalProtocol<?> protocol = session.options().getNet4jProtocol();
     SignalCounter signalCounter = new SignalCounter(protocol);
+
+    view.getResourceSet().eAdapters().add(new EContentAdapterQueringCDOLockState());
     view.getResource(getResourcePath(RESOURCE_NAME + "?" + CDOResource.PREFETCH_PARAMETER + "=" + Boolean.TRUE));
 
-    int numberDifferentRequestCall = signalCounter.getCountForSignalTypes();
-    String assertMessage = "4 differents kinds of requests should have been sent, QueryRequest, QueryCancel, LoadRevisionsRequest and LockStateRequest";
     // QueryRequest, QueryCancel are used to get the resourcePath
-    assertEquals(assertMessage, 4, numberDifferentRequestCall);
+    assertEquals("4 differents kinds of requests should have been sent, QueryRequest, QueryCancel, LoadRevisionsRequest and LockStateRequest", 4,
+        signalCounter.getCountForSignalTypes());
+
     assertNotSame(0, signalCounter.getCountFor(QueryRequest.class));
     assertNotSame(0, signalCounter.getCountFor(QueryCancelRequest.class));
     assertNotSame(0, signalCounter.getCountFor(LoadRevisionsRequest.class));
     assertNotSame(0, signalCounter.getCountFor(LockStateRequest.class));
+
     assertEquals("1 single query request should have been sent to get the resourcePath", 1, signalCounter.getCountFor(QueryRequest.class));
     assertEquals("1 single query request should have been sent to cancel the single QueryRequest", 1, signalCounter.getCountFor(QueryCancelRequest.class));
     assertEquals(
-        "3 load revisions request should have been sent, 2 first for CDORevisions of CDOResourceFolders to get resource path and another in prefetch to load all CDORevisions of CDOResource",
+        "3 load revisions request should have been sent, 2 first for revisions of CDOResourceFolders to get resource path and another in prefetch to load all revisions of CDOResource",
         3, signalCounter.getCountFor(LoadRevisionsRequest.class));
-    int expectedNbLockStateRequestCalls = (cdoLockStatePrefetchEnabled ? 0 : NB_CATEGORIES) + 2;
-    assertEquals("As CDOLockState prefetch is " + (cdoLockStatePrefetchEnabled ? "" : "not ") + "enabled " + expectedNbLockStateRequestCalls
-        + " LockStateRequests should have been sent to the server", expectedNbLockStateRequestCalls, signalCounter.getCountFor(LockStateRequest.class));
+
+    int expectedRequests = (lockStatePrefetchEnabled ? 0 : NB_CATEGORIES) + 2;
+    assertEquals("As lock state prefetch is " + (lockStatePrefetchEnabled ? "" : "not ") + "enabled " + expectedRequests
+        + " LockStateRequests should have been sent to the server", expectedRequests, signalCounter.getCountFor(LockStateRequest.class));
 
     protocol.removeListener(signalCounter);
   }
 
   /**
    * A {@link EContentAdapter} to request {@link CDOLockState} on each object of a {@link ResourceSet}.
+   *
+   * @author Esteban Dugueperoux
    */
   private static class EContentAdapterQueringCDOLockState extends EContentAdapter
   {
+    public EContentAdapterQueringCDOLockState()
+    {
+    }
 
     @Override
     protected void addAdapter(Notifier notifier)

@@ -212,7 +212,10 @@ public class CDOLockStatePrefetcher
       }
       catch (Exception ex)
       {
-        OM.LOG.error(ex);
+        if (view.isActive())
+        {
+          OM.LOG.error(ex);
+        }
       }
     });
   }
@@ -225,7 +228,10 @@ public class CDOLockStatePrefetcher
     }
     catch (Exception ex)
     {
-      OM.LOG.error(ex);
+      if (view.isActive())
+      {
+        OM.LOG.error(ex);
+      }
     }
 
     for (InternalCDOView otherview : view.getSession().getViews())
@@ -253,7 +259,10 @@ public class CDOLockStatePrefetcher
     }
     catch (Exception ex)
     {
-      OM.LOG.error(ex);
+      if (otherview.isActive())
+      {
+        OM.LOG.error(ex);
+      }
     }
   }
 }

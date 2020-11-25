@@ -275,6 +275,15 @@ public class LegacyBundle extends AbstractBundle
       {
         url = trimSegments(url, 1);
       }
+      else if ("classes".equals(lastSegment)) //$NON-NLS-1$
+      {
+        URL url1 = trimSegments(url, 1);
+        lastSegment = lastSegment(url1);
+        if ("target".equals(lastSegment)) //$NON-NLS-1$
+        {
+          url = trimSegments(url1, 1);
+        }
+      }
 
       try
       {

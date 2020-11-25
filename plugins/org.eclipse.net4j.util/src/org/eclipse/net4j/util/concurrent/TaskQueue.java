@@ -11,6 +11,7 @@
 package org.eclipse.net4j.util.concurrent;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
+import org.eclipse.net4j.util.om.job.OMJob;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -32,7 +33,7 @@ public abstract class TaskQueue<T>
 {
   private final Set<T> queue = new LinkedHashSet<>();
 
-  private Job job;
+  private TaskJob job;
 
   public TaskQueue()
   {
@@ -62,7 +63,7 @@ public abstract class TaskQueue<T>
       }
       else
       {
-        job = new Job(task);
+        job = new TaskJob(task);
         job.schedule();
       }
     }
@@ -83,11 +84,11 @@ public abstract class TaskQueue<T>
   /**
    * @author Eike Stepper
    */
-  private final class Job extends org.eclipse.core.runtime.jobs.Job
+  private final class TaskJob extends OMJob
   {
     private T currentTask;
 
-    public Job(T task)
+    public TaskJob(T task)
     {
       super(getJobName(task));
       currentTask = task;

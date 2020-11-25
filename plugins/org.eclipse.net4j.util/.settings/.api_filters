@@ -216,6 +216,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/net4j/util/om/job/OMJob.java" type="org.eclipse.net4j.util.om.job.OMJob">
+        <filter id="576720909">
+            <message_arguments>
+                <message_argument value="InternalOMJob"/>
+                <message_argument value="OMJob"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/net4j/util/om/log/Logger.java" type="org.eclipse.net4j.util.om.log.Logger">
         <filter id="576725006">
             <message_arguments>

@@ -10,6 +10,7 @@
  */
 package org.eclipse.net4j.internal.util.bundle;
 
+import org.eclipse.net4j.internal.util.om.InternalOMJob;
 import org.eclipse.net4j.internal.util.om.LegacyPlatform;
 import org.eclipse.net4j.internal.util.om.OSGiPlatform;
 import org.eclipse.net4j.util.collection.ConcurrentArray;
@@ -433,6 +434,12 @@ public abstract class AbstractPlatform implements OMPlatform
   protected abstract String getDebugOption(String bundleID, String option);
 
   protected abstract void setDebugOption(String bundleID, String option, String value);
+
+  public abstract void scheduleJob(InternalOMJob job);
+
+  public abstract void cancelJob(InternalOMJob job);
+
+  public abstract void renameJob(InternalOMJob job, String name);
 
   /**
    * TODO Make configurable via system property

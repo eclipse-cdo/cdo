@@ -13,17 +13,26 @@ package org.eclipse.net4j.internal.util.om;
 import org.eclipse.net4j.internal.util.bundle.AbstractPlatform;
 import org.eclipse.net4j.util.om.OMBundle;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.osgi.service.debug.DebugOptions;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
  */
 public class OSGiPlatform extends AbstractPlatform
 {
+  private final Map<InternalOMJob, Job> eclipseJobs = Collections.synchronizedMap(new HashMap<>());
+
   BundleContext systemContext;
 
   public OSGiPlatform(Object systemContext)
@@ -67,6 +76,51 @@ public class OSGiPlatform extends AbstractPlatform
   public void setCommandLineArgs(String[] args)
   {
     throw new UnsupportedOperationException("Set command line arguements inside the OSGi enviorment is not needed.");
+  }
+
+  @Override
+  public void scheduleJob(InternalOMJob job)
+  {
+    Job eclipseJob = new Job(job.getName())
+    {
+      @Override
+      protected IStatus run(IProgressMonitor monitor)
+      {
+        try
+        {
+          return job.run(monitor);
+        }
+        finally
+        {
+          eclipseJobs.remove(job);
+        }
+      }
+    };
+
+    eclipseJobs.put(job, eclipseJob);
+
+    eclipseJob.setSystem(job.isSystem());
+    eclipseJob.schedule();
+  }
+
+  @Override
+  public void cancelJob(InternalOMJob job)
+  {
+    Job eclipseJob = eclipseJobs.get(job);
+    if (eclipseJob != null)
+    {
+      eclipseJob.cancel();
+    }
+  }
+
+  @Override
+  public void renameJob(InternalOMJob job, String name)
+  {
+    Job eclipseJob = eclipseJobs.get(job);
+    if (eclipseJob != null)
+    {
+      eclipseJob.setName(name);
+    }
   }
 
   @Override

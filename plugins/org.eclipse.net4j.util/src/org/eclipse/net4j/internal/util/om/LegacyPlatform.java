@@ -11,18 +11,28 @@
 package org.eclipse.net4j.internal.util.om;
 
 import org.eclipse.net4j.internal.util.bundle.AbstractPlatform;
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
+import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.om.LegacyUtil;
 import org.eclipse.net4j.util.om.OMBundle;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
+
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
 
 /**
  * @author Eike Stepper
  */
 public class LegacyPlatform extends AbstractPlatform
 {
-  private Map<String, String> debugOptions = new ConcurrentHashMap<>(0);
+  private final Map<String, String> debugOptions = new ConcurrentHashMap<>(0);
+
+  private final Map<InternalOMJob, IProgressMonitor> jobMonitors = Collections.synchronizedMap(new HashMap<>());
 
   public LegacyPlatform()
   {
@@ -56,6 +66,41 @@ public class LegacyPlatform extends AbstractPlatform
   public String[] getCommandLineArgs()
   {
     return LegacyUtil.getCommandLineArgs();
+  }
+
+  @Override
+  public void scheduleJob(InternalOMJob job)
+  {
+    IProgressMonitor monitor = new NullProgressMonitor();
+    jobMonitors.put(job, monitor);
+
+    ExecutorService threadPool = ConcurrencyUtil.getExecutorService(IPluginContainer.INSTANCE);
+    threadPool.submit(() -> {
+      try
+      {
+        job.run(monitor);
+      }
+      finally
+      {
+        jobMonitors.remove(job);
+      }
+    });
+  }
+
+  @Override
+  public void cancelJob(InternalOMJob job)
+  {
+    IProgressMonitor monitor = jobMonitors.get(job);
+    if (monitor != null)
+    {
+      monitor.setCanceled(true);
+    }
+  }
+
+  @Override
+  public void renameJob(InternalOMJob job, String name)
+  {
+    // Do nothing.
   }
 
   public static boolean clearDebugOptions()

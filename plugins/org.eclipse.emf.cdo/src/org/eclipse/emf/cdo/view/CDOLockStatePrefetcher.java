@@ -84,6 +84,8 @@ public class CDOLockStatePrefetcher
 
   private final boolean asyncUpdate;
 
+  private boolean updateOtherViews;
+
   private Predicate<CDOID> objectFilter = DEFAULT_OBJECT_FILTER;
 
   public CDOLockStatePrefetcher(CDOView view, boolean asyncUpdate)
@@ -100,6 +102,16 @@ public class CDOLockStatePrefetcher
   public CDOLockStatePrefetcher(CDOView view)
   {
     this(view, true);
+  }
+
+  public final boolean isUpdateOtherViews()
+  {
+    return updateOtherViews;
+  }
+
+  public final void setUpdateOtherViews(boolean updateOtherViews)
+  {
+    this.updateOtherViews = updateOtherViews;
   }
 
   public final Predicate<CDOID> getObjectFilter()
@@ -193,7 +205,7 @@ public class CDOLockStatePrefetcher
           CDOSessionProtocol sessionProtocol = view.getSession().getSessionProtocol();
           CDOLockState[] loadedLockStates = sessionProtocol.getLockStates(view.getViewID(), ids, event.getPrefetchDepth());
 
-          updateLockStatesForAllViews(loadedLockStates, true);
+          updateLockStates(loadedLockStates, true);
 
           // Add missing lock states.
           List<CDOLockState> missingLockStates = new ArrayList<>();
@@ -235,7 +247,7 @@ public class CDOLockStatePrefetcher
             }
           }
 
-          updateLockStatesForAllViews(missingLockStates.toArray(new CDOLockState[missingLockStates.size()]), false);
+          updateLockStates(missingLockStates.toArray(new CDOLockState[missingLockStates.size()]), false);
         }
       }
       catch (Exception ex)
@@ -248,7 +260,7 @@ public class CDOLockStatePrefetcher
     });
   }
 
-  private void updateLockStatesForAllViews(CDOLockState[] lockStates, boolean loadOnDemand)
+  private void updateLockStates(CDOLockState[] lockStates, boolean loadOnDemand)
   {
     try
     {
@@ -262,16 +274,19 @@ public class CDOLockStatePrefetcher
       }
     }
 
-    for (InternalCDOView otherView : view.getSession().getViews())
+    if (updateOtherViews)
     {
-      if (asyncUpdate)
+      for (InternalCDOView otherView : view.getSession().getViews())
       {
-        ExecutorService executorService = view.getExecutorService();
-        executorService.submit(() -> updateLockStatesForOtherView(lockStates, loadOnDemand, otherView));
-      }
-      else
-      {
-        updateLockStatesForOtherView(lockStates, loadOnDemand, otherView);
+        if (asyncUpdate)
+        {
+          ExecutorService executorService = view.getExecutorService();
+          executorService.submit(() -> updateLockStatesForOtherView(lockStates, loadOnDemand, otherView));
+        }
+        else
+        {
+          updateLockStatesForOtherView(lockStates, loadOnDemand, otherView);
+        }
       }
     }
   }

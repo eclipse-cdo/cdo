@@ -61,7 +61,7 @@ public class Bugzilla_541003_Test extends AbstractCDOTest
     CDOLock lock1 = loadLock(view1);
     CDOLock lock2 = loadLock(view2);
     assertEquals(lockStatePrefetchEnabled, hasLockState(lock1));
-    assertEquals(lockStatePrefetchEnabled, hasLockState(lock2));
+    assertEquals(false, hasLockState(lock2));
 
     // Without lockStatePrefetchEnabled the lock state is loaded here:
     assertTrue(lock1.isLockedByOthers());

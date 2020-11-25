@@ -27,6 +27,11 @@ import java.io.Serializable;
  */
 public final class CDOBranchRef implements Serializable
 {
+  /**
+   * @since 4.12
+   */
+  public static final CDOBranchRef MAIN = new CDOBranchRef(CDOBranch.MAIN_BRANCH_NAME);
+
   private static final long serialVersionUID = 1L;
 
   private final String branchPath;
@@ -67,6 +72,14 @@ public final class CDOBranchRef implements Serializable
   public CDOBranchPointRef getPointRef(long timeStamp)
   {
     return new CDOBranchPointRef(this, timeStamp);
+  }
+
+  /**
+   * @since 4.12
+   */
+  public CDOBranchPointRef getHeadRef()
+  {
+    return getPointRef(CDOBranchPoint.UNSPECIFIED_DATE);
   }
 
   public CDOBranch resolve(CDOBranchManager branchManager)

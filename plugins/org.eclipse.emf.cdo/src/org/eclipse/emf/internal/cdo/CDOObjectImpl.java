@@ -244,8 +244,12 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   @Override
   public final void cdoPrefetch(int depth)
   {
-    CDOID id = cdoID();
-    viewAndState.view.prefetchRevisions(id, depth);
+    InternalCDOView view = viewAndState.view;
+    if (view != null)
+    {
+      CDOID id = cdoID();
+      view.prefetchRevisions(id, depth);
+    }
   }
 
   @Override

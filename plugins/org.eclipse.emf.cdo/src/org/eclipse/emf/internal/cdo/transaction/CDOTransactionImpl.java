@@ -141,6 +141,7 @@ import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
 
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.AbstractCloseableIterator;
 import org.eclipse.net4j.util.collection.ByteArrayWrapper;
@@ -195,6 +196,7 @@ import org.eclipse.core.runtime.SubMonitor;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Method;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -220,6 +222,25 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_TRANSACTION, CDOTransactionImpl.class);
 
   private static final boolean X_COMPRESSION = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.transaction.X_COMPRESSION");
+
+  private static final Method COPY_OBJECT_METHOD;
+
+  static
+  {
+    Method cdoInternalCopyTo = null;
+
+    try
+    {
+      cdoInternalCopyTo = ReflectUtil.getMethod(CDOObjectImpl.class, "cdoInternalCopyTo", CDOObjectImpl.class);
+      ReflectUtil.makeAccessible(cdoInternalCopyTo);
+    }
+    catch (Throwable ex)
+    {
+      OM.LOG.error(ex);
+    }
+
+    COPY_OBJECT_METHOD = cdoInternalCopyTo;
+  }
 
   private Object transactionHandlersLock = new Object();
 
@@ -4820,7 +4841,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         }
         else
         {
-          applyNewCommitData(newCommitData, timeStamp);
+          applyNewCommitData(newCommitData, result.getIDMappings(), timeStamp);
         }
 
         CDOTransactionHandler2[] handlers = getTransactionHandlers2();
@@ -4992,10 +5013,34 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       }
     }
 
-    private void applyNewCommitData(CommitData newCommitData, long timeStamp)
+    private void applyNewCommitData(CommitData newCommitData, Map<CDOID, CDOID> idMappings, long timeStamp)
     {
-      getTransactionStrategy().rollback(CDOTransactionImpl.this, firstSavepoint); // Transitions objects to CLEAN.
-      waitForBaseline(timeStamp); // Transitions objects to PROXY.
+      Map<CDOID, CDOObject> rememberedNewObjects = CDOIDUtil.createMap();
+      rememberedNewObjects.putAll(newObjects);
+
+      bypassRegistrationHandlers(() -> {
+        getTransactionStrategy().rollback(transaction, firstSavepoint); // Transitions objects to CLEAN.
+        waitForBaseline(timeStamp); // Transitions objects to PROXY.
+
+        Map<CDOID, InternalCDOObject> objects = getModifiableObjects();
+
+        for (Map.Entry<CDOID, CDOObject> entry : rememberedNewObjects.entrySet())
+        {
+          InternalCDOObject rememberedNewObject = (InternalCDOObject)entry.getValue();
+          if (rememberedNewObject instanceof CDOObjectImpl)
+          {
+            CDOID tempID = entry.getKey();
+            CDOID permID = idMappings.get(tempID);
+
+            if (permID != null)
+            {
+              CDOObjectImpl object = (CDOObjectImpl)getObject(permID);
+              ReflectUtil.invokeMethod(COPY_OBJECT_METHOD, object, rememberedNewObject);
+              objects.put(permID, rememberedNewObject);
+            }
+          }
+        }
+      });
     }
   }
 

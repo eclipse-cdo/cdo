@@ -67,38 +67,40 @@ public class CDOSingleTransactionStrategyImpl implements CDOTransactionStrategy
 
     if (result.getNewCommitData() != null)
     {
-      return null;
+      commitData = null;
     }
-
-    String rollbackMessage = result.getRollbackMessage();
-    if (rollbackMessage != null)
+    else
     {
-      byte rollbackReason = result.getRollbackReason();
-      switch (rollbackReason)
+      String rollbackMessage = result.getRollbackMessage();
+      if (rollbackMessage != null)
       {
-      case CDOProtocolConstants.ROLLBACK_REASON_OPTIMISTIC_LOCKING:
-        throw new OptimisticLockingException(rollbackMessage);
+        byte rollbackReason = result.getRollbackReason();
+        switch (rollbackReason)
+        {
+        case CDOProtocolConstants.ROLLBACK_REASON_OPTIMISTIC_LOCKING:
+          throw new OptimisticLockingException(rollbackMessage);
 
-      case CDOProtocolConstants.ROLLBACK_REASON_COMMIT_CONFLICT:
-        throw new CommitConflictException(rollbackMessage);
+        case CDOProtocolConstants.ROLLBACK_REASON_COMMIT_CONFLICT:
+          throw new CommitConflictException(rollbackMessage);
 
-      case CDOProtocolConstants.ROLLBACK_REASON_CONTAINMENT_CYCLE:
-        throw new ContainmentCycleException(rollbackMessage);
+        case CDOProtocolConstants.ROLLBACK_REASON_CONTAINMENT_CYCLE:
+          throw new ContainmentCycleException(rollbackMessage);
 
-      case CDOProtocolConstants.ROLLBACK_REASON_REFERENTIAL_INTEGRITY:
-        throw new ReferentialIntegrityException(rollbackMessage, result.getXRefs());
+        case CDOProtocolConstants.ROLLBACK_REASON_REFERENTIAL_INTEGRITY:
+          throw new ReferentialIntegrityException(rollbackMessage, result.getXRefs());
 
-      case CDOProtocolConstants.ROLLBACK_REASON_UNIT_INTEGRITY:
-        throw new UnitIntegrityException(rollbackMessage);
+        case CDOProtocolConstants.ROLLBACK_REASON_UNIT_INTEGRITY:
+          throw new UnitIntegrityException(rollbackMessage);
 
-      case CDOProtocolConstants.ROLLBACK_REASON_VALIDATION_ERROR:
-        throw new ValidationException(rollbackMessage);
+        case CDOProtocolConstants.ROLLBACK_REASON_VALIDATION_ERROR:
+          throw new ValidationException(rollbackMessage);
 
-      case CDOProtocolConstants.ROLLBACK_REASON_UNKNOWN:
-        throw new CommitException(rollbackMessage);
+        case CDOProtocolConstants.ROLLBACK_REASON_UNKNOWN:
+          throw new CommitException(rollbackMessage);
 
-      default:
-        throw new IllegalStateException("Invalid rollback reason: " + rollbackReason);
+        default:
+          throw new IllegalStateException("Invalid rollback reason: " + rollbackReason);
+        }
       }
     }
 

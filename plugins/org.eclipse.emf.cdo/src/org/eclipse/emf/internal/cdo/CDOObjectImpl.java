@@ -74,6 +74,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 import org.eclipse.emf.spi.cdo.InternalCDOView.ViewAndState;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -612,6 +613,24 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   public final InternalEObject cdoInternalInstance()
   {
     return this;
+  }
+
+  /**
+   * @since 4.12
+   */
+  final void cdoInternalCopyTo(CDOObjectImpl other)
+  {
+    if (eSettings != null)
+    {
+      other.eSettings = Arrays.copyOf(eSettings, eSettings.length);
+    }
+    else
+    {
+      other.eSettings = null;
+    }
+
+    other.revision = revision;
+    other.viewAndState = viewAndState;
   }
 
   @Override

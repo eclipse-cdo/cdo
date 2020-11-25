@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.transaction;
 
 import org.eclipse.emf.cdo.common.commit.CDOChangeSet;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
+import org.eclipse.emf.cdo.common.util.CDOException;
 
 /**
  * Calculates the changes between a source {@link CDOChangeSet change set} and a target {@link CDOChangeSet change set}
@@ -35,7 +36,7 @@ public interface CDOMerger
    * @author Eike Stepper
    * @since 4.0
    */
-  public static class ConflictException extends RuntimeException
+  public static class ConflictException extends CDOException
   {
     private static final long serialVersionUID = 1L;
 

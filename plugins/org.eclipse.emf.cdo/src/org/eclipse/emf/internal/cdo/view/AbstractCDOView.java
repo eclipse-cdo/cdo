@@ -227,6 +227,9 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   @ExcludeFromDump
   private transient InternalCDOObject lastLookupObject;
 
+  @ExcludeFromDump
+  private transient boolean bypassRegistrationHandlers;
+
   public AbstractCDOView(CDOSession session, CDOBranchPoint branchPoint)
   {
     this(session);
@@ -2519,6 +2522,11 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
   protected void objectRegistered(InternalCDOObject object)
   {
+    if (bypassRegistrationHandlers)
+    {
+      return;
+    }
+
     CDORegistrationHandler[] handlers = getRegistrationHandlers();
     if (handlers.length != 0)
     {
@@ -2544,6 +2552,11 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
   protected void objectDeregistered(InternalCDOObject object)
   {
+    if (bypassRegistrationHandlers)
+    {
+      return;
+    }
+
     CDORegistrationHandler[] handlers = getRegistrationHandlers();
     if (handlers.length != 0)
     {
@@ -2569,6 +2582,11 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
   protected void objectCollected(CDOID id)
   {
+    if (bypassRegistrationHandlers)
+    {
+      return;
+    }
+
     CDORegistrationHandler[] handlers = getRegistrationHandlers();
     if (handlers.length != 0)
     {
@@ -2691,6 +2709,20 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   public CDORegistrationHandler[] getRegistrationHandlers()
   {
     return registrationHandlers.get();
+  }
+
+  protected final void bypassRegistrationHandlers(Runnable runnable)
+  {
+    bypassRegistrationHandlers = true;
+
+    try
+    {
+      runnable.run();
+    }
+    finally
+    {
+      bypassRegistrationHandlers = false;
+    }
   }
 
   /*

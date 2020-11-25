@@ -193,12 +193,15 @@ public class CommitManager extends Lifecycle implements InternalCommitManager
         {
           try
           {
+            StoreThreadLocal.setAccessor(context.getAccessor());
             StoreThreadLocal.setCommitContext(context);
+
             context.write(monitor);
           }
           finally
           {
-            StoreThreadLocal.setCommitContext(null);
+            StoreThreadLocal.remove();
+
             if (in instanceof Closeable)
             {
               IOUtil.closeSilent((Closeable)in);

@@ -178,7 +178,11 @@ public class QueryManager extends Lifecycle implements InternalQueryManager
   {
     register(queryContext);
 
-    Future<?> future = getExecutors().submit(queryContext);
+    InternalSession session = queryContext.getView().getSession();
+
+    ExecutorService executors = getExecutors();
+    Future<?> future = executors.submit(StoreThreadLocal.wrap(session, queryContext));
+
     queryContext.setFuture(future);
     return future;
   }
@@ -309,9 +313,6 @@ public class QueryManager extends Lifecycle implements InternalQueryManager
     {
       CDOQueryQueue<Object> queue = queryResult.getQueue();
 
-      InternalSession session = queryResult.getView().getSession();
-      StoreThreadLocal.setSession(session);
-
       try
       {
         started = true;
@@ -338,7 +339,6 @@ public class QueryManager extends Lifecycle implements InternalQueryManager
       {
         queue.close();
         unregister(this);
-        StoreThreadLocal.release();
       }
     }
 

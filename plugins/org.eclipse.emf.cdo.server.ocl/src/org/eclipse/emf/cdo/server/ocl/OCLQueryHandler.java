@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IQueryContext;
 import org.eclipse.emf.cdo.server.IQueryHandler;
+import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetDataRevisionProvider;
 import org.eclipse.emf.cdo.spi.server.QueryHandlerFactory;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -115,14 +116,16 @@ public class OCLQueryHandler implements IQueryHandler
     {
       readParameters(info.getParameters());
 
-      CDORevisionProvider revisionProvider = context.getView();
+      IView serverView = context.getView();
+
+      CDORevisionProvider revisionProvider = serverView;
       CDOChangeSetData changeSetData = info.getChangeSetData();
       if (changeSetData != null)
       {
         revisionProvider = new CDOChangeSetDataRevisionProvider(revisionProvider, changeSetData);
       }
 
-      CDOView view = CDOServerUtil.openView(context.getView().getSession(), context, revisionProvider);
+      CDOView view = CDOServerUtil.openView(serverView.getSession(), context, revisionProvider);
       extentMap = createExtentMap(view, changeSetData, context);
       OCL<?, EClassifier, ?, ?, ?, ?, ?, ?, ?, Constraint, EClass, EObject> ocl = createOCL(view, extentMap);
 

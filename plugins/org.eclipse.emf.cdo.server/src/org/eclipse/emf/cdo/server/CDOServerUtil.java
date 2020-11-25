@@ -183,6 +183,19 @@ public final class CDOServerUtil
   }
 
   /**
+   * @since 4.11
+   */
+  public static ISession getServerSession(CDOView view)
+  {
+    if (view instanceof ServerCDOView)
+    {
+      return ((ServerCDOView)view).getServerSession();
+    }
+
+    return null;
+  }
+
+  /**
    * @since 3.0
    */
   public static ISessionManager createSessionManager()

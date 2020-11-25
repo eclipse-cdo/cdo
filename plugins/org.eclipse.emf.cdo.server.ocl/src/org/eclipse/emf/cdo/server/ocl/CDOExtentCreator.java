@@ -19,11 +19,15 @@ import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
+import org.eclipse.emf.cdo.server.CDOServerUtil;
+import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 import org.eclipse.emf.cdo.view.CDOView;
+
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -37,6 +41,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -211,16 +216,15 @@ public class CDOExtentCreator implements OCLExtentCreator
     }
 
     @Override
-    protected Set<EObject> createExtent(final EClass eClass, final IStoreAccessor accessor, final CDOBranch branch, final long timeStamp,
-        final AtomicBoolean canceled)
+    protected Set<EObject> createExtent(EClass eClass, IStoreAccessor accessor, CDOBranch branch, long timeStamp, AtomicBoolean canceled)
     {
       return new Set<EObject>()
       {
+        private final CountDownLatch emptyKnown = new CountDownLatch(1);
+
         private Iterator<EObject> emptyIterator;
 
         private Boolean empty;
-
-        private CountDownLatch emptyKnown = new CountDownLatch(1);
 
         @Override
         public synchronized boolean isEmpty()
@@ -253,11 +257,11 @@ public class CDOExtentCreator implements OCLExtentCreator
             return it;
           }
 
-          final Object mutex = new Object();
-          final LinkedList<CDOID> ids = new LinkedList<>();
-          final boolean[] done = { false };
+          Object mutex = new Object();
+          LinkedList<CDOID> ids = new LinkedList<>();
+          boolean[] done = { false };
 
-          Thread thread = new Thread("OCLExtentIterator")
+          class OCLExtentIterator implements Runnable
           {
             @Override
             public void run()
@@ -331,10 +335,12 @@ public class CDOExtentCreator implements OCLExtentCreator
                 mutex.notify();
               }
             }
-          };
+          }
 
-          thread.setDaemon(true);
-          thread.start();
+          ISession serverSession = CDOServerUtil.getServerSession(getView());
+
+          ExecutorService threadPool = ConcurrencyUtil.getExecutorService(getView());
+          threadPool.submit(StoreThreadLocal.wrap(serverSession, new OCLExtentIterator()));
 
           return new Iterator<EObject>()
           {

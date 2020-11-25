@@ -32,6 +32,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
+import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
@@ -106,7 +107,7 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
 
   private static final CDORevisionPrefetchingPolicy REVISION_PREFETCHING = CDOUtil.createRevisionPrefetchingPolicy(NO_REVISION_PREFETCHING);
 
-  private InternalCDOSession session;
+  private ServerCDOSession session;
 
   private CDORevisionProvider revisionProvider;
 
@@ -135,6 +136,11 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
   public InternalCDOSession getSession()
   {
     return session;
+  }
+
+  public ISession getServerSession()
+  {
+    return session.getInternalSession();
   }
 
   @Override
@@ -626,6 +632,11 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     public CDOSession getSession()
     {
       return this;
+    }
+
+    public InternalSession getInternalSession()
+    {
+      return internalSession;
     }
 
     @Override

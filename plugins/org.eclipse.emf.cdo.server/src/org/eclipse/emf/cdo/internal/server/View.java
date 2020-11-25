@@ -44,6 +44,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
 
 /**
  * @author Eike Stepper
@@ -93,6 +94,12 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
 
     repository = session.getManager().getRepository();
     setBranchPoint(branchPoint);
+  }
+
+  @Override
+  public ExecutorService getExecutorService()
+  {
+    return session.getExecutorService();
   }
 
   @Override

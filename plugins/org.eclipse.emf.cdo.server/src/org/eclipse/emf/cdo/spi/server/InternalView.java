@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.server.IView;
 
+import org.eclipse.net4j.util.concurrent.IExecutorServiceProvider;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
@@ -30,7 +31,7 @@ import java.util.List;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface InternalView extends IView, ILifecycle
+public interface InternalView extends IView, ILifecycle, IExecutorServiceProvider
 {
   @Override
   public InternalSession getSession();

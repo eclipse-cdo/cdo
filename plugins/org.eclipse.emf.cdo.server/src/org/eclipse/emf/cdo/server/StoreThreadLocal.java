@@ -13,7 +13,11 @@ package org.eclipse.emf.cdo.server;
 import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 
+import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
+
+import java.util.concurrent.Callable;
 
 /**
  * Provides server-side consumers with the {@link IStoreAccessor store accessor} that is valid in the context of a
@@ -25,14 +29,54 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
  */
 public final class StoreThreadLocal
 {
-  private static final ThreadLocal<InternalSession> SESSION = new InheritableThreadLocal<>();
+  private static final boolean DEBUG_SESSION = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.server.StoreThreadLocal.DEBUG_SESSION");
 
-  private static final ThreadLocal<IStoreAccessor> ACCESSOR = new InheritableThreadLocal<>();
+  private static final ThreadLocal<InternalSession> SESSION = new ThreadLocal<>();
 
-  private static final ThreadLocal<IStoreAccessor.CommitContext> COMMIT_CONTEXT = new InheritableThreadLocal<>();
+  private static final ThreadLocal<IStoreAccessor> ACCESSOR = new ThreadLocal<>();
+
+  private static final ThreadLocal<IStoreAccessor.CommitContext> COMMIT_CONTEXT = new ThreadLocal<>();
 
   private StoreThreadLocal()
   {
+  }
+
+  /**
+   * @since 4.11
+   */
+  public static Runnable wrap(ISession session, Runnable runnable)
+  {
+    return () -> {
+      StoreThreadLocal.setSession((InternalSession)session);
+
+      try
+      {
+        runnable.run();
+      }
+      finally
+      {
+        StoreThreadLocal.release();
+      }
+    };
+  }
+
+  /**
+   * @since 4.11
+   */
+  public static <T> Callable<T> wrap(ISession session, Callable<T> callable)
+  {
+    return () -> {
+      StoreThreadLocal.setSession((InternalSession)session);
+
+      try
+      {
+        return callable.call();
+      }
+      finally
+      {
+        StoreThreadLocal.release();
+      }
+    };
   }
 
   /**
@@ -42,11 +86,11 @@ public final class StoreThreadLocal
   {
     if (session == null)
     {
-      SESSION.remove();
+      REMOVE_SESSION();
     }
     else
     {
-      SESSION.set(session);
+      SET_SESSION(session);
     }
 
     ACCESSOR.remove();
@@ -85,12 +129,12 @@ public final class StoreThreadLocal
     if (accessor == null)
     {
       ACCESSOR.remove();
-      SESSION.remove();
+      REMOVE_SESSION();
     }
     else
     {
       ACCESSOR.set(accessor);
-      SESSION.set(accessor.getSession());
+      SET_SESSION(accessor.getSession());
     }
   }
 
@@ -169,8 +213,41 @@ public final class StoreThreadLocal
   public static void remove()
   {
     ACCESSOR.remove();
-    SESSION.remove();
+    REMOVE_SESSION();
     COMMIT_CONTEXT.remove();
+  }
+
+  private static void SET_SESSION(InternalSession session)
+  {
+    if (session != null)
+    {
+      if (DEBUG_SESSION)
+      {
+        InternalSession oldSession = SESSION.get();
+        if (oldSession != null)
+        {
+          throw new IllegalStateException("Session already registered: " + oldSession);
+        }
+
+        IOUtil.OUT().println("Set        " + session + " --> " + Thread.currentThread().getName());
+      }
+
+      SESSION.set(session);
+    }
+  }
+
+  private static void REMOVE_SESSION()
+  {
+    if (DEBUG_SESSION)
+    {
+      InternalSession session = SESSION.get();
+      if (session != null)
+      {
+        IOUtil.OUT().println("    Remove " + session + " --> " + Thread.currentThread().getName());
+      }
+    }
+
+    SESSION.remove();
   }
 
   /**

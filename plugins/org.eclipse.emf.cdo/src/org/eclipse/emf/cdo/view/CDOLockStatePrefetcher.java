@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionsLoadedEvent;
+import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
@@ -170,10 +171,17 @@ public class CDOLockStatePrefetcher
               // either as it will create some load revisions request.
               boolean normalObject = !revision.isResourceNode();
 
-              CDOObject object = view.getObject(id, normalObject);
-              if (object != null)
+              try
               {
-                ids.add(id);
+                CDOObject object = view.getObject(id, normalObject);
+                if (object != null)
+                {
+                  ids.add(id);
+                }
+              }
+              catch (ObjectNotFoundException ex)
+              {
+                //$FALL-THROUGH$
               }
             }
           }
@@ -191,8 +199,18 @@ public class CDOLockStatePrefetcher
           List<CDOLockState> missingLockStates = new ArrayList<>();
           for (CDOID id : ids)
           {
-            CDOObject object = view.getObject(id, false);
-            addMissingLockState(object, missingLockStates);
+            try
+            {
+              CDOObject object = view.getObject(id, false);
+              if (object != null)
+              {
+                addMissingLockState(object, missingLockStates);
+              }
+            }
+            catch (ObjectNotFoundException ex)
+            {
+              //$FALL-THROUGH$
+            }
           }
 
           for (CDORevision revision : event.getAdditionalLoadedRevisions())
@@ -202,8 +220,18 @@ public class CDOLockStatePrefetcher
             {
               boolean normalObject = !revision.isResourceNode();
 
-              CDOObject object = view.getObject(id, normalObject);
-              addMissingLockState(object, missingLockStates);
+              try
+              {
+                CDOObject object = view.getObject(id, normalObject);
+                if (object != null)
+                {
+                  addMissingLockState(object, missingLockStates);
+                }
+              }
+              catch (ObjectNotFoundException ex)
+              {
+                //$FALL-THROUGH$
+              }
             }
           }
 
@@ -234,16 +262,16 @@ public class CDOLockStatePrefetcher
       }
     }
 
-    for (InternalCDOView otherview : view.getSession().getViews())
+    for (InternalCDOView otherView : view.getSession().getViews())
     {
       if (asyncUpdate)
       {
         ExecutorService executorService = view.getExecutorService();
-        executorService.submit(() -> updateLockStatesForOtherView(lockStates, loadOnDemand, otherview));
+        executorService.submit(() -> updateLockStatesForOtherView(lockStates, loadOnDemand, otherView));
       }
       else
       {
-        updateLockStatesForOtherView(lockStates, loadOnDemand, otherview);
+        updateLockStatesForOtherView(lockStates, loadOnDemand, otherView);
       }
     }
   }
@@ -252,7 +280,7 @@ public class CDOLockStatePrefetcher
   {
     try
     {
-      if (otherview != view && otherview.getBranch() == view.getBranch())
+      if (otherview != view && otherview.isActive() && otherview.getBranch() == view.getBranch())
       {
         otherview.updateLockStates(lockStates, loadOnDemand, null);
       }

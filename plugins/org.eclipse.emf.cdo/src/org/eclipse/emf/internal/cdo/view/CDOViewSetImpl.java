@@ -15,7 +15,6 @@ package org.eclipse.emf.internal.cdo.view;
 
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
@@ -140,7 +139,7 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
       {
         if (viewURI != null)
         {
-          throw new IllegalArgumentException(MessageFormat.format(Messages.getString("CDOViewSetImpl.0"), viewURI)); //$NON-NLS-1$
+          throw new CDOViewSetException(MessageFormat.format(Messages.getString("CDOViewSetImpl.0"), viewURI)); //$NON-NLS-1$
         }
 
         if (mapOfViews.size() == 1)
@@ -153,7 +152,7 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
           return null;
         }
 
-        throw new IllegalStateException(Messages.getString("CDOViewSetImpl.1")); //$NON-NLS-1$
+        throw new CDOViewSetException(Messages.getString("CDOViewSetImpl.1")); //$NON-NLS-1$
       }
     }
 
@@ -178,7 +177,7 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
       CDOView lookupView = mapOfViews.get(viewURI);
       if (lookupView != null)
       {
-        throw new RuntimeException(MessageFormat.format(Messages.getString("CDOViewSetImpl.2"), viewURI)); //$NON-NLS-1$
+        throw new CDOViewSetException(MessageFormat.format(Messages.getString("CDOViewSetImpl.2"), viewURI, lookupView)); //$NON-NLS-1$
       }
 
       views.add(view);
@@ -271,12 +270,12 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
       // INSTALL
       if (!isAdapterForType(newTarget))
       {
-        throw new IllegalArgumentException(MessageFormat.format(Messages.getString("CDOViewSetImpl.3"), newTarget)); //$NON-NLS-1$
+        throw new CDOViewSetException(MessageFormat.format(Messages.getString("CDOViewSetImpl.3"), newTarget)); //$NON-NLS-1$
       }
 
       if (resourceSet != null)
       {
-        throw new IllegalStateException(Messages.getString("CDOViewSetImpl.4")); //$NON-NLS-1$
+        throw new CDOViewSetException(Messages.getString("CDOViewSetImpl.4")); //$NON-NLS-1$
       }
     }
 
@@ -389,11 +388,11 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
       int size = allDirtyResources.size();
       if (size == 1)
       {
-        throw new CDOException("Attempt to remove a dirty resource from a resource set: " + allDirtyResources.get(0));
+        throw new CDOViewSetException("Attempt to remove a dirty resource from a resource set: " + allDirtyResources.get(0));
       }
       else if (size > 1)
       {
-        throw new CDOException("Attempt to remove dirty resources from a resource set: " + allDirtyResources);
+        throw new CDOViewSetException("Attempt to remove dirty resources from a resource set: " + allDirtyResources);
       }
     }
   }

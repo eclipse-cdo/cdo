@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.view;
 
+import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
 
 import org.eclipse.emf.common.notify.Notifier;
@@ -59,4 +60,32 @@ public interface CDOViewSet extends Notifier
    * @since 4.12
    */
   public void setDefaultClearAdapterPolicy(CDOAdapterPolicy defaultClearAdapterPolicy);
+
+  /**
+   * @author Eike Stepper
+   * @since 4.12
+   */
+  public static class CDOViewSetException extends CDOException
+  {
+    private static final long serialVersionUID = 1L;
+
+    public CDOViewSetException()
+    {
+    }
+
+    public CDOViewSetException(String message, Throwable cause)
+    {
+      super(message, cause);
+    }
+
+    public CDOViewSetException(String message)
+    {
+      super(message);
+    }
+
+    public CDOViewSetException(Throwable cause)
+    {
+      super(cause);
+    }
+  }
 }

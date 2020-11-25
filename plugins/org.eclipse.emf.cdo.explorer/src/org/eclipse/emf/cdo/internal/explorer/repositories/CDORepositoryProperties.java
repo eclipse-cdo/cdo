@@ -17,6 +17,7 @@ import org.eclipse.net4j.util.properties.DefaultPropertyTester;
 import org.eclipse.net4j.util.properties.IProperties;
 import org.eclipse.net4j.util.properties.Properties;
 import org.eclipse.net4j.util.properties.Property;
+import org.eclipse.net4j.util.security.IPasswordCredentials;
 
 /**
  * @author Eike Stepper
@@ -91,6 +92,16 @@ public class CDORepositoryProperties extends Properties<CDORepository>
       protected Object eval(CDORepository repository)
       {
         return repository.getURI();
+      }
+    });
+
+    add(new Property<CDORepository>("userID", "User", "The user ID of this repository", CATEGORY_REPOSITORY)
+    {
+      @Override
+      protected Object eval(CDORepository repository)
+      {
+        IPasswordCredentials credentials = repository.getCredentials();
+        return credentials == null ? null : credentials.getUserID();
       }
     });
   }

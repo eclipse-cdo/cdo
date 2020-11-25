@@ -52,6 +52,7 @@
            adaptableType="org.eclipse.emf.cdo.internal.explorer.AbstractElement"
            class="org.eclipse.emf.cdo.explorer.ui.properties.ExplorerUIAdapterFactory">
         <adapter type="org.eclipse.emf.cdo.common.util.CDORenameContext"/>
+        <adapter type="org.eclipse.ui.model.IWorkbenchAdapter"/>
      </factory>
      <factory
            adaptableType="org.eclipse.emf.cdo.common.branch.CDOBranch"
@@ -117,6 +118,33 @@
            name="%preference.page.name">
      </page>
   </extension>
+
+   <extension point="org.eclipse.ui.propertyPages">
+      <page
+            class="org.eclipse.emf.cdo.explorer.ui.properties.CheckoutPropertyPage"
+            id="org.eclipse.emf.cdo.explorer.ui.properties.Checkout"
+            name="%property.page.checkout.name">
+         <enabledWhen>
+            <adapt type="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
+         </enabledWhen>
+      </page>
+      <page
+            class="org.eclipse.emf.cdo.explorer.ui.properties.RepositoryPropertyPage"
+            id="org.eclipse.emf.cdo.explorer.ui.properties.CheckoutRepository"
+            name="%property.page.repository.name">
+         <enabledWhen>
+            <adapt type="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
+         </enabledWhen>
+      </page>
+      <page
+            class="org.eclipse.emf.cdo.explorer.ui.properties.RepositoryPropertyPage"
+            id="org.eclipse.emf.cdo.explorer.ui.properties.Repository"
+            name="%property.page.repository.name">
+         <enabledWhen>
+            <adapt type="org.eclipse.emf.cdo.explorer.repositories.CDORepository"/>
+         </enabledWhen>
+      </page>
+   </extension>
 
   <extension point="org.eclipse.ui.views">
       <view

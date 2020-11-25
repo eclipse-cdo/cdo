@@ -38,19 +38,9 @@ import java.util.Properties;
  */
 public class CheckoutLabelPage extends CheckoutWizardPage
 {
+  private final CheckoutPropertiesHolder holder = new CheckoutPropertiesHolder();
+
   private String label;
-
-  private Label repositoryLabel;
-
-  private Label typeLabel;
-
-  private Label branchLabel;
-
-  private Label timeLabel;
-
-  private Label rootLabel;
-
-  private Text labelText;
 
   public CheckoutLabelPage()
   {
@@ -69,9 +59,9 @@ public class CheckoutLabelPage extends CheckoutWizardPage
       log("Setting label to " + label);
       this.label = label;
 
-      if (labelText != null && !labelText.getText().equals(label))
+      if (holder.labelText != null && !holder.labelText.getText().equals(label))
       {
-        labelText.setText(StringUtil.safe(label));
+        holder.labelText.setText(StringUtil.safe(label));
       }
     }
   }
@@ -88,35 +78,13 @@ public class CheckoutLabelPage extends CheckoutWizardPage
   @Override
   protected void createUI(Composite parent)
   {
-    new Label(parent, SWT.NONE).setText("Repository:");
-    repositoryLabel = new Label(parent, SWT.NONE);
-    repositoryLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-
-    new Label(parent, SWT.NONE).setText("Type:");
-    typeLabel = new Label(parent, SWT.NONE);
-    typeLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-
-    new Label(parent, SWT.NONE).setText("Branch:");
-    branchLabel = new Label(parent, SWT.NONE);
-    branchLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-
-    new Label(parent, SWT.NONE).setText("Time:");
-    timeLabel = new Label(parent, SWT.NONE);
-    timeLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-
-    new Label(parent, SWT.NONE).setText("Root:");
-    rootLabel = new Label(parent, SWT.NONE);
-    rootLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-
-    new Label(parent, SWT.NONE).setText("Label:");
-    labelText = new Text(parent, SWT.BORDER);
-    labelText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-    labelText.addModifyListener(new ModifyListener()
+    holder.createUI(parent);
+    holder.labelText.addModifyListener(new ModifyListener()
     {
       @Override
       public void modifyText(ModifyEvent e)
       {
-        setLabel(labelText.getText());
+        setLabel(holder.labelText.getText());
         validate();
       }
     });
@@ -154,17 +122,9 @@ public class CheckoutLabelPage extends CheckoutWizardPage
   protected void pageActivated()
   {
     CheckoutWizard wizard = getWizard();
-    repositoryLabel.setText(wizard.getRepositoryPage().getRepository().getLabel());
-
     String type = wizard.getTypePage().getType();
-    typeLabel.setText(type);
-
     CDOBranchPoint branchPoint = wizard.getBranchPointPage().getBranchPoint();
-    branchLabel.setText(branchPoint.getBranch().getPathName());
-    timeLabel.setText(CDOCommonUtil.formatTimeStamp(branchPoint.getTimeStamp()));
-
-    String rootObjectText = wizard.getRootObjectPage().getRootObjectText();
-    rootLabel.setText(rootObjectText);
+    String rootLabel = wizard.getRootObjectPage().getRootObjectText();
 
     if (StringUtil.isEmpty(label))
     {
@@ -172,8 +132,15 @@ public class CheckoutLabelPage extends CheckoutWizardPage
       setLabel(CDOExplorerUtil.getCheckoutManager().getUniqueLabel(label));
     }
 
-    labelText.setFocus();
-    labelText.selectAll();
+    holder.typeLabel.setText(type);
+    holder.branchLabel.setText(branchPoint.getBranch().getPathName());
+    holder.timeLabel.setText(CDOCommonUtil.formatTimeStamp(branchPoint.getTimeStamp()));
+    holder.rootLabel.setText(rootLabel);
+    holder.repositoryLabel.setText(wizard.getRepositoryPage().getRepository().getLabel());
+
+    holder.labelText.setFocus();
+    holder.labelText.selectAll();
+
     super.pageActivated();
   }
 
@@ -214,9 +181,88 @@ public class CheckoutLabelPage extends CheckoutWizardPage
   private void clearLabel()
   {
     label = null;
-    if (labelText != null)
+    if (holder.labelText != null)
     {
-      labelText.setText("");
+      holder.labelText.setText("");
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class CheckoutPropertiesHolder
+  {
+    public Text labelText;
+
+    public Label typeLabel;
+
+    public Label branchLabel;
+
+    public Label timeLabel;
+
+    public Label rootLabel;
+
+    public Label repositoryLabel;
+
+    public CheckoutPropertiesHolder()
+    {
+    }
+
+    public void createUI(Composite parent)
+    {
+      new Label(parent, SWT.NONE).setText("Label:");
+      labelText = createLabelText(parent);
+      labelText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+
+      new Label(parent, SWT.NONE).setText("Type:");
+      typeLabel = createTypeLabel(parent);
+      typeLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+
+      new Label(parent, SWT.NONE).setText("Branch:");
+      branchLabel = createBranchLabel(parent);
+      branchLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+
+      new Label(parent, SWT.NONE).setText("Time:");
+      timeLabel = createTimeLabel(parent);
+      timeLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+
+      new Label(parent, SWT.NONE).setText("Root:");
+      rootLabel = createRootLabel(parent);
+      rootLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+
+      new Label(parent, SWT.NONE).setText("Repository:");
+      repositoryLabel = createRepositoryLabel(parent);
+      repositoryLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+    }
+
+    protected Text createLabelText(Composite parent)
+    {
+      return new Text(parent, SWT.BORDER);
+    }
+
+    protected Label createTypeLabel(Composite parent)
+    {
+      return new Label(parent, SWT.NONE);
+    }
+
+    protected Label createBranchLabel(Composite parent)
+    {
+      return new Label(parent, SWT.NONE);
+    }
+
+    protected Label createTimeLabel(Composite parent)
+    {
+      return new Label(parent, SWT.NONE);
+    }
+
+    protected Label createRootLabel(Composite parent)
+    {
+      return new Label(parent, SWT.NONE);
+    }
+
+    protected Label createRepositoryLabel(Composite parent)
+    {
+      return new Label(parent, SWT.NONE);
     }
   }
 }

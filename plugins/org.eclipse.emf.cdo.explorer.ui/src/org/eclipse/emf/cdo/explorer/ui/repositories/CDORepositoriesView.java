@@ -61,7 +61,9 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.IWorkbenchActionConstants;
+import org.eclipse.ui.IWorkbenchCommandConstants;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.dialogs.PropertyDialogAction;
 import org.eclipse.ui.navigator.ICommonMenuConstants;
 
 import java.util.Properties;
@@ -80,6 +82,8 @@ public class CDORepositoriesView extends ContainerView
   private CDORepositoryItemProvider itemProvider;
 
   private NewRepositoryAction newAction;
+
+  private PropertyDialogAction propertiesAction;
 
   public CDORepositoriesView()
   {
@@ -125,6 +129,9 @@ public class CDORepositoriesView extends ContainerView
     tree.addKeyListener(activityDetector);
 
     tree.getDisplay().timerExec(getRepositoryTimeoutMillis(), activityDetector);
+
+    propertiesAction = new PropertyDialogAction(() -> getShell(), viewer);
+    propertiesAction.setActionDefinitionId(IWorkbenchCommandConstants.FILE_PROPERTIES);
   }
 
   @Override
@@ -238,6 +245,11 @@ public class CDORepositoriesView extends ContainerView
     {
       showInMenu.add(new GroupMarker(ICommonMenuConstants.GROUP_ADDITIONS));
       manager.appendToGroup(ICommonMenuConstants.GROUP_OPEN, showInMenu);
+    }
+
+    if (propertiesAction.isApplicableForSelection())
+    {
+      manager.appendToGroup("group.properties", propertiesAction);
     }
   }
 

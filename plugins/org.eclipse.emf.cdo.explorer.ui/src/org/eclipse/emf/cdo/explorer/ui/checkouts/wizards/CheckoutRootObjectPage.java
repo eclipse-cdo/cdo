@@ -261,28 +261,11 @@ public class CheckoutRootObjectPage extends CheckoutWizardPage
 
           if (cdoObject != view.getRootResource())
           {
-            rootObjectText = getText(itemProvider, cdoObject);
+            rootObjectText = getRootObjectText(itemProvider, cdoObject);
           }
         }
 
         validate();
-      }
-
-      private String getText(final CDOItemProvider itemProvider, EObject object)
-      {
-        String text = itemProvider.getText(object);
-        for (int i = 0; i < AbstractElement.ILLEGAL_LABEL_CHARACTERS.length(); i++)
-        {
-          text = text.replace(AbstractElement.ILLEGAL_LABEL_CHARACTERS.charAt(i), '.');
-        }
-
-        Object parent = itemProvider.getParent(object);
-        if (parent instanceof EObject)
-        {
-          text = getText(itemProvider, (EObject)parent) + "." + text;
-        }
-
-        return text;
       }
     });
 
@@ -351,6 +334,7 @@ public class CheckoutRootObjectPage extends CheckoutWizardPage
     if (rootID != null)
     {
       properties.setProperty(CDOCheckoutImpl.PROP_ROOT_ID, CDOExplorerUtil.getCDOIDString(rootID));
+      properties.setProperty(CDOCheckoutImpl.PROP_ROOT_LABEL, rootObjectText);
     }
   }
 
@@ -371,5 +355,22 @@ public class CheckoutRootObjectPage extends CheckoutWizardPage
       log("Closing view to " + repository);
       oldView.close();
     }
+  }
+
+  public static String getRootObjectText(CDOItemProvider itemProvider, EObject object)
+  {
+    String text = itemProvider.getText(object);
+    for (int i = 0; i < AbstractElement.ILLEGAL_LABEL_CHARACTERS.length(); i++)
+    {
+      text = text.replace(AbstractElement.ILLEGAL_LABEL_CHARACTERS.charAt(i), '.');
+    }
+
+    Object parent = itemProvider.getParent(object);
+    if (parent instanceof EObject)
+    {
+      text = getRootObjectText(itemProvider, (EObject)parent) + "/" + text;
+    }
+
+    return text;
   }
 }

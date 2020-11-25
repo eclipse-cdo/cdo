@@ -13,6 +13,7 @@ package org.eclipse.net4j.util.ui.views;
 /**
  * @author Eike Stepper
  */
+@FunctionalInterface
 public interface IElementFilter
 {
   public boolean filter(Object element);

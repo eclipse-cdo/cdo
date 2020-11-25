@@ -64,9 +64,9 @@ import org.eclipse.ui.PlatformUI;
  */
 public final class CDOCheckoutState
 {
-  private static final Image CHECKOUT_IMAGE = OM.getImage("icons/checkout.gif");
+  public static final Image CHECKOUT_IMAGE = OM.getImage("icons/checkout.gif");
 
-  private static final Image CHECKOUT_CLOSED_IMAGE = OM.getImage("icons/checkout_closed.gif");
+  public static final Image CHECKOUT_CLOSED_IMAGE = OM.getImage("icons/checkout_closed.gif");
 
   private static final Image FOLDER_IMAGE = OM.getImage("icons/CDOResourceFolder.gif");
 

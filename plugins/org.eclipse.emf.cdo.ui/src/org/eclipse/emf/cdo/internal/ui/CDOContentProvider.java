@@ -283,6 +283,8 @@ public abstract class CDOContentProvider<CONTEXT> implements ITreeContentProvide
           @Override
           protected IStatus run(IProgressMonitor monitor)
           {
+            CDOView view = null;
+
             try
             {
               if (finalOpeningContext != null)
@@ -294,7 +296,7 @@ public abstract class CDOContentProvider<CONTEXT> implements ITreeContentProvide
               if (!missingIDs.isEmpty())
               {
                 CDOObject cdoObject = getCDOObject((EObject)finalObject);
-                CDOView view = cdoObject.cdoView();
+                view = cdoObject.cdoView();
                 CDORevisionManager revisionManager = view.getSession().getRevisionManager();
 
                 List<CDORevision> revisions = revisionManager.getRevisions(missingIDs, view, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
@@ -330,7 +332,16 @@ public abstract class CDOContentProvider<CONTEXT> implements ITreeContentProvide
                 closeContext(finalOpeningContext);
               }
 
-              OM.LOG.error(ex);
+              if (view == null)
+              {
+                CDOObject cdoObject = getCDOObject((EObject)finalObject);
+                view = cdoObject.cdoView();
+              }
+
+              if (view == null || !view.isClosed())
+              {
+                OM.LOG.error(ex);
+              }
 
               // final Control control = viewer.getControl();
               // if (!control.isDisposed())

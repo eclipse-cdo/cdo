@@ -57,7 +57,7 @@ import org.eclipse.core.runtime.Path;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -71,6 +71,8 @@ import java.util.concurrent.atomic.AtomicReference;
 public abstract class CDOCheckoutImpl extends AbstractElement implements CDOCheckout
 {
   public static final String PROP_ROOT_ID = "rootID";
+
+  public static final String PROP_ROOT_LABEL = "rootLabel";
 
   public static final String PROP_READ_ONLY = "readOnly";
 
@@ -98,7 +100,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
 
   private static final String BRANCH_AND_POINT_SEPARATOR = "_";
 
-  private final Set<CDOView> views = new HashSet<>();
+  private final Set<CDOView> views = new LinkedHashSet<>();
 
   private final Map<CDOID, String> editorIDs = new WeakHashMap<>();
 
@@ -115,6 +117,8 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
   private boolean readOnly;
 
   private CDOID rootID;
+
+  private String rootLabel;
 
   private State state = State.Closed;
 
@@ -386,6 +390,12 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
   }
 
   @Override
+  public String getRootLabel()
+  {
+    return rootLabel;
+  }
+
+  @Override
   public CDOCheckout duplicate()
   {
     Properties properties = new Properties();
@@ -409,6 +419,11 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     properties.setProperty(PROP_TIME_STAMP, Long.toString(getTimeStamp()));
     properties.setProperty(PROP_READ_ONLY, Boolean.toString(isReadOnly()));
     properties.setProperty(PROP_ROOT_ID, CDOExplorerUtil.getCDOIDString(getRootID()));
+
+    if (!StringUtil.isEmpty(rootLabel))
+    {
+      properties.setProperty(PROP_ROOT_LABEL, rootLabel);
+    }
   }
 
   @Override
@@ -923,6 +938,8 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
       rootID = CDOIDUtil.read(property);
     }
 
+    rootLabel = properties.getProperty(PROP_ROOT_LABEL);
+
     uri = createResourceURI(null);
     ((CDORepositoryImpl)repository).addCheckout(this);
   }
@@ -950,6 +967,11 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     {
       String string = CDOExplorerUtil.getCDOIDString(rootID);
       properties.setProperty(PROP_ROOT_ID, string);
+    }
+
+    if (!StringUtil.isEmpty(rootLabel))
+    {
+      properties.setProperty(PROP_ROOT_LABEL, rootLabel);
     }
   }
 

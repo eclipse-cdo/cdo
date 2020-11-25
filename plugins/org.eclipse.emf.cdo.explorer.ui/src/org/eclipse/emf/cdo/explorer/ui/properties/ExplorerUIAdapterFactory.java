@@ -16,11 +16,14 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.util.CDORenameContext;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
+import org.eclipse.emf.cdo.explorer.CDOExplorerElement;
 import org.eclipse.emf.cdo.explorer.CDOExplorerManager.ElementsChangedEvent;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
+import org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutState;
+import org.eclipse.emf.cdo.explorer.ui.repositories.CDORepositoryItemProvider;
 import org.eclipse.emf.cdo.internal.explorer.AbstractElement;
 import org.eclipse.emf.cdo.internal.explorer.checkouts.CDOCheckoutManagerImpl;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -36,6 +39,9 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.ui.model.IWorkbenchAdapter;
+import org.eclipse.ui.model.WorkbenchAdapter;
 
 /**
  * @since 4.4
@@ -46,7 +52,9 @@ public class ExplorerUIAdapterFactory implements IAdapterFactory
 
   private static final Class<StateProvider> CLASS_STATE_PROVIDER = StateProvider.class;
 
-  private static final Class<?>[] CLASSES = { CLASS_EXPLORER_RENAME_CONTEXT, CLASS_STATE_PROVIDER };
+  private static final Class<IWorkbenchAdapter> CLASS_WORKBENCH_ADAPTER = IWorkbenchAdapter.class;
+
+  private static final Class<?>[] CLASSES = { CLASS_EXPLORER_RENAME_CONTEXT, CLASS_STATE_PROVIDER, CLASS_WORKBENCH_ADAPTER };
 
   public ExplorerUIAdapterFactory()
   {
@@ -96,6 +104,13 @@ public class ExplorerUIAdapterFactory implements IAdapterFactory
         {
           return (T)checkout;
         }
+      }
+    }
+    else if (adapterType == CLASS_WORKBENCH_ADAPTER)
+    {
+      if (adaptableObject instanceof AbstractElement)
+      {
+        return (T)ExplorerWorkbenchAdapter.INSTANCE;
       }
     }
 
@@ -305,5 +320,57 @@ public class ExplorerUIAdapterFactory implements IAdapterFactory
     }
 
     return null;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class ExplorerWorkbenchAdapter extends WorkbenchAdapter
+  {
+    public static final IWorkbenchAdapter INSTANCE = new ExplorerWorkbenchAdapter();
+
+    private static final ImageDescriptor REPOSITORY_IMAGE_DESCRIPTOR = ImageDescriptor.createFromImage(CDORepositoryItemProvider.REPOSITORY_IMAGE);
+
+    private static final ImageDescriptor CHECKOUT_IMAGE_DESCRIPTOR = ImageDescriptor.createFromImage(CDOCheckoutState.CHECKOUT_IMAGE);
+
+    private static final ImageDescriptor CHECKOUT_CLOSED_IMAGE_DESCRIPTOR = ImageDescriptor.createFromImage(CDOCheckoutState.CHECKOUT_CLOSED_IMAGE);
+
+    private ExplorerWorkbenchAdapter()
+    {
+    }
+
+    @Override
+    public ImageDescriptor getImageDescriptor(Object object)
+    {
+      if (object instanceof CDORepository)
+      {
+        return REPOSITORY_IMAGE_DESCRIPTOR;
+      }
+
+      if (object instanceof CDOCheckout)
+      {
+        CDOCheckout checkout = (CDOCheckout)object;
+        if (checkout.isOpen())
+        {
+          return CHECKOUT_IMAGE_DESCRIPTOR;
+        }
+
+        return CHECKOUT_CLOSED_IMAGE_DESCRIPTOR;
+      }
+
+      return super.getImageDescriptor(object);
+    }
+
+    @Override
+    public String getLabel(Object object)
+    {
+      if (object instanceof CDOExplorerElement)
+      {
+        CDOExplorerElement element = (CDOExplorerElement)object;
+        return element.getLabel();
+      }
+
+      return super.getLabel(object);
+    }
   }
 }

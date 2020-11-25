@@ -64,6 +64,7 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
 
   public abstract AbstractManager<?> getManager();
 
+  @Override
   public final File getFolder()
   {
     return folder;

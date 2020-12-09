@@ -73,6 +73,14 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
    */
   private IObjectTypeMapper objectTypeMapper;
 
+  private IClassMapping resourceFolderMapping;
+
+  private IClassMapping modelResourceMapping;
+
+  private IClassMapping textResourceMapping;
+
+  private IClassMapping binaryResourceMapping;
+
   public AbstractHorizontalMappingStrategy()
   {
   }
@@ -121,23 +129,44 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
   @Override
   public void queryResources(IDBStoreAccessor accessor, QueryResourcesContext context)
   {
-    // only support timestamp in audit mode
+    // Only support timestamp in audit mode.
     if (context.getTimeStamp() != CDORevision.UNSPECIFIED_DATE && !hasAuditSupport())
     {
       throw new IllegalArgumentException("Mapping Strategy does not support audits"); //$NON-NLS-1$
     }
 
-    EresourcePackage resourcesPackage = EresourcePackage.eINSTANCE;
+    if (resourceFolderMapping == null)
+    {
+      resourceFolderMapping = getClassMapping(EresourcePackage.eINSTANCE.getCDOResourceFolder());
+      modelResourceMapping = getClassMapping(EresourcePackage.eINSTANCE.getCDOResource());
+      textResourceMapping = getClassMapping(EresourcePackage.eINSTANCE.getCDOTextResource());
+      binaryResourceMapping = getClassMapping(EresourcePackage.eINSTANCE.getCDOBinaryResource());
+    }
 
-    // first query folders
-    IClassMapping resourceFolder = getClassMapping(resourcesPackage.getCDOResourceFolder());
-    boolean shallContinue = queryResources(accessor, resourceFolder, context);
+    boolean shallContinue = true;
 
-    // not enough results? -> query resources
+    // First query folders.
     if (shallContinue)
     {
-      IClassMapping resource = getClassMapping(resourcesPackage.getCDOResource());
-      queryResources(accessor, resource, context);
+      shallContinue = queryResources(accessor, resourceFolderMapping, context);
+    }
+
+    // Not enough results? -> Query resources.
+    if (shallContinue)
+    {
+      shallContinue = queryResources(accessor, modelResourceMapping, context);
+    }
+
+    // Not enough results? -> Query text resources.
+    if (shallContinue)
+    {
+      shallContinue = queryResources(accessor, textResourceMapping, context);
+    }
+
+    // Not enough results? -> Query binary resources.
+    if (shallContinue)
+    {
+      shallContinue = queryResources(accessor, binaryResourceMapping, context);
     }
   }
 

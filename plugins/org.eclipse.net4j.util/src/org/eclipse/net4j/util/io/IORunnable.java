@@ -16,6 +16,7 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
+@FunctionalInterface
 public interface IORunnable<IO extends Closeable>
 {
   public void run(IO io) throws IOException;

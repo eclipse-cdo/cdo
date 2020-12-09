@@ -108,6 +108,21 @@ public final class IOUtil
   }
 
   /**
+   * @since 3.13
+   */
+  public static IOException ioException(Exception ex)
+  {
+    if (ex instanceof IOException)
+    {
+      return (IOException)ex;
+    }
+  
+    IOException ioException = new IOException(ex.getMessage());
+    ioException.initCause(ex);
+    return ioException;
+  }
+
+  /**
    * @since 3.1
    */
   public static void print(StackTraceElement[] elements)

@@ -12,6 +12,8 @@ package org.eclipse.emf.cdo.internal.ui.editor;
 
 import org.eclipse.emf.cdo.eresource.CDOResourceLeaf;
 
+import org.eclipse.emf.common.util.URI;
+
 import org.eclipse.core.runtime.PlatformObject;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IEditorInput;
@@ -27,6 +29,8 @@ public class CDOLobEditorInput extends PlatformObject implements IEditorInput
   private final CDOResourceLeaf resource;
 
   private final boolean commitOnSave;
+
+  private URI uri;
 
   public CDOLobEditorInput(CDOResourceLeaf resource)
   {
@@ -47,6 +51,16 @@ public class CDOLobEditorInput extends PlatformObject implements IEditorInput
   public final boolean isCommitOnSave()
   {
     return commitOnSave;
+  }
+
+  public final URI getURI()
+  {
+    return uri == null ? resource.getURI() : uri;
+  }
+
+  public final void setURI(URI uri)
+  {
+    this.uri = uri;
   }
 
   @Override
@@ -77,5 +91,19 @@ public class CDOLobEditorInput extends PlatformObject implements IEditorInput
   public String getToolTipText()
   {
     return resource.getURI().toString();
+  }
+
+  @Override
+  @SuppressWarnings("unchecked")
+  public <T> T getAdapter(Class<T> type)
+  {
+    T adapter = super.getAdapter(type);
+
+    if (adapter == null && type == URI.class)
+    {
+      adapter = (T)getURI();
+    }
+
+    return adapter;
   }
 }

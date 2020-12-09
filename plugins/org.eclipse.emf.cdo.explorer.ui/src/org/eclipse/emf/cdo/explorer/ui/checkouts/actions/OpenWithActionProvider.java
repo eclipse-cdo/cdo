@@ -13,15 +13,17 @@ package org.eclipse.emf.cdo.explorer.ui.checkouts.actions;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.eresource.CDOFileResource;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceLeaf;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
-import org.eclipse.emf.cdo.eresource.CDOTextResource;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
+import org.eclipse.emf.cdo.internal.explorer.CDOExplorerURIHandler;
 import org.eclipse.emf.cdo.internal.ui.dialogs.EditObjectDialog;
+import org.eclipse.emf.cdo.internal.ui.editor.CDOLobEditorInput;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.ui.CDOEditorOpener;
 import org.eclipse.emf.cdo.ui.CDOEditorUtil;
@@ -29,6 +31,7 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
@@ -46,7 +49,6 @@ import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IActionBars;
-import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IWorkbenchPage;
@@ -63,37 +65,7 @@ import org.eclipse.ui.navigator.ICommonViewerWorkbenchSite;
  */
 public class OpenWithActionProvider extends CommonActionProvider
 {
-  // private static final String WORKBENCH_PART_KEY = IWorkbenchPart.class.getName();
-  //
-  // private static final Map<IEditorPart, Pair<CDOView, Pair<CDOResourceLeaf, String>>> VIEWS = new
-  // HashMap<IEditorPart, Pair<CDOView, Pair<CDOResourceLeaf, String>>>();
-  //
-  // private static final Map<Pair<CDOResourceLeaf, String>, Object> EDITORS = new HashMap<Pair<CDOResourceLeaf,
-  // String>, Object>();
-  //
-  // private static final Object EDITOR_OPENING = new Object();
-  //
-  // private static final IPartListener2 PART_LISTENER = new PartListener();
-  //
-  // private static final IPageListener PAGE_LISTENER = new PageListener();
-  //
-  // private static final IWindowListener WINDOW_LISTENER = new WindowListener();
-  //
-  // static
-  // {
-  // IWorkbench workbench = UIUtil.getWorkbench();
-  // for (IWorkbenchWindow window : workbench.getWorkbenchWindows())
-  // {
-  // window.addPageListener(PAGE_LISTENER);
-  //
-  // for (IWorkbenchPage page : window.getPages())
-  // {
-  // page.addPartListener(PART_LISTENER);
-  // }
-  // }
-  //
-  // workbench.addWindowListener(WINDOW_LISTENER);
-  // }
+  private static final boolean OMIT_LOB_HANDLER_URI = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.explorer.ui.omitLobHandlerURI");
 
   private ICommonViewerWorkbenchSite viewSite;
 
@@ -224,61 +196,6 @@ public class OpenWithActionProvider extends CommonActionProvider
     return cdoObject.cdoResource();
   }
 
-  // private static IEditorInput createEditorInput(String editorID, CDOCheckout checkout, CDOResourceLeaf resourceLeaf)
-  // {
-  // if (CDOEditorUtil.EDITOR_ID.equals(editorID))
-  // {
-  // return CDOEditorUtil.createEditorInput(editorID, resourceLeaf, false, true);
-  // }
-  //
-  // String path = resourceLeaf.getPath();
-  // URI uri = checkout.createResourceURI(path);
-  // return new URIEditorInput(uri);
-  // }
-  //
-  // private static void openEditor(final IWorkbenchPage page, final CDOObject object, final CDOResourceLeaf
-  // resourceLeaf,
-  // final String editorID, final Pair<CDOResourceLeaf, String> key)
-  // {
-  // new Job("Open")
-  // {
-  // @Override
-  // protected IStatus run(IProgressMonitor monitor)
-  // {
-  // final CDOCheckout checkout = CDOExplorerUtil.getCheckout(object);
-  // final CDOView view = checkout.openView();
-  //
-  // final CDOResourceLeaf contextualLeaf = view.getObject(resourceLeaf);
-  // final IEditorInput editorInput = createEditorInput(editorID, checkout, contextualLeaf);
-  //
-  // Shell shell = page.getWorkbenchWindow().getShell();
-  // if (!shell.isDisposed())
-  // {
-  // shell.getDisplay().asyncExec(new Runnable()
-  // {
-  // public void run()
-  // {
-  // try
-  // {
-  // IEditorPart editor = page.openEditor(editorInput, editorID);
-  // if (editor != null)
-  // {
-  // registerEditor(editor, view, key);
-  // }
-  // }
-  // catch (Exception ex)
-  // {
-  // OM.LOG.error(ex);
-  // }
-  // }
-  // });
-  // }
-  //
-  // return Status.OK_STATUS;
-  // }
-  // }.schedule();
-  // }
-
   public static void openEditor(IWorkbenchPage page, ComposedAdapterFactory adapterFactory, EObject object, String editorOpenerID)
   {
     if (page == null)
@@ -383,7 +300,7 @@ public class OpenWithActionProvider extends CommonActionProvider
         }
       }
     }
-    else if (resourceLeaf instanceof CDOTextResource)
+    else if (resourceLeaf instanceof CDOFileResource)
     {
       String editorID = CDOEditorUtil.getEffectiveEditorID(resourceLeaf);
       if (editorID != null)
@@ -395,7 +312,13 @@ public class OpenWithActionProvider extends CommonActionProvider
 
         try
         {
-          IEditorInput editorInput = CDOEditorUtil.createLobEditorInput(txLeaf, true);
+          CDOLobEditorInput editorInput = (CDOLobEditorInput)CDOEditorUtil.createLobEditorInput(txLeaf, true);
+
+          if (!OMIT_LOB_HANDLER_URI)
+          {
+            editorInput.setURI(CDOExplorerURIHandler.createURI(checkout, txLeaf));
+          }
+
           IEditorPart editor = page.openEditor(editorInput, editorID);
 
           page.addPartListener(new IPartListener()

@@ -39,7 +39,7 @@ import java.util.Map;
  */
 public class CDOCheckoutViewProvider extends AbstractCDOViewProvider
 {
-  public static final String SCHEME = "cdo.checkout";
+  public static final String SCHEME = CDOExplorerUtil.URI_SCHEME;
 
   // TODO Move to activator and deactivate via stop().
   private static final ReferenceMonitor<ResourceSet> MONITOR = new ReferenceMonitor<ResourceSet>()

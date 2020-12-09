@@ -39,6 +39,11 @@ import java.util.LinkedList;
  */
 public final class CDOExplorerUtil
 {
+  /**
+   * @since 4.8
+   */
+  public static final String URI_SCHEME = "cdo.checkout";
+
   public static CDORepositoryManager getRepositoryManager()
   {
     return OM.getRepositoryManager();

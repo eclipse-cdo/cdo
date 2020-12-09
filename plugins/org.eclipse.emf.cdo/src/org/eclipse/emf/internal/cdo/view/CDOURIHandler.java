@@ -11,11 +11,15 @@
  */
 package org.eclipse.emf.internal.cdo.view;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
+import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
+import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewProvider;
 import org.eclipse.emf.cdo.view.CDOViewProvider.CDOViewProvider2;
 import org.eclipse.emf.cdo.view.CDOViewProviderRegistry;
@@ -101,26 +105,7 @@ public class CDOURIHandler implements URIHandler
   @Override
   public void delete(URI uri, Map<?, ?> options) throws IOException
   {
-    String path = CDOURIUtil.extractResourcePath(uri);
-    CDOTransaction transaction = null;
-
-    try
-    {
-      transaction = view.getSession().openTransaction();
-      CDOResourceNode node = transaction.getResourceNode(path);
-      node.delete(options);
-      transaction.commit();
-    }
-    catch (Exception ex)
-    {
-      IOException ioException = new IOException(ex.getMessage());
-      ioException.initCause(ex);
-      throw ioException;
-    }
-    finally
-    {
-      IOUtil.closeSilent(transaction);
-    }
+    modify(uri, node -> node.delete(options));
   }
 
   @Override
@@ -144,11 +129,83 @@ public class CDOURIHandler implements URIHandler
   }
 
   @Override
-  @SuppressWarnings("unchecked")
   public Map<String, ?> getAttributes(URI uri, Map<?, ?> options)
   {
+    String path = getPath(uri);
+    return getAttributes(view, path, options);
+  }
+
+  @Override
+  public void setAttributes(URI uri, Map<String, ?> attributes, Map<?, ?> options) throws IOException
+  {
+    // ViK: We can't change any of the proposed attributes. Only TIME_STAMP, and I believe we are not
+    // storing that attribute in the server. Due to CDOResouce distributed nature, changing it wouldn't make much sense.
+  }
+
+  void setViewProvider2(CDOViewProvider2 viewProvider2)
+  {
+    this.viewProvider2 = viewProvider2;
+    viewURI = viewProvider2.getViewURI(view);
+  }
+
+  private String getPath(URI uri)
+  {
+    if (CDO_URI_SCHEME.equals(uri.scheme()))
+    {
+      return CDOURIUtil.extractResourcePath(uri);
+    }
+
+    for (CDOViewProvider viewProvider : CDOViewProviderRegistry.INSTANCE.getViewProviders(uri))
+    {
+      if (viewProvider instanceof CDOViewProvider2)
+      {
+        return ((CDOViewProvider2)viewProvider).getPath(uri);
+      }
+    }
+
+    return null;
+  }
+
+  private void modify(URI uri, ResourceNodeModifier modifier) throws IOException
+  {
+    if (view.isHistorical())
+    {
+      throw new IOException("View is historical: " + view);
+    }
+
+    String path = getPath(uri);
+    CDOTransaction transaction = null;
+
+    try
+    {
+      CDOSession session = view.getSession();
+      CDOBranch branch = view.getBranch();
+      transaction = session.openTransaction(branch);
+
+      CDOResourceNode node = transaction.getResourceNode(path);
+      modifier.modify(node);
+
+      CDOCommitInfo commitInfo = transaction.commit();
+      if (commitInfo != null)
+      {
+        view.waitForUpdate(commitInfo.getTimeStamp());
+      }
+    }
+    catch (Exception ex)
+    {
+      throw IOUtil.ioException(ex);
+    }
+    finally
+    {
+      IOUtil.closeSilent(transaction);
+    }
+  }
+
+  @SuppressWarnings("unchecked")
+  public static Map<String, ?> getAttributes(CDOView view, String path, Map<?, ?> options)
+  {
     Map<String, Object> result = new HashMap<>();
-    String path = CDOURIUtil.extractResourcePath(uri);
+
     CDOResourceNode node = view.getResourceNode(path);
     if (node != null)
     {
@@ -173,34 +230,12 @@ public class CDOURIHandler implements URIHandler
     return result;
   }
 
-  @Override
-  public void setAttributes(URI uri, Map<String, ?> attributes, Map<?, ?> options) throws IOException
+  /**
+   * @author Eike Stepper
+   */
+  @FunctionalInterface
+  private interface ResourceNodeModifier
   {
-    // ViK: We can't change any of the proposed attributes. Only TIME_STAMP, and I believe we are not
-    // storing that attribute in the server. Due to CDOResouce distributed nature, changing it wouldn't make much sense.
-  }
-
-  private String getPath(URI uri)
-  {
-    if (CDO_URI_SCHEME.equals(uri.scheme()))
-    {
-      return CDOURIUtil.extractResourcePath(uri);
-    }
-
-    for (CDOViewProvider viewProvider : CDOViewProviderRegistry.INSTANCE.getViewProviders(uri))
-    {
-      if (viewProvider instanceof CDOViewProvider2)
-      {
-        return ((CDOViewProvider2)viewProvider).getPath(uri);
-      }
-    }
-
-    return null;
-  }
-
-  void setViewProvider2(CDOViewProvider2 viewProvider2)
-  {
-    this.viewProvider2 = viewProvider2;
-    viewURI = viewProvider2.getViewURI(view);
+    public void modify(CDOResourceNode node) throws IOException;
   }
 }

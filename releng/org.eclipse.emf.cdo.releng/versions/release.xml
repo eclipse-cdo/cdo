@@ -29,12 +29,12 @@
 		<plugin name="org.eclipse.emf.cdo.explorer" version="4.8.0"/>
 		<plugin name="org.eclipse.emf.cdo.explorer.ui" version="4.7.0"/>
 	</feature>
-	<feature name="org.eclipse.emf.cdo.all" version="4.12.0">
+	<feature name="org.eclipse.emf.cdo.all" version="4.12.1">
 		<feature name="org.eclipse.emf.cdo.license" version="4.1.601" license="true"/>
 		<feature name="org.eclipse.emf.cdo.dawn" version="2.3.0"/>
-		<feature name="org.eclipse.emf.cdo.epp" version="4.12.0"/>
+		<feature name="org.eclipse.emf.cdo.epp" version="4.12.1"/>
 		<feature name="org.eclipse.emf.cdo.examples" version="4.4.3"/>
-		<feature name="org.eclipse.emf.cdo.sdk" version="5.5.0"/>
+		<feature name="org.eclipse.emf.cdo.sdk" version="5.5.1"/>
 		<feature name="org.eclipse.emf.cdo.tests" version="4.4.3"/>
 		<feature name="org.eclipse.net4j.db.derby" version="4.2.501"/>
 		<feature name="org.eclipse.net4j.db.hsqldb" version="4.3.0"/>
@@ -72,7 +72,7 @@
 		<feature name="org.eclipse.emf.cdo.license" version="4.1.601" license="true"/>
 		<plugin name="org.eclipse.emf.cdo.doc" version="4.2.2"/>
 	</feature>
-	<feature name="org.eclipse.emf.cdo.epp" version="4.12.0">
+	<feature name="org.eclipse.emf.cdo.epp" version="4.12.1">
 		<feature name="org.eclipse.emf.cdo.license" version="4.1.601" license="true"/>
 		<feature name="org.eclipse.emf.cdo" version="4.12.0"/>
 		<feature name="org.eclipse.emf.cdo.server" version="4.12.0"/>
@@ -83,7 +83,7 @@
 		<feature name="org.eclipse.net4j.examples.installer" version="4.3.2"/>
 		<feature name="org.eclipse.emf.cdo.compare" version="4.6.0"/>
 		<feature name="org.eclipse.emf.cdo.doc" version="4.3.2"/>
-		<plugin name="org.eclipse.emf.cdo.migrator" version="3.2.1"/>
+		<plugin name="org.eclipse.emf.cdo.migrator" version="3.2.2"/>
 	</feature>
 	<feature name="org.eclipse.emf.cdo.examples" version="4.4.3">
 		<feature name="org.eclipse.emf.cdo.license" version="4.1.601" license="true"/>
@@ -108,11 +108,11 @@
 		<plugin name="org.eclipse.emf.cdo.examples.installer" version="4.2.3"/>
 	</feature>
 	<feature name="org.eclipse.emf.cdo.license" version="4.1.601"/>
-	<feature name="org.eclipse.emf.cdo.migrator" version="4.4.1">
+	<feature name="org.eclipse.emf.cdo.migrator" version="4.4.2">
 		<feature name="org.eclipse.emf.cdo.license" version="4.1.601" license="true"/>
-		<plugin name="org.eclipse.emf.cdo.migrator" version="3.2.1"/>
+		<plugin name="org.eclipse.emf.cdo.migrator" version="3.2.2"/>
 	</feature>
-	<feature name="org.eclipse.emf.cdo.sdk" version="5.5.0">
+	<feature name="org.eclipse.emf.cdo.sdk" version="5.5.1">
 		<feature name="org.eclipse.emf.cdo.license" version="4.1.601" license="true"/>
 		<feature name="org.eclipse.emf.cdo.doc" version="4.3.2"/>
 		<feature name="org.eclipse.emf.cdo.compare" version="4.6.0"/>
@@ -120,7 +120,7 @@
 		<feature name="org.eclipse.emf.cdo.server.db" version="4.10.0"/>
 		<feature name="org.eclipse.emf.cdo.server.mongodb" version="5.1.1"/>
 		<feature name="org.eclipse.emf.cdo.server.lissome" version="4.3.1"/>
-		<feature name="org.eclipse.emf.cdo.migrator" version="4.4.1"/>
+		<feature name="org.eclipse.emf.cdo.migrator" version="4.4.2"/>
 		<feature name="org.eclipse.emf.cdo.examples.installer" version="4.3.3"/>
 		<plugin name="org.eclipse.emf.cdo.sdk" version="4.1.601"/>
 	</feature>
@@ -323,7 +323,7 @@
 	<plugin name="org.eclipse.emf.cdo.expressions.editor" version="4.5.0"/>
 	<plugin name="org.eclipse.emf.cdo.genmodel" version="1.0.0"/>
 	<plugin name="org.eclipse.emf.cdo.gmf.notation" version="1.10.1"/>
-	<plugin name="org.eclipse.emf.cdo.migrator" version="3.2.1"/>
+	<plugin name="org.eclipse.emf.cdo.migrator" version="3.2.2"/>
 	<plugin name="org.eclipse.emf.cdo.net4j" version="4.4.0"/>
 	<plugin name="org.eclipse.emf.cdo.releng" version="4.3.2"/>
 	<plugin name="org.eclipse.emf.cdo.releng.apireports" version="1.1.2"/>

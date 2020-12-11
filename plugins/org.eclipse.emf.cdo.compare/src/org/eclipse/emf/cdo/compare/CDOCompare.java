@@ -619,7 +619,6 @@ public class CDOCompare
     /**
      * @since 4.5
      */
-    @Override
     protected boolean isTransient(EStructuralFeature feature)
     {
       return !EMFUtil.isPersistent(feature);

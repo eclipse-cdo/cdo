@@ -35,6 +35,7 @@ import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
@@ -1758,6 +1759,45 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   public InternalCDORevision getRevision(CDOID id)
   {
     return getRevision(id, true);
+  }
+
+  @Override
+  public Map<CDOID, CDOObject> getObjects(Collection<CDOID> ids)
+  {
+    Map<CDOID, CDOObject> result = CDOIDUtil.createMap();
+    List<CDOID> missingIDs = new ArrayList<>();
+
+    for (CDOID id : ids)
+    {
+      result.computeIfAbsent(id, i -> {
+        InternalCDOObject object = getObject(i, false);
+        if (object == null)
+        {
+          missingIDs.add(i);
+        }
+
+        return object;
+      });
+    }
+
+    if (!missingIDs.isEmpty())
+    {
+      InternalCDOSession session = getSession();
+      int initialChunkSize = session.options().getCollectionLoadingPolicy().getInitialChunkSize();
+
+      CDORevisionManager revisionManager = session.getRevisionManager();
+      List<CDORevision> revisions = revisionManager.getRevisions(missingIDs, this, initialChunkSize, CDORevision.DEPTH_NONE, true);
+
+      for (CDORevision revision : revisions)
+      {
+        if (revision != null)
+        {
+          result.computeIfAbsent(revision.getID(), i -> getObject(i, false));
+        }
+      }
+    }
+
+    return result;
   }
 
   @Override

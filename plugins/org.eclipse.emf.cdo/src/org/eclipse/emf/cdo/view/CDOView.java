@@ -432,6 +432,19 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
   public CloseableIterator<CDOObjectReference> queryXRefsAsync(Set<CDOObject> targetObjects, EReference... sourceReferences);
 
   /**
+   * Returns the objects with the given CDOIDs.
+   * <p>
+   * If objects are missing from the local cache they are loaded from the server in one round-trip.
+   *
+   * @param ids
+   *          the collection of CDOIDs that identify the CDOObjects to return.
+   * @return a map that contains the CDOObjects with the given CDOIDs.
+   *
+   * @since 4.13
+   */
+  public Map<CDOID, CDOObject> getObjects(Collection<CDOID> ids);
+
+  /**
    * Returns the object for the given CDOID.
    *
    * @param loadOnDemand

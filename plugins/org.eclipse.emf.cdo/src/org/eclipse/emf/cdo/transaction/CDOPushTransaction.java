@@ -579,6 +579,15 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
     return delegate.getNewObjects();
   }
 
+  /**
+   * @since 4.13
+   */
+  @Override
+  public Map<CDOID, CDOObject> getObjects(Collection<CDOID> ids)
+  {
+    return delegate.getObjects(ids);
+  }
+
   @Override
   public CDOObject getObject(CDOID id, boolean loadOnDemand)
   {

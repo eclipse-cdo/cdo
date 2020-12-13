@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.emf.cdo.tests.db;singleton:=true
-Bundle-Version: 4.1.2.qualifier
+Bundle-Version: 4.1.3.qualifier
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -18,8 +18,7 @@ Require-Bundle: org.eclipse.emf.cdo.tests;bundle-version="[4.0.0,5.0.0)";visibil
  org.eclipse.net4j.db.postgresql;bundle-version="[4.0.0,5.0.0)",
  org.eclipse.net4j.db.jdbc;bundle-version="[4.0.0,5.0.0)",
  org.eclipse.net4j.db.oracle;bundle-version="[1.0.0,2.0.0)",
- oracle.database.driver;bundle-version="[6.0.0,9.0.0)",
- org.eclipse.emf.cdo.common.db;bundle-version="[3.0.0,4.0.0)"
+ oracle.database.driver;bundle-version="[6.0.0,9.0.0)"
 Eclipse-BuddyPolicy: dependent
 Import-Package: com.mysql.jdbc.jdbc2.optional;version="[5.0.0,6.0.0)",
  org.apache.derby.jdbc;version="[10.0.0,11.0.0)",
@@ -27,12 +26,11 @@ Import-Package: com.mysql.jdbc.jdbc2.optional;version="[5.0.0,6.0.0)",
  org.hsqldb.jdbc;version="[2.0.0,3.0.0)",
  org.postgresql.ds;version="[9.0.0,10.0.0)",
  org.postgresql.ds.common;version="[9.0.0,10.0.0)"
-Export-Package: org.eclipse.emf.cdo.tests.db;version="4.1.2";x-friends:="org.eclipse.emf.cdo.tests.all",
- org.eclipse.emf.cdo.tests.db.bugzilla;version="4.1.2";x-friends:="org.eclipse.emf.cdo.tests.all",
- org.eclipse.emf.cdo.tests.db.bundle;version="4.1.2";x-internal:=true,
- org.eclipse.emf.cdo.tests.db.capabilities;version="4.1.2";x-friends:="org.eclipse.emf.cdo.tests.all",
- org.eclipse.emf.cdo.tests.db.offline;version="4.1.2";x-friends:="org.eclipse.emf.cdo.tests.all",
- org.eclipse.emf.cdo.tests.db.performance;version="4.1.2";x-friends:="org.eclipse.emf.cdo.tests.all",
- org.eclipse.emf.cdo.tests.db.revisioncache;version="4.1.2";x-friends:="org.eclipse.emf.cdo.tests.all",
- org.eclipse.emf.cdo.tests.db.verifier;version="4.1.2";x-friends:="org.eclipse.emf.cdo.tests.all"
+Export-Package: org.eclipse.emf.cdo.tests.db;version="4.1.3";x-friends:="org.eclipse.emf.cdo.tests.all",
+ org.eclipse.emf.cdo.tests.db.bugzilla;version="4.1.3";x-friends:="org.eclipse.emf.cdo.tests.all",
+ org.eclipse.emf.cdo.tests.db.bundle;version="4.1.3";x-internal:=true,
+ org.eclipse.emf.cdo.tests.db.capabilities;version="4.1.3";x-friends:="org.eclipse.emf.cdo.tests.all",
+ org.eclipse.emf.cdo.tests.db.offline;version="4.1.3";x-friends:="org.eclipse.emf.cdo.tests.all",
+ org.eclipse.emf.cdo.tests.db.performance;version="4.1.3";x-friends:="org.eclipse.emf.cdo.tests.all",
+ org.eclipse.emf.cdo.tests.db.verifier;version="4.1.3";x-friends:="org.eclipse.emf.cdo.tests.all"
 Automatic-Module-Name: org.eclipse.emf.cdo.tests.db

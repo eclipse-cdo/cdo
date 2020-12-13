@@ -25,7 +25,7 @@
 
   <groupId>org.eclipse.emf.cdo.features</groupId>
   <artifactId>org.eclipse.emf.cdo.tests</artifactId>
-  <version>4.4.3-SNAPSHOT</version>
+  <version>4.4.4-SNAPSHOT</version>
   <packaging>eclipse-feature</packaging>
 
 </project>

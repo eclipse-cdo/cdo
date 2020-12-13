@@ -32,7 +32,6 @@ Eike Stepper - initial API and implementation
     <module>../../../plugins/org.eclipse.emf.cdo</module>
     <module>../../../plugins/org.eclipse.emf.cdo.admin</module>
     <module>../../../plugins/org.eclipse.emf.cdo.common</module>
-    <module>../../../plugins/org.eclipse.emf.cdo.common.db</module>
     <module>../../../plugins/org.eclipse.emf.cdo.compare</module>
     <module>../../../plugins/org.eclipse.emf.cdo.dawn</module>
     <module>../../../plugins/org.eclipse.emf.cdo.dawn.emf</module>

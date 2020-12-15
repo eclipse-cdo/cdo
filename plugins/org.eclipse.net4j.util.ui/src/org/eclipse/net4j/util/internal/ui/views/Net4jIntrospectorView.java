@@ -11,7 +11,9 @@
 package org.eclipse.net4j.util.internal.ui.views;
 
 import org.eclipse.net4j.ui.shared.SharedIcons;
+import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.ReflectUtil;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.container.IPluginContainer;
@@ -85,6 +87,8 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
 
   private Text classLabel;
 
+  private Text identityLabel;
+
   private Text objectLabel;
 
   private IAction backAction = new BackAction();
@@ -147,13 +151,17 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
     composite.setLayout(UIUtil.createGridLayout(1));
 
     Composite c = new Composite(composite, SWT.BORDER);
-    c.setLayout(UIUtil.createGridLayout(2));
+    c.setLayout(UIUtil.createGridLayout(3));
     c.setLayoutData(UIUtil.createGridData(true, false));
 
     classLabel = new Text(c, SWT.READ_ONLY);
     classLabel.setLayoutData(UIUtil.createGridData(false, false));
     classLabel.setBackground(bg);
     classLabel.setForeground(gray);
+
+    identityLabel = new Text(c, SWT.READ_ONLY);
+    identityLabel.setLayoutData(UIUtil.createGridData(false, false));
+    identityLabel.setBackground(bg);
 
     objectLabel = new Text(c, SWT.READ_ONLY);
     objectLabel.setLayoutData(UIUtil.createGridData(true, false));
@@ -377,19 +385,32 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
     if (object == null)
     {
       classLabel.setText(""); //$NON-NLS-1$
+      identityLabel.setText(""); //$NON-NLS-1$
       objectLabel.setText(""); //$NON-NLS-1$
       currentViewer = objectViewer;
     }
     else
     {
       EventUtil.addListener(object, this);
-      String className = object.getClass().getName();
+
+      Class<? extends Object> c = object.getClass();
+      String className = c.isArray() ? c.getComponentType().getName() + "[]" : c.getName();
       classLabel.setText(className);
 
+      String identity = HexUtil.identityHashCode(object);
+      identityLabel.setText(identity);
+
       String value = object.toString();
-      if (value.startsWith(className + "@")) //$NON-NLS-1$
+      String prefix = c.getName() + "@";
+      if (value.startsWith(prefix))
       {
-        objectLabel.setText(value.substring(className.length()));
+        String text = value.substring(prefix.length());
+        if (identity.endsWith(text))
+        {
+          text = StringUtil.EMPTY;
+        }
+
+        objectLabel.setText(text);
       }
       else
       {

@@ -307,14 +307,14 @@ public class OpenWithActionProvider extends CommonActionProvider
       {
         CDOView view = resourceLeaf.cdoView();
         CDOCheckout checkout = CDOExplorerUtil.getCheckout(view);
-        CDOTransaction transaction = checkout != null ? checkout.openTransaction() : view.getSession().openTransaction(view.getBranch());
-        CDOResourceLeaf txLeaf = transaction.getObject(resourceLeaf);
+        CDOTransaction tx = view.isHistorical() ? null : checkout != null ? checkout.openTransaction() : view.getSession().openTransaction(view.getBranch());
+        CDOResourceLeaf txLeaf = tx == null ? resourceLeaf : tx.getObject(resourceLeaf);
 
         try
         {
           CDOLobEditorInput editorInput = (CDOLobEditorInput)CDOEditorUtil.createLobEditorInput(txLeaf, true);
 
-          if (!OMIT_LOB_HANDLER_URI)
+          if (checkout != null && !OMIT_LOB_HANDLER_URI)
           {
             editorInput.setURI(CDOExplorerURIHandler.createURI(checkout, txLeaf));
           }
@@ -328,7 +328,11 @@ public class OpenWithActionProvider extends CommonActionProvider
             {
               if (part == editor)
               {
-                transaction.close();
+                if (tx != null)
+                {
+                  tx.close();
+                }
+
                 editor.getSite().getPage().removePartListener(this);
               }
             }

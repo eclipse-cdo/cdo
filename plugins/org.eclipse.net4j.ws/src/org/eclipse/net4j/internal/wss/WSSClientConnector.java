@@ -14,6 +14,7 @@ import org.eclipse.net4j.internal.ws.WSClientConnector;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.wss.WSSUtil;
 
+import org.eclipse.core.net.proxy.IProxyData;
 import org.eclipse.jetty.client.HttpClient;
 import org.eclipse.jetty.client.transport.HttpClientTransportDynamic;
 import org.eclipse.jetty.ee8.websocket.client.WebSocketClient;
@@ -51,6 +52,8 @@ public class WSSClientConnector extends WSClientConnector
       HttpClient httpClient = new HttpClient(new HttpClientTransportDynamic(clientConnector));
 
       WebSocketClient securedClient = new WebSocketClient(httpClient);
+      configureProxy(securedClient, IProxyData.HTTPS_PROXY_TYPE);
+      configureBasicAuthentication(securedClient);
       setClient(securedClient);
 
       // Let WSClientConnector manage the WebSocketClient, see WSClientConnector::doActivate/doDeactivate

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2013, 2015, 2016, 2019, 2020 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2013, 2015, 2016, 2019, 2020, 2022 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -9,6 +9,7 @@
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - maintenance
  *    Victor Roldan Betancort - maintenance
+*     Obeo - WSS Support
  */
 package org.eclipse.emf.cdo.net4j;
 
@@ -62,6 +63,11 @@ public final class CDONet4jUtil
    */
   public static final String PROTOCOL_WS = "cdo.net4j.ws";
 
+  /**
+   * @since 4.3
+   */
+  public static final String PROTOCOL_WSS = "cdo.net4j.wss";
+
   static
   {
     try
@@ -86,6 +92,11 @@ public final class CDONet4jUtil
           map.put(PROTOCOL_WS, CDOResourceFactory.INSTANCE);
         }
 
+        if (!map.containsKey(PROTOCOL_WSS))
+        {
+          map.put(PROTOCOL_WSS, CDOResourceFactory.INSTANCE);
+        }
+
         if (!map.containsKey(PROTOCOL_JVM))
         {
           map.put(PROTOCOL_JVM, CDOResourceFactory.INSTANCE);
@@ -96,6 +107,7 @@ public final class CDONet4jUtil
         CDOViewProviderRegistry.INSTANCE.addViewProvider(new CDONet4jViewProvider.TCP(priority));
         CDOViewProviderRegistry.INSTANCE.addViewProvider(new CDONet4jViewProvider.SSL(priority));
         CDOViewProviderRegistry.INSTANCE.addViewProvider(new CDONet4jViewProvider.WS(priority));
+        CDOViewProviderRegistry.INSTANCE.addViewProvider(new CDONet4jViewProvider.WSS(priority));
       }
     }
     catch (RuntimeException ex)

@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Obeo - WSS Support
  */
 package org.eclipse.net4j.internal.ws;
 
@@ -34,7 +35,7 @@ public class WSClientConnector extends WSConnector
 
   private WebSocketClient client;
 
-  private boolean ownedClient;
+  protected boolean ownedClient;
 
   private long connectTimeout = 5000;
 

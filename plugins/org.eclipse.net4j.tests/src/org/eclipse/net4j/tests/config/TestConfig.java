@@ -9,6 +9,7 @@
  *    Eike Stepper - initial API and implementation
  *    Maxime Porhel (Obeo) - re-enable WebSocket tests after move to Jetty 10.0.12
  *    Maxime Porhel (Obeo) - WebSocket support adaptation to Jetty 12
+ *    Maxime Porhel (Obeo) - WSS Support
  */
 package org.eclipse.net4j.tests.config;
 
@@ -25,6 +26,7 @@ import org.eclipse.net4j.internal.tcp.ssl.SSLConnectorFactory;
 import org.eclipse.net4j.internal.ws.WSAcceptorFactory;
 import org.eclipse.net4j.internal.ws.WSConnector;
 import org.eclipse.net4j.internal.ws.WSConnectorFactory;
+import org.eclipse.net4j.internal.wss.WSSAcceptorFactory;
 import org.eclipse.net4j.jvm.IJVMAcceptor;
 import org.eclipse.net4j.jvm.IJVMConnector;
 import org.eclipse.net4j.jvm.JVMUtil;
@@ -38,11 +40,13 @@ import org.eclipse.net4j.ws.IWSAcceptor;
 import org.eclipse.net4j.ws.IWSConnector;
 import org.eclipse.net4j.ws.WSUtil;
 import org.eclipse.net4j.ws.jetty.Net4jWebSocketServlet;
+import org.eclipse.net4j.wss.WSSUtil;
 
 import org.eclipse.jetty.ee8.servlet.ServletContextHandler;
 import org.eclipse.jetty.ee8.servlet.ServletHolder;
 import org.eclipse.jetty.ee8.websocket.server.config.JettyWebSocketServletContainerInitializer;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.ServerConnector;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -335,6 +339,103 @@ public abstract class TestConfig
         public String toString()
         {
           return WS.class.getSimpleName();
+        }
+      };
+    }
+  }
+
+  /**
+   * @author Maxime Porhel
+   */
+  public static class WSS implements Factory
+  {
+    public static final int HTTPS_PORT = 8088;
+
+    public static final String SERVICE_URI = "wss://localhost:" + HTTPS_PORT + "/net4j";
+
+    public static final String ACCEPTOR_NAME = "default";
+
+    public TestConfig createConfig()
+    {
+      return new TestConfig()
+      {
+        private Server server;
+
+        @Override
+        public boolean needsSeparateContainers()
+        {
+          return false;
+        }
+
+        @Override
+        public void prepareContainer(IManagedContainer container)
+        {
+          WSSUtil.prepareContainer(container);
+        }
+
+        @Override
+        public IAcceptor getAcceptor(IManagedContainer container, boolean activate)
+        {
+          // SSL context is handlded by Jetty.
+
+          return (IWSAcceptor)container.getElement(WSSAcceptorFactory.PRODUCT_GROUP, WSSUtil.FACTORY_TYPE, ACCEPTOR_NAME, activate);
+        }
+
+        @Override
+        public IConnector getConnector(IManagedContainer container, boolean activate)
+        {
+          try
+          {
+            // System.getProperties().put("org.eclipse.net4j.wss.ssl.endpointIdentificationAlgorithm", "null");
+            // System.getProperties().put("org.eclipse.net4j.wss.ssl.passphrase", "secret");
+            // System.getProperties().put("org.eclipse.net4j.wss.ssl.trust", new
+            // File("ssl/trusted.ks").toURI().toString());
+
+            String description = WSSUtil.getConnectorDescription(SERVICE_URI, ACCEPTOR_NAME);
+            return (IWSConnector)container.getElement(WSConnectorFactory.PRODUCT_GROUP, WSUtil.FACTORY_TYPE, description, activate);
+          }
+          catch (URISyntaxException ex)
+          {
+            throw new RuntimeException(ex);
+          }
+        }
+
+        @Override
+        public void closeUnderlyingConnection(IConnector connector) throws IOException
+        {
+          ((WSConnector)connector).getWebSocket().close();
+        }
+
+        @Override
+        public void setUp() throws Exception
+        {
+          IOUtil.OUT().println("Starting Jetty...");
+          server = new Server();
+
+          ServerConnector connector = new ServerConnector(server);
+          connector.setPort(HTTPS_PORT);
+          server.addConnector(connector);
+
+          ServletContextHandler handler = new ServletContextHandler(ServletContextHandler.SESSIONS);
+          handler.setContextPath("/");
+          handler.addServlet(new ServletHolder("net4j", Net4jWebSocketServlet.class), "/net4j");
+          // configure SSLContextFactory
+          server.setHandler(handler);
+          server.start();
+        }
+
+        @Override
+        public void tearDown() throws Exception
+        {
+          IOUtil.OUT().println("Stopping Jetty...");
+          server.stop();
+          server = null;
+        }
+
+        @Override
+        public String toString()
+        {
+          return WSS.class.getSimpleName();
         }
       };
     }

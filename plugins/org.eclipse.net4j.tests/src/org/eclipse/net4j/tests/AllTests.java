@@ -18,6 +18,7 @@ import org.eclipse.net4j.tests.config.TestConfig.JVM;
 import org.eclipse.net4j.tests.config.TestConfig.SSL;
 import org.eclipse.net4j.tests.config.TestConfig.TCP;
 import org.eclipse.net4j.tests.config.TestConfig.WS;
+import org.eclipse.net4j.tests.config.TestConfig.WSS;
 import org.eclipse.net4j.util.tests.ExecutorWorkSerializerTest;
 import org.eclipse.net4j.util.tests.ExpectedIOTest;
 import org.eclipse.net4j.util.tests.ExtendedIOTest;
@@ -42,7 +43,7 @@ public class AllTests
   public static Test suite()
   {
     @SuppressWarnings("unchecked")
-    TestSuite suite = new Net4jTestSuite(AllTests.class.getName(), JVM.class, TCP.class, SSL.class, WS.class);
+    TestSuite suite = new Net4jTestSuite(AllTests.class.getName(), JVM.class, TCP.class, SSL.class, WS.class, WSS.class);
     populateSuite(suite);
     return suite;
   }

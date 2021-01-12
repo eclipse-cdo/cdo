@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020, 2021 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2020, 2024 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Maxime Porhel (Obeo) - WSS Support
  */
 package org.eclipse.net4j.internal.ws;
 
@@ -34,7 +35,7 @@ public class WSClientConnector extends WSConnector
 
   private WebSocketClient client;
 
-  private boolean ownedClient;
+  protected boolean ownedClient;
 
   private long connectTimeout = 5000;
 

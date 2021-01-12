@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2020, 2024 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,10 +7,12 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Maxime Porhel (Obeo) - WSS Support
  */
 package org.eclipse.net4j.internal.ws;
 
 import org.eclipse.net4j.util.factory.ProductCreationException;
+import org.eclipse.net4j.ws.WSUtil;
 
 import org.eclipse.spi.net4j.ConnectorFactory;
 
@@ -21,11 +23,10 @@ import java.net.URISyntaxException;
  */
 public class WSConnectorFactory extends ConnectorFactory
 {
-  public static final String TYPE = "ws"; //$NON-NLS-1$
 
   public WSConnectorFactory()
   {
-    super(TYPE);
+    super(WSUtil.FACTORY_TYPE);
   }
 
   /**

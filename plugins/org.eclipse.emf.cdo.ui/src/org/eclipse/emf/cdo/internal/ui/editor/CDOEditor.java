@@ -53,6 +53,7 @@ import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.actions.LongRunningAction;
 import org.eclipse.net4j.util.ui.actions.SafeAction;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
@@ -105,7 +106,6 @@ import org.eclipse.emf.edit.ui.view.ExtendedPropertySheetPage;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.ProgressMonitorWrapper;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
@@ -148,6 +148,7 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Item;
@@ -1135,66 +1136,59 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
       addPage(0, progressLabel);
       setActivePage(0);
-      hideTabs();
 
-      new Job("Open view")
-      {
-        @Override
-        protected IStatus run(IProgressMonitor monitor)
+      Job.create("Open view", monitor -> {
+        ProgressMonitorWrapper monitorWrapper = new ProgressMonitorWrapper(monitor)
         {
-          ProgressMonitorWrapper monitorWrapper = new ProgressMonitorWrapper(monitor)
+          @Override
+          public void beginTask(String name, int totalWork)
           {
-            @Override
-            public void beginTask(String name, int totalWork)
-            {
-              display.asyncExec(() -> progressLabel.setText(name));
-              super.beginTask(name, totalWork);
-            }
-
-            @Override
-            public void setTaskName(String name)
-            {
-              display.asyncExec(() -> progressLabel.setText(name));
-              super.setTaskName(name);
-            }
-          };
-
-          try
-          {
-            CDOView view = ((CDOEditorInput3)editorInput).openView(monitorWrapper);
-            if (view != null)
-            {
-              display.asyncExec(() -> {
-                try
-                {
-                  removePage(0);
-                  showTabs();
-
-                  CDOID objectID = editorInput instanceof CDOEditorInput2 ? ((CDOEditorInput2)editorInput).getObjectID() : null;
-                  createPages(view, resourcePath, objectID, domainProvider);
-
-                  handleActivate();
-
-                  CDOActionBarContributor actionBarContributor = (CDOActionBarContributor)getActionBarContributor();
-                  actionBarContributor.activate();
-
-                  firePropertyChange(IEditorPart.PROP_INPUT);
-                }
-                catch (Exception ex)
-                {
-                  //$FALL-THROUGH$
-                }
-              });
-            }
-
-            return Status.OK_STATUS;
+            display.asyncExec(() -> progressLabel.setText(name));
+            super.beginTask(name, totalWork);
           }
-          catch (Throwable ex)
+
+          @Override
+          public void setTaskName(String name)
           {
-            return OM.BUNDLE.getStatus(ex);
+            display.asyncExec(() -> progressLabel.setText(name));
+            super.setTaskName(name);
           }
+        };
+
+        try
+        {
+          CDOView newView = ((CDOEditorInput3)editorInput).openView(monitorWrapper);
+          if (newView != null)
+          {
+            UIUtil.asyncExec(display, () -> {
+              hideTabs();
+              removePage(0);
+
+              CDOID objectID = editorInput instanceof CDOEditorInput2 ? ((CDOEditorInput2)editorInput).getObjectID() : null;
+              createPages(newView, resourcePath, objectID, domainProvider);
+
+              handleActivate();
+
+              CDOActionBarContributor actionBarContributor = (CDOActionBarContributor)getActionBarContributor();
+              actionBarContributor.activate();
+
+              IContentOutlinePage contentOutlinePage = getContentOutlinePage();
+              if (contentOutlinePage instanceof CDOContentOutlinePage)
+              {
+                ((CDOContentOutlinePage)contentOutlinePage).setView(newView);
+              }
+
+              firePropertyChange(IEditorPart.PROP_INPUT);
+            });
+          }
+
+          return Status.OK_STATUS;
         }
-      }.schedule();
+        catch (Throwable ex)
+        {
+          return OM.BUNDLE.getStatus(ex);
+        }
+      }).schedule();
     }
   }
 
@@ -1330,7 +1324,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       setCurrentViewer(selectionViewer);
 
       selectionViewer.setContentProvider(createContentProvider());
-      selectionViewer.setLabelProvider(createLabelProvider());
+      selectionViewer.setLabelProvider(createLabelProvider(selectionViewer));
       selectionViewer.setInput(viewerInput);
 
       getSite().getShell().getDisplay().asyncExec(new Runnable()
@@ -1638,10 +1632,21 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
   /**
    * @ADDED
+   * @deprecated As of 4.10 use {@link #createLabelProvider(TreeViewer)}.
    */
+  @Deprecated
   protected ILabelProvider createLabelProvider()
   {
-    return new DecoratingLabelProvider(new CDOLabelProvider(adapterFactory, view, selectionViewer), createLabelDecorator())
+    return createLabelProvider(selectionViewer);
+  }
+
+  /**
+   * @ADDED
+   * @since 4.10
+   */
+  protected ILabelProvider createLabelProvider(TreeViewer viewer)
+  {
+    return new DecoratingLabelProvider(new CDOLabelProvider(adapterFactory, view, viewer), createLabelDecorator())
     {
       @Override
       public Image getImage(Object element)
@@ -1737,11 +1742,12 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     if (getPageCount() <= 1)
     {
       setPageText(0, ""); //$NON-NLS-1$
-      if (getContainer() != null && !getContainer().isDisposed() && getContainer() instanceof CTabFolder)
+      Composite container = getContainer();
+      if (container instanceof CTabFolder && !container.isDisposed())
       {
-        ((CTabFolder)getContainer()).setTabHeight(1);
-        Point point = getContainer().getSize();
-        getContainer().setSize(point.x, point.y + 6);
+        Point point = container.getSize();
+        Rectangle clientArea = container.getClientArea();
+        container.setSize(point.x, 2 * point.y - clientArea.height - clientArea.y);
       }
     }
   }
@@ -1757,11 +1763,12 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     if (getPageCount() > 1)
     {
       setPageText(0, getString("_UI_SelectionPage_label")); //$NON-NLS-1$
-      if (getContainer() != null && !getContainer().isDisposed() && getContainer() instanceof CTabFolder)
+      Composite container = getContainer();
+      if (container instanceof CTabFolder && !container.isDisposed())
       {
-        ((CTabFolder)getContainer()).setTabHeight(SWT.DEFAULT);
-        Point point = getContainer().getSize();
-        getContainer().setSize(point.x, point.y - 6);
+        Point point = container.getSize();
+        Rectangle clientArea = container.getClientArea();
+        container.setSize(point.x, clientArea.height + clientArea.y);
       }
     }
   }
@@ -1814,109 +1821,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   {
     if (contentOutlinePage == null)
     {
-      // The content outline is just a tree.
-      //
-      class MyContentOutlinePage extends ContentOutlinePage
-      {
-        private CDOInvalidRootAgent invalidRootAgent;
-
-        @Override
-        public void createControl(Composite parent)
-        {
-          if (CONTENT_OUTLINE_PAGE_VIEWER_FIELD == null)
-          {
-            super.createControl(parent);
-          }
-          else
-          {
-            TreeViewer treeViewer = new SafeTreeViewer(parent, getTreeStyle());
-            treeViewer.addSelectionChangedListener(this);
-            ReflectUtil.setValue(CONTENT_OUTLINE_PAGE_VIEWER_FIELD, this, treeViewer);
-          }
-
-          // super.createControl(parent);
-          contentOutlineViewer = getTreeViewer();
-          contentOutlineViewer.addSelectionChangedListener(this);
-
-          // Set up the tree viewer.
-          //
-          contentOutlineViewer.setContentProvider(createContentProvider());
-          contentOutlineViewer.setLabelProvider(createLabelProvider());
-
-          try
-          {
-            contentOutlineViewer.setInput(viewerInput);
-          }
-          catch (Exception ex)
-          {
-            contentOutlineViewer.setInput(null);
-          }
-
-          // If the view can be switched to historical times let an InvalidRootAgent handle detached inputs.
-          if (view.isReadOnly())
-          {
-            invalidRootAgent = new CDOInvalidRootAgent(view)
-            {
-              @Override
-              protected Object getRootFromUI()
-              {
-                return contentOutlineViewer.getInput();
-              }
-
-              @Override
-              protected void setRootToUI(Object root)
-              {
-                contentOutlineViewer.setInput(root);
-              }
-
-              @Override
-              protected void closeUI()
-              {
-                closeEditor();
-              }
-            };
-          }
-
-          // Make sure our popups work.
-          //
-          createContextMenuFor(contentOutlineViewer);
-
-          if (!CDOUtil.getResources(editingDomain.getResourceSet()).isEmpty())
-          {
-            // Select the root object in the view.
-            //
-            contentOutlineViewer.setSelection(new StructuredSelection(CDOUtil.getResources(editingDomain.getResourceSet()).get(0)), true);
-          }
-        }
-
-        @Override
-        public void makeContributions(IMenuManager menuManager, IToolBarManager toolBarManager, IStatusLineManager statusLineManager)
-        {
-          super.makeContributions(menuManager, toolBarManager, statusLineManager);
-          contentOutlineStatusLineManager = statusLineManager;
-        }
-
-        @Override
-        public void setActionBars(IActionBars actionBars)
-        {
-          super.setActionBars(actionBars);
-          getActionBarContributor().shareGlobalActions(this, actionBars);
-        }
-
-        @Override
-        public void dispose()
-        {
-          if (invalidRootAgent != null)
-          {
-            invalidRootAgent.dispose();
-            invalidRootAgent = null;
-          }
-
-          super.dispose();
-        }
-      }
-
-      contentOutlinePage = new MyContentOutlinePage();
+      contentOutlinePage = new CDOContentOutlinePage();
 
       // Listen to selection so that we can handle it is a special way.
       //
@@ -3023,6 +2928,122 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     catch (Throwable ex)
     {
       return null;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class CDOContentOutlinePage extends ContentOutlinePage
+  {
+    private CDOInvalidRootAgent invalidRootAgent;
+
+    public CDOContentOutlinePage()
+    {
+    }
+
+    public void setView(CDOView view)
+    {
+      // If the view can be switched to historical times let an InvalidRootAgent handle detached inputs.
+      if (invalidRootAgent == null && view.isReadOnly())
+      {
+        invalidRootAgent = new CDOInvalidRootAgent(view)
+        {
+          @Override
+          protected Object getRootFromUI()
+          {
+            return contentOutlineViewer.getInput();
+          }
+
+          @Override
+          protected void setRootToUI(Object root)
+          {
+            contentOutlineViewer.setInput(root);
+          }
+
+          @Override
+          protected void closeUI()
+          {
+            closeEditor();
+          }
+        };
+      }
+
+      if (!CDOUtil.getResources(editingDomain.getResourceSet()).isEmpty())
+      {
+        // Select the root object in the view.
+        //
+        contentOutlineViewer.setSelection(new StructuredSelection(CDOUtil.getResources(editingDomain.getResourceSet()).get(0)), true);
+      }
+    }
+
+    @Override
+    public void createControl(Composite parent)
+    {
+      if (CONTENT_OUTLINE_PAGE_VIEWER_FIELD == null)
+      {
+        super.createControl(parent);
+      }
+      else
+      {
+        TreeViewer treeViewer = new SafeTreeViewer(parent, getTreeStyle());
+        treeViewer.addSelectionChangedListener(this);
+        ReflectUtil.setValue(CONTENT_OUTLINE_PAGE_VIEWER_FIELD, this, treeViewer);
+      }
+
+      // super.createControl(parent);
+      contentOutlineViewer = getTreeViewer();
+      contentOutlineViewer.addSelectionChangedListener(this);
+
+      // Set up the tree viewer.
+      //
+      contentOutlineViewer.setContentProvider(createContentProvider());
+      contentOutlineViewer.setLabelProvider(createLabelProvider(contentOutlineViewer));
+
+      try
+      {
+        contentOutlineViewer.setInput(viewerInput);
+      }
+      catch (Exception ex)
+      {
+        contentOutlineViewer.setInput(null);
+        return;
+      }
+
+      if (view != null)
+      {
+        setView(view);
+      }
+
+      // Make sure our popups work.
+      //
+      createContextMenuFor(contentOutlineViewer);
+    }
+
+    @Override
+    public void makeContributions(IMenuManager menuManager, IToolBarManager toolBarManager, IStatusLineManager statusLineManager)
+    {
+      super.makeContributions(menuManager, toolBarManager, statusLineManager);
+      contentOutlineStatusLineManager = statusLineManager;
+    }
+
+    @Override
+    public void setActionBars(IActionBars actionBars)
+    {
+      super.setActionBars(actionBars);
+      getActionBarContributor().shareGlobalActions(this, actionBars);
+    }
+
+    @Override
+    public void dispose()
+    {
+      if (invalidRootAgent != null)
+      {
+        invalidRootAgent.dispose();
+        invalidRootAgent = null;
+      }
+
+      super.dispose();
     }
   }
 

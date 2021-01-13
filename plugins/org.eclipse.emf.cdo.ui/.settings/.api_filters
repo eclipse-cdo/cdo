@@ -1530,20 +1530,6 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/cdo/internal/ui/editor/CDOEditor.java" type="org.eclipse.emf.cdo.internal.ui.editor.CDOEditor">
-        <filter id="571519004">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.cdo.internal.ui.editor.CDOEditor"/>
-                <message_argument value="TreeViewer"/>
-            </message_arguments>
-        </filter>
-        <filter id="571519004">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.cdo.internal.ui.editor.CDOEditor.createPages()"/>
-                <message_argument value="TreeViewer"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="src/org/eclipse/emf/cdo/internal/ui/editor/CDOEditor.java" type="org.eclipse.emf.cdo.internal.ui.editor.CDOEditor$SafeTreeViewer">
         <filter id="571473929">
             <message_arguments>

@@ -10,54 +10,29 @@
  */
 package org.eclipse.emf.cdo.explorer.ui.checkouts.wizards;
 
-import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
-import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
-import org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutContentProvider;
 
 import org.eclipse.net4j.util.ObjectUtil;
 
-import org.eclipse.emf.common.notify.Adapter;
-import org.eclipse.emf.common.util.ECollections;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 
-import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
  * @author Eike Stepper
  */
-public class NewWizardPage extends WizardPage
+public class NewWizardPage extends CheckoutNodeWizardPage
 {
   private final String resourceType;
-
-  private final String title;
-
-  private TreeViewer parentViewer;
-
-  private boolean parentRevealed;
-
-  private Object parent;
 
   private Text nameText;
 
@@ -67,21 +42,14 @@ public class NewWizardPage extends WizardPage
 
   public NewWizardPage(String resourceType, String title, IStructuredSelection selection)
   {
-    super("NewPage");
+    super("NewPage", title, selection);
     this.resourceType = resourceType;
-    this.title = title;
-    parent = selection.getFirstElement();
   }
 
   @Override
   public NewWizard getWizard()
   {
     return (NewWizard)super.getWizard();
-  }
-
-  public final Object getParent()
-  {
-    return parent;
   }
 
   @Override
@@ -91,184 +59,78 @@ public class NewWizardPage extends WizardPage
   }
 
   @Override
-  public void createControl(Composite parentControl)
+  protected String getNodeMessage()
   {
-    setTitle(title);
+    return "Select the parent folder";
+  }
+
+  @Override
+  protected void doCreateControl(Composite parent)
+  {
     setImageDescriptor(OM.getImageDescriptor("icons/wiz/new_" + resourceType + ".gif"));
     setMessage("Enter the name of the " + title.toLowerCase() + ".");
 
-    Composite container = new Composite(parentControl, SWT.NULL);
-    GridLayout containerGridLayout = new GridLayout();
-    containerGridLayout.numColumns = 2;
-    container.setLayout(containerGridLayout);
-    setControl(container);
+    super.doCreateControl(parent);
 
-    Label parentLabel = new Label(container, SWT.NONE);
-    parentLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
-    parentLabel.setText("Select the parent folder:");
-
-    parentViewer = CDOCheckoutContentProvider.createTreeViewer(container);
-    parentViewer.getTree().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
-    parentViewer.addSelectionChangedListener(new ISelectionChangedListener()
-    {
-      @Override
-      public void selectionChanged(SelectionChangedEvent event)
-      {
-        if (parentRevealed)
-        {
-          IStructuredSelection selection = (IStructuredSelection)event.getSelection();
-          parent = selection.getFirstElement();
-        }
-
-        validate();
-      }
-    });
-
-    Label nameLabel = new Label(container, SWT.NONE);
+    Label nameLabel = new Label(parent, SWT.NONE);
     nameLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
     nameLabel.setText("Name:");
 
-    nameText = new Text(container, SWT.BORDER);
+    nameText = new Text(parent, SWT.BORDER);
     nameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-    nameText.addModifyListener(new ModifyListener()
-    {
-      @Override
-      public void modifyText(ModifyEvent e)
-      {
-        nameModified = true;
-        validate();
-      }
-    });
-
-    getShell().getDisplay().asyncExec(new Runnable()
-    {
-      @Override
-      public void run()
-      {
-        try
-        {
-          getShell().setText(title);
-        }
-        catch (Exception ex)
-        {
-          //$FALL-THROUGH$
-        }
-
-        revealParent();
-        validate();
-
-        nameText.setFocus();
-        nameText.selectAll();
-      }
+    nameText.addModifyListener(e -> {
+      nameModified = true;
+      validate();
     });
   }
 
-  private void revealParent()
+  @Override
+  protected void deferredInit()
   {
-    if (parent != null)
+    super.deferredInit();
+    if (getNode() != null)
     {
-      List<Object> segments = new ArrayList<>();
-      fillSegments(segments, parent);
-
-      for (int i = 0; i < segments.size() - 1; i++)
-      {
-        Object segment = segments.get(i);
-        parentViewer.setExpandedState(segment, true);
-      }
-
-      parentRevealed = true;
-      parentViewer.setSelection(new StructuredSelection(parent), true);
+      nameText.setFocus();
     }
+    else
+    {
+      getControl().getParent().setFocus();
+    }
+
+    nameText.selectAll();
   }
 
-  private void fillSegments(List<Object> segments, Object node)
+  @Override
+  protected void doValidate() throws Exception
   {
-    if (node instanceof CDOCheckout)
+    super.doValidate();
+
+    String name = nameText.getText();
+    if (!nameModified)
     {
-      segments.add(node);
-      return;
+      name = getUniqueName();
+      nameText.setText(name);
     }
-
-    if (node instanceof CDOResourceFolder)
+    else
     {
-      CDOResourceFolder folder = (CDOResourceFolder)node;
-
-      Adapter adapter = EcoreUtil.getAdapter(folder.eAdapters(), CDOCheckout.class);
-      if (adapter != null)
+      if (name.length() == 0)
       {
-        fillSegments(segments, adapter);
-      }
-      else
-      {
-        Object parent = folder.getFolder();
-        if (parent == null)
-        {
-          parent = EcoreUtil.getAdapter(folder.cdoView().getRootResource().eAdapters(), CDOCheckout.class);
-        }
-
-        fillSegments(segments, parent);
-      }
-    }
-
-    segments.add(node);
-  }
-
-  private void validate()
-  {
-    try
-    {
-      String name = nameText.getText();
-      if (!nameModified)
-      {
-        name = getUniqueName();
-        nameText.setText(name);
-      }
-      else
-      {
-        if (name.length() == 0)
-        {
-          // throw new Exception("Name is empty.");
-        }
-
-        if (!isUnique(name))
-        {
-          throw new Exception("Name is not unique within the parent folder.");
-        }
-
-        this.name = name;
+        // throw new Exception("Name is empty.");
       }
 
-      setErrorMessage(null);
-      setPageComplete(true);
-    }
-    catch (Exception ex)
-    {
-      setErrorMessage(ex.getMessage());
-      setPageComplete(false);
-    }
-  }
+      if (!isUnique(name))
+      {
+        throw new Exception("Name is not unique within the parent folder.");
+      }
 
-  private EList<EObject> getChildrenOfParent()
-  {
-    if (parent instanceof CDOCheckout)
-    {
-      CDOCheckout checkout = (CDOCheckout)parent;
-      return checkout.getRootObject().eContents();
+      this.name = name;
     }
-
-    if (parent instanceof CDOResourceFolder)
-    {
-      CDOResourceFolder folder = (CDOResourceFolder)parent;
-      return folder.eContents();
-    }
-
-    return ECollections.emptyEList();
   }
 
   private String getUniqueName()
   {
     Set<String> names = new HashSet<>();
-    for (EObject eObject : getChildrenOfParent())
+    for (EObject eObject : getNodeChildren())
     {
       if (eObject instanceof CDOResourceNode)
       {
@@ -295,7 +157,7 @@ public class NewWizardPage extends WizardPage
 
   private boolean isUnique(String name)
   {
-    for (EObject eObject : getChildrenOfParent())
+    for (EObject eObject : getNodeChildren())
     {
       if (eObject instanceof CDOResourceNode)
       {

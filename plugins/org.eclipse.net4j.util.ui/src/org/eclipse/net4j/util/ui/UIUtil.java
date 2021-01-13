@@ -18,6 +18,7 @@ import org.eclipse.net4j.util.internal.ui.bundle.OM;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 import org.eclipse.net4j.util.ui.security.InteractiveCredentialsProvider;
 
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jface.fieldassist.FieldDecoration;
 import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
@@ -25,7 +26,9 @@ import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.operation.ModalContext;
 import org.eclipse.jface.util.LocalSelectionTransfer;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
@@ -51,8 +54,10 @@ import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.part.ISetSelectionTarget;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -886,6 +891,61 @@ public final class UIUtil
       if (child instanceof Composite)
       {
         forEachChild((Composite)child, consumer);
+      }
+    }
+  }
+
+  /**
+   * @since 3.10
+   */
+  public static void selectReveal(Object object)
+  {
+    if (object == null)
+    {
+      return;
+    }
+
+    asyncExec(() -> {
+      for (IWorkbenchWindow window : PlatformUI.getWorkbench().getWorkbenchWindows())
+      {
+        IWorkbenchPage page = window.getActivePage();
+        if (page != null)
+        {
+          ISelection selection = new StructuredSelection(object);
+          selectReveal(selection, page.getViewReferences());
+          selectReveal(selection, page.getEditorReferences());
+        }
+      }
+    });
+  }
+
+  private static void selectReveal(ISelection selection, IWorkbenchPartReference[] partRefs)
+  {
+    for (IWorkbenchPartReference ref : partRefs)
+    {
+      IWorkbenchPart part = ref.getPart(false);
+      if (part != null)
+      {
+        ISelectionProvider selectionProvider = part.getSite().getSelectionProvider();
+        if (selectionProvider != null)
+        {
+          ISelection oldSelection = selectionProvider.getSelection();
+
+          ISetSelectionTarget selectionTarget = Adapters.adapt(part, ISetSelectionTarget.class);
+          if (selectionTarget != null)
+          {
+            selectionTarget.selectReveal(selection);
+
+            if (!oldSelection.isEmpty())
+            {
+              ISelection newSelection = selectionProvider.getSelection();
+              if (!selection.equals(newSelection))
+              {
+                selectionTarget.selectReveal(oldSelection);
+              }
+            }
+          }
+        }
       }
     }
   }

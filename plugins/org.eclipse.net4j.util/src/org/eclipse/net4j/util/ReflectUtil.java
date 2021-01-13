@@ -658,7 +658,7 @@ public final class ReflectUtil
   /**
    * @since 3.12
    */
-  @SuppressWarnings("deprecation")
+  @SuppressWarnings("all")
   public static <T> void makeAccessible(AccessibleObject accessibleObject)
   {
     if (!accessibleObject.isAccessible())

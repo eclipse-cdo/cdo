@@ -226,8 +226,9 @@ public abstract class AbstractBundle implements OMBundle, OMBundle.DebugSupport,
   {
     if (obj instanceof CoreException)
     {
-      CoreException coreException = (CoreException)obj;
-      return coreException.getStatus();
+      CoreException ex = (CoreException)obj;
+      IStatus st = ex.getStatus();
+      return new Status(st.getSeverity(), st.getPlugin(), st.getCode(), st.getMessage(), ex);
     }
 
     if (obj instanceof Throwable)
@@ -239,10 +240,10 @@ public abstract class AbstractBundle implements OMBundle, OMBundle.DebugSupport,
         msg = t.getClass().getName();
       }
 
-      return new Status(IStatus.ERROR, getBundleID(), msg, t);
+      return new Status(IStatus.ERROR, bundleID, msg, t);
     }
 
-    return new Status(IStatus.INFO, getBundleID(), obj.toString(), null);
+    return new Status(IStatus.INFO, bundleID, obj.toString(), null);
   }
 
   @Override

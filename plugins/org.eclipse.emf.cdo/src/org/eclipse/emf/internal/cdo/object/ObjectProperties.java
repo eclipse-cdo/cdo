@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
+import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -112,6 +113,49 @@ public class ObjectProperties extends Properties<EObject>
         }
 
         return revision.getBranch().getPathName();
+      }
+    });
+
+    add(new Property<EObject>("timeStamp") //$NON-NLS-1$
+    {
+      @Override
+      protected Object eval(EObject object)
+      {
+        CDOObject cdoObject = getCDOObject(object);
+        if (cdoObject == null)
+        {
+          return CDOBranchPoint.UNSPECIFIED_DATE;
+        }
+
+        CDORevision revision = cdoObject.cdoRevision();
+        if (revision == null)
+        {
+          return CDOBranchPoint.UNSPECIFIED_DATE;
+        }
+
+        return revision.getTimeStamp();
+      }
+    });
+
+    add(new Property<EObject>("modificationTime", //$NON-NLS-1$
+        "Modification Time", "The modification time of this object.", CATEGORY_CDO)
+    {
+      @Override
+      protected Object eval(EObject object)
+      {
+        CDOObject cdoObject = getCDOObject(object);
+        if (cdoObject == null)
+        {
+          return null;
+        }
+
+        CDORevision revision = cdoObject.cdoRevision();
+        if (revision == null)
+        {
+          return null;
+        }
+
+        return CDOCommonUtil.formatTimeStamp(revision.getTimeStamp());
       }
     });
 

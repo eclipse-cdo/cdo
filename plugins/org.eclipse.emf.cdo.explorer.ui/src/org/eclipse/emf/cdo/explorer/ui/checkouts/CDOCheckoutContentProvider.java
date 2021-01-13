@@ -51,8 +51,6 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
@@ -80,6 +78,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 /**
@@ -252,7 +251,12 @@ public class CDOCheckoutContentProvider extends CDOContentProvider<CDOCheckout> 
   public void init(ICommonContentExtensionSite config)
   {
     viewerID = config.getService().getViewerId();
-    INSTANCES.put(viewerID, this);
+
+    synchronized (INSTANCES)
+    {
+      INSTANCES.put(viewerID, this);
+    }
+
     CHECKOUT_MANAGER.addListener(checkoutManagerListener);
   }
 
@@ -272,19 +276,16 @@ public class CDOCheckoutContentProvider extends CDOContentProvider<CDOCheckout> 
   public void dispose()
   {
     CHECKOUT_MANAGER.removeListener(checkoutManagerListener);
-    INSTANCES.remove(viewerID);
+
+    synchronized (INSTANCES)
+    {
+      INSTANCES.remove(viewerID);
+    }
   }
 
   public void disposeWith(Control control)
   {
-    control.addDisposeListener(new DisposeListener()
-    {
-      @Override
-      public void widgetDisposed(DisposeEvent e)
-      {
-        dispose();
-      }
-    });
+    control.addDisposeListener(e -> dispose());
   }
 
   public final CDOCheckoutStateManager getStateManager()
@@ -622,8 +623,25 @@ public class CDOCheckoutContentProvider extends CDOContentProvider<CDOCheckout> 
     return createTreeViewer(container, child -> child instanceof CDOCheckout || child instanceof CDOResourceFolder);
   }
 
-  public static final CDOCheckoutContentProvider getInstance(String viewerID)
+  public static CDOCheckoutContentProvider getInstance(String viewerID)
   {
-    return INSTANCES.get(viewerID);
+    synchronized (INSTANCES)
+    {
+      return INSTANCES.get(viewerID);
+    }
+  }
+
+  public static void forEachInstance(Consumer<CDOCheckoutContentProvider> consumer)
+  {
+    CDOCheckoutContentProvider[] contentProviders;
+    synchronized (INSTANCES)
+    {
+      contentProviders = INSTANCES.values().toArray(new CDOCheckoutContentProvider[INSTANCES.size()]);
+    }
+
+    for (CDOCheckoutContentProvider contentProvider : contentProviders)
+    {
+      consumer.accept(contentProvider);
+    }
   }
 }

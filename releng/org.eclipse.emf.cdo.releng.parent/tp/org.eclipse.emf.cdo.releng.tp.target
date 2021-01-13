@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde version="3.8"?>
-<target name="Generated from CDO" sequenceNumber="49">
+<target name="Generated from CDO" sequenceNumber="50">
   <locations>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
       <unit id="com.google.guava" version="0.0.0"/>
@@ -52,6 +52,7 @@
       <repository location="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
       <repository location="http://www.elver.org/eclipse/2.1.0/update"/>
       <repository location="http://download.eclipse.org/tools/ajdt/48/dev/update"/>
+      <repository location="http://download.eclipse.org/eclipse/updates/4.19-I-builds"/>
     </location>
   </locations>
 </target>

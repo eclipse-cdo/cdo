@@ -68,4 +68,18 @@
             protocolName="cdo.checkout"/>
    </extension>
 
+   <extension point="org.eclipse.core.filesystem.filesystems" id="org.eclipse.core.filesystem.cdo.checkout">
+      <filesystem scheme="cdo.checkout">
+         <run class="org.eclipse.emf.cdo.internal.explorer.resources.CDOCheckoutFileSystem"/>
+      </filesystem>
+   </extension>
+   
+   <extension
+         point="org.eclipse.core.resources.refreshProviders">
+      <refreshProvider
+            class="org.eclipse.emf.cdo.internal.explorer.resources.CDOCheckoutRefreshProvider"
+            name="CDO Auto-refresh monitor">
+      </refreshProvider>
+   </extension>
+   
 </plugin>

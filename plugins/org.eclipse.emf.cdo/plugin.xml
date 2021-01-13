@@ -65,13 +65,13 @@
          id="org.eclipse.emf.cdo.object.properties"
          type="org.eclipse.emf.ecore.EObject"
          namespace="org.eclipse.emf.cdo.object"
-         properties="isCDO,id,version,branch,state,transactional,readable,writable,writableContainer,container,children,permission,permissionContainer,readLocks,readLocked,readLockedByOthers,writeLock,writeLocked,writeLockedByOthers,writeOption,writeOptioned,writeOptionedByOthers,autoReleaseLocksExemption,viewHistorical,uri"
+         properties="isCDO,id,version,branch,timeStamp,modificationTime,state,transactional,readable,writable,writableContainer,container,children,permission,permissionContainer,readLocks,readLocked,readLockedByOthers,writeLock,writeLocked,writeLockedByOthers,writeOption,writeOptioned,writeOptionedByOthers,autoReleaseLocksExemption,viewHistorical,uri"
          class="org.eclipse.emf.internal.cdo.object.ObjectProperties$Tester"/>
       <propertyTester
          id="org.eclipse.emf.cdo.object.properties"
          type="org.eclipse.emf.cdo.CDOElement"
          namespace="org.eclipse.emf.cdo.object"
-         properties="isCDO,id,version,branch,state,transactional,readable,writable,writableContainer,container,children,permission,permissionContainer,readLocks,readLocked,readLockedByOthers,writeLock,writeLocked,writeLockedByOthers,writeOption,writeOptioned,writeOptionedByOthers,autoReleaseLocksExemption,viewHistorical,uri"
+         properties="isCDO,id,version,branch,timeStamp,modificationTime,state,transactional,readable,writable,writableContainer,container,children,permission,permissionContainer,readLocks,readLocked,readLockedByOthers,writeLock,writeLocked,writeLockedByOthers,writeOption,writeOptioned,writeOptionedByOthers,autoReleaseLocksExemption,viewHistorical,uri"
          class="org.eclipse.emf.internal.cdo.object.ObjectProperties$ElementTester"/>
    </extension>
 

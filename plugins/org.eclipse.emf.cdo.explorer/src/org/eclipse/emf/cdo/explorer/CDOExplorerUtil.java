@@ -13,6 +13,8 @@ package org.eclipse.emf.cdo.explorer;
 import org.eclipse.emf.cdo.CDOElement;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.util.CDOException;
+import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager;
@@ -20,6 +22,7 @@ import org.eclipse.emf.cdo.explorer.repositories.CDORepositoryManager;
 import org.eclipse.emf.cdo.internal.explorer.bundle.OM;
 import org.eclipse.emf.cdo.internal.explorer.checkouts.CDOCheckoutImpl;
 import org.eclipse.emf.cdo.internal.explorer.checkouts.CDOCheckoutViewProvider;
+import org.eclipse.emf.cdo.internal.explorer.resources.CDOCheckoutFileSystem;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -30,6 +33,15 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+
+import org.eclipse.core.resources.IContainer;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Path;
 
 import java.util.LinkedList;
 
@@ -56,6 +68,12 @@ public final class CDOExplorerUtil
 
   public static CDOCheckout getCheckout(Object object)
   {
+    CDOCheckoutManager checkoutManager = getCheckoutManager();
+    if (checkoutManager == null)
+    {
+      return null;
+    }
+
     if (object instanceof CDOView)
     {
       CDOView view = (CDOView)object;
@@ -76,7 +94,7 @@ public final class CDOExplorerUtil
     if (object instanceof String)
     {
       String id = (String)object;
-      return getCheckoutManager().getCheckout(id);
+      return checkoutManager.getCheckout(id);
     }
 
     CDOCheckout checkout = walkUp(object, null);
@@ -188,5 +206,55 @@ public final class CDOExplorerUtil
     StringBuilder builder = new StringBuilder();
     CDOIDUtil.write(builder, id);
     return builder.toString();
+  }
+
+  /**
+   * @since 4.9
+   */
+  public static IResource createWorkspaceLink(CDOCheckout checkout, String sourcePath, //
+      IContainer targetContainer, String targetName, //
+      boolean shallowTimeStamp, IProgressMonitor monitor) throws CoreException
+  {
+    CDOView view = checkout.getView();
+    if (view == null)
+    {
+      throw new CDOException("Checkout not open: " + checkout);
+    }
+
+    CDOResourceNode node = view.getResourceNode(sourcePath);
+    boolean isFolder = isFolder(node);
+    java.net.URI uri = CDOCheckoutFileSystem.createURI(checkout, sourcePath, shallowTimeStamp);
+
+    if (targetContainer instanceof IWorkspaceRoot)
+    {
+      throw new CDOException("File resource can not be linked as project: " + sourcePath);
+    }
+
+    Path targetPath = new Path(targetName);
+    if (isFolder)
+    {
+      IFolder folder = targetContainer.getFolder(targetPath);
+      folder.createLink(uri, IResource.ALLOW_MISSING_LOCAL, monitor);
+      return folder;
+    }
+
+    IFile file = targetContainer.getFile(targetPath);
+    file.createLink(uri, IResource.ALLOW_MISSING_LOCAL, monitor);
+    return file;
+  }
+
+  /**
+   * @since 4.9
+   */
+  public static IResource createWorkspaceLink(CDOCheckout checkout, String sourcePath, //
+      IContainer targetContainer, String targetName, //
+      IProgressMonitor monitor) throws CoreException
+  {
+    return createWorkspaceLink(checkout, sourcePath, targetContainer, targetName, false, monitor);
+  }
+
+  private static boolean isFolder(CDOResourceNode node)
+  {
+    return node instanceof CDOResourceFolder || node.isRoot();
   }
 }

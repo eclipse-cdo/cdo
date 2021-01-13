@@ -15,19 +15,18 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
-import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
 import org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutContentProvider;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.InternalEList;
 
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
@@ -58,12 +57,6 @@ public abstract class NewWizard extends Wizard implements INewWizard
     this.title = title;
   }
 
-  @Override
-  public void init(IWorkbench workbench, IStructuredSelection selection)
-  {
-    this.selection = selection;
-  }
-
   public void setContentProvider(CDOCheckoutContentProvider contentProvider)
   {
     this.contentProvider = contentProvider;
@@ -80,6 +73,12 @@ public abstract class NewWizard extends Wizard implements INewWizard
   }
 
   @Override
+  public void init(IWorkbench workbench, IStructuredSelection selection)
+  {
+    this.selection = selection;
+  }
+
+  @Override
   public void addPages()
   {
     page = new NewWizardPage(resourceType, title, selection);
@@ -87,93 +86,83 @@ public abstract class NewWizard extends Wizard implements INewWizard
   }
 
   @Override
+  public boolean canFinish()
+  {
+    return page.getNodeInfo() != null && super.canFinish();
+  }
+
+  @Override
   public boolean performFinish()
   {
-    final Object parent = page.getParent();
-    final String name = page.getName();
-    final String error = "An error occured while creating the " + title.toLowerCase() + ".";
+    Pair<CDOCheckout, CDOResourceNode> parentInfo = page.getNodeInfo();
+    String name = page.getName();
+    String error = "An error occured while creating the " + title.toLowerCase() + ".";
 
-    new Job(title)
-    {
-      @Override
-      protected IStatus run(IProgressMonitor monitor)
+    Job.create(title, monitor -> {
+      CDOResourceNode newResourceNode = createNewResourceNode();
+      newResourceNode.setName(name);
+
+      CDOCheckout checkout = parentInfo.getElement1();
+      CDOResourceNode parentNode = parentInfo.getElement2();
+
+      CDOTransaction transaction = checkout.openTransaction();
+      CDOCommitInfo commitInfo = null;
+      CDOID newID = null;
+
+      try
       {
-        CDOResourceNode newResourceNode = createNewResourceNode();
-        newResourceNode.setName(name);
-
-        CDOCheckout checkout;
-        CDOResourceNode parentResourceNode;
-
-        if (parent instanceof CDOCheckout)
+        CDOResourceNode txParent = transaction.getObject(parentNode);
+        if (txParent instanceof CDOResourceFolder)
         {
-          checkout = (CDOCheckout)parent;
-          parentResourceNode = (CDOResourceNode)checkout.getRootObject();
+          InternalEList<CDOResourceNode> nodes = (InternalEList<CDOResourceNode>)((CDOResourceFolder)txParent).getNodes();
+          nodes.addUnique(newResourceNode);
         }
         else
         {
-          parentResourceNode = (CDOResourceNode)parent;
-          checkout = CDOExplorerUtil.getCheckout(parentResourceNode);
+          InternalEList<EObject> contents = (InternalEList<EObject>)transaction.getRootResource().getContents();
+          contents.addUnique(newResourceNode);
         }
 
-        CDOTransaction transaction = checkout.openTransaction();
+        commitInfo = transaction.commit();
+        newID = newResourceNode.cdoID();
+      }
+      catch (Exception ex)
+      {
+        OM.LOG.error(ex);
 
-        CDOCommitInfo commitInfo = null;
-        CDOID newID = null;
-
-        try
-        {
-          CDOResourceNode txParent = transaction.getObject(parentResourceNode);
-          if (txParent instanceof CDOResourceFolder)
-          {
-            InternalEList<CDOResourceNode> nodes = (InternalEList<CDOResourceNode>)((CDOResourceFolder)txParent).getNodes();
-            nodes.addUnique(newResourceNode);
-          }
-          else
-          {
-            InternalEList<EObject> contents = (InternalEList<EObject>)transaction.getRootResource().getContents();
-            contents.addUnique(newResourceNode);
-          }
-
-          commitInfo = transaction.commit();
-          newID = newResourceNode.cdoID();
-        }
-        catch (Exception ex)
-        {
-          OM.LOG.error(ex);
-
-          final IStatus status = new Status(IStatus.ERROR, OM.BUNDLE_ID, ex.getMessage(), ex);
-          UIUtil.getDisplay().asyncExec(new Runnable()
-          {
-            @Override
-            public void run()
-            {
-              ErrorDialog.openError(getShell(), "Error", error, status);
-            }
-          });
-
-          return Status.OK_STATUS;
-        }
-        finally
-        {
-          transaction.close();
-        }
-
-        if (commitInfo != null && contentProvider != null)
-        {
-          CDOView view = checkout.getView();
-          if (!view.waitForUpdate(commitInfo.getTimeStamp(), 10000))
-          {
-            OM.LOG.error(error + " Did not receive an update");
-            return Status.OK_STATUS;
-          }
-
-          CDOObject newObject = view.getObject(newID);
-          contentProvider.selectObjects(newObject);
-        }
+        IStatus status = new Status(IStatus.ERROR, OM.BUNDLE_ID, ex.getMessage(), ex);
+        UIUtil.asyncExec(() -> ErrorDialog.openError(getShell(), "Error", error, status));
 
         return Status.OK_STATUS;
       }
-    }.schedule();
+      finally
+      {
+        transaction.close();
+      }
+
+      if (commitInfo != null)
+      {
+        CDOView view = checkout.getView();
+        if (!view.waitForUpdate(commitInfo.getTimeStamp(), 10000))
+        {
+          OM.LOG.error(error + " Did not receive an update");
+          return Status.OK_STATUS;
+        }
+
+        CDOObject newObject = view.getObject(newID);
+
+        if (contentProvider != null)
+        {
+          contentProvider.selectObjects(newObject);
+        }
+        else
+        {
+          CDOCheckoutContentProvider.forEachInstance(cp -> cp.selectObjects(newObject));
+        }
+      }
+
+      return Status.OK_STATUS;
+    }).schedule();
 
     return true;
   }

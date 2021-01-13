@@ -32,6 +32,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 
@@ -70,7 +71,9 @@ public class CDOLabelProvider extends AdapterFactoryLabelProvider implements ICo
     super(adapterFactory);
     this.view = view;
     this.viewer = viewer;
-    bold = UIUtil.getBoldFont(viewer.getControl());
+
+    Control control = viewer.getControl();
+    bold = UIUtil.getBoldFont(control);
   }
 
   /**

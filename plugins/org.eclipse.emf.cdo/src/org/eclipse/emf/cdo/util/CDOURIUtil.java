@@ -158,12 +158,12 @@ public final class CDOURIUtil
     {
       return SEGMENT_SEPARATOR;
     }
-  
+
     if (path.charAt(0) != SEGMENT_SEPARATOR_CHAR)
     {
       return SEGMENT_SEPARATOR + path;
     }
-  
+
     return path;
   }
 
@@ -179,7 +179,7 @@ public final class CDOURIUtil
         segments.add(name);
       }
     }
-  
+
     return segments;
   }
 
@@ -201,23 +201,26 @@ public final class CDOURIUtil
   {
     Map<String, String> parameters = new LinkedHashMap<>();
 
-    StringTokenizer tokenizer = new StringTokenizer(query, "&"); //$NON-NLS-1$
-    while (tokenizer.hasMoreTokens())
+    if (query != null)
     {
-      String parameter = tokenizer.nextToken();
-      if (!StringUtil.isEmpty(parameter))
+      StringTokenizer tokenizer = new StringTokenizer(query, "&"); //$NON-NLS-1$
+      while (tokenizer.hasMoreTokens())
       {
-        int pos = parameter.indexOf('=');
-        if (pos == -1)
+        String parameter = tokenizer.nextToken();
+        if (!StringUtil.isEmpty(parameter))
         {
-          String key = parameter.trim();
-          parameters.put(key, ""); //$NON-NLS-1$
-        }
-        else
-        {
-          String key = parameter.substring(0, pos).trim();
-          String value = parameter.substring(pos + 1);
-          parameters.put(key, value);
+          int pos = parameter.indexOf('=');
+          if (pos == -1)
+          {
+            String key = parameter.trim();
+            parameters.put(key, ""); //$NON-NLS-1$
+          }
+          else
+          {
+            String key = parameter.substring(0, pos).trim();
+            String value = parameter.substring(pos + 1);
+            parameters.put(key, value);
+          }
         }
       }
     }
@@ -348,23 +351,23 @@ public final class CDOURIUtil
     StringBuilder stringBuilder = new StringBuilder();
     stringBuilder.append(PROTOCOL_NAME);
     stringBuilder.append(":"); //$NON-NLS-1$
-  
+
     if (repositoryUUID != null)
     {
       stringBuilder.append("//"); //$NON-NLS-1$
       stringBuilder.append(repositoryUUID);
     }
-  
+
     if (!SEGMENT_SEPARATOR.equals(path))
     {
       if (path.charAt(0) != SEGMENT_SEPARATOR_CHAR)
       {
         stringBuilder.append(SEGMENT_SEPARATOR_CHAR);
       }
-  
+
       stringBuilder.append(path);
     }
-  
+
     return URI.createURI(stringBuilder.toString());
   }
 

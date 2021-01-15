@@ -698,7 +698,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   public void internalReattach(InternalCDOObject object, InternalCDOTransaction transaction)
   {
     InternalCDORevisionManager revisionManager = transaction.getSession().getRevisionManager();
-    InternalCDORevision cleanRevision = transaction.getCleanRevisions().get(object).copy();
+    Map<InternalCDOObject, InternalCDORevision> cleanRevisions = transaction.getCleanRevisions();
+    InternalCDORevision cleanRevision = cleanRevisions.get(object).copy();
     CDOID id = cleanRevision.getID();
 
     // Bug 373096: Determine clean revision of the CURRENT/LAST savepoint
@@ -732,6 +733,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     if (revisionDelta.isEmpty())
     {
       changeState(object, CDOState.CLEAN);
+      cleanRevisions.remove(object);
     }
     else
     {
@@ -981,7 +983,9 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
     private void processRevisionDeltas(CDOID reattachedObject, InternalCDOTransaction transaction)
     {
+      Map<InternalCDOObject, InternalCDORevision> cleanRevisions = transaction.getCleanRevisions();
       InternalCDOSavepoint lastSavepoint = transaction.getLastSavepoint();
+
       Map<CDOID, CDORevisionDelta> revisionDeltas = lastSavepoint.getRevisionDeltas2();
       for (Iterator<Entry<CDOID, CDORevisionDelta>> it = revisionDeltas.entrySet().iterator(); it.hasNext();)
       {
@@ -1000,6 +1004,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
           if (cleanObject != null)
           {
             cleanObject.cdoInternalSetState(CDOState.CLEAN);
+            cleanRevisions.remove(cleanObject);
           }
         }
       }

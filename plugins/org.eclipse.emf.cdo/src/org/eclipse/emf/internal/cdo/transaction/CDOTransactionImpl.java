@@ -4499,7 +4499,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         {
           // Can happen after merged detachments
           CDORevision revision = object.cdoRevision();
-          detached.add(CDOIDUtil.createIDAndVersion(revision));
+          if (revision != null)
+          {
+            detached.add(CDOIDUtil.createIDAndVersion(revision));
+          }
         }
         else if (cleanRevision.getBranch() == getBranch())
         {

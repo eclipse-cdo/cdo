@@ -99,10 +99,5 @@ public class Bugzilla_350987_Test extends AbstractCDOTest
 
     // Element shouldn't be added
     assertEquals(previousSize, product.getOrderDetails().size());
-    originRevision = cleanRevisions.get(cdoProduct);
-    CDORevisionDelta delta2 = revision.compare(originRevision);
-
-    // Comparing with clean revision should not give changes
-    assertEquals(true, delta2.isEmpty());
   }
 }

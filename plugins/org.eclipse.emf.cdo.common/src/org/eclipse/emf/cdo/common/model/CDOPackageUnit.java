@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
 
@@ -150,28 +151,29 @@ public interface CDOPackageUnit extends Comparable<CDOPackageUnit>, CDOTimeProvi
   }
 
   /**
-   * Describes the instances of {@link EClass classes} of a {@link CDOPackageUnit package unit}.
+   * Describes the {@link EObject instances} of {@link EClass classes} of a {@link CDOPackageUnit package unit}.
    *
    * @author Eike Stepper
    */
   public enum Type
   {
     /**
-     * The type of models that are generated specifically for the usage with CDO. Instances of {@link EClass classes} of
-     * these models can be directly cast to InternalCDOObject.
+     * The type of models that are generated specifically for the usage with CDO. {@link EObject Instances} of {@link EClass classes} of
+     * these models can be directly cast to <code>CDOObject</code>.
      */
     NATIVE,
 
     /**
-     * The type of models that are <b>not</b> generated specifically for the usage with CDO. Instances of {@link EClass
-     * classes} of these models can <b>not</b> be directly cast to InternalCDOObject.
+     * The type of models that are <b>not</b> generated specifically for the usage with CDO. {@link EObject Instances} of {@link EClass
+     * classes} of these models can <b>not</b> be directly cast to <code>CDOObject</code>. The static utility method
+     * <code>CDOUtil.getCDOObject(eObject)</code> can be used to obtain a <code>CDOObject</code>.
      */
     LEGACY,
 
     /**
-     * The type of models that are not generated <b>at all</b> but rather dynamically contructed at runtime. Instances
-     * of {@link EClass classes} of these models <b>can</b> be directly cast to InternalCDOObject, i.e. they're
-     * implicitely <i>native</i>.
+     * The type of models that are not generated <b>at all</b> but rather dynamically constructed at runtime. {@link EObject Instances}
+     * of {@link EClass classes} of these models <b>can</b> be directly cast to <code>CDOObject</code>, i.e. they're
+     * implicitly {@link #NATIVE}.
      */
     DYNAMIC,
 

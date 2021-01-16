@@ -2358,50 +2358,52 @@ public class Repository extends Container<Object> implements InternalRepository
   @Override
   public void initSystemPackages(final boolean firstStart)
   {
-    final List<InternalCDOPackageUnit> list = new ArrayList<>();
-    IStoreAccessor writer = store.getWriter(null);
-    StoreThreadLocal.setAccessor(writer);
+    List<InternalCDOPackageUnit> newPackageUnits = new ArrayList<>();
+    long timeStamp;
 
-    try
+    if (firstStart)
     {
-      long timeStamp;
-      if (firstStart)
-      {
-        timeStamp = store.getCreationTime();
-        list.add(initPackage(timeStamp, EcorePackage.eINSTANCE));
-        list.add(initPackage(timeStamp, EresourcePackage.eINSTANCE));
-        list.add(initPackage(timeStamp, EtypesPackage.eINSTANCE));
-      }
-      else
-      {
-        timeStamp = getTimeStamp();
-        initPackage(timeStamp, EcorePackage.eINSTANCE);
-        initPackage(timeStamp, EresourcePackage.eINSTANCE);
-        initPackage(timeStamp, EtypesPackage.eINSTANCE);
-      }
+      timeStamp = store.getCreationTime();
+      newPackageUnits.add(initPackage(timeStamp, EcorePackage.eINSTANCE));
+      newPackageUnits.add(initPackage(timeStamp, EresourcePackage.eINSTANCE));
+      newPackageUnits.add(initPackage(timeStamp, EtypesPackage.eINSTANCE));
+    }
+    else
+    {
+      readPackageUnits(); // Makes sure that all mapped package units have proper originalType/timeStamp.
 
-      if (initialPackages != null)
+      timeStamp = getTimeStamp();
+      initPackage(timeStamp, EcorePackage.eINSTANCE);
+      initPackage(timeStamp, EresourcePackage.eINSTANCE);
+      initPackage(timeStamp, EtypesPackage.eINSTANCE);
+    }
+
+    if (initialPackages != null)
+    {
+      for (EPackage initialPackage : initialPackages)
       {
-        for (EPackage initialPackage : initialPackages)
+        if (!packageRegistry.containsKey(initialPackage.getNsURI()))
         {
-          if (!packageRegistry.containsKey(initialPackage.getNsURI()))
-          {
-            InternalCDOPackageUnit packageUnit = initPackage(timeStamp, initialPackage);
-            list.add(packageUnit);
-          }
+          newPackageUnits.add(initPackage(timeStamp, initialPackage));
         }
       }
+    }
 
-      if (!list.isEmpty())
+    if (!newPackageUnits.isEmpty())
+    {
+      IStoreAccessor writer = store.getWriter(null);
+      StoreThreadLocal.setAccessor(writer);
+
+      try
       {
-        InternalCDOPackageUnit[] initialUnits = list.toArray(new InternalCDOPackageUnit[list.size()]);
-        writer.writePackageUnits(initialUnits, new Monitor());
+        InternalCDOPackageUnit[] packageUnits = newPackageUnits.toArray(new InternalCDOPackageUnit[newPackageUnits.size()]);
+        writer.writePackageUnits(packageUnits, new Monitor());
         writer.commit(new Monitor());
       }
-    }
-    finally
-    {
-      StoreThreadLocal.release();
+      finally
+      {
+        StoreThreadLocal.release();
+      }
     }
 
     fireEvent(new PackagesInitializedEvent()
@@ -2421,7 +2423,7 @@ public class Repository extends Container<Object> implements InternalRepository
       @Override
       public List<InternalCDOPackageUnit> getPackageUnits()
       {
-        return Collections.unmodifiableList(list);
+        return Collections.unmodifiableList(newPackageUnits);
       }
     });
   }
@@ -2432,8 +2434,13 @@ public class Repository extends Container<Object> implements InternalRepository
     InternalCDOPackageInfo packageInfo = packageRegistry.getPackageInfo(ePackage);
 
     InternalCDOPackageUnit packageUnit = packageInfo.getPackageUnit();
-    packageUnit.setTimeStamp(timeStamp);
     packageUnit.setState(CDOPackageUnit.State.LOADED);
+
+    if (packageUnit.getTimeStamp() == CDOBranchPoint.UNSPECIFIED_DATE)
+    {
+      packageUnit.setTimeStamp(timeStamp);
+    }
+
     return packageUnit;
   }
 
@@ -2484,7 +2491,6 @@ public class Repository extends Container<Object> implements InternalRepository
 
     commitContext.setNewObjects(new InternalCDORevision[] { rootResource });
     commitContext.preWrite();
-
     commitContext.write(new Monitor());
     commitContext.commit(new Monitor());
 
@@ -2709,7 +2715,6 @@ public class Repository extends Container<Object> implements InternalRepository
       else
       {
         initSystemPackages(false);
-        readPackageUnits();
         readRootResource();
       }
 

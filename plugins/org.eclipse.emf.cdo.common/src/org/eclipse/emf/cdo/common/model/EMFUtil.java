@@ -203,6 +203,8 @@ public final class EMFUtil
     }
   };
 
+  private static final EPackage.Registry[] GLOBAL_REGISTRY_ARRAY = { EPackage.Registry.INSTANCE };
+
   private EMFUtil()
   {
   }
@@ -505,10 +507,10 @@ public final class EMFUtil
   public static void registerPackage(EPackage ePackage, EPackage.Registry... packageRegistries)
   {
     ePackage.getClass(); // Initialize package in standalone mode
-    if (packageRegistries == null || packageRegistries.length == 0)
+
+    if (packageRegistries.length == 0)
     {
-      EPackage.Registry[] globalRegistry = { EPackage.Registry.INSTANCE };
-      packageRegistries = globalRegistry;
+      packageRegistries = GLOBAL_REGISTRY_ARRAY;
     }
 
     for (EPackage.Registry packageRegistry : packageRegistries)

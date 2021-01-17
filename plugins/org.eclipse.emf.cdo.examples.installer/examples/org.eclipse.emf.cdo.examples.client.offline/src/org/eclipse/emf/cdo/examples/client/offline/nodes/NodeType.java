@@ -314,18 +314,23 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
     JdbcDataSource dataSource = new JdbcDataSource();
     dataSource.setURL("jdbc:h2:" + node.getFolder() + "/db/repository");
 
+    Map<String, String> mappingStrategyProps = new HashMap<>();
+    mappingStrategyProps.put(IMappingStrategy.Props.EAGER_TABLE_CREATION, "true");
+
     IMappingStrategy mappingStrategy = CDODBUtil.createHorizontalMappingStrategy(true, true);
+    mappingStrategy.setProperties(mappingStrategyProps);
+
     IDBAdapter dbAdapter = new H2Adapter();
     IDBConnectionProvider dbConnectionProvider = dbAdapter.createConnectionProvider(dataSource);
     IStore store = CDODBUtil.createStore(mappingStrategy, dbAdapter, dbConnectionProvider);
 
-    Map<String, String> props = new HashMap<>();
-    props.put(IRepository.Props.OVERRIDE_UUID, REPOSITORY_NAME);
-    props.put(IRepository.Props.SUPPORTING_AUDITS, "true");
-    props.put(IRepository.Props.SUPPORTING_BRANCHES, "true");
-    props.put(IRepository.Props.ID_GENERATION_LOCATION, "CLIENT");
+    Map<String, String> repositoryProps = new HashMap<>();
+    repositoryProps.put(IRepository.Props.OVERRIDE_UUID, REPOSITORY_NAME);
+    repositoryProps.put(IRepository.Props.SUPPORTING_AUDITS, "true");
+    repositoryProps.put(IRepository.Props.SUPPORTING_BRANCHES, "true");
+    repositoryProps.put(IRepository.Props.ID_GENERATION_LOCATION, "CLIENT");
 
-    IRepository repository = createRepository(node, store, props);
+    IRepository repository = createRepository(node, store, repositoryProps);
     repository.setInitialPackages(CompanyPackage.eINSTANCE);
     activateRepository(repository);
     return repository;

@@ -68,6 +68,10 @@ public class Application implements IApplication
         }
       });
 
+      // Make sure that the workbench doesn't persist the perspective layout in a single shared file.
+      System.setProperty("clearPersistedState", "true");
+      System.setProperty("persistState", "false");
+
       int returnCode = PlatformUI.createAndRunWorkbench(display, new ApplicationWorkbenchAdvisor());
       if (returnCode == PlatformUI.RETURN_RESTART)
       {

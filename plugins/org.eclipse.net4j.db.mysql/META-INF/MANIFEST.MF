@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.net4j.db.mysql;singleton:=true
-Bundle-Version: 4.3.1.qualifier
+Bundle-Version: 4.3.2.qualifier
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -13,7 +13,7 @@ Require-Bundle: org.eclipse.net4j.db;bundle-version="[4.0.0,5.0.0)";visibility:=
 Import-Package: com.mysql.jdbc;version="[5.0.0,6.0.0)";resolution:=optional;x-installation:=greedy,
  com.mysql.jdbc.jdbc2.optional;version="[5.0.0,6.0.0)";resolution:=optional;x-installation:=greedy,
  org.osgi.framework;version="[1.0.0,2.0.0)"
-Export-Package: org.eclipse.net4j.db.internal.mysql.bundle;version="4.3.1";x-internal:=true,
- org.eclipse.net4j.db.mysql;version="4.3.1"
+Export-Package: org.eclipse.net4j.db.internal.mysql.bundle;version="4.3.2";x-internal:=true,
+ org.eclipse.net4j.db.mysql;version="4.3.2"
 Eclipse-RegisterBuddy: org.eclipse.net4j.db
 Automatic-Module-Name: org.eclipse.net4j.db.mysql

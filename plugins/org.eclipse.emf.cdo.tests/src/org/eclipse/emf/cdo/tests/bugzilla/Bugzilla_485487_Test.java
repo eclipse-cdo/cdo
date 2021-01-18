@@ -94,7 +94,7 @@ public class Bugzilla_485487_Test extends AbstractCDOTest
     transaction.options().setCommitInfoTimeout(1000);
     transaction.createResource(getResourcePath("/test1"));
 
-    msg("#### Commit-1");
+    msg("--> Commit-1");
 
     try
     {
@@ -108,14 +108,14 @@ public class Bugzilla_485487_Test extends AbstractCDOTest
       assertEquals(true, expected.getMessage().contains("Timeout after"));
     }
 
-    msg("#### Rollback");
+    msg("--> Rollback");
 
     forceTimeout = false;
     transaction.rollback();
 
     transaction.createResource(getResourcePath("/test2"));
 
-    msg("#### Commit-2");
+    msg("--> Commit-2");
     transaction.setCommitComment("test2");
     transaction.commit();
   }

@@ -19,16 +19,21 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
+import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.util.CountedTimeProvider;
 import org.eclipse.emf.cdo.internal.common.revision.NOOPRevisionCache;
 import org.eclipse.emf.cdo.internal.net4j.CDONet4jSessionConfigurationImpl;
 import org.eclipse.emf.cdo.internal.net4j.CDONet4jSessionImpl;
+import org.eclipse.emf.cdo.internal.server.mem.MEMStore;
+import org.eclipse.emf.cdo.internal.server.mem.MEMStoreAccessor;
 import org.eclipse.emf.cdo.internal.server.syncing.OfflineClone;
 import org.eclipse.emf.cdo.internal.server.syncing.RepositorySynchronizer;
 import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.server.CDOServerBrowser;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IPermissionManager;
+import org.eclipse.emf.cdo.server.IQueryContext;
+import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRepository.Handler;
@@ -59,6 +64,7 @@ import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.spi.server.InternalStore;
 import org.eclipse.emf.cdo.spi.server.InternalSynchronizableRepository;
 import org.eclipse.emf.cdo.spi.server.InternalUnitManager;
+import org.eclipse.emf.cdo.spi.server.StoreAccessorBase;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.IScenario;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesAfter;
@@ -72,6 +78,7 @@ import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.jvm.JVMUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.ReflectUtil;
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.concurrent.DelegatingExecutorService;
 import org.eclipse.net4j.util.concurrent.ExecutorServiceFactory;
@@ -90,6 +97,7 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.security.IAuthenticator;
 import org.eclipse.net4j.util.tests.AbstractOMTest;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 import org.junit.Assert;
@@ -103,11 +111,14 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Eike Stepper
@@ -1260,6 +1271,8 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   {
     public static final String STORE_NAME = "MEM";
 
+    public static final String TEST_QUERY_LANGUAGE = "TEST_LANGUAGE";
+
     private static final long serialVersionUID = 1L;
 
     public MEMConfig(String name)
@@ -1287,7 +1300,257 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     @Override
     public IStore createStore(String repoName)
     {
-      return MEMStoreUtil.createMEMStore();
+      return new MEMStore_UT();
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    public static class MEMStore_UT extends MEMStore
+    {
+      private final Set<MEMStoreAccessor_UT> storeAccessors = Collections.synchronizedSet(new HashSet<>());
+
+      public MEMStore_UT()
+      {
+      }
+
+      public MEMStore_UT(int listLimit)
+      {
+        super(listLimit);
+      }
+
+      public Set<MEMStoreAccessor_UT> getStoreAccessors()
+      {
+        return Collections.unmodifiableSet(storeAccessors);
+      }
+
+      @Override
+      public MEMStoreAccessor createReader(ISession session)
+      {
+        return acquireAccessor(new MEMStoreAccessor_UT(this, session));
+      }
+
+      @Override
+      public MEMStoreAccessor createWriter(ITransaction transaction)
+      {
+        return new MEMStoreAccessor_UT(this, transaction);
+      }
+
+      private MEMStoreAccessor acquireAccessor(MEMStoreAccessor_UT accessor)
+      {
+        storeAccessors.add(accessor);
+        return accessor;
+      }
+
+      @Override
+      protected void releaseAccessor(StoreAccessorBase accessor)
+      {
+        storeAccessors.remove(accessor);
+        super.releaseAccessor(accessor);
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    public static class MEMStoreAccessor_UT extends MEMStoreAccessor
+    {
+      private static CountDownLatch testQueryLatch;
+
+      private final IQueryHandler testQueryHandler = new IQueryHandler()
+      {
+        @Override
+        public void executeQuery(CDOQueryInfo info, IQueryContext queryContext)
+        {
+          if (testQueryLatch != null)
+          {
+            try
+            {
+              testQueryLatch.await(5000L, TimeUnit.MILLISECONDS);
+            }
+            catch (InterruptedException ex)
+            {
+              Thread.currentThread().interrupt();
+            }
+            finally
+            {
+              testQueryLatch = null;
+            }
+
+            return;
+          }
+
+          List<Object> filters = new ArrayList<>();
+          Object context = info.getParameters().get("context"); //$NON-NLS-1$
+          Long sleep = (Long)info.getParameters().get("sleep"); //$NON-NLS-1$
+          Integer integers = (Integer)info.getParameters().get("integers"); //$NON-NLS-1$
+          Integer error = (Integer)info.getParameters().get("error"); //$NON-NLS-1$
+
+          if (integers != null)
+          {
+            executeQuery(integers, error, queryContext);
+            return;
+          }
+
+          if (context != null)
+          {
+            if (context instanceof EClass)
+            {
+              final EClass eClass = (EClass)context;
+              filters.add(new Object()
+              {
+                @Override
+                public int hashCode()
+                {
+                  return eClass.hashCode();
+                }
+
+                @Override
+                public boolean equals(Object obj)
+                {
+                  InternalCDORevision revision = (InternalCDORevision)obj;
+                  return revision.getEClass().equals(eClass);
+                }
+              });
+            }
+          }
+
+          int i = 0;
+          for (InternalCDORevision revision : getStore().getCurrentRevisions())
+          {
+            if (sleep != null)
+            {
+              try
+              {
+                Thread.sleep(sleep);
+              }
+              catch (InterruptedException ex)
+              {
+                throw WrappedException.wrap(ex);
+              }
+            }
+
+            if (isValid(revision, filters))
+            {
+              throwExceptionAt(error, ++i);
+
+              if (!queryContext.addResult(revision))
+              {
+                // No more results allowed
+                break;
+              }
+            }
+          }
+        }
+
+        private void throwExceptionAt(Integer error, int i)
+        {
+          if (error != null && i == error)
+          {
+            throw new RuntimeException("Simulated problem in query execution at result " + i);
+          }
+        }
+
+        private void executeQuery(int integers, Integer error, IQueryContext queryContext)
+        {
+          for (int i = 1; i <= integers; ++i)
+          {
+            throwExceptionAt(error, i);
+
+            if (!queryContext.addResult(i))
+            {
+              // No more results allowed
+              break;
+            }
+          }
+        }
+
+        private boolean isValid(InternalCDORevision revision, List<Object> filters)
+        {
+          for (Object filter : filters)
+          {
+            if (!filter.equals(revision))
+            {
+              return false;
+            }
+          }
+
+          return true;
+        }
+      };
+
+      private boolean passivated;
+
+      public MEMStoreAccessor_UT(MEMStore store, ISession session)
+      {
+        super(store, session);
+      }
+
+      public MEMStoreAccessor_UT(MEMStore store, ITransaction transaction)
+      {
+        super(store, transaction);
+      }
+
+      @Override
+      public IQueryHandler getQueryHandler(CDOQueryInfo info)
+      {
+        if (TEST_QUERY_LANGUAGE.equals(info.getQueryLanguage()))
+        {
+          return testQueryHandler;
+        }
+
+        return super.getQueryHandler(info);
+      }
+
+      public boolean isPassivated()
+      {
+        return passivated;
+      }
+
+      @Override
+      protected void doPassivate() throws Exception
+      {
+        passivated = true;
+      }
+
+      @Override
+      protected void doUnpassivate() throws Exception
+      {
+        passivated = false;
+      }
+
+      @Override
+      protected void doDeactivate() throws Exception
+      {
+        if (Thread.currentThread().isInterrupted())
+        {
+          throw new InterruptedException("Thread is interrupted");
+        }
+
+        super.doDeactivate();
+      }
+
+      public static void testQueryLatchCreate()
+      {
+        testQueryLatch = new CountDownLatch(1);
+      }
+
+      public static void testQueryLatchCountDown()
+      {
+        try
+        {
+          testQueryLatch.countDown();
+        }
+        catch (NullPointerException ex)
+        {
+          //$FALL-THROUGH$
+        }
+        finally
+        {
+          // Give the store accessor of this query a chance to become inactive.
+          ConcurrencyUtil.sleep(100);
+        }
+      }
     }
 
     /**

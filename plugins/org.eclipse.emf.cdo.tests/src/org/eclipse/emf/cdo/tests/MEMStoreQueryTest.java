@@ -14,6 +14,9 @@ package org.eclipse.emf.cdo.tests;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
+import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.MEMConfig;
+import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.MEMConfig.MEMStoreAccessor_UT;
+import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.MEMConfig.MEMStore_UT;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -57,7 +60,7 @@ public class MEMStoreQueryTest extends AbstractCDOTest
 
     transaction.commit();
 
-    CDOQuery query = transaction.createQuery("TEST", "QUERYSTRING");
+    CDOQuery query = transaction.createQuery(MEMConfig.TEST_QUERY_LANGUAGE, "QUERYSTRING");
     List<Object> result = query.getResult(Object.class);
     assertEquals(5, result.size());
     for (Object object : result)
@@ -73,7 +76,7 @@ public class MEMStoreQueryTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOQuery query = transaction.createQuery("TEST", "QUERYSTRING");
+    CDOQuery query = transaction.createQuery(MEMConfig.TEST_QUERY_LANGUAGE, "QUERYSTRING");
     query.setParameter("error", 5000);
     query.setParameter("integers", 10000);
 
@@ -125,7 +128,7 @@ public class MEMStoreQueryTest extends AbstractCDOTest
     transaction.commit();
     System.out.println(category1.eClass().getEPackage().getNsURI());
 
-    CDOQuery query = transaction.createQuery("TEST", "QUERYSTRING");
+    CDOQuery query = transaction.createQuery(MEMConfig.TEST_QUERY_LANGUAGE, "QUERYSTRING");
     query.setParameter("context", getModel1Package().getCategory());
 
     List<Category> result = query.getResult(Category.class);
@@ -139,7 +142,7 @@ public class MEMStoreQueryTest extends AbstractCDOTest
   public void testQueryCancel_successful() throws Exception
   {
     CDOTransaction transaction = initialize(500);
-    CDOQuery query = transaction.createQuery("TEST", "QUERYSTRING");
+    CDOQuery query = transaction.createQuery(MEMConfig.TEST_QUERY_LANGUAGE, "QUERYSTRING");
     query.setParameter("sleep", 1000L);
     final CloseableIterator<Object> result = query.getResultAsync(Object.class);
     result.close();
@@ -161,7 +164,7 @@ public class MEMStoreQueryTest extends AbstractCDOTest
   public void testQueryCancel_ViewClose() throws Exception
   {
     CDOTransaction transaction = initialize(500);
-    CDOQuery query = transaction.createQuery("TEST", "QUERYSTRING");
+    CDOQuery query = transaction.createQuery(MEMConfig.TEST_QUERY_LANGUAGE, "QUERYSTRING");
     query.setParameter("sleep", 1000L);
     final CloseableIterator<Object> result = query.getResultAsync(Object.class);
     CDOSession session = transaction.getSession();
@@ -181,7 +184,7 @@ public class MEMStoreQueryTest extends AbstractCDOTest
   public void testQueryCancel_SessionClose() throws Exception
   {
     CDOTransaction transaction = initialize(500);
-    CDOQuery query = transaction.createQuery("TEST", "QUERYSTRING");
+    CDOQuery query = transaction.createQuery(MEMConfig.TEST_QUERY_LANGUAGE, "QUERYSTRING");
     query.setParameter("sleep", 1000L);
     final CloseableIterator<Object> result = query.getResultAsync(Object.class);
     transaction.getSession().close();
@@ -196,6 +199,27 @@ public class MEMStoreQueryTest extends AbstractCDOTest
     }.assertNoTimeOut();
   }
 
+  public void testQueryCancel_storeAccessorLeak() throws Exception
+  {
+    MEMStoreAccessor_UT.testQueryLatchCreate();
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOQuery query = transaction.createQuery(MEMConfig.TEST_QUERY_LANGUAGE, null);
+
+    Set<MEMStoreAccessor_UT> accessors = ((MEMStore_UT)getRepository().getStore()).getStoreAccessors();
+    int originalAccessors = accessors.size();
+
+    CloseableIterator<Object> result = query.getResultAsync(Object.class);
+    sleep(100); // Give the store accessor of this query a chance to become active.
+    result.close();
+
+    MEMStoreAccessor_UT.testQueryLatchCountDown();
+
+    int leakedAccessors = accessors.size() - originalAccessors;
+    assertEquals("Store accessor leak detected", 0, leakedAccessors);
+  }
+
   public void testQueryAsync_UnsupportedLanguage() throws Exception
   {
     CDOTransaction transaction = initialize(100);
@@ -205,10 +229,11 @@ public class MEMStoreQueryTest extends AbstractCDOTest
     {
       CloseableIterator<Object> result = query.getResultAsync(Object.class);
       result.hasNext();
-      fail("Should throw an exception");
+      fail("Exception expected");
     }
     catch (Exception expected)
     {
+      // SUCCESS.
     }
   }
 
@@ -220,10 +245,11 @@ public class MEMStoreQueryTest extends AbstractCDOTest
     try
     {
       query.getResult(Object.class);
-      fail("Should throw an exception");
+      fail("Exception expected");
     }
     catch (Exception expected)
     {
+      // SUCCESS.
     }
   }
 

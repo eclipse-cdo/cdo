@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.tests.bugzilla;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.MEMConfig;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -31,8 +32,6 @@ import java.util.Set;
  */
 public class Bugzilla_260756_Test extends AbstractCDOTest
 {
-  private static final String LANGUAGE = "TEST";
-
   @Requires("MEM")
   public void testBugzilla_260756() throws Exception
   {
@@ -58,7 +57,7 @@ public class Bugzilla_260756_Test extends AbstractCDOTest
     transaction.commit();
     System.out.println(category1.eClass().getEPackage().getNsURI());
 
-    CDOQuery cdoQuery = transaction.createQuery(LANGUAGE, "QUERYSTRING");
+    CDOQuery cdoQuery = transaction.createQuery(MEMConfig.TEST_QUERY_LANGUAGE, "QUERYSTRING");
     cdoQuery.setParameter("context", getModel1Package().getCategory());
 
     List<Category> queryResult = cdoQuery.getResult(Category.class);

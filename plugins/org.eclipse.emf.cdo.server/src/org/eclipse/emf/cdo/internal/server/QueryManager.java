@@ -191,21 +191,9 @@ public class QueryManager extends Lifecycle implements InternalQueryManager
    * @author Simon McDuff
    * @since 2.0
    */
-  private class QueryContext implements IQueryContext, Runnable
+  private final class QueryContext implements IQueryContext, Runnable
   {
-    private CDOBranchPoint branchPoint;
-
-    private InternalQueryResult queryResult;
-
-    private boolean started;
-
-    private boolean cancelled;
-
-    private int resultCount;
-
-    private Future<?> future;
-
-    private IListener sessionListener = new IListener()
+    private final IListener sessionListener = new IListener()
     {
       @Override
       public void notifyEvent(IEvent event)
@@ -223,21 +211,24 @@ public class QueryManager extends Lifecycle implements InternalQueryManager
       }
     };
 
+    private CDOBranchPoint branchPoint;
+
+    private InternalQueryResult queryResult;
+
+    private boolean started;
+
+    private volatile boolean cancelled;
+
+    private int resultCount;
+
+    private Future<?> future;
+
     public QueryContext(InternalQueryResult queryResult)
     {
       this.queryResult = queryResult;
 
       // Remember the branchPoint because it can change
       InternalView view = getView();
-
-      // long timeStamp = view.getTimeStamp();
-      // if (timeStamp == CDOBranchPoint.UNSPECIFIED_DATE && repository.isSupportingAudits())
-      // {
-      // timeStamp = repository.getTimeStamp();
-      // }
-      //
-      // branchPoint = view.getBranch().getPoint(timeStamp);
-
       branchPoint = CDOBranchUtil.copyBranchPoint(view);
     }
 
@@ -274,17 +265,27 @@ public class QueryManager extends Lifecycle implements InternalQueryManager
       this.future = future;
     }
 
+    @Override
+    public boolean isCancelled()
+    {
+      return cancelled;
+    }
+
     public void cancel()
     {
-      cancelled = true;
-      if (future != null)
+      if (!cancelled)
       {
-        future.cancel(allowInterruptRunningQueries);
-      }
+        cancelled = true;
 
-      if (!started)
-      {
-        unregister(this);
+        if (future != null)
+        {
+          future.cancel(allowInterruptRunningQueries);
+        }
+
+        if (!started)
+        {
+          unregister(this);
+        }
       }
     }
 

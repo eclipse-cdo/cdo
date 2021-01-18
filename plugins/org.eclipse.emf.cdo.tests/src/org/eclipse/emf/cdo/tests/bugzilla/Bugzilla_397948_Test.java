@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
+import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.MEMConfig;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -124,7 +125,7 @@ public class Bugzilla_397948_Test extends AbstractCDOTest
 
     transaction.commit();
 
-    CDOQuery query = transaction.createQuery("TEST", "QUERYSTRING");
+    CDOQuery query = transaction.createQuery(MEMConfig.TEST_QUERY_LANGUAGE, "QUERYSTRING");
     query.setParameter("context", getModel1Package().getCategory());
 
     List<Category> result = query.getResult(Category.class);

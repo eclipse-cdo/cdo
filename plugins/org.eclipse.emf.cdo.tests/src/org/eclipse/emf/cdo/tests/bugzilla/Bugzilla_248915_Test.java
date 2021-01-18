@@ -67,9 +67,9 @@ public class Bugzilla_248915_Test extends AbstractCDOTest
     mySupplier = null;
     myPurchaseOrder = null;
 
-    /* #### End first phase of persisting the data in the CDO Server #### */
+    /* End first phase of persisting the data in the CDO Server */
 
-    /* #### Start of second phase where the data is fetched from the CDO Server #### */
+    /* Start of second phase where the data is fetched from the CDO Server */
 
     /* 7) Open a completely new session and transaction onto the persisted data */
     CDOSession session2 = openSession();

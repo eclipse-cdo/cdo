@@ -100,6 +100,11 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SIGNAL, SignalProtocol.class);
 
+  /**
+   * This field can only be set via reflection, e.g., by SessionConfig.Net4j.
+   */
+  private static boolean testing;
+
   private long timeout = DEFAULT_TIMEOUT;
 
   private IStreamWrapper streamWrapper;
@@ -341,16 +346,21 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
   @Override
   protected void doBeforeDeactivate() throws Exception
   {
-    synchronized (signals)
+    if (!testing)
     {
-      // Wait at most 10 seconds for running signals to finish
-      int waitMillis = 10 * 1000;
-      long stop = System.currentTimeMillis() + waitMillis;
-      while (!signals.isEmpty() && System.currentTimeMillis() < stop)
+      synchronized (signals)
       {
-        signals.wait(1000L);
+        // Wait at most 10 seconds for running signals to finish
+        int waitMillis = 10 * 1000;
+        long stop = System.currentTimeMillis() + waitMillis;
+        while (!signals.isEmpty() && System.currentTimeMillis() < stop)
+        {
+          signals.wait(1000L);
+        }
       }
     }
+
+    super.doBeforeDeactivate();
   }
 
   @Override

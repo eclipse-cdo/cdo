@@ -47,7 +47,7 @@ public final class StoreThreadLocal
   public static Runnable wrap(ISession session, Runnable runnable)
   {
     return () -> {
-      StoreThreadLocal.setSession((InternalSession)session);
+      setSession((InternalSession)session);
 
       try
       {
@@ -55,7 +55,7 @@ public final class StoreThreadLocal
       }
       finally
       {
-        StoreThreadLocal.release();
+        release();
       }
     };
   }
@@ -66,7 +66,7 @@ public final class StoreThreadLocal
   public static <T> Callable<T> wrap(ISession session, Callable<T> callable)
   {
     return () -> {
-      StoreThreadLocal.setSession((InternalSession)session);
+      setSession((InternalSession)session);
 
       try
       {
@@ -74,7 +74,7 @@ public final class StoreThreadLocal
       }
       finally
       {
-        StoreThreadLocal.release();
+        release();
       }
     };
   }

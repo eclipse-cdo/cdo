@@ -34,8 +34,10 @@ import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.jvm.JVMUtil;
+import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.tcp.TCPUtil;
 import org.eclipse.net4j.tcp.ssl.SSLUtil;
+import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.concurrent.DelegatingExecutorService;
 import org.eclipse.net4j.util.concurrent.ExecutorServiceFactory;
 import org.eclipse.net4j.util.container.ContainerUtil;
@@ -58,6 +60,7 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
 import java.io.File;
+import java.lang.reflect.Field;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Date;
@@ -360,6 +363,8 @@ public abstract class SessionConfig extends Config implements ISessionConfig
   {
     private static final long serialVersionUID = 1L;
 
+    private static final Field PROTOCOL_TESTING_FIELD = ReflectUtil.getField(SignalProtocol.class, "testing");
+
     private transient CDOViewProvider viewProvider;
 
     public Net4j(String name)
@@ -466,7 +471,16 @@ public abstract class SessionConfig extends Config implements ISessionConfig
         CDOViewProviderRegistry.INSTANCE.removeViewProvider(viewProvider);
       }
 
-      super.tearDown();
+      ReflectUtil.setValue(PROTOCOL_TESTING_FIELD, null, true);
+
+      try
+      {
+        super.tearDown();
+      }
+      finally
+      {
+        ReflectUtil.setValue(PROTOCOL_TESTING_FIELD, null, false);
+      }
     }
 
     public abstract IAcceptor getAcceptor();

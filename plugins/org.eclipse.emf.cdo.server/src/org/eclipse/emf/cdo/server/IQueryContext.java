@@ -27,6 +27,11 @@ public interface IQueryContext extends CDOBranchPoint
   public IView getView();
 
   /**
+   * @since 4.12
+   */
+  public boolean isCancelled();
+
+  /**
    * @since 4.0
    */
   public int getResultCount();

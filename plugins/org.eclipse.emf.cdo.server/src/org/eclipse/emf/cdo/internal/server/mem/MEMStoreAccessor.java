@@ -25,7 +25,6 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
-import org.eclipse.emf.cdo.server.IQueryContext;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreAccessor.DurableLocking2;
@@ -39,7 +38,6 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.LongIDStoreAccessor;
 
-import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -68,110 +66,6 @@ import java.util.function.Consumer;
 public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw2, DurableLocking2, BranchLoader4
 {
   private final MEMStore store;
-
-  private final IQueryHandler testQueryHandler = new IQueryHandler()
-  {
-    @Override
-    public void executeQuery(CDOQueryInfo info, IQueryContext queryContext)
-    {
-      List<Object> filters = new ArrayList<>();
-      Object context = info.getParameters().get("context"); //$NON-NLS-1$
-      Long sleep = (Long)info.getParameters().get("sleep"); //$NON-NLS-1$
-      Integer integers = (Integer)info.getParameters().get("integers"); //$NON-NLS-1$
-      Integer error = (Integer)info.getParameters().get("error"); //$NON-NLS-1$
-
-      if (integers != null)
-      {
-        executeQuery(integers, error, queryContext);
-        return;
-      }
-
-      if (context != null)
-      {
-        if (context instanceof EClass)
-        {
-          final EClass eClass = (EClass)context;
-          filters.add(new Object()
-          {
-            @Override
-            public int hashCode()
-            {
-              return eClass.hashCode();
-            }
-
-            @Override
-            public boolean equals(Object obj)
-            {
-              InternalCDORevision revision = (InternalCDORevision)obj;
-              return revision.getEClass().equals(eClass);
-            }
-          });
-        }
-      }
-
-      int i = 0;
-      for (InternalCDORevision revision : store.getCurrentRevisions())
-      {
-        if (sleep != null)
-        {
-          try
-          {
-            Thread.sleep(sleep);
-          }
-          catch (InterruptedException ex)
-          {
-            throw WrappedException.wrap(ex);
-          }
-        }
-
-        if (isValid(revision, filters))
-        {
-          throwExceptionAt(error, ++i);
-
-          if (!queryContext.addResult(revision))
-          {
-            // No more results allowed
-            break;
-          }
-        }
-      }
-    }
-
-    private void throwExceptionAt(Integer error, int i)
-    {
-      if (error != null && i == error)
-      {
-        throw new RuntimeException("Simulated problem in query execution at result " + i);
-      }
-    }
-
-    private void executeQuery(int integers, Integer error, IQueryContext queryContext)
-    {
-      for (int i = 1; i <= integers; ++i)
-      {
-        throwExceptionAt(error, i);
-
-        if (!queryContext.addResult(i))
-        {
-          // No more results allowed
-          break;
-        }
-      }
-    }
-
-    private boolean isValid(InternalCDORevision revision, List<Object> filters)
-    {
-      for (Object filter : filters)
-      {
-        if (!filter.equals(revision))
-        {
-          return false;
-        }
-      }
-
-      return true;
-    }
-  };
 
   private List<InternalCDORevision> newRevisions;
 
@@ -448,11 +342,6 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw2, Durab
   @Override
   public IQueryHandler getQueryHandler(CDOQueryInfo info)
   {
-    if ("TEST".equals(info.getQueryLanguage())) //$NON-NLS-1$
-    {
-      return testQueryHandler;
-    }
-
     return null;
   }
 
@@ -601,12 +490,6 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw2, Durab
   }
 
   @Override
-  protected void doActivate() throws Exception
-  {
-    // Do nothing
-  }
-
-  @Override
   protected void doDeactivate() throws Exception
   {
     if (newRevisions != null)
@@ -614,17 +497,7 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw2, Durab
       newRevisions.clear();
       newRevisions = null;
     }
-  }
 
-  @Override
-  protected void doPassivate() throws Exception
-  {
-    // Pooling of store accessors not supported
-  }
-
-  @Override
-  protected void doUnpassivate() throws Exception
-  {
-    // Pooling of store accessors not supported
+    super.doDeactivate();
   }
 }

@@ -255,15 +255,16 @@ public class SQLQueryTest extends AbstractCDOTest
     {
       msg("Query for products");
       CDOQuery productQuery = transaction.createQuery("sql", "SELECT CDO_ID FROM MODEL1_PRODUCT1");
-      final CloseableIterator<Product1> iterator = productQuery.getResultAsync(Product1.class);
+      CloseableIterator<Product1> iterator = productQuery.getResultAsync(Product1.class);
       int counter = 0;
       while (iterator.hasNext())
       {
-        final Product1 product = iterator.next();
-        // meaningless but do something
+        Product1 product = iterator.next();
+
+        // Meaningless but do something.
         assertEquals(true, product != null);
-        counter++;
-        if (counter == NUM_OF_PRODUCTS / 2)
+
+        if (counter++ == NUM_OF_PRODUCTS / 2)
         {
           iterator.close();
         }
@@ -271,6 +272,21 @@ public class SQLQueryTest extends AbstractCDOTest
     }
 
     transaction.commit();
+  }
+
+  public void testIteratorCancelation() throws Exception
+  {
+    CDOSession session = openSession();
+    createTestSet(session);
+
+    CDOView view = session.openView();
+
+    // Query many times to see whether we run out of store accessors.
+    for (int i = 0; i < 2000; i++)
+    {
+      CDOQuery query = view.createQuery("sql", "SELECT CDO_ID FROM MODEL1_PRODUCT1");
+      query.getResultAsync(Product1.class).close();
+    }
   }
 
   public void _testNonCdoObjectQueries() throws Exception

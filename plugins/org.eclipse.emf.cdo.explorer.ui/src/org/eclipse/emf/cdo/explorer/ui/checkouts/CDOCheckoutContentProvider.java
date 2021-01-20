@@ -29,6 +29,7 @@ import org.eclipse.emf.cdo.ui.CDOItemProvider;
 import org.eclipse.net4j.util.container.IContainerEvent;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.om.pref.OMPreferencesChangeEvent;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -642,6 +643,39 @@ public class CDOCheckoutContentProvider extends CDOContentProvider<CDOCheckout> 
     for (CDOCheckoutContentProvider contentProvider : contentProviders)
     {
       consumer.accept(contentProvider);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class FromPreferences extends CDOCheckoutContentProvider
+  {
+    private final IListener preferenceListener = new IListener()
+    {
+      @Override
+      public void notifyEvent(IEvent event)
+      {
+        @SuppressWarnings("unchecked")
+        OMPreferencesChangeEvent<Boolean> preferenceChangeEvent = (OMPreferencesChangeEvent<Boolean>)event;
+        if (OM.PREF_SHOW_OBJECTS_IN_EXPLORER.getName().equals(preferenceChangeEvent.getPreference().getName()))
+        {
+          setHideObjects(!preferenceChangeEvent.getNewValue());
+        }
+      }
+    };
+
+    public FromPreferences()
+    {
+      setHideObjects(!OM.PREF_SHOW_OBJECTS_IN_EXPLORER.getValue());
+      OM.PREFS.addListener(preferenceListener);
+    }
+
+    @Override
+    public void dispose()
+    {
+      OM.PREFS.removeListener(preferenceListener);
+      super.dispose();
     }
   }
 }

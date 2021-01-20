@@ -2,11 +2,11 @@
 <launchConfiguration type="org.eclipse.pde.ui.RuntimeWorkbench">
     <setAttribute key="additional_plugins">
         <setEntry value="javax.servlet:3.1.0.v201410161800:default:false:default:default"/>
-        <setEntry value="org.eclipse.emf.cdo.edit:4.5.2.qualifier:default:true:default:default"/>
+        <setEntry value="org.eclipse.emf.cdo.edit:4.5.3.qualifier:default:true:default:default"/>
         <setEntry value="org.eclipse.emf.cdo.examples.company.edit:4.1.0.qualifier:default:true:default:default"/>
         <setEntry value="org.eclipse.emf.cdo.expressions.edit:4.4.0.qualifier:default:true:default:default"/>
         <setEntry value="org.eclipse.emf.cdo.security.edit:4.5.0.qualifier:default:true:default:default"/>
-        <setEntry value="org.eclipse.emf.compare.edit:4.3.1.202008311302:default:true:default:default"/>
+        <setEntry value="org.eclipse.emf.compare.edit:4.3.1.202011201248:default:true:default:default"/>
         <setEntry value="org.eclipse.emf.databinding.edit:1.6.0.v20190323-1031:default:true:default:default"/>
         <setEntry value="org.eclipse.emf.ecore.edit:2.13.0.v20190822-1451:default:true:default:default"/>
         <setEntry value="org.eclipse.emf.ecore.editor:2.17.0.v20190528-0725:default:true:default:default"/>
@@ -37,6 +37,7 @@
         <listEntry value="org.eclipse.debug.ui.launchGroup.debug"/>
         <listEntry value="org.eclipse.debug.ui.launchGroup.run"/>
     </listAttribute>
+    <booleanAttribute key="org.eclipse.jdt.launching.ATTR_ATTR_USE_ARGFILE" value="false"/>
     <stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-11"/>
     <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} -consoleLog -nosplash&#13;&#10;-clean"/>
     <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.pde.ui.workbenchClasspathProvider"/>

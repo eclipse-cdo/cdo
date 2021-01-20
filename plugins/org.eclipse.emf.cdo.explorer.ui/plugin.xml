@@ -233,7 +233,7 @@
             id="org.eclipse.emf.cdo.explorer.ui.CDOCheckouts"
             icon="icons/checkout.gif"
             name="CDO Checkouts"
-            contentProvider="org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutContentProvider"
+            contentProvider="org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutContentProvider$FromPreferences"
             labelProvider="org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutLabelProvider"
             priority="normal"
             activeByDefault="true"
@@ -443,12 +443,9 @@
   </extension>
 
   <extension point="org.eclipse.ui.navigator.viewer">
-      <viewerContentBinding
-            viewerId="org.eclipse.ui.navigator.ProjectExplorer">
+      <viewerContentBinding viewerId="org.eclipse.ui.navigator.ProjectExplorer">
          <includes>
-            <contentExtension
-                  pattern="org.eclipse.emf.cdo.explorer.ui.CDOCheckouts">
-            </contentExtension>
+            <contentExtension pattern="org\.eclipse\.emf\.cdo\.explorer\.ui\..*"/>
          </includes>
       </viewerContentBinding>
   </extension>

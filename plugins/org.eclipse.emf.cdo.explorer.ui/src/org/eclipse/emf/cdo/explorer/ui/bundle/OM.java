@@ -54,6 +54,9 @@ public abstract class OM
   public static final OMPreference<Boolean> PREF_REMEMBER_OPEN_EDITORS = //
       PREFS.init("PREF_REMEMBER_OPEN_EDITORS", true); //$NON-NLS-1$
 
+  public static final OMPreference<Boolean> PREF_SHOW_OBJECTS_IN_EXPLORER = //
+      PREFS.init("PREF_SHOW_OBJECTS_IN_EXPLORER", true); //$NON-NLS-1$
+
   public static final OMPreference<Integer> PREF_DASHBOARD_HEIGHT = //
       PREFS.init("PREF_DASHBOARD_HEIGHT", 0); //$NON-NLS-1$
 

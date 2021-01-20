@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
@@ -24,6 +25,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.lifecycle.LifecycleException;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.views.ItemProvider;
 
 import org.eclipse.emf.common.util.EList;
@@ -73,6 +75,8 @@ public abstract class CDOContentProvider<CONTEXT> implements ITreeContentProvide
 
   private Object input;
 
+  private boolean hideObjects;
+
   public CDOContentProvider()
   {
   }
@@ -80,6 +84,25 @@ public abstract class CDOContentProvider<CONTEXT> implements ITreeContentProvide
   public final TreeViewer getViewer()
   {
     return viewer;
+  }
+
+  public final boolean isHideObjects()
+  {
+    return hideObjects;
+  }
+
+  public final void setHideObjects(boolean hideObjects)
+  {
+    boolean oldValue = this.hideObjects;
+    if (hideObjects != oldValue)
+    {
+      this.hideObjects = hideObjects;
+
+      if (viewer != null)
+      {
+        UIUtil.asyncExec(viewer.getControl().getDisplay(), () -> UIUtil.refreshViewer(viewer));
+      }
+    }
   }
 
   @Override
@@ -128,6 +151,15 @@ public abstract class CDOContentProvider<CONTEXT> implements ITreeContentProvide
       if (object instanceof ViewerUtil.Pending)
       {
         return false;
+      }
+
+      if (hideObjects && object instanceof CDOResource)
+      {
+        CDOResource resource = (CDOResource)object;
+        if (!resource.isRoot())
+        {
+          return false;
+        }
       }
 
       if (isContext(object))
@@ -213,6 +245,15 @@ public abstract class CDOContentProvider<CONTEXT> implements ITreeContentProvide
       if (object instanceof ViewerUtil.Pending)
       {
         return ViewerUtil.NO_CHILDREN;
+      }
+
+      if (hideObjects && object instanceof CDOResource)
+      {
+        CDOResource resource = (CDOResource)object;
+        if (!resource.isRoot())
+        {
+          return ViewerUtil.NO_CHILDREN;
+        }
       }
 
       if (object instanceof CDOElement)

@@ -62,9 +62,7 @@ public class CDOLabelDecorator implements ILabelDecorator
 
   private static final Image LOCK_SELF_OVERLAY = SharedIcons.getImage(SharedIcons.OVR_LOCK_SELF);
 
-  private String pattern;
-
-  private IListener preferenceListener = new IListener()
+  private final IListener preferenceListener = new IListener()
   {
     @Override
     public void notifyEvent(IEvent event)
@@ -77,6 +75,8 @@ public class CDOLabelDecorator implements ILabelDecorator
       }
     }
   };
+
+  private String pattern;
 
   public CDOLabelDecorator()
   {

@@ -17,6 +17,8 @@ import org.eclipse.net4j.util.ui.prefs.OMPreferencePage;
 import org.eclipse.net4j.util.ui.prefs.PrefBoolean;
 import org.eclipse.net4j.util.ui.prefs.PrefIntegerAndDisable;
 
+import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
@@ -32,6 +34,8 @@ public class ExplorerPreferencePage extends OMPreferencePage
 
   private PrefBoolean rememberOpenEditors;
 
+  private PrefBoolean showObjectsInExplorer;
+
   public ExplorerPreferencePage()
   {
     super(OM.PREFS);
@@ -40,7 +44,8 @@ public class ExplorerPreferencePage extends OMPreferencePage
   @Override
   protected Control createUI(Composite parent)
   {
-    Composite composite = UIUtil.createGridComposite(parent, 2);
+    Composite composite = new Composite(parent, SWT.NONE);
+    composite.setLayout(GridLayoutFactory.fillDefaults().numColumns(2).create());
     composite.setLayoutData(UIUtil.createGridData());
 
     new Label(composite, SWT.NONE).setText("Repository timeout:");
@@ -57,8 +62,12 @@ public class ExplorerPreferencePage extends OMPreferencePage
 
     rememberOpenEditors = new PrefBoolean(composite, SWT.CHECK, OM.PREF_REMEMBER_OPEN_EDITORS);
     rememberOpenEditors.getButton().setText("Remember open model editors");
-    rememberOpenEditors.setLayoutData(UIUtil.createGridData(false, false));
+    rememberOpenEditors.setLayoutData(GridDataFactory.fillDefaults().span(2, 1).create());
     UIUtil.setIndentation(rememberOpenEditors, -1, 10);
+
+    showObjectsInExplorer = new PrefBoolean(composite, SWT.CHECK, OM.PREF_SHOW_OBJECTS_IN_EXPLORER);
+    showObjectsInExplorer.getButton().setText("Show objects in project explorer");
+    showObjectsInExplorer.setLayoutData(GridDataFactory.fillDefaults().span(2, 1).create());
 
     initValues();
     return composite;
@@ -68,6 +77,7 @@ public class ExplorerPreferencePage extends OMPreferencePage
   {
     repositoryTimeout.loadPreferences();
     rememberOpenEditors.loadPreferences();
+    showObjectsInExplorer.loadPreferences();
   }
 
   @Override
@@ -75,6 +85,7 @@ public class ExplorerPreferencePage extends OMPreferencePage
   {
     repositoryTimeout.savePreferences();
     rememberOpenEditors.savePreferences();
+    showObjectsInExplorer.savePreferences();
     return super.performOk();
   }
 }

@@ -10,8 +10,6 @@
  */
 package org.eclipse.emf.cdo.compare;
 
-import static org.eclipse.emf.compare.utils.EMFComparePredicates.IS_EGENERIC_TYPE_WITHOUT_PARAMETERS;
-
 import org.eclipse.emf.cdo.CDOElement;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -22,7 +20,6 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.net4j.util.ReflectUtil;
 
 import org.eclipse.emf.common.notify.Notifier;
-import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.Monitor;
 import org.eclipse.emf.compare.CompareFactory;
 import org.eclipse.emf.compare.Comparison;
@@ -79,14 +76,9 @@ public class CDOCompare
     IEObjectMatcher matcher = createMatcher(idFunction);
     IEqualityHelperFactory equalityHelperFactory = createEqualityHelperFactory();
     IComparisonFactory comparisonFactory = createComparisonFactory(equalityHelperFactory);
+
     EMFCompare comparator = createComparator(matcher, comparisonFactory);
-
-    Comparison comparison = comparator.compare(scope);
-
-    // TODO See EMFCompare.java, line 316
-    comparison.eAdapters().add(new ComparisonScopeAdapter(scope));
-
-    return comparison;
+    return comparator.compare(scope);
   }
 
   protected CDOIDFunction createIDFunction()
@@ -193,13 +185,7 @@ public class CDOCompare
 
   public static IComparisonScope getScope(Comparison comparison)
   {
-    ComparisonScopeAdapter adapter = EMFUtil.getAdapter(comparison, ComparisonScopeAdapter.class);
-    if (adapter == null)
-    {
-      return null;
-    }
-
-    return adapter.getScope();
+    return EMFUtil.getAdapter(comparison, IComparisonScope.class);
   }
 
   /**
@@ -508,8 +494,10 @@ public class CDOCompare
           boolean isGenericType = reference.getEType() == EcorePackage.eINSTANCE.getEGenericType();
           if (isGenericType)
           {
-            isGenericTypeWithoutArguments = IS_EGENERIC_TYPE_WITHOUT_PARAMETERS.apply(match.getLeft())
-                && IS_EGENERIC_TYPE_WITHOUT_PARAMETERS.apply(match.getRight()) && IS_EGENERIC_TYPE_WITHOUT_PARAMETERS.apply(match.getOrigin());
+            isGenericTypeWithoutArguments = //
+                org.eclipse.emf.compare.utils.EMFComparePredicates.IS_EGENERIC_TYPE_WITHOUT_PARAMETERS.apply(match.getLeft()) && //
+                    org.eclipse.emf.compare.utils.EMFComparePredicates.IS_EGENERIC_TYPE_WITHOUT_PARAMETERS.apply(match.getRight()) && //
+                    org.eclipse.emf.compare.utils.EMFComparePredicates.IS_EGENERIC_TYPE_WITHOUT_PARAMETERS.apply(match.getOrigin());
           }
           toIgnore = isGenericTypeWithoutArguments || !referenceIsSet(reference, match);
         }
@@ -541,30 +529,6 @@ public class CDOCompare
     protected boolean isTransient(EStructuralFeature feature)
     {
       return !EMFUtil.isPersistent(feature);
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private static final class ComparisonScopeAdapter extends AdapterImpl
-  {
-    private IComparisonScope scope;
-
-    public ComparisonScopeAdapter(IComparisonScope scope)
-    {
-      this.scope = scope;
-    }
-
-    public final IComparisonScope getScope()
-    {
-      return scope;
-    }
-
-    @Override
-    public boolean isAdapterForType(Object type)
-    {
-      return type == ComparisonScopeAdapter.class;
     }
   }
 }

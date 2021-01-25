@@ -594,6 +594,7 @@ public final class EMFUtil
   {
     @SuppressWarnings("unchecked")
     T adapter = (T)EcoreUtil.getAdapter(notifier.eAdapters(), type);
+
     return adapter;
   }
 

@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.eresource.CDOTextResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
@@ -855,5 +856,76 @@ public class MergingTest extends AbstractCDOTest
     Company company = getModel1Factory().createCompany();
     contents.add(company);
     return company;
+  }
+
+  public void testMergeClobChangesInSource() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOBranch mainBranch = session.getBranchManager().getMainBranch();
+    CDOTransaction transaction = session.openTransaction(mainBranch);
+
+    CDOTextResource resource = transaction.createTextResource(getResourcePath("text1.txt"));
+    resource.setContents(session.newClob("This can be a looooong document"));
+
+    long time = transaction.commit().getTimeStamp();
+
+    CDOBranch source = mainBranch.createBranch("branch", time);
+    CDOTransaction tx1 = session.openTransaction(source);
+
+    CDOTextResource res1 = tx1.getTextResource(getResourcePath("text1.txt"));
+    res1.setContents(session.newClob("This is a different document from a different branch"));
+
+    commitAndSync(tx1, transaction);
+    tx1.close();
+
+    CDOChangeSetData result = transaction.merge(source.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
+    assertEquals(false, result.isEmpty());
+    assertEquals(0, result.getNewObjects().size());
+    assertEquals(1, result.getChangedObjects().size());
+    assertEquals(0, result.getDetachedObjects().size());
+    assertEquals(true, transaction.isDirty());
+
+    CDOCommitInfo commitInfo1 = transaction.commit();
+    assertEquals(0, commitInfo1.getNewObjects().size());
+    assertEquals(1, commitInfo1.getChangedObjects().size());
+    assertEquals(0, commitInfo1.getDetachedObjects().size());
+    assertEquals(false, transaction.isDirty());
+
+    String contents = resource.getContents().getString();
+    assertEquals("This is a different document from a different branch", contents);
+  }
+
+  public void testMergeClobChangesInSourceConflict() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOBranch mainBranch = session.getBranchManager().getMainBranch();
+    CDOTransaction transaction = session.openTransaction(mainBranch);
+
+    CDOTextResource resource = transaction.createTextResource(getResourcePath("text1.txt"));
+    resource.setContents(session.newClob("This can be a looooong document"));
+
+    long time = transaction.commit().getTimeStamp();
+
+    CDOBranch source = mainBranch.createBranch("branch", time);
+    CDOTransaction tx1 = session.openTransaction(source);
+
+    CDOTextResource res1 = tx1.getTextResource(getResourcePath("text1.txt"));
+    res1.setContents(session.newClob("This is a different document from a different branch"));
+
+    commitAndSync(tx1, transaction);
+    tx1.close();
+
+    resource.setContents(session.newClob("This is a different document from the same branch"));
+    transaction.commit();
+
+    try
+    {
+      transaction.merge(source.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
+      fail("ConflictException expected");
+    }
+    catch (ConflictException expected)
+    {
+      // SUCCESS
+    }
   }
 }

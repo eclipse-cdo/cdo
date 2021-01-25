@@ -12,12 +12,15 @@ package org.eclipse.emf.cdo.eresource;
 
 import org.eclipse.emf.cdo.common.lob.CDOClob;
 
+import org.eclipse.net4j.util.io.EncodingProvider;
+
 import java.io.Reader;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>CDO Text Resource</b></em>'.
  *
  * @since 4.1
+ * @extends EncodingProvider
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  * <!-- end-user-doc -->
@@ -32,9 +35,9 @@ import java.io.Reader;
  *
  * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOTextResource()
  * @model superTypes="org.eclipse.emf.cdo.eresource.CDOFileResource&lt;org.eclipse.emf.cdo.etypes.Reader&gt;"
- * @generated
+ * @generated not
  */
-public interface CDOTextResource extends CDOFileResource<Reader>
+public interface CDOTextResource extends CDOFileResource<Reader>, EncodingProvider
 {
   /**
    * Returns the value of the '<em><b>Contents</b></em>' attribute.
@@ -78,6 +81,7 @@ public interface CDOTextResource extends CDOFileResource<Reader>
    * @model
    * @generated
    */
+  @Override
   String getEncoding();
 
   /**

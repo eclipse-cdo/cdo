@@ -82,7 +82,7 @@ public class EresourceItemProviderAdapterFactory extends EresourceAdapterFactory
    *
    * @generated
    */
-  protected Collection<Object> supportedTypes = new ArrayList<>();
+  protected Collection<Object> supportedTypes = new ArrayList<Object>();
 
   /**
    * This constructs an instance.
@@ -258,7 +258,7 @@ public class EresourceItemProviderAdapterFactory extends EresourceAdapterFactory
     if (isFactoryForType(type))
     {
       Object adapter = super.adapt(object, type);
-      if (!(type instanceof Class<?>) || ((Class<?>)type).isInstance(adapter))
+      if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter)))
       {
         return adapter;
       }
@@ -336,7 +336,7 @@ public class EresourceItemProviderAdapterFactory extends EresourceAdapterFactory
   }
 
   /**
-   * This disposes all of the item providers created by this factory.
+   * This disposes all of the item providers created by this factory. 
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
@@ -344,21 +344,13 @@ public class EresourceItemProviderAdapterFactory extends EresourceAdapterFactory
   public void dispose()
   {
     if (cdoResourceFolderItemProvider != null)
-    {
       cdoResourceFolderItemProvider.dispose();
-    }
     if (cdoResourceItemProvider != null)
-    {
       cdoResourceItemProvider.dispose();
-    }
     if (cdoBinaryResourceItemProvider != null)
-    {
       cdoBinaryResourceItemProvider.dispose();
-    }
     if (cdoTextResourceItemProvider != null)
-    {
       cdoTextResourceItemProvider.dispose();
-    }
   }
 
 }

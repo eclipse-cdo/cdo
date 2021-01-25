@@ -13,12 +13,16 @@
 
 <plugin>
 
-   <extension
-         point="org.eclipse.net4j.util.factories">
+   <extension point="org.eclipse.net4j.util.factories">
       <factory
             class="org.eclipse.emf.cdo.ui.internal.compare.CompareConflictHandler$Factory"
             productGroup="org.eclipse.emf.cdo.conflictHandlers"
             type="merge"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.compare.rcp.ui.accessorFactory">
+      <factory class="org.eclipse.emf.cdo.ui.internal.compare.CDOMatchAccessorFactory" ranking="50"/>
+      <factory class="org.eclipse.emf.cdo.ui.internal.compare.CDOLobAttributeChangeAccessorFactory" ranking="50"/>
    </extension>
 
    <extension point="org.eclipse.ui.popupMenus">
@@ -68,5 +72,5 @@
          </action>
       </objectContribution>
    </extension>
-
+   
 </plugin>

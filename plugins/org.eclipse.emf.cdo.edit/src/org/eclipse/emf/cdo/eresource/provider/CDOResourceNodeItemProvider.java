@@ -85,8 +85,7 @@ public class CDOResourceNodeItemProvider extends CDOItemProviderAdapter
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
         getString("_UI_CDOResourceNode_name_feature"), //$NON-NLS-1$
-        getString("_UI_PropertyDescriptor_description", "_UI_CDOResourceNode_name_feature", //$NON-NLS-1$//$NON-NLS-2$
-            "_UI_CDOResourceNode_type"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_CDOResourceNode_name_feature", "_UI_CDOResourceNode_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         EresourcePackage.Literals.CDO_RESOURCE_NODE__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
@@ -99,8 +98,7 @@ public class CDOResourceNodeItemProvider extends CDOItemProviderAdapter
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
         getString("_UI_CDOResourceNode_path_feature"), //$NON-NLS-1$
-        getString("_UI_PropertyDescriptor_description", "_UI_CDOResourceNode_path_feature", //$NON-NLS-1$//$NON-NLS-2$
-            "_UI_CDOResourceNode_type"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_CDOResourceNode_path_feature", "_UI_CDOResourceNode_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         EresourcePackage.Literals.CDO_RESOURCE_NODE__PATH, false, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
@@ -112,6 +110,22 @@ public class CDOResourceNodeItemProvider extends CDOItemProviderAdapter
   public boolean hasChildren(Object object)
   {
     return hasChildren(object, true);
+  }
+
+  /**
+   * This returns <code>getImage(object)</code> for the column index <code>0</code> or <code>super.getImage(object)</code> otherwise.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getText(Object)
+   * @see #getColumnText(Object, int)
+   * @generated
+   */
+  @Override
+  public Object getColumnImage(Object object, int columnIndex)
+  {
+    // TODO: implement this method to return appropriate information for each column.
+    // Ensure that you remove @generated or mark it @generated NOT
+    return columnIndex == 0 ? getImage(object) : super.getImage(object);
   }
 
   /**
@@ -136,6 +150,22 @@ public class CDOResourceNodeItemProvider extends CDOItemProviderAdapter
     String label = ((CDOResourceNode)object).getName();
     return label == null || label.length() == 0 ? getString("_UI_CDOResourceNode_type") : //$NON-NLS-1$
         getString("_UI_CDOResourceNode_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+  }
+
+  /**
+   * This returns <code>getText(object)</code> for the column index <code>0</code> or <code>super.getText(object)</code> otherwise.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getImage(Object)
+   * @see #getColumnImage(Object, int)
+   * @generated
+   */
+  @Override
+  public String getColumnText(Object object, int columnIndex)
+  {
+    // TODO: implement this method to return appropriate information for each column.
+    // Ensure that you remove @generated or mark it @generated NOT
+    return columnIndex == 0 ? getText(object) : super.getText(object);
   }
 
   /**

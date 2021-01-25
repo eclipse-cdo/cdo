@@ -13,6 +13,8 @@ package org.eclipse.emf.cdo.common.lob;
 import org.eclipse.net4j.util.HexUtil;
 
 import java.text.MessageFormat;
+import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * Encapsulates {@link #getID() ID} and {@link #getSize() size} of a {@link CDOLob large object}.
@@ -59,6 +61,33 @@ public class CDOLobInfo
   public final long getSize()
   {
     return size;
+  }
+
+  @Override
+  public final int hashCode()
+  {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + Arrays.hashCode(id);
+    result = prime * result + Objects.hash(size);
+    return result;
+  }
+
+  @Override
+  public final boolean equals(Object obj)
+  {
+    if (this == obj)
+    {
+      return true;
+    }
+
+    if (!(obj instanceof CDOLobInfo))
+    {
+      return false;
+    }
+
+    CDOLobInfo other = (CDOLobInfo)obj;
+    return Arrays.equals(id, other.id) && size == other.size;
   }
 
   @Override

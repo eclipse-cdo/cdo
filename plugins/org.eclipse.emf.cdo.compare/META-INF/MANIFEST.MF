@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emf.cdo.compare; singleton:=true
-Bundle-Version: 4.4.1.qualifier
+Bundle-Version: 4.5.0.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -10,8 +10,8 @@ Bundle-Activator: org.eclipse.emf.cdo.internal.compare.bundle.OM$Activator
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.emf.cdo;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
  org.eclipse.emf.compare;bundle-version="[3.0.0,4.0.0)";visibility:=reexport
-Export-Package: org.eclipse.emf.cdo.compare;version="4.4.1",
- org.eclipse.emf.cdo.internal.compare.bundle;version="4.4.1";x-friends:="org.eclipse.emf.cdo.tests"
+Export-Package: org.eclipse.emf.cdo.compare;version="4.5.0",
+ org.eclipse.emf.cdo.internal.compare.bundle;version="4.5.0";x-friends:="org.eclipse.emf.cdo.tests"
 Bundle-ActivationPolicy: lazy
 Import-Package: com.google.common.base;version="[15.0.0,28.0.0)",
  com.google.common.collect;version="[15.0.0,28.0.0)",

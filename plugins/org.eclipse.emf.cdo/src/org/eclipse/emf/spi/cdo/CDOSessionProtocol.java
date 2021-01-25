@@ -53,6 +53,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.Revisi
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.CheckUtil;
+import org.eclipse.net4j.util.collection.UnionSet;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
@@ -976,6 +977,14 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
     public MergeDataResult()
     {
+    }
+
+    /**
+     * @since 4.13
+     */
+    public Set<CDOID> getIDs()
+    {
+      return new UnionSet<>(sourceIDs, targetIDs);
     }
 
     public Set<CDOID> getTargetIDs()

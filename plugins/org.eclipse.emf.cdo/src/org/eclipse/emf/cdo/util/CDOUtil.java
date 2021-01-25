@@ -17,11 +17,17 @@ import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPointRange;
+import org.eclipse.emf.cdo.common.lob.CDOBlob;
+import org.eclipse.emf.cdo.common.lob.CDOClob;
+import org.eclipse.emf.cdo.common.lob.CDOLob;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
+import org.eclipse.emf.cdo.eresource.CDOBinaryResource;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
+import org.eclipse.emf.cdo.eresource.CDOResourceLeaf;
+import org.eclipse.emf.cdo.eresource.CDOTextResource;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.etypes.Annotation;
@@ -67,6 +73,8 @@ import org.eclipse.emf.internal.cdo.view.CDOStoreImpl;
 import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.concurrent.DelegableReentrantLock;
 import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.io.EmptyInputStream;
+import org.eclipse.net4j.util.io.ReaderInputStream;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.security.CredentialsProviderFactory;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
@@ -89,6 +97,10 @@ import org.eclipse.emf.spi.cdo.FSMUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -889,4 +901,53 @@ public final class CDOUtil
     return setAnnotation(modelElement, CDO_ANNOTATION_URI, DOCUMENTATION_KEY, value);
   }
 
+  /**
+   * @since 4.13
+   */
+  public static InputStream openInputStream(CDOResourceLeaf leaf) throws IOException
+  {
+    if (leaf instanceof CDOBinaryResource)
+    {
+      CDOBinaryResource binary = (CDOBinaryResource)leaf;
+      return openInputStream(binary.getContents(), null);
+    }
+
+    if (leaf instanceof CDOTextResource)
+    {
+      CDOTextResource text = (CDOTextResource)leaf;
+      return openInputStream(text.getContents(), text.getEncoding());
+    }
+
+    if (leaf instanceof CDOResource)
+    {
+      CDOResource resource = (CDOResource)leaf;
+      ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+      resource.save(baos, null);
+      return new ByteArrayInputStream(baos.toByteArray());
+    }
+
+    // Can't realistically happen.
+    return null;
+  }
+
+  /**
+   * @since 4.13
+   */
+  public static InputStream openInputStream(CDOLob<?> lob, String encoding) throws IOException
+  {
+    if (lob instanceof CDOBlob)
+    {
+      CDOBlob blob = (CDOBlob)lob;
+      return blob.getContents();
+    }
+
+    if (lob instanceof CDOClob)
+    {
+      CDOClob clob = (CDOClob)lob;
+      return new ReaderInputStream(clob.getContents(), encoding);
+    }
+
+    return new EmptyInputStream();
+  }
 }

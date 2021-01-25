@@ -22,7 +22,6 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.IORuntimeException;
-import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -36,10 +35,7 @@ import org.eclipse.ui.texteditor.IDocumentProvider;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.CharArrayReader;
-import java.io.CharArrayWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.Reader;
 
 /**
  * @author Eike Stepper
@@ -163,21 +159,7 @@ public class CDOLobStorage extends AbstractDocumentProvider
           return StringUtil.EMPTY;
         }
 
-        Reader reader = null;
-
-        try
-        {
-          reader = clob.getContents();
-
-          CharArrayWriter writer = new CharArrayWriter();
-          IOUtil.copyCharacter(reader, writer);
-          return writer.toString();
-        }
-        finally
-        {
-          IOUtil.close(reader);
-        }
-
+        return clob.getString();
       }
 
       if (resource instanceof CDOBinaryResource)
@@ -188,21 +170,7 @@ public class CDOLobStorage extends AbstractDocumentProvider
           return StringUtil.EMPTY;
         }
 
-        InputStream inputStream = null;
-
-        try
-        {
-          inputStream = blob.getContents();
-
-          ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-          IOUtil.copy(inputStream, outputStream);
-          return new String(outputStream.toByteArray(), getDefaultEncoding());
-        }
-        finally
-        {
-          IOUtil.close(inputStream);
-        }
-
+        return new String(blob.getBytes(), getDefaultEncoding());
       }
 
       ByteArrayOutputStream outputStream = new ByteArrayOutputStream();

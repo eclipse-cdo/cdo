@@ -102,13 +102,13 @@ public interface EtypesPackage extends EPackage
   int MODEL_ELEMENT___GET_ANNOTATION__STRING = 0;
 
   /**
-  	 * The number of operations of the '<em>Model Element</em>' class.
-  	 * <!-- begin-user-doc -->
+   * The number of operations of the '<em>Model Element</em>' class.
+   * <!-- begin-user-doc -->
   	 * @since 4.11
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @generated
+   * @ordered
+   */
   int MODEL_ELEMENT_OPERATION_COUNT = 1;
 
   /**
@@ -191,22 +191,22 @@ public interface EtypesPackage extends EPackage
   int ANNOTATION___GET_ANNOTATION__STRING = MODEL_ELEMENT___GET_ANNOTATION__STRING;
 
   /**
-  	 * The number of operations of the '<em>Annotation</em>' class.
-  	 * <!-- begin-user-doc -->
+   * The number of operations of the '<em>Annotation</em>' class.
+   * <!-- begin-user-doc -->
   	 * @since 4.11
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @generated
+   * @ordered
+   */
   int ANNOTATION_OPERATION_COUNT = MODEL_ELEMENT_OPERATION_COUNT + 0;
 
   /**
-  	 * The meta object id for the '<em>Blob</em>' data type.
-  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-  	 * @see org.eclipse.emf.cdo.common.lob.CDOBlob
-  	 * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getBlob()
-  	 * @generated
-  	 */
+   * The meta object id for the '<em>Blob</em>' data type.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.common.lob.CDOBlob
+   * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getBlob()
+   * @generated
+   */
   int BLOB = 2;
 
   /**
@@ -519,12 +519,12 @@ public interface EtypesPackage extends EPackage
     EOperation MODEL_ELEMENT___GET_ANNOTATION__STRING = eINSTANCE.getModelElement__GetAnnotation__String();
 
     /**
-    	 * The meta object literal for the '{@link org.eclipse.emf.cdo.etypes.impl.AnnotationImpl <em>Annotation</em>}' class.
-    	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-    	 * @see org.eclipse.emf.cdo.etypes.impl.AnnotationImpl
-    	 * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getAnnotation()
-    	 * @generated
-    	 */
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.etypes.impl.AnnotationImpl <em>Annotation</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.etypes.impl.AnnotationImpl
+     * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getAnnotation()
+     * @generated
+     */
     EClass ANNOTATION = eINSTANCE.getAnnotation();
 
     /**

@@ -20,6 +20,8 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOID.ObjectType;
 import org.eclipse.emf.cdo.common.id.CDOIDGenerator;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.lob.CDOBlob;
+import org.eclipse.emf.cdo.common.lob.CDOClob;
 import org.eclipse.emf.cdo.common.lob.CDOLobStore;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
@@ -91,6 +93,9 @@ import org.eclipse.emf.spi.cdo.InternalCDOViewSet;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.PlatformObject;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Reader;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -1546,6 +1551,30 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
 
     @Override
     public void setDelegableViewLockEnabled(boolean enabled)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public CDOClob newClob(Reader contents) throws IOException
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public CDOClob newClob(String contents) throws IOException
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public CDOBlob newBlob(InputStream contents) throws IOException
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public CDOBlob newBlob(byte[] contents) throws IOException
     {
       throw new UnsupportedOperationException();
     }

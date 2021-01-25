@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.etypes.impl;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPointRef;
+import org.eclipse.emf.cdo.common.branch.CDOBranchRef;
 import org.eclipse.emf.cdo.common.lob.CDOBlob;
 import org.eclipse.emf.cdo.common.lob.CDOClob;
 import org.eclipse.emf.cdo.common.lob.CDOLob;
@@ -29,8 +31,6 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 import java.io.InputStream;
 import java.io.Reader;
-import org.eclipse.emf.cdo.common.branch.CDOBranchPointRef;
-import org.eclipse.emf.cdo.common.branch.CDOBranchRef;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Package</b>.
@@ -200,9 +200,9 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
   }
 
   /**
-  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public EClass getAnnotation()
   {

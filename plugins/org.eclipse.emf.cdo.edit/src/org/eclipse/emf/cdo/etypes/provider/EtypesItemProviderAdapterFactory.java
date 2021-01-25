@@ -83,7 +83,7 @@ public class EtypesItemProviderAdapterFactory extends EtypesAdapterFactory
    *
    * @generated
    */
-  protected Collection<Object> supportedTypes = new ArrayList<>();
+  protected Collection<Object> supportedTypes = new ArrayList<Object>();
 
   /**
    * This constructs an instance.
@@ -183,7 +183,7 @@ public class EtypesItemProviderAdapterFactory extends EtypesAdapterFactory
     if (isFactoryForType(type))
     {
       Object adapter = super.adapt(object, type);
-      if (!(type instanceof Class<?>) || ((Class<?>)type).isInstance(adapter))
+      if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter)))
       {
         return adapter;
       }
@@ -261,7 +261,7 @@ public class EtypesItemProviderAdapterFactory extends EtypesAdapterFactory
   }
 
   /**
-   * This disposes all of the item providers created by this factory.
+   * This disposes all of the item providers created by this factory. 
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
@@ -269,9 +269,7 @@ public class EtypesItemProviderAdapterFactory extends EtypesAdapterFactory
   public void dispose()
   {
     if (annotationItemProvider != null)
-    {
       annotationItemProvider.dispose();
-    }
   }
 
 }

@@ -22,7 +22,6 @@ import org.eclipse.emf.cdo.etypes.EtypesPackage;
 
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.io.IORuntimeException;
-import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
@@ -35,7 +34,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
 
@@ -252,14 +250,10 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
       return null;
     }
 
-    CDOClob clob = (CDOClob)instanceValue;
-
     try
     {
-      Reader reader = clob.getContents();
-      StringWriter writer = new StringWriter();
-      IOUtil.copyCharacter(reader, writer);
-      return writer.toString();
+      CDOClob clob = (CDOClob)instanceValue;
+      return clob.getString();
     }
     catch (IOException ex)
     {

@@ -22,6 +22,8 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.common.id.CDOIDGenerator;
+import org.eclipse.emf.cdo.common.lob.CDOBlob;
+import org.eclipse.emf.cdo.common.lob.CDOClob;
 import org.eclipse.emf.cdo.common.lob.CDOLobStore;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
@@ -47,6 +49,9 @@ import org.eclipse.emf.spi.cdo.CDOPermissionUpdater;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.RefreshSessionResult;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Reader;
 import java.util.concurrent.locks.Lock;
 
 /**
@@ -188,6 +193,26 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransacti
    * @see #getCredentialsProvider()
    */
   public void changeCredentials();
+
+  /**
+   * @since 4.13
+   */
+  public CDOClob newClob(Reader contents) throws IOException;
+
+  /**
+   * @since 4.13
+   */
+  public CDOClob newClob(String contents) throws IOException;
+
+  /**
+   * @since 4.13
+   */
+  public CDOBlob newBlob(InputStream contents) throws IOException;
+
+  /**
+   * @since 4.13
+   */
+  public CDOBlob newBlob(byte[] contents) throws IOException;
 
   /**
    * Returns the {@link Options options} of this session.

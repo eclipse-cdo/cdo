@@ -13,9 +13,12 @@ package org.eclipse.emf.cdo.common.lob;
 import org.eclipse.emf.cdo.spi.common.CDOLobStoreImpl;
 
 import org.eclipse.net4j.util.io.ExtendedDataInput;
+import org.eclipse.net4j.util.io.IOUtil;
 
+import java.io.CharArrayWriter;
 import java.io.IOException;
 import java.io.Reader;
+import java.io.StringReader;
 
 /**
  * An identifiable character large object with streaming support.
@@ -35,6 +38,14 @@ public final class CDOClob extends CDOLob<Reader>
     super(contents, store);
   }
 
+  /**
+   * @since 4.13
+   */
+  public CDOClob(String contents, CDOLobStore store) throws IOException
+  {
+    super(new StringReader(contents), store);
+  }
+
   CDOClob(byte[] id, long size)
   {
     super(id, size);
@@ -49,6 +60,28 @@ public final class CDOClob extends CDOLob<Reader>
   public Reader getContents() throws IOException
   {
     return getStore().getCharacter(this);
+  }
+
+  /**
+   * @since 4.13
+   */
+  @Override
+  public String getString() throws IOException
+  {
+    Reader reader = null;
+
+    try
+    {
+      reader = getContents();
+
+      CharArrayWriter writer = new CharArrayWriter();
+      IOUtil.copyCharacter(reader, writer);
+      return writer.toString();
+    }
+    finally
+    {
+      IOUtil.close(reader);
+    }
   }
 
   @Override

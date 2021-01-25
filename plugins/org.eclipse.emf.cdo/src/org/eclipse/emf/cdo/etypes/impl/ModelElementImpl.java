@@ -10,20 +10,21 @@
  */
 package org.eclipse.emf.cdo.etypes.impl;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.Collection;
 import org.eclipse.emf.cdo.etypes.Annotation;
 import org.eclipse.emf.cdo.etypes.EtypesPackage;
 import org.eclipse.emf.cdo.etypes.ModelElement;
 
-import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.InternalEList;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.Collection;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Model Element</b></em>'.
@@ -150,10 +151,10 @@ public abstract class ModelElementImpl extends CDOObjectImpl implements ModelEle
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   @SuppressWarnings("unchecked")
   @Override
   public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
@@ -167,10 +168,10 @@ public abstract class ModelElementImpl extends CDOObjectImpl implements ModelEle
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -183,10 +184,10 @@ public abstract class ModelElementImpl extends CDOObjectImpl implements ModelEle
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -199,10 +200,10 @@ public abstract class ModelElementImpl extends CDOObjectImpl implements ModelEle
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
@@ -218,10 +219,10 @@ public abstract class ModelElementImpl extends CDOObjectImpl implements ModelEle
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   @Override
   public void eUnset(int featureID)
   {
@@ -235,10 +236,10 @@ public abstract class ModelElementImpl extends CDOObjectImpl implements ModelEle
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   @Override
   public boolean eIsSet(int featureID)
   {
@@ -251,10 +252,10 @@ public abstract class ModelElementImpl extends CDOObjectImpl implements ModelEle
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   @Override
   public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException
   {

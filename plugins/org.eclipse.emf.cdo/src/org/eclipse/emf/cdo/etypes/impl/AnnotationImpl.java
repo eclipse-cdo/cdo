@@ -57,9 +57,9 @@ public class AnnotationImpl extends ModelElementImpl implements Annotation
   protected static final String SOURCE_EDEFAULT = null;
 
   /**
-  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   protected AnnotationImpl()
   {
     super();
@@ -129,9 +129,9 @@ public class AnnotationImpl extends ModelElementImpl implements Annotation
   }
 
   /**
-  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void setModelElement(ModelElement newModelElement)
   {
@@ -161,10 +161,10 @@ public class AnnotationImpl extends ModelElementImpl implements Annotation
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   @SuppressWarnings("unchecked")
   @Override
   public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
@@ -184,10 +184,10 @@ public class AnnotationImpl extends ModelElementImpl implements Annotation
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -206,10 +206,10 @@ public class AnnotationImpl extends ModelElementImpl implements Annotation
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   @Override
   public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs)
   {
@@ -222,10 +222,10 @@ public class AnnotationImpl extends ModelElementImpl implements Annotation
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -252,10 +252,10 @@ public class AnnotationImpl extends ModelElementImpl implements Annotation
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
@@ -288,10 +288,10 @@ public class AnnotationImpl extends ModelElementImpl implements Annotation
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   @Override
   public void eUnset(int featureID)
   {
@@ -320,10 +320,10 @@ public class AnnotationImpl extends ModelElementImpl implements Annotation
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   @Override
   public boolean eIsSet(int featureID)
   {

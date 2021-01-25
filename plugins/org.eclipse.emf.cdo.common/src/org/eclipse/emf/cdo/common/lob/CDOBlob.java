@@ -12,8 +12,12 @@ package org.eclipse.emf.cdo.common.lob;
 
 import org.eclipse.emf.cdo.spi.common.CDOLobStoreImpl;
 
+import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.io.ExtendedDataInput;
+import org.eclipse.net4j.util.io.IOUtil;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -35,6 +39,22 @@ public final class CDOBlob extends CDOLob<InputStream>
     super(contents, store);
   }
 
+  /**
+   * @since 4.13
+   */
+  public CDOBlob(byte[] contents, CDOLobStore store) throws IOException
+  {
+    super(new ByteArrayInputStream(contents), store);
+  }
+
+  /**
+   * @since 4.13
+   */
+  public CDOBlob(String contents, CDOLobStore store) throws IOException
+  {
+    super(new ByteArrayInputStream(HexUtil.hexToBytes(contents)), store);
+  }
+
   CDOBlob(byte[] id, long size)
   {
     super(id, size);
@@ -49,6 +69,36 @@ public final class CDOBlob extends CDOLob<InputStream>
   public InputStream getContents() throws IOException
   {
     return getStore().getBinary(this);
+  }
+
+  /**
+   * @since 4.13
+   */
+  public byte[] getBytes() throws IOException
+  {
+    InputStream inputStream = null;
+
+    try
+    {
+      inputStream = getContents();
+
+      ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+      IOUtil.copy(inputStream, outputStream);
+      return outputStream.toByteArray();
+    }
+    finally
+    {
+      IOUtil.close(inputStream);
+    }
+  }
+
+  /**
+   * @since 4.13
+   */
+  @Override
+  public String getString() throws IOException
+  {
+    return HexUtil.bytesToHex(getBytes());
   }
 
   @Override

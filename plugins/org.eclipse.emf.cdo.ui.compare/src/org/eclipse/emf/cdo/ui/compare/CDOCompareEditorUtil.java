@@ -801,7 +801,7 @@ public final class CDOCompareEditorUtil
     private Input(CDOView sourceView, CDOView targetView, CompareConfiguration configuration, Comparison comparison, ICompareEditingDomain editingDomain,
         AdapterFactory adapterFactory)
     {
-      super(new org.eclipse.emf.compare.ide.ui.internal.configuration.EMFCompareConfiguration(configuration), comparison, editingDomain, adapterFactory);
+      super(createEMFCompareConfiguration(configuration, adapterFactory), comparison, editingDomain, adapterFactory);
       this.sourceView = sourceView;
       this.targetView = targetView;
       this.comparison = comparison;
@@ -816,6 +816,16 @@ public final class CDOCompareEditorUtil
       {
         consumer.accept(this);
       }
+    }
+
+    private static org.eclipse.emf.compare.ide.ui.internal.configuration.EMFCompareConfiguration createEMFCompareConfiguration(
+        CompareConfiguration configuration, AdapterFactory adapterFactory)
+    {
+      org.eclipse.emf.compare.ide.ui.internal.configuration.EMFCompareConfiguration result = //
+          new org.eclipse.emf.compare.ide.ui.internal.configuration.EMFCompareConfiguration(configuration);
+
+      result.setAdapterFactory(adapterFactory);
+      return result;
     }
 
     private void dispose()

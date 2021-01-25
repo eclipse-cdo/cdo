@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.compare;
 
+import static org.eclipse.emf.compare.utils.EMFComparePredicates.IS_EGENERIC_TYPE_WITHOUT_PARAMETERS;
+
 import org.eclipse.emf.cdo.CDOElement;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -28,6 +30,9 @@ import org.eclipse.emf.compare.EMFCompare;
 import org.eclipse.emf.compare.EMFCompare.Builder;
 import org.eclipse.emf.compare.Match;
 import org.eclipse.emf.compare.conflict.IConflictDetector;
+import org.eclipse.emf.compare.diff.DefaultDiffEngine;
+import org.eclipse.emf.compare.diff.DiffBuilder;
+import org.eclipse.emf.compare.diff.FeatureFilter;
 import org.eclipse.emf.compare.diff.IDiffEngine;
 import org.eclipse.emf.compare.equi.IEquiEngine;
 import org.eclipse.emf.compare.match.DefaultComparisonFactory;
@@ -42,7 +47,12 @@ import org.eclipse.emf.compare.match.impl.MatchEngineFactoryRegistryImpl;
 import org.eclipse.emf.compare.postprocessor.IPostProcessor;
 import org.eclipse.emf.compare.req.IReqEngine;
 import org.eclipse.emf.compare.scope.IComparisonScope;
+import org.eclipse.emf.compare.utils.ReferenceUtil;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -151,7 +161,14 @@ public class CDOCompare
 
   protected IDiffEngine createDiffEngine()
   {
-    return null;
+    return new DefaultDiffEngine(new DiffBuilder())
+    {
+      @Override
+      protected FeatureFilter createFeatureFilter()
+      {
+        return new CDOFeatureFilter();
+      }
+    };
   }
 
   protected IReqEngine createRequirementEngine()
@@ -462,6 +479,68 @@ public class CDOCompare
       {
         return scope instanceof CDOComparisonScope;
       }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 4.5
+   */
+  public static class CDOFeatureFilter extends FeatureFilter
+  {
+    @Override
+    @SuppressWarnings("deprecation")
+    protected boolean isIgnoredReference(Match match, EReference reference)
+    {
+      final boolean toIgnore;
+      if (reference != null)
+      {
+        // ignore the derived, container or transient
+        if (!reference.isDerived() && !reference.isContainer() && !isTransient(reference))
+        {
+          /*
+           * EGenericTypes are usually "mutually derived" references that are handled through specific means in ecore
+           * (eGenericSuperTypes and eSuperTypes, EGenericType and eType...). As these aren't even shown to the user, we
+           * wish to avoid detection of changes on them.
+           */
+          // Otherwise if this reference is not set on any side, no use checking it
+          boolean isGenericTypeWithoutArguments = false;
+          boolean isGenericType = reference.getEType() == EcorePackage.eINSTANCE.getEGenericType();
+          if (isGenericType)
+          {
+            isGenericTypeWithoutArguments = IS_EGENERIC_TYPE_WITHOUT_PARAMETERS.apply(match.getLeft())
+                && IS_EGENERIC_TYPE_WITHOUT_PARAMETERS.apply(match.getRight()) && IS_EGENERIC_TYPE_WITHOUT_PARAMETERS.apply(match.getOrigin());
+          }
+          toIgnore = isGenericTypeWithoutArguments || !referenceIsSet(reference, match);
+        }
+        else if (ReferenceUtil.isFeatureMapDerivedFeature(reference))
+        {
+          toIgnore = false;
+        }
+        else
+        {
+          toIgnore = true;
+        }
+      }
+      else
+      {
+        toIgnore = true;
+      }
+      return toIgnore;
+    }
+
+    @Override
+    protected boolean isIgnoredAttribute(EAttribute attribute)
+    {
+      return attribute == null || attribute.isDerived() || isTransient(attribute);
+    }
+
+    /**
+     * @since 4.5
+     */
+    protected boolean isTransient(EStructuralFeature feature)
+    {
+      return !EMFUtil.isPersistent(feature);
     }
   }
 

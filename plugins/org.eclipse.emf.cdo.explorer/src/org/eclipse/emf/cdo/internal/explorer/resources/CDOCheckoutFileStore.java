@@ -11,16 +11,13 @@
 package org.eclipse.emf.cdo.internal.explorer.resources;
 
 import org.eclipse.emf.cdo.CDOObject;
-import org.eclipse.emf.cdo.common.lob.CDOBlob;
-import org.eclipse.emf.cdo.common.lob.CDOClob;
 import org.eclipse.emf.cdo.common.lob.CDOLob;
 import org.eclipse.emf.cdo.common.util.CDOResourceNodeNotFoundException;
-import org.eclipse.emf.cdo.eresource.CDOBinaryResource;
 import org.eclipse.emf.cdo.eresource.CDOFileResource;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
+import org.eclipse.emf.cdo.eresource.CDOResourceLeaf;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
-import org.eclipse.emf.cdo.eresource.CDOTextResource;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.internal.explorer.bundle.OM;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
@@ -28,8 +25,6 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.StringUtil;
-import org.eclipse.net4j.util.io.IOUtil;
-import org.eclipse.net4j.util.io.ReaderInputStream;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
@@ -47,8 +42,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
@@ -213,72 +206,17 @@ public class CDOCheckoutFileStore extends FileStore
       throw new CoreException(new Status(IStatus.ERROR, OM.BUNDLE_ID, EFS.ERROR_WRONG_TYPE, "Resource is a folder: " + path, null));
     }
 
-    if (node instanceof CDOBinaryResource)
-    {
-      CDOBinaryResource binary = (CDOBinaryResource)node;
-      CDOBlob blob = binary.getContents();
-      if (blob == null)
-      {
-        return createEmptyInputStream();
-      }
+    CDOResourceLeaf leaf = (CDOResourceLeaf)node;
 
-      try
-      {
-        return blob.getContents();
-      }
-      catch (IOException ex)
-      {
-        OM.BUNDLE.coreException(ex);
-      }
+    try
+    {
+      return CDOUtil.openInputStream(leaf);
     }
-    else if (node instanceof CDOTextResource)
+    catch (IOException ex)
     {
-      CDOTextResource text = (CDOTextResource)node;
-      CDOClob clob = text.getContents();
-      if (clob == null)
-      {
-        return createEmptyInputStream();
-      }
-
-      try
-      {
-        return new ReaderInputStream(clob.getContents(), text.getEncoding());
-      }
-      catch (IOException ex)
-      {
-        OM.BUNDLE.coreException(ex);
-      }
+      OM.BUNDLE.coreException(ex);
+      return null; // Can't happen.
     }
-    else // Model resource
-    {
-      CDOResource resource = (CDOResource)node;
-      ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-      try
-      {
-        resource.save(baos, null);
-        return new ByteArrayInputStream(baos.toByteArray());
-      }
-      catch (IOException ex)
-      {
-        OM.BUNDLE.coreException(ex);
-      }
-    }
-
-    // Can't realistically happen.
-    return null;
-  }
-
-  private InputStream createEmptyInputStream()
-  {
-    return new InputStream()
-    {
-      @Override
-      public int read() throws IOException
-      {
-        return IOUtil.EOF;
-      }
-    };
   }
 
   private boolean isRoot()

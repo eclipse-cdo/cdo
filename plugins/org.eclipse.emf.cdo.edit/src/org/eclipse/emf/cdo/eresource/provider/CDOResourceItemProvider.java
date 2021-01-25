@@ -123,8 +123,7 @@ public class CDOResourceItemProvider extends CDOResourceLeafItemProvider
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
         getString("_UI_CDOResource_trackingModification_feature"), //$NON-NLS-1$
-        getString("_UI_PropertyDescriptor_description", "_UI_CDOResource_trackingModification_feature", //$NON-NLS-1$//$NON-NLS-2$
-            "_UI_CDOResource_type"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_CDOResource_trackingModification_feature", "_UI_CDOResource_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         EresourcePackage.Literals.CDO_RESOURCE__TRACKING_MODIFICATION, true, false, false, ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
   }
 
@@ -137,8 +136,7 @@ public class CDOResourceItemProvider extends CDOResourceLeafItemProvider
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
         getString("_UI_CDOResource_timeStamp_feature"), //$NON-NLS-1$
-        getString("_UI_PropertyDescriptor_description", "_UI_CDOResource_timeStamp_feature", //$NON-NLS-1$//$NON-NLS-2$
-            "_UI_CDOResource_type"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_CDOResource_timeStamp_feature", "_UI_CDOResource_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         EresourcePackage.Literals.CDO_RESOURCE__TIME_STAMP, true, false, false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
   }
 

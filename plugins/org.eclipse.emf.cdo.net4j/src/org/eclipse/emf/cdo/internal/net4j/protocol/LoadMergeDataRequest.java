@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Consumer;
 
 /**
  * @author Eike Stepper
@@ -130,42 +131,16 @@ public class LoadMergeDataRequest extends CDOClientRequestWithMonitoring<MergeDa
     try
     {
       // Read IDs of objects that are changed only in target.
-      for (;;)
-      {
-        CDOID id = in.readCDOID();
-        if (CDOIDUtil.isNull(id))
-        {
-          break;
-        }
-
-        result.getTargetIDs().add(id);
-      }
+      readIDs(in, id -> result.getTargetIDs().add(id));
 
       // Read IDs of objects that are changed in both target and source.
-      for (;;)
-      {
-        CDOID id = in.readCDOID();
-        if (CDOIDUtil.isNull(id))
-        {
-          break;
-        }
-
+      readIDs(in, id -> {
         result.getTargetIDs().add(id);
         result.getSourceIDs().add(id);
-      }
+      });
 
       // Read IDs of objects that are changed only in source.
-      for (;;)
-      {
-        CDOID id = in.readCDOID();
-        if (CDOIDUtil.isNull(id))
-        {
-          break;
-        }
-
-        result.getSourceIDs().add(id);
-      }
-
+      readIDs(in, id -> result.getSourceIDs().add(id));
       monitor.worked();
 
       if (auto)
@@ -273,5 +248,19 @@ public class LoadMergeDataRequest extends CDOClientRequestWithMonitoring<MergeDa
     }
 
     return null;
+  }
+
+  private static void readIDs(CDODataInput in, Consumer<CDOID> consumer) throws IOException
+  {
+    for (;;)
+    {
+      CDOID id = in.readCDOID();
+      if (CDOIDUtil.isNull(id))
+      {
+        break;
+      }
+
+      consumer.accept(id);
+    }
   }
 }

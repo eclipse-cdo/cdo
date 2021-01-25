@@ -70,7 +70,7 @@ public class MergeFromActionProvider extends AbstractBranchPointActionProvider
   {
     if (Support.COMPARE.isAvailable())
     {
-      final CDORepository repository = checkout.getRepository();
+      CDORepository repository = checkout.getRepository();
       CDOBranchPoint left = branchPoint;
       CDOBranchPoint right = checkout.getBranchPoint();
 

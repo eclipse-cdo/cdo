@@ -65,5 +65,10 @@ public abstract class CDOLob<IO> extends CDOLobInfo
 
   public abstract IO getContents() throws IOException;
 
+  /**
+   * @since 4.13
+   */
+  public abstract String getString() throws IOException;
+
   protected abstract CDOLobInfo put(IO contents) throws IOException;
 }

@@ -28,6 +28,8 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDGenerator;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.lob.CDOBlob;
+import org.eclipse.emf.cdo.common.lob.CDOClob;
 import org.eclipse.emf.cdo.common.lob.CDOLobInfo;
 import org.eclipse.emf.cdo.common.lob.CDOLobStore;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
@@ -467,6 +469,30 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   public void setRemoteSessionManager(InternalCDORemoteSessionManager remoteSessionManager)
   {
     this.remoteSessionManager = remoteSessionManager;
+  }
+
+  @Override
+  public CDOClob newClob(Reader contents) throws IOException
+  {
+    return new CDOClob(contents, getLobStore());
+  }
+
+  @Override
+  public CDOClob newClob(String contents) throws IOException
+  {
+    return new CDOClob(contents, getLobStore());
+  }
+
+  @Override
+  public CDOBlob newBlob(InputStream contents) throws IOException
+  {
+    return new CDOBlob(contents, getLobStore());
+  }
+
+  @Override
+  public CDOBlob newBlob(byte[] contents) throws IOException
+  {
+    return new CDOBlob(contents, getLobStore());
   }
 
   @Override
@@ -1306,7 +1332,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     CDORevisionAvailabilityInfo sourceInfo = createRevisionAvailabilityInfo2(source);
 
     MergeDataResult result = sessionProtocol.loadMergeData2(targetInfo, sourceInfo, null, null);
-    Set<CDOID> ids = result.getTargetIDs();
+    Set<CDOID> ids = result.getIDs();
 
     cacheRevisions2(targetInfo);
     cacheRevisions2(sourceInfo);

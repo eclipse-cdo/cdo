@@ -17,17 +17,18 @@ import org.eclipse.emf.cdo.common.lob.CDOLobStore;
 import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.common.util.CDOResourceNodeNotFoundException;
 import org.eclipse.emf.cdo.eresource.CDOBinaryResource;
+import org.eclipse.emf.cdo.eresource.CDOResourceLeaf;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.eresource.CDOTextResource;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.view.CDOURIHandler;
 
 import org.eclipse.net4j.util.io.IOUtil;
-import org.eclipse.net4j.util.io.ReaderInputStream;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.URIConverter;
@@ -137,9 +138,17 @@ public abstract class CDOExplorerURIHandler<NODE extends CDOResourceNode> extend
 
   protected abstract NODE getOrCreateNode(CDOTransaction transaction, String path);
 
-  protected abstract InputStream createInputStream(NODE node) throws IOException;
-
   protected abstract void setContents(NODE node, byte[] bytes, CDOLobStore lobStore) throws IOException;
+
+  protected InputStream createInputStream(NODE node) throws IOException
+  {
+    if (node instanceof CDOResourceLeaf)
+    {
+      return CDOUtil.openInputStream((CDOResourceLeaf)node);
+    }
+
+    throw new IllegalArgumentException("Not a resource leaf: " + node);
+  }
 
   private CDOCheckout getCheckout(URI uri)
   {
@@ -255,25 +264,6 @@ public abstract class CDOExplorerURIHandler<NODE extends CDOResourceNode> extend
     }
 
     @Override
-    protected InputStream createInputStream(CDOTextResource node) throws IOException
-    {
-      CDOClob clob = node.getContents();
-      if (clob == null)
-      {
-        return new InputStream()
-        {
-          @Override
-          public int read() throws IOException
-          {
-            return IOUtil.EOF;
-          }
-        };
-      }
-
-      return new ReaderInputStream(clob.getContents(), node.getEncoding());
-    }
-
-    @Override
     protected void setContents(CDOTextResource node, byte[] bytes, CDOLobStore lobStore) throws IOException
     {
       String encoding = node.getEncoding();
@@ -307,12 +297,6 @@ public abstract class CDOExplorerURIHandler<NODE extends CDOResourceNode> extend
     protected CDOBinaryResource getOrCreateNode(CDOTransaction transaction, String path)
     {
       return transaction.getOrCreateBinaryResource(path);
-    }
-
-    @Override
-    protected InputStream createInputStream(CDOBinaryResource node) throws IOException
-    {
-      return node.getContents().getContents();
     }
 
     @Override

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<cs:cspecExtension xmlns:cs="http://www.eclipse.org/buckminster/CSpec-1.0">
-
-	<cs:dependencies>
-		<cs:dependency name="org.eclipse.emf.ecp.emfforms.runtime.feature" componentType="eclipse.feature"/>
-	</cs:dependencies>
-
-</cs:cspecExtension>

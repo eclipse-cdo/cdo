@@ -207,6 +207,25 @@ public abstract class CDOComparisonScope extends AbstractComparisonScope
 
       ids.addAll(requiredParentIDs);
 
+      Set<String> nsURIs = getNsURIs();
+      for (CDOID id : ids)
+      {
+        String nsURI = getNsURI(leftView, id);
+        if (nsURI == null)
+        {
+          nsURI = getNsURI(rightView, id);
+          if (nsURI == null)
+          {
+            nsURI = getNsURI(originView, id);
+          }
+        }
+
+        if (nsURI != null)
+        {
+          nsURIs.add(nsURI);
+        }
+      }
+
       CDOResource rootResource = (CDOResource)getLeft();
       ids.remove(rootResource.cdoID());
     }
@@ -406,6 +425,27 @@ public abstract class CDOComparisonScope extends AbstractComparisonScope
       }
 
       return view.getRootResource();
+    }
+
+    private static String getNsURI(CDOView view, CDOID id)
+    {
+      if (view != null)
+      {
+        try
+        {
+          CDOObject object = view.getObject(id);
+          if (object != null)
+          {
+            return object.eClass().getEPackage().getNsURI();
+          }
+        }
+        catch (ObjectNotFoundException ex)
+        {
+          //$FALL-THROUGH$
+        }
+      }
+    
+      return null;
     }
   }
 }

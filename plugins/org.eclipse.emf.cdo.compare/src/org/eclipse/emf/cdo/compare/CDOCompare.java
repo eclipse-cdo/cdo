@@ -18,7 +18,9 @@ import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.util.ReflectUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
 
+import org.eclipse.emf.common.CommonPlugin;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.Monitor;
 import org.eclipse.emf.compare.CompareFactory;
@@ -28,9 +30,9 @@ import org.eclipse.emf.compare.EMFCompare.Builder;
 import org.eclipse.emf.compare.Match;
 import org.eclipse.emf.compare.conflict.IConflictDetector;
 import org.eclipse.emf.compare.diff.DefaultDiffEngine;
-import org.eclipse.emf.compare.diff.DiffBuilder;
 import org.eclipse.emf.compare.diff.FeatureFilter;
 import org.eclipse.emf.compare.diff.IDiffEngine;
+import org.eclipse.emf.compare.diff.IDiffProcessor;
 import org.eclipse.emf.compare.equi.IEquiEngine;
 import org.eclipse.emf.compare.match.DefaultComparisonFactory;
 import org.eclipse.emf.compare.match.DefaultEqualityHelperFactory;
@@ -70,6 +72,33 @@ import java.util.Set;
  */
 public class CDOCompare
 {
+  private static final boolean IGNORE_RCP_REGISTRIES = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.compare.CDOCompare.IGNORE_RCP_REGISTRIES");
+
+  private static final boolean USE_RCP_REGISTRIES;
+
+  static
+  {
+    if (IGNORE_RCP_REGISTRIES)
+    {
+      USE_RCP_REGISTRIES = false;
+    }
+    else
+    {
+      boolean rcpRegistriesAvailable = false;
+
+      try
+      {
+        rcpRegistriesAvailable = CommonPlugin.loadClass("org.eclipse.emf.compare.rcp", "org.eclipse.emf.compare.rcp.EMFCompareRCPPlugin") != null;
+      }
+      catch (Throwable ex)
+      {
+        //$FALL-THROUGH$
+      }
+
+      USE_RCP_REGISTRIES = rcpRegistriesAvailable;
+    }
+  }
+
   public Comparison compare(IComparisonScope scope)
   {
     Function<EObject, String> idFunction = createIDFunction();
@@ -101,9 +130,28 @@ public class CDOCompare
     return new DefaultComparisonFactory(equalityHelperFactory);
   }
 
-  protected EMFCompare createComparator(IEObjectMatcher matcher, IComparisonFactory comparisonFactory)
+  /**
+   * @since 4.5
+   */
+  @SuppressWarnings("restriction")
+  protected Builder createComparatorBuilder()
   {
     Builder builder = EMFCompare.builder();
+
+    if (USE_RCP_REGISTRIES)
+    {
+      org.eclipse.emf.compare.rcp.internal.extension.IEMFCompareBuilderConfigurator configurator = //
+          org.eclipse.emf.compare.rcp.internal.extension.impl.EMFCompareBuilderConfigurator.createDefault();
+
+      configurator.configure(builder);
+    }
+
+    return builder;
+  }
+
+  protected EMFCompare createComparator(IEObjectMatcher matcher, IComparisonFactory comparisonFactory)
+  {
+    Builder builder = createComparatorBuilder();
 
     IMatchEngine.Factory.Registry matchEngineFactoryRegistry = createMatchEngineFactoryRegistry(matcher, comparisonFactory);
     if (matchEngineFactoryRegistry != null)
@@ -153,14 +201,7 @@ public class CDOCompare
 
   protected IDiffEngine createDiffEngine()
   {
-    return new DefaultDiffEngine(new DiffBuilder())
-    {
-      @Override
-      protected FeatureFilter createFeatureFilter()
-      {
-        return new CDOFeatureFilter();
-      }
-    };
+    return new CDODiffEngine();
   }
 
   protected IReqEngine createRequirementEngine()
@@ -243,8 +284,13 @@ public class CDOCompare
       return super.matchPerId(leftEObjects, rightEObjects, originEObjects, leftEObjectsNoID, rightEObjectsNoID, originEObjectsNoID);
     }
 
-    private Set<Match> matchPerIdCompatibility(Iterator<? extends EObject> leftEObjects, Iterator<? extends EObject> rightEObjects,
-        Iterator<? extends EObject> originEObjects, List<EObject> leftEObjectsNoID, List<EObject> rightEObjectsNoID, List<EObject> originEObjectsNoID)
+    private Set<Match> matchPerIdCompatibility( //
+        Iterator<? extends EObject> leftEObjects, //
+        Iterator<? extends EObject> rightEObjects, //
+        Iterator<? extends EObject> originEObjects, //
+        List<EObject> leftEObjectsNoID, //
+        List<EObject> rightEObjectsNoID, //
+        List<EObject> originEObjectsNoID)
     {
       final List<EObject> leftEObjectsNoID1 = leftEObjectsNoID;
       final List<EObject> rightEObjectsNoID1 = rightEObjectsNoID;
@@ -283,6 +329,7 @@ public class CDOCompare
           {
             matches.add(match);
           }
+
           idToMatch.put(identifier, match);
           leftEObjectsToMatch.put(left, match);
         }
@@ -377,6 +424,7 @@ public class CDOCompare
           originEObjectsNoID1.add(origin);
         }
       }
+
       return matches;
     }
 
@@ -472,8 +520,37 @@ public class CDOCompare
    * @author Eike Stepper
    * @since 4.5
    */
+  public static class CDODiffEngine extends DefaultDiffEngine
+  {
+    public CDODiffEngine()
+    {
+    }
+
+    public CDODiffEngine(IDiffProcessor processor)
+    {
+      super(processor);
+    }
+
+    @Override
+    protected FeatureFilter createFeatureFilter()
+    {
+      return new CDOFeatureFilter();
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 4.5
+   */
   public static class CDOFeatureFilter extends FeatureFilter
   {
+    public CDOFeatureFilter()
+    {
+    }
+
+    /**
+     * TODO Remove this copied method when EMFCompare bug 570625 is resolved and released.
+     */
     @Override
     @SuppressWarnings("deprecation")
     protected boolean isIgnoredReference(Match match, EReference reference)
@@ -499,6 +576,7 @@ public class CDOCompare
                     org.eclipse.emf.compare.utils.EMFComparePredicates.IS_EGENERIC_TYPE_WITHOUT_PARAMETERS.apply(match.getRight()) && //
                     org.eclipse.emf.compare.utils.EMFComparePredicates.IS_EGENERIC_TYPE_WITHOUT_PARAMETERS.apply(match.getOrigin());
           }
+
           toIgnore = isGenericTypeWithoutArguments || !referenceIsSet(reference, match);
         }
         else if (ReferenceUtil.isFeatureMapDerivedFeature(reference))
@@ -514,9 +592,13 @@ public class CDOCompare
       {
         toIgnore = true;
       }
+
       return toIgnore;
     }
 
+    /**
+     * TODO Remove this copied method when EMFCompare bug 570625 is resolved and released.
+     */
     @Override
     protected boolean isIgnoredAttribute(EAttribute attribute)
     {
@@ -526,6 +608,7 @@ public class CDOCompare
     /**
      * @since 4.5
      */
+    @Override
     protected boolean isTransient(EStructuralFeature feature)
     {
       return !EMFUtil.isPersistent(feature);

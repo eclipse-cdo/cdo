@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
+import org.eclipse.emf.cdo.internal.compare.CDOCompareFactoryImpl;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.util.ReflectUtil;
@@ -24,6 +25,7 @@ import org.eclipse.emf.common.CommonPlugin;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.Monitor;
 import org.eclipse.emf.compare.CompareFactory;
+import org.eclipse.emf.compare.ComparePackage;
 import org.eclipse.emf.compare.Comparison;
 import org.eclipse.emf.compare.EMFCompare;
 import org.eclipse.emf.compare.EMFCompare.Builder;
@@ -48,6 +50,7 @@ import org.eclipse.emf.compare.req.IReqEngine;
 import org.eclipse.emf.compare.scope.IComparisonScope;
 import org.eclipse.emf.compare.utils.ReferenceUtil;
 import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -96,6 +99,14 @@ public class CDOCompare
       }
 
       USE_RCP_REGISTRIES = rcpRegistriesAvailable;
+    }
+
+    // Bug 568373 - IllegalStateException in ReferenceChangeMerger:
+    // Couldn't add in target because its parent hasn't been merged yet.
+    EFactory factory = ComparePackage.eINSTANCE.getEFactoryInstance();
+    if (factory == null || factory.getClass() != CDOCompareFactoryImpl.class)
+    {
+      ComparePackage.eINSTANCE.setEFactoryInstance(CDOCompareFactoryImpl.getInstance());
     }
   }
 

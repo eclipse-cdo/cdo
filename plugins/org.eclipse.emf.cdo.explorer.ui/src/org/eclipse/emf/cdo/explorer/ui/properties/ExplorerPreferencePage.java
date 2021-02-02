@@ -48,7 +48,7 @@ public class ExplorerPreferencePage extends OMPreferencePage
     composite.setLayout(GridLayoutFactory.fillDefaults().numColumns(2).create());
     composite.setLayoutData(UIUtil.createGridData());
 
-    new Label(composite, SWT.NONE).setText("Repository timeout:");
+    new Label(composite, SWT.NONE).setText("Repository inactivity timeout:");
     repositoryTimeout = new PrefIntegerAndDisable(composite, SWT.BORDER, OM.PREF_REPOSITORY_TIMEOUT_MINUTES, OM.PREF_REPOSITORY_TIMEOUT_DISABLED)
     {
       @Override

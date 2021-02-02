@@ -22,16 +22,20 @@ import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.eresource.CDOTextResource;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
+import org.eclipse.emf.cdo.spi.common.util.URIHandlerFactory;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.view.CDOURIHandler;
 
+import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.URIConverter;
+import org.eclipse.emf.ecore.resource.URIHandler;
 import org.eclipse.emf.ecore.resource.impl.URIHandlerImpl;
 
 import java.io.ByteArrayInputStream;
@@ -48,15 +52,13 @@ import java.util.Map;
  */
 public abstract class CDOExplorerURIHandler<NODE extends CDOResourceNode> extends URIHandlerImpl
 {
-  public static final CDOExplorerURIHandler<CDOTextResource> TEXT = new TextURIHandler();
-
-  public static final CDOExplorerURIHandler<CDOBinaryResource> BINARY = new BinaryURIRHandler();
+  private static final boolean OMIT_CHECKOUT_FILE_URI_HANDLERS = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.explorer.omitCheckoutFileURIHandlers");
 
   private final String scheme;
 
-  protected CDOExplorerURIHandler(String schemeType)
+  protected CDOExplorerURIHandler(String scheme)
   {
-    this.scheme = CDOExplorerUtil.URI_SCHEME + "." + schemeType;
+    this.scheme = scheme;
   }
 
   public final String getScheme()
@@ -67,7 +69,7 @@ public abstract class CDOExplorerURIHandler<NODE extends CDOResourceNode> extend
   @Override
   public boolean canHandle(URI uri)
   {
-    return scheme.equals(uri.scheme());
+    return !OMIT_CHECKOUT_FILE_URI_HANDLERS;
   }
 
   @Override
@@ -202,16 +204,16 @@ public abstract class CDOExplorerURIHandler<NODE extends CDOResourceNode> extend
     }
   }
 
-  private static CDOExplorerURIHandler<?> getURIHandler(CDOResourceNode node)
+  private static String getScheme(CDOResourceNode node)
   {
     if (node instanceof CDOTextResource)
     {
-      return TEXT;
+      return TextURIHandler.SCHEME;
     }
 
     if (node instanceof CDOBinaryResource)
     {
-      return TEXT;
+      return BinaryURIHandler.SCHEME;
     }
 
     return null;
@@ -219,13 +221,12 @@ public abstract class CDOExplorerURIHandler<NODE extends CDOResourceNode> extend
 
   public static URI createURI(CDOCheckout checkout, CDOResourceNode node)
   {
-    CDOExplorerURIHandler<?> uriHandler = getURIHandler(node);
-    if (uriHandler == null)
+    String scheme = getScheme(node);
+    if (scheme == null)
     {
       return null;
     }
 
-    String scheme = uriHandler.getScheme();
     String authority = checkout.getID();
     String[] segments = node.getURI().segments();
 
@@ -244,11 +245,13 @@ public abstract class CDOExplorerURIHandler<NODE extends CDOResourceNode> extend
   /**
    * @author Eike Stepper
    */
-  private static final class TextURIHandler extends CDOExplorerURIHandler<CDOTextResource>
+  public static final class TextURIHandler extends CDOExplorerURIHandler<CDOTextResource>
   {
+    public static final String SCHEME = CDOExplorerUtil.URI_SCHEME + ".text";
+
     public TextURIHandler()
     {
-      super("text");
+      super(SCHEME);
     }
 
     @Override
@@ -275,16 +278,35 @@ public abstract class CDOExplorerURIHandler<NODE extends CDOResourceNode> extend
       CDOClob clob = new CDOClob(new StringReader(new String(bytes, encoding)), lobStore);
       node.setContents(clob);
     }
+
+    /**
+     * @author Eike Stepper
+     */
+    public static final class Factory extends URIHandlerFactory
+    {
+      public Factory()
+      {
+        super(SCHEME);
+      }
+
+      @Override
+      public URIHandler create(String description) throws ProductCreationException
+      {
+        return new TextURIHandler();
+      }
+    }
   }
 
   /**
    * @author Eike Stepper
    */
-  private static final class BinaryURIRHandler extends CDOExplorerURIHandler<CDOBinaryResource>
+  public static final class BinaryURIHandler extends CDOExplorerURIHandler<CDOBinaryResource>
   {
-    public BinaryURIRHandler()
+    public static final String SCHEME = CDOExplorerUtil.URI_SCHEME + ".binary";
+
+    public BinaryURIHandler()
     {
-      super("binary");
+      super(SCHEME);
     }
 
     @Override
@@ -304,6 +326,23 @@ public abstract class CDOExplorerURIHandler<NODE extends CDOResourceNode> extend
     {
       CDOBlob blob = new CDOBlob(new ByteArrayInputStream(bytes), lobStore);
       node.setContents(blob);
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    public static final class Factory extends URIHandlerFactory
+    {
+      public Factory()
+      {
+        super(SCHEME);
+      }
+
+      @Override
+      public URIHandler create(String description) throws ProductCreationException
+      {
+        return new BinaryURIHandler();
+      }
     }
   }
 }

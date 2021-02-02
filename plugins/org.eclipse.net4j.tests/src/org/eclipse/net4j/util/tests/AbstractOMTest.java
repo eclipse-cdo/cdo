@@ -284,6 +284,7 @@ public abstract class AbstractOMTest extends TestCase
           continue;
         }
 
+        ReflectUtil.makeAccessible(field);
         ReflectUtil.setValue(field, this, null);
       }
 

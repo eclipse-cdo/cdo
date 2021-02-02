@@ -70,20 +70,44 @@ public final class ReflectUtil
   {
   }
 
+  /**
+   * @since 3.12
+   */
+  @SuppressWarnings("all")
+  public static <T> void makeAccessible(AccessibleObject accessibleObject)
+  {
+    if (!accessibleObject.isAccessible())
+    {
+      accessibleObject.setAccessible(true);
+    }
+  }
+
   public static Method getMethod(Class<?> c, String methodName, Class<?>... parameterTypes)
   {
     try
     {
       try
       {
-        return c.getDeclaredMethod(methodName, parameterTypes);
+        Method method = c.getDeclaredMethod(methodName, parameterTypes);
+        if (method != null)
+        {
+          makeAccessible(method);
+        }
+
+        return method;
       }
       catch (NoSuchMethodException ex)
       {
         Class<?> superclass = c.getSuperclass();
         if (superclass != null)
         {
-          return getMethod(superclass, methodName, parameterTypes);
+          Method method = getMethod(superclass, methodName, parameterTypes);
+          if (method != null)
+          {
+            makeAccessible(method);
+          }
+
+          return method;
         }
 
         throw ex;
@@ -97,8 +121,6 @@ public final class ReflectUtil
 
   public static Object invokeMethod(Method method, Object target, Object... arguments)
   {
-    makeAccessible(method);
-
     try
     {
       return method.invoke(target, arguments);
@@ -115,14 +137,26 @@ public final class ReflectUtil
     {
       try
       {
-        return c.getDeclaredField(fieldName);
+        Field field = c.getDeclaredField(fieldName);
+        if (field != null)
+        {
+          makeAccessible(field);
+        }
+
+        return field;
       }
       catch (NoSuchFieldException ex)
       {
         Class<?> superclass = c.getSuperclass();
         if (superclass != null)
         {
-          return getField(superclass, fieldName);
+          Field field = getField(superclass, fieldName);
+          if (field != null)
+          {
+            makeAccessible(field);
+          }
+
+          return field;
         }
 
         return null;
@@ -136,12 +170,12 @@ public final class ReflectUtil
 
   /**
    * @since 3.8
+   * @deprecated As of 3.14 use {@link #getField(Class, String)}.
    */
+  @Deprecated
   public static Field getAccessibleField(Class<?> c, String fieldName)
   {
-    Field field = getField(c, fieldName);
-    field.setAccessible(true);
-    return field;
+    return getField(c, fieldName);
   }
 
   public static void collectFields(Class<?> c, List<Field> fields)
@@ -174,6 +208,7 @@ public final class ReflectUtil
           continue;
         }
 
+        makeAccessible(field);
         fields.add(field);
       }
     }
@@ -185,8 +220,6 @@ public final class ReflectUtil
 
   public static Object getValue(Field field, Object target)
   {
-    makeAccessible(field);
-
     try
     {
       return field.get(target);
@@ -199,10 +232,21 @@ public final class ReflectUtil
 
   public static void setValue(Field field, Object target, Object value)
   {
-    makeAccessible(field);
+    setValue(field, target, value, false);
+  }
 
+  /**
+   * @since 3.14
+   */
+  public static void setValue(Field field, Object target, Object value, boolean force)
+  {
     try
     {
+      if (force && (field.getModifiers() & Modifier.FINAL) != 0)
+      {
+        AccessUtil.setNonFinal(field);
+      }
+
       field.set(target, value);
     }
     catch (Exception ex)
@@ -611,6 +655,8 @@ public final class ReflectUtil
       builder.append(field.getName());
       builder.append(" = "); //$NON-NLS-1$
 
+      makeAccessible(field);
+
       Object value = getValue(field, object);
       if (value instanceof Map<?, ?>)
       {
@@ -653,18 +699,6 @@ public final class ReflectUtil
 
     makeAccessible(method);
     return method;
-  }
-
-  /**
-   * @since 3.12
-   */
-  @SuppressWarnings("all")
-  public static <T> void makeAccessible(AccessibleObject accessibleObject)
-  {
-    if (!accessibleObject.isAccessible())
-    {
-      accessibleObject.setAccessible(true);
-    }
   }
 
   /**

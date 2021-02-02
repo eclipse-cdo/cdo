@@ -232,7 +232,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     try
     {
       cdoInternalCopyTo = ReflectUtil.getMethod(CDOObjectImpl.class, "cdoInternalCopyTo", CDOObjectImpl.class);
-      ReflectUtil.makeAccessible(cdoInternalCopyTo);
     }
     catch (Throwable ex)
     {

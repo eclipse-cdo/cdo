@@ -10,11 +10,21 @@
  */
 package org.eclipse.emf.cdo.internal.common.bundle;
 
+import org.eclipse.emf.cdo.internal.common.util.URIHandlerRegistryImpl;
+
+import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.OSGiActivator;
 import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.trace.OMTracer;
+
+import org.eclipse.emf.ecore.resource.URIHandler;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * The <em>Operations & Maintenance</em> class of this bundle.
@@ -53,6 +63,26 @@ public abstract class OM
     public Activator()
     {
       super(BUNDLE);
+    }
+
+    @Override
+    protected void doStart() throws Exception
+    {
+      super.doStart();
+
+      try
+      {
+        List<URIHandler> defaultHandlers = new ArrayList<>();
+        defaultHandlers.add(URIHandlerRegistryImpl.INSTANCE);
+        defaultHandlers.addAll(URIHandler.DEFAULT_HANDLERS);
+
+        Field field = ReflectUtil.getField(URIHandler.class, "DEFAULT_HANDLERS");
+        ReflectUtil.setValue(field, null, Collections.unmodifiableList(defaultHandlers), true);
+      }
+      catch (Throwable t)
+      {
+        LOG.error(t);
+      }
     }
   }
 }

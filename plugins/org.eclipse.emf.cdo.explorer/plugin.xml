@@ -13,8 +13,18 @@
 
 <plugin>
 
-  <extension
-        point="org.eclipse.core.runtime.adapters">
+  <extension point="org.eclipse.net4j.util.factories">
+      <factory
+            productGroup="org.eclipse.emf.cdo.common.util.uriHandlers"
+            type="cdo.checkout.text"
+            class="org.eclipse.emf.cdo.internal.explorer.CDOExplorerURIHandler$TextURIHandler$Factory"/>
+      <factory
+            productGroup="org.eclipse.emf.cdo.common.util.uriHandlers"
+            type="cdo.checkout.binary"
+            class="org.eclipse.emf.cdo.internal.explorer.CDOExplorerURIHandler$BinaryURIHandler$Factory"/>
+  </extension>
+
+  <extension point="org.eclipse.core.runtime.adapters">
      <factory
            adaptableType="org.eclipse.emf.cdo.common.branch.CDOBranch"
            class="org.eclipse.emf.cdo.internal.explorer.CDOExplorerAdapterFactory">
@@ -25,7 +35,7 @@
            class="org.eclipse.emf.cdo.internal.explorer.CDOExplorerAdapterFactory">
         <adapter type="org.eclipse.emf.cdo.explorer.repositories.CDORepositoryElement"/>
      </factory>
-  </extension>
+   </extension>
 
    <extension point="org.eclipse.core.expressions.propertyTesters">
       <propertyTester
@@ -61,8 +71,7 @@
             regex="cdo\.checkout://.*"/>
    </extension>
 
-   <extension
-         point="org.eclipse.emf.ecore.protocol_parser">
+   <extension point="org.eclipse.emf.ecore.protocol_parser">
       <parser
             class="org.eclipse.emf.cdo.eresource.impl.CDOResourceFactoryImpl"
             protocolName="cdo.checkout"/>
@@ -74,12 +83,10 @@
       </filesystem>
    </extension>
    
-   <extension
-         point="org.eclipse.core.resources.refreshProviders">
+   <extension point="org.eclipse.core.resources.refreshProviders">
       <refreshProvider
             class="org.eclipse.emf.cdo.internal.explorer.resources.CDOCheckoutRefreshProvider"
-            name="CDO Auto-refresh monitor">
-      </refreshProvider>
+            name="CDO Auto-refresh monitor"/>
    </extension>
    
 </plugin>

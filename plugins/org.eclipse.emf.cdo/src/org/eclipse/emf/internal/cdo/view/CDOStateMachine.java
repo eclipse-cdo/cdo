@@ -91,9 +91,9 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_STATEMACHINE, CDOStateMachine.class);
 
-  private static final Field NATIVE_VIEW_AND_STATE_FIELD = ReflectUtil.getAccessibleField(CDOObjectImpl.class, "viewAndState");
+  private static final Field NATIVE_VIEW_AND_STATE_FIELD = ReflectUtil.getField(CDOObjectImpl.class, "viewAndState");
 
-  private static final Field LEGACY_VIEW_AND_STATE_FIELD = ReflectUtil.getAccessibleField(CDOLegacyWrapper.class, "viewAndState");
+  private static final Field LEGACY_VIEW_AND_STATE_FIELD = ReflectUtil.getField(CDOLegacyWrapper.class, "viewAndState");
 
   private InternalCDOObject lastTracedObject;
 

@@ -69,16 +69,33 @@ public final class URIHandlerRegistryImpl implements URIHandlerRegistry, URIHand
         @Override
         protected void onAdded(IContainer<Entry<IFactoryKey, IFactory>> container, Map.Entry<IFactoryKey, IFactory> element)
         {
-          String scheme = element.getKey().getType();
-          URIHandler handler = (URIHandler)IPluginContainer.INSTANCE.getElement(URIHandlerFactory.PRODUCT_GROUP, scheme, null);
-          addURIHandler(scheme, handler);
+          String scheme = getScheme(element);
+          if (scheme != null)
+          {
+            URIHandler handler = (URIHandler)IPluginContainer.INSTANCE.getElement(URIHandlerFactory.PRODUCT_GROUP, scheme, null);
+            addURIHandler(scheme, handler);
+          }
         }
 
         @Override
         protected void onRemoved(IContainer<Entry<IFactoryKey, IFactory>> container, Map.Entry<IFactoryKey, IFactory> element)
         {
-          String scheme = element.getKey().getType();
-          removeURIHandler(scheme);
+          String scheme = getScheme(element);
+          if (scheme != null)
+          {
+            removeURIHandler(scheme);
+          }
+        }
+
+        private String getScheme(Map.Entry<IFactoryKey, IFactory> element)
+        {
+          IFactoryKey key = element.getKey();
+          if (URIHandlerFactory.PRODUCT_GROUP.equals(key.getProductGroup()))
+          {
+            return key.getType();
+          }
+
+          return null;
         }
       });
     }

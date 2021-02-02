@@ -30,6 +30,8 @@ public class CDOLobEditorInput extends PlatformObject implements IEditorInput
 
   private final boolean commitOnSave;
 
+  private final String name;
+
   private URI uri;
 
   public CDOLobEditorInput(CDOResourceLeaf resource)
@@ -41,6 +43,7 @@ public class CDOLobEditorInput extends PlatformObject implements IEditorInput
   {
     this.resource = resource;
     this.commitOnSave = commitOnSave;
+    name = resource.getName();
   }
 
   public final CDOResourceLeaf getResource()
@@ -55,7 +58,12 @@ public class CDOLobEditorInput extends PlatformObject implements IEditorInput
 
   public final URI getURI()
   {
-    return uri == null ? resource.getURI() : uri;
+    if (uri != null)
+    {
+      return uri;
+    }
+
+    return resource.getURI();
   }
 
   public final void setURI(URI uri)
@@ -78,7 +86,7 @@ public class CDOLobEditorInput extends PlatformObject implements IEditorInput
   @Override
   public String getName()
   {
-    return resource.getName();
+    return name;
   }
 
   @Override
@@ -90,7 +98,7 @@ public class CDOLobEditorInput extends PlatformObject implements IEditorInput
   @Override
   public String getToolTipText()
   {
-    return resource.getURI().toString();
+    return getURI().toString();
   }
 
   @Override

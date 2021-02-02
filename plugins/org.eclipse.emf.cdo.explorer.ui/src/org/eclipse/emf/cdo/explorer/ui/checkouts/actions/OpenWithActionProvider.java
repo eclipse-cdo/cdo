@@ -21,17 +21,15 @@ import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
+import org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutLobEditorInput;
 import org.eclipse.emf.cdo.internal.explorer.CDOExplorerURIHandler;
 import org.eclipse.emf.cdo.internal.ui.dialogs.EditObjectDialog;
-import org.eclipse.emf.cdo.internal.ui.editor.CDOLobEditorInput;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.ui.CDOEditorOpener;
 import org.eclipse.emf.cdo.ui.CDOEditorUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
-import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.ObjectUtil;
-import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
@@ -49,10 +47,7 @@ import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IActionBars;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.navigator.CommonActionProvider;
 import org.eclipse.ui.navigator.ICommonActionConstants;
@@ -65,8 +60,6 @@ import org.eclipse.ui.navigator.ICommonViewerWorkbenchSite;
  */
 public class OpenWithActionProvider extends CommonActionProvider
 {
-  private static final boolean OMIT_LOB_HANDLER_URI = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.explorer.ui.omitLobHandlerURI");
-
   private ICommonViewerWorkbenchSite viewSite;
 
   private OpenAction openAction;
@@ -276,28 +269,6 @@ public class OpenWithActionProvider extends CommonActionProvider
             editorOpener.openEditor(page, uri);
           }
         }
-        else
-        {
-          // Pair<CDOResourceLeaf, String> key = Pair.create(resourceLeaf, editorOpenerID);
-          //
-          // synchronized (EDITORS)
-          // {
-          // Object editor = EDITORS.get(key);
-          // if (editor != null)
-          // {
-          // if (editor != EDITOR_OPENING)
-          // {
-          // page.activate((IEditorPart)editor);
-          // }
-          //
-          // return;
-          // }
-          //
-          // EDITORS.put(key, EDITOR_OPENING);
-          // }
-          //
-          // openEditor(page, cdoObject, resourceLeaf, editorOpenerID, key);
-        }
       }
     }
     else if (resourceLeaf instanceof CDOFileResource)
@@ -305,62 +276,11 @@ public class OpenWithActionProvider extends CommonActionProvider
       String editorID = CDOEditorUtil.getEffectiveEditorID(resourceLeaf);
       if (editorID != null)
       {
-        CDOView view = resourceLeaf.cdoView();
-        CDOCheckout checkout = CDOExplorerUtil.getCheckout(view);
-        CDOTransaction tx = view.isHistorical() ? null : checkout != null ? checkout.openTransaction() : view.getSession().openTransaction(view.getBranch());
-        CDOResourceLeaf txLeaf = tx == null ? resourceLeaf : tx.getObject(resourceLeaf);
+        URI uri = CDOExplorerURIHandler.createURI(resourceLeaf);
 
         try
         {
-          CDOLobEditorInput editorInput = (CDOLobEditorInput)CDOEditorUtil.createLobEditorInput(txLeaf, true);
-
-          if (checkout != null && !OMIT_LOB_HANDLER_URI)
-          {
-            editorInput.setURI(CDOExplorerURIHandler.createURI(checkout, txLeaf));
-          }
-
-          IEditorPart editor = page.openEditor(editorInput, editorID);
-
-          page.addPartListener(new IPartListener()
-          {
-            @Override
-            public void partClosed(IWorkbenchPart part)
-            {
-              if (part == editor)
-              {
-                if (tx != null)
-                {
-                  tx.close();
-                }
-
-                editor.getSite().getPage().removePartListener(this);
-              }
-            }
-
-            @Override
-            public void partActivated(IWorkbenchPart part)
-            {
-              // Do nothing.
-            }
-
-            @Override
-            public void partBroughtToTop(IWorkbenchPart part)
-            {
-              // Do nothing.
-            }
-
-            @Override
-            public void partDeactivated(IWorkbenchPart part)
-            {
-              // Do nothing.
-            }
-
-            @Override
-            public void partOpened(IWorkbenchPart part)
-            {
-              // Do nothing.
-            }
-          });
+          CDOCheckoutLobEditorInput.openEditor(page, editorID, uri);
         }
         catch (PartInitException ex)
         {
@@ -408,133 +328,6 @@ public class OpenWithActionProvider extends CommonActionProvider
 
     return edited;
   }
-
-  // private static void registerEditor(IEditorPart editor, CDOView view, Pair<CDOResourceLeaf, String> key)
-  // {
-  // view.properties().put(WORKBENCH_PART_KEY, editor);
-  //
-  // synchronized (EDITORS)
-  // {
-  // EDITORS.put(key, editor);
-  // }
-  //
-  // synchronized (VIEWS)
-  // {
-  // VIEWS.put(editor, Pair.create(view, key));
-  // }
-  // }
-  //
-  // /**
-  // * @author Eike Stepper
-  // */
-  // private static final class WindowListener implements IWindowListener
-  // {
-  // public void windowOpened(IWorkbenchWindow window)
-  // {
-  // window.addPageListener(PAGE_LISTENER);
-  // }
-  //
-  // public void windowClosed(IWorkbenchWindow window)
-  // {
-  // window.removePageListener(PAGE_LISTENER);
-  // }
-  //
-  // public void windowActivated(IWorkbenchWindow window)
-  // {
-  // // Do nothing
-  // }
-  //
-  // public void windowDeactivated(IWorkbenchWindow window)
-  // {
-  // // Do nothing
-  // }
-  // }
-  //
-  // /**
-  // * @author Eike Stepper
-  // */
-  // private static final class PageListener implements IPageListener
-  // {
-  // public void pageOpened(IWorkbenchPage page)
-  // {
-  // page.addPartListener(PART_LISTENER);
-  // }
-  //
-  // public void pageClosed(IWorkbenchPage page)
-  // {
-  // page.removePartListener(PART_LISTENER);
-  // }
-  //
-  // public void pageActivated(IWorkbenchPage page)
-  // {
-  // // Do nothing
-  // }
-  // }
-  //
-  // /**
-  // * @author Eike Stepper
-  // */
-  // private static final class PartListener implements IPartListener2
-  // {
-  // public void partOpened(IWorkbenchPartReference partRef)
-  // {
-  // }
-  //
-  // public void partClosed(IWorkbenchPartReference partRef)
-  // {
-  // IWorkbenchPart part = partRef.getPart(false);
-  // if (part != null)
-  // {
-  // Pair<CDOView, Pair<CDOResourceLeaf, String>> pair;
-  // synchronized (VIEWS)
-  // {
-  // pair = VIEWS.remove(part);
-  // }
-  //
-  // if (pair != null)
-  // {
-  // CDOView view = pair.getElement1();
-  // view.close();
-  //
-  // Pair<CDOResourceLeaf, String> key = pair.getElement2();
-  // synchronized (EDITORS)
-  // {
-  // EDITORS.remove(key);
-  // }
-  // }
-  // }
-  // }
-  //
-  // public void partVisible(IWorkbenchPartReference partRef)
-  // {
-  // // Do nothing
-  // }
-  //
-  // public void partHidden(IWorkbenchPartReference partRef)
-  // {
-  // // Do nothing
-  // }
-  //
-  // public void partActivated(IWorkbenchPartReference partRef)
-  // {
-  // // Do nothing
-  // }
-  //
-  // public void partDeactivated(IWorkbenchPartReference partRef)
-  // {
-  // // Do nothing
-  // }
-  //
-  // public void partBroughtToTop(IWorkbenchPartReference partRef)
-  // {
-  // // Do nothing
-  // }
-  //
-  // public void partInputChanged(IWorkbenchPartReference partRef)
-  // {
-  // // Do nothing
-  // }
-  // }
 
   /**
    * @author Eike Stepper
@@ -599,39 +392,4 @@ public class OpenWithActionProvider extends CommonActionProvider
       openEditor(page, null, openableElement, editorOpener.getID());
     }
   }
-
-  // /**
-  // * @author Eike Stepper
-  // */
-  // private static class OpenFileAction extends Action
-  // {
-  // public static final String ID = OM.BUNDLE_ID + ".OpenFileAction"; //$NON-NLS-1$
-  //
-  // private final IWorkbenchPage page;
-  //
-  // private EObject openableElement;
-  //
-  // private String editorID;
-  //
-  // public OpenFileAction(IWorkbenchPage page, EObject openableElement, String editorID)
-  // {
-  // setId(ID);
-  //
-  // this.page = page;
-  // this.openableElement = openableElement;
-  // this.editorID = editorID;
-  //
-  // IEditorDescriptor editorDescriptor = PlatformUI.getWorkbench().getEditorRegistry().findEditor(editorID);
-  // setText(editorDescriptor.getLabel());
-  // setImageDescriptor(editorDescriptor.getImageDescriptor());
-  //
-  // setToolTipText("Edit this resource");
-  // }
-  //
-  // @Override
-  // public void run()
-  // {
-  // openEditor(page, null, openableElement, editorID);
-  // }
-  // }
 }

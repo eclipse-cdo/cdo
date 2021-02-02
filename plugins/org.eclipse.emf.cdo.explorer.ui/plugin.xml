@@ -855,6 +855,9 @@
     <factory
             id="org.eclipse.emf.cdo.explorer.ui.checkouts.CDOModelEditorInput.ElementFactory"
             class="org.eclipse.emf.cdo.explorer.ui.checkouts.CDOModelEditorInput$ElementFactory"/>
+    <factory
+            id="org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutLobEditorInput.ElementFactory"
+            class="org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutLobEditorInput$ElementFactory"/>
   </extension>
 
   <extension point="org.eclipse.emf.cdo.ui.editorOpeners">

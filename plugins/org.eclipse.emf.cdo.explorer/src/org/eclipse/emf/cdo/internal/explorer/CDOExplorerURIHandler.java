@@ -219,6 +219,17 @@ public abstract class CDOExplorerURIHandler<NODE extends CDOResourceNode> extend
     return null;
   }
 
+  public static URI createURI(CDOResourceNode node)
+  {
+    CDOCheckout checkout = CDOExplorerUtil.getCheckout(node);
+    if (checkout == null)
+    {
+      return null;
+    }
+
+    return createURI(checkout, node);
+  }
+
   public static URI createURI(CDOCheckout checkout, CDOResourceNode node)
   {
     String scheme = getScheme(node);

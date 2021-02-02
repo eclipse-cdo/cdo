@@ -42,6 +42,14 @@ public class OracleAdapter extends DBAdapter
     super(NAME, VERSION);
   }
 
+  /**
+   * @since 1.3
+   */
+  protected OracleAdapter(String name, String version)
+  {
+    super(name, version);
+  }
+
   @Override
   public IDBConnectionProvider createConnectionProvider(DataSource dataSource)
   {

@@ -24,4 +24,12 @@ public class EmbeddedDerbyAdapter extends DerbyAdapter
   {
     super(NAME);
   }
+
+  /**
+   * @since 4.3
+   */
+  protected EmbeddedDerbyAdapter(String name, String version)
+  {
+    super(name, version);
+  }
 }

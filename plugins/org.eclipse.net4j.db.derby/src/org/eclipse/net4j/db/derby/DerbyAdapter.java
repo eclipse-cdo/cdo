@@ -53,6 +53,14 @@ public abstract class DerbyAdapter extends DBAdapter
     super(name, VERSION);
   }
 
+  /**
+   * @since 4.3
+   */
+  protected DerbyAdapter(String name, String version)
+  {
+    super(name, version);
+  }
+
   @Override
   protected String getTypeName(IDBField field)
   {

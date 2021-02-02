@@ -41,6 +41,14 @@ public class H2Adapter extends DBAdapter
     super(NAME, VERSION);
   }
 
+  /**
+   * @since 4.5
+   */
+  protected H2Adapter(String name, String version)
+  {
+    super(name, version);
+  }
+
   @Override
   protected String getTypeName(IDBField field)
   {

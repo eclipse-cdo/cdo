@@ -60,6 +60,14 @@ public class MYSQLAdapter extends DBAdapter
   }
 
   /**
+   * @since 4.4
+   */
+  protected MYSQLAdapter(String name, String version)
+  {
+    super(name, version);
+  }
+
+  /**
    * @since 2.0
    */
   @Override

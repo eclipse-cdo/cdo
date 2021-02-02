@@ -34,6 +34,14 @@ public class HSQLDBAdapter extends DBAdapter
     super(NAME, VERSION);
   }
 
+  /**
+   * @since 4.4
+   */
+  protected HSQLDBAdapter(String name, String version)
+  {
+    super(name, version);
+  }
+
   @Override
   protected String getTypeName(IDBField field)
   {

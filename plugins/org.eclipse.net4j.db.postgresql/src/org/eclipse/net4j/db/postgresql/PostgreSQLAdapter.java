@@ -56,6 +56,14 @@ public class PostgreSQLAdapter extends DBAdapter
   }
 
   /**
+   * @since 4.4
+   */
+  protected PostgreSQLAdapter(String name, String version)
+  {
+    super(name, version);
+  }
+
+  /**
    * @since 2.0
    */
   @Override

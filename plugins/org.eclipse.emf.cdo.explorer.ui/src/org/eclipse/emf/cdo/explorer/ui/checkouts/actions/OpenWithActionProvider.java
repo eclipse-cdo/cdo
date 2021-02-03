@@ -42,18 +42,27 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.GroupMarker;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.IEditorDescriptor;
+import org.eclipse.ui.IEditorRegistry;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.navigator.CommonActionProvider;
 import org.eclipse.ui.navigator.ICommonActionConstants;
 import org.eclipse.ui.navigator.ICommonActionExtensionSite;
 import org.eclipse.ui.navigator.ICommonMenuConstants;
 import org.eclipse.ui.navigator.ICommonViewerWorkbenchSite;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Eike Stepper
@@ -119,33 +128,65 @@ public class OpenWithActionProvider extends CommonActionProvider
     if (openableElement != null)
     {
       CDOObject cdoObject = CDOUtil.getCDOObject(openableElement);
-      CDOResourceLeaf resourceLeaf = getResourceLeaf(cdoObject);
-      if (resourceLeaf instanceof CDOResource)
+
+      CDOCheckout checkout = CDOExplorerUtil.getCheckout(cdoObject);
+      if (checkout != null)
       {
-        CDOResource resource = (CDOResource)resourceLeaf;
-        URI uri = resource.getURI();
+        CDOResourceLeaf resourceLeaf = getResourceLeaf(cdoObject);
 
-        CDOCheckout checkout = CDOExplorerUtil.getCheckout(cdoObject);
-        if (checkout != null)
+        List<IAction> actions = collectOpenWithActions(resourceLeaf, cdoObject);
+        if (!actions.isEmpty())
         {
-          CDOEditorOpener[] editorOpeners = CDOEditorOpener.Registry.INSTANCE.getEditorOpeners(uri);
-          if (editorOpeners.length != 0)
-          {
-            IMenuManager submenu = new MenuManager("Open With", ICommonMenuConstants.GROUP_OPEN_WITH);
-            submenu.add(new GroupMarker(ICommonMenuConstants.GROUP_TOP));
+          IMenuManager submenu = new MenuManager("Open With", ICommonMenuConstants.GROUP_OPEN_WITH);
+          submenu.add(new GroupMarker(ICommonMenuConstants.GROUP_TOP));
 
-            for (CDOEditorOpener editorOpener : editorOpeners)
+          for (IAction action : actions)
+          {
+            if (action != null)
             {
-              OpenWithAction action = new OpenWithAction(viewSite.getPage(), cdoObject, editorOpener);
               submenu.add(action);
             }
-
-            submenu.add(new GroupMarker(ICommonMenuConstants.GROUP_ADDITIONS));
-            menu.appendToGroup(ICommonMenuConstants.GROUP_OPEN, submenu);
+            else
+            {
+              submenu.add(new Separator());
+            }
           }
+
+          submenu.add(new GroupMarker(ICommonMenuConstants.GROUP_ADDITIONS));
+          menu.appendToGroup(ICommonMenuConstants.GROUP_OPEN, submenu);
         }
       }
     }
+  }
+
+  private List<IAction> collectOpenWithActions(CDOResourceLeaf resourceLeaf, CDOObject cdoObject)
+  {
+    List<IAction> actions = new ArrayList<>();
+    URI uri = resourceLeaf.getURI();
+
+    if (resourceLeaf instanceof CDOResource)
+    {
+      CDOEditorOpener[] editorOpeners = CDOEditorOpener.Registry.INSTANCE.getEditorOpeners(uri);
+      for (CDOEditorOpener editorOpener : editorOpeners)
+      {
+        actions.add(new OpenWithAction(viewSite.getPage(), cdoObject, editorOpener));
+      }
+
+      actions.add(null); // Produce a separator on the sub menu.
+    }
+
+    String[] editorIDs = CDOEditorUtil.getAllEditorIDs(resourceLeaf);
+    for (String editorID : editorIDs)
+    {
+      if (Objects.equals(editorID, CDOEditorUtil.getEditorID()))
+      {
+        continue;
+      }
+
+      actions.add(new OpenWithRegisteredEditorAction(viewSite.getPage(), editorID, resourceLeaf));
+    }
+
+    return actions;
   }
 
   private Object getSelectedElement()
@@ -276,17 +317,22 @@ public class OpenWithActionProvider extends CommonActionProvider
       String editorID = CDOEditorUtil.getEffectiveEditorID(resourceLeaf);
       if (editorID != null)
       {
-        URI uri = CDOExplorerURIHandler.createURI(resourceLeaf);
-
-        try
-        {
-          CDOCheckoutLobEditorInput.openEditor(page, editorID, uri);
-        }
-        catch (PartInitException ex)
-        {
-          OM.LOG.error(ex);
-        }
+        openFileEditor(page, editorID, resourceLeaf);
       }
+    }
+  }
+
+  private static void openFileEditor(IWorkbenchPage page, String editorID, CDOResourceLeaf resourceLeaf)
+  {
+    URI uri = CDOExplorerURIHandler.createURI(resourceLeaf);
+
+    try
+    {
+      CDOCheckoutLobEditorInput.openEditor(page, editorID, uri);
+    }
+    catch (PartInitException ex)
+    {
+      OM.LOG.error(ex);
     }
   }
 
@@ -390,6 +436,45 @@ public class OpenWithActionProvider extends CommonActionProvider
     public void run()
     {
       openEditor(page, null, openableElement, editorOpener.getID());
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static class OpenWithRegisteredEditorAction extends Action
+  {
+    private static final IEditorRegistry EDITOR_REGISTRY = PlatformUI.getWorkbench().getEditorRegistry();
+
+    private IWorkbenchPage page;
+
+    private String editorID;
+
+    private CDOResourceLeaf resourceLeaf;
+
+    public OpenWithRegisteredEditorAction(IWorkbenchPage page, String editorID, CDOResourceLeaf resourceLeaf)
+    {
+      this.page = page;
+      this.editorID = editorID;
+      this.resourceLeaf = resourceLeaf;
+
+      IEditorDescriptor editorDescriptor = EDITOR_REGISTRY.findEditor(editorID);
+      setText(editorDescriptor.getLabel());
+      setImageDescriptor(editorDescriptor.getImageDescriptor());
+      setToolTipText("Edit this resource");
+    }
+
+    @Override
+    public void run()
+    {
+      if (resourceLeaf instanceof CDOResource)
+      {
+        CDOEditorUtil.openEditor(page, editorID, resourceLeaf);
+      }
+      else
+      {
+        openFileEditor(page, editorID, resourceLeaf);
+      }
     }
   }
 }

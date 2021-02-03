@@ -56,7 +56,7 @@ public class CDOModelEditorOpener extends CDOEditorOpener.Default
   }
 
   /**
-   * @deprecated As of 4.6 no longer supported in favor of CDOCheckoutEditorInput.configureTransaction().
+   * @deprecated As of 4.6 no longer supported in favor of CDOModelEditorInput.configureTransaction().
    */
   @Deprecated
   protected void configureTransaction(CDOTransaction transaction)

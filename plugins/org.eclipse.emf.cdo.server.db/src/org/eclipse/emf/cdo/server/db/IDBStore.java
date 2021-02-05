@@ -107,7 +107,7 @@ public interface IDBStore extends IStore, IDBConnectionProvider, CanHandleClient
   }
 
   /**
-   * Contains symbolic constants that specifiy valid keys of {@link IRepository#getProperties() DB store properties}.
+   * Contains symbolic constants that specify valid keys of {@link IRepository#getProperties() DB store properties}.
    *
    * @author Eike Stepper
    * @since 4.0

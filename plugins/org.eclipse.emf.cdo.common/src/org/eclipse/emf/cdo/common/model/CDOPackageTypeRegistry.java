@@ -16,7 +16,6 @@ import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
@@ -171,7 +170,7 @@ public final class CDOPackageTypeRegistry
     }
 
     EPackage topLevelPackage = EMFUtil.getTopLevelPackage(ePackage);
-    EClass eClass = getAnyConcreteEClass(topLevelPackage);
+    EClass eClass = EMFUtil.getAnyConcreteEClass(topLevelPackage, true);
     if (eClass != null)
     {
       EObject testObject = EcoreUtil.create(eClass);
@@ -181,32 +180,6 @@ public final class CDOPackageTypeRegistry
       }
 
       return CDOPackageUnit.Type.LEGACY;
-    }
-
-    return null;
-  }
-
-  private static EClass getAnyConcreteEClass(EPackage ePackage)
-  {
-    for (EClassifier classifier : ePackage.getEClassifiers())
-    {
-      if (classifier instanceof EClass)
-      {
-        EClass eClass = (EClass)classifier;
-        if (!(eClass.isAbstract() || eClass.isInterface()))
-        {
-          return eClass;
-        }
-      }
-    }
-
-    for (EPackage subpackage : ePackage.getESubpackages())
-    {
-      EClass eClass = getAnyConcreteEClass(subpackage);
-      if (eClass != null)
-      {
-        return eClass;
-      }
     }
 
     return null;

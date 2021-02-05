@@ -414,6 +414,38 @@ public final class EMFUtil
     }
   }
 
+  /**
+   * @since 4.13
+   */
+  public static EClass getAnyConcreteEClass(EPackage ePackage, boolean includeSubPackages)
+  {
+    for (EClassifier classifier : ePackage.getEClassifiers())
+    {
+      if (classifier instanceof EClass)
+      {
+        EClass eClass = (EClass)classifier;
+        if (!(eClass.isAbstract() || eClass.isInterface()))
+        {
+          return eClass;
+        }
+      }
+    }
+
+    if (includeSubPackages)
+    {
+      for (EPackage subpackage : ePackage.getESubpackages())
+      {
+        EClass eClass = getAnyConcreteEClass(subpackage, true);
+        if (eClass != null)
+        {
+          return eClass;
+        }
+      }
+    }
+
+    return null;
+  }
+
   public static EClass[] getPersistentClasses(EPackage ePackage)
   {
     List<EClass> result = new ArrayList<>();

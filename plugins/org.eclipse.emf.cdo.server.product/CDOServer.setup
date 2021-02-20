@@ -70,45 +70,53 @@
   </setupTask>
   <setupTask
       xsi:type="setup:ResourceCreationTask"
-      content="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;cdoServer>&#xD;&#xA;&#xD;&#xA;  &lt;acceptor type=&quot;tcp&quot; listenAddr=&quot;0.0.0.0&quot; port=&quot;2036&quot;/>&#xD;&#xA;&#xD;&#xA;  &lt;repository name=&quot;repo1&quot;>&#xD;&#xA;    &lt;property name=&quot;overrideUUID&quot; value=&quot;&quot;/>&#xD;&#xA;    &lt;property name=&quot;supportingAudits&quot; value=&quot;true&quot;/>&#xD;&#xA;    &lt;property name=&quot;supportingBranches&quot; value=&quot;true&quot;/>&#xD;&#xA;    &lt;property name=&quot;ensureReferentialIntegrity&quot; value=&quot;false&quot;/>&#xD;&#xA;    &lt;property name=&quot;allowInterruptRunningQueries&quot; value=&quot;true&quot;/>&#xD;&#xA;    &lt;property name=&quot;idGenerationLocation&quot; value=&quot;STORE&quot;/>&#xD;&#xA;    &lt;property name=&quot;serializeCommits&quot; value=&quot;false&quot;/>&#xD;&#xA;    &lt;property name=&quot;optimisticLockingTimeout&quot; value=&quot;10000&quot;/>&#xD;&#xA;&#xD;&#xA;    &lt;store type=&quot;db&quot;>&#xD;&#xA;      &lt;property name=&quot;connectionKeepAlivePeriod&quot; value=&quot;60&quot;/>&#xD;&#xA;      &lt;property name=&quot;readerPoolCapacity&quot; value=&quot;20&quot;/>&#xD;&#xA;      &lt;property name=&quot;writerPoolCapacity&quot; value=&quot;20&quot;/>&#xD;&#xA;&#xD;&#xA;      &lt;mappingStrategy type=&quot;horizontal&quot;>&#xD;&#xA;        &lt;property name=&quot;qualifiedNames&quot; value=&quot;true&quot;/>&#xD;&#xA;      &lt;/mappingStrategy>&#xD;&#xA;&#xD;&#xA;      &lt;dbAdapter name=&quot;h2&quot;/>&#xD;&#xA;&#xD;&#xA;      &lt;dataSource&#xD;&#xA;        class=&quot;org.h2.jdbcx.JdbcDataSource&quot;&#xD;&#xA;        URL=&quot;jdbc:h2:${installation.location}/${installation.relativeProductFolder}/database/repo1&quot;/>&#xD;&#xA;    &lt;/store>&#xD;&#xA;  &lt;/repository>&#xD;&#xA;&lt;/cdoServer>&#xD;&#xA;"
       targetURL="${installation.location|uri}/${installation.relativeProductFolder}/cdo-server.xml"
-      encoding="UTF-8"/>
-  <version name="oxygen"
-      label="Oxygen"
-      requiredJavaVersion="1.7">
+      encoding="UTF-8">
+    <content>
+      &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>
+      &lt;cdoServer>
+
+        &lt;acceptor type=&quot;tcp&quot; listenAddr=&quot;0.0.0.0&quot; port=&quot;2036&quot;/>
+
+        &lt;repository name=&quot;repo1&quot;>
+          &lt;property name=&quot;overrideUUID&quot; value=&quot;&quot;/>
+          &lt;property name=&quot;supportingAudits&quot; value=&quot;true&quot;/>
+          &lt;property name=&quot;supportingBranches&quot; value=&quot;true&quot;/>
+          &lt;property name=&quot;ensureReferentialIntegrity&quot; value=&quot;false&quot;/>
+          &lt;property name=&quot;allowInterruptRunningQueries&quot; value=&quot;true&quot;/>
+          &lt;property name=&quot;idGenerationLocation&quot; value=&quot;STORE&quot;/>
+          &lt;property name=&quot;serializeCommits&quot; value=&quot;false&quot;/>
+          &lt;property name=&quot;optimisticLockingTimeout&quot; value=&quot;10000&quot;/>
+
+          &lt;store type=&quot;db&quot;>
+            &lt;property name=&quot;connectionKeepAlivePeriod&quot; value=&quot;60&quot;/>
+            &lt;property name=&quot;readerPoolCapacity&quot; value=&quot;20&quot;/>
+            &lt;property name=&quot;writerPoolCapacity&quot; value=&quot;20&quot;/>
+
+            &lt;mappingStrategy type=&quot;horizontal&quot;>
+              &lt;property name=&quot;qualifiedNames&quot; value=&quot;true&quot;/>
+            &lt;/mappingStrategy>
+
+            &lt;dbAdapter name=&quot;h2&quot;/>
+
+            &lt;dataSource
+              class=&quot;org.h2.jdbcx.JdbcDataSource&quot;
+              URL=&quot;jdbc:h2:${installation.location}/${installation.relativeProductFolder}/database/repo1&quot;/>
+          &lt;/store>
+        &lt;/repository>
+      &lt;/cdoServer>
+
+    </content>
+  </setupTask>
+  <version name="latest.release"
+      label="Latest Release"
+      requiredJavaVersion="11">
     <setupTask
         xsi:type="setup.p2:P2Task">
       <repository
-          url="http://download.eclipse.org/releases/oxygen"/>
+          url="https://download.eclipse.org/releases/latest"/>
       <repository
-          url="http://download.eclipse.org/modeling/emf/cdo/updates/integration"/>
-    </setupTask>
-  </version>
-  <version name="neon"
-      label="Neon"
-      requiredJavaVersion="1.7">
-    <setupTask
-        xsi:type="setup.p2:P2Task">
-      <repository
-          url="http://download.eclipse.org/releases/neon"/>
-    </setupTask>
-  </version>
-  <version name="mars"
-      label="Mars"
-      requiredJavaVersion="1.7">
-    <setupTask
-        xsi:type="setup.p2:P2Task">
-      <repository
-          url="http://download.eclipse.org/releases/mars"/>
-    </setupTask>
-  </version>
-  <version name="luna"
-      label="Luna"
-      requiredJavaVersion="1.7">
-    <setupTask
-        xsi:type="setup.p2:P2Task">
-      <repository
-          url="http://download.eclipse.org/releases/luna"/>
+          url="https://download.eclipse.org/modeling/emf/cdo/updates/releases/latest"/>
     </setupTask>
   </version>
   <description>A headless CDO Model Repository server.</description>

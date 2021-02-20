@@ -3,8 +3,10 @@
     xmi:version="2.0"
     xmlns:xmi="http://www.omg.org/XMI"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:projects="http://www.eclipse.org/oomph/setup/projects/1.0"
     xmlns:setup="http://www.eclipse.org/oomph/setup/1.0"
     xmlns:setup.p2="http://www.eclipse.org/oomph/setup/p2/1.0"
+    xsi:schemaLocation="http://www.eclipse.org/oomph/setup/projects/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Projects.ecore"
     name="cdo-explorer"
     label="CDO Explorer">
   <annotation
@@ -21,6 +23,16 @@
   <setupTask
       xsi:type="setup.p2:P2Task"
       label="CDO Explorer">
+    <requirement
+        name="epp.package.java"/>
+    <requirement
+        name="org.eclipse.platform.feature.group"/>
+    <requirement
+        name="org.eclipse.rcp.feature.group"/>
+    <requirement
+        name="org.eclipse.jdt.feature.group"/>
+    <requirement
+        name="org.eclipse.pde.feature.group"/>
     <requirement
         name="org.eclipse.emf.cdo.sdk.feature.group"/>
     <requirement
@@ -43,8 +55,41 @@
       xsi:type="setup:ResourceCreationTask"
       id="plugin.customization.ini"
       excludedTriggers="STARTUP MANUAL"
-      content="org.eclipse.ui/defaultPerspectiveId=org.eclipse.emf.cdo.explorer.ui.CDOExplorerPerspective&#xA;"
-      targetURL="${installation.location|uri}/${installation.relativeProductFolder}/plugin_customization.ini"/>
+      targetURL="${installation.location|uri}/${installation.relativeProductFolder}/plugin_customization.ini">
+    <content>
+      org.eclipse.ui/defaultPerspectiveId=org.eclipse.emf.cdo.explorer.ui.CDOExplorerPerspective
+
+    </content>
+  </setupTask>
+  <setupTask
+      xsi:type="setup:CompoundTask"
+      name="Workaround for empty Project Explorer (bug 553353)">
+    <setupTask
+        xsi:type="setup:ResourceCreationTask"
+        id="dummy.project"
+        excludedTriggers="BOOTSTRAP"
+        targetURL="${osgi.instance.area}/Dummy/.project">
+      <content>
+        &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>
+        &lt;projectDescription>
+        	&lt;name>Dummy&lt;/name>
+        	&lt;comment>&lt;/comment>
+        	&lt;projects>
+        	&lt;/projects>
+        	&lt;buildSpec>
+        	&lt;/buildSpec>
+        	&lt;natures>
+        	&lt;/natures>
+        &lt;/projectDescription>
+
+      </content>
+    </setupTask>
+    <setupTask
+        xsi:type="projects:ProjectsImportTask">
+      <sourceLocator
+          rootFolder="${osgi.instance.area|file/Dummy}"/>
+    </setupTask>
+  </setupTask>
   <setupTask
       xsi:type="setup:EclipseIniTask"
       option="-Xmx"
@@ -59,9 +104,9 @@
       excludedTriggers="STARTUP MANUAL"
       option="-pluginCustomization"
       value="${plugin.customization.ini.targetURL|file}"/>
-  <version name="neon"
-      label="Neon"
-      requiredJavaVersion="1.8">
+  <version name="latest.release"
+      label="Latest Release"
+      requiredJavaVersion="11">
     <annotation
         source="http://www.eclipse.org/oomph/setup/BrandingInfo">
       <detail
@@ -70,65 +115,17 @@
       </detail>
     </annotation>
     <setupTask
-        xsi:type="setup.p2:P2Task"
-        label="Platform">
-      <requirement
-          name="epp.package.java"
-          versionRange="[4.6.0,4.7.0)"/>
-      <requirement
-          name="org.eclipse.platform.feature.group"
-          versionRange="[4.6.0,4.7.0)"/>
-      <requirement
-          name="org.eclipse.rcp.feature.group"
-          versionRange="[4.6.0,4.7.0)"/>
-      <requirement
-          name="org.eclipse.jdt.feature.group"
-          versionRange="[3.12.0,3.13.0)"/>
-      <requirement
-          name="org.eclipse.pde.feature.group"
-          versionRange="[3.12.0,3.13.0)"/>
+        xsi:type="setup.p2:P2Task">
       <repository
-          url="http://download.eclipse.org/technology/epp/packages/neon"/>
+          url="http://download.eclipse.org/technology/epp/packages/latest"/>
       <repository
-          url="http://download.eclipse.org/releases/neon"/>
+          url="https://download.eclipse.org/releases/latest"/>
       <repository
-          url="http://download.eclipse.org/modeling/emf/cdo/updates/integration"/>
-    </setupTask>
-  </version>
-  <version name="mars"
-      label="Mars"
-      requiredJavaVersion="1.7">
-    <annotation
-        source="http://www.eclipse.org/oomph/setup/BrandingInfo">
-      <detail
-          key="siteURI">
-        <value>https://www.eclipse.org/cdo/downloads/#maintenance</value>
-      </detail>
-    </annotation>
-    <setupTask
-        xsi:type="setup.p2:P2Task"
-        label="Platform">
-      <requirement
-          name="epp.package.java"
-          versionRange="[4.5.0,4.6.0)"/>
-      <requirement
-          name="org.eclipse.platform.feature.group"
-          versionRange="[4.5.0,4.6.0)"/>
-      <requirement
-          name="org.eclipse.rcp.feature.group"
-          versionRange="[4.5.0,4.6.0)"/>
-      <requirement
-          name="org.eclipse.jdt.feature.group"
-          versionRange="[3.11.0,3.12.0)"/>
-      <requirement
-          name="org.eclipse.pde.feature.group"
-          versionRange="[3.11.0,3.12.0)"/>
+          url="https://download.eclipse.org/tools/orbit/downloads/latest-R"/>
       <repository
-          url="http://download.eclipse.org/technology/epp/packages/mars"/>
+          url="https://download.eclipse.org/nebula/releases/latest"/>
       <repository
-          url="http://download.eclipse.org/releases/mars"/>
-      <repository
-          url="http://download.eclipse.org/modeling/emf/cdo/updates/maintenance"/>
+          url="https://download.eclipse.org/modeling/emf/cdo/updates/releases/latest"/>
     </setupTask>
   </version>
   <description>A CDO Model Repository client.</description>

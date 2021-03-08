@@ -94,4 +94,30 @@ public final class SecurityUtil
   {
     return pbeEncrypt(data, password, algorithmName, salt, count);
   }
+
+  /**
+   * @since 3.14
+   */
+  public static String toString(char[] chars)
+  {
+    if (chars == null || chars.length == 0)
+    {
+      return null;
+    }
+
+    return new String(chars);
+  }
+
+  /**
+   * @since 3.14
+   */
+  public static char[] toCharArray(String str)
+  {
+    if (str == null || str.length() == 0)
+    {
+      return null;
+    }
+
+    return str.toCharArray();
+  }
 }

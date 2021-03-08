@@ -23,7 +23,9 @@ import org.eclipse.emf.cdo.security.SecurityPackage;
 import org.eclipse.emf.cdo.security.User;
 import org.eclipse.emf.cdo.security.UserPassword;
 
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.security.IPasswordCredentials;
+import org.eclipse.net4j.util.security.SecurityUtil;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -441,7 +443,7 @@ public class RealmImpl extends SecurityElementImpl implements Realm
   @Override
   public User addUser(IPasswordCredentials credentials)
   {
-    return addUser(credentials.getUserID(), new String(credentials.getPassword()));
+    return addUser(credentials.getUserID(), SecurityUtil.toString(credentials.getPassword()));
   }
 
   /**
@@ -461,7 +463,7 @@ public class RealmImpl extends SecurityElementImpl implements Realm
   public User setPassword(String id, String password)
   {
     UserPassword userPassword = null;
-    if (password != null && password.length() != 0)
+    if (!StringUtil.isEmpty(password))
     {
       userPassword = SecurityFactory.eINSTANCE.createUserPassword();
       userPassword.setEncrypted(password);

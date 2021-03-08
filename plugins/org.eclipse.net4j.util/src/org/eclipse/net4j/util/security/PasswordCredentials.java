@@ -28,7 +28,7 @@ public class PasswordCredentials extends Credentials implements IPasswordCredent
    */
   public PasswordCredentials(String userID, String password)
   {
-    this(userID, password.toCharArray());
+    this(userID, SecurityUtil.toCharArray(password));
   }
 
   /**

@@ -40,6 +40,7 @@ import java.util.WeakHashMap;
  * Various static helper methods for dealing with Java reflection.
  *
  * @author Eike Stepper
+ * @since 3.14
  */
 public final class ReflectUtil
 {
@@ -115,7 +116,7 @@ public final class ReflectUtil
     }
     catch (Exception ex)
     {
-      throw WrappedException.wrap(ex);
+      throw ReflectionException.wrap(ex);
     }
   }
 
@@ -127,8 +128,22 @@ public final class ReflectUtil
     }
     catch (Exception ex)
     {
-      throw WrappedException.wrap(ex);
+      throw ReflectionException.wrap(ex);
     }
+  }
+
+  /**
+   * @since 3.14
+   */
+  @SuppressWarnings("unchecked")
+  public static <T> T invokeMethod(String methodName, Object target)
+  {
+    if (target instanceof Class)
+    {
+      return (T)invokeMethod(getMethod((Class<?>)target, methodName), null);
+    }
+
+    return (T)invokeMethod(getMethod(target.getClass(), methodName), target);
   }
 
   public static Field getField(Class<?> c, String fieldName)
@@ -164,7 +179,7 @@ public final class ReflectUtil
     }
     catch (Exception ex)
     {
-      throw WrappedException.wrap(ex);
+      throw ReflectionException.wrap(ex);
     }
   }
 
@@ -214,7 +229,7 @@ public final class ReflectUtil
     }
     catch (Exception ex)
     {
-      throw WrappedException.wrap(ex);
+      throw ReflectionException.wrap(ex);
     }
   }
 
@@ -226,8 +241,34 @@ public final class ReflectUtil
     }
     catch (Exception ex)
     {
-      throw WrappedException.wrap(ex);
+      throw ReflectionException.wrap(ex);
     }
+  }
+
+  /**
+   * @since 3.14
+   */
+  @SuppressWarnings("unchecked")
+  public static <T> T getValue(String fieldName, Object target)
+  {
+    if (target instanceof Class)
+    {
+      Field field = getField((Class<?>)target, fieldName);
+      if (field == null)
+      {
+        throw new ReflectionException("No such field: " + fieldName);
+      }
+
+      return (T)getValue(field, null);
+    }
+
+    Field field = getField(target.getClass(), fieldName);
+    if (field == null)
+    {
+      throw new ReflectionException("No such field: " + fieldName);
+    }
+
+    return (T)getValue(field, target);
   }
 
   public static void setValue(Field field, Object target, Object value)
@@ -251,7 +292,7 @@ public final class ReflectUtil
     }
     catch (Exception ex)
     {
-      throw WrappedException.wrap(ex);
+      throw ReflectionException.wrap(ex);
     }
   }
 
@@ -755,10 +796,61 @@ public final class ReflectUtil
       return type;
     }
 
+    /**
+     * @since 3.14
+     */
     public static PrimitiveType forClass(Class<?> clazz)
     {
       PrimitiveType result = INSTANCES.get(clazz);
       return result == null ? NONE : result;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 3.14
+   */
+  public static class ReflectionException extends RuntimeException
+  {
+    private static final long serialVersionUID = 1L;
+
+    public ReflectionException()
+    {
+    }
+
+    public ReflectionException(String message, Exception cause)
+    {
+      super(message, cause);
+    }
+
+    public ReflectionException(String message)
+    {
+      super(message);
+    }
+
+    public ReflectionException(Exception cause)
+    {
+      super(cause);
+    }
+
+    public static ReflectionException wrap(Exception exception)
+    {
+      if (exception instanceof ReflectionException)
+      {
+        return (ReflectionException)exception;
+      }
+
+      return new ReflectionException(exception);
+    }
+
+    public static Exception unwrap(Exception exception)
+    {
+      if (exception instanceof ReflectionException)
+      {
+        return (Exception)((ReflectionException)exception).getCause();
+      }
+
+      return exception;
     }
   }
 }

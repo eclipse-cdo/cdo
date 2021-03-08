@@ -47,6 +47,8 @@ import org.eclipse.net4j.util.io.IStreamWrapper;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 /**
  * @author Eike Stepper
  */
@@ -113,11 +115,25 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
   }
 
   @Override
+  @Deprecated
   public void changeCredentials()
   {
+    changeServerPassword();
     // Send a request to the server to initiate (from the server) the password change protocol
     CDOSessionProtocol sessionProtocol = getSessionProtocol();
     sessionProtocol.requestChangeCredentials();
+  }
+
+  @Override
+  public char[] changeServerPassword()
+  {
+    AtomicReference<char[]> result = new AtomicReference<>();
+
+    // Send a request to the server to initiate (from the server) the password change protocol
+    CDOSessionProtocol sessionProtocol = getSessionProtocol();
+    sessionProtocol.requestChangeServerPassword(result);
+
+    return result.getAndSet(null);
   }
 
   @Override
@@ -170,6 +186,7 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
       setSessionID(result.getSessionID());
       setUserID(result.getUserID());
       setLastUpdateTime(result.getLastUpdateTime());
+      setOpeningTime(result.getOpeningTime());
       setRepositoryInfo(new RepositoryInfo(this, result));
       return result;
     }

@@ -124,7 +124,7 @@ public class LocalCDORepository extends CDORepositoryImpl
   }
 
   @Override
-  protected CDOSession openSession()
+  public CDOSession openSession()
   {
     String repositoryName = getName();
     File folder = new File(getFolder(), "db");

@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.internal.server.messages.Messages;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.spi.server.IAppExtension;
 import org.eclipse.emf.cdo.spi.server.IAppExtension3;
+import org.eclipse.emf.cdo.spi.server.IAppExtension4;
 import org.eclipse.emf.cdo.spi.server.RepositoryConfigurator;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -102,6 +103,9 @@ public class CDOServerApplication extends OSGiApplication
   protected void doStop() throws Exception
   {
     OM.LOG.info(Messages.getString("CDOServerApplication.7")); //$NON-NLS-1$
+
+    extensions.sort(IAppExtension4.COMPARATOR.reversed());
+
     for (IAppExtension extension : extensions)
     {
       try
@@ -141,30 +145,42 @@ public class CDOServerApplication extends OSGiApplication
   {
     IExtensionRegistry registry = Platform.getExtensionRegistry();
     IConfigurationElement[] elements = registry.getConfigurationElementsFor(OM.BUNDLE_ID, IAppExtension.EXT_POINT);
-    for (final IConfigurationElement element : elements)
+
+    for (IConfigurationElement element : elements)
     {
       if ("appExtension".equals(element.getName())) //$NON-NLS-1$
       {
         try
         {
           IAppExtension extension = (IAppExtension)element.createExecutableExtension("class"); //$NON-NLS-1$
-
-          if (extension instanceof IAppExtension3)
-          {
-            IAppExtension3 extension3 = (IAppExtension3)extension;
-            extension3.start(repositories, configFile);
-          }
-          else
-          {
-            extension.start(configFile);
-          }
-
           extensions.add(extension);
         }
         catch (Exception ex)
         {
           OM.LOG.error(ex);
         }
+      }
+    }
+
+    extensions.sort(IAppExtension4.COMPARATOR);
+
+    for (IAppExtension extension : extensions)
+    {
+      try
+      {
+        if (extension instanceof IAppExtension3)
+        {
+          IAppExtension3 extension3 = (IAppExtension3)extension;
+          extension3.start(repositories, configFile);
+        }
+        else
+        {
+          extension.start(configFile);
+        }
+      }
+      catch (Exception ex)
+      {
+        OM.LOG.error(ex);
       }
     }
   }

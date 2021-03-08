@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -36,13 +36,13 @@ public final class CheckoutPropertyPage extends AbstractPropertyPage<CDOCheckout
   }
 
   @Override
-  protected Control createControl(Composite parent, String name, String label, String description, String value)
+  protected Control createControl(Composite parent, String name, String description, String value)
   {
     if ("folder".equals(name))
     {
-      return createLink(parent, name, label, description, value);
+      return createFileLink(parent, name, description, value);
     }
 
-    return super.createControl(parent, name, label, description, value);
+    return super.createControl(parent, name, description, value);
   }
 }

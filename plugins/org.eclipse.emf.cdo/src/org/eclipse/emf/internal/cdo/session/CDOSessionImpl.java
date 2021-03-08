@@ -196,6 +196,8 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
   private String userID;
 
+  private long openingTime;
+
   private long lastUpdateTime;
 
   @ExcludeFromDump
@@ -858,6 +860,17 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
         cache.removeRevision(revision.getID(), revision);
       }
     }
+  }
+
+  @Override
+  public long getOpeningTime()
+  {
+    return openingTime;
+  }
+
+  public void setOpeningTime(long openingTime)
+  {
+    this.openingTime = openingTime;
   }
 
   @Override

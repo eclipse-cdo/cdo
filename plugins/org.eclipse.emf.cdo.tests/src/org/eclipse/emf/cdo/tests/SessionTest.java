@@ -67,7 +67,6 @@ public class SessionTest extends AbstractCDOTest
   {
     super.setUp();
     enableConsole();
-
   }
 
   public void testIsSupportingAudits() throws Exception

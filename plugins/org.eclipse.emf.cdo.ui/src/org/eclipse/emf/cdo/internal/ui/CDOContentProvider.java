@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.common.security.NoPermissionException;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -220,7 +221,7 @@ public abstract class CDOContentProvider<CONTEXT> implements ITreeContentProvide
         return contentProvider.hasChildren(object);
       }
     }
-    catch (LifecycleException ex)
+    catch (LifecycleException | NoPermissionException ex)
     {
       //$FALL-THROUGH$
     }
@@ -366,17 +367,20 @@ public abstract class CDOContentProvider<CONTEXT> implements ITreeContentProvide
             }
             catch (Exception ex)
             {
-              childrenCache.remove(originalObject);
+              childrenCache.put(originalObject, new Object[] { new ViewerUtil.Error(originalObject, ex.getMessage()) });
 
               if (finalOpeningContext != null)
               {
                 closeContext(finalOpeningContext);
               }
 
-              if (view == null)
+              if (view == null && finalObject instanceof EObject)
               {
                 CDOObject cdoObject = getCDOObject((EObject)finalObject);
-                view = cdoObject.cdoView();
+                if (cdoObject != null)
+                {
+                  view = cdoObject.cdoView();
+                }
               }
 
               if (view == null || !view.isClosed())
@@ -471,7 +475,7 @@ public abstract class CDOContentProvider<CONTEXT> implements ITreeContentProvide
 
       return new Object[] { new ViewerUtil.Pending(originalObject, text) };
     }
-    catch (LifecycleException ex)
+    catch (LifecycleException | NoPermissionException ex)
     {
       //$FALL-THROUGH$
     }
@@ -521,7 +525,7 @@ public abstract class CDOContentProvider<CONTEXT> implements ITreeContentProvide
         }
       }
     }
-    catch (LifecycleException ex)
+    catch (LifecycleException | NoPermissionException ex)
     {
       //$FALL-THROUGH$
     }

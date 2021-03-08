@@ -202,4 +202,36 @@ public final class ViewerUtil
       return text;
     }
   }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class Error
+  {
+    private final Object parent;
+
+    private final String text;
+
+    public Error(Object parent, String text)
+    {
+      this.parent = parent;
+      this.text = text;
+    }
+
+    public Object getParent()
+    {
+      return parent;
+    }
+
+    public String getText()
+    {
+      return text;
+    }
+
+    @Override
+    public String toString()
+    {
+      return text;
+    }
+  }
 }

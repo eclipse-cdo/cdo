@@ -49,11 +49,11 @@ import org.eclipse.ui.PlatformUI;
  */
 public class CDOLabelProvider extends AdapterFactoryLabelProvider implements IColorProvider, IFontProvider
 {
-  private static final Color GRAY = UIUtil.getDisplay().getSystemColor(SWT.COLOR_GRAY);
+  private static final Color COLOR_PERMISSION_NONE = UIUtil.getDisplay().getSystemColor(SWT.COLOR_GRAY);
 
-  private static final Color YELLOW = UIUtil.getDisplay().getSystemColor(SWT.COLOR_DARK_YELLOW);
+  private static final Color COLOR_PERMISSION_READ = UIUtil.getDisplay().getSystemColor(SWT.COLOR_DARK_CYAN);
 
-  private static final Color RED = UIUtil.getDisplay().getSystemColor(SWT.COLOR_RED);
+  private static final Color COLOR_CONFLICT = UIUtil.getDisplay().getSystemColor(SWT.COLOR_RED);
 
   private static final Image ERROR_IMAGE = PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJS_ERROR_TSK);
 
@@ -217,17 +217,17 @@ public class CDOLabelProvider extends AdapterFactoryLabelProvider implements ICo
     {
       if (object.cdoConflict())
       {
-        return RED;
+        return COLOR_CONFLICT;
       }
 
       CDOPermission permission = object.cdoPermission();
       switch (permission)
       {
       case NONE:
-        return GRAY;
+        return COLOR_PERMISSION_NONE;
 
       case READ:
-        return YELLOW;
+        return COLOR_PERMISSION_READ;
 
       default:
         //$FALL-THROUGH$

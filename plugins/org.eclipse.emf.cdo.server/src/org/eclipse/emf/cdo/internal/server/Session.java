@@ -53,6 +53,7 @@ import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 import org.eclipse.emf.cdo.spi.server.InternalView;
 
 import org.eclipse.net4j.util.AdapterUtil;
+import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.collection.IndexedList;
 import org.eclipse.net4j.util.container.Container;
@@ -97,6 +98,8 @@ public class Session extends Container<IView> implements InternalSession
   private LockNotificationMode lockNotificationMode = LockNotificationMode.IF_REQUIRED_BY_VIEWS;
 
   private boolean openOnClientSide;
+
+  private long openingTime;
 
   private long firstUpdateTime;
 
@@ -281,6 +284,19 @@ public class Session extends Container<IView> implements InternalSession
     checkActive();
     checkArg(lockNotificationMode, "lockNotificationMode");
     this.lockNotificationMode = lockNotificationMode;
+  }
+
+  @Override
+  public long getOpeningTime()
+  {
+    return openingTime;
+  }
+
+  @Override
+  public void setOpeningTime(long openingTime)
+  {
+    CheckUtil.checkState(this.openingTime == 0, "Opening time is already set");
+    this.openingTime = openingTime;
   }
 
   @Override

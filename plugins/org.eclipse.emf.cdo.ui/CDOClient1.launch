@@ -2,7 +2,7 @@
 <launchConfiguration type="org.eclipse.pde.ui.RuntimeWorkbench">
     <setAttribute key="additional_plugins">
         <setEntry value="javax.servlet:3.1.0.v201410161800:default:false:default:default"/>
-        <setEntry value="org.eclipse.emf.cdo.edit:4.5.3.qualifier:default:true:default:default"/>
+        <setEntry value="org.eclipse.emf.cdo.edit:4.5.4.qualifier:default:true:default:default"/>
         <setEntry value="org.eclipse.emf.cdo.examples.company.edit:4.1.0.qualifier:default:true:default:default"/>
         <setEntry value="org.eclipse.emf.cdo.expressions.edit:4.4.0.qualifier:default:true:default:default"/>
         <setEntry value="org.eclipse.emf.cdo.security.edit:4.5.0.qualifier:default:true:default:default"/>

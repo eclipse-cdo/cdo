@@ -15,9 +15,11 @@ import org.eclipse.net4j.util.internal.ui.bundle.OM;
 import org.eclipse.net4j.util.internal.ui.messages.Messages;
 import org.eclipse.net4j.util.security.IPasswordCredentials;
 import org.eclipse.net4j.util.security.PasswordCredentials;
+import org.eclipse.net4j.util.security.SecurityUtil;
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.widgets.BaseDialog;
 
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
@@ -50,7 +52,7 @@ public class CredentialsDialog extends BaseDialog<Viewer>
 
   private final String realm;
 
-  private final List<String> users;
+  private List<String> users;
 
   private Control userIDControl;
 
@@ -79,7 +81,6 @@ public class CredentialsDialog extends BaseDialog<Viewer>
     super(shell, DEFAULT_SHELL_STYLE | SWT.APPLICATION_MODAL, title, message, OM.Activator.INSTANCE.getDialogSettings(),
         OM.getImageDescriptor("icons/credentials_wiz.gif")); //$NON-NLS-1$
     this.realm = realm;
-    users = loadUsers();
   }
 
   /**
@@ -124,8 +125,17 @@ public class CredentialsDialog extends BaseDialog<Viewer>
   }
 
   @Override
+  protected Control createButtonBar(Composite parent)
+  {
+    Control buttonBar = super.createButtonBar(parent);
+    updateOkButton();
+    return buttonBar;
+  }
+
+  @Override
   protected void createUI(Composite parent)
   {
+    users = loadUsers();
     createCredentialsArea(parent);
   }
 
@@ -161,12 +171,16 @@ public class CredentialsDialog extends BaseDialog<Viewer>
   {
     if (users.isEmpty())
     {
-      return new Text(composite, SWT.BORDER);
+      Text text = new Text(composite, SWT.BORDER);
+      text.addModifyListener(e -> updateOkButton());
+
+      return text;
     }
 
     Combo combo = new Combo(composite, SWT.BORDER);
     combo.setItems(users.toArray(new String[users.size()]));
-    combo.setText(users.get(0));
+    combo.setText(getInitialUserID());
+    combo.addModifyListener(e -> updateOkButton());
 
     return combo;
   }
@@ -174,18 +188,10 @@ public class CredentialsDialog extends BaseDialog<Viewer>
   @Override
   protected void okPressed()
   {
-    String userID;
-    if (userIDControl instanceof Combo)
-    {
-      userID = ((Combo)userIDControl).getText();
-    }
-    else
-    {
-      userID = ((Text)userIDControl).getText();
-    }
+    String userID = getUserID();
 
     String password = passwordControl.getText();
-    credentials = createCredentials(userID, password.toCharArray());
+    credentials = createCredentials(userID, SecurityUtil.toCharArray(password));
 
     users.remove(userID);
     users.add(0, userID);
@@ -232,6 +238,24 @@ public class CredentialsDialog extends BaseDialog<Viewer>
     settings.put(key, users.toArray(new String[users.size()]));
   }
 
+  /**
+   * @since 3.10
+   */
+  protected String getInitialUserID()
+  {
+    return users.get(0);
+  }
+
+  private String getUserID()
+  {
+    if (userIDControl instanceof Combo)
+    {
+      return ((Combo)userIDControl).getText();
+    }
+
+    return ((Text)userIDControl).getText();
+  }
+
   private String getRealmKey()
   {
     String key = "realm";
@@ -246,5 +270,10 @@ public class CredentialsDialog extends BaseDialog<Viewer>
   private IDialogSettings getUsersSection()
   {
     return getDialogSettings("users");
+  }
+
+  private void updateOkButton()
+  {
+    getButton(IDialogConstants.OK_ID).setEnabled(getUserID().length() != 0);
   }
 }

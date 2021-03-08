@@ -31,6 +31,11 @@ public interface CDOCommonSession extends IAdaptable, IUserAware, IOptionsContai
 {
   public int getSessionID();
 
+  /**
+   * @since 4.13
+   */
+  public long getOpeningTime();
+
   public CDOCommonView[] getViews();
 
   public CDOCommonView getView(int viewID);

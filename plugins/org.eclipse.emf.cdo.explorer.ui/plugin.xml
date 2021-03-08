@@ -715,10 +715,24 @@
                </with>
             </visibleWhen>
          </command>
+         <command
+               commandId="org.eclipse.emf.cdo.explorer.ui.CheckoutDuplicate"
+               icon="icons/duplicate.gif"
+               label="Duplicate Checkout"
+               style="push"
+               tooltip="Duplicate the checkout">
+            <visibleWhen checkEnabled="false">
+               <with variable="activeMenuSelection">
+                  <iterate ifEmpty="false">
+                    <instanceof value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
       </menuContribution>
       <menuContribution
             allPopups="false"
-            locationURI="popup:org.eclipse.ui.popup.any?after=group.build">
+            locationURI="popup:org.eclipse.ui.popup.any?after=group.close">
          <command
                commandId="org.eclipse.emf.cdo.explorer.ui.RepositoryDisconnect"
                icon="icons/disconnect.gif"
@@ -736,6 +750,10 @@
                </with>
             </visibleWhen>
          </command>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.ui.popup.any?after=group.build">
          <command
                commandId="org.eclipse.emf.cdo.explorer.ui.CheckoutClose"
                icon="icons/checkout_closed.gif"
@@ -749,20 +767,6 @@
                       <instanceof value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
                       <test property="org.eclipse.emf.cdo.explorer.checkout.state" value="Open"/>
                     </and>
-                  </iterate>
-               </with>
-            </visibleWhen>
-         </command>
-         <command
-               commandId="org.eclipse.emf.cdo.explorer.ui.CheckoutDuplicate"
-               icon="icons/duplicate.gif"
-               label="Duplicate Checkout"
-               style="push"
-               tooltip="Duplicate the checkout">
-            <visibleWhen checkEnabled="false">
-               <with variable="activeMenuSelection">
-                  <iterate ifEmpty="false">
-                    <instanceof value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
                   </iterate>
                </with>
             </visibleWhen>

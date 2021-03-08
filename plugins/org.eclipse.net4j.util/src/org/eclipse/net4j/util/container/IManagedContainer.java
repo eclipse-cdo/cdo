@@ -82,6 +82,11 @@ public interface IManagedContainer extends IContainer<Object>, ILifecycle
   public Object getElement(String productGroup, String factoryType, String description, boolean activate)
       throws FactoryNotFoundException, ProductCreationException;
 
+  /**
+   * @since 3.14
+   */
+  public <T> T getElementOrNull(String productGroup, String factoryType, String description);
+
   public Object removeElement(String productGroup, String factoryType, String description);
 
   /**

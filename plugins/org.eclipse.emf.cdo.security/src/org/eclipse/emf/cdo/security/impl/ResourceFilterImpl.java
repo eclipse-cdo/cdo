@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
@@ -397,7 +398,9 @@ public class ResourceFilterImpl extends PermissionFilterImpl implements Resource
     {
       resourceNode = true;
 
-      boolean rootResource = CDOIDUtil.isNull((CDOID)((InternalCDORevision)revision).getContainerID());
+      CDORevisionData revisionData = revision.data();
+      boolean rootResource = CDOIDUtil.isNull((CDOID)revisionData.getContainerID()) && CDOIDUtil.isNull(revisionData.getResourceID());
+
       if (rootResource)
       {
         if (!isIncludeRoot())

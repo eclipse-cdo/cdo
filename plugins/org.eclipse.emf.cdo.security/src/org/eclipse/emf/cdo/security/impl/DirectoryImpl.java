@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.security.SecurityPackage;
 import org.eclipse.emf.cdo.security.User;
 
 import org.eclipse.net4j.util.security.IPasswordCredentials;
+import org.eclipse.net4j.util.security.SecurityUtil;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -172,7 +173,7 @@ public class DirectoryImpl extends SecurityItemImpl implements Directory
   @Override
   public User addUser(IPasswordCredentials credentials)
   {
-    return addUser(credentials.getUserID(), new String(credentials.getPassword()));
+    return addUser(credentials.getUserID(), SecurityUtil.toString(credentials.getPassword()));
   }
 
   /**

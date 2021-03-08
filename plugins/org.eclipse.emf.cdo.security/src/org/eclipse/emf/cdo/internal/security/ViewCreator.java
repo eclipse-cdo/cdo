@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 /**
  * @author Eike Stepper
  */
+@FunctionalInterface
 public interface ViewCreator
 {
   public CDOView createView(CDORevisionProvider revisionProvider);

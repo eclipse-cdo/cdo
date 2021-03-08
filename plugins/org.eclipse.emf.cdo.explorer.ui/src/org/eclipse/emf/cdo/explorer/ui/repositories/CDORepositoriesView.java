@@ -31,7 +31,9 @@ import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.util.ConcurrentAccessException;
 
 import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.net4j.util.security.PasswordCredentials;
 import org.eclipse.net4j.util.ui.UIUtil;
+import org.eclipse.net4j.util.ui.actions.LongRunningAction;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.ContainerView;
 
@@ -41,12 +43,14 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.ITreeViewerListener;
 import org.eclipse.jface.viewers.TreeExpansionEvent;
@@ -76,6 +80,8 @@ public class CDORepositoriesView extends ContainerView
   public static final String ID = "org.eclipse.emf.cdo.explorer.ui.CDORepositoriesView";
 
   public static final String SHOW_IN_MENU_ID = ID + ".ShowInMenu";
+
+  private static final String GROUP_SECURITY = "group.security";
 
   private final ActivityDetector activityDetector = new ActivityDetector();
 
@@ -233,6 +239,8 @@ public class CDORepositoriesView extends ContainerView
     manager.add(new Separator("group.port"));
     manager.add(new Separator("group.build"));
     manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+    manager.add(new Separator(GROUP_SECURITY));
+    manager.add(new Separator("group.close"));
     manager.add(new Separator("group.properties"));
 
     IWorkbenchPage page = getSite().getPage();
@@ -245,6 +253,16 @@ public class CDORepositoriesView extends ContainerView
     {
       showInMenu.add(new GroupMarker(ICommonMenuConstants.GROUP_ADDITIONS));
       manager.appendToGroup(ICommonMenuConstants.GROUP_OPEN, showInMenu);
+    }
+
+    if (selectedElement instanceof CDORepository)
+    {
+      CDORepository repository = (CDORepository)selectedElement;
+      CDOSession session = repository.getSession();
+      if (session != null)
+      {
+        manager.appendToGroup(GROUP_SECURITY, new ChangeServerPasswordAction(page, repository));
+      }
     }
 
     if (propertiesAction.isApplicableForSelection())
@@ -395,6 +413,41 @@ public class CDORepositoriesView extends ContainerView
     {
       Shell shell = getSite().getShell();
       newRepository(shell);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class ChangeServerPasswordAction extends LongRunningAction
+  {
+    private static final String TITLE = "Change Server Password";
+
+    private final CDORepository repository;
+
+    public ChangeServerPasswordAction(IWorkbenchPage page, CDORepository repository)
+    {
+      super(page, TITLE + INTERACTIVE);
+      this.repository = repository;
+    }
+
+    @Override
+    protected void doRun(IProgressMonitor progressMonitor) throws Exception
+    {
+      CDOSession session = repository.getSession();
+      if (session != null)
+      {
+        // Opens the org.eclipse.net4j.util.ui.security.CredentialsUpdateDialog.
+        char[] newPassword = session.changeServerPassword();
+
+        UIUtil.asyncExec(getDisplay(), () -> {
+          if (MessageDialog.openQuestion(getShell(), TITLE, "Adjust login credentials, accordingly?"))
+          {
+            String userID = repository.getCredentials().getUserID();
+            repository.setCredentials(new PasswordCredentials(userID, newPassword));
+          }
+        });
+      }
     }
   }
 }

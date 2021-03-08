@@ -28,11 +28,11 @@ import org.eclipse.swt.widgets.Link;
 import org.eclipse.ui.dialogs.PropertyPage;
 
 import java.io.File;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 /**
  * @author Eike Stepper
@@ -139,7 +139,7 @@ public abstract class AbstractPropertyPage<T> extends PropertyPage
     Label labelControl = new Label(parent, SWT.NONE);
     labelControl.setText(label + ":");
 
-    Control control = createControl(parent, name, label, description, value);
+    Control control = createControl(parent, name, description, value);
     if (control == null)
     {
       control = new Label(parent, SWT.NONE);
@@ -147,14 +147,21 @@ public abstract class AbstractPropertyPage<T> extends PropertyPage
 
     if (!StringUtil.isEmpty(description))
     {
-      labelControl.setToolTipText(description);
-      control.setToolTipText(description);
+      if (StringUtil.isEmpty(labelControl.getToolTipText()))
+      {
+        labelControl.setToolTipText(description);
+      }
+
+      if (StringUtil.isEmpty(control.getToolTipText()))
+      {
+        control.setToolTipText(description);
+      }
     }
 
     return control;
   }
 
-  protected Control createControl(Composite parent, String name, String label, String description, String value)
+  protected Control createControl(Composite parent, String name, String description, String value)
   {
     Label control = new Label(parent, SWT.NONE);
     control.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
@@ -163,24 +170,33 @@ public abstract class AbstractPropertyPage<T> extends PropertyPage
     return control;
   }
 
-  protected Link createLink(Composite parent, String name, String label, String description, String value)
+  protected Link createFileLink(Composite parent, String name, String description, String value)
   {
     File file = new File(value);
-    URI uri = file.toURI();
+    return createLink(parent, file.toString(), file.toURI().toString(), uri -> IOUtil.openSystemBrowser(uri));
+  }
 
+  protected Link createLink(Composite parent, String label, String uri, Consumer<String> consumer)
+  {
     Link link = new Link(parent, SWT.NONE);
     link.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-    link.setText("<a href=\"" + uri + "\">" + file + "</a>");
+    setLinkText(link, label, uri);
+
     link.addSelectionListener(new SelectionAdapter()
     {
       @Override
       public void widgetSelected(SelectionEvent e)
       {
-        IOUtil.openSystemBrowser(uri.toString());
+        consumer.accept(uri);
       }
     });
 
     return link;
+  }
+
+  protected void setLinkText(Link link, String label, String uri)
+  {
+    link.setText("<a href=\"" + uri + "\">" + label + "</a>");
   }
 
   protected abstract T convertElement(IAdaptable element);

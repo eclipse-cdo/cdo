@@ -15,6 +15,7 @@ import org.eclipse.net4j.util.internal.ui.messages.Messages;
 import org.eclipse.net4j.util.security.IPasswordCredentials;
 import org.eclipse.net4j.util.security.IPasswordCredentialsUpdate;
 import org.eclipse.net4j.util.security.PasswordCredentialsUpdate;
+import org.eclipse.net4j.util.security.SecurityUtil;
 import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -72,7 +73,7 @@ public class CredentialsUpdateDialog extends CredentialsDialog
   protected IPasswordCredentials createCredentials(String userID, char[] password)
   {
     String newPassword = newPasswordControl.getText();
-    return new PasswordCredentialsUpdate(userID, password, newPassword.toCharArray());
+    return new PasswordCredentialsUpdate(userID, password, SecurityUtil.toCharArray(newPassword));
   }
 
   @Override

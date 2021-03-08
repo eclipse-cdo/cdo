@@ -17,10 +17,12 @@ import org.eclipse.emf.cdo.explorer.CDOExplorerElement;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
+import org.eclipse.emf.cdo.explorer.repositories.CDORepositoryManager.RepositoryConnectionEvent;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
 import org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutContentProvider;
 import org.eclipse.emf.cdo.internal.explorer.AbstractElement;
 import org.eclipse.emf.cdo.internal.explorer.checkouts.OfflineCDOCheckout;
+import org.eclipse.emf.cdo.internal.explorer.repositories.CDORepositoryImpl;
 import org.eclipse.emf.cdo.internal.explorer.repositories.LocalCDORepository;
 import org.eclipse.emf.cdo.internal.ui.views.CDOSessionsView;
 import org.eclipse.emf.cdo.internal.ui.views.CDOTimeMachineView;
@@ -38,9 +40,17 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.session.CDOSessionFactory;
 
+import org.eclipse.net4j.util.container.ContainerEventAdapter;
+import org.eclipse.net4j.util.container.FactoryNotFoundException;
+import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.lifecycle.LifecycleEvent;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.ui.MenuFiller;
 
 import org.eclipse.emf.ecore.EObject;
@@ -259,18 +269,18 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
     return false;
   }
 
-  public static void showDashboard(final StructuredViewer viewer, ISelectionService selectionService)
+  public static void showDashboard(StructuredViewer viewer, ISelectionService selectionService)
   {
-    final CDOCheckoutDashboard[] dashboard = { (CDOCheckoutDashboard)viewer.getData(DASHBOARD_KEY) };
+    CDOCheckoutDashboard[] dashboard = { (CDOCheckoutDashboard)viewer.getData(DASHBOARD_KEY) };
     if (dashboard[0] == null)
     {
-      final Control control = viewer.getControl();
-      final Object controlLayoutData = control.getLayoutData();
+      Control control = viewer.getControl();
+      Object controlLayoutData = control.getLayoutData();
 
-      final Composite parent = control.getParent();
-      final Layout parentLayout = parent.getLayout();
+      Composite parent = control.getParent();
+      Layout parentLayout = parent.getLayout();
 
-      final int[] minimumHeight = { 0 };
+      int[] minimumHeight = { 0 };
 
       GridLayout layout = new GridLayout(1, false);
       layout.marginWidth = 0;
@@ -280,7 +290,7 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
       parent.setLayout(layout);
       control.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-      final Sash sash = new Sash(parent, SWT.HORIZONTAL | SWT.SMOOTH);
+      Sash sash = new Sash(parent, SWT.HORIZONTAL | SWT.SMOOTH);
       sash.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
       sash.addListener(SWT.Selection, new Listener()
       {
@@ -547,10 +557,10 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
     @Override
     protected void run(IViewPart viewPart) throws Exception
     {
-      final Object select = show();
+      Object select = show();
       if (select != null)
       {
-        final TreeViewer viewer = ((CDOSessionsView)viewPart).getViewer();
+        TreeViewer viewer = ((CDOSessionsView)viewPart).getViewer();
         viewer.getControl().getDisplay().asyncExec(new Runnable()
         {
           @Override
@@ -584,7 +594,7 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
             CDOBranch branch = checkoutView.getBranch();
             for (CDOTransaction transaction : session.getTransactions())
             {
-              if (branch.equals(transaction.getBranch()))
+              if (branch.getID() == transaction.getBranch().getID())
               {
                 return transaction;
               }
@@ -617,13 +627,64 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
     {
       repository.connect();
 
-      String description = repository.getURI();
-      int lastSlash = description.lastIndexOf('/');
-      description = description.substring(0, lastSlash) + "?repositoryName=" + repository.getName() + "&automaticPackageRegistry=true&repositoryID="
-          + repository.getID();
+      String factoryType = "cdo-explorer";
+      String description = repository.getID();
 
-      return (CDOSession)IPluginContainer.INSTANCE.getElement(CDOSessionFactory.PRODUCT_GROUP, "cdo", repository.getConnectorType() + "://"
-          + repository.getConnectorDescription() + "?repositoryName=" + repository.getName() + "&repositoryID=" + repository.getID());
+      try
+      {
+        return (CDOSession)IPluginContainer.INSTANCE.getElement(CDOSessionFactory.PRODUCT_GROUP, factoryType, description);
+      }
+      catch (FactoryNotFoundException | ProductCreationException ex)
+      {
+        CDOSession session = ((CDORepositoryImpl)repository).openSession();
+
+        IListener listener = new ContainerEventAdapter<Object>()
+        {
+          @Override
+          protected void onRemoved(IContainer<Object> container, Object element)
+          {
+            if (element == repository)
+            {
+              dispose(session);
+            }
+          }
+
+          @Override
+          protected void notifyOtherEvent(IEvent event)
+          {
+            if (event instanceof RepositoryConnectionEvent)
+            {
+              RepositoryConnectionEvent e = (RepositoryConnectionEvent)event;
+              if (e.getRepository() == repository)
+              {
+                dispose(session);
+              }
+            }
+            else if (event instanceof LifecycleEvent)
+            {
+              LifecycleEvent e = (LifecycleEvent)event;
+              if (e.getSource() == session && e.getKind() == LifecycleEvent.Kind.DEACTIVATED)
+              {
+                dispose(session);
+              }
+            }
+          }
+
+          private void dispose(CDOSession session)
+          {
+            session.removeListener(this);
+            CDOExplorerUtil.getRepositoryManager().removeListener(this);
+            LifecycleUtil.deactivate(session);
+          }
+        };
+
+        session.addListener(listener);
+        CDOExplorerUtil.getRepositoryManager().addListener(listener);
+
+        IPluginContainer.INSTANCE.putElement(CDOSessionFactory.PRODUCT_GROUP, factoryType, description, session);
+
+        return session;
+      }
     }
   }
 

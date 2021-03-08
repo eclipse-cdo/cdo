@@ -190,9 +190,23 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransacti
    * @throws UnsupportedOperationException if the session implementation does not permit changing credentials
    *
    * @since 4.3
+   * @deprecated As of 4.13 use {@link #changeServerPassword()}.
+   *
    * @see #getCredentialsProvider()
    */
+  @Deprecated
   public void changeCredentials();
+
+  /**
+   * Initiates (possibly interactive) changing of credentials for the user logged in in this session.
+   * This is an optional operation of the session.
+   *
+   * @throws UnsupportedOperationException if the session implementation does not permit changing credentials
+   *
+   * @since 4.13
+   * @see #getCredentialsProvider()
+   */
+  public char[] changeServerPassword();
 
   /**
    * @since 4.13

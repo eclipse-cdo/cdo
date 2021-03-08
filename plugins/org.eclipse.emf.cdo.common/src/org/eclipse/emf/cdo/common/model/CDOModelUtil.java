@@ -14,6 +14,7 @@
 package org.eclipse.emf.cdo.common.model;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.model.CDOPackageUnit.State;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
@@ -23,6 +24,7 @@ import org.eclipse.emf.cdo.internal.common.model.CDOPackageInfoImpl;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageUnitImpl;
 import org.eclipse.emf.cdo.internal.common.model.CDOTypeImpl;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 
 import org.eclipse.net4j.util.io.ExtendedDataInput;
@@ -586,6 +588,34 @@ public final class CDOModelUtil implements CDOModelConstants
   {
     CDOClassInfo classInfo = getClassInfo(eClass);
     return classInfo.getAllPersistentFeatures();
+  }
+
+  /**
+   * @since 4.13
+   */
+  public static CDOPackageUnit copyPackageUnit(CDOPackageUnit packageUnit)
+  {
+    InternalCDOPackageUnit newPackageUnit = (InternalCDOPackageUnit)CDOModelUtil.createPackageUnit();
+    newPackageUnit.setOriginalType(packageUnit.getOriginalType());
+    newPackageUnit.setTimeStamp(packageUnit.getTimeStamp());
+    newPackageUnit.setState(State.LOADED);
+
+    InternalCDOPackageInfo[] packageInfos = (InternalCDOPackageInfo[])packageUnit.getPackageInfos();
+    InternalCDOPackageInfo[] newPackageInfos = new InternalCDOPackageInfo[packageInfos.length];
+
+    for (int i = 0; i < packageInfos.length; i++)
+    {
+      InternalCDOPackageInfo packageInfo = packageInfos[i];
+
+      newPackageInfos[i] = (InternalCDOPackageInfo)CDOModelUtil.createPackageInfo();
+      newPackageInfos[i].setPackageUnit(newPackageUnit);
+      newPackageInfos[i].setEPackage(packageInfo.getEPackage());
+      newPackageInfos[i].setPackageURI(packageInfo.getPackageURI());
+      newPackageInfos[i].setParentURI(packageInfo.getParentURI());
+    }
+
+    newPackageUnit.setPackageInfos(newPackageInfos);
+    return newPackageUnit;
   }
 
   /**

@@ -38,6 +38,8 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.util.ConsumerWithException;
+import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.UUIDGenerator;
 import org.eclipse.net4j.util.container.ContainerEvent;
@@ -49,8 +51,14 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.om.OMPlatform;
+import org.eclipse.net4j.util.security.CredentialsProviderFactory;
+import org.eclipse.net4j.util.security.CredentialsUpdateOperation;
+import org.eclipse.net4j.util.security.ICredentialsProvider;
 import org.eclipse.net4j.util.security.IPasswordCredentials;
+import org.eclipse.net4j.util.security.IPasswordCredentialsUpdate;
+import org.eclipse.net4j.util.security.IPasswordCredentialsUpdateProvider;
 import org.eclipse.net4j.util.security.PasswordCredentials;
+import org.eclipse.net4j.util.security.SecurityUtil;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -197,54 +205,80 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
   @Override
   public IPasswordCredentials getCredentials(String realm)
   {
-    try
-    {
-      ISecurePreferences securePreferences = getSecurePreferences();
-      if (securePreferences != null)
+    IPasswordCredentials[] result = { null };
+
+    withSecureNode(false, node -> {
+      String userID = node.get("username", null);
+      if (!StringUtil.isEmpty(userID))
       {
-        String path = getSecurePath(securePreferences);
-        if (securePreferences.nodeExists(path))
-        {
-          ISecurePreferences node = securePreferences.node(path);
-          String userID = node.get("username", null);
-
-          if (!StringUtil.isEmpty(userID))
-          {
-            String password = node.get("password", null);
-            return new PasswordCredentials(userID, password);
-          }
-        }
+        String password = node.get("password", null);
+        result[0] = new PasswordCredentials(userID, password);
       }
-    }
-    catch (Exception ex)
-    {
-      OM.LOG.error(ex);
-    }
+    });
 
-    return null;
+    return result[0];
   }
 
   @Override
   public void setCredentials(IPasswordCredentials credentials)
   {
-    try
+    if (credentials == null)
     {
-      ISecurePreferences securePreferences = getSecurePreferences();
-      if (securePreferences != null)
-      {
-        String path = getSecurePath(securePreferences);
-        ISecurePreferences node = securePreferences.node(path);
-
-        node.put("uri", getURI(), false);
-        node.put("username", credentials.getUserID(), false);
-        node.put("password", new String(credentials.getPassword()), true);
+      // Delete node.
+      withSecureNode(false, node -> {
+        node.removeNode();
         node.flush();
+      });
+
+      return;
+    }
+
+    String password = SecurityUtil.toString(credentials.getPassword());
+
+    withSecureNode(true, node -> {
+      node.put("uri", getURI(), false);
+      node.put("username", credentials.getUserID(), false);
+
+      if (password == null)
+      {
+        node.remove("password");
+      }
+      else
+      {
+        node.put("password", password, true);
+      }
+
+      node.flush();
+    });
+  }
+
+  @Override
+  public IPasswordCredentialsUpdate getCredentialsUpdate(String userID, CredentialsUpdateOperation operation)
+  {
+    return getCredentialsUpdate(null, userID, operation);
+  }
+
+  @Override
+  public IPasswordCredentialsUpdate getCredentialsUpdate(String realm, String userID, CredentialsUpdateOperation operation)
+  {
+    IManagedContainer container = getContainer();
+
+    ICredentialsProvider provider = container.getElementOrNull(CredentialsProviderFactory.PRODUCT_GROUP, "cdo-explorer", null);
+    if (provider == null)
+    {
+      provider = container.getElementOrNull(CredentialsProviderFactory.PRODUCT_GROUP, "interactive", null);
+      if (provider == null)
+      {
+        provider = container.getElementOrNull(CredentialsProviderFactory.PRODUCT_GROUP, "default", null);
       }
     }
-    catch (Exception ex)
+
+    if (provider instanceof IPasswordCredentialsUpdateProvider)
     {
-      OM.LOG.error(ex);
+      return ((IPasswordCredentialsUpdateProvider)provider).getCredentialsUpdate(realm, userID, operation);
     }
+
+    return null;
   }
 
   @Override
@@ -329,8 +363,13 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
   @Override
   public final void disconnect()
   {
+    disconnect(false);
+  }
+
+  public final void disconnect(boolean force)
+  {
     explicitlyConnected = false;
-    doDisconnect(false);
+    doDisconnect(force);
   }
 
   protected void doDisconnect(boolean force)
@@ -451,6 +490,9 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
   public void delete(boolean deleteContents)
   {
     disconnect();
+
+    // Delete secure preference node.
+    setCredentials(null);
 
     CDORepositoryManagerImpl manager = getManager();
     if (manager != null)
@@ -739,7 +781,7 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
     return config;
   }
 
-  protected CDOSession openSession()
+  public CDOSession openSession()
   {
     CDOSessionConfiguration sessionConfiguration = createSessionConfiguration();
     sessionConfiguration.setPassiveUpdateEnabled(true);
@@ -766,6 +808,27 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
     session.close();
   }
 
+  private void withSecureNode(boolean createOnDemand, ConsumerWithException<ISecurePreferences, Exception> consumer)
+  {
+    try
+    {
+      ISecurePreferences securePreferences = getSecurePreferences();
+      if (securePreferences != null)
+      {
+        String path = getSecurePath(securePreferences);
+        if (createOnDemand || securePreferences.nodeExists(path))
+        {
+          ISecurePreferences node = securePreferences.node(path);
+          consumer.accept(node);
+        }
+      }
+    }
+    catch (Exception ex)
+    {
+      OM.LOG.error(ex);
+    }
+  }
+
   private String getSecurePath(ISecurePreferences securePreferences)
   {
     String stateLocation = OM.getStateLocation().replace('/', '\\');
@@ -779,6 +842,38 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
     Map<Object, Object> options = new HashMap<>();
     options.put(IProviderHints.PROMPT_USER, Boolean.FALSE);
 
-    return SecurePreferencesFactory.open(null, options);
+    ISecurePreferences result = SecurePreferencesFactory.open(null, options);
+    if (result != null)
+    {
+      // Try to refresh the entire secure storage, if needed.
+      try
+      {
+        // Fetch the root node.
+        Object root = ReflectUtil.getValue("node", result); //$NON-NLS-1$
+
+        // Just to be sure...
+        root = ReflectUtil.invokeMethod("getRoot", root); //$NON-NLS-1$
+
+        // Check if it has been modified, i.e., whether it is dirty from unsaved changes.
+        boolean modified = ReflectUtil.invokeMethod("isModified", root); //$NON-NLS-1$
+        if (!modified)
+        {
+          // If it's not dirty, check if the expected time stamp is different from the timestamp on disk.
+          long lastModified = ReflectUtil.invokeMethod("getLastModified", root); //$NON-NLS-1$
+          long timestamp = ReflectUtil.getValue("timestamp", root); //$NON-NLS-1$
+          if (lastModified != timestamp)
+          {
+            // If so, reload the secure storage from disk.
+            ReflectUtil.invokeMethod("load", root); //$NON-NLS-1$
+          }
+        }
+      }
+      catch (Throwable ex)
+      {
+        OM.LOG.error(ex);
+      }
+    }
+
+    return result;
   }
 }

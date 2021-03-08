@@ -37,11 +37,6 @@ public interface Role extends SecurityItem
   /**
    * @since 4.3
    */
-  public static final String ADMINISTRATION = "Administration";
-
-  /**
-   * @since 4.3
-   */
   public static final String RESOURCE_TREE_WRITER = "Resource Tree Writer";
 
   /**
@@ -58,6 +53,21 @@ public interface Role extends SecurityItem
    * @since 4.3
    */
   public static final String ALL_OBJECTS_READER = "All Objects Reader";
+
+  /**
+   * @since 4.5
+   */
+  public static final String NORMAL_OBJECTS_WRITER = "Normal Objects Writer";
+
+  /**
+   * @since 4.5
+   */
+  public static final String NORMAL_OBJECTS_READER = "Normal Objects Reader";
+
+  /**
+   * @since 4.3
+   */
+  public static final String ADMINISTRATION = "Administration";
 
   /**
    * Returns the value of the '<em><b>Assignees</b></em>' reference list.

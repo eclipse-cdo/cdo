@@ -17,6 +17,7 @@ import org.eclipse.net4j.util.security.IPasswordCredentials;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider2;
 import org.eclipse.net4j.util.security.IPasswordCredentialsUpdate;
 import org.eclipse.net4j.util.security.IPasswordCredentialsUpdateProvider;
+import org.eclipse.net4j.util.security.SecurityUtil;
 import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -25,7 +26,6 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 import java.text.MessageFormat;
@@ -56,20 +56,15 @@ public class InteractiveCredentialsProvider implements IPasswordCredentialsProvi
    * @since 3.3
    */
   @Override
-  public IPasswordCredentials getCredentials(final String realm)
+  public IPasswordCredentials getCredentials(String realm)
   {
-    final IPasswordCredentials[] credentials = new IPasswordCredentials[1];
-    final Display display = UIUtil.getDisplay();
-    display.syncExec(new Runnable()
-    {
-      @Override
-      public void run()
+    IPasswordCredentials[] credentials = new IPasswordCredentials[1];
+
+    UIUtil.syncExec(() -> {
+      CredentialsDialog dialog = new CredentialsDialog(UIUtil.getShell(), realm);
+      if (dialog.open() == CredentialsDialog.OK)
       {
-        CredentialsDialog dialog = new CredentialsDialog(UIUtil.getShell(), realm);
-        if (dialog.open() == CredentialsDialog.OK)
-        {
-          credentials[0] = dialog.getCredentials();
-        }
+        credentials[0] = dialog.getCredentials();
       }
     });
 
@@ -89,73 +84,68 @@ public class InteractiveCredentialsProvider implements IPasswordCredentialsProvi
    * @since 3.4
    */
   @Override
-  public IPasswordCredentialsUpdate getCredentialsUpdate(final String realm, final String userID, final CredentialsUpdateOperation operation)
+  public IPasswordCredentialsUpdate getCredentialsUpdate(String realm, String userID, CredentialsUpdateOperation operation)
   {
-    final IPasswordCredentialsUpdate[] update = { null };
-    final Display display = UIUtil.getDisplay();
-    display.syncExec(new Runnable()
-    {
-      @Override
-      public void run()
+    IPasswordCredentialsUpdate[] update = { null };
+
+    UIUtil.syncExec(() -> {
+      Shell shell = UIUtil.getShell();
+
+      if (operation == CredentialsUpdateOperation.CHANGE_PASSWORD)
       {
-        Shell shell = UIUtil.getShell();
-
-        if (operation == CredentialsUpdateOperation.CHANGE_PASSWORD)
+        CredentialsUpdateDialog dialog = new CredentialsUpdateDialog(shell, realm, userID);
+        if (dialog.open() == Window.OK)
         {
-          CredentialsUpdateDialog dialog = new CredentialsUpdateDialog(shell, realm, userID);
-          if (dialog.open() == Window.OK)
-          {
-            update[0] = dialog.getCredentials();
-          }
+          update[0] = dialog.getCredentials();
         }
-        else
+      }
+      else
+      {
+        CredentialsResetDialog dialog = new CredentialsResetDialog(shell, realm, userID);
+        if (dialog.open() == Window.OK)
         {
-          CredentialsResetDialog dialog = new CredentialsResetDialog(shell, realm, userID);
-          if (dialog.open() == Window.OK)
+          update[0] = dialog.getCredentials();
+          String newPassword = SecurityUtil.toString(update[0].getNewPassword());
+
+          MessageDialog msg = new MessageDialog(shell, Messages.getString("InteractiveCredentialsProvider.0"), null, //$NON-NLS-1$
+              MessageFormat.format(Messages.getString("InteractiveCredentialsProvider.1"), //$NON-NLS-1$
+                  userID, newPassword),
+              MessageDialog.INFORMATION, new String[] { Messages.getString("InteractiveCredentialsProvider.2"), //$NON-NLS-1$
+                  IDialogConstants.OK_LABEL },
+              0)
           {
-            update[0] = dialog.getCredentials();
-            final String newPassword = new String(update[0].getNewPassword());
 
-            MessageDialog msg = new MessageDialog(shell, Messages.getString("InteractiveCredentialsProvider.0"), null, //$NON-NLS-1$
-                MessageFormat.format(Messages.getString("InteractiveCredentialsProvider.1"), //$NON-NLS-1$
-                    userID, newPassword),
-                MessageDialog.INFORMATION, new String[] { Messages.getString("InteractiveCredentialsProvider.2"), //$NON-NLS-1$
-                    IDialogConstants.OK_LABEL },
-                0)
+            @Override
+            protected void buttonPressed(int buttonId)
             {
-
-              @Override
-              protected void buttonPressed(int buttonId)
+              if (buttonId == 0)
               {
-                if (buttonId == 0)
-                {
-                  copyToClipboard();
-                  // Don't close the dialog
-                }
-                else
-                {
-                  // Close the dialog in the usual way
-                  super.buttonPressed(IDialogConstants.OK_ID);
-                }
+                copyToClipboard();
+                // Don't close the dialog
               }
-
-              private void copyToClipboard()
+              else
               {
-                Clipboard clipboard = new Clipboard(getShell().getDisplay());
-
-                try
-                {
-                  clipboard.setContents(new Object[] { newPassword }, new Transfer[] { TextTransfer.getInstance() });
-                }
-                finally
-                {
-                  clipboard.dispose();
-                }
+                // Close the dialog in the usual way
+                super.buttonPressed(IDialogConstants.OK_ID);
               }
-            };
+            }
 
-            msg.open();
-          }
+            private void copyToClipboard()
+            {
+              Clipboard clipboard = new Clipboard(getShell().getDisplay());
+
+              try
+              {
+                clipboard.setContents(new Object[] { newPassword }, new Transfer[] { TextTransfer.getInstance() });
+              }
+              finally
+              {
+                clipboard.dispose();
+              }
+            }
+          };
+
+          msg.open();
         }
       }
     });

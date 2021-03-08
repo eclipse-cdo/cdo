@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.explorer.ui.checkouts;
 
 import org.eclipse.emf.cdo.CDOElement;
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.eresource.CDOResourceLeaf;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
@@ -21,6 +22,7 @@ import org.eclipse.emf.cdo.internal.ui.ViewerUtil;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 import org.eclipse.emf.cdo.ui.CDOEditorUtil;
 import org.eclipse.emf.cdo.ui.CDOLabelDecorator;
+import org.eclipse.emf.cdo.ui.CDOLabelProvider;
 import org.eclipse.emf.cdo.ui.CDOTreeExpansionAgent;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -360,6 +362,15 @@ public final class CDOCheckoutState
         if (object instanceof ViewerUtil.Pending)
         {
           return ContainerItemProvider.PENDING_COLOR;
+        }
+
+        if (object instanceof CDOObject)
+        {
+          Color color = CDOLabelProvider.getColor((CDOObject)object);
+          if (color != null)
+          {
+            return color;
+          }
         }
 
         return super.getForeground(object);

@@ -28,7 +28,7 @@ public class PasswordCredentialsUpdate extends PasswordCredentials implements IP
 
   public PasswordCredentialsUpdate(String userID, String password, String newPassword)
   {
-    this(userID, password.toCharArray(), newPassword.toCharArray());
+    this(userID, SecurityUtil.toCharArray(password), SecurityUtil.toCharArray(newPassword));
   }
 
   public PasswordCredentialsUpdate(String userID)

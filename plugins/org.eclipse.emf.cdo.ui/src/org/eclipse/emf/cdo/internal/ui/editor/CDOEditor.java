@@ -3010,6 +3010,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
         return;
       }
 
+      CDOView view = CDOEditor.this.view;
       if (view != null)
       {
         setView(view);

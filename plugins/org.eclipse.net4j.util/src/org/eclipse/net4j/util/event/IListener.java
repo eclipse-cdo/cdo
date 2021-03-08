@@ -17,6 +17,7 @@ import java.util.EventListener;
  *
  * @author Eike Stepper
  */
+@FunctionalInterface
 public interface IListener extends EventListener
 {
   public void notifyEvent(IEvent event);

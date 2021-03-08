@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
 
 import org.eclipse.net4j.signal.IndicationWithMonitoring;
 import org.eclipse.net4j.signal.SignalProtocol;
-import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -28,10 +27,12 @@ import org.eclipse.net4j.util.security.DiffieHellman.Server.Challenge;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 import org.eclipse.net4j.util.security.IPasswordCredentialsUpdate;
 import org.eclipse.net4j.util.security.IPasswordCredentialsUpdateProvider;
+import org.eclipse.net4j.util.security.SecurityUtil;
 
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 import java.io.ByteArrayOutputStream;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Implementation of the CDO client handler for the server-initiated change-credentials protocol.
@@ -40,6 +41,8 @@ import java.io.ByteArrayOutputStream;
  */
 public class CredentialsChallengeIndication extends IndicationWithMonitoring
 {
+  private AtomicReference<char[]> newPasswordReceiver;
+
   private Challenge challenge;
 
   private CredentialsUpdateOperation operation;
@@ -49,6 +52,7 @@ public class CredentialsChallengeIndication extends IndicationWithMonitoring
   public CredentialsChallengeIndication(SignalProtocol<?> protocol)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_CREDENTIALS_CHALLENGE);
+    newPasswordReceiver = ChangeCredentialsRequest.NEW_PASSWORD_RECEIVERS.remove(getSession());
   }
 
   @Override
@@ -99,12 +103,8 @@ public class CredentialsChallengeIndication extends IndicationWithMonitoring
       }
 
       String authUserID = credentials.getUserID();
-      String authPassword = new String(credentials.getPassword());
-      String newPassword = new String(credentials.getNewPassword());
-      if (StringUtil.isEmpty(newPassword))
-      {
-        throw new IllegalStateException("No new password provided"); //$NON-NLS-1$
-      }
+      String authPassword = SecurityUtil.toString(credentials.getPassword());
+      String newPassword = SecurityUtil.toString(credentials.getNewPassword());
 
       ByteArrayOutputStream baos = new ByteArrayOutputStream();
       ExtendedDataOutputStream stream = new ExtendedDataOutputStream(baos);
@@ -115,7 +115,15 @@ public class CredentialsChallengeIndication extends IndicationWithMonitoring
         stream.writeString(authUserID);
         stream.writeString(authPassword);
         stream.writeString(newPassword);
+
+        if (newPasswordReceiver != null)
+        {
+          newPasswordReceiver.set(credentials.getNewPassword());
+          newPasswordReceiver = null;
+        }
+
         break;
+
       case RESET_PASSWORD:
         stream.writeString(authUserID);
         stream.writeString(authPassword);

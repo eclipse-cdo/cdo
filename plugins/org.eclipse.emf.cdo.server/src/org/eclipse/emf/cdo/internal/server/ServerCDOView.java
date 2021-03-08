@@ -615,16 +615,19 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
       }
     };
 
+    private final InternalSession internalSession;
+
+    private final InternalRepository repository;
+
+    private final long openingTime;
+
     private boolean generatedPackageEmulationEnabled;
-
-    private InternalSession internalSession;
-
-    private InternalRepository repository;
 
     public ServerCDOSession(InternalSession internalSession)
     {
       this.internalSession = internalSession;
       repository = internalSession.getManager().getRepository();
+      openingTime = repository.getTimeStamp();
     }
 
     @Override
@@ -726,16 +729,28 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
      * be done client-side by interaction with the user.
      *
      * @since 4.3
+     * @deprecated
      */
     @Override
+    @Deprecated
     public void changeCredentials()
     {
       throw new UnsupportedOperationException();
     }
 
     /**
+     * Server sessions may not be used to change the user's credentials: it must
+     * be done client-side by interaction with the user.
+     */
+    @Override
+    public char[] changeServerPassword()
+    {
+      return null;
+    }
+
+    /**
      * Server sessions may not be used to reset a user's credentials: it must
-     * be done client-side by interaction with an adminstrator.
+     * be done client-side by interaction with an administrator.
      *
      * @since 4.3
      */
@@ -1024,6 +1039,12 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     public void waitForUpdate(long updateTime)
     {
       throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public long getOpeningTime()
+    {
+      return openingTime;
     }
 
     @Override

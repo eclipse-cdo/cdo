@@ -42,7 +42,7 @@ public class PasswordCredentialsProvider implements IPasswordCredentialsProvider
    */
   public PasswordCredentialsProvider(String userID, String password)
   {
-    this(userID, password == null ? null : password.toCharArray());
+    this(userID, SecurityUtil.toCharArray(password));
   }
 
   @Override

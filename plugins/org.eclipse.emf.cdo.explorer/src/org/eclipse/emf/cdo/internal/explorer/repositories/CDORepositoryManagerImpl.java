@@ -79,7 +79,7 @@ public class CDORepositoryManagerImpl extends AbstractManager<CDORepository> imp
   public CDORepository addRepository(Properties properties, IPasswordCredentials credentials)
   {
     CDORepository repository = newElement(properties);
-    if (repository != null && credentials != null)
+    if (repository != null)
     {
       repository.setCredentials(credentials);
     }

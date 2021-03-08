@@ -159,7 +159,7 @@ public class FileUserManager extends UserManager
     for (Entry<Object, Object> entry : properties.entrySet())
     {
       String userID = (String)entry.getKey();
-      char[] password = ((String)entry.getValue()).toCharArray();
+      char[] password = SecurityUtil.toCharArray((String)entry.getValue());
       users.put(userID, password);
     }
   }
@@ -193,7 +193,7 @@ public class FileUserManager extends UserManager
 
     for (Entry<String, char[]> entry : users.entrySet())
     {
-      properties.put(entry.getKey(), new String(entry.getValue()));
+      properties.put(entry.getKey(), SecurityUtil.toString(entry.getValue()));
     }
 
     String comment = MessageFormat.format("User database {0,date} {0,time,HH:mm:ss:SSS}", System.currentTimeMillis());

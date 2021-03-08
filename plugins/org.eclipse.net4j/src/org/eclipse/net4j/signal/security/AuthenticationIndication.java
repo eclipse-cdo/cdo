@@ -23,6 +23,7 @@ import org.eclipse.net4j.util.security.DiffieHellman.Client.Response;
 import org.eclipse.net4j.util.security.DiffieHellman.Server.Challenge;
 import org.eclipse.net4j.util.security.IPasswordCredentials;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
+import org.eclipse.net4j.util.security.SecurityUtil;
 
 import org.eclipse.internal.net4j.bundle.OM;
 
@@ -103,7 +104,7 @@ public class AuthenticationIndication extends IndicationWithMonitoring
         throw new IllegalStateException("No userID provided"); //$NON-NLS-1$
       }
 
-      String password = new String(credentials.getPassword());
+      String password = SecurityUtil.toString(credentials.getPassword());
 
       ByteArrayOutputStream baos = new ByteArrayOutputStream();
       ExtendedDataOutputStream stream = new ExtendedDataOutputStream(baos);

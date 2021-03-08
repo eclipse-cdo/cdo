@@ -15,6 +15,7 @@ package org.eclipse.emf.cdo.server.internal.security;
 import org.eclipse.emf.cdo.server.internal.security.bundle.OM;
 import org.eclipse.emf.cdo.server.spi.security.SecurityManagerFactory;
 import org.eclipse.emf.cdo.spi.server.IAppExtension2;
+import org.eclipse.emf.cdo.spi.server.IAppExtension4;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.RepositoryFactory;
 
@@ -38,12 +39,18 @@ import java.io.Reader;
 /**
  * @author Eike Stepper
  */
-public class SecurityExtension implements IAppExtension2
+public class SecurityExtension implements IAppExtension2, IAppExtension4
 {
   public static final String DEFAULT_REALM_PATH = "security";
 
   public SecurityExtension()
   {
+  }
+
+  @Override
+  public int getPriority()
+  {
+    return PRIORITY_SECURITY;
   }
 
   @Override

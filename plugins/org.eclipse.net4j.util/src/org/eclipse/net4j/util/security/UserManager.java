@@ -68,12 +68,12 @@ public class UserManager extends Lifecycle implements IUserManager, IAuthenticat
 
     if (userPassword == null)
     {
-      throw new SecurityException("No such user: " + userID); //$NON-NLS-1$
+      throw new NotAuthenticatedException("No such user: " + userID); //$NON-NLS-1$
     }
 
     if (!Arrays.equals(userPassword, password))
     {
-      throw new SecurityException("Wrong password for user: " + userID); //$NON-NLS-1$
+      throw new NotAuthenticatedException("Wrong password for user: " + userID); //$NON-NLS-1$
     }
   }
 

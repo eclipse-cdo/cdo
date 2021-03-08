@@ -261,6 +261,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
   {
     LifecycleUtil.checkActive(this);
     packageUnit.setPackageRegistry(this);
+
     for (InternalCDOPackageInfo packageInfo : packageUnit.getPackageInfos())
     {
       EPackage ePackage = packageInfo.getEPackage(false);

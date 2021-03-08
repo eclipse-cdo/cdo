@@ -35,6 +35,6 @@ public final class ChangePasswordAction extends SessionAction
   @Override
   protected void doRun(IProgressMonitor progressMonitor) throws Exception
   {
-    getSession().changeCredentials();
+    getSession().changeServerPassword();
   }
 }

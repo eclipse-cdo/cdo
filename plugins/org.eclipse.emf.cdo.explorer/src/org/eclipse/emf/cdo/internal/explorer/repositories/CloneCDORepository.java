@@ -145,7 +145,7 @@ public class CloneCDORepository extends CDORepositoryImpl
   }
 
   @Override
-  protected CDOSession openSession()
+  public CDOSession openSession()
   {
     final String repositoryName = getName();
     File folder = new File(getFolder(), "db");

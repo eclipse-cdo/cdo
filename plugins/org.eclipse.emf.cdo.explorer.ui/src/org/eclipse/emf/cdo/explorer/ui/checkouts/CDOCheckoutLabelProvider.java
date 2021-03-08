@@ -229,6 +229,11 @@ public class CDOCheckoutLabelProvider extends LabelProvider implements ICommonLa
       return ContainerItemProvider.PENDING_IMAGE;
     }
 
+    if (object instanceof ViewerUtil.Error)
+    {
+      return ContainerItemProvider.ERROR_IMAGE;
+    }
+
     try
     {
       ILabelProvider provider = getStateManager().getLabelProvider(object);

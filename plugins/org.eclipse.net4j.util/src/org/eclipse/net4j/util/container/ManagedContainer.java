@@ -365,6 +365,20 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     return element;
   }
 
+  @Override
+  @SuppressWarnings("unchecked")
+  public <T> T getElementOrNull(String productGroup, String factoryType, String description)
+  {
+    try
+    {
+      return (T)getElement(productGroup, factoryType, description);
+    }
+    catch (FactoryNotFoundException | ProductCreationException ex)
+    {
+      return null;
+    }
+  }
+
   /**
    * @since 3.2
    */

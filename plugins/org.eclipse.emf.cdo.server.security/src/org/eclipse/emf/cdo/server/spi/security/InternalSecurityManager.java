@@ -31,6 +31,22 @@ public interface InternalSecurityManager extends ISecurityManager
 
   public void setRepository(InternalRepository repository);
 
+  /**
+   * @since 4.6
+   */
+  @Override
+  public InternalRepository[] getSecondaryRepositories();
+
+  /**
+   * @since 4.6
+   */
+  public void addSecondaryRepository(InternalRepository repository);
+
+  /**
+   * @since 4.6
+   */
+  public void removeSecondaryRepository(InternalRepository repository);
+
   public String getRealmPath();
 
   public CommitHandler[] getCommitHandlers();

@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
+import org.eclipse.emf.cdo.common.security.NoPermissionException;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -285,7 +286,14 @@ public class ObjectProperties extends Properties<EObject>
       @Override
       protected Object eval(EObject object)
       {
-        return !object.eContents().isEmpty();
+        try
+        {
+          return !object.eContents().isEmpty();
+        }
+        catch (NoPermissionException ex)
+        {
+          return false;
+        }
       }
     });
 

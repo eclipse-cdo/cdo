@@ -75,6 +75,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
 /**
@@ -1126,14 +1127,21 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
   }
 
   @Override
+  @Deprecated
   public void requestChangeCredentials()
+  {
+    requestChangeServerPassword(null);
+  }
+
+  @Override
+  public void requestChangeServerPassword(AtomicReference<char[]> receiver)
   {
     int attempt = 0;
     for (;;)
     {
       try
       {
-        delegate.requestChangeCredentials();
+        delegate.requestChangeServerPassword(receiver);
         return;
       }
       catch (Exception ex)

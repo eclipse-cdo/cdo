@@ -76,6 +76,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * If the meaning of this type isn't clear, there really should be more of a description here...
@@ -330,11 +331,24 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
    * This is an optional session protocol operation.
    *
    * @since 4.3
+   * @deprecated As of 4.13 use {@link #requestChangeServerPassword(AtomicReference)}.
    *
    * @throws UnsupportedOperationException if the session protocol implementation does
    *         not support requesting change of credentials
    */
+  @Deprecated
   public void requestChangeCredentials();
+
+  /**
+   * Requests that the server initiate the change-credentials protocol.
+   * This is an optional session protocol operation.
+   *
+   * @since 4.13
+   *
+   * @throws UnsupportedOperationException if the session protocol implementation does
+   *         not support requesting change of credentials
+   */
+  public void requestChangeServerPassword(AtomicReference<char[]> receiver);
 
   /**
    * Requests that the server initiate the reset-credentials protocol.
@@ -383,6 +397,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
     private long lastUpdateTime;
 
+    private long openingTime;
+
     private int tagModCount;
 
     private RepositoryTimeResult repositoryTimeResult;
@@ -430,6 +446,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
       repositoryCreationTime = in.readXLong();
       lastUpdateTime = in.readXLong();
+      openingTime = in.readXLong();
       tagModCount = in.readXInt();
       rootResourceID = in.readCDOID();
       authenticating = in.readBoolean();
@@ -635,6 +652,14 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     public int getTagModCount()
     {
       return tagModCount;
+    }
+
+    /**
+     * @since 4.13
+     */
+    public long getOpeningTime()
+    {
+      return openingTime;
     }
 
     /**

@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IPermissionManager;
+import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
@@ -50,10 +51,12 @@ import org.eclipse.net4j.util.security.DiffieHellman.Server.Challenge;
 import org.eclipse.net4j.util.security.IAuthenticator;
 import org.eclipse.net4j.util.security.IAuthenticator2;
 import org.eclipse.net4j.util.security.IUserManager;
+import org.eclipse.net4j.util.security.SecurityUtil;
 import org.eclipse.net4j.util.security.UserManagerAuthenticator;
 
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -92,6 +95,8 @@ public class SessionManager extends Container<ISession> implements InternalSessi
       }
     }
   };
+
+  private InternalSession[] sessionsArray = {};
 
   /**
    * @since 2.0
@@ -190,10 +195,33 @@ public class SessionManager extends Container<ISession> implements InternalSessi
   @Override
   public InternalSession[] getSessions()
   {
-    synchronized (sessions)
-    {
-      return sessions.values().toArray(new InternalSession[sessions.size()]);
-    }
+    return sessionsArray;
+  }
+
+  /**
+   * This method is (and must be) called while holding the "sessions" monitor lock.
+   */
+  private void buildSessionsArray()
+  {
+    sessionsArray = sessions.values().toArray(new InternalSession[sessions.size()]);
+
+    Arrays.sort(sessionsArray, (s1, s2) -> {
+      // Iterating system sessions first is very important for the SecurityManager.
+      // In particular realmView.waitForUpdate(lastRealmModification) may deadlock without this order.
+      int sys1 = IRepository.SYSTEM_USER_ID.equals(s1.getUserID()) ? 0 : 1;
+      int sys2 = IRepository.SYSTEM_USER_ID.equals(s2.getUserID()) ? 0 : 1;
+
+      int result = Integer.compare(sys1, sys2);
+      if (result == 0)
+      {
+        long t1 = s1.getOpeningTime();
+        long t2 = s2.getOpeningTime();
+
+        result = Long.compare(t1, t2);
+      }
+
+      return result;
+    });
   }
 
   /**
@@ -230,14 +258,14 @@ public class SessionManager extends Container<ISession> implements InternalSessi
   @Override
   public InternalSession openSession(ISessionProtocol sessionProtocol)
   {
-    final int id = lastSessionID.incrementAndGet();
+    int id = lastSessionID.incrementAndGet();
     if (TRACER.isEnabled())
     {
       TRACER.trace("Opening session " + id); //$NON-NLS-1$
     }
 
     String userID = authenticateUser(sessionProtocol);
-    final InternalSession session = createSession(id, userID, sessionProtocol);
+    InternalSession session = createSession(id, userID, sessionProtocol);
     LifecycleUtil.activate(session);
 
     synchronized (sessions)
@@ -247,10 +275,14 @@ public class SessionManager extends Container<ISession> implements InternalSessi
         @Override
         public void run()
         {
+          long openingTime = repository.getTimeStamp();
+          session.setOpeningTime(openingTime);
+
           long firstUpdateTime = repository.getLastCommitTimeStamp();
           session.setFirstUpdateTime(firstUpdateTime);
 
           sessions.put(id, session);
+          buildSessionsArray();
         }
       });
     }
@@ -273,6 +305,7 @@ public class SessionManager extends Container<ISession> implements InternalSessi
     synchronized (sessions)
     {
       removeSession = sessions.remove(sessionID);
+      buildSessionsArray();
     }
 
     if (removeSession != null)
@@ -390,7 +423,9 @@ public class SessionManager extends Container<ISession> implements InternalSessi
   public void sendCommitNotification(CommitNotificationInfo info)
   {
     CDOCommonSession sender = info.getSender();
-    for (InternalSession session : getSessions())
+    InternalSession[] sessions = getSessions();
+
+    for (InternalSession session : sessions)
     {
       if (session != sender || info.isModifiedByServer())
       {
@@ -571,7 +606,7 @@ public class SessionManager extends Container<ISession> implements InternalSessi
 
       ExtendedDataInputStream stream = new ExtendedDataInputStream(bais);
       String userID = stream.readString();
-      char[] password = stream.readString().toCharArray();
+      char[] password = SecurityUtil.toCharArray(stream.readString());
 
       authenticator.authenticate(userID, password);
       return userID;
@@ -637,12 +672,13 @@ public class SessionManager extends Container<ISession> implements InternalSessi
       if (operation == CredentialsUpdateOperation.RESET_PASSWORD)
       {
         String adminID = stream.readString();
-        char[] adminPassword = stream.readString().toCharArray();
+        char[] adminPassword = SecurityUtil.toCharArray(stream.readString());
         if (!ObjectUtil.equals(userID, stream.readString()))
         {
           throw new SecurityException("Attempt to reset password of a different user than requested"); //$NON-NLS-1$
         }
-        char[] newPassword = stream.readString().toCharArray();
+
+        char[] newPassword = SecurityUtil.toCharArray(stream.readString());
 
         // this will throw if the current credentials are not authenticated as an administrator
         ((IAuthenticator2)authenticator).resetPassword(adminID, adminPassword, userID, newPassword);
@@ -650,8 +686,8 @@ public class SessionManager extends Container<ISession> implements InternalSessi
       else
       {
         userID = stream.readString(); // user can change any password that she can authenticate on the old password
-        char[] password = stream.readString().toCharArray();
-        char[] newPassword = stream.readString().toCharArray();
+        char[] password = SecurityUtil.toCharArray(stream.readString());
+        char[] newPassword = SecurityUtil.toCharArray(stream.readString());
 
         // this will throw if the "old password" provided by the user is not correct
         ((IAuthenticator2)authenticator).updatePassword(userID, password, newPassword);

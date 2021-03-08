@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.net4j.bundle;
 
-import org.eclipse.emf.cdo.spi.server.IAppExtension;
+import org.eclipse.emf.cdo.spi.server.IAppExtension4;
 
 import org.eclipse.net4j.TransportConfigurator;
 import org.eclipse.net4j.acceptor.IAcceptor;
@@ -22,12 +22,18 @@ import java.io.File;
 /**
  * @author Eike Stepper
  */
-public class Net4jAppExtension implements IAppExtension
+public class Net4jAppExtension implements IAppExtension4
 {
   private IAcceptor[] acceptors;
 
   public Net4jAppExtension()
   {
+  }
+
+  @Override
+  public int getPriority()
+  {
+    return PRIORITY_NETWORK;
   }
 
   @Override

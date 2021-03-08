@@ -32,6 +32,11 @@ public interface ISecurityManager extends SecurityItemContainer
 
   public IRepository getRepository();
 
+  /**
+   * @since 4.6
+   */
+  public IRepository[] getSecondaryRepositories();
+
   public Realm getRealm();
 
   /**
@@ -56,6 +61,7 @@ public interface ISecurityManager extends SecurityItemContainer
    *
    * @author Eike Stepper
    */
+  @FunctionalInterface
   public interface RealmOperation
   {
     public void execute(Realm realm);

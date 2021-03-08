@@ -65,7 +65,6 @@ import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.PerfTracer;
-import org.eclipse.net4j.util.security.CredentialsUpdateOperation;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
@@ -83,6 +82,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
 /**
@@ -605,15 +605,22 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
   }
 
   @Override
+  @Deprecated
   public void requestChangeCredentials()
   {
-    send(new ChangeCredentialsRequest(this, CredentialsUpdateOperation.CHANGE_PASSWORD, null), new Monitor());
+    requestChangeServerPassword(null);
+  }
+
+  @Override
+  public void requestChangeServerPassword(AtomicReference<char[]> receiver)
+  {
+    send(new ChangeCredentialsRequest(this, receiver), new Monitor());
   }
 
   @Override
   public void requestResetCredentials(String userID)
   {
-    send(new ChangeCredentialsRequest(this, CredentialsUpdateOperation.RESET_PASSWORD, userID), new Monitor());
+    send(new ChangeCredentialsRequest(this, userID), new Monitor());
   }
 
   @Override

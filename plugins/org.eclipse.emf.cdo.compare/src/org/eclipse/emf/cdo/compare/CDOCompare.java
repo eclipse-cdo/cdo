@@ -48,13 +48,10 @@ import org.eclipse.emf.compare.match.impl.MatchEngineFactoryRegistryImpl;
 import org.eclipse.emf.compare.postprocessor.IPostProcessor;
 import org.eclipse.emf.compare.req.IReqEngine;
 import org.eclipse.emf.compare.scope.IComparisonScope;
-import org.eclipse.emf.compare.utils.ReferenceUtil;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -563,54 +560,6 @@ public class CDOCompare
      * TODO Remove this copied method when EMFCompare bug 570625 is resolved and released.
      */
     @Override
-    @SuppressWarnings("deprecation")
-    protected boolean isIgnoredReference(Match match, EReference reference)
-    {
-      final boolean toIgnore;
-      if (reference != null)
-      {
-        // ignore the derived, container or transient
-        if (!reference.isDerived() && !reference.isContainer() && !isTransient(reference))
-        {
-          /*
-           * EGenericTypes are usually "mutually derived" references that are handled through specific means in ecore
-           * (eGenericSuperTypes and eSuperTypes, EGenericType and eType...). As these aren't even shown to the user, we
-           * wish to avoid detection of changes on them.
-           */
-          // Otherwise if this reference is not set on any side, no use checking it
-          boolean isGenericTypeWithoutArguments = false;
-          boolean isGenericType = reference.getEType() == EcorePackage.eINSTANCE.getEGenericType();
-          if (isGenericType)
-          {
-            isGenericTypeWithoutArguments = //
-                org.eclipse.emf.compare.utils.EMFComparePredicates.IS_EGENERIC_TYPE_WITHOUT_PARAMETERS.apply(match.getLeft()) && //
-                    org.eclipse.emf.compare.utils.EMFComparePredicates.IS_EGENERIC_TYPE_WITHOUT_PARAMETERS.apply(match.getRight()) && //
-                    org.eclipse.emf.compare.utils.EMFComparePredicates.IS_EGENERIC_TYPE_WITHOUT_PARAMETERS.apply(match.getOrigin());
-          }
-
-          toIgnore = isGenericTypeWithoutArguments || !referenceIsSet(reference, match);
-        }
-        else if (ReferenceUtil.isFeatureMapDerivedFeature(reference))
-        {
-          toIgnore = false;
-        }
-        else
-        {
-          toIgnore = true;
-        }
-      }
-      else
-      {
-        toIgnore = true;
-      }
-
-      return toIgnore;
-    }
-
-    /**
-     * TODO Remove this copied method when EMFCompare bug 570625 is resolved and released.
-     */
-    @Override
     protected boolean isIgnoredAttribute(EAttribute attribute)
     {
       return attribute == null || attribute.isDerived() || isTransient(attribute);
@@ -619,6 +568,7 @@ public class CDOCompare
     /**
      * @since 4.5
      */
+    @Override
     protected boolean isTransient(EStructuralFeature feature)
     {
       return !EMFUtil.isPersistent(feature);

@@ -263,7 +263,7 @@
         <repository
             url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
         <repository
-            url="http://www.elver.org/eclipse/2.1.0/update"/>
+            url="http://www.springsite.com/eclipse/2.1.0/update"/>
         <repository
             url="${aspectj.repository}"/>
       </repositoryList>
@@ -284,7 +284,7 @@
         <repository
             url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
         <repository
-            url="http://www.elver.org/eclipse/2.1.0/update"/>
+            url="http://www.springsite.com/eclipse/2.1.0/update"/>
         <repository
             url="${aspectj.repository}"/>
       </repositoryList>
@@ -305,7 +305,7 @@
         <repository
             url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
         <repository
-            url="http://www.elver.org/eclipse/2.1.0/update"/>
+            url="http://www.springsite.com/eclipse/2.1.0/update"/>
         <repository
             url="${aspectj.repository}"/>
       </repositoryList>
@@ -326,7 +326,7 @@
         <repository
             url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
         <repository
-            url="http://www.elver.org/eclipse/2.1.0/update"/>
+            url="http://www.springsite.com/eclipse/2.1.0/update"/>
         <repository
             url="${aspectj.repository}"/>
       </repositoryList>
@@ -345,7 +345,7 @@
         <repository
             url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
         <repository
-            url="http://www.elver.org/eclipse/2.1.0/update"/>
+            url="http://www.springsite.com/eclipse/2.1.0/update"/>
         <repository
             url="${aspectj.repository}"/>
       </repositoryList>
@@ -364,7 +364,7 @@
         <repository
             url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
         <repository
-            url="http://www.elver.org/eclipse/2.1.0/update"/>
+            url="http://www.springsite.com/eclipse/2.1.0/update"/>
         <repository
             url="${aspectj.repository}"/>
       </repositoryList>
@@ -383,7 +383,7 @@
         <repository
             url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
         <repository
-            url="http://www.elver.org/eclipse/2.1.0/update"/>
+            url="http://www.springsite.com/eclipse/2.1.0/update"/>
         <repository
             url="${aspectj.repository}"/>
       </repositoryList>
@@ -400,7 +400,7 @@
         <repository
             url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
         <repository
-            url="http://www.elver.org/eclipse/2.1.0/update"/>
+            url="http://www.springsite.com/eclipse/2.1.0/update"/>
         <repository
             url="${aspectj.repository}"/>
       </repositoryList>
@@ -421,7 +421,7 @@
         <repository
             url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
         <repository
-            url="http://www.elver.org/eclipse/2.1.0/update"/>
+            url="http://www.springsite.com/eclipse/2.1.0/update"/>
       </repositoryList>
       <repositoryList
           name="Neon">
@@ -442,7 +442,7 @@
         <repository
             url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
         <repository
-            url="http://www.elver.org/eclipse/2.1.0/update"/>
+            url="http://www.springsite.com/eclipse/2.1.0/update"/>
       </repositoryList>
     </targlet>
   </setupTask>
@@ -480,7 +480,7 @@
         <repository
             url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
         <repository
-            url="http://www.elver.org/eclipse/2.1.0/update"/>
+            url="http://www.springsite.com/eclipse/2.1.0/update"/>
       </repositoryList>
       <repositoryList
           name="4.11">
@@ -497,7 +497,7 @@
         <repository
             url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
         <repository
-            url="http://www.elver.org/eclipse/2.1.0/update"/>
+            url="http://www.springsite.com/eclipse/2.1.0/update"/>
       </repositoryList>
       <repositoryList
           name="4.10">
@@ -514,7 +514,7 @@
         <repository
             url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
         <repository
-            url="http://www.elver.org/eclipse/2.1.0/update"/>
+            url="http://www.springsite.com/eclipse/2.1.0/update"/>
       </repositoryList>
       <repositoryList
           name="4.9">
@@ -529,7 +529,7 @@
         <repository
             url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
         <repository
-            url="http://www.elver.org/eclipse/2.1.0/update"/>
+            url="http://www.springsite.com/eclipse/2.1.0/update"/>
       </repositoryList>
       <repositoryList
           name="4.8">
@@ -544,7 +544,7 @@
         <repository
             url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
         <repository
-            url="http://www.elver.org/eclipse/2.1.0/update"/>
+            url="http://www.springsite.com/eclipse/2.1.0/update"/>
       </repositoryList>
       <repositoryList
           name="4.7">
@@ -565,7 +565,7 @@
         <repository
             url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
         <repository
-            url="http://www.elver.org/eclipse/2.1.0/update"/>
+            url="http://www.springsite.com/eclipse/2.1.0/update"/>
       </repositoryList>
       <repositoryList
           name="4.6">
@@ -586,7 +586,7 @@
         <repository
             url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
         <repository
-            url="http://www.elver.org/eclipse/2.1.0/update"/>
+            url="http://www.springsite.com/eclipse/2.1.0/update"/>
       </repositoryList>
       <repositoryList
           name="4.5">
@@ -607,7 +607,7 @@
         <repository
             url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
         <repository
-            url="http://www.elver.org/eclipse/2.1.0/update"/>
+            url="http://www.springsite.com/eclipse/2.1.0/update"/>
       </repositoryList>
     </targlet>
   </setupTask>

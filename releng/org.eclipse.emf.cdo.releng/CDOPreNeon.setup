@@ -154,7 +154,7 @@
         <repository
             url="http://download.oracle.com/otn_software/oepe/12.2.1/mars/repository"/>
         <repository
-            url="http://www.elver.org/eclipse/2.1.0/update"/>
+            url="http://www.springsite.com/eclipse/2.1.0/update"/>
       </repositoryList>
       <repositoryList
           name="Luna">
@@ -201,7 +201,7 @@
         <repository
             url="http://download.eclipse.org/mmt/qvto/updates/releases/3.4.0"/>
         <repository
-            url="http://www.elver.org/eclipse/2.0.0/update"/>
+            url="http://www.springsite.com/eclipse/2.0.0/update"/>
         <repository
             url="http://download.oracle.com/otn_software/oepe/kepler"/>
       </repositoryList>

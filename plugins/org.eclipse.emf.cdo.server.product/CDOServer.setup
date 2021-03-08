@@ -119,5 +119,27 @@
           url="https://download.eclipse.org/modeling/emf/cdo/updates/releases/latest"/>
     </setupTask>
   </version>
+  <version name="integration.stable"
+      label="Stable Integration"
+      requiredJavaVersion="11">
+    <setupTask
+        xsi:type="setup.p2:P2Task">
+      <repository
+          url="https://download.eclipse.org/releases/latest"/>
+      <repository
+          url="https://download.eclipse.org/modeling/emf/cdo/updates/integration/stable/latest"/>
+    </setupTask>
+  </version>
+  <version name="integration.weekly"
+      label="Weekly Integration"
+      requiredJavaVersion="11">
+    <setupTask
+        xsi:type="setup.p2:P2Task">
+      <repository
+          url="https://download.eclipse.org/releases/latest"/>
+      <repository
+          url="https://download.eclipse.org/modeling/emf/cdo/updates/integration/weekly/latest"/>
+    </setupTask>
+  </version>
   <description>A headless CDO Model Repository server.</description>
 </setup:Product>

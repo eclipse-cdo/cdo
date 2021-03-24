@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.net4j.util.ui.actions.LongRunningActionDelegate;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 
@@ -40,6 +41,48 @@ public class CheckoutCommitInfoActionDelegate extends LongRunningActionDelegate
   protected void doRun(IProgressMonitor progressMonitor) throws Exception
   {
     ISelection selection = getSelection();
+    final CDOCommitInfo commitInfo = getCDOCommitInfo(selection);
+    final CDOSession session = CDOUtil.getSession(commitInfo);
+    if (session != null)
+    {
+      final CDORepository repository = (CDORepository)session.properties().get(CDORepositoryImpl.REPOSITORY_KEY);
+      if (repository != null)
+      {
+        CDORepositoryElement repositoryElement = new CDORepositoryElement()
+        {
+          @Override
+          public CDORepository getRepository()
+          {
+            return repository;
+          }
+
+          @Override
+          public int getBranchID()
+          {
+            return commitInfo.getBranch().getID();
+          }
+
+          @Override
+          public long getTimeStamp()
+          {
+            return commitInfo.getTimeStamp();
+          }
+
+          @Override
+          public CDOID getObjectID()
+          {
+            return session.getRepositoryInfo().getRootResourceID();
+          }
+        };
+
+        checkout(repositoryElement);
+      }
+    }
+  }
+
+  private CDOCommitInfo getCDOCommitInfo(ISelection selection)
+  {
+    CDOCommitInfo commitInfo = null;
     if (selection instanceof IStructuredSelection)
     {
       IStructuredSelection ssel = (IStructuredSelection)selection;
@@ -48,47 +91,27 @@ public class CheckoutCommitInfoActionDelegate extends LongRunningActionDelegate
         Object element = ssel.getFirstElement();
         if (element instanceof CDOCommitInfo)
         {
-          CDOCommitInfo commitInfo = (CDOCommitInfo)element;
-
-          CDOSession session = CDOUtil.getSession(commitInfo);
-          if (session != null)
-          {
-            final CDORepository repository = (CDORepository)session.properties().get(CDORepositoryImpl.REPOSITORY_KEY);
-            if (repository != null)
-            {
-              CDORepositoryElement repositoryElement = new CDORepositoryElement()
-              {
-                @Override
-                public CDORepository getRepository()
-                {
-                  return repository;
-                }
-
-                @Override
-                public int getBranchID()
-                {
-                  return commitInfo.getBranch().getID();
-                }
-
-                @Override
-                public long getTimeStamp()
-                {
-                  return commitInfo.getTimeStamp();
-                }
-
-                @Override
-                public CDOID getObjectID()
-                {
-                  return session.getRepositoryInfo().getRootResourceID();
-                }
-              };
-
-              checkout(repositoryElement);
-            }
-          }
+          commitInfo = (CDOCommitInfo)element;
         }
       }
     }
+    return commitInfo;
+  }
+
+  /**
+   * This method is overridden so that the action can be disabled if the branching is not supported.
+   */
+  @Override
+  public void selectionChanged(IAction action, ISelection selection)
+  {
+    CDOCommitInfo commitInfo = getCDOCommitInfo(selection);
+    CDOSession session = CDOUtil.getSession(commitInfo);
+    if (session != null)
+    {
+      boolean supportingBranches = session.getRepositoryInfo().isSupportingBranches();
+      action.setEnabled(supportingBranches);
+    }
+    super.selectionChanged(action, selection);
   }
 
   protected void checkout(CDORepositoryElement repositoryElement)

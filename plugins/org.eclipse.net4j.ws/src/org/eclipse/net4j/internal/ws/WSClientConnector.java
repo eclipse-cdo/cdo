@@ -177,8 +177,20 @@ public class WSClientConnector extends WSConnector
     ClientUpgradeRequest request = new ClientUpgradeRequest();
     request.setHeader(ACCEPTOR_NAME_HEADER, acceptorName);
 
-    Future<Session> result = client.connect(webSocket, serviceURI, request);
-    result.get(connectTimeout, TimeUnit.MILLISECONDS);
+    try
+    {
+      Future<Session> result = client.connect(webSocket, serviceURI, request);
+      result.get(connectTimeout, TimeUnit.MILLISECONDS);
+    }
+    catch (Exception e)
+    {
+      if (ownedClient && client != null)
+      {
+        client.stop();
+        client = null;
+      }
+      throw e;
+    }
   }
 
   @Override
@@ -186,7 +198,7 @@ public class WSClientConnector extends WSConnector
   {
     super.doDeactivate();
 
-    if (ownedClient)
+    if (ownedClient && client != null)
     {
       client.stop();
       client = null;

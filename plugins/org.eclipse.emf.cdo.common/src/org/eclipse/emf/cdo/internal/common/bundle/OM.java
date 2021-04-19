@@ -60,6 +60,8 @@ public abstract class OM
    */
   public static final class Activator extends OSGiActivator
   {
+    private static final boolean disableURIHandlerRegistry = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.common.disableURIHandlerRegistry");
+
     public Activator()
     {
       super(BUNDLE);
@@ -70,18 +72,20 @@ public abstract class OM
     {
       super.doStart();
 
-      try
+      if (!disableURIHandlerRegistry)
       {
-        List<URIHandler> defaultHandlers = new ArrayList<>();
-        defaultHandlers.add(URIHandlerRegistryImpl.INSTANCE);
-        defaultHandlers.addAll(URIHandler.DEFAULT_HANDLERS);
+        try
+        {
+          List<URIHandler> defaultHandlers = new ArrayList<>(URIHandler.DEFAULT_HANDLERS);
+          defaultHandlers.add(4, URIHandlerRegistryImpl.INSTANCE); // Add our registry before EMF's catch-all handler.
 
-        Field field = ReflectUtil.getField(URIHandler.class, "DEFAULT_HANDLERS");
-        ReflectUtil.setValue(field, null, Collections.unmodifiableList(defaultHandlers), true);
-      }
-      catch (Throwable t)
-      {
-        LOG.error(t);
+          Field field = ReflectUtil.getField(URIHandler.class, "DEFAULT_HANDLERS");
+          ReflectUtil.setValue(field, null, Collections.unmodifiableList(defaultHandlers), true);
+        }
+        catch (Throwable t)
+        {
+          LOG.error(t);
+        }
       }
     }
   }

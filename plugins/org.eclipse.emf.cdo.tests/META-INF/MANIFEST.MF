@@ -1,13 +1,13 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.emf.cdo.tests;singleton:=true
-Bundle-Version: 4.1.4.qualifier
+Bundle-Version: 4.1.5.qualifier
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.eclipse.emf.cdo.tests.bundle.OM$Activator
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ClassPath: .
 Require-Bundle: org.eclipse.net4j.tests;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
  org.eclipse.emf.ecore.xmi;bundle-version="[2.5.0,3.0.0)";visibility:=reexport,
@@ -62,17 +62,17 @@ Export-Package: base;version="4.0.200",
  interface_;version="4.0.200",
  interface_.impl;version="4.0.200",
  interface_.util;version="4.0.200",
- org.eclipse.emf.cdo.tests;version="4.1.4",
- org.eclipse.emf.cdo.tests.bugzilla;version="4.1.4",
- org.eclipse.emf.cdo.tests.bundle;version="4.1.4";x-internal:=true,
- org.eclipse.emf.cdo.tests.config;version="4.1.4",
- org.eclipse.emf.cdo.tests.config.impl;version="4.1.4",
- org.eclipse.emf.cdo.tests.extra;version="4.1.4",
- org.eclipse.emf.cdo.tests.offline;version="4.1.4",
- org.eclipse.emf.cdo.tests.performance;version="4.1.4",
- org.eclipse.emf.cdo.tests.performance.framework;version="4.1.4",
- org.eclipse.emf.cdo.tests.revisioncache;version="4.1.4",
- org.eclipse.emf.cdo.tests.util;version="4.1.4",
+ org.eclipse.emf.cdo.tests;version="4.1.5",
+ org.eclipse.emf.cdo.tests.bugzilla;version="4.1.5",
+ org.eclipse.emf.cdo.tests.bundle;version="4.1.5";x-internal:=true,
+ org.eclipse.emf.cdo.tests.config;version="4.1.5",
+ org.eclipse.emf.cdo.tests.config.impl;version="4.1.5",
+ org.eclipse.emf.cdo.tests.extra;version="4.1.5",
+ org.eclipse.emf.cdo.tests.offline;version="4.1.5",
+ org.eclipse.emf.cdo.tests.performance;version="4.1.5",
+ org.eclipse.emf.cdo.tests.performance.framework;version="4.1.5",
+ org.eclipse.emf.cdo.tests.revisioncache;version="4.1.5",
+ org.eclipse.emf.cdo.tests.util;version="4.1.5",
  reference;version="4.0.200",
  reference.impl;version="4.0.200";
   x-friends:="org.eclipse.emf.cdo.dawn.tests,

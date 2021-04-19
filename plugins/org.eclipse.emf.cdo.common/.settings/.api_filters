@@ -14,11 +14,43 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.core.runtime.ILibrary">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.core.runtime.ILibrary"/>
+                <message_argument value="org.eclipse.emf.cdo.common_4.12.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.core.runtime.IPlatformRunnable">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.core.runtime.IPlatformRunnable"/>
+                <message_argument value="org.eclipse.emf.cdo.common_4.12.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="META-INF/MANIFEST.MF" type="org.eclipse.core.runtime.IPluginDescriptor">
         <filter id="305422471">
             <message_arguments>
                 <message_argument value="org.eclipse.core.runtime.IPluginDescriptor"/>
                 <message_argument value="org.eclipse.emf.cdo.common_4.7.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.core.runtime.IPluginPrerequisite">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.core.runtime.IPluginPrerequisite"/>
+                <message_argument value="org.eclipse.emf.cdo.common_4.12.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.core.runtime.IPluginRegistry">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.core.runtime.IPluginRegistry"/>
+                <message_argument value="org.eclipse.emf.cdo.common_4.12.0"/>
             </message_arguments>
         </filter>
     </resource>

@@ -21,12 +21,24 @@
                 <message_argument value="org.eclipse.emf.cdo.common_4.12.0"/>
             </message_arguments>
         </filter>
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.core.runtime.ILibrary"/>
+                <message_argument value="org.eclipse.emf.cdo.common_4.13.0"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="META-INF/MANIFEST.MF" type="org.eclipse.core.runtime.IPlatformRunnable">
         <filter id="305422471">
             <message_arguments>
                 <message_argument value="org.eclipse.core.runtime.IPlatformRunnable"/>
                 <message_argument value="org.eclipse.emf.cdo.common_4.12.0"/>
+            </message_arguments>
+        </filter>
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.core.runtime.IPlatformRunnable"/>
+                <message_argument value="org.eclipse.emf.cdo.common_4.13.0"/>
             </message_arguments>
         </filter>
     </resource>
@@ -45,12 +57,24 @@
                 <message_argument value="org.eclipse.emf.cdo.common_4.12.0"/>
             </message_arguments>
         </filter>
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.core.runtime.IPluginPrerequisite"/>
+                <message_argument value="org.eclipse.emf.cdo.common_4.13.0"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="META-INF/MANIFEST.MF" type="org.eclipse.core.runtime.IPluginRegistry">
         <filter id="305422471">
             <message_arguments>
                 <message_argument value="org.eclipse.core.runtime.IPluginRegistry"/>
                 <message_argument value="org.eclipse.emf.cdo.common_4.12.0"/>
+            </message_arguments>
+        </filter>
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.core.runtime.IPluginRegistry"/>
+                <message_argument value="org.eclipse.emf.cdo.common_4.13.0"/>
             </message_arguments>
         </filter>
     </resource>

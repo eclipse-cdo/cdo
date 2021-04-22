@@ -334,6 +334,10 @@ public class CheckoutRootObjectPage extends CheckoutWizardPage
     if (rootID != null)
     {
       properties.setProperty(CDOCheckoutImpl.PROP_ROOT_ID, CDOExplorerUtil.getCDOIDString(rootID));
+    }
+
+    if (rootObjectText != null)
+    {
       properties.setProperty(CDOCheckoutImpl.PROP_ROOT_LABEL, rootObjectText);
     }
   }

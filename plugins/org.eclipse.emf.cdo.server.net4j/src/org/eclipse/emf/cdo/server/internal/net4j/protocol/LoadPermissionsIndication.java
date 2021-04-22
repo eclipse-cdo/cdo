@@ -76,6 +76,7 @@ public class LoadPermissionsIndication extends CDOServerReadIndication
       if (revision == null)
       {
         out.writeByte(CDOProtocolConstants.REVISION_DOES_NOT_EXIST);
+        continue;
       }
 
       CDOPermission newPermission = permissionManager.getPermission(revision, head, session);

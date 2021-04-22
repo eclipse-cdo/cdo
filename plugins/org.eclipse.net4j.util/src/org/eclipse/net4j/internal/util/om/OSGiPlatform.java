@@ -144,12 +144,19 @@ public class OSGiPlatform extends AbstractPlatform
   }
 
   @Override
-  protected void setDebugOption(String bundleID, String option, String value)
+  protected void setDebugOption(String bundleID, String option, String value, boolean ifAbsent)
   {
     try
     {
       DebugOptions debugOptions = getDebugOptions();
-      debugOptions.setOption(bundleID + "/" + option, value); //$NON-NLS-1$
+      option = bundleID + "/" + option; //$NON-NLS-1$
+
+      if (ifAbsent && debugOptions.getOption(option) != null)
+      {
+        return;
+      }
+
+      debugOptions.setOption(option, value);
     }
     catch (RuntimeException ex)
     {

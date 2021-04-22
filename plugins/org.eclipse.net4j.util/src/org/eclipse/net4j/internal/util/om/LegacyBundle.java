@@ -19,6 +19,7 @@ import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.trace.Tracer;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -180,7 +181,7 @@ public class LegacyBundle extends AbstractBundle
       final String prefix = getBundleID() + "/"; //$NON-NLS-1$
       final int length = prefix.length();
 
-      inputStream = getInputStream(".options"); //$NON-NLS-1$
+      inputStream = new BufferedInputStream(getInputStream(LegacyPlatform.OPTIONS));
       properties.load(inputStream);
 
       for (Entry<Object, Object> entry : properties.entrySet())
@@ -191,7 +192,7 @@ public class LegacyBundle extends AbstractBundle
           if (key.startsWith(prefix))
           {
             String value = (String)entry.getValue();
-            setDebugOption(key.substring(length), value);
+            setDebugOptionIfAbsent(key.substring(length), value.trim());
           }
         }
         catch (RuntimeException ignore)

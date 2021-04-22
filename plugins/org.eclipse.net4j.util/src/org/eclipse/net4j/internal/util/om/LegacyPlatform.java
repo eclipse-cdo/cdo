@@ -13,15 +13,23 @@ package org.eclipse.net4j.internal.util.om;
 import org.eclipse.net4j.internal.util.bundle.AbstractPlatform;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.LegacyUtil;
 import org.eclipse.net4j.util.om.OMBundle;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 
@@ -30,12 +38,61 @@ import java.util.concurrent.ExecutorService;
  */
 public class LegacyPlatform extends AbstractPlatform
 {
+  public static final String OPTIONS = ".options";
+
   private final Map<String, String> debugOptions = new ConcurrentHashMap<>(0);
 
   private final Map<InternalOMJob, IProgressMonitor> jobMonitors = Collections.synchronizedMap(new HashMap<>());
 
   public LegacyPlatform()
   {
+    String debugOptionsPath = System.getProperty("debug.options");
+    if (debugOptionsPath == null)
+    {
+      debugOptionsPath = System.getProperty("osgi.debug");
+    }
+
+    if (debugOptionsPath != null)
+    {
+      loadDebugOptions(debugOptionsPath);
+    }
+  }
+
+  private void loadDebugOptions(String debugOptionsPath)
+  {
+    if (debugOptionsPath.length() == 0)
+    {
+      debugOptionsPath = new File(System.getProperty("user.dir"), OPTIONS).toString();
+    }
+  
+    InputStream inputStream = null;
+    Properties properties = new Properties();
+  
+    try
+    {
+      inputStream = new BufferedInputStream(new FileInputStream(debugOptionsPath));
+      properties.load(inputStream);
+  
+      for (Entry<Object, Object> entry : properties.entrySet())
+      {
+        try
+        {
+          String key = (String)entry.getKey();
+          String value = (String)entry.getValue();
+          debugOptions.put(key, value.trim());
+        }
+        catch (RuntimeException ignore)
+        {
+        }
+      }
+    }
+    catch (IOException ignore)
+    {
+    }
+    finally
+    {
+      IOUtil.closeSilent(inputStream);
+    }
   }
 
   @Override
@@ -57,9 +114,18 @@ public class LegacyPlatform extends AbstractPlatform
   }
 
   @Override
-  protected void setDebugOption(String bundleID, String option, String value)
+  protected void setDebugOption(String bundleID, String option, String value, boolean ifAbsent)
   {
-    debugOptions.put(bundleID + "/" + option, value); //$NON-NLS-1$
+    option = bundleID + "/" + option; //$NON-NLS-1$
+
+    if (ifAbsent)
+    {
+      debugOptions.putIfAbsent(option, value);
+    }
+    else
+    {
+      debugOptions.put(option, value);
+    }
   }
 
   @Override

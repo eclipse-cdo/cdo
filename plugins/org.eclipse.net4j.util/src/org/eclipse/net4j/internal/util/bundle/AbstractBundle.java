@@ -198,6 +198,11 @@ public abstract class AbstractBundle implements OMBundle, OMBundle.DebugSupport,
     platform.setDebugOption(bundleID, option, value);
   }
 
+  public void setDebugOptionIfAbsent(String option, String value)
+  {
+    platform.setDebugOption(bundleID, option, value, true);
+  }
+
   @Override
   public synchronized OMTracer tracer(String name)
   {

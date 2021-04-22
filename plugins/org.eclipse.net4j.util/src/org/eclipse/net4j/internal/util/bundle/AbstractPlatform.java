@@ -433,7 +433,12 @@ public abstract class AbstractPlatform implements OMPlatform
 
   protected abstract String getDebugOption(String bundleID, String option);
 
-  protected abstract void setDebugOption(String bundleID, String option, String value);
+  protected abstract void setDebugOption(String bundleID, String option, String value, boolean ifAbsent);
+
+  protected void setDebugOption(String bundleID, String option, String value)
+  {
+    setDebugOption(bundleID, option, value, false);
+  }
 
   public abstract void scheduleJob(InternalOMJob job);
 

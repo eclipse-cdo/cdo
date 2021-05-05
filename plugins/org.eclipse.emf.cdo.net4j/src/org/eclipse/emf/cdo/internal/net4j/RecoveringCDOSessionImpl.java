@@ -21,6 +21,8 @@ import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
+import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
+
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.signal.heartbeat.HeartBeatProtocol;
@@ -288,23 +290,47 @@ public abstract class RecoveringCDOSessionImpl extends CDONet4jSessionImpl
    */
   private static final class OpenViewRunnable implements AfterRecoveryRunnable
   {
-    private int viewID;
+    private final int viewID;
 
-    private CDOBranchPoint branchPoint;
+    private final boolean transaction;
 
-    private boolean transaction;
+    private final String durableLockingID;
+
+    private final CDOBranchPoint branchPoint;
+
+    private final CDOViewImpl.OptionsImpl options;
 
     public OpenViewRunnable(InternalCDOView view)
     {
       viewID = view.getViewID();
-      branchPoint = CDOBranchUtil.copyBranchPoint(view);
       transaction = view instanceof CDOTransaction;
+
+      durableLockingID = view.getDurableLockingID();
+      if (durableLockingID == null)
+      {
+        branchPoint = CDOBranchUtil.copyBranchPoint(view);
+      }
+      else
+      {
+        branchPoint = null;
+      }
+
+      options = (CDOViewImpl.OptionsImpl)view.options();
     }
 
     @Override
     public void run(CDOSessionProtocol sessionProtocol)
     {
-      sessionProtocol.openView(viewID, !transaction, branchPoint);
+      if (durableLockingID != null)
+      {
+        sessionProtocol.openView(viewID, !transaction, durableLockingID);
+      }
+      else
+      {
+        sessionProtocol.openView(viewID, !transaction, branchPoint);
+      }
+
+      options.recoverView();
     }
   }
 

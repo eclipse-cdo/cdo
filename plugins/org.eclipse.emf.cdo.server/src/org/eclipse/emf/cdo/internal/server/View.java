@@ -55,8 +55,10 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
 
   private final int viewID;
 
-  private final int sessionID; // Needed here so we can compute the hashCode even after session becomes null due to
-  // deactivation!
+  /**
+   * Needed here so we can compute the hashCode even after session becomes null due to deactivation!
+   */
+  private final int sessionID;
 
   private CDOBranchPoint branchPoint;
 

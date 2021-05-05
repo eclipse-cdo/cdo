@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.config.impl.SessionConfig;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOView;
+import org.eclipse.emf.cdo.view.CDOViewLocksChangedEvent;
 
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.signal.RemoteException;
@@ -33,6 +34,9 @@ import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.tests.TestListener;
+
+import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.util.concurrent.CountDownLatch;
 
@@ -105,6 +109,12 @@ public class ReconnectingSessionTest extends AbstractCDOTest
         }
       });
 
+      CDOView viewWithLockNotifications = reconnectingSession.openView();
+      viewWithLockNotifications.options().setLockNotificationEnabled(true);
+
+      CDOResource resReconn = viewWithLockNotifications.getObject(resource1);
+      checkLockNotifications(resource1, resReconn);
+
       IConnector connector = (IConnector)reconnectingSession.options().getNet4jProtocol().getChannel().getMultiplexer();
       dumpEvents(connector);
 
@@ -132,12 +142,39 @@ public class ReconnectingSessionTest extends AbstractCDOTest
       resource1.getContents().add(getModel1Factory().createCategory());
       commitAndSync(transaction, view);
       assertEquals(3, resource2.getContents().size());
+
+      checkLockNotifications(resource1, resReconn);
     }
     finally
+
     {
       LifecycleUtil.deactivate(reconnectingSession);
       LifecycleUtil.deactivate(acceptor);
     }
+  }
+
+  private void checkLockNotifications(CDOResource resource1, CDOResource resReconn) throws Exception
+  {
+    CDOView viewReconn = resReconn.cdoView();
+    assertEquals(true, viewReconn.options().isLockNotificationEnabled());
+    assertNull(resReconn.cdoLockState().getWriteLockOwner());
+
+    TestListener listener = new TestListener(viewReconn);
+
+    resource1.cdoWriteLock().lock(1000);
+
+    listener.assertEvent(CDOViewLocksChangedEvent.class, e -> {
+      assertNotNull(resReconn.cdoLockState().getWriteLockOwner());
+      assertEquals(((InternalCDOView)resource1.cdoView()).getLockOwner(), resReconn.cdoLockState().getWriteLockOwner());
+    });
+
+    listener.clearEvents();
+
+    resource1.cdoWriteLock().unlock();
+
+    listener.assertEvent(CDOViewLocksChangedEvent.class, e -> {
+      assertNull(resReconn.cdoLockState().getWriteLockOwner());
+    });
   }
 
   public void testReconnectTwice() throws Exception

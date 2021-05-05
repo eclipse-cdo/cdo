@@ -2644,6 +2644,11 @@ public class CDOViewImpl extends AbstractCDOView
       handleDetachedObjects(commitContext.getDetachedObjects().values());
     }
 
+    private boolean hasSubscriptions()
+    {
+      return !subscriptions.isEmpty();
+    }
+
     private void subscribe(EObject eObject, Adapter adapter)
     {
       subscribe(eObject, adapter, 1);
@@ -2661,6 +2666,7 @@ public class CDOViewImpl extends AbstractCDOView
     {
       boolean policiesPresent = options().hasChangeSubscriptionPolicies();
       subscriptions.clear();
+
       List<CDOID> ids = new ArrayList<>();
       if (policiesPresent)
       {
@@ -3210,6 +3216,22 @@ public class CDOViewImpl extends AbstractCDOView
 
     public OptionsImpl()
     {
+    }
+
+    public void recoverView()
+    {
+      if (lockNotificationsEnabled)
+      {
+        CDOSessionProtocol protocol = session.getSessionProtocol();
+        protocol.enableLockNotifications(viewID, true);
+      }
+
+      if (changeSubscriptionManager.hasSubscriptions())
+      {
+        changeSubscriptionManager.handleChangeSubcriptionPoliciesChanged();
+      }
+
+      // TODO unitManager.recoverView();
     }
 
     @Override

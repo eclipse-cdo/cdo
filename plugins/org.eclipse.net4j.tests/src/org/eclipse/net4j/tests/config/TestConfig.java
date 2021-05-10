@@ -379,7 +379,7 @@ public abstract class TestConfig
         @Override
         public IAcceptor getAcceptor(IManagedContainer container, boolean activate)
         {
-          // SSL context is handlded by Jetty.
+          // SSL context is handled by Jetty.
 
           return (IWSAcceptor)container.getElement(WSSAcceptorFactory.PRODUCT_GROUP, WSSUtil.FACTORY_TYPE, ACCEPTOR_NAME, activate);
         }
@@ -395,7 +395,7 @@ public abstract class TestConfig
             // File("ssl/trusted.ks").toURI().toString());
 
             String description = WSSUtil.getConnectorDescription(SERVICE_URI, ACCEPTOR_NAME);
-            return (IWSConnector)container.getElement(WSConnectorFactory.PRODUCT_GROUP, WSUtil.FACTORY_TYPE, description, activate);
+            return (IWSConnector)container.getElement(WSConnectorFactory.PRODUCT_GROUP, WSSUtil.FACTORY_TYPE, description, activate);
           }
           catch (URISyntaxException ex)
           {
@@ -421,6 +421,9 @@ public abstract class TestConfig
 
           ServletContextHandler handler = new ServletContextHandler(ServletContextHandler.SESSIONS);
           handler.setContextPath("/");
+
+          JettyWebSocketServletContainerInitializer.configure(handler, null);
+
           handler.addServlet(new ServletHolder("net4j", Net4jWebSocketServlet.class), "/net4j");
           // configure SSLContextFactory
           server.setHandler(handler);

@@ -51,19 +51,29 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 import org.eclipse.net4j.ws.WSUtil;
 import org.eclipse.net4j.ws.jetty.Net4jWebSocketServlet;
+import org.eclipse.net4j.wss.WSSUtil;
 
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
+import org.eclipse.core.runtime.URIUtil;
 import org.eclipse.jetty.ee8.servlet.ServletContextHandler;
 import org.eclipse.jetty.ee8.servlet.ServletHolder;
 import org.eclipse.jetty.ee8.websocket.server.config.JettyWebSocketServletContainerInitializer;
+import org.eclipse.jetty.http.HttpVersion;
+import org.eclipse.jetty.server.HttpConfiguration;
+import org.eclipse.jetty.server.HttpConnectionFactory;
+import org.eclipse.jetty.server.SecureRequestCustomizer;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.ServerConnector;
+import org.eclipse.jetty.server.SslConnectionFactory;
+import org.eclipse.jetty.util.ssl.SslContextFactory;
 
 import java.io.File;
 import java.lang.reflect.Field;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -827,6 +837,7 @@ public abstract class SessionConfig extends Config implements ISessionConfig
           handler.addServlet(new ServletHolder("net4j", Net4jWebSocketServlet.class), "/net4j");
 
           server.start();
+          System.out.println("Started Jetty server...");
         }
       }
 
@@ -847,6 +858,139 @@ public abstract class SessionConfig extends Config implements ISessionConfig
       public CDOViewProvider createViewProvider(final IManagedContainer container)
       {
         return new CDONet4jViewProvider.WS()
+        {
+          @Override
+          protected IManagedContainer getContainer()
+          {
+            return container;
+          }
+        };
+      }
+    }
+
+    /**
+     * @author Maxime Porhel
+     */
+    public static final class WSS extends SessionConfig.Net4j
+    {
+      public static final String NAME = "WSS";
+
+      public static final WSS INSTANCE = new WSS();
+
+      public static final int HTTPS_PORT = 8433;
+
+      public static final String SERVICE_URI = "wss://localhost:" + HTTPS_PORT + "/net4j";
+
+      public static final String ACCEPTOR_NAME = "default";
+
+      private static final long serialVersionUID = 1L;
+
+      private static Server server;
+
+      public WSS()
+      {
+        super(NAME);
+      }
+
+      @Override
+      public void initCapabilities(Set<String> capabilities)
+      {
+        super.initCapabilities(capabilities);
+        capabilities.add(CAPABILITY_NET4J_WSS);
+      }
+
+      @Override
+      public String getURIPrefix()
+      {
+        return getURIProtocol() + "://localhost:" + HTTPS_PORT + "/net4j/@" + ACCEPTOR_NAME;
+      }
+
+      @Override
+      public IAcceptor getAcceptor()
+      {
+        return WSSUtil.getAcceptor(getServerContainer(), ACCEPTOR_NAME);
+      }
+
+      @Override
+      public IConnector getConnector()
+      {
+        try
+        {
+          // System.setProperty("org.eclipse.net4j.wss.ssl.endpointIdentificationAlgorithm", "null");
+          // System.setProperty("org.eclipse.net4j.wss.ssl.passphrase", "secret");
+          // System.setProperty("org.eclipse.net4j.wss.ssl.trust", new File("ssl/trusted.ks").toURI().toString());
+          System.setProperty("org.eclipse.net4j.internal.wss.ssl.trustall", "true");
+
+          return WSSUtil.getConnector(getClientContainer(), new URI(SERVICE_URI), ACCEPTOR_NAME);
+        }
+        catch (URISyntaxException ex)
+        {
+          throw new RuntimeException(ex);
+        }
+      }
+
+      @Override
+      public void setUp() throws Exception
+      {
+        super.setUp();
+        WSSUtil.prepareContainer(getClientContainer());
+
+        if (!usesServerContainer())
+        {
+          WSSUtil.prepareContainer(getServerContainer());
+        }
+
+        if (server == null)
+        {
+          System.out.println("Starting Jetty...");
+          server = new Server();
+
+          SslContextFactory.Server sslContextFactory = new SslContextFactory.Server();
+
+          URL baseurl = org.eclipse.emf.cdo.tests.bundle.OM.BUNDLE.getBaseURL();
+          File file = URIUtil.toFile(URIUtil.toURI(baseurl));
+          File keyStoreFile = new File(file.getPath() + File.separator + "sslKey" + File.separator + "testKeys");
+          sslContextFactory.setKeyStorePath(keyStoreFile.getPath());
+          sslContextFactory.setKeyStorePassword("ab987c");
+
+          HttpConfiguration httpsConfig = new HttpConfiguration();
+          httpsConfig.addCustomizer(new SecureRequestCustomizer(false));
+
+          ServerConnector wssConnector = new ServerConnector(server, new SslConnectionFactory(sslContextFactory, HttpVersion.HTTP_1_1.toString()),
+              new HttpConnectionFactory(httpsConfig));
+          wssConnector.setHost("localhost");
+          wssConnector.setPort(HTTPS_PORT);
+          server.addConnector(wssConnector);
+
+          ServletContextHandler handler = new ServletContextHandler(ServletContextHandler.SESSIONS);
+          handler.setContextPath("/");
+          server.setHandler(handler);
+
+          JettyWebSocketServletContainerInitializer.configure(handler, null);
+          handler.addServlet(new ServletHolder("net4j", Net4jWebSocketServlet.class), "/net4j");
+
+          server.start();
+          System.out.println("Started Jetty server...");
+        }
+      }
+
+      @Override
+      public void mainSuiteFinished() throws Exception
+      {
+        super.mainSuiteFinished();
+
+        if (server != null)
+        {
+          System.out.println("Stopping Jetty...");
+          server.stop();
+          server = null;
+        }
+      }
+
+      @Override
+      public CDOViewProvider createViewProvider(final IManagedContainer container)
+      {
+        return new CDONet4jViewProvider.WSS()
         {
           @Override
           protected IManagedContainer getContainer()

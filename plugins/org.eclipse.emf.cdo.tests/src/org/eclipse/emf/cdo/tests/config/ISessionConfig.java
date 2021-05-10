@@ -32,6 +32,8 @@ public interface ISessionConfig extends IConfig
 
   public static final String CAPABILITY_NET4J_WS = "session.net4j.ws";
 
+  public static final String CAPABILITY_NET4J_WSS = "session.net4j.wss";
+
   public static final String CAPABILITY_NET4J_EMBEDDED = "session.net4j.embedded";
 
   public IManagedContainer getClientContainer();

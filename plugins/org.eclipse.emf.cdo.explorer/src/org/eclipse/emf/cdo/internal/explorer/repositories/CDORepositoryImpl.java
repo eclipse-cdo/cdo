@@ -50,6 +50,7 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.om.OMPlatform;
+import org.eclipse.net4j.util.registry.IRegistry;
 import org.eclipse.net4j.util.security.CredentialsProviderFactory;
 import org.eclipse.net4j.util.security.CredentialsUpdateOperation;
 import org.eclipse.net4j.util.security.ICredentialsProvider;
@@ -92,6 +93,8 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
   private static final boolean READABLE_IDS = OMPlatform.INSTANCE.isProperty("cdo.explorer.readableIDs");
 
   private static final boolean SET_USER_NAME = OMPlatform.INSTANCE.isProperty("cdo.explorer.setUserName");
+
+  private static final String VIEW_CONFIGURATOR_TYPE = OMPlatform.INSTANCE.getProperty("cdo.explorer.viewConfiguratorType", "checkout");
 
   private final Set<CDOCheckout> checkouts = new HashSet<>();
 
@@ -313,7 +316,11 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
           state = State.Connecting;
 
           session = openSession();
-          session.properties().put(REPOSITORY_KEY, this);
+
+          IRegistry<String, Object> properties = session.properties();
+          properties.put(REPOSITORY_KEY, this);
+          properties.put(CDOUtil.PROP_VIEW_CONFIGURATOR_TYPE, VIEW_CONFIGURATOR_TYPE);
+
           session.addListener(new LifecycleEventAdapter()
           {
             @Override

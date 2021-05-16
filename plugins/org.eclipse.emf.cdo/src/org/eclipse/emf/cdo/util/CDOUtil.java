@@ -50,6 +50,7 @@ import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 import org.eclipse.emf.cdo.view.CDORevisionPrefetchingPolicy;
 import org.eclipse.emf.cdo.view.CDOStaleObject;
 import org.eclipse.emf.cdo.view.CDOView;
+import org.eclipse.emf.cdo.view.CDOViewConfigurator;
 import org.eclipse.emf.cdo.view.CDOViewContainer;
 import org.eclipse.emf.cdo.view.CDOViewProviderRegistry;
 import org.eclipse.emf.cdo.view.CDOViewSet;
@@ -72,10 +73,13 @@ import org.eclipse.emf.internal.cdo.view.CDOStoreImpl;
 
 import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.concurrent.DelegableReentrantLock;
+import org.eclipse.net4j.util.container.ContainerUtil;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.io.EmptyInputStream;
 import org.eclipse.net4j.util.io.ReaderInputStream;
 import org.eclipse.net4j.util.om.OMPlatform;
+import org.eclipse.net4j.util.properties.PropertiesContainerUtil;
 import org.eclipse.net4j.util.security.CredentialsProviderFactory;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 
@@ -115,6 +119,21 @@ import java.util.concurrent.locks.Lock;
  */
 public final class CDOUtil
 {
+  /**
+   * @since 4.14
+   */
+  public static final String PROP_VIEW_CONFIGURATOR = "org.eclipse.emf.cdo.viewConfigurator";
+
+  /**
+   * @since 4.14
+   */
+  public static final String PROP_VIEW_CONFIGURATOR_TYPE = "org.eclipse.emf.cdo.viewConfiguratorType";
+
+  /**
+   * @since 4.14
+   */
+  public static final String PROP_VIEW_CONFIGURATOR_DESCRIPTION = "org.eclipse.emf.cdo.viewConfiguratorDescription";
+
   /**
    * @since 4.3
    */
@@ -276,13 +295,45 @@ public final class CDOUtil
    */
   public static void configureView(CDOView view)
   {
-    view.options().setLockNotificationEnabled(true);
-
-    if (view instanceof CDOTransaction)
+    CDOViewConfigurator viewConfigurator = getViewConfigurator(view);
+    if (viewConfigurator == null)
     {
-      CDOTransaction transaction = (CDOTransaction)view;
-      new CDOTransactionCommentator(transaction);
+      viewConfigurator = getViewConfigurator(view.getSession());
     }
+
+    if (viewConfigurator != null)
+    {
+      viewConfigurator.configureView(view);
+    }
+    else
+    {
+      view.options().setLockNotificationEnabled(true);
+
+      if (view instanceof CDOTransaction)
+      {
+        new CDOTransactionCommentator((CDOTransaction)view);
+      }
+    }
+  }
+
+  private static CDOViewConfigurator getViewConfigurator(Object object)
+  {
+    CDOViewConfigurator viewConfigurator = PropertiesContainerUtil.getProperty(object, PROP_VIEW_CONFIGURATOR, CDOViewConfigurator.class);
+    if (viewConfigurator == null)
+    {
+      String type = PropertiesContainerUtil.getProperty(object, PROP_VIEW_CONFIGURATOR_TYPE, String.class);
+      if (type != null)
+      {
+        IManagedContainer container = ContainerUtil.getContainer(object);
+        if (container != null)
+        {
+          String description = PropertiesContainerUtil.getProperty(object, PROP_VIEW_CONFIGURATOR_DESCRIPTION, String.class);
+          viewConfigurator = container.getElementOrNull(CDOViewConfigurator.Factory.PRODUCT_GROUP, type, description);
+        }
+      }
+    }
+
+    return viewConfigurator;
   }
 
   /**

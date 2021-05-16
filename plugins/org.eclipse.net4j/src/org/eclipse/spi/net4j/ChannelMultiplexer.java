@@ -30,6 +30,8 @@ import org.eclipse.net4j.util.factory.FactoryKey;
 import org.eclipse.net4j.util.factory.IFactoryKey;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.registry.HashMapRegistry;
+import org.eclipse.net4j.util.registry.IRegistry;
 import org.eclipse.net4j.util.security.INegotiationContext;
 
 import org.eclipse.internal.net4j.TransportConfig;
@@ -56,6 +58,8 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_CONNECTOR, ChannelMultiplexer.class);
 
+  private final IRegistry<String, Object> properties = new HashMapRegistry.AutoCommit<>();
+
   private ITransportConfig config;
 
   private long openChannelTimeout = IChannelMultiplexer.DEFAULT_OPEN_CHANNEL_TIMEOUT;
@@ -70,6 +74,15 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
 
   public ChannelMultiplexer()
   {
+  }
+
+  /**
+   * @since 4.12
+   */
+  @Override
+  public final IRegistry<String, Object> properties()
+  {
+    return properties;
   }
 
   @Override

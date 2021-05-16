@@ -25,6 +25,7 @@ import org.eclipse.net4j.signal.confirmation.ConfirmationRequest;
 import org.eclipse.net4j.signal.security.AuthenticationRequest;
 import org.eclipse.net4j.util.confirmation.Confirmation;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.container.IManagedContainerProvider;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.Monitor;
@@ -37,7 +38,7 @@ import org.eclipse.spi.net4j.ServerProtocolFactory;
 /**
  * @author Eike Stepper
  */
-public class CDOAdminServerProtocol extends SignalProtocol<CDOAdminServer> implements IAuthenticationProtocol
+public class CDOAdminServerProtocol extends SignalProtocol<CDOAdminServer> implements IAuthenticationProtocol, IManagedContainerProvider
 {
   public static final long DEFAULT_NEGOTIATION_TIMEOUT = 15 * 1000;
 
@@ -53,6 +54,7 @@ public class CDOAdminServerProtocol extends SignalProtocol<CDOAdminServer> imple
     admin.registerProtocol(this);
   }
 
+  @Override
   public final IManagedContainer getContainer()
   {
     return container;
@@ -156,7 +158,7 @@ public class CDOAdminServerProtocol extends SignalProtocol<CDOAdminServer> imple
   /**
    * @author Eike Stepper
    */
-  public static class Factory extends ServerProtocolFactory
+  public static class Factory extends ServerProtocolFactory implements IManagedContainerProvider
   {
     public static final String TYPE = CDOAdminProtocolConstants.PROTOCOL_NAME;
 
@@ -168,6 +170,7 @@ public class CDOAdminServerProtocol extends SignalProtocol<CDOAdminServer> imple
       this.container = container;
     }
 
+    @Override
     public IManagedContainer getContainer()
     {
       return container;

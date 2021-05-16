@@ -348,8 +348,10 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
     writeString(lockArea.getUserID());
     writeBoolean(lockArea.isReadOnly());
 
-    writeXInt(lockArea.getLocks().size());
-    for (Map.Entry<CDOID, LockGrade> entry : lockArea.getLocks().entrySet())
+    Map<CDOID, LockGrade> locks = lockArea.getLocks();
+    writeXInt(locks.size());
+
+    for (Map.Entry<CDOID, LockGrade> entry : locks.entrySet())
     {
       writeCDOID(entry.getKey());
       writeEnum(entry.getValue());

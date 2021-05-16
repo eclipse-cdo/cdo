@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRepositoryProvider;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.container.IManagedContainerProvider;
 
 /**
  * If the meaning of this type isn't clear, there really should be more of a description here...
@@ -21,7 +22,7 @@ import org.eclipse.net4j.util.container.IManagedContainer;
  * @author Eike Stepper
  * @since 2.0
  */
-public class ContainerRepositoryProvider implements IRepositoryProvider
+public class ContainerRepositoryProvider implements IRepositoryProvider, IManagedContainerProvider
 {
   private IManagedContainer container;
 
@@ -30,6 +31,7 @@ public class ContainerRepositoryProvider implements IRepositoryProvider
     this.container = container;
   }
 
+  @Override
   public IManagedContainer getContainer()
   {
     return container;

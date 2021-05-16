@@ -33,6 +33,7 @@ import org.eclipse.net4j.util.confirmation.Confirmation;
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.container.IManagedContainerProvider;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
@@ -49,7 +50,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class CDOAdminServer extends AbstractCDOAdmin
+public class CDOAdminServer extends AbstractCDOAdmin implements IManagedContainerProvider
 {
   public static final String PROP_IGNORE = "org.eclipse.emf.cdo.server.admin.ignore";
 
@@ -90,6 +91,7 @@ public class CDOAdminServer extends AbstractCDOAdmin
     this.container = container;
   }
 
+  @Override
   public final IManagedContainer getContainer()
   {
     return container;
@@ -408,7 +410,7 @@ public class CDOAdminServer extends AbstractCDOAdmin
   /**
    * @author Eike Stepper
    */
-  public static class Factory extends org.eclipse.net4j.util.factory.Factory
+  public static class Factory extends org.eclipse.net4j.util.factory.Factory implements IManagedContainerProvider
   {
     public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.admin.adminServers";
 
@@ -430,6 +432,7 @@ public class CDOAdminServer extends AbstractCDOAdmin
       this.timeout = timeout;
     }
 
+    @Override
     public final IManagedContainer getContainer()
     {
       return container;

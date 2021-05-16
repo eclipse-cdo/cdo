@@ -45,6 +45,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.Revisi
 import org.eclipse.net4j.util.concurrent.IExecutorServiceProvider;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.container.IManagedContainerProvider;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
@@ -69,8 +70,15 @@ import java.util.concurrent.Semaphore;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface InternalRepository
-    extends IRepository, PackageProcessor, PackageLoader, BranchLoader4, RevisionLoader2, CommitInfoLoader, CDORevisionUnchunker, IExecutorServiceProvider
+public interface InternalRepository extends IRepository, //
+    PackageProcessor, //
+    PackageLoader, //
+    BranchLoader4, //
+    RevisionLoader2, //
+    CommitInfoLoader, //
+    CDORevisionUnchunker, //
+    IExecutorServiceProvider, //
+    IManagedContainerProvider
 {
   public void setName(String name);
 
@@ -158,11 +166,6 @@ public interface InternalRepository
   public InternalQueryManager getQueryManager();
 
   public void setQueryHandlerProvider(IQueryHandlerProvider queryHandlerProvider);
-
-  /**
-   * @since 4.3
-   */
-  public IManagedContainer getContainer();
 
   /**
    * @since 4.3

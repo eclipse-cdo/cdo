@@ -25,6 +25,7 @@ import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.jvm.JVMUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.container.IManagedContainerProvider;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
@@ -42,7 +43,7 @@ import java.util.Map;
  * @author Eike Stepper
  * @since 4.6
  */
-public abstract class CDOEmbeddedRepositoryConfig extends Lifecycle
+public abstract class CDOEmbeddedRepositoryConfig extends Lifecycle implements IManagedContainerProvider
 {
   private static final String JVM_ACCEPTOR_PREFIX = "cdo_embedded_repo_";
 
@@ -76,6 +77,7 @@ public abstract class CDOEmbeddedRepositoryConfig extends Lifecycle
   /**
    * Subclasses may override.
    */
+  @Override
   public IManagedContainer getContainer()
   {
     return IPluginContainer.INSTANCE;

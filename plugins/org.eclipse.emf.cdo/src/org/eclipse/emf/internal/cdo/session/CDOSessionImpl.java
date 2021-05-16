@@ -104,6 +104,9 @@ import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.concurrent.IRWOLockManager;
 import org.eclipse.net4j.util.concurrent.RWOLockManager;
 import org.eclipse.net4j.util.concurrent.RunnableWithName;
+import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.container.IManagedContainerProvider;
+import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IEvent;
@@ -161,7 +164,7 @@ import java.util.concurrent.ExecutorService;
 /**
  * @author Eike Stepper
  */
-public abstract class CDOSessionImpl extends CDOTransactionContainerImpl implements InternalCDOSession
+public abstract class CDOSessionImpl extends CDOTransactionContainerImpl implements InternalCDOSession, IManagedContainerProvider
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SESSION, CDOSessionImpl.class);
 
@@ -205,14 +208,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
   private CDOSession.Options options = createOptions();
 
-  private final IRegistry<String, Object> properties = new HashMapRegistry<String, Object>()
-  {
-    @Override
-    public void setAutoCommit(boolean autoCommit)
-    {
-      throw new UnsupportedOperationException();
-    }
-  };
+  private final IRegistry<String, Object> properties = new HashMapRegistry.AutoCommit<>();
 
   private final SessionInvalidator invalidator = new SessionInvalidator();
 
@@ -247,6 +243,12 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
   public CDOSessionImpl()
   {
+  }
+
+  @Override
+  public IManagedContainer getContainer()
+  {
+    return IPluginContainer.INSTANCE;
   }
 
   @Override

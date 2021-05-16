@@ -18,6 +18,7 @@ import org.eclipse.net4j.signal.wrapping.StreamWrapperInjector;
 import org.eclipse.net4j.util.container.FactoryNotFoundException;
 import org.eclipse.net4j.util.container.IElementProcessor;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.container.IManagedContainerProvider;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.io.IStreamWrapper;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -54,7 +55,7 @@ import java.util.Map;
  * @author Eike Stepper
  * @since 2.0
  */
-public class TransportConfigurator
+public class TransportConfigurator implements IManagedContainerProvider
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, TransportConfigurator.class);
 
@@ -65,6 +66,7 @@ public class TransportConfigurator
     this.container = container;
   }
 
+  @Override
   public IManagedContainer getContainer()
   {
     return container;

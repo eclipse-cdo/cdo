@@ -31,6 +31,7 @@ import org.eclipse.net4j.util.container.FactoryNotFoundException;
 import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.container.IContainerDelta.Kind;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.container.IManagedContainerProvider;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
@@ -62,7 +63,7 @@ import java.util.Set;
  *
  * @author Stefan Winkler
  */
-public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.Provider
+public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.Provider, IManagedContainerProvider
 {
   public static final EClass CUSTOM_DATA_TYPE = EcorePackage.Literals.EDATA_TYPE;
 
@@ -221,7 +222,8 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
     classifierDefaultMapping.put(EtypesPackage.Literals.CLOB, DBType.VARCHAR); // TODO Should be DBType.CLOB?
   }
 
-  protected IManagedContainer getContainer()
+  @Override
+  public IManagedContainer getContainer()
   {
     return IPluginContainer.INSTANCE;
   }

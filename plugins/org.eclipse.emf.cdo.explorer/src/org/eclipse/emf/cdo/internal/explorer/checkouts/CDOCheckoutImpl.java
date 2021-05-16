@@ -36,7 +36,6 @@ import org.eclipse.emf.cdo.view.CDOViewTargetChangedEvent;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
@@ -973,11 +972,6 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     {
       properties.setProperty(PROP_ROOT_LABEL, rootLabel);
     }
-  }
-
-  protected IManagedContainer getContainer()
-  {
-    return IPluginContainer.INSTANCE;
   }
 
   protected EObject loadRootObject()

@@ -17,6 +17,7 @@ package org.eclipse.emf.cdo.common.lock;
  * @author Caspar De Groot
  * @since 4.1
  */
+@FunctionalInterface
 public interface CDOLockChangeInfoHandler
 {
   public void handleLockChangeInfo(CDOLockChangeInfo lockChangeInfo);

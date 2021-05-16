@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.common.util;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.container.IManagedContainerProvider;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.lifecycle.IDeactivateable;
@@ -92,7 +93,7 @@ public interface ResourceSetConfigurer
     /**
      * @author Eike Stepper
      */
-    public static final class ResourceSetConfiguration extends AdapterImpl implements IDeactivateable
+    public static final class ResourceSetConfiguration extends AdapterImpl implements IDeactivateable, IManagedContainerProvider
     {
       private final ResourceSet resourceSet;
 
@@ -123,6 +124,7 @@ public interface ResourceSetConfigurer
         return context;
       }
 
+      @Override
       public IManagedContainer getContainer()
       {
         return container;

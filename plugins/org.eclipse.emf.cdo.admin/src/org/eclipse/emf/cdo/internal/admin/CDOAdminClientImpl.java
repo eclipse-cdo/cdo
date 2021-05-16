@@ -24,6 +24,7 @@ import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.concurrent.ExecutorServiceFactory;
 import org.eclipse.net4j.util.confirmation.IConfirmationProvider;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.container.IManagedContainerProvider;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -39,7 +40,8 @@ import java.util.concurrent.ExecutorService;
 /**
  * @author Eike Stepper
  */
-public class CDOAdminClientImpl extends AbstractCDOAdmin implements CDOAdminClient, IPasswordCredentialsProvider.Provider, IConfirmationProvider.Provider
+public class CDOAdminClientImpl extends AbstractCDOAdmin
+    implements CDOAdminClient, IPasswordCredentialsProvider.Provider, IConfirmationProvider.Provider, IManagedContainerProvider
 {
   private static final String URL_SEPARATOR = "://";
 
@@ -72,6 +74,7 @@ public class CDOAdminClientImpl extends AbstractCDOAdmin implements CDOAdminClie
     return url;
   }
 
+  @Override
   public final IManagedContainer getContainer()
   {
     return container;

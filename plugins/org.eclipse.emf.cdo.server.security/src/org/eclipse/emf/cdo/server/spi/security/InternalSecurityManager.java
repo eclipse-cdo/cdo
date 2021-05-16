@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
 import org.eclipse.emf.cdo.server.security.ISecurityManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
-import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.container.IManagedContainerProvider;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
 /**
@@ -25,10 +25,8 @@ import org.eclipse.net4j.util.factory.ProductCreationException;
  * @noimplement This interface is not intended to be implemented by clients.
  * @noextend This interface is not intended to be extended by clients.
  */
-public interface InternalSecurityManager extends ISecurityManager
+public interface InternalSecurityManager extends ISecurityManager, IManagedContainerProvider
 {
-  public IManagedContainer getContainer();
-
   public void setRepository(InternalRepository repository);
 
   /**

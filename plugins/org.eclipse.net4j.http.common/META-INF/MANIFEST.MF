@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.net4j.http.common
-Bundle-Version: 4.1.1.qualifier
+Bundle-Version: 4.2.0.qualifier
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -11,11 +11,11 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ClassPath: .
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)";resolution:=optional,
  org.eclipse.net4j;bundle-version="[4.0.0,5.0.0)";visibility:=reexport
-Export-Package: org.eclipse.net4j.http.common;version="4.1.1";uses:="org.eclipse.net4j.connector",
- org.eclipse.net4j.http.internal.common;version="4.1.1";
+Export-Package: org.eclipse.net4j.http.common;version="4.2.0";uses:="org.eclipse.net4j.connector",
+ org.eclipse.net4j.http.internal.common;version="4.2.0";
   x-friends:="org.eclipse.net4j.http,
    org.eclipse.net4j.http.server,
    org.eclipse.net4j.http.tests",
- org.eclipse.net4j.http.internal.common.bundle;version="4.1.1";x-friends:="org.eclipse.net4j.http,org.eclipse.net4j.http.server,org.eclipse.net4j.http.tests",
- org.eclipse.net4j.http.internal.common.messages;version="4.1.1";x-internal:=true
+ org.eclipse.net4j.http.internal.common.bundle;version="4.2.0";x-friends:="org.eclipse.net4j.http,org.eclipse.net4j.http.server,org.eclipse.net4j.http.tests",
+ org.eclipse.net4j.http.internal.common.messages;version="4.2.0";x-internal:=true
 Automatic-Module-Name: org.eclipse.net4j.http.common

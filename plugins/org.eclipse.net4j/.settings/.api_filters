@@ -99,6 +99,12 @@
                 <message_argument value="IAcceptor"/>
             </message_arguments>
         </filter>
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="InternalAcceptor"/>
+                <message_argument value="Acceptor"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/spi/net4j/Channel.java" type="org.eclipse.spi.net4j.Channel">
         <filter id="574668824">
@@ -139,6 +145,12 @@
                 <message_argument value="IChannelMultiplexer"/>
             </message_arguments>
         </filter>
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="InternalChannelMultiplexer"/>
+                <message_argument value="ChannelMultiplexer"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/spi/net4j/Connector.java" type="org.eclipse.spi.net4j.Connector">
         <filter id="574668824">
@@ -146,6 +158,12 @@
                 <message_argument value="InternalConnector"/>
                 <message_argument value="Connector"/>
                 <message_argument value="IConnector"/>
+            </message_arguments>
+        </filter>
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="InternalConnector"/>
+                <message_argument value="Connector"/>
             </message_arguments>
         </filter>
     </resource>

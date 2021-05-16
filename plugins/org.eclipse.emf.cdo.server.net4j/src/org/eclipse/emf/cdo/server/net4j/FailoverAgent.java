@@ -27,6 +27,7 @@ import org.eclipse.net4j.signal.heartbeat.HeartBeatProtocol;
 import org.eclipse.net4j.util.concurrent.TimerLifecycle;
 import org.eclipse.net4j.util.concurrent.TimerLifecycle.DaemonFactory;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.container.IManagedContainerProvider;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
@@ -42,7 +43,7 @@ import java.util.Timer;
  * @author Eike Stepper
  * @since 4.0
  */
-public abstract class FailoverAgent extends Lifecycle implements CDOSessionConfigurationFactory
+public abstract class FailoverAgent extends Lifecycle implements CDOSessionConfigurationFactory, IManagedContainerProvider
 {
   private IConnector monitorConnector;
 
@@ -75,6 +76,7 @@ public abstract class FailoverAgent extends Lifecycle implements CDOSessionConfi
   /**
    * @since 4.1
    */
+  @Override
   public IManagedContainer getContainer()
   {
     return IPluginContainer.INSTANCE;

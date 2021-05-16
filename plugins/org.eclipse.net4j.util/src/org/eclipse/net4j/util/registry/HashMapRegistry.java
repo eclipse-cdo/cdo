@@ -45,4 +45,36 @@ public class HashMapRegistry<K, V> extends Registry<K, V>
   {
     return map;
   }
+
+  /**
+   * @author Eike Stepper
+   * @since 3.15
+   */
+  public static class AutoCommit<K, V> extends HashMapRegistry<K, V>
+  {
+    public AutoCommit()
+    {
+    }
+
+    public AutoCommit(int initialCapacity, float loadFactor)
+    {
+      super(initialCapacity, loadFactor);
+    }
+
+    public AutoCommit(int initialCapacity)
+    {
+      super(initialCapacity);
+    }
+
+    public AutoCommit(Map<? extends K, ? extends V> m)
+    {
+      super(m);
+    }
+
+    @Override
+    public final void setAutoCommit(boolean autoCommit)
+    {
+      throw new UnsupportedOperationException();
+    }
+  }
 }

@@ -11,6 +11,7 @@
 package org.eclipse.net4j.util.ui.widgets;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.container.IManagedContainerProvider;
 import org.eclipse.net4j.util.container.IPluginContainer;
 
 import org.eclipse.swt.SWT;
@@ -22,7 +23,7 @@ import java.util.Set;
  * @author Eike Stepper
  * @since 3.3
  */
-public class CustomizeableComposite extends Composite
+public class CustomizeableComposite extends Composite implements IManagedContainerProvider
 {
   private final String productGroup;
 
@@ -43,6 +44,7 @@ public class CustomizeableComposite extends Composite
     return productGroup;
   }
 
+  @Override
   public IManagedContainer getContainer()
   {
     return IPluginContainer.INSTANCE;

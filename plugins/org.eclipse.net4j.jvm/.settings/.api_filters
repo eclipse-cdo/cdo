@@ -79,6 +79,12 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/net4j/internal/jvm/JVMServerConnector.java" type="org.eclipse.net4j.internal.jvm.JVMServerConnector">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="IServerConnector"/>
+                <message_argument value="JVMServerConnector"/>
+            </message_arguments>
+        </filter>
         <filter id="643842064">
             <message_arguments>
                 <message_argument value="JVMAcceptor"/>
@@ -98,6 +104,14 @@
                 <message_argument value="JVMClientConnector"/>
                 <message_argument value="JVMServerConnector"/>
                 <message_argument value="JVMServerConnector(JVMAcceptor, JVMClientConnector)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/net4j/jvm/IJVMAcceptor.java" type="org.eclipse.net4j.jvm.IJVMAcceptor">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="IAcceptor"/>
+                <message_argument value="IJVMAcceptor"/>
             </message_arguments>
         </filter>
     </resource>

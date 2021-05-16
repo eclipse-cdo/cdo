@@ -606,14 +606,7 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
    */
   private final class ServerCDOSession extends PlatformObject implements InternalCDOSession, CDORepositoryInfo, org.eclipse.emf.cdo.session.CDOSession.Options
   {
-    private final IRegistry<String, Object> properties = new HashMapRegistry<String, Object>()
-    {
-      @Override
-      public void setAutoCommit(boolean autoCommit)
-      {
-        throw new UnsupportedOperationException();
-      }
-    };
+    private final IRegistry<String, Object> properties = new HashMapRegistry.AutoCommit<>();
 
     private final InternalSession internalSession;
 

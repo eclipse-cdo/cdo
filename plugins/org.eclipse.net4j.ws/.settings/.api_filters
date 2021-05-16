@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.net4j.ws" version="2">
+    <resource path="src/org/eclipse/net4j/internal/ws/WSServerConnector.java" type="org.eclipse.net4j.internal.ws.WSServerConnector">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="IServerConnector"/>
+                <message_argument value="WSServerConnector"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/net4j/ws/IWSAcceptor.java" type="org.eclipse.net4j.ws.IWSAcceptor">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="IAcceptor"/>
+                <message_argument value="IWSAcceptor"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/net4j/ws/IWSConnector.java" type="org.eclipse.net4j.ws.IWSConnector">
         <filter id="571473929">
             <message_arguments>

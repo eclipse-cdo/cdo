@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.container.IManagedContainerProvider;
 
 /**
  * If the meaning of this type isn't clear, there really should be more of a description here...
@@ -22,7 +23,7 @@ import org.eclipse.net4j.util.container.IManagedContainer;
  * @author Eike Stepper
  * @since 2.0
  */
-public class ContainerQueryHandlerProvider implements IQueryHandlerProvider
+public class ContainerQueryHandlerProvider implements IQueryHandlerProvider, IManagedContainerProvider
 {
   private IManagedContainer container;
 
@@ -31,6 +32,7 @@ public class ContainerQueryHandlerProvider implements IQueryHandlerProvider
     this.container = container;
   }
 
+  @Override
   public IManagedContainer getContainer()
   {
     return container;

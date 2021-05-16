@@ -77,6 +77,7 @@ public interface IDurableLockingManager
      *
      * @author Eike Stepper
      */
+    @FunctionalInterface
     public interface Handler
     {
       public boolean handleLockArea(LockArea area);

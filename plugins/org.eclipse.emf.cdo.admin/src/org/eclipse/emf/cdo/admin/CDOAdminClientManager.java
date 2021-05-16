@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.admin;
 
 import org.eclipse.net4j.util.container.IContainer;
-import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.container.IManagedContainerProvider;
 
 import java.util.Collection;
 import java.util.List;
@@ -23,10 +23,8 @@ import java.util.List;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface CDOAdminClientManager extends IContainer<CDOAdminClient>
+public interface CDOAdminClientManager extends IContainer<CDOAdminClient>, IManagedContainerProvider
 {
-  public IManagedContainer getContainer();
-
   public CDOAdminClient[] getConnections();
 
   public List<String> getConnectionURLs();

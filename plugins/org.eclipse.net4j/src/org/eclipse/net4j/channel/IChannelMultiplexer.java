@@ -17,6 +17,7 @@ import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.factory.IFactory;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
+import org.eclipse.net4j.util.properties.IPropertiesContainer;
 
 import java.util.Collection;
 
@@ -27,7 +28,7 @@ import java.util.Collection;
  * @noimplement This interface is not intended to be implemented by clients.
  * @noextend This interface is not intended to be extended by clients.
  */
-public interface IChannelMultiplexer extends ILocationAware, IContainer<IChannel>
+public interface IChannelMultiplexer extends ILocationAware, IContainer<IChannel>, IPropertiesContainer
 {
   /**
    * @since 2.0

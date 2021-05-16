@@ -238,19 +238,17 @@ public abstract class SynchronizableRepository extends Repository.Default implem
   @Override
   public String[] getLockAreaIDs()
   {
+    StoreThreadLocal.setSession(replicatorSession);
+
     try
     {
-      StoreThreadLocal.setSession(replicatorSession);
-      final List<String> areaIDs = new LinkedList<>();
-      getLockingManager().getLockAreas(null, new LockArea.Handler()
-      {
-        @Override
-        public boolean handleLockArea(LockArea area)
-        {
-          areaIDs.add(area.getDurableLockingID());
-          return true;
-        }
+      List<String> areaIDs = new LinkedList<>();
+
+      getLockingManager().getLockAreas(null, area -> {
+        areaIDs.add(area.getDurableLockingID());
+        return true;
       });
+
       return areaIDs.toArray(new String[areaIDs.size()]);
     }
     finally

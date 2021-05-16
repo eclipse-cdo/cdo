@@ -25,6 +25,7 @@ import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IManagedContainer.ContainerAware;
+import org.eclipse.net4j.util.container.IManagedContainerProvider;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.factory.PropertiesFactory;
 import org.eclipse.net4j.util.om.OMPlatform;
@@ -67,7 +68,7 @@ import java.util.Map.Entry;
  * @author Eike Stepper
  * @since 4.0
  */
-public class RepositoryConfigurator
+public class RepositoryConfigurator implements IManagedContainerProvider
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_REPOSITORY, RepositoryConfigurator.class);
 
@@ -89,6 +90,7 @@ public class RepositoryConfigurator
     this.container = container;
   }
 
+  @Override
   public IManagedContainer getContainer()
   {
     return container;

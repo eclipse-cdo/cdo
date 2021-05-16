@@ -15,6 +15,8 @@ import org.eclipse.net4j.acceptor.IAcceptor;
 /**
  * @author Eike Stepper
  * @since 4.5
+ * @noimplement This interface is not intended to be implemented by clients.
+ * @noextend This interface is not intended to be extended by clients.
  */
 public interface IServerConnector extends IConnector
 {

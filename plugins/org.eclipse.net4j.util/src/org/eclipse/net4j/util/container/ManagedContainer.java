@@ -26,6 +26,7 @@ import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleException;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.properties.PropertiesContainerUtil;
 import org.eclipse.net4j.util.registry.HashMapRegistry;
 import org.eclipse.net4j.util.registry.IRegistry;
 
@@ -431,6 +432,15 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
         ((ContainerAware)element).setManagedContainer(this);
       }
 
+      IRegistry<String, Object> properties = PropertiesContainerUtil.getProperties(element);
+      if (properties != null)
+      {
+        if (!properties.containsKey(ContainerUtil.PROP_CONTAINER))
+        {
+          properties.put(ContainerUtil.PROP_CONTAINER, this);
+        }
+      }
+
       EventUtil.addUniqueListener(element, elementListener);
 
       if (oldElement != null)
@@ -470,6 +480,16 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
       if (element instanceof ContainerAware)
       {
         ((ContainerAware)element).setManagedContainer(null);
+      }
+
+      IRegistry<String, Object> properties = PropertiesContainerUtil.getProperties(element);
+      if (properties != null)
+      {
+        Object container = properties.get(ContainerUtil.PROP_CONTAINER);
+        if (container == this)
+        {
+          properties.remove(ContainerUtil.PROP_CONTAINER);
+        }
       }
     }
 

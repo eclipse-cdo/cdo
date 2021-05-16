@@ -20,6 +20,9 @@ import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.concurrent.IExecutorServiceProvider;
 import org.eclipse.net4j.util.concurrent.RunnableWithName;
+import org.eclipse.net4j.util.container.ContainerUtil;
+import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.container.IManagedContainerProvider;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
@@ -44,7 +47,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author Eike Stepper
  * @since 2.0
  */
-public class Channel extends Lifecycle implements InternalChannel, IExecutorServiceProvider
+public class Channel extends Lifecycle implements InternalChannel, IExecutorServiceProvider, IManagedContainerProvider
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_CHANNEL, Channel.class);
 
@@ -67,6 +70,12 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
 
   public Channel()
   {
+  }
+
+  @Override
+  public IManagedContainer getContainer()
+  {
+    return ContainerUtil.getContainer(channelMultiplexer);
   }
 
   @Override

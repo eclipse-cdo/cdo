@@ -42,6 +42,8 @@ import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.signal.ISignalProtocol;
 import org.eclipse.net4j.signal.RemoteException;
 import org.eclipse.net4j.signal.SignalProtocol;
+import org.eclipse.net4j.util.container.ContainerUtil;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.io.IStreamWrapper;
 
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
@@ -65,6 +67,18 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
 
   public CDONet4jSessionImpl()
   {
+  }
+
+  @Override
+  public IManagedContainer getContainer()
+  {
+    IManagedContainer container = ContainerUtil.getContainer(connector);
+    if (container != null)
+    {
+      return container;
+    }
+
+    return super.getContainer();
   }
 
   public IStreamWrapper getStreamWrapper()

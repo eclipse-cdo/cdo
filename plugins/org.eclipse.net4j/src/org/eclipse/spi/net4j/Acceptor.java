@@ -20,6 +20,8 @@ import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.registry.HashMapRegistry;
+import org.eclipse.net4j.util.registry.IRegistry;
 import org.eclipse.net4j.util.security.INegotiator;
 
 import org.eclipse.internal.net4j.TransportConfig;
@@ -38,6 +40,8 @@ public abstract class Acceptor extends Container<IConnector> implements Internal
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_ACCEPTOR, Acceptor.class);
 
+  private final IRegistry<String, Object> properties = new HashMapRegistry.AutoCommit<>();
+
   private ITransportConfig config;
 
   private ConnectorPreparer connectorPreparer;
@@ -55,6 +59,12 @@ public abstract class Acceptor extends Container<IConnector> implements Internal
 
   public Acceptor()
   {
+  }
+
+  @Override
+  public final IRegistry<String, Object> properties()
+  {
+    return properties;
   }
 
   @Override

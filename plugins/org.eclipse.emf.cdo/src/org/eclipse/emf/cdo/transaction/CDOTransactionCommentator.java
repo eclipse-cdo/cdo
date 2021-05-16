@@ -246,5 +246,4 @@ public class CDOTransactionCommentator implements Closeable
 
     return false;
   }
-
 }

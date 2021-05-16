@@ -45,7 +45,6 @@ import org.eclipse.net4j.util.UUIDGenerator;
 import org.eclipse.net4j.util.container.ContainerEvent;
 import org.eclipse.net4j.util.container.IContainerEvent;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
@@ -164,12 +163,6 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
 
   public CDORepositoryImpl()
   {
-  }
-
-  @Override
-  public IManagedContainer getContainer()
-  {
-    return IPluginContainer.INSTANCE;
   }
 
   @Override

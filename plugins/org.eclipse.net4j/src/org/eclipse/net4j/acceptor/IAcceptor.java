@@ -14,6 +14,7 @@ import org.eclipse.net4j.ILocationAware.Location;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.collection.Closeable;
 import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.net4j.util.properties.IPropertiesContainer;
 
 import org.eclipse.spi.net4j.Acceptor;
 
@@ -29,8 +30,9 @@ import org.eclipse.spi.net4j.Acceptor;
  *
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
+ * @noextend This interface is not intended to be extended by clients.
  */
-public interface IAcceptor extends IContainer<IConnector>, Closeable
+public interface IAcceptor extends IContainer<IConnector>, IPropertiesContainer, Closeable
 {
   /**
    * Returns an array of the connectors that have been accepted by this acceptor and not been closed since.

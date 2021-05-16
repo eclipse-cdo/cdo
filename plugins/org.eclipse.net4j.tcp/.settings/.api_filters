@@ -123,6 +123,12 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/net4j/internal/tcp/TCPServerConnector.java" type="org.eclipse.net4j.internal.tcp.TCPServerConnector">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="IServerConnector"/>
+                <message_argument value="TCPServerConnector"/>
+            </message_arguments>
+        </filter>
         <filter id="643842064">
             <message_arguments>
                 <message_argument value="TCPAcceptor"/>
@@ -157,6 +163,12 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/net4j/internal/tcp/ssl/SSLServerConnector.java" type="org.eclipse.net4j.internal.tcp.ssl.SSLServerConnector">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="IServerConnector"/>
+                <message_argument value="SSLServerConnector"/>
+            </message_arguments>
+        </filter>
         <filter id="643842064">
             <message_arguments>
                 <message_argument value="SSLAcceptor"/>
@@ -169,6 +181,14 @@
                 <message_argument value="SSLAcceptor"/>
                 <message_argument value="SSLServerConnector"/>
                 <message_argument value="SSLServerConnector(SSLAcceptor)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/net4j/tcp/ITCPAcceptor.java" type="org.eclipse.net4j.tcp.ITCPAcceptor">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="IAcceptor"/>
+                <message_argument value="ITCPAcceptor"/>
             </message_arguments>
         </filter>
     </resource>

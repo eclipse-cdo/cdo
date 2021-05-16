@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.net4j.http.server" version="2">
+    <resource path="src/org/eclipse/net4j/http/internal/server/HTTPServerConnector.java" type="org.eclipse.net4j.http.internal.server.HTTPServerConnector">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="IServerConnector"/>
+                <message_argument value="HTTPServerConnector"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/net4j/http/server/IHTTPAcceptor.java" type="org.eclipse.net4j.http.server.IHTTPAcceptor">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="IAcceptor"/>
+                <message_argument value="IHTTPAcceptor"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

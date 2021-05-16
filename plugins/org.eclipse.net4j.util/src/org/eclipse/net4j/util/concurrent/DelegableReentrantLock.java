@@ -13,6 +13,7 @@ package org.eclipse.net4j.util.concurrent;
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.container.IManagedContainerProvider;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IListener;
@@ -28,7 +29,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @author Eike Stepper
  * @since 3.6
  */
-public class DelegableReentrantLock extends NonFairReentrantLock implements ILifecycle
+public class DelegableReentrantLock extends NonFairReentrantLock implements ILifecycle, IManagedContainerProvider
 {
   private static final long serialVersionUID = 1L;
 
@@ -63,6 +64,7 @@ public class DelegableReentrantLock extends NonFairReentrantLock implements ILif
     this(IPluginContainer.INSTANCE);
   }
 
+  @Override
   public final IManagedContainer getContainer()
   {
     return container;

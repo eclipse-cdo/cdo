@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.view.CDOViewOpener;
 
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.container.IManagedContainerProvider;
 import org.eclipse.net4j.util.security.IPasswordCredentials;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider2;
 import org.eclipse.net4j.util.security.IPasswordCredentialsUpdateProvider;
@@ -38,6 +39,7 @@ public interface CDORepository extends CDOExplorerElement, //
     IContainer<CDOBranch>, //
     IPasswordCredentialsProvider2, //
     IPasswordCredentialsUpdateProvider, //
+    IManagedContainerProvider, //
     CDOSessionProvider, //
     CDOViewOpener, //
     CDOTransactionOpener
@@ -57,6 +59,7 @@ public interface CDORepository extends CDOExplorerElement, //
   /**
    * @since 4.7
    */
+  @Override
   public IManagedContainer getContainer();
 
   public String getConnectorType();

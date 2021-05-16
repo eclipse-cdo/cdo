@@ -585,7 +585,7 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
   public void activate()
   {
     CDOEditor cdoEditor = (CDOEditor)activeEditor;
-    if (cdoEditor.pagesCreated.get())
+    if (cdoEditor != null && cdoEditor.pagesCreated.get())
     {
       importRootsAction.setActiveWorkbenchPart(activeEditor);
 

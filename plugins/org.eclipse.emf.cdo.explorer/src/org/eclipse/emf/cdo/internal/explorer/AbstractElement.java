@@ -17,6 +17,9 @@ import org.eclipse.emf.cdo.explorer.CDOExplorerManager.ElementsChangedEvent;
 import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.container.IManagedContainerProvider;
+import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.Notifier;
 import org.eclipse.net4j.util.io.IOUtil;
 
@@ -32,7 +35,7 @@ import java.util.Properties;
 /**
  * @author Eike Stepper
  */
-public abstract class AbstractElement extends Notifier implements CDOExplorerElement, Adapter.Internal
+public abstract class AbstractElement extends Notifier implements CDOExplorerElement, Adapter.Internal, IManagedContainerProvider
 {
   public static final String ILLEGAL_LABEL_CHARACTERS = "/\\:;,";
 
@@ -63,6 +66,12 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
   }
 
   public abstract AbstractManager<?> getManager();
+
+  @Override
+  public IManagedContainer getContainer()
+  {
+    return IPluginContainer.INSTANCE;
+  }
 
   @Override
   public final File getFolder()

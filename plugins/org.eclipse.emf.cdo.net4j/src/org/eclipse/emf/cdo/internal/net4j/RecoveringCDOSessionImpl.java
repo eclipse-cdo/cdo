@@ -76,6 +76,7 @@ public abstract class RecoveringCDOSessionImpl extends CDONet4jSessionImpl
     this.container = container;
   }
 
+  @Override
   public IManagedContainer getContainer()
   {
     return container;

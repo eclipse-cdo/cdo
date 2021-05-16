@@ -112,14 +112,7 @@ public class Session extends Container<IView> implements InternalSession
 
   private AtomicInteger lastTempViewID = new AtomicInteger();
 
-  private final IRegistry<String, Object> properties = new HashMapRegistry<String, Object>()
-  {
-    @Override
-    public void setAutoCommit(boolean autoCommit)
-    {
-      throw new UnsupportedOperationException();
-    }
-  };
+  private final IRegistry<String, Object> properties = new HashMapRegistry.AutoCommit<>();
 
   @ExcludeFromDump
   private IListener protocolListener = new LifecycleEventAdapter()

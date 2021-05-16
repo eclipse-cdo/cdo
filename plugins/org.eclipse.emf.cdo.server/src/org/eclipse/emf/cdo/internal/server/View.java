@@ -76,14 +76,7 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
 
   private boolean closed;
 
-  private final IRegistry<String, Object> properties = new HashMapRegistry<String, Object>()
-  {
-    @Override
-    public void setAutoCommit(boolean autoCommit)
-    {
-      throw new UnsupportedOperationException();
-    }
-  };
+  private final IRegistry<String, Object> properties = new HashMapRegistry.AutoCommit<>();
 
   /**
    * @since 2.0

@@ -16,6 +16,7 @@ import org.eclipse.net4j.util.concurrent.ExecutorServiceFactory;
 import org.eclipse.net4j.util.concurrent.TimerLifecycle;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.properties.PropertiesContainerUtil;
 import org.eclipse.net4j.util.security.FileUserManagerFactory;
 import org.eclipse.net4j.util.security.RandomizerFactory;
 
@@ -26,6 +27,11 @@ import org.eclipse.net4j.util.security.RandomizerFactory;
  */
 public final class ContainerUtil
 {
+  /**
+   * @since 3.15
+   */
+  public static final String PROP_CONTAINER = "org.eclipse.net4j.util.container";
+
   private static final Object[] NO_ELEMENTS = {};
 
   private static final IContainer<Object> EMPTY = new IContainer<Object>()
@@ -73,6 +79,19 @@ public final class ContainerUtil
 
   private ContainerUtil()
   {
+  }
+
+  /**
+   * @since 3.15
+   */
+  public static IManagedContainer getContainer(Object object)
+  {
+    if (object instanceof IManagedContainerProvider)
+    {
+      return ((IManagedContainerProvider)object).getContainer();
+    }
+
+    return PropertiesContainerUtil.getProperty(object, PROP_CONTAINER, IManagedContainer.class);
   }
 
   /**

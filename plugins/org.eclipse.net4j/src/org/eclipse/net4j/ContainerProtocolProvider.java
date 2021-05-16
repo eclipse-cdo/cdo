@@ -14,6 +14,7 @@ import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.protocol.IProtocolProvider;
 import org.eclipse.net4j.util.concurrent.NonBlockingLongCounter;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.container.IManagedContainerProvider;
 
 import org.eclipse.spi.net4j.ClientProtocolFactory;
 import org.eclipse.spi.net4j.ServerProtocolFactory;
@@ -24,7 +25,7 @@ import org.eclipse.spi.net4j.ServerProtocolFactory;
  * @author Eike Stepper
  * @since 2.0
  */
-public abstract class ContainerProtocolProvider implements IProtocolProvider
+public abstract class ContainerProtocolProvider implements IProtocolProvider, IManagedContainerProvider
 {
   private static NonBlockingLongCounter counter = new NonBlockingLongCounter();
 
@@ -38,6 +39,7 @@ public abstract class ContainerProtocolProvider implements IProtocolProvider
     this.productGroup = productGroup;
   }
 
+  @Override
   public IManagedContainer getContainer()
   {
     return container;

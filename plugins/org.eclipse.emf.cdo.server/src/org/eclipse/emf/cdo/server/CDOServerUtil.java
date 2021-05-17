@@ -57,7 +57,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Callable;
+import java.util.function.Consumer;
 
 /**
  * Various static methods that may help with CDO {@link IRepository repositories} and server-side {@link CDOView views}.
@@ -369,7 +369,7 @@ public final class CDOServerUtil
   /**
    * @since 4.13
    */
-  public static void run(ISession context, Runnable runnable)
+  public static void execute(ISession context, Runnable runnable)
   {
     StoreThreadLocal.wrap(context, runnable).run();
   }
@@ -377,27 +377,10 @@ public final class CDOServerUtil
   /**
    * @since 4.13
    */
-  public static void run(CDOSession context, Runnable runnable)
+  public static void execute(CDOSession context, Consumer<ISession> consumer)
   {
     ISession serverSession = getServerSession(context);
-    run(serverSession, runnable);
-  }
-
-  /**
-   * @since 4.13
-   */
-  public static <T> T call(ISession context, Callable<T> callable) throws Exception
-  {
-    return StoreThreadLocal.wrap(context, callable).call();
-  }
-
-  /**
-   * @since 4.13
-   */
-  public static <T> T call(CDOSession context, Callable<T> callable) throws Exception
-  {
-    ISession serverSession = getServerSession(context);
-    return call(serverSession, callable);
+    execute(serverSession, () -> consumer.accept(serverSession));
   }
 
   /**

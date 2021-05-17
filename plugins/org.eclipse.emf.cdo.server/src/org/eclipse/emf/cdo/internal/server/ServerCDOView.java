@@ -148,6 +148,11 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     return session.getInternalSession();
   }
 
+  public CDORevisionProvider getRevisionProvider()
+  {
+    return revisionProvider;
+  }
+
   @Override
   public ExecutorService getExecutorService()
   {
@@ -604,7 +609,7 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
   /**
    * @author Eike Stepper
    */
-  private final class ServerCDOSession extends PlatformObject implements InternalCDOSession, CDORepositoryInfo, org.eclipse.emf.cdo.session.CDOSession.Options
+  public final class ServerCDOSession extends PlatformObject implements InternalCDOSession, CDORepositoryInfo, org.eclipse.emf.cdo.session.CDOSession.Options
   {
     private final IRegistry<String, Object> properties = new HashMapRegistry.AutoCommit<>();
 

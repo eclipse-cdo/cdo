@@ -17,11 +17,13 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.ServerCDOView;
+import org.eclipse.emf.cdo.internal.server.ServerCDOView.ServerCDOSession;
 import org.eclipse.emf.cdo.internal.server.SessionManager;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.internal.server.syncing.FailoverParticipant;
 import org.eclipse.emf.cdo.internal.server.syncing.OfflineClone;
 import org.eclipse.emf.cdo.internal.server.syncing.RepositorySynchronizer;
+import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider;
@@ -30,6 +32,7 @@ import org.eclipse.emf.cdo.spi.server.InternalRepositorySynchronizer;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalStore;
 import org.eclipse.emf.cdo.spi.server.RepositoryFactory;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.ObjectUtil;
@@ -54,6 +57,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 /**
  * Various static methods that may help with CDO {@link IRepository repositories} and server-side {@link CDOView views}.
@@ -65,44 +69,6 @@ public final class CDOServerUtil
   private CDOServerUtil()
   {
   }
-
-  // /**
-  // * @since 4.2
-  // */
-  // public static CDOView openView(ISession session, CDOBranchPoint branchPoint, CDORevisionProvider revisionProvider)
-  // {
-  // return new ServerCDOView((InternalSession)session, branchPoint, revisionProvider);
-  // }
-  //
-  // /**
-  // * @since 4.2
-  // */
-  // public static CDOView openView(ISession session, CDOBranchPoint branchPoint)
-  // {
-  // CDORevisionManager revisionManager = session.getManager().getRepository().getRevisionManager();
-  // CDORevisionProvider revisionProvider = new ManagedRevisionProvider(revisionManager, branchPoint);
-  // return new ServerCDOView((InternalSession)session, branchPoint, revisionProvider);
-  // }
-  //
-  // /**
-  // * @since 4.2
-  // */
-  // public static CDOView openView(IView view)
-  // {
-  // ISession session = view.getSession();
-  // CDOBranchPoint branchPoint = CDOBranchUtil.copyBranchPoint(view);
-  // return openView(session, branchPoint, view);
-  // }
-  //
-  // /**
-  // * @since 4.2
-  // */
-  // public static CDOView openView(IStoreAccessor.CommitContext commitContext)
-  // {
-  // ISession session = commitContext.getTransaction().getSession();
-  // CDOBranchPoint branchPoint = commitContext.getBranchPoint();
-  // return openView(session, branchPoint, commitContext);
-  // }
 
   /**
    * @since 4.2
@@ -183,6 +149,43 @@ public final class CDOServerUtil
   }
 
   /**
+   * @since 4.13
+   */
+  public static ITransaction getServerTransaction(CDOTransaction transaction)
+  {
+    IView serverView = getServerView(transaction);
+    if (serverView instanceof ITransaction)
+    {
+      return (ITransaction)serverView;
+    }
+
+    return null;
+  }
+
+  /**
+   * @since 4.13
+   */
+  public static IView getServerView(CDOView view)
+  {
+    if (view instanceof ServerCDOView)
+    {
+      CDORevisionProvider revisionProvider = ((ServerCDOView)view).getRevisionProvider();
+      if (revisionProvider instanceof IView)
+      {
+        return (IView)revisionProvider;
+      }
+    }
+
+    ISession session = getServerSession(view);
+    if (session != null)
+    {
+      return session.getView(view.getViewID());
+    }
+
+    return null;
+  }
+
+  /**
    * @since 4.11
    */
   public static ISession getServerSession(CDOView view)
@@ -190,6 +193,25 @@ public final class CDOServerUtil
     if (view instanceof ServerCDOView)
     {
       return ((ServerCDOView)view).getServerSession();
+    }
+
+    return getServerSession(view.getSession());
+  }
+
+  /**
+   * @since 4.13
+   */
+  public static ISession getServerSession(CDOSession session)
+  {
+    if (session instanceof ServerCDOSession)
+    {
+      return ((ServerCDOSession)session).getInternalSession();
+    }
+
+    IRepository repository = getRepository(session);
+    if (repository != null)
+    {
+      return repository.getSessionManager().getSession(session.getSessionID());
     }
 
     return null;
@@ -302,6 +324,23 @@ public final class CDOServerUtil
     return RepositoryFactory.get(container, name);
   }
 
+  /**
+   * @since 4.13
+   */
+  public static IRepository getRepository(String uuid)
+  {
+    return Repository.get(uuid);
+  }
+
+  /**
+   * @since 4.13
+   */
+  public static IRepository getRepository(CDOSession session)
+  {
+    String uuid = session.getRepositoryInfo().getUUID();
+    return getRepository(uuid);
+  }
+
   public static Element getRepositoryConfig(String repositoryName) throws ParserConfigurationException, SAXException, IOException
   {
     File configFile = OMPlatform.INSTANCE.getConfigFile("cdo-server.xml"); //$NON-NLS-1$
@@ -325,6 +364,40 @@ public final class CDOServerUtil
     }
 
     throw new IllegalStateException("Repository config not found: " + repositoryName); //$NON-NLS-1$
+  }
+
+  /**
+   * @since 4.13
+   */
+  public static void run(ISession context, Runnable runnable)
+  {
+    StoreThreadLocal.wrap(context, runnable).run();
+  }
+
+  /**
+   * @since 4.13
+   */
+  public static void run(CDOSession context, Runnable runnable)
+  {
+    ISession serverSession = getServerSession(context);
+    run(serverSession, runnable);
+  }
+
+  /**
+   * @since 4.13
+   */
+  public static <T> T call(ISession context, Callable<T> callable) throws Exception
+  {
+    return StoreThreadLocal.wrap(context, callable).call();
+  }
+
+  /**
+   * @since 4.13
+   */
+  public static <T> T call(CDOSession context, Callable<T> callable) throws Exception
+  {
+    ISession serverSession = getServerSession(context);
+    return call(serverSession, callable);
   }
 
   /**

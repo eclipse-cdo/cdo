@@ -166,6 +166,8 @@ public class Repository extends Container<Object> implements InternalRepository
   private static final boolean DISABLE_FEATURE_MAP_CHECKS = OMPlatform.INSTANCE
       .isProperty("org.eclipse.emf.cdo.internal.server.Repository.DISABLE_FEATURE_MAP_CHECKS");
 
+  private static final Map<String, Repository> REPOSITORIES = new HashMap<>();
+
   private String name;
 
   private String uuid;
@@ -2739,11 +2741,24 @@ public class Repository extends Container<Object> implements InternalRepository
 
     LifecycleUtil.activate(lockingManager); // Needs an initialized main branch / branch manager
     setPostActivateState();
+
+    synchronized (REPOSITORIES)
+    {
+      if (REPOSITORIES.putIfAbsent(uuid, this) != null)
+      {
+        OM.LOG.warn("Attempt to register repository with duplicate UUID: " + uuid);
+      }
+    }
   }
 
   @Override
   protected void doDeactivate() throws Exception
   {
+    synchronized (REPOSITORIES)
+    {
+      REPOSITORIES.remove(uuid);
+    }
+
     LifecycleUtil.deactivate(unitManager);
     LifecycleUtil.deactivate(lockingManager);
     LifecycleUtil.deactivate(queryHandlerProvider);
@@ -2756,6 +2771,14 @@ public class Repository extends Container<Object> implements InternalRepository
     LifecycleUtil.deactivate(branchManager);
     LifecycleUtil.deactivate(packageRegistry);
     super.doDeactivate();
+  }
+
+  public static Repository get(String uuid)
+  {
+    synchronized (REPOSITORIES)
+    {
+      return REPOSITORIES.get(uuid);
+    }
   }
 
   /**

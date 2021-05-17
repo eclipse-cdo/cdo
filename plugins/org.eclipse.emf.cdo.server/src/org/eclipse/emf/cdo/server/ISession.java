@@ -50,6 +50,18 @@ public interface ISession extends CDOCommonSession, IContainer<IView>
   public boolean isSubscribed();
 
   /**
+   * @since 4.13
+   */
+  @Override
+  public IView[] getViews();
+
+  /**
+   * @since 4.13
+   */
+  @Override
+  public IView getView(int viewID);
+
+  /**
    * @since 3.0
    */
   public IView openView(int viewID, CDOBranchPoint branchPoint);

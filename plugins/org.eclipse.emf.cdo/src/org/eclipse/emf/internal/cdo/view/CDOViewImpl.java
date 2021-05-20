@@ -585,7 +585,7 @@ public class CDOViewImpl extends AbstractCDOView
   @Override
   public void handleLockNotification(InternalCDOView sender, CDOLockChangeInfo lockChangeInfo)
   {
-    CDOLockChangeInfo event = null;
+    CDOLockChangeInfo lockChangeInfoToFire = null;
 
     try
     {
@@ -598,7 +598,7 @@ public class CDOViewImpl extends AbstractCDOView
           if (lockChangeInfo.isInvalidateAll())
           {
             lockStates.clear();
-            event = lockChangeInfo;
+            lockChangeInfoToFire = lockChangeInfo;
             return;
           }
 
@@ -619,7 +619,7 @@ public class CDOViewImpl extends AbstractCDOView
 
           if (options().isLockNotificationEnabled())
           {
-            event = lockChangeInfo;
+            lockChangeInfoToFire = lockChangeInfo;
           }
         }
         finally
@@ -630,9 +630,9 @@ public class CDOViewImpl extends AbstractCDOView
     }
     finally
     {
-      if (event != null)
+      if (lockChangeInfoToFire != null)
       {
-        fireLocksChangedEvent(sender, event);
+        fireLocksChangedEvent(sender, lockChangeInfoToFire);
       }
     }
   }

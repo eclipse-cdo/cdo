@@ -4972,9 +4972,15 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         }
       }
 
-      lockStates.putAll(newLockStates);
+      lockStates.putAll(newLockStates); // Side effect!!!
 
-      CDOLockState[] array = objectsToUnlock.toArray(new CDOLockState[objectsToUnlock.size()]);
+      int size = objectsToUnlock.size();
+      if (size == 0)
+      {
+        return null;
+      }
+
+      CDOLockState[] array = objectsToUnlock.toArray(new CDOLockState[size]);
       return makeLockChangeInfo(CDOLockChangeInfo.Operation.UNLOCK, null, result.getTimeStamp(), array);
     }
 

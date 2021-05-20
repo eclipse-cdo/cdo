@@ -2201,7 +2201,11 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
           if (success)
           {
             fireEvent(new SessionInvalidationEvent(sender, commitInfo, invalidationData.getSecurityImpact(), oldPermissionsFinal));
-            fireEvent(new SessionLocksChangedEvent(sender, lockChangeInfo));
+
+            if (lockChangeInfo != null)
+            {
+              fireEvent(new SessionLocksChangedEvent(sender, lockChangeInfo));
+            }
 
             commitInfoManager.notifyCommitInfoHandlers(commitInfo);
           }

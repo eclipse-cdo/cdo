@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.session.CDOSessionLocksChangedEvent;
 import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.tests.model1.Category;
@@ -36,6 +37,7 @@ import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.concurrent.RWOLockManager;
 import org.eclipse.net4j.util.concurrent.RWOLockManager.LockState;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
+import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import java.util.ArrayList;
@@ -45,6 +47,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import junit.framework.AssertionFailedError;
 
@@ -53,6 +56,37 @@ import junit.framework.AssertionFailedError;
  */
 public class LockingManagerTest extends AbstractLockingTest
 {
+  public void testAutoReleaseLocks() throws Exception
+  {
+    CDOSession session = openSession();
+
+    AtomicInteger counter = new AtomicInteger();
+    try (AutoCloseable listener = EventUtil.addListener(session, CDOSessionLocksChangedEvent.class, event -> counter.incrementAndGet()))
+    {
+      CDOTransaction transaction = session.openTransaction();
+      transaction.options().setAutoReleaseLocksEnabled(false);
+
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
+      assertWriteLock(false, resource);
+
+      transaction.commit();
+      assertWriteLock(false, resource);
+
+      resource.cdoWriteLock().lock();
+      assertWriteLock(true, resource);
+
+      resource.getContents().add(getModel1Factory().createSupplier());
+      transaction.commit();
+      assertWriteLock(true, resource);
+
+      resource.cdoWriteLock().unlock();
+      assertWriteLock(false, resource);
+
+      sleep(200);
+      assertEquals(2, counter.get());
+    }
+  }
+
   public void testUnlockAll() throws Exception
   {
     RWOLockManager<Integer, Integer> lockingManager = new RWOLockManager<>();

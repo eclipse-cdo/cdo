@@ -12,6 +12,8 @@ package org.eclipse.net4j.util.event;
 
 import org.eclipse.net4j.util.event.INotifier.INotifier2;
 
+import java.util.function.Consumer;
+
 /**
  * Various static helper methods for dealing with {@link IEvent events}, {@link INotifier notifiers} and
  * {@link IListener listeners}.
@@ -62,6 +64,41 @@ public final class EventUtil
     return false;
   }
 
+  /**
+   * @since 3.15
+   */
+  public static <E extends IEvent> AutoCloseable addListener(Object notifier, Class<E> eventType, Consumer<E> eventConsumer)
+  {
+    if (notifier instanceof INotifier)
+    {
+      INotifier n = (INotifier)notifier;
+
+      AutoCloseableListener listener = new AutoCloseableListener()
+      {
+        @Override
+        public void notifyEvent(IEvent event)
+        {
+          if (eventType.isInstance(event))
+          {
+            eventConsumer.accept(eventType.cast(event));
+          }
+        }
+
+        @Override
+        public void close() throws Exception
+        {
+          n.removeListener(this);
+        }
+      };
+
+      n.addListener(listener);
+      return listener;
+    }
+
+    return () -> {
+    };
+  }
+
   public static boolean removeListener(Object notifier, IListener listener)
   {
     if (notifier instanceof INotifier)
@@ -106,5 +143,12 @@ public final class EventUtil
     }
 
     return false;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static interface AutoCloseableListener extends IListener, AutoCloseable
+  {
   }
 }

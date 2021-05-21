@@ -27,6 +27,7 @@ import java.util.StringTokenizer;
 
 /**
  * @author Kai Schlamp
+ * @see DBAnnotation
  */
 public final class DBIndexAnnotation
 {

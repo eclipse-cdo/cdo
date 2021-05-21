@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 
 /**
  * @author Kai Schlamp
+ * @see DBIndexAnnotation
  */
 public enum DBAnnotation
 {

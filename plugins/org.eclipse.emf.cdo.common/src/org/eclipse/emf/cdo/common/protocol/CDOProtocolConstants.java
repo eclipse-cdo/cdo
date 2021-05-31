@@ -32,8 +32,9 @@ public interface CDOProtocolConstants
    * @since 4.2
    * @noreference This field is not intended to be referenced by clients.
    */
-  public static final int PROTOCOL_VERSION = 38; // CDOBranchTag support
+  public static final int PROTOCOL_VERSION = 39; // CDOLockOwner.isDurableView becomes derived
 
+  // public static final int PROTOCOL_VERSION = 38; // CDOBranchTag support
   // public static final int PROTOCOL_VERSION = 37; // SIGNAL_ACKNOWLEDGE_COMPRESSED_STRINGS
   // public static final int PROTOCOL_VERSION = 36; // CDOID.NIL
   // public static final int PROTOCOL_VERSION = 35; // DiffieHellman.Server.Challenge.getSecretAlgorithmKeyLen()

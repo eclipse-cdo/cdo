@@ -66,7 +66,7 @@ public final class ReplicatorCommitContext extends TransactionCommitContext
   @Override
   protected long[] createTimeStamp(OMMonitor monitor)
   {
-    InternalRepository repository = getTransaction().getSession().getManager().getRepository();
+    InternalRepository repository = getTransaction().getSession().getRepository();
 
     long commitTimeStamp = commitInfo.getTimeStamp();
     if (commitTimeStamp == CDOBranchPoint.UNSPECIFIED_DATE)

@@ -2474,7 +2474,7 @@ public class Repository extends Container<Object> implements InternalRepository
       @Override
       protected long[] createTimeStamp(OMMonitor monitor)
       {
-        InternalRepository repository = getTransaction().getSession().getManager().getRepository();
+        InternalRepository repository = getTransaction().getSession().getRepository();
         return repository.forceCommitTimeStamp(store.getCreationTime(), monitor);
       }
 

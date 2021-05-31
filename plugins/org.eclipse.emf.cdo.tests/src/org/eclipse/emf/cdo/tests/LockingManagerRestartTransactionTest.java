@@ -10,16 +10,35 @@
  */
 package org.eclipse.emf.cdo.tests;
 
+import static org.junit.Assume.assumeNotNull;
+
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.CDOCommonSession;
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
+import org.eclipse.emf.cdo.common.lock.CDOLockState;
+import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockArea;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockAreaNotFoundException;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.ILockingManager;
+import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.server.ISession;
+import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
+import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.util.concurrent.RWOLockManager.LockState;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+
+import org.eclipse.emf.spi.cdo.InternalCDOView;
+
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -404,5 +423,119 @@ public class LockingManagerRestartTransactionTest extends AbstractLockingTest
     restart(durableLockingID);
 
     assertEquals(true, gotCalled[0]);
+  }
+
+  public void _testClearLocksOnServer() throws Exception
+  {
+    ISession serverSession = CDOServerUtil.getServerSession(session);
+    InternalLockManager lm = (InternalLockManager)serverSession.getRepository().getLockingManager();
+
+    transaction.commit();
+    transaction.options().setLockNotificationEnabled(true);
+    // EventUtil.addListener(transaction, CDOViewLocksChangedEvent.class, System.out::println);
+
+    CDOView localView = session.openView();
+    localView.options().setLockNotificationEnabled(true);
+    // EventUtil.addListener(localView, CDOViewLocksChangedEvent.class, System.out::println);
+    CDOResource localResource = localView.getResource(resource.getPath());
+
+    CDOSession remoteSession = openSession();
+    CDOView remoteView = remoteSession.openView();
+    remoteView.options().setLockNotificationEnabled(true);
+    // EventUtil.addListener(remoteView, CDOViewLocksChangedEvent.class, System.out::println);
+    CDOResource remoteResource = remoteView.getResource(resource.getPath());
+
+    writeLock(resource);
+    assertWriteLock(true, resource);
+    assertServerLockState(resource);
+    assertServerLockState(localResource);
+    assertServerLockState(remoteResource);
+
+    System.out.println("Normal:  " + ((InternalCDOView)transaction).getLockOwner());
+    String durableLockingID = transaction.enableDurableLocking();
+    System.out.println("Durable: " + ((InternalCDOView)transaction).getLockOwner());
+
+    assertWriteLock(true, resource);
+    assertServerLockState(resource);
+    assertServerLockState(localResource);
+    assertServerLockState(remoteResource);
+
+    sleep(100);
+    assertEquals(true, localResource.cdoWriteLock().isLockedByOthers());
+    // System.out.println(localResource.cdoLockState());
+
+    transaction.close();
+    sleep(100);
+    // System.out.println(localResource.cdoLockState());
+
+    CDOServerUtil.execute(serverSession, () -> {
+      // LockArea lockArea = lm.getLockArea(durableLockingID);
+      // System.out.println(lockArea);
+      lm.deleteLockArea(durableLockingID);
+    });
+
+    sleep(1000);
+    // assertWriteLock(false, resource);
+    // assertServerLockState(resource);
+    assertServerLockState(localResource);
+    assertServerLockState(remoteResource);
+  }
+
+  private static void assertServerLockState(CDOObject object)
+  {
+    CDOView view = object.cdoView();
+    assumeNotNull(view);
+
+    CDOLockState clientLockState = object.cdoLockState();
+    assumeNotNull(clientLockState);
+
+    IRepository repository = CDOServerUtil.getRepository(view.getSession());
+    InternalLockManager lm = (InternalLockManager)repository.getLockingManager();
+
+    CDOBranch serverBranch = CDOBranchUtil.adjustBranch(view.getBranch(), repository.getBranchManager());
+    Object lockKey = lm.getLockKey(object.cdoID(), serverBranch);
+    LockState<Object, IView> serverLockState = lm.getLockState(lockKey);
+    assumeNotNull(serverLockState);
+
+    assertLockOwners(clientLockState.getReadLockOwners(), //
+        serverLockState.getReadLockOwners());
+
+    assertLockOwner(clientLockState.getWriteLockOwner(), //
+        serverLockState.getWriteLockOwner());
+
+    assertLockOwner(clientLockState.getWriteOptionOwner(), //
+        serverLockState.getWriteOptionOwner());
+  }
+
+  private static void assertLockOwners(Set<CDOLockOwner> clientLockOwners, Set<IView> serverViews)
+  {
+    assertEquals(clientLockOwners.size(), serverViews.size());
+
+    for (IView serverView : serverViews)
+    {
+      CDOLockOwner serverLockOwner = CDOLockUtil.createLockOwner(serverView);
+      assertTrue("Missing on client: " + serverLockOwner, clientLockOwners.contains(serverLockOwner));
+    }
+  }
+
+  private static void assertLockOwner(CDOLockOwner clientLockOwner, IView serverView)
+  {
+    if (clientLockOwner == null)
+    {
+      assertEquals(null, serverView);
+    }
+    else
+    {
+      CDOLockOwner serverLockOwner = CDOLockUtil.createLockOwner(serverView);
+      assertEquals(clientLockOwner, serverLockOwner);
+
+      // assumeNotNull(serverLockOwner);
+      //
+      // assertEquals(clientLockOwner.getSessionID(), //
+      // serverLockOwner.getSessionID());
+      //
+      // assertEquals(clientLockOwner.getViewID(), //
+      // serverLockOwner.getViewID());
+    }
   }
 }

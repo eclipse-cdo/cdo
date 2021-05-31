@@ -163,7 +163,7 @@ public abstract class AbstractCDOTest extends ConfigTest
     Object serverLockTarget = serverLockTarget(lockState.getLockedObject());
 
     InternalSession serverSession = serverSession(session);
-    InternalLockManager lockingManager = serverSession.getManager().getRepository().getLockingManager();
+    InternalLockManager lockingManager = serverSession.getRepository().getLockingManager();
     return lockingManager.getLockState(serverLockTarget);
   }
 

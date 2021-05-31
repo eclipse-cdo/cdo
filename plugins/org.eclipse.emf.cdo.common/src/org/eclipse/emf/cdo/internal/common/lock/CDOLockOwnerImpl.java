@@ -11,8 +11,11 @@
 package org.eclipse.emf.cdo.internal.common.lock;
 
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
+import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 
 import org.eclipse.net4j.util.ObjectUtil;
+
+import java.util.Objects;
 
 /**
  * @author Caspar De Groot
@@ -25,14 +28,11 @@ public class CDOLockOwnerImpl implements CDOLockOwner
 
   private final String durableLockingID;
 
-  private final boolean isDurableView;
-
-  public CDOLockOwnerImpl(int sessionID, int viewID, String durableLockingID, boolean isDurableView)
+  public CDOLockOwnerImpl(int sessionID, int viewID, String durableLockingID)
   {
     this.sessionID = sessionID;
     this.viewID = viewID;
     this.durableLockingID = durableLockingID;
-    this.isDurableView = isDurableView;
   }
 
   @Override
@@ -56,12 +56,17 @@ public class CDOLockOwnerImpl implements CDOLockOwner
   @Override
   public boolean isDurableView()
   {
-    return isDurableView;
+    return sessionID == CDOLockUtil.DURABLE_SESSION_ID;
   }
 
   @Override
   public int hashCode()
   {
+    if (isDurableView())
+    {
+      return ObjectUtil.hashCode(durableLockingID);
+    }
+
     return ObjectUtil.hashCode(sessionID, viewID);
   }
 
@@ -76,7 +81,13 @@ public class CDOLockOwnerImpl implements CDOLockOwner
     if (obj instanceof CDOLockOwner)
     {
       CDOLockOwner that = (CDOLockOwner)obj;
-      return sessionID == that.getSessionID() && viewID == that.getViewID();
+
+      if (isDurableView())
+      {
+        return that.isDurableView() && Objects.equals(durableLockingID, that.getDurableLockingID());
+      }
+
+      return !that.isDurableView() && sessionID == that.getSessionID() && viewID == that.getViewID();
     }
 
     return false;
@@ -86,9 +97,19 @@ public class CDOLockOwnerImpl implements CDOLockOwner
   public String toString()
   {
     StringBuilder builder = new StringBuilder("CDOLockOwner[");
-    builder.append(sessionID);
-    builder.append(':');
-    builder.append(viewID);
+
+    if (isDurableView())
+    {
+      builder.append("durable:");
+      builder.append(durableLockingID);
+    }
+    else
+    {
+      builder.append(sessionID);
+      builder.append(':');
+      builder.append(viewID);
+    }
+
     builder.append(']');
     return builder.toString();
   }

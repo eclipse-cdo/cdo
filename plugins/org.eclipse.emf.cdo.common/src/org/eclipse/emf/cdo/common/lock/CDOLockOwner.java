@@ -33,5 +33,9 @@ public interface CDOLockOwner
 
   public String getDurableLockingID();
 
+  /**
+   * Returns <code>true</code> if this view is <b>purely</b> durable,
+   * i.e., currently not open and active on the client-side, <code>false</code> otherwise.
+   */
   public boolean isDurableView();
 }

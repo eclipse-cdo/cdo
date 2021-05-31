@@ -1190,7 +1190,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
       long previousTimeStamp = result.getPreviousTimeStamp();
       result = null;
 
-      InternalRepository repository = getTransaction().getSession().getManager().getRepository();
+      InternalRepository repository = getTransaction().getSession().getRepository();
       repository.forceCommitTimeStamp(timeStamp, monitor);
 
       return new long[] { timeStamp, previousTimeStamp };

@@ -87,7 +87,7 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
     this.viewID = viewID;
     sessionID = session.getSessionID();
 
-    repository = session.getManager().getRepository();
+    repository = session.getRepository();
     setBranchPoint(branchPoint);
   }
 
@@ -206,7 +206,7 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
     checkOpen();
     validateTimeStamp(branchPoint.getTimeStamp());
 
-    InternalCDOBranchManager branchManager = getSession().getManager().getRepository().getBranchManager();
+    InternalCDOBranchManager branchManager = getSession().getRepository().getBranchManager();
     this.branchPoint = CDOBranchUtil.adjustBranchPoint(branchPoint, branchManager);
     normalizedBranchPoint = CDOBranchUtil.normalizeBranchPoint(this.branchPoint);
   }

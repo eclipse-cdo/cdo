@@ -364,7 +364,6 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
     writeXInt(lockOwner.getSessionID());
     writeXInt(lockOwner.getViewID());
     writeString(lockOwner.getDurableLockingID());
-    writeBoolean(lockOwner.isDurableView());
   }
 
   @Override

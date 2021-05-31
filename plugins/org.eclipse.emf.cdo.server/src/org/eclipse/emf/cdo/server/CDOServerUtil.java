@@ -83,7 +83,7 @@ public final class CDOServerUtil
    */
   public static CDOView openView(ISession session, CDOBranchPoint branchPoint)
   {
-    CDORevisionManager revisionManager = session.getManager().getRepository().getRevisionManager();
+    CDORevisionManager revisionManager = session.getRepository().getRevisionManager();
     CDORevisionProvider revisionProvider = new ManagedRevisionProvider(revisionManager, branchPoint);
     return openView(session, branchPoint, revisionProvider);
   }

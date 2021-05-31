@@ -826,9 +826,9 @@ public class CDOViewImpl extends AbstractCDOView
 
         try
         {
-          CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
           if (durableLockingID == null)
           {
+            CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
             durableLockingID = sessionProtocol.changeLockArea(this, true);
           }
 
@@ -1821,7 +1821,7 @@ public class CDOViewImpl extends AbstractCDOView
 
         try
         {
-          if (session.isActive() && !lockStates.isEmpty())
+          if (session.isActive() && !lockStates.isEmpty() && !isDurableView())
           {
             List<CDOLockState> result = new ArrayList<>();
             for (CDOLockState lockState : lockStates.values())

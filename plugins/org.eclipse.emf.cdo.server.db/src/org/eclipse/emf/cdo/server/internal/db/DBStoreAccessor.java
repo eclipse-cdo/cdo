@@ -1112,8 +1112,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     IDBPreparedStatement stmt = connection.prepareStatement(CDODBSchema.SQL_LOAD_BRANCHES, ReuseProbability.HIGH);
     ResultSet resultSet = null;
 
-    InternalRepository repository = getSession().getManager().getRepository();
-    InternalCDOBranchManager branchManager = repository.getBranchManager();
+    InternalCDOBranchManager branchManager = getSession().getRepository().getBranchManager();
 
     try
     {

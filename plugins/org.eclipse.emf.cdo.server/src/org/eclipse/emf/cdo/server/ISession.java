@@ -33,6 +33,11 @@ public interface ISession extends CDOCommonSession, IContainer<IView>
   public ISessionManager getManager();
 
   /**
+   * @since 4.13
+   */
+  public IRepository getRepository();
+
+  /**
    * @since 3.0
    */
   public ISessionProtocol getProtocol();

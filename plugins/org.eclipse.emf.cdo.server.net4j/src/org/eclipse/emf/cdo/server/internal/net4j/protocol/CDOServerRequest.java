@@ -67,13 +67,13 @@ public abstract class CDOServerRequest extends Request
       @Override
       public CDOPackageRegistry getPackageRegistry()
       {
-        return getSession().getManager().getRepository().getPackageRegistry();
+        return getSession().getRepository().getPackageRegistry();
       }
 
       @Override
       public CDORevisionUnchunker getRevisionUnchunker()
       {
-        return getSession().getManager().getRepository();
+        return getSession().getRepository();
       }
 
       @Override

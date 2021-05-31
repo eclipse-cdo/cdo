@@ -142,15 +142,28 @@ public final class CDOBranchUtil
   }
 
   /**
+   * @since 4.14
+   */
+  public static CDOBranch adjustBranch(CDOBranch branch, CDOBranchManager branchManager)
+  {
+    if (branch.getBranchManager() != branchManager)
+    {
+      branch = branchManager.getBranch(branch.getID());
+    }
+
+    return branch;
+  }
+
+  /**
    * @since 4.4
    */
   public static CDOBranchPoint adjustBranchPoint(CDOBranchPoint branchPoint, CDOBranchManager branchManager)
   {
     CDOBranch branch = branchPoint.getBranch();
-    if (branch.getBranchManager() != branchManager)
+    CDOBranch adjustedBranch = adjustBranch(branch, branchManager);
+    if (adjustedBranch != branch)
     {
-      branch = branchManager.getBranch(branch.getID());
-      branchPoint = branch.getPoint(branchPoint.getTimeStamp());
+      branchPoint = adjustedBranch.getPoint(branchPoint.getTimeStamp());
     }
 
     return branchPoint;

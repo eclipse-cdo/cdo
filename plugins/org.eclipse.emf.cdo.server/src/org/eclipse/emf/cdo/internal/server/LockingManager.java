@@ -47,6 +47,7 @@ import org.eclipse.net4j.util.collection.ConcurrentArray;
 import org.eclipse.net4j.util.concurrent.RWOLockManager;
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
@@ -103,7 +104,7 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
       }
       else
       {
-        DurableView durableView = new DurableView(durableLockingID);
+        DurableView durableView = new DurableView(durableLockingID, view, view.isReadOnly());
         changeContext(view, durableView);
         unregisterOpenDurableView(durableLockingID);
         durableViews.put(durableLockingID, durableView);
@@ -270,7 +271,7 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
     CDOBranch branch = view.getBranch();
     boolean branching = repository.isSupportingBranches();
 
-    CDORevisionManager revisionManager = view.getSession().getManager().getRepository().getRevisionManager();
+    CDORevisionManager revisionManager = view.getSession().getRepository().getRevisionManager();
     CDORevisionProvider revisionProvider = new ManagedRevisionProvider(revisionManager, branch.getHead());
 
     Set<Object> contents = new HashSet<>();
@@ -637,13 +638,19 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
    */
   private final class DurableView extends PlatformObject implements IView, CDOCommonView.Options
   {
-    private String durableLockingID;
+    private final String durableLockingID;
+
+    private final CDOBranchPoint branchPoint;
+
+    private final boolean readOnly;
 
     private IRegistry<String, Object> properties;
 
-    public DurableView(String durableLockingID)
+    public DurableView(String durableLockingID, CDOBranchPoint branchPoint, boolean readOnly)
     {
       this.durableLockingID = durableLockingID;
+      this.readOnly = readOnly;
+      this.branchPoint = CDOBranchUtil.copyBranchPoint(branchPoint);
     }
 
     @Override
@@ -661,43 +668,44 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
     @Override
     public int getSessionID()
     {
-      throw new UnsupportedOperationException();
+      return CDOLockUtil.DURABLE_SESSION_ID;
     }
 
     @Override
     public int getViewID()
     {
-      throw new UnsupportedOperationException();
+      return CDOLockUtil.DURABLE_VIEW_ID;
     }
 
     @Override
     public boolean isReadOnly()
     {
-      throw new UnsupportedOperationException();
+      return readOnly;
     }
 
     @Override
     public boolean isHistorical()
     {
-      throw new UnsupportedOperationException();
+      return branchPoint.getTimeStamp() != CDOBranchPoint.UNSPECIFIED_DATE;
     }
 
     @Override
     public CDOBranch getBranch()
     {
-      throw new UnsupportedOperationException();
+      return branchPoint.getBranch();
     }
 
     @Override
     public long getTimeStamp()
     {
-      throw new UnsupportedOperationException();
+      return branchPoint.getTimeStamp();
     }
 
     @Override
     public CDORevision getRevision(CDOID id)
     {
-      throw new UnsupportedOperationException();
+      CDORevisionManager revisionManager = getRepository().getRevisionManager();
+      return revisionManager.getRevision(id, branchPoint, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
     }
 
     @Override
@@ -709,13 +717,13 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
     @Override
     public boolean isClosed()
     {
-      throw new UnsupportedOperationException();
+      return false;
     }
 
     @Override
     public IRepository getRepository()
     {
-      throw new UnsupportedOperationException();
+      return LockingManager.this.getRepository();
     }
 
     @Override
@@ -756,7 +764,7 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
     @Override
     public IOptionsContainer getContainer()
     {
-      return null;
+      return this;
     }
 
     @Override
@@ -778,7 +786,7 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
     @Override
     public IListener[] getListeners()
     {
-      return null;
+      return EventUtil.NO_LISTENERS;
     }
 
     @Override
@@ -792,14 +800,7 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
     {
       if (properties == null)
       {
-        properties = new HashMapRegistry<String, Object>()
-        {
-          @Override
-          public void setAutoCommit(boolean autoCommit)
-          {
-            throw new UnsupportedOperationException();
-          }
-        };
+        properties = new HashMapRegistry.AutoCommit<>();
       }
 
       return properties;
@@ -841,15 +842,15 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
     public boolean handleLockArea(LockArea area)
     {
       String durableLockingID = area.getDurableLockingID();
+
       IView view = getView(durableLockingID);
       if (view != null)
       {
         unlock2(view);
       }
-
-      if (view == null)
+      else
       {
-        view = new DurableView(durableLockingID);
+        view = new DurableView(durableLockingID, area, area.isReadOnly());
         durableViews.put(durableLockingID, (DurableView)view);
       }
 

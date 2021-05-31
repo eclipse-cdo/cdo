@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.common.lock;
 
-import org.eclipse.emf.cdo.common.CDOCommonSession;
 import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
@@ -41,9 +40,15 @@ import java.util.Random;
  */
 public final class CDOLockUtil
 {
-  private static final int DURABLE_SESSION_ID = 0;
+  /**
+   * @since 4.14
+   */
+  public static final int DURABLE_SESSION_ID = 0;
 
-  private static final int DURABLE_VIEW_ID = 0;
+  /**
+   * @since 4.14
+   */
+  public static final int DURABLE_VIEW_ID = 0;
 
   private CDOLockUtil()
   {
@@ -106,37 +111,19 @@ public final class CDOLockUtil
 
     for (CDOCommonView view : lockState.getReadLockOwners())
     {
-      String durableLockingID = view.getDurableLockingID();
-      int sessionID, viewID;
-      CDOCommonSession session = view.getSession();
-      boolean isDurableView = session == null;
-      if (isDurableView)
-      {
-        sessionID = DURABLE_SESSION_ID;
-        viewID = DURABLE_VIEW_ID;
-      }
-      else
-      {
-        sessionID = session.getSessionID();
-        viewID = view.getViewID();
-      }
-
-      CDOLockOwner owner = new CDOLockOwnerImpl(sessionID, viewID, durableLockingID, isDurableView);
-      cdoLockState.addReadLockOwner(owner);
+      cdoLockState.addReadLockOwner(createLockOwner(view));
     }
 
     CDOCommonView writeLockOwner = lockState.getWriteLockOwner();
     if (writeLockOwner != null)
     {
-      CDOLockOwner owner = createLockOwner(writeLockOwner);
-      cdoLockState.setWriteLockOwner(owner);
+      cdoLockState.setWriteLockOwner(createLockOwner(writeLockOwner));
     }
 
     CDOCommonView writeOptionOwner = lockState.getWriteOptionOwner();
     if (writeOptionOwner != null)
     {
-      CDOLockOwner owner = createLockOwner(writeOptionOwner);
-      cdoLockState.setWriteOptionOwner(owner);
+      cdoLockState.setWriteOptionOwner(createLockOwner(writeOptionOwner));
     }
 
     return cdoLockState;
@@ -144,18 +131,18 @@ public final class CDOLockUtil
 
   public static CDOLockOwner createLockOwner(CDOCommonView view)
   {
+    int sessionID = view.getSessionID();
+    int viewID = view.getViewID();
     String durableLockingID = view.getDurableLockingID();
+    return createLockOwner(sessionID, viewID, durableLockingID);
+  }
 
-    CDOCommonSession session = view.getSession();
-    if (session != null)
-    {
-      int sessionID = session.getSessionID();
-      int viewID = view.getViewID();
-      return new CDOLockOwnerImpl(sessionID, viewID, durableLockingID, false);
-    }
-
-    CheckUtil.checkNull(durableLockingID, "durableLockingID");
-    return new CDOLockOwnerImpl(DURABLE_SESSION_ID, DURABLE_VIEW_ID, durableLockingID, true);
+  /**
+   * @since 4.14
+   */
+  public static CDOLockOwner createLockOwner(int sessionID, int viewID, String durableLockingID)
+  {
+    return new CDOLockOwnerImpl(sessionID, viewID, durableLockingID);
   }
 
   public static CDOLockChangeInfo createLockChangeInfo(long timestamp, CDOLockOwner lockOwner, CDOBranch branch, Operation op, LockType lockType,

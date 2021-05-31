@@ -46,7 +46,7 @@ public class UserRolesQueryHandlerFactory extends QueryHandlerFactory
       public void executeQuery(CDOQueryInfo info, final IQueryContext context)
       {
         ISession session = context.getView().getSession();
-        IRepository repository = session.getManager().getRepository();
+        IRepository repository = session.getRepository();
         ISecurityManager securityManager = SecurityManagerUtil.getSecurityManager(repository);
 
         if (securityManager != null)

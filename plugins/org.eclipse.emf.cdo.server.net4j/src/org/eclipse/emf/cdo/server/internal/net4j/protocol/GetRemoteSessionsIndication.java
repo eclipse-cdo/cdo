@@ -48,7 +48,8 @@ public class GetRemoteSessionsIndication extends CDOServerReadIndication
   protected void responding(CDODataOutput out) throws IOException
   {
     InternalSession localSession = getSession();
-    InternalSession[] sessions = getSession().getManager().getSessions();
+    InternalSession[] sessions = localSession.getManager().getSessions();
+
     for (InternalSession session : sessions)
     {
       if (session != localSession)

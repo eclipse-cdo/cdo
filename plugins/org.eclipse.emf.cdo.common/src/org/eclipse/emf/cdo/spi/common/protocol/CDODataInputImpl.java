@@ -56,7 +56,6 @@ import org.eclipse.emf.cdo.internal.common.commit.CDOChangeSetDataImpl;
 import org.eclipse.emf.cdo.internal.common.commit.FailureCommitInfo;
 import org.eclipse.emf.cdo.internal.common.lock.CDOLockAreaImpl;
 import org.eclipse.emf.cdo.internal.common.lock.CDOLockChangeInfoImpl;
-import org.eclipse.emf.cdo.internal.common.lock.CDOLockOwnerImpl;
 import org.eclipse.emf.cdo.internal.common.lock.CDOLockStateImpl;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
 import org.eclipse.emf.cdo.internal.common.revision.CDOIDAndBranchImpl;
@@ -380,8 +379,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     int session = readXInt();
     int view = readXInt();
     String lockAreaID = readString();
-    boolean isDurableView = readBoolean();
-    return new CDOLockOwnerImpl(session, view, lockAreaID, isDurableView);
+    return CDOLockUtil.createLockOwner(session, view, lockAreaID);
   }
 
   @Override

@@ -624,7 +624,7 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     public ServerCDOSession(InternalSession internalSession)
     {
       this.internalSession = internalSession;
-      repository = internalSession.getManager().getRepository();
+      repository = internalSession.getRepository();
       openingTime = repository.getTimeStamp();
     }
 

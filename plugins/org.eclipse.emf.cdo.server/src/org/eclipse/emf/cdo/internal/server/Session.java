@@ -171,6 +171,12 @@ public class Session extends Container<IView> implements InternalSession
   }
 
   @Override
+  public InternalRepository getRepository()
+  {
+    return manager.getRepository();
+  }
+
+  @Override
   public ExecutorService getExecutorService()
   {
     return manager.getExecutorService();
@@ -178,7 +184,7 @@ public class Session extends Container<IView> implements InternalSession
 
   public CDOBranchManager getBranchManager()
   {
-    return manager.getRepository().getBranchManager();
+    return getRepository().getBranchManager();
   }
 
   @Override
@@ -450,7 +456,7 @@ public class Session extends Container<IView> implements InternalSession
   public void collectContainedRevisions(InternalCDORevision revision, CDOBranchPoint branchPoint, int referenceChunk, Set<CDOID> revisions,
       List<CDORevision> additionalRevisions)
   {
-    InternalCDORevisionManager revisionManager = manager.getRepository().getRevisionManager();
+    InternalCDORevisionManager revisionManager = getRepository().getRevisionManager();
     for (EStructuralFeature feature : revision.getClassInfo().getAllPersistentFeatures())
     {
       // TODO Clarify feature maps
@@ -670,7 +676,7 @@ public class Session extends Container<IView> implements InternalSession
     }
 
     Set<CDOID> lockedIDs = new HashSet<>();
-    InternalLockManager lockingManager = getManager().getRepository().getLockingManager();
+    InternalLockManager lockingManager = getRepository().getLockingManager();
 
     for (InternalView view : getViews())
     {
@@ -703,7 +709,7 @@ public class Session extends Container<IView> implements InternalSession
 
   private boolean isDeltaNeeded(CDOID id, InternalView[] views)
   {
-    boolean supportingUnits = manager.getRepository().isSupportingUnits();
+    boolean supportingUnits = getRepository().isSupportingUnits();
 
     for (InternalView view : views)
     {
@@ -762,7 +768,7 @@ public class Session extends Container<IView> implements InternalSession
     String name = "unknown";
     if (manager != null)
     {
-      InternalRepository repository = manager.getRepository();
+      InternalRepository repository = getRepository();
       if (repository != null)
       {
         name = repository.getName();

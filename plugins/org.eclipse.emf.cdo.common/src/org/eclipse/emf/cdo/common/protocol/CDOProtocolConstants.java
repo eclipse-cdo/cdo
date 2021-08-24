@@ -30,35 +30,8 @@ public interface CDOProtocolConstants
 
   /**
    * @since 4.2
-   * @noreference This field is not intended to be referenced by clients.
    */
-  public static final int PROTOCOL_VERSION = 39; // CDOLockOwner.isDurableView becomes derived
-
-  // public static final int PROTOCOL_VERSION = 38; // CDOBranchTag support
-  // public static final int PROTOCOL_VERSION = 37; // SIGNAL_ACKNOWLEDGE_COMPRESSED_STRINGS
-  // public static final int PROTOCOL_VERSION = 36; // CDOID.NIL
-  // public static final int PROTOCOL_VERSION = 35; // DiffieHellman.Server.Challenge.getSecretAlgorithmKeyLen()
-  // public static final int PROTOCOL_VERSION = 34; // CDOSessionProtocol.loadMergeData2()
-  // public static final int PROTOCOL_VERSION = 33; // CDOCommitInfo.getMergeSource()
-  // public static final int PROTOCOL_VERSION = 32; // ROLLBACK_REASON_UNIT_INTEGRITY
-  // public static final int PROTOCOL_VERSION = 31; // CDOCommonRepository.isSupportingUnits()
-  // public static final int PROTOCOL_VERSION = 30; // UnitOpcode
-  // public static final int PROTOCOL_VERSION = 29; // SIGNAL_UNIT
-  // public static final int PROTOCOL_VERSION = 28; // SIGNAL_RESET_TRANSACTION
-  // public static final int PROTOCOL_VERSION = 27; // SIGNAL_OPENED_SESSION
-  // public static final int PROTOCOL_VERSION = 26; // Add prefetch depth in LockStateRequest/Indication
-  // public static final int PROTOCOL_VERSION = 25; // OpenSessionResponse.repositoryAuthenticating
-  // public static final int PROTOCOL_VERSION = 24; // SIGNAL_LOAD_OBJECT_LIFETIME
-  // public static final int PROTOCOL_VERSION = 23; // Fix branch renaming
-  // public static final int PROTOCOL_VERSION = 22; // Prefetch returns RevisionInfo instead of CDORevision to have
-  // PointerCDORevision
-  // public static final int PROTOCOL_VERSION = 21; // Update how CDOChangeSetData's detachedObject is encoded, see
-  // https://bugs.eclipse.org/bugs/show_bug.cgi?id=449171
-  // public static final int PROTOCOL_VERSION = 20; // Have OMMonitor optional in
-  // RequestWithMonitoring/IndicationWithMonitoring
-  // public static final int PROTOCOL_VERSION = 19; // Branch renaming
-  // public static final int PROTOCOL_VERSION = 18; // Password change protocol
-  // public static final int PROTOCOL_VERSION = 17; // Last update for make query fail in sequence
+  public static final int PROTOCOL_VERSION = CDOProtocolVersion.getValue();
 
   /**
    * @since 4.6

@@ -105,6 +105,7 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
   @Override
   public int getVersion()
   {
+    // See org.eclipse.emf.cdo.common.protocol.CDOProtocolVersion.
     return PROTOCOL_VERSION;
   }
 

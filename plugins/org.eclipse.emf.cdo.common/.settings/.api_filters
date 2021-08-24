@@ -343,13 +343,6 @@
                 <message_argument value="38"/>
             </message_arguments>
         </filter>
-        <filter id="389242988">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants"/>
-                <message_argument value="PROTOCOL_VERSION"/>
-                <message_argument value="38"/>
-            </message_arguments>
-        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/common/revision/CDORevisionData.java" type="org.eclipse.emf.cdo.common.revision.CDORevisionData">
         <filter id="1209008130">

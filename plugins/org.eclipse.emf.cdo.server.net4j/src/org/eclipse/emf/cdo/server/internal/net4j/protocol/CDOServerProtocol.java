@@ -71,7 +71,6 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
   @Override
   public int getVersion()
   {
-    // See org.eclipse.emf.cdo.common.protocol.CDOProtocolVersion.
     return PROTOCOL_VERSION;
   }
 

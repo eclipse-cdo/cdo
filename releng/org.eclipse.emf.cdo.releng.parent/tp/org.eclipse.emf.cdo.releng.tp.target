@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde version="3.8"?>
-<target name="Generated from CDO" sequenceNumber="53">
+<target name="Generated from CDO" sequenceNumber="54">
   <locations>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
       <unit id="com.google.guava" version="0.0.0"/>
@@ -27,6 +27,7 @@
       <unit id="org.eclipse.gmf.runtime.notation.providers" version="0.0.0"/>
       <unit id="org.eclipse.graphiti.ui" version="0.0.0"/>
       <unit id="org.eclipse.jetty.client" version="0.0.0"/>
+      <unit id="org.eclipse.jetty.http" version="0.0.0"/>
       <unit id="org.eclipse.jetty.io" version="0.0.0"/>
       <unit id="org.eclipse.jetty.osgi-servlet-api" version="0.0.0"/>
       <unit id="org.eclipse.jetty.security" version="0.0.0"/>
@@ -50,17 +51,16 @@
       <unit id="org.hsqldb" version="0.0.0"/>
       <unit id="org.postgresql" version="0.0.0"/>
       <unit id="org.slf4j.api" version="0.0.0"/>
-      <unit id="slf4j.api" version="0.0.0"/>
-      <repository location="http://download.eclipse.org/releases/2021-06"/>
-      <repository location="http://download.eclipse.org/eclipse/updates/latest"/>
-      <repository location="http://download.eclipse.org/tools/orbit/downloads/latest-I"/>
+      <repository location="http://download.eclipse.org/releases/2021-09"/>
+      <repository location="http://download.eclipse.org/eclipse/updates/4.20"/>
+      <repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20210602031627/repository"/>
       <repository location="http://download.eclipse.org/nebula/snapshot"/>
       <repository location="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
       <repository location="http://download.eclipse.org/jetty/updates/jetty-bundles-9.x/development"/>
       <repository location="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
       <repository location="http://www.springsite.com/eclipse/2.1.0/update"/>
       <repository location="http://download.eclipse.org/tools/ajdt/48/dev/update"/>
-      <repository location="http://download.eclipse.org/eclipse/updates/4.20-I-builds"/>
+      <repository location="http://download.eclipse.org/eclipse/updates/4.20/R-4.20-202106111600"/>
     </location>
   </locations>
 </target>

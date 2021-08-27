@@ -26,7 +26,6 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.connector.IConnector;
-import org.eclipse.net4j.http.common.IHTTPConnector;
 import org.eclipse.net4j.jvm.IJVMConnector;
 import org.eclipse.net4j.signal.ISignalProtocol;
 import org.eclipse.net4j.tcp.ITCPConnector;
@@ -38,6 +37,7 @@ import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.pref.OMPreference;
 import org.eclipse.net4j.util.om.trace.OMTracer;
+import org.eclipse.net4j.ws.IWSConnector;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -122,7 +122,7 @@ public class Doc01_Architecture
    * The <i>Net4j Signalling Platform</i> is an extensible client/server communications framework. Net4j eases the
    * development of fast and maintainable application {@link ISignalProtocol protocols} that are independent of the
    * physical {@link IConnector transport} medium. Transport protocols are pluggable and Net4j ships with support for
-   * {@link ITCPConnector TCP}, {@link SSLUtil SSL}, {@link IHTTPConnector HTTP} and {@link IJVMConnector JVM}
+   * {@link ITCPConnector TCP}, {@link SSLUtil SSL}, {@link IWSConnector WS} and {@link IJVMConnector JVM}
    * (in-process) transport. The core of Net4j is a fast, asynchronous and non-blocking {@link IBuffer buffer}
    * multiplexing kernel, based on {@link OSGi} but also executable stand-alone.
    *
@@ -167,7 +167,7 @@ public class Doc01_Architecture
    * <p>
    * A concrete transport adapter, an {@link IConnector} implementation that operates on top of the
    * {@link Net4j Net4j core}. Net4j currently ships with {@link IJVMConnector}, {@link ITCPConnector}
-   * (optionally with SSL support) and {@link IHTTPConnector}.
+   * (optionally with SSL support) and {@link IWSConnector}.
    * <p>
    * The {@link org.eclipse.emf.cdo.doc.programmers.server.Architecture server} must be deployed and configured with
    * the matching {@link org.eclipse.emf.cdo.doc.programmers.server.Architecture.Transport transport}.

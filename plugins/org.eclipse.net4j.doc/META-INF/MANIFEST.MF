@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.net4j.doc; singleton:=true
-Bundle-Version: 4.2.2.qualifier
+Bundle-Version: 4.2.3.qualifier
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
@@ -13,15 +13,13 @@ Require-Bundle: org.eclipse.help;bundle-version="[3.3.0,4.0.0)";resolution:=opti
  org.eclipse.net4j.util.doc;bundle-version="[4.0.0,5.0.0)";resolution:=optional;visibility:=reexport,
  org.eclipse.net4j;bundle-version="[4.0.0,5.0.0)";resolution:=optional;visibility:=reexport,
  org.eclipse.net4j.debug;bundle-version="[3.0.0,4.0.0)";resolution:=optional;visibility:=reexport,
- org.eclipse.net4j.http;bundle-version="[4.0.0,5.0.0)";resolution:=optional;visibility:=reexport,
- org.eclipse.net4j.http.common;bundle-version="[4.0.0,5.0.0)";resolution:=optional;visibility:=reexport,
- org.eclipse.net4j.http.server;bundle-version="[4.0.0,5.0.0)";resolution:=optional;visibility:=reexport,
+ org.eclipse.net4j.ws;bundle-version="[1.1.0,2.0.0)";resolution:=optional;visibility:=reexport,
  org.eclipse.net4j.jvm;bundle-version="[4.0.0,5.0.0)";resolution:=optional;visibility:=reexport,
  org.eclipse.net4j.tcp;bundle-version="[4.0.0,5.0.0)";resolution:=optional;visibility:=reexport,
  org.eclipse.net4j.ui;bundle-version="[4.0.0,5.0.0)";resolution:=optional;visibility:=reexport
-Export-Package: org.eclipse.net4j.doc;version="4.2.2",
- org.eclipse.net4j.doc.online;version="4.2.2",
- org.eclipse.net4j.doc.reference;version="4.2.2",
- org.eclipse.net4j.doc.reference.api;version="4.2.2",
- org.eclipse.net4j.doc.reference.schema;version="4.2.2"
+Export-Package: org.eclipse.net4j.doc;version="4.2.3",
+ org.eclipse.net4j.doc.online;version="4.2.3",
+ org.eclipse.net4j.doc.reference;version="4.2.3",
+ org.eclipse.net4j.doc.reference.api;version="4.2.3",
+ org.eclipse.net4j.doc.reference.schema;version="4.2.3"
 Automatic-Module-Name: org.eclipse.net4j.doc

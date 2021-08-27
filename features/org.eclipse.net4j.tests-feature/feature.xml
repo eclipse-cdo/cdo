@@ -12,7 +12,7 @@
 <feature
       id="org.eclipse.net4j.tests"
       label="%featureName"
-      version="4.3.4.qualifier"
+      version="4.3.5.qualifier"
       provider-name="%providerName"
       license-feature="org.eclipse.emf.cdo.license"
       license-feature-version="0.0.0">
@@ -36,13 +36,6 @@
 
    <plugin
          id="org.eclipse.net4j.tests"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/> <!-- Used to be true -->
-
-   <plugin
-         id="org.eclipse.net4j.http.tests"
          download-size="0"
          install-size="0"
          version="0.0.0"

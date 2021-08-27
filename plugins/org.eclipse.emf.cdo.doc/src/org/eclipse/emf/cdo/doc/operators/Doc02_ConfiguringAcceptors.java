@@ -11,10 +11,10 @@
 package org.eclipse.emf.cdo.doc.operators;
 
 import org.eclipse.net4j.acceptor.IAcceptor;
-import org.eclipse.net4j.http.server.IHTTPAcceptor;
 import org.eclipse.net4j.jvm.IJVMAcceptor;
 import org.eclipse.net4j.tcp.ITCPAcceptor;
 import org.eclipse.net4j.util.security.INegotiator;
+import org.eclipse.net4j.ws.IWSAcceptor;
 
 /**
  * Configuring Acceptors
@@ -59,8 +59,8 @@ public class Doc02_ConfiguringAcceptors
    *           A value of <code>2036</code> is the default (whole attribute can be omitted).
    *      </ul>
    * <li> <b>ssl</b>: Similar to tcp but with transport-level security (TLS).
+   * <li> <b>ws</b>: {@link IWSAcceptor} for WebSocket-based connections over HTTP.
    * <li> <b>jvm</b>: {@link IJVMAcceptor} for JVM internal (non-socket based ) connections.
-   * <li> <b>http</b>: Experimental {@link IHTTPAcceptor}.
    * </ul>
    */
   public class Element_acceptor

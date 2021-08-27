@@ -121,10 +121,6 @@ Eike Stepper - initial API and implementation
     <module>../../../plugins/org.eclipse.net4j.doc</module>
     <module>../../../plugins/org.eclipse.net4j.examples</module>
     <module>../../../plugins/org.eclipse.net4j.examples.installer</module>
-    <module>../../../plugins/org.eclipse.net4j.http</module>
-    <module>../../../plugins/org.eclipse.net4j.http.common</module>
-    <module>../../../plugins/org.eclipse.net4j.http.server</module>
-    <module>../../../plugins/org.eclipse.net4j.http.tests</module>
     <module>../../../plugins/org.eclipse.net4j.jms</module>
     <module>../../../plugins/org.eclipse.net4j.jms.admin</module>
     <module>../../../plugins/org.eclipse.net4j.jms.api</module>

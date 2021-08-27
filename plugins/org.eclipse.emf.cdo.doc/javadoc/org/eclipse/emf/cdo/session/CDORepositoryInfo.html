@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>CDORepositoryInfo (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6};
+var data = {"i0":6,"i1":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/CDORepositoryInfo.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/emf/cdo/session/CDOCollectionLoadingPolicy.html" title="interface in org.eclipse.emf.cdo.session"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/emf/cdo/session/CDORetryExceptionHandler.html" title="class in org.eclipse.emf.cdo.session"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/emf/cdo/session/CDORepositoryInfo.html" target="_top">Frames</a></li>
-<li><a href="CDORepositoryInfo.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,11 +82,14 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
@@ -85,13 +101,22 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.emf.cdo.session</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.cdo.session</a></div>
 <h2 title="Interface CDORepositoryInfo" class="title">Interface CDORepositoryInfo</h2>
 </div>
 <div class="contentContainer">
@@ -100,13 +125,12 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a>, <a href="../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IAdaptable</a></dd>
+<dd><code><a href="../common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a></code>, <code><a href="../common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a></code>, <code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IAdaptable</a></code></dd>
 </dl>
 <hr>
-<br>
 <pre>public interface <span class="typeNameLabel">CDORepositoryInfo</span>
-extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a></pre>
-<div class="block">Describes a model repository a <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> is connected to.</div>
+extends <a href="../common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a></pre>
+<div class="block">Describes a model repository a <a href="CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> is connected to.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
@@ -124,68 +148,75 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.h
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="nested.class.summary">
+<li class="blockList"><a id="nested.class.summary">
 <!--   -->
 </a>
 <h3>Nested Class Summary</h3>
 <ul class="blockList">
-<li class="blockList"><a name="nested.classes.inherited.from.class.org.eclipse.emf.cdo.common.CDOCommonRepository">
+<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.emf.cdo.common.CDOCommonRepository">
 <!--   -->
 </a>
-<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.emf.cdo.common.<a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a></h3>
-<code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.CommitInfoStorage.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.CommitInfoStorage</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.IDGenerationLocation.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.IDGenerationLocation</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.ListOrdering.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.ListOrdering</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.State.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.State</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.StateChangedEvent.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository.StateChangedEvent</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.Type.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.Type</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.TypeChangedEvent.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository.TypeChangedEvent</a></code></li>
+<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.emf.cdo.common.<a href="../common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a></h3>
+<code><a href="../common/CDOCommonRepository.CommitInfoStorage.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.CommitInfoStorage</a>, <a href="../common/CDOCommonRepository.IDGenerationLocation.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.IDGenerationLocation</a>, <a href="../common/CDOCommonRepository.ListOrdering.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.ListOrdering</a>, <a href="../common/CDOCommonRepository.State.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.State</a>, <a href="../common/CDOCommonRepository.StateChangedEvent.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository.StateChangedEvent</a>, <a href="../common/CDOCommonRepository.Type.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.Type</a>, <a href="../common/CDOCommonRepository.TypeChangedEvent.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository.TypeChangedEvent</a></code></li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/session/CDORepositoryInfo.html#getSession--">getSession</a></span>()</code>
+<td class="colFirst"><code><a href="CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSession()">getSession</a></span>()</code></th>
+<td class="colLast">
 <div class="block">Returns the session.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>long</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/session/CDORepositoryInfo.html#getTimeStamp-boolean-">getTimeStamp</a></span>(boolean&nbsp;forceRefresh)</code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTimeStamp(boolean)">getTimeStamp</a></span>&#8203;(boolean&nbsp;forceRefresh)</code></th>
+<td class="colLast">
 <div class="block">Returns the approximate current time of this repository by optionally refreshing the approximation from the server.</div>
 </td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.emf.cdo.common.CDOCommonRepository">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.cdo.common.CDOCommonRepository">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.<a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a></h3>
-<code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getCommitInfoStorage--">getCommitInfoStorage</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getCreationTime--">getCreationTime</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getIDGenerationLocation--">getIDGenerationLocation</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getName--">getName</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getObjectIDTypes--">getObjectIDTypes</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getRootResourceID--">getRootResourceID</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getState--">getState</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getStoreType--">getStoreType</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getType--">getType</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getUUID--">getUUID</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#isAuthenticating--">isAuthenticating</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#isEnsuringReferentialIntegrity--">isEnsuringReferentialIntegrity</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#isSerializingCommits--">isSerializingCommits</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#isSupportingAudits--">isSupportingAudits</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#isSupportingBranches--">isSupportingBranches</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#isSupportingEcore--">isSupportingEcore</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#isSupportingUnits--">isSupportingUnits</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#waitWhileInitial-org.eclipse.core.runtime.IProgressMonitor-">waitWhileInitial</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.<a href="../common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a></h3>
+<code><a href="../common/CDOCommonRepository.html#getCommitInfoStorage()">getCommitInfoStorage</a>, <a href="../common/CDOCommonRepository.html#getCreationTime()">getCreationTime</a>, <a href="../common/CDOCommonRepository.html#getIDGenerationLocation()">getIDGenerationLocation</a>, <a href="../common/CDOCommonRepository.html#getName()">getName</a>, <a href="../common/CDOCommonRepository.html#getObjectIDTypes()">getObjectIDTypes</a>, <a href="../common/CDOCommonRepository.html#getRootResourceID()">getRootResourceID</a>, <a href="../common/CDOCommonRepository.html#getState()">getState</a>, <a href="../common/CDOCommonRepository.html#getStoreType()">getStoreType</a>, <a href="../common/CDOCommonRepository.html#getType()">getType</a>, <a href="../common/CDOCommonRepository.html#getUUID()">getUUID</a>, <a href="../common/CDOCommonRepository.html#isAuthenticating()">isAuthenticating</a>, <a href="../common/CDOCommonRepository.html#isEnsuringReferentialIntegrity()">isEnsuringReferentialIntegrity</a>, <a href="../common/CDOCommonRepository.html#isSerializingCommits()">isSerializingCommits</a>, <a href="../common/CDOCommonRepository.html#isSupportingAudits()">isSupportingAudits</a>, <a href="../common/CDOCommonRepository.html#isSupportingBranches()">isSupportingBranches</a>, <a href="../common/CDOCommonRepository.html#isSupportingEcore()">isSupportingEcore</a>, <a href="../common/CDOCommonRepository.html#isSupportingUnits()">isSupportingUnits</a>, <a href="../common/CDOCommonRepository.html#waitWhileInitial(org.eclipse.core.runtime.IProgressMonitor)">waitWhileInitial</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.emf.cdo.common.util.CDOTimeProvider">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.cdo.common.util.CDOTimeProvider">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.util.<a href="../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a></h3>
-<code><a href="../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html#getTimeStamp--">getTimeStamp</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.util.<a href="../common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a></h3>
+<code><a href="../common/util/CDOTimeProvider.html#getTimeStamp()">getTimeStamp</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.core.runtime.IAdaptable">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.core.runtime.IAdaptable">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.core.runtime.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IAdaptable</a></h3>
-<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html?is-external=true#getAdapter-java.lang.Class-" title="class or interface in org.eclipse.core.runtime">getAdapter</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.core.runtime.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IAdaptable</a></h3>
+<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html?is-external=true#getAdapter(java.lang.Class)" title="class or interface in org.eclipse.core.runtime" class="externalLink">getAdapter</a></code></li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -193,18 +224,19 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.h
 <ul class="blockList">
 <li class="blockList">
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="getSession--">
+<a id="getSession()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getSession</h4>
-<pre><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;getSession()</pre>
+<pre class="methodSignature"><a href="CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;getSession()</pre>
 <div class="block">Returns the session.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -212,37 +244,41 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.h
 </dl>
 </li>
 </ul>
-<a name="getTimeStamp-boolean-">
+<a id="getTimeStamp(boolean)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getTimeStamp</h4>
-<pre>long&nbsp;getTimeStamp(boolean&nbsp;forceRefresh)</pre>
+<pre class="methodSignature">long&nbsp;getTimeStamp&#8203;(boolean&nbsp;forceRefresh)</pre>
 <div class="block">Returns the approximate current time of this repository by optionally refreshing the approximation from the server.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html#getTimeStamp--"><code>CDOTimeProvider.getTimeStamp()</code></a></dd>
+<dd><a href="../common/util/CDOTimeProvider.html#getTimeStamp()"><code>CDOTimeProvider.getTimeStamp()</code></a></dd>
 </dl>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/CDORepositoryInfo.html">Use</a></li>
@@ -252,16 +288,8 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.h
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/emf/cdo/session/CDOCollectionLoadingPolicy.html" title="interface in org.eclipse.emf.cdo.session"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/emf/cdo/session/CDORetryExceptionHandler.html" title="class in org.eclipse.emf.cdo.session"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/emf/cdo/session/CDORepositoryInfo.html" target="_top">Frames</a></li>
-<li><a href="CDORepositoryInfo.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -274,11 +302,14 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.h
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
@@ -290,10 +321,12 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.h
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

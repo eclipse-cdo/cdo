@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>History (Net4j Utilities Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/History.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/net4j/util/collection/HashBag.html" title="class in org.eclipse.net4j.util.collection"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/net4j/util/collection/HistoryElement.html" title="class in org.eclipse.net4j.util.collection"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/net4j/util/collection/History.html" target="_top">Frames</a></li>
-<li><a href="History.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,11 +82,14 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
@@ -85,13 +101,22 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.net4j.util.collection</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.net4j.util.collection</a></div>
 <h2 title="Class History" class="title">Class History&lt;T&gt;</h2>
 </div>
 <div class="contentContainer">
@@ -99,7 +124,7 @@ var activeTableTab = "activeTableTab";
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li><a href="../../../../../org/eclipse/net4j/util/event/Notifier.html" title="class in org.eclipse.net4j.util.event">org.eclipse.net4j.util.event.Notifier</a></li>
+<li><a href="../event/Notifier.html" title="class in org.eclipse.net4j.util.event">org.eclipse.net4j.util.event.Notifier</a></li>
 <li>
 <ul class="inheritance">
 <li>org.eclipse.net4j.util.collection.History&lt;T&gt;</li>
@@ -113,17 +138,16 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd>java.lang.Iterable&lt;<a href="../../../../../org/eclipse/net4j/util/collection/IHistoryElement.html" title="interface in org.eclipse.net4j.util.collection">IHistoryElement</a>&lt;T&gt;&gt;, <a href="../../../../../org/eclipse/net4j/util/collection/IHistory.html" title="interface in org.eclipse.net4j.util.collection">IHistory</a>&lt;T&gt;, <a href="../../../../../org/eclipse/net4j/util/event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a></dd>
+<dd><code>java.lang.Iterable&lt;<a href="IHistoryElement.html" title="interface in org.eclipse.net4j.util.collection">IHistoryElement</a>&lt;T&gt;&gt;</code>, <code><a href="IHistory.html" title="interface in org.eclipse.net4j.util.collection">IHistory</a>&lt;T&gt;</code>, <code><a href="../event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a></code>, <code><a href="../event/INotifier.INotifier2.html" title="interface in org.eclipse.net4j.util.event">INotifier.INotifier2</a></code></dd>
 </dl>
 <dl>
 <dt>Direct Known Subclasses:</dt>
-<dd><a href="../../../../../org/eclipse/net4j/util/collection/PreferenceHistory.html" title="class in org.eclipse.net4j.util.collection">PreferenceHistory</a></dd>
+<dd><code><a href="PreferenceHistory.html" title="class in org.eclipse.net4j.util.collection">PreferenceHistory</a></code></dd>
 </dl>
 <hr>
-<br>
 <pre>public class <span class="typeNameLabel">History&lt;T&gt;</span>
-extends <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html" title="class in org.eclipse.net4j.util.event">Notifier</a>
-implements <a href="../../../../../org/eclipse/net4j/util/collection/IHistory.html" title="interface in org.eclipse.net4j.util.collection">IHistory</a>&lt;T&gt;</pre>
+extends <a href="../event/Notifier.html" title="class in org.eclipse.net4j.util.event">Notifier</a>
+implements <a href="IHistory.html" title="interface in org.eclipse.net4j.util.collection">IHistory</a>&lt;T&gt;</pre>
 <dl>
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>Eike Stepper</dd>
@@ -134,146 +158,190 @@ implements <a href="../../../../../org/eclipse/net4j/util/collection/IHistory.ht
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
-<!-- =========== FIELD SUMMARY =========== -->
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.summary">
+<li class="blockList"><a id="nested.class.summary">
+<!--   -->
+</a>
+<h3>Nested Class Summary</h3>
+<ul class="blockList">
+<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.net4j.util.event.INotifier">
+<!--   -->
+</a>
+<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.event.<a href="../event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a></h3>
+<code><a href="../event/INotifier.INotifier2.html" title="interface in org.eclipse.net4j.util.event">INotifier.INotifier2</a></code></li>
+</ul>
+</li>
+</ul>
+</section>
+<!-- =========== FIELD SUMMARY =========== -->
+<section role="region">
+<ul class="blockList">
+<li class="blockList"><a id="field.summary">
 <!--   -->
 </a>
 <h3>Field Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Field Summary table, listing fields, and an explanation">
+<table class="memberSummary">
 <caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Field and Description</th>
+<th class="colSecond" scope="col">Field</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>protected java.util.List&lt;<a href="../../../../../org/eclipse/net4j/util/collection/IHistoryElement.html" title="interface in org.eclipse.net4j.util.collection">IHistoryElement</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/History.html" title="type parameter in History">T</a>&gt;&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/History.html#elements">elements</a></span></code>&nbsp;</td>
+<td class="colFirst"><code>protected java.util.List&lt;<a href="IHistoryElement.html" title="interface in org.eclipse.net4j.util.collection">IHistoryElement</a>&lt;<a href="History.html" title="type parameter in History">T</a>&gt;&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#elements">elements</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.summary">
+<li class="blockList"><a id="constructor.summary">
 <!--   -->
 </a>
 <h3>Constructor Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
+<table class="memberSummary">
 <caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Constructor and Description</th>
+<th class="colFirst" scope="col">Constructor</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/History.html#History--">History</a></span>()</code>&nbsp;</td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">History</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/History.html#add-T-">add</a></span>(<a href="../../../../../org/eclipse/net4j/util/collection/History.html" title="type parameter in History">T</a>&nbsp;data)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#add(T)">add</a></span>&#8203;(<a href="History.html" title="type parameter in History">T</a>&nbsp;data)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/History.html#changed--">changed</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#changed()">changed</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/History.html#clear--">clear</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clear()">clear</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>protected <a href="../../../../../org/eclipse/net4j/util/collection/IHistoryElement.html" title="interface in org.eclipse.net4j.util.collection">IHistoryElement</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/History.html" title="type parameter in History">T</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/History.html#createElement-T-">createElement</a></span>(<a href="../../../../../org/eclipse/net4j/util/collection/History.html" title="type parameter in History">T</a>&nbsp;data)</code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="IHistoryElement.html" title="interface in org.eclipse.net4j.util.collection">IHistoryElement</a>&lt;<a href="History.html" title="type parameter in History">T</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createElement(T)">createElement</a></span>&#8203;(<a href="History.html" title="type parameter in History">T</a>&nbsp;data)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/collection/IHistoryElement.html" title="interface in org.eclipse.net4j.util.collection">IHistoryElement</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/History.html" title="type parameter in History">T</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/History.html#get-int-">get</a></span>(int&nbsp;index)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="IHistoryElement.html" title="interface in org.eclipse.net4j.util.collection">IHistoryElement</a>&lt;<a href="History.html" title="type parameter in History">T</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#get(int)">get</a></span>&#8203;(int&nbsp;index)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>&lt;D&gt;&nbsp;D[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/History.html#getData-D:A-">getData</a></span>(D[]&nbsp;a)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getData(D%5B%5D)">getData</a></span>&#8203;(D[]&nbsp;a)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code>java.util.List&lt;<a href="../../../../../org/eclipse/net4j/util/collection/IHistoryElement.html" title="interface in org.eclipse.net4j.util.collection">IHistoryElement</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/History.html" title="type parameter in History">T</a>&gt;&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/History.html#getElements--">getElements</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>java.util.List&lt;<a href="IHistoryElement.html" title="interface in org.eclipse.net4j.util.collection">IHistoryElement</a>&lt;<a href="History.html" title="type parameter in History">T</a>&gt;&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getElements()">getElements</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/collection/History.html" title="type parameter in History">T</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/History.html#getMostRecent--">getMostRecent</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="History.html" title="type parameter in History">T</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMostRecent()">getMostRecent</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/History.html#indexOf-T-">indexOf</a></span>(<a href="../../../../../org/eclipse/net4j/util/collection/History.html" title="type parameter in History">T</a>&nbsp;data)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#indexOf(T)">indexOf</a></span>&#8203;(<a href="History.html" title="type parameter in History">T</a>&nbsp;data)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/History.html#isEmpty--">isEmpty</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isEmpty()">isEmpty</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
-<td class="colFirst"><code>java.util.Iterator&lt;<a href="../../../../../org/eclipse/net4j/util/collection/IHistoryElement.html" title="interface in org.eclipse.net4j.util.collection">IHistoryElement</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/History.html" title="type parameter in History">T</a>&gt;&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/History.html#iterator--">iterator</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>java.util.Iterator&lt;<a href="IHistoryElement.html" title="interface in org.eclipse.net4j.util.collection">IHistoryElement</a>&lt;<a href="History.html" title="type parameter in History">T</a>&gt;&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#iterator()">iterator</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/History.html#load--">load</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#load()">load</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i12" class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/collection/IHistoryElement.html" title="interface in org.eclipse.net4j.util.collection">IHistoryElement</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/History.html" title="type parameter in History">T</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/History.html#remove-int-">remove</a></span>(int&nbsp;index)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="IHistoryElement.html" title="interface in org.eclipse.net4j.util.collection">IHistoryElement</a>&lt;<a href="History.html" title="type parameter in History">T</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#remove(int)">remove</a></span>&#8203;(int&nbsp;index)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/History.html#save--">save</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#save()">save</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/History.html#setElements-java.util.List-">setElements</a></span>(java.util.List&lt;<a href="../../../../../org/eclipse/net4j/util/collection/IHistoryElement.html" title="interface in org.eclipse.net4j.util.collection">IHistoryElement</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/History.html" title="type parameter in History">T</a>&gt;&gt;&nbsp;newElements)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setElements(java.util.List)">setElements</a></span>&#8203;(java.util.List&lt;<a href="IHistoryElement.html" title="interface in org.eclipse.net4j.util.collection">IHistoryElement</a>&lt;<a href="History.html" title="type parameter in History">T</a>&gt;&gt;&nbsp;newElements)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i15" class="rowColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/History.html#size--">size</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#size()">size</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i16" class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/collection/IHistoryElement.html" title="interface in org.eclipse.net4j.util.collection">IHistoryElement</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/History.html" title="type parameter in History">T</a>&gt;[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/History.html#toArray--">toArray</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="IHistoryElement.html" title="interface in org.eclipse.net4j.util.collection">IHistoryElement</a>&lt;<a href="History.html" title="type parameter in History">T</a>&gt;[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toArray()">toArray</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.event.Notifier">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.event.Notifier">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.event.<a href="../../../../../org/eclipse/net4j/util/event/Notifier.html" title="class in org.eclipse.net4j.util.event">Notifier</a></h3>
-<code><a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#addListener-org.eclipse.net4j.util.event.IListener-">addListener</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#fireEvent--">fireEvent</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#fireEvent-org.eclipse.net4j.util.event.IEvent-">fireEvent</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#fireEvent-org.eclipse.net4j.util.event.IEvent-org.eclipse.net4j.util.event.IListener:A-">fireEvent</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#fireThrowable-java.lang.Throwable-">fireThrowable</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#firstListenerAdded--">firstListenerAdded</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#getListeners--">getListeners</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#getNotificationService--">getNotificationService</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#hasListeners--">hasListeners</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#lastListenerRemoved--">lastListenerRemoved</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#removeListener-org.eclipse.net4j.util.event.IListener-">removeListener</a></code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.event.<a href="../event/Notifier.html" title="class in org.eclipse.net4j.util.event">Notifier</a></h3>
+<code><a href="../event/Notifier.html#addListener(org.eclipse.net4j.util.event.IListener)">addListener</a>, <a href="../event/Notifier.html#addUniqueListener(org.eclipse.net4j.util.event.IListener)">addUniqueListener</a>, <a href="../event/Notifier.html#fireEvent()">fireEvent</a>, <a href="../event/Notifier.html#fireEvent(org.eclipse.net4j.util.event.IEvent)">fireEvent</a>, <a href="../event/Notifier.html#fireEvent(org.eclipse.net4j.util.event.IEvent,org.eclipse.net4j.util.event.IListener%5B%5D)">fireEvent</a>, <a href="../event/Notifier.html#fireThrowable(java.lang.Throwable)">fireThrowable</a>, <a href="../event/Notifier.html#firstListenerAdded()">firstListenerAdded</a>, <a href="../event/Notifier.html#getListeners()">getListeners</a>, <a href="../event/Notifier.html#getNotificationService()">getNotificationService</a>, <a href="../event/Notifier.html#hasListener(org.eclipse.net4j.util.event.IListener)">hasListener</a>, <a href="../event/Notifier.html#hasListeners()">hasListeners</a>, <a href="../event/Notifier.html#lastListenerRemoved()">lastListenerRemoved</a>, <a href="../event/Notifier.html#listenerAdded(org.eclipse.net4j.util.event.IListener)">listenerAdded</a>, <a href="../event/Notifier.html#listenerRemoved(org.eclipse.net4j.util.event.IListener)">listenerRemoved</a>, <a href="../event/Notifier.html#removeListener(org.eclipse.net4j.util.event.IListener)">removeListener</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
+<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
 <code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.event.INotifier">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.event.INotifier">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.event.<a href="../../../../../org/eclipse/net4j/util/event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a></h3>
-<code><a href="../../../../../org/eclipse/net4j/util/event/INotifier.html#addListener-org.eclipse.net4j.util.event.IListener-">addListener</a>, <a href="../../../../../org/eclipse/net4j/util/event/INotifier.html#getListeners--">getListeners</a>, <a href="../../../../../org/eclipse/net4j/util/event/INotifier.html#hasListeners--">hasListeners</a>, <a href="../../../../../org/eclipse/net4j/util/event/INotifier.html#removeListener-org.eclipse.net4j.util.event.IListener-">removeListener</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.event.<a href="../event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a></h3>
+<code><a href="../event/INotifier.html#addListener(org.eclipse.net4j.util.event.IListener)">addListener</a>, <a href="../event/INotifier.html#getListeners()">getListeners</a>, <a href="../event/INotifier.html#hasListeners()">hasListeners</a>, <a href="../event/INotifier.html#removeListener(org.eclipse.net4j.util.event.IListener)">removeListener</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Iterable">
+<li class="blockList"><a id="methods.inherited.from.class.java.lang.Iterable">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;java.lang.Iterable</h3>
@@ -281,6 +349,7 @@ implements <a href="../../../../../org/eclipse/net4j/util/collection/IHistory.ht
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -288,29 +357,32 @@ implements <a href="../../../../../org/eclipse/net4j/util/collection/IHistory.ht
 <ul class="blockList">
 <li class="blockList">
 <!-- ============ FIELD DETAIL =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.detail">
+<li class="blockList"><a id="field.detail">
 <!--   -->
 </a>
 <h3>Field Detail</h3>
-<a name="elements">
+<a id="elements">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>elements</h4>
-<pre>protected&nbsp;java.util.List&lt;<a href="../../../../../org/eclipse/net4j/util/collection/IHistoryElement.html" title="interface in org.eclipse.net4j.util.collection">IHistoryElement</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/History.html" title="type parameter in History">T</a>&gt;&gt; elements</pre>
+<pre>protected&nbsp;java.util.List&lt;<a href="IHistoryElement.html" title="interface in org.eclipse.net4j.util.collection">IHistoryElement</a>&lt;<a href="History.html" title="type parameter in History">T</a>&gt;&gt; elements</pre>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.detail">
+<li class="blockList"><a id="constructor.detail">
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="History--">
+<a id="&lt;init&gt;()">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -321,234 +393,240 @@ implements <a href="../../../../../org/eclipse/net4j/util/collection/IHistory.ht
 </ul>
 </li>
 </ul>
+</section>
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="getElements--">
+<a id="getElements()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getElements</h4>
-<pre>public&nbsp;java.util.List&lt;<a href="../../../../../org/eclipse/net4j/util/collection/IHistoryElement.html" title="interface in org.eclipse.net4j.util.collection">IHistoryElement</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/History.html" title="type parameter in History">T</a>&gt;&gt;&nbsp;getElements()</pre>
+<pre class="methodSignature">public&nbsp;java.util.List&lt;<a href="IHistoryElement.html" title="interface in org.eclipse.net4j.util.collection">IHistoryElement</a>&lt;<a href="History.html" title="type parameter in History">T</a>&gt;&gt;&nbsp;getElements()</pre>
 </li>
 </ul>
-<a name="setElements-java.util.List-">
+<a id="setElements(java.util.List)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setElements</h4>
-<pre>public&nbsp;void&nbsp;setElements(java.util.List&lt;<a href="../../../../../org/eclipse/net4j/util/collection/IHistoryElement.html" title="interface in org.eclipse.net4j.util.collection">IHistoryElement</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/History.html" title="type parameter in History">T</a>&gt;&gt;&nbsp;newElements)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setElements&#8203;(java.util.List&lt;<a href="IHistoryElement.html" title="interface in org.eclipse.net4j.util.collection">IHistoryElement</a>&lt;<a href="History.html" title="type parameter in History">T</a>&gt;&gt;&nbsp;newElements)</pre>
 </li>
 </ul>
-<a name="isEmpty--">
+<a id="isEmpty()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>isEmpty</h4>
-<pre>public&nbsp;boolean&nbsp;isEmpty()</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;isEmpty()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/collection/IHistory.html#isEmpty--">isEmpty</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/collection/IHistory.html" title="interface in org.eclipse.net4j.util.collection">IHistory</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/History.html" title="type parameter in History">T</a>&gt;</code></dd>
+<dd><code><a href="IHistory.html#isEmpty()">isEmpty</a></code>&nbsp;in interface&nbsp;<code><a href="IHistory.html" title="interface in org.eclipse.net4j.util.collection">IHistory</a>&lt;<a href="History.html" title="type parameter in History">T</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="size--">
+<a id="size()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>size</h4>
-<pre>public&nbsp;int&nbsp;size()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;size()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/collection/IHistory.html#size--">size</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/collection/IHistory.html" title="interface in org.eclipse.net4j.util.collection">IHistory</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/History.html" title="type parameter in History">T</a>&gt;</code></dd>
+<dd><code><a href="IHistory.html#size()">size</a></code>&nbsp;in interface&nbsp;<code><a href="IHistory.html" title="interface in org.eclipse.net4j.util.collection">IHistory</a>&lt;<a href="History.html" title="type parameter in History">T</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="indexOf-java.lang.Object-">
+<a id="indexOf(java.lang.Object)">
 <!--   -->
-</a><a name="indexOf-T-">
+</a><a id="indexOf(T)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>indexOf</h4>
-<pre>public&nbsp;int&nbsp;indexOf(<a href="../../../../../org/eclipse/net4j/util/collection/History.html" title="type parameter in History">T</a>&nbsp;data)</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;indexOf&#8203;(<a href="History.html" title="type parameter in History">T</a>&nbsp;data)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/collection/IHistory.html#indexOf-T-">indexOf</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/collection/IHistory.html" title="interface in org.eclipse.net4j.util.collection">IHistory</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/History.html" title="type parameter in History">T</a>&gt;</code></dd>
+<dd><code><a href="IHistory.html#indexOf(T)">indexOf</a></code>&nbsp;in interface&nbsp;<code><a href="IHistory.html" title="interface in org.eclipse.net4j.util.collection">IHistory</a>&lt;<a href="History.html" title="type parameter in History">T</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="get-int-">
+<a id="get(int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>get</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/collection/IHistoryElement.html" title="interface in org.eclipse.net4j.util.collection">IHistoryElement</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/History.html" title="type parameter in History">T</a>&gt;&nbsp;get(int&nbsp;index)</pre>
+<pre class="methodSignature">public&nbsp;<a href="IHistoryElement.html" title="interface in org.eclipse.net4j.util.collection">IHistoryElement</a>&lt;<a href="History.html" title="type parameter in History">T</a>&gt;&nbsp;get&#8203;(int&nbsp;index)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/collection/IHistory.html#get-int-">get</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/collection/IHistory.html" title="interface in org.eclipse.net4j.util.collection">IHistory</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/History.html" title="type parameter in History">T</a>&gt;</code></dd>
+<dd><code><a href="IHistory.html#get(int)">get</a></code>&nbsp;in interface&nbsp;<code><a href="IHistory.html" title="interface in org.eclipse.net4j.util.collection">IHistory</a>&lt;<a href="History.html" title="type parameter in History">T</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="add-java.lang.Object-">
+<a id="add(java.lang.Object)">
 <!--   -->
-</a><a name="add-T-">
+</a><a id="add(T)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>add</h4>
-<pre>public&nbsp;boolean&nbsp;add(<a href="../../../../../org/eclipse/net4j/util/collection/History.html" title="type parameter in History">T</a>&nbsp;data)</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;add&#8203;(<a href="History.html" title="type parameter in History">T</a>&nbsp;data)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/collection/IHistory.html#add-T-">add</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/collection/IHistory.html" title="interface in org.eclipse.net4j.util.collection">IHistory</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/History.html" title="type parameter in History">T</a>&gt;</code></dd>
+<dd><code><a href="IHistory.html#add(T)">add</a></code>&nbsp;in interface&nbsp;<code><a href="IHistory.html" title="interface in org.eclipse.net4j.util.collection">IHistory</a>&lt;<a href="History.html" title="type parameter in History">T</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="remove-int-">
+<a id="remove(int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>remove</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/collection/IHistoryElement.html" title="interface in org.eclipse.net4j.util.collection">IHistoryElement</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/History.html" title="type parameter in History">T</a>&gt;&nbsp;remove(int&nbsp;index)</pre>
+<pre class="methodSignature">public&nbsp;<a href="IHistoryElement.html" title="interface in org.eclipse.net4j.util.collection">IHistoryElement</a>&lt;<a href="History.html" title="type parameter in History">T</a>&gt;&nbsp;remove&#8203;(int&nbsp;index)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/collection/IHistory.html#remove-int-">remove</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/collection/IHistory.html" title="interface in org.eclipse.net4j.util.collection">IHistory</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/History.html" title="type parameter in History">T</a>&gt;</code></dd>
+<dd><code><a href="IHistory.html#remove(int)">remove</a></code>&nbsp;in interface&nbsp;<code><a href="IHistory.html" title="interface in org.eclipse.net4j.util.collection">IHistory</a>&lt;<a href="History.html" title="type parameter in History">T</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="clear--">
+<a id="clear()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>clear</h4>
-<pre>public&nbsp;boolean&nbsp;clear()</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;clear()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/collection/IHistory.html#clear--">clear</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/collection/IHistory.html" title="interface in org.eclipse.net4j.util.collection">IHistory</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/History.html" title="type parameter in History">T</a>&gt;</code></dd>
+<dd><code><a href="IHistory.html#clear()">clear</a></code>&nbsp;in interface&nbsp;<code><a href="IHistory.html" title="interface in org.eclipse.net4j.util.collection">IHistory</a>&lt;<a href="History.html" title="type parameter in History">T</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="getMostRecent--">
+<a id="getMostRecent()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getMostRecent</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/collection/History.html" title="type parameter in History">T</a>&nbsp;getMostRecent()</pre>
+<pre class="methodSignature">public&nbsp;<a href="History.html" title="type parameter in History">T</a>&nbsp;getMostRecent()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/collection/IHistory.html#getMostRecent--">getMostRecent</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/collection/IHistory.html" title="interface in org.eclipse.net4j.util.collection">IHistory</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/History.html" title="type parameter in History">T</a>&gt;</code></dd>
+<dd><code><a href="IHistory.html#getMostRecent()">getMostRecent</a></code>&nbsp;in interface&nbsp;<code><a href="IHistory.html" title="interface in org.eclipse.net4j.util.collection">IHistory</a>&lt;<a href="History.html" title="type parameter in History">T</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="getData-java.lang.Object:A-">
+<a id="getData(java.lang.Object[])">
 <!--   -->
-</a><a name="getData-D:A-">
+</a><a id="getData(D[])">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getData</h4>
-<pre>public&nbsp;&lt;D&gt;&nbsp;D[]&nbsp;getData(D[]&nbsp;a)</pre>
+<pre class="methodSignature">public&nbsp;&lt;D&gt;&nbsp;D[]&nbsp;getData&#8203;(D[]&nbsp;a)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/collection/IHistory.html#getData-D:A-">getData</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/collection/IHistory.html" title="interface in org.eclipse.net4j.util.collection">IHistory</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/History.html" title="type parameter in History">T</a>&gt;</code></dd>
+<dd><code><a href="IHistory.html#getData(D%5B%5D)">getData</a></code>&nbsp;in interface&nbsp;<code><a href="IHistory.html" title="interface in org.eclipse.net4j.util.collection">IHistory</a>&lt;<a href="History.html" title="type parameter in History">T</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="toArray--">
+<a id="toArray()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>toArray</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/collection/IHistoryElement.html" title="interface in org.eclipse.net4j.util.collection">IHistoryElement</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/History.html" title="type parameter in History">T</a>&gt;[]&nbsp;toArray()</pre>
+<pre class="methodSignature">public&nbsp;<a href="IHistoryElement.html" title="interface in org.eclipse.net4j.util.collection">IHistoryElement</a>&lt;<a href="History.html" title="type parameter in History">T</a>&gt;[]&nbsp;toArray()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/collection/IHistory.html#toArray--">toArray</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/collection/IHistory.html" title="interface in org.eclipse.net4j.util.collection">IHistory</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/History.html" title="type parameter in History">T</a>&gt;</code></dd>
+<dd><code><a href="IHistory.html#toArray()">toArray</a></code>&nbsp;in interface&nbsp;<code><a href="IHistory.html" title="interface in org.eclipse.net4j.util.collection">IHistory</a>&lt;<a href="History.html" title="type parameter in History">T</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="iterator--">
+<a id="iterator()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>iterator</h4>
-<pre>public&nbsp;java.util.Iterator&lt;<a href="../../../../../org/eclipse/net4j/util/collection/IHistoryElement.html" title="interface in org.eclipse.net4j.util.collection">IHistoryElement</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/History.html" title="type parameter in History">T</a>&gt;&gt;&nbsp;iterator()</pre>
+<pre class="methodSignature">public&nbsp;java.util.Iterator&lt;<a href="IHistoryElement.html" title="interface in org.eclipse.net4j.util.collection">IHistoryElement</a>&lt;<a href="History.html" title="type parameter in History">T</a>&gt;&gt;&nbsp;iterator()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>iterator</code>&nbsp;in interface&nbsp;<code>java.lang.Iterable&lt;<a href="../../../../../org/eclipse/net4j/util/collection/IHistoryElement.html" title="interface in org.eclipse.net4j.util.collection">IHistoryElement</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/History.html" title="type parameter in History">T</a>&gt;&gt;</code></dd>
+<dd><code>iterator</code>&nbsp;in interface&nbsp;<code>java.lang.Iterable&lt;<a href="History.html" title="type parameter in History">T</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="createElement-java.lang.Object-">
+<a id="createElement(java.lang.Object)">
 <!--   -->
-</a><a name="createElement-T-">
+</a><a id="createElement(T)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createElement</h4>
-<pre>protected&nbsp;<a href="../../../../../org/eclipse/net4j/util/collection/IHistoryElement.html" title="interface in org.eclipse.net4j.util.collection">IHistoryElement</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/History.html" title="type parameter in History">T</a>&gt;&nbsp;createElement(<a href="../../../../../org/eclipse/net4j/util/collection/History.html" title="type parameter in History">T</a>&nbsp;data)</pre>
+<pre class="methodSignature">protected&nbsp;<a href="IHistoryElement.html" title="interface in org.eclipse.net4j.util.collection">IHistoryElement</a>&lt;<a href="History.html" title="type parameter in History">T</a>&gt;&nbsp;createElement&#8203;(<a href="History.html" title="type parameter in History">T</a>&nbsp;data)</pre>
 </li>
 </ul>
-<a name="load--">
+<a id="load()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>load</h4>
-<pre>protected&nbsp;void&nbsp;load()</pre>
+<pre class="methodSignature">protected&nbsp;void&nbsp;load()</pre>
 </li>
 </ul>
-<a name="save--">
+<a id="save()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>save</h4>
-<pre>protected&nbsp;void&nbsp;save()</pre>
+<pre class="methodSignature">protected&nbsp;void&nbsp;save()</pre>
 </li>
 </ul>
-<a name="changed--">
+<a id="changed()">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>changed</h4>
-<pre>protected final&nbsp;void&nbsp;changed()</pre>
+<pre class="methodSignature">protected final&nbsp;void&nbsp;changed()</pre>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/History.html">Use</a></li>
@@ -558,16 +636,8 @@ implements <a href="../../../../../org/eclipse/net4j/util/collection/IHistory.ht
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/net4j/util/collection/HashBag.html" title="class in org.eclipse.net4j.util.collection"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/net4j/util/collection/HistoryElement.html" title="class in org.eclipse.net4j.util.collection"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/net4j/util/collection/History.html" target="_top">Frames</a></li>
-<li><a href="History.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -580,11 +650,14 @@ implements <a href="../../../../../org/eclipse/net4j/util/collection/IHistory.ht
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
@@ -596,10 +669,12 @@ implements <a href="../../../../../org/eclipse/net4j/util/collection/IHistory.ht
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

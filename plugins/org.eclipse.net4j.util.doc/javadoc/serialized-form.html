@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>Serialized Form (Net4j Utilities Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="script.js"></script>
+<script type="text/javascript" src="jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,20 +28,25 @@
     catch(err) {
     }
 //-->
-</script>
+var pathtoroot = "./";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="overview-summary.html">Overview</a></li>
+<li><a href="index.html">Overview</a></li>
 <li>Package</li>
 <li>Class</li>
 <li>Use</li>
@@ -41,16 +56,14 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev</li>
-<li>Next</li>
-</ul>
-<ul class="navList">
-<li><a href="index.html?serialized-form.html" target="_top">Frames</a></li>
-<li><a href="serialized-form.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -63,20 +76,33 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
+<main role="main">
 <div class="header">
 <h1 title="Serialized Form" class="title">Serialized Form</h1>
 </div>
 <div class="serializedFormContainer">
 <ul class="blockList">
 <li class="blockList">
+<section role="region">
 <h2 title="Package">Package&nbsp;org.eclipse.net4j.util</h2>
 <ul class="blockList">
-<li class="blockList"><a name="org.eclipse.net4j.util.ImplementationError">
+<li class="blockList"><a id="org.eclipse.net4j.util.ImplementationError">
 <!--   -->
 </a>
 <h3>Class <a href="org/eclipse/net4j/util/ImplementationError.html" title="class in org.eclipse.net4j.util">org.eclipse.net4j.util.ImplementationError</a> extends java.lang.Error implements Serializable</h3>
@@ -85,7 +111,16 @@
 <dd>1L</dd>
 </dl>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.WrappedException">
+<li class="blockList"><a id="org.eclipse.net4j.util.ReflectUtil.ReflectionException">
+<!--   -->
+</a>
+<h3>Class <a href="org/eclipse/net4j/util/ReflectUtil.ReflectionException.html" title="class in org.eclipse.net4j.util">org.eclipse.net4j.util.ReflectUtil.ReflectionException</a> extends java.lang.RuntimeException implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>1L</dd>
+</dl>
+</li>
+<li class="blockList"><a id="org.eclipse.net4j.util.WrappedException">
 <!--   -->
 </a>
 <h3>Class <a href="org/eclipse/net4j/util/WrappedException.html" title="class in org.eclipse.net4j.util">org.eclipse.net4j.util.WrappedException</a> extends java.lang.RuntimeException implements Serializable</h3>
@@ -95,11 +130,13 @@
 </dl>
 </li>
 </ul>
+</section>
 </li>
 <li class="blockList">
+<section role="region">
 <h2 title="Package">Package&nbsp;org.eclipse.net4j.util.collection</h2>
 <ul class="blockList">
-<li class="blockList"><a name="org.eclipse.net4j.util.collection.CaseInsensitiveStringSet">
+<li class="blockList"><a id="org.eclipse.net4j.util.collection.CaseInsensitiveStringSet">
 <!--   -->
 </a>
 <h3>Class <a href="org/eclipse/net4j/util/collection/CaseInsensitiveStringSet.html" title="class in org.eclipse.net4j.util.collection">org.eclipse.net4j.util.collection.CaseInsensitiveStringSet</a> extends java.util.HashSet&lt;java.lang.String&gt; implements Serializable</h3>
@@ -108,7 +145,7 @@
 <dd>1L</dd>
 </dl>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.collection.MoveableArrayList">
+<li class="blockList"><a id="org.eclipse.net4j.util.collection.MoveableArrayList">
 <!--   -->
 </a>
 <h3>Class <a href="org/eclipse/net4j/util/collection/MoveableArrayList.html" title="class in org.eclipse.net4j.util.collection">org.eclipse.net4j.util.collection.MoveableArrayList</a> extends java.util.ArrayList&lt;<a href="org/eclipse/net4j/util/collection/MoveableArrayList.html" title="type parameter in MoveableArrayList">E</a>&gt; implements Serializable</h3>
@@ -118,11 +155,13 @@
 </dl>
 </li>
 </ul>
+</section>
 </li>
 <li class="blockList">
+<section role="region">
 <h2 title="Package">Package&nbsp;org.eclipse.net4j.util.concurrent</h2>
 <ul class="blockList">
-<li class="blockList"><a name="org.eclipse.net4j.util.concurrent.DelegableReentrantLock">
+<li class="blockList"><a id="org.eclipse.net4j.util.concurrent.DelegableReentrantLock">
 <!--   -->
 </a>
 <h3>Class <a href="org/eclipse/net4j/util/concurrent/DelegableReentrantLock.html" title="class in org.eclipse.net4j.util.concurrent">org.eclipse.net4j.util.concurrent.DelegableReentrantLock</a> extends <a href="org/eclipse/net4j/util/concurrent/NonFairReentrantLock.html" title="class in org.eclipse.net4j.util.concurrent">NonFairReentrantLock</a> implements Serializable</h3>
@@ -135,6 +174,10 @@
 <h3>Serialized Fields</h3>
 <ul class="blockList">
 <li class="blockList">
+<h4>active</h4>
+<pre>boolean active</pre>
+</li>
+<li class="blockList">
 <h4>container</h4>
 <pre><a href="org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a> container</pre>
 </li>
@@ -142,19 +185,15 @@
 <h4>containerListener</h4>
 <pre><a href="org/eclipse/net4j/util/event/IListener.html" title="interface in org.eclipse.net4j.util.event">IListener</a> containerListener</pre>
 </li>
-<li class="blockList">
-<h4>delegateDetectors</h4>
-<pre>java.util.List&lt;E&gt; delegateDetectors</pre>
-</li>
 <li class="blockListLast">
-<h4>active</h4>
-<pre>boolean active</pre>
+<h4>delegateDetectors</h4>
+<pre>java.util.List&lt;<a href="org/eclipse/net4j/util/concurrent/DelegableReentrantLock.DelegateDetector.html" title="interface in org.eclipse.net4j.util.concurrent">DelegableReentrantLock.DelegateDetector</a>&gt; delegateDetectors</pre>
 </li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.concurrent.NonFairReentrantLock">
+<li class="blockList"><a id="org.eclipse.net4j.util.concurrent.NonFairReentrantLock">
 <!--   -->
 </a>
 <h3>Class <a href="org/eclipse/net4j/util/concurrent/NonFairReentrantLock.html" title="class in org.eclipse.net4j.util.concurrent">org.eclipse.net4j.util.concurrent.NonFairReentrantLock</a> extends java.lang.Object implements Serializable</h3>
@@ -174,7 +213,7 @@
 </li>
 </ul>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.concurrent.ParallelRunner">
+<li class="blockList"><a id="org.eclipse.net4j.util.concurrent.ParallelRunner">
 <!--   -->
 </a>
 <h3>Class <a href="org/eclipse/net4j/util/concurrent/ParallelRunner.html" title="class in org.eclipse.net4j.util.concurrent">org.eclipse.net4j.util.concurrent.ParallelRunner</a> extends java.util.ArrayList&lt;java.lang.Runnable&gt; implements Serializable</h3>
@@ -183,7 +222,7 @@
 <dd>1L</dd>
 </dl>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.concurrent.RoundRobinList">
+<li class="blockList"><a id="org.eclipse.net4j.util.concurrent.RoundRobinList">
 <!--   -->
 </a>
 <h3>Class <a href="org/eclipse/net4j/util/concurrent/RoundRobinList.html" title="class in org.eclipse.net4j.util.concurrent">org.eclipse.net4j.util.concurrent.RoundRobinList</a> extends java.util.LinkedList&lt;<a href="org/eclipse/net4j/util/concurrent/RoundRobinList.html" title="type parameter in RoundRobinList">E</a>&gt; implements Serializable</h3>
@@ -196,18 +235,18 @@
 <h3>Serialized Fields</h3>
 <ul class="blockList">
 <li class="blockList">
+<h4>it</h4>
+<pre>java.util.Iterator&lt;<a href="org/eclipse/net4j/util/concurrent/RoundRobinList.html" title="type parameter in RoundRobinList">E</a>&gt; it</pre>
+</li>
+<li class="blockListLast">
 <h4>lock</h4>
 <pre>java.util.concurrent.locks.ReadWriteLock lock</pre>
 </li>
-<li class="blockListLast">
-<h4>it</h4>
-<pre>java.util.Iterator&lt;E&gt; it</pre>
-</li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.concurrent.RWLock">
+<li class="blockList"><a id="org.eclipse.net4j.util.concurrent.RWLock">
 <!--   -->
 </a>
 <h3>Class <a href="org/eclipse/net4j/util/concurrent/RWLock.html" title="class in org.eclipse.net4j.util.concurrent">org.eclipse.net4j.util.concurrent.RWLock</a> extends java.util.concurrent.locks.ReentrantReadWriteLock implements Serializable</h3>
@@ -227,7 +266,7 @@
 </li>
 </ul>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.concurrent.TimeoutRuntimeException">
+<li class="blockList"><a id="org.eclipse.net4j.util.concurrent.TimeoutRuntimeException">
 <!--   -->
 </a>
 <h3>Class <a href="org/eclipse/net4j/util/concurrent/TimeoutRuntimeException.html" title="class in org.eclipse.net4j.util.concurrent">org.eclipse.net4j.util.concurrent.TimeoutRuntimeException</a> extends java.lang.RuntimeException implements Serializable</h3>
@@ -237,11 +276,13 @@
 </dl>
 </li>
 </ul>
+</section>
 </li>
 <li class="blockList">
+<section role="region">
 <h2 title="Package">Package&nbsp;org.eclipse.net4j.util.container</h2>
 <ul class="blockList">
-<li class="blockList"><a name="org.eclipse.net4j.util.container.ContainerEvent">
+<li class="blockList"><a id="org.eclipse.net4j.util.container.ContainerEvent">
 <!--   -->
 </a>
 <h3>Class <a href="org/eclipse/net4j/util/container/ContainerEvent.html" title="class in org.eclipse.net4j.util.container">org.eclipse.net4j.util.container.ContainerEvent</a> extends <a href="org/eclipse/net4j/util/event/Event.html" title="class in org.eclipse.net4j.util.event">Event</a> implements Serializable</h3>
@@ -255,13 +296,13 @@
 <ul class="blockList">
 <li class="blockListLast">
 <h4>deltas</h4>
-<pre>java.util.List&lt;E&gt; deltas</pre>
+<pre>java.util.List&lt;<a href="org/eclipse/net4j/util/container/IContainerDelta.html" title="interface in org.eclipse.net4j.util.container">IContainerDelta</a>&lt;<a href="org/eclipse/net4j/util/container/ContainerEvent.html" title="type parameter in ContainerEvent">E</a>&gt;&gt; deltas</pre>
 </li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.container.FactoryNotFoundException">
+<li class="blockList"><a id="org.eclipse.net4j.util.container.FactoryNotFoundException">
 <!--   -->
 </a>
 <h3>Class <a href="org/eclipse/net4j/util/container/FactoryNotFoundException.html" title="class in org.eclipse.net4j.util.container">org.eclipse.net4j.util.container.FactoryNotFoundException</a> extends java.lang.RuntimeException implements Serializable</h3>
@@ -270,7 +311,7 @@
 <dd>1L</dd>
 </dl>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.container.SingleDeltaContainerEvent">
+<li class="blockList"><a id="org.eclipse.net4j.util.container.SingleDeltaContainerEvent">
 <!--   -->
 </a>
 <h3>Class <a href="org/eclipse/net4j/util/container/SingleDeltaContainerEvent.html" title="class in org.eclipse.net4j.util.container">org.eclipse.net4j.util.container.SingleDeltaContainerEvent</a> extends <a href="org/eclipse/net4j/util/event/Event.html" title="class in org.eclipse.net4j.util.event">Event</a> implements Serializable</h3>
@@ -284,18 +325,20 @@
 <ul class="blockList">
 <li class="blockListLast">
 <h4>deltas</h4>
-<pre><a href="org/eclipse/net4j/util/container/IContainerDelta.html" title="interface in org.eclipse.net4j.util.container">IContainerDelta</a>&lt;<a href="org/eclipse/net4j/util/container/IContainerDelta.html" title="type parameter in IContainerDelta">E</a>&gt;[] deltas</pre>
+<pre><a href="org/eclipse/net4j/util/container/IContainerDelta.html" title="interface in org.eclipse.net4j.util.container">IContainerDelta</a>&lt;<a href="org/eclipse/net4j/util/container/SingleDeltaContainerEvent.html" title="type parameter in SingleDeltaContainerEvent">E</a>&gt;[] deltas</pre>
 </li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 <li class="blockList">
+<section role="region">
 <h2 title="Package">Package&nbsp;org.eclipse.net4j.util.event</h2>
 <ul class="blockList">
-<li class="blockList"><a name="org.eclipse.net4j.util.event.Event">
+<li class="blockList"><a id="org.eclipse.net4j.util.event.Event">
 <!--   -->
 </a>
 <h3>Class <a href="org/eclipse/net4j/util/event/Event.html" title="class in org.eclipse.net4j.util.event">org.eclipse.net4j.util.event.Event</a> extends java.util.EventObject implements Serializable</h3>
@@ -304,7 +347,7 @@
 <dd>1L</dd>
 </dl>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.event.ThrowableEvent">
+<li class="blockList"><a id="org.eclipse.net4j.util.event.ThrowableEvent">
 <!--   -->
 </a>
 <h3>Class <a href="org/eclipse/net4j/util/event/ThrowableEvent.html" title="class in org.eclipse.net4j.util.event">org.eclipse.net4j.util.event.ThrowableEvent</a> extends <a href="org/eclipse/net4j/util/event/Event.html" title="class in org.eclipse.net4j.util.event">Event</a> implements Serializable</h3>
@@ -324,7 +367,7 @@
 </li>
 </ul>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.event.ValueEvent">
+<li class="blockList"><a id="org.eclipse.net4j.util.event.ValueEvent">
 <!--   -->
 </a>
 <h3>Class <a href="org/eclipse/net4j/util/event/ValueEvent.html" title="class in org.eclipse.net4j.util.event">org.eclipse.net4j.util.event.ValueEvent</a> extends <a href="org/eclipse/net4j/util/event/Event.html" title="class in org.eclipse.net4j.util.event">Event</a> implements Serializable</h3>
@@ -337,23 +380,25 @@
 <h3>Serialized Fields</h3>
 <ul class="blockList">
 <li class="blockList">
-<h4>oldValue</h4>
-<pre>java.lang.Object oldValue</pre>
+<h4>newValue</h4>
+<pre><a href="org/eclipse/net4j/util/event/ValueEvent.html" title="type parameter in ValueEvent">VALUE</a> newValue</pre>
 </li>
 <li class="blockListLast">
-<h4>newValue</h4>
-<pre>java.lang.Object newValue</pre>
+<h4>oldValue</h4>
+<pre><a href="org/eclipse/net4j/util/event/ValueEvent.html" title="type parameter in ValueEvent">VALUE</a> oldValue</pre>
 </li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 <li class="blockList">
+<section role="region">
 <h2 title="Package">Package&nbsp;org.eclipse.net4j.util.factory</h2>
 <ul class="blockList">
-<li class="blockList"><a name="org.eclipse.net4j.util.factory.FactoryCreationException">
+<li class="blockList"><a id="org.eclipse.net4j.util.factory.FactoryCreationException">
 <!--   -->
 </a>
 <h3>Class <a href="org/eclipse/net4j/util/factory/FactoryCreationException.html" title="class in org.eclipse.net4j.util.factory">org.eclipse.net4j.util.factory.FactoryCreationException</a> extends java.lang.RuntimeException implements Serializable</h3>
@@ -362,7 +407,7 @@
 <dd>1L</dd>
 </dl>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.factory.FactoryKey">
+<li class="blockList"><a id="org.eclipse.net4j.util.factory.FactoryKey">
 <!--   -->
 </a>
 <h3>Class <a href="org/eclipse/net4j/util/factory/FactoryKey.html" title="class in org.eclipse.net4j.util.factory">org.eclipse.net4j.util.factory.FactoryKey</a> extends java.lang.Object implements Serializable</h3>
@@ -386,7 +431,7 @@
 </li>
 </ul>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.factory.ProductCreationException">
+<li class="blockList"><a id="org.eclipse.net4j.util.factory.ProductCreationException">
 <!--   -->
 </a>
 <h3>Class <a href="org/eclipse/net4j/util/factory/ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">org.eclipse.net4j.util.factory.ProductCreationException</a> extends java.lang.RuntimeException implements Serializable</h3>
@@ -396,11 +441,13 @@
 </dl>
 </li>
 </ul>
+</section>
 </li>
 <li class="blockList">
+<section role="region">
 <h2 title="Package">Package&nbsp;org.eclipse.net4j.util.io</h2>
 <ul class="blockList">
-<li class="blockList"><a name="org.eclipse.net4j.util.io.IORuntimeException">
+<li class="blockList"><a id="org.eclipse.net4j.util.io.IORuntimeException">
 <!--   -->
 </a>
 <h3>Class <a href="org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">org.eclipse.net4j.util.io.IORuntimeException</a> extends java.lang.RuntimeException implements Serializable</h3>
@@ -409,7 +456,7 @@
 <dd>1L</dd>
 </dl>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.io.IOTimeoutException">
+<li class="blockList"><a id="org.eclipse.net4j.util.io.IOTimeoutException">
 <!--   -->
 </a>
 <h3>Class <a href="org/eclipse/net4j/util/io/IOTimeoutException.html" title="class in org.eclipse.net4j.util.io">org.eclipse.net4j.util.io.IOTimeoutException</a> extends java.io.IOException implements Serializable</h3>
@@ -419,11 +466,13 @@
 </dl>
 </li>
 </ul>
+</section>
 </li>
 <li class="blockList">
+<section role="region">
 <h2 title="Package">Package&nbsp;org.eclipse.net4j.util.lifecycle</h2>
 <ul class="blockList">
-<li class="blockList"><a name="org.eclipse.net4j.util.lifecycle.LifecycleEvent">
+<li class="blockList"><a id="org.eclipse.net4j.util.lifecycle.LifecycleEvent">
 <!--   -->
 </a>
 <h3>Class <a href="org/eclipse/net4j/util/lifecycle/LifecycleEvent.html" title="class in org.eclipse.net4j.util.lifecycle">org.eclipse.net4j.util.lifecycle.LifecycleEvent</a> extends <a href="org/eclipse/net4j/util/event/Event.html" title="class in org.eclipse.net4j.util.event">Event</a> implements Serializable</h3>
@@ -443,7 +492,7 @@
 </li>
 </ul>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.lifecycle.LifecycleException">
+<li class="blockList"><a id="org.eclipse.net4j.util.lifecycle.LifecycleException">
 <!--   -->
 </a>
 <h3>Class <a href="org/eclipse/net4j/util/lifecycle/LifecycleException.html" title="class in org.eclipse.net4j.util.lifecycle">org.eclipse.net4j.util.lifecycle.LifecycleException</a> extends java.lang.IllegalStateException implements Serializable</h3>
@@ -453,11 +502,13 @@
 </dl>
 </li>
 </ul>
+</section>
 </li>
 <li class="blockList">
+<section role="region">
 <h2 title="Package">Package&nbsp;org.eclipse.net4j.util.om.log</h2>
 <ul class="blockList">
-<li class="blockList"><a name="org.eclipse.net4j.util.om.log.RollingLog.PropertiesEvent">
+<li class="blockList"><a id="org.eclipse.net4j.util.om.log.RollingLog.PropertiesEvent">
 <!--   -->
 </a>
 <h3>Class <a href="org/eclipse/net4j/util/om/log/RollingLog.PropertiesEvent.html" title="class in org.eclipse.net4j.util.om.log">org.eclipse.net4j.util.om.log.RollingLog.PropertiesEvent</a> extends <a href="org/eclipse/net4j/util/om/log/RollingLog.RollingLogEvent.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.RollingLogEvent</a> implements Serializable</h3>
@@ -470,18 +521,18 @@
 <h3>Serialized Fields</h3>
 <ul class="blockList">
 <li class="blockList">
-<h4>type</h4>
-<pre><a href="org/eclipse/net4j/util/om/log/RollingLog.PropertiesEvent.Type.html" title="enum in org.eclipse.net4j.util.om.log">RollingLog.PropertiesEvent.Type</a> type</pre>
-</li>
-<li class="blockListLast">
 <h4>properties</h4>
 <pre>java.util.Properties properties</pre>
 </li>
-</ul>
+<li class="blockListLast">
+<h4>type</h4>
+<pre><a href="org/eclipse/net4j/util/om/log/RollingLog.PropertiesEvent.Type.html" title="enum in org.eclipse.net4j.util.om.log">RollingLog.PropertiesEvent.Type</a> type</pre>
 </li>
 </ul>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.om.log.RollingLog.RecoveryEvent">
+</ul>
+</li>
+<li class="blockList"><a id="org.eclipse.net4j.util.om.log.RollingLog.RecoveryEvent">
 <!--   -->
 </a>
 <h3>Class <a href="org/eclipse/net4j/util/om/log/RollingLog.RecoveryEvent.html" title="class in org.eclipse.net4j.util.om.log">org.eclipse.net4j.util.om.log.RollingLog.RecoveryEvent</a> extends <a href="org/eclipse/net4j/util/om/log/RollingLog.RollingLogEvent.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.RollingLogEvent</a> implements Serializable</h3>
@@ -494,18 +545,18 @@
 <h3>Serialized Fields</h3>
 <ul class="blockList">
 <li class="blockList">
-<h4>properties</h4>
-<pre>java.util.Properties properties</pre>
-</li>
-<li class="blockListLast">
 <h4>logLine</h4>
 <pre><a href="org/eclipse/net4j/util/om/log/RollingLog.LogLine.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.LogLine</a> logLine</pre>
 </li>
-</ul>
+<li class="blockListLast">
+<h4>properties</h4>
+<pre>java.util.Properties properties</pre>
 </li>
 </ul>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.om.log.RollingLog.RollingLogEvent">
+</ul>
+</li>
+<li class="blockList"><a id="org.eclipse.net4j.util.om.log.RollingLog.RollingLogEvent">
 <!--   -->
 </a>
 <h3>Class <a href="org/eclipse/net4j/util/om/log/RollingLog.RollingLogEvent.html" title="class in org.eclipse.net4j.util.om.log">org.eclipse.net4j.util.om.log.RollingLog.RollingLogEvent</a> extends <a href="org/eclipse/net4j/util/event/Event.html" title="class in org.eclipse.net4j.util.event">Event</a> implements Serializable</h3>
@@ -514,7 +565,7 @@
 <dd>1L</dd>
 </dl>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.om.log.RollingLog.SplitEvent">
+<li class="blockList"><a id="org.eclipse.net4j.util.om.log.RollingLog.SplitEvent">
 <!--   -->
 </a>
 <h3>Class <a href="org/eclipse/net4j/util/om/log/RollingLog.SplitEvent.html" title="class in org.eclipse.net4j.util.om.log">org.eclipse.net4j.util.om.log.RollingLog.SplitEvent</a> extends <a href="org/eclipse/net4j/util/om/log/RollingLog.RollingLogEvent.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.RollingLogEvent</a> implements Serializable</h3>
@@ -539,11 +590,13 @@
 </ul>
 </li>
 </ul>
+</section>
 </li>
 <li class="blockList">
+<section role="region">
 <h2 title="Package">Package&nbsp;org.eclipse.net4j.util.om.monitor</h2>
 <ul class="blockList">
-<li class="blockList"><a name="org.eclipse.net4j.util.om.monitor.MonitorCanceledException">
+<li class="blockList"><a id="org.eclipse.net4j.util.om.monitor.MonitorCanceledException">
 <!--   -->
 </a>
 <h3>Class <a href="org/eclipse/net4j/util/om/monitor/MonitorCanceledException.html" title="class in org.eclipse.net4j.util.om.monitor">org.eclipse.net4j.util.om.monitor.MonitorCanceledException</a> extends java.lang.RuntimeException implements Serializable</h3>
@@ -552,7 +605,7 @@
 <dd>1L</dd>
 </dl>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.om.monitor.NotifyingMonitor.ProgressEvent">
+<li class="blockList"><a id="org.eclipse.net4j.util.om.monitor.NotifyingMonitor.ProgressEvent">
 <!--   -->
 </a>
 <h3>Class <a href="org/eclipse/net4j/util/om/monitor/NotifyingMonitor.ProgressEvent.html" title="class in org.eclipse.net4j.util.om.monitor">org.eclipse.net4j.util.om.monitor.NotifyingMonitor.ProgressEvent</a> extends <a href="org/eclipse/net4j/util/event/Event.html" title="class in org.eclipse.net4j.util.event">Event</a> implements Serializable</h3>
@@ -577,11 +630,13 @@
 </ul>
 </li>
 </ul>
+</section>
 </li>
 <li class="blockList">
+<section role="region">
 <h2 title="Package">Package&nbsp;org.eclipse.net4j.util.om.trace</h2>
 <ul class="blockList">
-<li class="blockList"><a name="org.eclipse.net4j.util.om.trace.RemoteTraceServer.Event">
+<li class="blockList"><a id="org.eclipse.net4j.util.om.trace.RemoteTraceServer.Event">
 <!--   -->
 </a>
 <h3>Class <a href="org/eclipse/net4j/util/om/trace/RemoteTraceServer.Event.html" title="class in org.eclipse.net4j.util.om.trace">org.eclipse.net4j.util.om.trace.RemoteTraceServer.Event</a> extends java.util.EventObject implements Serializable</h3>
@@ -593,14 +648,6 @@
 <li class="blockList">
 <h3>Serialized Fields</h3>
 <ul class="blockList">
-<li class="blockList">
-<h4>id</h4>
-<pre>long id</pre>
-</li>
-<li class="blockList">
-<h4>timeStamp</h4>
-<pre>long timeStamp</pre>
-</li>
 <li class="blockList">
 <h4>agentID</h4>
 <pre>java.lang.String agentID</pre>
@@ -618,14 +665,6 @@
 </dl>
 </li>
 <li class="blockList">
-<h4>tracerName</h4>
-<pre>java.lang.String tracerName</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
-<dd>3.2</dd>
-</dl>
-</li>
-<li class="blockList">
 <h4>context</h4>
 <pre>java.lang.String context</pre>
 <dl>
@@ -634,8 +673,20 @@
 </dl>
 </li>
 <li class="blockList">
+<h4>id</h4>
+<pre>long id</pre>
+</li>
+<li class="blockList">
 <h4>message</h4>
 <pre>java.lang.String message</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.2</dd>
+</dl>
+</li>
+<li class="blockList">
+<h4>stackTrace</h4>
+<pre>java.lang.StackTraceElement[] stackTrace</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.2</dd>
@@ -649,9 +700,13 @@
 <dd>3.2</dd>
 </dl>
 </li>
+<li class="blockList">
+<h4>timeStamp</h4>
+<pre>long timeStamp</pre>
+</li>
 <li class="blockListLast">
-<h4>stackTrace</h4>
-<pre>java.lang.StackTraceElement[] stackTrace</pre>
+<h4>tracerName</h4>
+<pre>java.lang.String tracerName</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.2</dd>
@@ -661,7 +716,7 @@
 </li>
 </ul>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.om.trace.TraceHandlerEvent">
+<li class="blockList"><a id="org.eclipse.net4j.util.om.trace.TraceHandlerEvent">
 <!--   -->
 </a>
 <h3>Class <a href="org/eclipse/net4j/util/om/trace/TraceHandlerEvent.html" title="class in org.eclipse.net4j.util.om.trace">org.eclipse.net4j.util.om.trace.TraceHandlerEvent</a> extends java.lang.Object implements Serializable</h3>
@@ -674,35 +729,37 @@
 <h3>Serialized Fields</h3>
 <ul class="blockList">
 <li class="blockList">
-<h4>timeStamp</h4>
-<pre>long timeStamp</pre>
-</li>
-<li class="blockList">
-<h4>tracer</h4>
-<pre><a href="org/eclipse/net4j/util/om/trace/OMTracer.html" title="interface in org.eclipse.net4j.util.om.trace">OMTracer</a> tracer</pre>
-</li>
-<li class="blockList">
 <h4>context</h4>
-<pre>java.lang.Class&lt;T&gt; context</pre>
+<pre>java.lang.Class&lt;?&gt; context</pre>
 </li>
 <li class="blockList">
 <h4>message</h4>
 <pre>java.lang.String message</pre>
 </li>
-<li class="blockListLast">
+<li class="blockList">
 <h4>throwable</h4>
 <pre>java.lang.Throwable throwable</pre>
 </li>
-</ul>
+<li class="blockList">
+<h4>timeStamp</h4>
+<pre>long timeStamp</pre>
+</li>
+<li class="blockListLast">
+<h4>tracer</h4>
+<pre><a href="org/eclipse/net4j/util/om/trace/OMTracer.html" title="interface in org.eclipse.net4j.util.om.trace">OMTracer</a> tracer</pre>
 </li>
 </ul>
 </li>
 </ul>
+</li>
+</ul>
+</section>
 </li>
 <li class="blockList">
+<section role="region">
 <h2 title="Package">Package&nbsp;org.eclipse.net4j.util.options</h2>
 <ul class="blockList">
-<li class="blockList"><a name="org.eclipse.net4j.util.options.OptionsEvent">
+<li class="blockList"><a id="org.eclipse.net4j.util.options.OptionsEvent">
 <!--   -->
 </a>
 <h3>Class <a href="org/eclipse/net4j/util/options/OptionsEvent.html" title="class in org.eclipse.net4j.util.options">org.eclipse.net4j.util.options.OptionsEvent</a> extends <a href="org/eclipse/net4j/util/event/Event.html" title="class in org.eclipse.net4j.util.event">Event</a> implements Serializable</h3>
@@ -712,11 +769,13 @@
 </dl>
 </li>
 </ul>
+</section>
 </li>
 <li class="blockList">
+<section role="region">
 <h2 title="Package">Package&nbsp;org.eclipse.net4j.util.security</h2>
 <ul class="blockList">
-<li class="blockList"><a name="org.eclipse.net4j.util.security.NegotiationException">
+<li class="blockList"><a id="org.eclipse.net4j.util.security.NegotiationException">
 <!--   -->
 </a>
 <h3>Class <a href="org/eclipse/net4j/util/security/NegotiationException.html" title="class in org.eclipse.net4j.util.security">org.eclipse.net4j.util.security.NegotiationException</a> extends java.lang.SecurityException implements Serializable</h3>
@@ -725,7 +784,7 @@
 <dd>1L</dd>
 </dl>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.security.NotAuthenticatedException">
+<li class="blockList"><a id="org.eclipse.net4j.util.security.NotAuthenticatedException">
 <!--   -->
 </a>
 <h3>Class <a href="org/eclipse/net4j/util/security/NotAuthenticatedException.html" title="class in org.eclipse.net4j.util.security">org.eclipse.net4j.util.security.NotAuthenticatedException</a> extends java.lang.SecurityException implements Serializable</h3>
@@ -735,11 +794,13 @@
 </dl>
 </li>
 </ul>
+</section>
 </li>
 <li class="blockList">
+<section role="region">
 <h2 title="Package">Package&nbsp;org.eclipse.net4j.util.transaction</h2>
 <ul class="blockList">
-<li class="blockList"><a name="org.eclipse.net4j.util.transaction.TransactionException">
+<li class="blockList"><a id="org.eclipse.net4j.util.transaction.TransactionException">
 <!--   -->
 </a>
 <h3>Class <a href="org/eclipse/net4j/util/transaction/TransactionException.html" title="class in org.eclipse.net4j.util.transaction">org.eclipse.net4j.util.transaction.TransactionException</a> extends java.lang.RuntimeException implements Serializable</h3>
@@ -749,11 +810,13 @@
 </dl>
 </li>
 </ul>
+</section>
 </li>
 <li class="blockList">
+<section role="region">
 <h2 title="Package">Package&nbsp;org.eclipse.net4j.util.ui.widgets</h2>
 <ul class="blockList">
-<li class="blockList"><a name="org.eclipse.net4j.util.ui.widgets.SashComposite.OrientationChangedEvent">
+<li class="blockList"><a id="org.eclipse.net4j.util.ui.widgets.SashComposite.OrientationChangedEvent">
 <!--   -->
 </a>
 <h3>Class <a href="org/eclipse/net4j/util/ui/widgets/SashComposite.OrientationChangedEvent.html" title="class in org.eclipse.net4j.util.ui.widgets">org.eclipse.net4j.util.ui.widgets.SashComposite.OrientationChangedEvent</a> extends <a href="org/eclipse/net4j/util/event/Event.html" title="class in org.eclipse.net4j.util.event">Event</a> implements Serializable</h3>
@@ -774,19 +837,23 @@
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
+</main>
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="overview-summary.html">Overview</a></li>
+<li><a href="index.html">Overview</a></li>
 <li>Package</li>
 <li>Class</li>
 <li>Use</li>
@@ -796,16 +863,8 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev</li>
-<li>Next</li>
-</ul>
-<ul class="navList">
-<li><a href="index.html?serialized-form.html" target="_top">Frames</a></li>
-<li><a href="serialized-form.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -818,11 +877,16 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

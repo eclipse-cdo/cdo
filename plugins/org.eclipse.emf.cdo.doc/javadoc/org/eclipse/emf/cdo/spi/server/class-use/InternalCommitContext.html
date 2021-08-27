@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>Uses of Interface org.eclipse.emf.cdo.spi.server.InternalCommitContext (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,39 +28,43 @@
     catch(err) {
     }
 //-->
-</script>
+var pathtoroot = "../../../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../../index.html">Overview</a></li>
 <li><a href="../package-summary.html">Package</a></li>
-<li><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">Class</a></li>
+<li><a href="../InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">Class</a></li>
 <li class="navBarCell1Rev">Use</li>
+<li><a href="../package-tree.html">Tree</a></li>
 <li><a href="../../../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../../../help-doc.html">Help</a></li>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev</li>
-<li>Next</li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../../index.html?org/eclipse/emf/cdo/spi/server/class-use/InternalCommitContext.html" target="_top">Frames</a></li>
-<li><a href="InternalCommitContext.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -63,32 +77,44 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
+<main role="main">
 <div class="header">
 <h2 title="Uses of Interface org.eclipse.emf.cdo.spi.server.InternalCommitContext" class="title">Uses of Interface<br>org.eclipse.emf.cdo.spi.server.InternalCommitContext</h2>
 </div>
 <div class="classUseContainer">
 <ul class="blockList">
 <li class="blockList">
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing packages, and an explanation">
-<caption><span>Packages that use <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Packages that use <a href="../InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Package</th>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.server">org.eclipse.emf.cdo.server</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.server">org.eclipse.emf.cdo.server</a></th>
 <td class="colLast">
 <div class="block">Server concepts for dealing with repositories and stores.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.spi.server">org.eclipse.emf.cdo.spi.server</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.spi.server">org.eclipse.emf.cdo.spi.server</a></th>
 <td class="colLast">
 <div class="block">Server service provider interfaces and useful base implementations.</div>
 </td>
@@ -98,177 +124,198 @@
 </li>
 <li class="blockList">
 <ul class="blockList">
-<li class="blockList"><a name="org.eclipse.emf.cdo.server">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.emf.cdo.server">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a> in <a href="../../../../../../../org/eclipse/emf/cdo/server/package-summary.html">org.eclipse.emf.cdo.server</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../../org/eclipse/emf/cdo/server/package-summary.html">org.eclipse.emf.cdo.server</a> with parameters of type <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a> in <a href="../../../server/package-summary.html">org.eclipse.emf.cdo.server</a></h3>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../../server/package-summary.html">org.eclipse.emf.cdo.server</a> with parameters of type <a href="../InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">IStoreAccessor.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#write-org.eclipse.emf.cdo.spi.server.InternalCommitContext-org.eclipse.net4j.util.om.monitor.OMMonitor-">write</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a>&nbsp;context,
-     <a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor)</code>
+<th class="colSecond" scope="row"><span class="typeNameLabel">IStoreAccessor.</span><code><span class="memberNameLink"><a href="../../../server/IStoreAccessor.html#write(org.eclipse.emf.cdo.spi.server.InternalCommitContext,org.eclipse.net4j.util.om.monitor.OMMonitor)">write</a></span>&#8203;(<a href="../InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a>&nbsp;context,
+     org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</code></th>
+<td class="colLast">
 <div class="block">Called before committing.</div>
 </td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.spi.server">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.emf.cdo.spi.server">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a> in <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/package-summary.html">org.eclipse.emf.cdo.spi.server</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/package-summary.html">org.eclipse.emf.cdo.spi.server</a> that return <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a> in <a href="../package-summary.html">org.eclipse.emf.cdo.spi.server</a></h3>
+<table class="useSummary">
+<caption><span>Methods in <a href="../package-summary.html">org.eclipse.emf.cdo.spi.server</a> that return <a href="../InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a></code></td>
-<td class="colLast"><span class="typeNameLabel">InternalTransaction.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalTransaction.html#createCommitContext--">createCommitContext</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalRepository.</span><code><span class="memberNameLink"><a href="../InternalRepository.html#createCommitContext(org.eclipse.emf.cdo.spi.server.InternalTransaction)">createCommitContext</a></span>&#8203;(<a href="../InternalTransaction.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalTransaction</a>&nbsp;transaction)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a></code></td>
-<td class="colLast"><span class="typeNameLabel">InternalRepository.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html#createCommitContext-org.eclipse.emf.cdo.spi.server.InternalTransaction-">createCommitContext</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalTransaction.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalTransaction</a>&nbsp;transaction)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalTransaction.</span><code><span class="memberNameLink"><a href="../InternalTransaction.html#createCommitContext()">createCommitContext</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a></code></td>
-<td class="colLast"><span class="typeNameLabel">InternalCommitManager.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitManager.html#get-org.eclipse.emf.cdo.spi.server.InternalTransaction-">get</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalTransaction.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalTransaction</a>&nbsp;transaction)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalCommitManager.</span><code><span class="memberNameLink"><a href="../InternalCommitManager.html#get(org.eclipse.emf.cdo.spi.server.InternalTransaction)">get</a></span>&#8203;(<a href="../InternalTransaction.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalTransaction</a>&nbsp;transaction)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/package-summary.html">org.eclipse.emf.cdo.spi.server</a> with parameters of type <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Methods in <a href="../package-summary.html">org.eclipse.emf.cdo.spi.server</a> with parameters of type <a href="../InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">StoreAccessorBase.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/StoreAccessorBase.html#addIDMappings-org.eclipse.emf.cdo.spi.server.InternalCommitContext-org.eclipse.net4j.util.om.monitor.OMMonitor-">addIDMappings</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a>&nbsp;commitContext,
-             <a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor)</code>
+<th class="colSecond" scope="row"><span class="typeNameLabel">StoreAccessorBase.</span><code><span class="memberNameLink"><a href="../StoreAccessorBase.html#addIDMappings(org.eclipse.emf.cdo.spi.server.InternalCommitContext,org.eclipse.net4j.util.om.monitor.OMMonitor)">addIDMappings</a></span>&#8203;(<a href="../InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a>&nbsp;commitContext,
+             org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</code></th>
+<td class="colLast">
 <div class="block">Add ID mappings for all new objects of a transaction to the commit context.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><span class="typeNameLabel">StoreAccessor.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/StoreAccessor.html#applyIDMappings-org.eclipse.emf.cdo.spi.server.InternalCommitContext-org.eclipse.net4j.util.om.monitor.OMMonitor-">applyIDMappings</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a>&nbsp;context,
-               <a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">StoreAccessor.</span><code><span class="memberNameLink"><a href="../StoreAccessor.html#applyIDMappings(org.eclipse.emf.cdo.spi.server.InternalCommitContext,org.eclipse.net4j.util.om.monitor.OMMonitor)">applyIDMappings</a></span>&#8203;(<a href="../InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a>&nbsp;context,
+               org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalUnitManager.InternalObjectAttacher.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalUnitManager.InternalObjectAttacher</a></code></td>
-<td class="colLast"><span class="typeNameLabel">InternalUnitManager.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalUnitManager.html#attachObjects-org.eclipse.emf.cdo.spi.server.InternalCommitContext-">attachObjects</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a>&nbsp;commitContext)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../InternalUnitManager.InternalObjectAttacher.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalUnitManager.InternalObjectAttacher</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalUnitManager.</span><code><span class="memberNameLink"><a href="../InternalUnitManager.html#attachObjects(org.eclipse.emf.cdo.spi.server.InternalCommitContext)">attachObjects</a></span>&#8203;(<a href="../InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a>&nbsp;commitContext)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">InternalRepository.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html#commit-org.eclipse.emf.cdo.spi.server.InternalCommitContext-org.eclipse.net4j.util.om.monitor.OMMonitor-">commit</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a>&nbsp;commitContext,
-      <a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalRepository.</span><code><span class="memberNameLink"><a href="../InternalRepository.html#commit(org.eclipse.emf.cdo.spi.server.InternalCommitContext,org.eclipse.net4j.util.om.monitor.OMMonitor)">commit</a></span>&#8203;(<a href="../InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a>&nbsp;commitContext,
+      org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><span class="typeNameLabel">StoreAccessor.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/StoreAccessor.html#doWrite-org.eclipse.emf.cdo.spi.server.InternalCommitContext-org.eclipse.net4j.util.om.monitor.OMMonitor-">doWrite</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a>&nbsp;context,
-       <a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">StoreAccessor.</span><code><span class="memberNameLink"><a href="../StoreAccessor.html#doWrite(org.eclipse.emf.cdo.spi.server.InternalCommitContext,org.eclipse.net4j.util.om.monitor.OMMonitor)">doWrite</a></span>&#8203;(<a href="../InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a>&nbsp;context,
+       org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected abstract void</code></td>
-<td class="colLast"><span class="typeNameLabel">StoreAccessorBase.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/StoreAccessorBase.html#doWrite-org.eclipse.emf.cdo.spi.server.InternalCommitContext-org.eclipse.net4j.util.om.monitor.OMMonitor-">doWrite</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a>&nbsp;context,
-       <a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">StoreAccessorBase.</span><code><span class="memberNameLink"><a href="../StoreAccessorBase.html#doWrite(org.eclipse.emf.cdo.spi.server.InternalCommitContext,org.eclipse.net4j.util.om.monitor.OMMonitor)">doWrite</a></span>&#8203;(<a href="../InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a>&nbsp;context,
+       org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><span class="typeNameLabel">StoreAccessor.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/StoreAccessor.html#postProcessRevisions-org.eclipse.emf.cdo.spi.server.InternalCommitContext-org.eclipse.net4j.util.om.monitor.OMMonitor-">postProcessRevisions</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a>&nbsp;context,
-                    <a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">StoreAccessor.</span><code><span class="memberNameLink"><a href="../StoreAccessor.html#postProcessRevisions(org.eclipse.emf.cdo.spi.server.InternalCommitContext,org.eclipse.net4j.util.om.monitor.OMMonitor)">postProcessRevisions</a></span>&#8203;(<a href="../InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a>&nbsp;context,
+                    org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">InternalCommitManager.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitManager.html#preCommit-org.eclipse.emf.cdo.spi.server.InternalCommitContext-org.eclipse.emf.cdo.common.protocol.CDODataInput-org.eclipse.net4j.util.om.monitor.OMMonitor-">preCommit</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a>&nbsp;commitContext,
-         <a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a>&nbsp;in,
-         <a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor)</code>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalCommitManager.</span><code><span class="memberNameLink"><a href="../InternalCommitManager.html#preCommit(org.eclipse.emf.cdo.spi.server.InternalCommitContext,org.eclipse.emf.cdo.common.protocol.CDODataInput,org.eclipse.net4j.util.om.monitor.OMMonitor)">preCommit</a></span>&#8203;(<a href="../InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a>&nbsp;commitContext,
+         <a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a>&nbsp;in,
+         org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</code></th>
+<td class="colLast">
 <div class="block">Create a future to execute commitContext in a different thread.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">InternalCommitManager.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitManager.html#preCommit-org.eclipse.emf.cdo.spi.server.InternalCommitContext-org.eclipse.net4j.util.om.monitor.OMMonitor-">preCommit</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a>&nbsp;commitContext,
-         <a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">As of 4.5 use <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitManager.html#preCommit-org.eclipse.emf.cdo.spi.server.InternalCommitContext-org.eclipse.emf.cdo.common.protocol.CDODataInput-org.eclipse.net4j.util.om.monitor.OMMonitor-"><code>InternalCommitManager.preCommit(InternalCommitContext, CDODataInput, OMMonitor)</code></a>.</span></div>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalCommitManager.</span><code><span class="memberNameLink"><a href="../InternalCommitManager.html#preCommit(org.eclipse.emf.cdo.spi.server.InternalCommitContext,org.eclipse.net4j.util.om.monitor.OMMonitor)">preCommit</a></span>&#8203;(<a href="../InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a>&nbsp;commitContext,
+         org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.5 use <a href="../InternalCommitManager.html#preCommit(org.eclipse.emf.cdo.spi.server.InternalCommitContext,org.eclipse.emf.cdo.common.protocol.CDODataInput,org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>InternalCommitManager.preCommit(InternalCommitContext, CDODataInput, OMMonitor)</code></a>.</div>
 </div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">InternalCommitManager.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitManager.html#remove-org.eclipse.emf.cdo.spi.server.InternalCommitContext-">remove</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a>&nbsp;commitContext)</code>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalCommitManager.</span><code><span class="memberNameLink"><a href="../InternalCommitManager.html#remove(org.eclipse.emf.cdo.spi.server.InternalCommitContext)">remove</a></span>&#8203;(<a href="../InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a>&nbsp;commitContext)</code></th>
+<td class="colLast">
 <div class="block">Called after a commitContext is done successfully or not.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">InternalCommitManager.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitManager.html#rollback-org.eclipse.emf.cdo.spi.server.InternalCommitContext-">rollback</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a>&nbsp;commitContext)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalCommitManager.</span><code><span class="memberNameLink"><a href="../InternalCommitManager.html#rollback(org.eclipse.emf.cdo.spi.server.InternalCommitContext)">rollback</a></span>&#8203;(<a href="../InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a>&nbsp;commitContext)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">StoreAccessorBase.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/StoreAccessorBase.html#write-org.eclipse.emf.cdo.spi.server.InternalCommitContext-org.eclipse.net4j.util.om.monitor.OMMonitor-">write</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a>&nbsp;context,
-     <a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">StoreAccessorBase.</span><code><span class="memberNameLink"><a href="../StoreAccessorBase.html#write(org.eclipse.emf.cdo.spi.server.InternalCommitContext,org.eclipse.net4j.util.om.monitor.OMMonitor)">write</a></span>&#8203;(<a href="../InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a>&nbsp;context,
+     org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><span class="typeNameLabel">StoreAccessor.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/StoreAccessor.html#writeDirtyObjectRevisions-org.eclipse.emf.cdo.spi.server.InternalCommitContext-org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision:A-org.eclipse.emf.cdo.common.branch.CDOBranch-org.eclipse.net4j.util.om.monitor.OMMonitor-">writeDirtyObjectRevisions</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a>&nbsp;context,
-                         <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>[]&nbsp;dirtyObjects,
-                         <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
-                         <a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">StoreAccessor.</span><code><span class="memberNameLink"><a href="../StoreAccessor.html#writeDirtyObjectRevisions(org.eclipse.emf.cdo.spi.server.InternalCommitContext,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision%5B%5D,org.eclipse.emf.cdo.common.branch.CDOBranch,org.eclipse.net4j.util.om.monitor.OMMonitor)">writeDirtyObjectRevisions</a></span>&#8203;(<a href="../InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a>&nbsp;context,
+                         <a href="../../common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>[]&nbsp;dirtyObjects,
+                         <a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
+                         org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><span class="typeNameLabel">StoreAccessor.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/StoreAccessor.html#writeNewObjectRevisions-org.eclipse.emf.cdo.spi.server.InternalCommitContext-org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision:A-org.eclipse.emf.cdo.common.branch.CDOBranch-org.eclipse.net4j.util.om.monitor.OMMonitor-">writeNewObjectRevisions</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a>&nbsp;context,
-                       <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>[]&nbsp;newObjects,
-                       <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
-                       <a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">StoreAccessor.</span><code><span class="memberNameLink"><a href="../StoreAccessor.html#writeNewObjectRevisions(org.eclipse.emf.cdo.spi.server.InternalCommitContext,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision%5B%5D,org.eclipse.emf.cdo.common.branch.CDOBranch,org.eclipse.net4j.util.om.monitor.OMMonitor)">writeNewObjectRevisions</a></span>&#8203;(<a href="../InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a>&nbsp;context,
+                       <a href="../../common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>[]&nbsp;newObjects,
+                       <a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
+                       org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
 </ul>
 </li>
 </ul>
 </div>
+</main>
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../../index.html">Overview</a></li>
 <li><a href="../package-summary.html">Package</a></li>
-<li><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">Class</a></li>
+<li><a href="../InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">Class</a></li>
 <li class="navBarCell1Rev">Use</li>
+<li><a href="../package-tree.html">Tree</a></li>
 <li><a href="../../../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../../../help-doc.html">Help</a></li>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev</li>
-<li>Next</li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../../index.html?org/eclipse/emf/cdo/spi/server/class-use/InternalCommitContext.html" target="_top">Frames</a></li>
-<li><a href="InternalCommitContext.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -281,11 +328,16 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

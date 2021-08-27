@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>CDOCompareEditorUtil (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9,"i12":9,"i13":9,"i14":9,"i15":9,"i16":9,"i17":9,"i18":9,"i19":9,"i20":9,"i21":9,"i22":9,"i23":9};
+var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9,"i12":9,"i13":9,"i14":9,"i15":9,"i16":9,"i17":9,"i18":9,"i19":9,"i20":9,"i21":9,"i22":9,"i23":9,"i24":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/CDOCompareEditorUtil.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev&nbsp;Class</li>
-<li><a href="../../../../../../org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.Input.html" title="class in org.eclipse.emf.cdo.ui.compare"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.html" target="_top">Frames</a></li>
-<li><a href="CDOCompareEditorUtil.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,29 +82,41 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
-<li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
 <li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
-<li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.emf.cdo.ui.compare</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.cdo.ui.compare</a></div>
 <h2 title="Class CDOCompareEditorUtil" class="title">Class CDOCompareEditorUtil</h2>
 </div>
 <div class="contentContainer">
@@ -107,8 +132,7 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<br>
-<pre>public class <span class="typeNameLabel">CDOCompareEditorUtil</span>
+<pre>public final class <span class="typeNameLabel">CDOCompareEditorUtil</span>
 extends java.lang.Object</pre>
 <div class="block">Static methods to open an EMF Compare dialog.</div>
 <dl>
@@ -124,223 +148,257 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="nested.class.summary">
+<li class="blockList"><a id="nested.class.summary">
 <!--   -->
 </a>
 <h3>Nested Class Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Nested Class Summary table, listing nested classes, and an explanation">
+<table class="memberSummary">
 <caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Class and Description</th>
+<th class="colSecond" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.Input.html" title="class in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.Input</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CDOCompareEditorUtil.Input.html" title="class in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.Input</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.TransactionOpenerAndEditorCloser.html" title="class in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.TransactionOpenerAndEditorCloser</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CDOCompareEditorUtil.InputHolder.html" title="class in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.InputHolder</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static class&nbsp;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CDOCompareEditorUtil.TransactionOpenerAndEditorCloser.html" title="class in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.TransactionOpenerAndEditorCloser</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- =========== FIELD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.summary">
+<li class="blockList"><a id="field.summary">
 <!--   -->
 </a>
 <h3>Field Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Field Summary table, listing fields, and an explanation">
+<table class="memberSummary">
 <caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Field and Description</th>
+<th class="colSecond" scope="col">Field</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.html#PROP_COMPARISON_IMAGE">PROP_COMPARISON_IMAGE</a></span></code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Image.html?is-external=true" title="class or interface in org.eclipse.swt.graphics" class="externalLink">Image</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#COMPARE_IMAGE">COMPARE_IMAGE</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.html#PROP_COMPARISON_LABEL">PROP_COMPARISON_LABEL</a></span></code>&nbsp;</td>
-</tr>
-</table>
-</li>
-</ul>
-<!-- ======== CONSTRUCTOR SUMMARY ======== -->
-<ul class="blockList">
-<li class="blockList"><a name="constructor.summary">
-<!--   -->
-</a>
-<h3>Constructor Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
-<caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colOne" scope="col">Constructor and Description</th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#PROP_COMPARISON_IMAGE">PROP_COMPARISON_IMAGE</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.html#CDOCompareEditorUtil--">CDOCompareEditorUtil</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>static java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#PROP_COMPARISON_LABEL">PROP_COMPARISON_LABEL</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.html#addDisposeRunnables-java.lang.Runnable...-">addDisposeRunnables</a></span>(java.lang.Runnable...&nbsp;disposeRunnables)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addDisposeRunnables(java.lang.Runnable...)">addDisposeRunnables</a></span>&#8203;(java.lang.Runnable...&nbsp;disposeRunnables)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.html#closeEditorWithTransaction-org.eclipse.emf.cdo.transaction.CDOTransaction-">closeEditorWithTransaction</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#closeEditorWithTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)">closeEditorWithTransaction</a></span>&#8203;(<a href="../../transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.html#closeTransactionAfterCommit-org.eclipse.emf.cdo.transaction.CDOTransaction-">closeTransactionAfterCommit</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#closeTransactionAfterCommit(org.eclipse.emf.cdo.transaction.CDOTransaction)">closeTransactionAfterCommit</a></span>&#8203;(<a href="../../transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.Input.html" title="class in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.Input</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.html#createComparisonInput-org.eclipse.emf.cdo.view.CDOView-org.eclipse.emf.cdo.view.CDOView-org.eclipse.emf.cdo.view.CDOView:A-org.eclipse.emf.cdo.view.CDOViewOpener-">createComparisonInput</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;leftView,
-                     <a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView,
-                     <a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView,
-                     <a href="../../../../../../org/eclipse/emf/cdo/view/CDOViewOpener.html" title="interface in org.eclipse.emf.cdo.view">CDOViewOpener</a>&nbsp;viewOpener)</code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="CDOCompareEditorUtil.Input.html" title="class in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.Input</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createComparisonInput(org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView,java.util.Set)">createComparisonInput</a></span>&#8203;(<a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;leftView,
+                     <a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView,
+                     java.util.Set&lt;<a href="../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;affectedIDs)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.Input.html" title="class in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.Input</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.html#createComparisonInput-org.eclipse.emf.cdo.view.CDOView-org.eclipse.emf.cdo.view.CDOView-org.eclipse.emf.compare.Comparison-">createComparisonInput</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;leftView,
-                     <a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView,
-                     org.eclipse.emf.compare.Comparison&nbsp;comparison)</code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="CDOCompareEditorUtil.Input.html" title="class in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.Input</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createComparisonInput(org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView%5B%5D,org.eclipse.emf.cdo.view.CDOViewOpener)">createComparisonInput</a></span>&#8203;(<a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;leftView,
+                     <a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView,
+                     <a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView,
+                     <a href="../../view/CDOViewOpener.html" title="interface in org.eclipse.emf.cdo.view">CDOViewOpener</a>&nbsp;viewOpener)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.Input.html" title="class in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.Input</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.html#createComparisonInput-org.eclipse.emf.cdo.view.CDOView-org.eclipse.emf.cdo.view.CDOView-java.util.Set-">createComparisonInput</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;leftView,
-                     <a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView,
-                     java.util.Set&lt;<a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;affectedIDs)</code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="CDOCompareEditorUtil.Input.html" title="class in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.Input</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createComparisonInput(org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.compare.Comparison)">createComparisonInput</a></span>&#8203;(<a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;leftView,
+                     <a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView,
+                     org.eclipse.emf.compare.Comparison&nbsp;comparison)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>static boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.html#isSuppressCommit--">isSuppressCommit</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isSuppressCommit()">isSuppressCommit</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>static boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.html#openDialog-org.eclipse.emf.cdo.common.commit.CDOCommitInfo-">openDialog</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;commitInfo)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#openDialog(org.eclipse.emf.cdo.common.commit.CDOCommitInfo)">openDialog</a></span>&#8203;(<a href="../../common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;commitInfo)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>static boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.html#openDialog-org.eclipse.emf.cdo.common.commit.CDOCommitInfo-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-">openDialog</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;rightCommitInfo,
-          <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;leftPoint)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#openDialog(org.eclipse.emf.cdo.common.commit.CDOCommitInfo,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">openDialog</a></span>&#8203;(<a href="../../common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;rightCommitInfo,
+          <a href="../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;leftPoint)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>static boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.html#openDialog-org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil.Input-org.eclipse.emf.cdo.view.CDOView-">openDialog</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.Input.html" title="class in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.Input</a>&nbsp;input,
-          <a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#openDialog(org.eclipse.emf.cdo.session.CDOSession,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">openDialog</a></span>&#8203;(<a href="../../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session,
+          <a href="../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;leftPoint,
+          <a href="../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;rightPoint)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>static boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.html#openDialog-org.eclipse.emf.cdo.session.CDOSession-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-">openDialog</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session,
-          <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;leftPoint,
-          <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;rightPoint)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#openDialog(org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil.Input,org.eclipse.emf.cdo.view.CDOView)">openDialog</a></span>&#8203;(<a href="CDOCompareEditorUtil.Input.html" title="class in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.Input</a>&nbsp;input,
+          <a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>static boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.html#openDialog-org.eclipse.emf.cdo.view.CDOView-org.eclipse.emf.cdo.view.CDOView-org.eclipse.emf.cdo.view.CDOView:A-">openDialog</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;leftView,
-          <a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView,
-          <a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#openDialog(org.eclipse.emf.cdo.view.CDOViewOpener,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.view.CDOView%5B%5D)">openDialog</a></span>&#8203;(<a href="../../view/CDOViewOpener.html" title="interface in org.eclipse.emf.cdo.view">CDOViewOpener</a>&nbsp;viewOpener,
+          <a href="../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;leftPoint,
+          <a href="../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;rightPoint,
+          <a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code>static boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.html#openDialog-org.eclipse.emf.cdo.view.CDOView-org.eclipse.emf.cdo.view.CDOView-org.eclipse.emf.cdo.view.CDOView:A-org.eclipse.emf.cdo.view.CDOViewOpener-">openDialog</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;leftView,
-          <a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView,
-          <a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView,
-          <a href="../../../../../../org/eclipse/emf/cdo/view/CDOViewOpener.html" title="interface in org.eclipse.emf.cdo.view">CDOViewOpener</a>&nbsp;viewOpener)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#openDialog(org.eclipse.emf.cdo.view.CDOViewOpener,org.eclipse.emf.cdo.transaction.CDOTransactionOpener,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.view.CDOView%5B%5D)">openDialog</a></span>&#8203;(<a href="../../view/CDOViewOpener.html" title="interface in org.eclipse.emf.cdo.view">CDOViewOpener</a>&nbsp;viewOpener,
+          <a href="../../transaction/CDOTransactionOpener.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionOpener</a>&nbsp;transactionOpener,
+          <a href="../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;leftPoint,
+          <a href="../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;rightPoint,
+          <a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code>static boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.html#openDialog-org.eclipse.emf.cdo.view.CDOView-org.eclipse.emf.cdo.view.CDOView-java.util.Set-">openDialog</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;leftView,
-          <a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView,
-          java.util.Set&lt;<a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;affectedIDs)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#openDialog(org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView,java.util.Set)">openDialog</a></span>&#8203;(<a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;leftView,
+          <a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView,
+          java.util.Set&lt;<a href="../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;affectedIDs)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code>static boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.html#openDialog-org.eclipse.emf.cdo.view.CDOViewOpener-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.view.CDOView:A-">openDialog</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/view/CDOViewOpener.html" title="interface in org.eclipse.emf.cdo.view">CDOViewOpener</a>&nbsp;viewOpener,
-          <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;leftPoint,
-          <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;rightPoint,
-          <a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#openDialog(org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView%5B%5D)">openDialog</a></span>&#8203;(<a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;leftView,
+          <a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView,
+          <a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i15" class="rowColor">
 <td class="colFirst"><code>static boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.html#openDialog-org.eclipse.emf.cdo.view.CDOViewOpener-org.eclipse.emf.cdo.transaction.CDOTransactionOpener-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.view.CDOView:A-">openDialog</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/view/CDOViewOpener.html" title="interface in org.eclipse.emf.cdo.view">CDOViewOpener</a>&nbsp;viewOpener,
-          <a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionOpener.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionOpener</a>&nbsp;transactionOpener,
-          <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;leftPoint,
-          <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;rightPoint,
-          <a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#openDialog(org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView%5B%5D,org.eclipse.emf.cdo.view.CDOViewOpener)">openDialog</a></span>&#8203;(<a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;leftView,
+          <a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView,
+          <a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView,
+          <a href="../../view/CDOViewOpener.html" title="interface in org.eclipse.emf.cdo.view">CDOViewOpener</a>&nbsp;viewOpener)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i16" class="altColor">
 <td class="colFirst"><code>static boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.html#openEditor-org.eclipse.emf.cdo.common.commit.CDOCommitInfo-boolean-">openEditor</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;commitInfo,
-          boolean&nbsp;activate)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#openEditor(org.eclipse.emf.cdo.common.commit.CDOCommitInfo,boolean)">openEditor</a></span>&#8203;(<a href="../../common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;commitInfo,
+          boolean&nbsp;activate)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i17" class="rowColor">
 <td class="colFirst"><code>static boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.html#openEditor-org.eclipse.emf.cdo.common.commit.CDOCommitInfo-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-boolean-">openEditor</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;rightCommitInfo,
-          <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;leftPoint,
-          boolean&nbsp;activate)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#openEditor(org.eclipse.emf.cdo.common.commit.CDOCommitInfo,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,boolean)">openEditor</a></span>&#8203;(<a href="../../common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;rightCommitInfo,
+          <a href="../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;leftPoint,
+          boolean&nbsp;activate)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i18" class="altColor">
 <td class="colFirst"><code>static boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.html#openEditor-org.eclipse.emf.cdo.view.CDOView-org.eclipse.emf.cdo.view.CDOView-org.eclipse.emf.cdo.view.CDOView:A-boolean-">openEditor</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;leftView,
-          <a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView,
-          <a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView,
-          boolean&nbsp;activate)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#openEditor(org.eclipse.emf.cdo.view.CDOViewOpener,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.view.CDOView%5B%5D,boolean)">openEditor</a></span>&#8203;(<a href="../../view/CDOViewOpener.html" title="interface in org.eclipse.emf.cdo.view">CDOViewOpener</a>&nbsp;viewOpener,
+          <a href="../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;leftPoint,
+          <a href="../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;rightPoint,
+          <a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView,
+          boolean&nbsp;activate)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i19" class="rowColor">
 <td class="colFirst"><code>static boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.html#openEditor-org.eclipse.emf.cdo.view.CDOView-org.eclipse.emf.cdo.view.CDOView-java.util.Set-boolean-">openEditor</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;leftView,
-          <a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView,
-          java.util.Set&lt;<a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;affectedIDs,
-          boolean&nbsp;activate)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#openEditor(org.eclipse.emf.cdo.view.CDOViewOpener,org.eclipse.emf.cdo.transaction.CDOTransactionOpener,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.view.CDOView%5B%5D,boolean)">openEditor</a></span>&#8203;(<a href="../../view/CDOViewOpener.html" title="interface in org.eclipse.emf.cdo.view">CDOViewOpener</a>&nbsp;viewOpener,
+          <a href="../../transaction/CDOTransactionOpener.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionOpener</a>&nbsp;transactionOpener,
+          <a href="../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;leftPoint,
+          <a href="../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;rightPoint,
+          <a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView,
+          boolean&nbsp;activate)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i20" class="altColor">
 <td class="colFirst"><code>static boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.html#openEditor-org.eclipse.emf.cdo.view.CDOViewOpener-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.view.CDOView:A-boolean-">openEditor</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/view/CDOViewOpener.html" title="interface in org.eclipse.emf.cdo.view">CDOViewOpener</a>&nbsp;viewOpener,
-          <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;leftPoint,
-          <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;rightPoint,
-          <a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView,
-          boolean&nbsp;activate)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#openEditor(org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView,java.util.Set,boolean)">openEditor</a></span>&#8203;(<a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;leftView,
+          <a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView,
+          java.util.Set&lt;<a href="../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;affectedIDs,
+          boolean&nbsp;activate)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i21" class="rowColor">
 <td class="colFirst"><code>static boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.html#openEditor-org.eclipse.emf.cdo.view.CDOViewOpener-org.eclipse.emf.cdo.transaction.CDOTransactionOpener-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.view.CDOView:A-boolean-">openEditor</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/view/CDOViewOpener.html" title="interface in org.eclipse.emf.cdo.view">CDOViewOpener</a>&nbsp;viewOpener,
-          <a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionOpener.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionOpener</a>&nbsp;transactionOpener,
-          <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;leftPoint,
-          <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;rightPoint,
-          <a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView,
-          boolean&nbsp;activate)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#openEditor(org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView%5B%5D,boolean)">openEditor</a></span>&#8203;(<a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;leftView,
+          <a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView,
+          <a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView,
+          boolean&nbsp;activate)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i22" class="altColor">
 <td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.html#runWithTitle-java.lang.String-java.lang.Runnable-">runWithTitle</a></span>(java.lang.String&nbsp;title,
-            java.lang.Runnable&nbsp;runnable)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#runWithTitle(java.lang.String,java.lang.Runnable)">runWithTitle</a></span>&#8203;(java.lang.String&nbsp;title,
+            java.lang.Runnable&nbsp;runnable)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i23" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.html#setSuppressCommit-boolean-">setSuppressCommit</a></span>(boolean&nbsp;suppressCommit)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setInputConsumer(java.util.function.Consumer)">setInputConsumer</a></span>&#8203;(java.util.function.Consumer&lt;<a href="CDOCompareEditorUtil.Input.html" title="class in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.Input</a>&gt;&nbsp;consumer)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i24" class="altColor">
+<td class="colFirst"><code>static void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSuppressCommit(boolean)">setSuppressCommit</a></span>&#8203;(boolean&nbsp;suppressCommit)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
+<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
@@ -348,6 +406,7 @@ extends java.lang.Object</pre>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -355,12 +414,26 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <!-- ============ FIELD DETAIL =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.detail">
+<li class="blockList"><a id="field.detail">
 <!--   -->
 </a>
 <h3>Field Detail</h3>
-<a name="PROP_COMPARISON_LABEL">
+<a id="COMPARE_IMAGE">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>COMPARE_IMAGE</h4>
+<pre>public static final&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Image.html?is-external=true" title="class or interface in org.eclipse.swt.graphics" class="externalLink">Image</a> COMPARE_IMAGE</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.6</dd>
+</dl>
+</li>
+</ul>
+<a id="PROP_COMPARISON_LABEL">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -375,7 +448,7 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a name="PROP_COMPARISON_IMAGE">
+<a id="PROP_COMPARISON_IMAGE">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -392,65 +465,50 @@ extends java.lang.Object</pre>
 </ul>
 </li>
 </ul>
-<!-- ========= CONSTRUCTOR DETAIL ======== -->
-<ul class="blockList">
-<li class="blockList"><a name="constructor.detail">
-<!--   -->
-</a>
-<h3>Constructor Detail</h3>
-<a name="CDOCompareEditorUtil--">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>CDOCompareEditorUtil</h4>
-<pre>public&nbsp;CDOCompareEditorUtil()</pre>
-</li>
-</ul>
-</li>
-</ul>
+</section>
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="closeTransactionAfterCommit-org.eclipse.emf.cdo.transaction.CDOTransaction-">
+<a id="closeTransactionAfterCommit(org.eclipse.emf.cdo.transaction.CDOTransaction)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>closeTransactionAfterCommit</h4>
-<pre>public static&nbsp;void&nbsp;closeTransactionAfterCommit(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</pre>
+<pre class="methodSignature">public static&nbsp;void&nbsp;closeTransactionAfterCommit&#8203;(<a href="../../transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.4</dd>
 </dl>
 </li>
 </ul>
-<a name="closeEditorWithTransaction-org.eclipse.emf.cdo.transaction.CDOTransaction-">
+<a id="closeEditorWithTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>closeEditorWithTransaction</h4>
-<pre>public static&nbsp;void&nbsp;closeEditorWithTransaction(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</pre>
+<pre class="methodSignature">public static&nbsp;void&nbsp;closeEditorWithTransaction&#8203;(<a href="../../transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.4</dd>
 </dl>
 </li>
 </ul>
-<a name="openEditor-org.eclipse.emf.cdo.view.CDOViewOpener-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.view.CDOView:A-boolean-">
+<a id="openEditor(org.eclipse.emf.cdo.view.CDOViewOpener,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.view.CDOView[],boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>openEditor</h4>
-<pre>public static&nbsp;boolean&nbsp;openEditor(<a href="../../../../../../org/eclipse/emf/cdo/view/CDOViewOpener.html" title="interface in org.eclipse.emf.cdo.view">CDOViewOpener</a>&nbsp;viewOpener,
-                                 <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;leftPoint,
-                                 <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;rightPoint,
-                                 <a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView,
+<pre class="methodSignature">public static&nbsp;boolean&nbsp;openEditor&#8203;(<a href="../../view/CDOViewOpener.html" title="interface in org.eclipse.emf.cdo.view">CDOViewOpener</a>&nbsp;viewOpener,
+                                 <a href="../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;leftPoint,
+                                 <a href="../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;rightPoint,
+                                 <a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView,
                                  boolean&nbsp;activate)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -458,17 +516,17 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a name="openEditor-org.eclipse.emf.cdo.view.CDOViewOpener-org.eclipse.emf.cdo.transaction.CDOTransactionOpener-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.view.CDOView:A-boolean-">
+<a id="openEditor(org.eclipse.emf.cdo.view.CDOViewOpener,org.eclipse.emf.cdo.transaction.CDOTransactionOpener,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.view.CDOView[],boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>openEditor</h4>
-<pre>public static&nbsp;boolean&nbsp;openEditor(<a href="../../../../../../org/eclipse/emf/cdo/view/CDOViewOpener.html" title="interface in org.eclipse.emf.cdo.view">CDOViewOpener</a>&nbsp;viewOpener,
-                                 <a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionOpener.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionOpener</a>&nbsp;transactionOpener,
-                                 <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;leftPoint,
-                                 <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;rightPoint,
-                                 <a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView,
+<pre class="methodSignature">public static&nbsp;boolean&nbsp;openEditor&#8203;(<a href="../../view/CDOViewOpener.html" title="interface in org.eclipse.emf.cdo.view">CDOViewOpener</a>&nbsp;viewOpener,
+                                 <a href="../../transaction/CDOTransactionOpener.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionOpener</a>&nbsp;transactionOpener,
+                                 <a href="../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;leftPoint,
+                                 <a href="../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;rightPoint,
+                                 <a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView,
                                  boolean&nbsp;activate)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -476,14 +534,14 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a name="openEditor-org.eclipse.emf.cdo.common.commit.CDOCommitInfo-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-boolean-">
+<a id="openEditor(org.eclipse.emf.cdo.common.commit.CDOCommitInfo,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>openEditor</h4>
-<pre>public static&nbsp;boolean&nbsp;openEditor(<a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;rightCommitInfo,
-                                 <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;leftPoint,
+<pre class="methodSignature">public static&nbsp;boolean&nbsp;openEditor&#8203;(<a href="../../common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;rightCommitInfo,
+                                 <a href="../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;leftPoint,
                                  boolean&nbsp;activate)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -491,13 +549,13 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a name="openEditor-org.eclipse.emf.cdo.common.commit.CDOCommitInfo-boolean-">
+<a id="openEditor(org.eclipse.emf.cdo.common.commit.CDOCommitInfo,boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>openEditor</h4>
-<pre>public static&nbsp;boolean&nbsp;openEditor(<a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;commitInfo,
+<pre class="methodSignature">public static&nbsp;boolean&nbsp;openEditor&#8203;(<a href="../../common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;commitInfo,
                                  boolean&nbsp;activate)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -505,15 +563,15 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a name="openEditor-org.eclipse.emf.cdo.view.CDOView-org.eclipse.emf.cdo.view.CDOView-org.eclipse.emf.cdo.view.CDOView:A-boolean-">
+<a id="openEditor(org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView[],boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>openEditor</h4>
-<pre>public static&nbsp;boolean&nbsp;openEditor(<a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;leftView,
-                                 <a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView,
-                                 <a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView,
+<pre class="methodSignature">public static&nbsp;boolean&nbsp;openEditor&#8203;(<a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;leftView,
+                                 <a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView,
+                                 <a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView,
                                  boolean&nbsp;activate)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -521,15 +579,15 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a name="openEditor-org.eclipse.emf.cdo.view.CDOView-org.eclipse.emf.cdo.view.CDOView-java.util.Set-boolean-">
+<a id="openEditor(org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView,java.util.Set,boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>openEditor</h4>
-<pre>public static&nbsp;boolean&nbsp;openEditor(<a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;leftView,
-                                 <a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView,
-                                 java.util.Set&lt;<a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;affectedIDs,
+<pre class="methodSignature">public static&nbsp;boolean&nbsp;openEditor&#8203;(<a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;leftView,
+                                 <a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView,
+                                 java.util.Set&lt;<a href="../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;affectedIDs,
                                  boolean&nbsp;activate)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -537,168 +595,168 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a name="openDialog-org.eclipse.emf.cdo.session.CDOSession-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-">
+<a id="openDialog(org.eclipse.emf.cdo.session.CDOSession,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>openDialog</h4>
-<pre>public static&nbsp;boolean&nbsp;openDialog(<a href="../../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session,
-                                 <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;leftPoint,
-                                 <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;rightPoint)</pre>
+<pre class="methodSignature">public static&nbsp;boolean&nbsp;openDialog&#8203;(<a href="../../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session,
+                                 <a href="../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;leftPoint,
+                                 <a href="../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;rightPoint)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.3</dd>
 </dl>
 </li>
 </ul>
-<a name="openDialog-org.eclipse.emf.cdo.view.CDOViewOpener-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.view.CDOView:A-">
+<a id="openDialog(org.eclipse.emf.cdo.view.CDOViewOpener,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.view.CDOView[])">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>openDialog</h4>
-<pre>public static&nbsp;boolean&nbsp;openDialog(<a href="../../../../../../org/eclipse/emf/cdo/view/CDOViewOpener.html" title="interface in org.eclipse.emf.cdo.view">CDOViewOpener</a>&nbsp;viewOpener,
-                                 <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;leftPoint,
-                                 <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;rightPoint,
-                                 <a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView)</pre>
+<pre class="methodSignature">public static&nbsp;boolean&nbsp;openDialog&#8203;(<a href="../../view/CDOViewOpener.html" title="interface in org.eclipse.emf.cdo.view">CDOViewOpener</a>&nbsp;viewOpener,
+                                 <a href="../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;leftPoint,
+                                 <a href="../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;rightPoint,
+                                 <a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.3</dd>
 </dl>
 </li>
 </ul>
-<a name="openDialog-org.eclipse.emf.cdo.view.CDOViewOpener-org.eclipse.emf.cdo.transaction.CDOTransactionOpener-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.view.CDOView:A-">
+<a id="openDialog(org.eclipse.emf.cdo.view.CDOViewOpener,org.eclipse.emf.cdo.transaction.CDOTransactionOpener,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.view.CDOView[])">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>openDialog</h4>
-<pre>public static&nbsp;boolean&nbsp;openDialog(<a href="../../../../../../org/eclipse/emf/cdo/view/CDOViewOpener.html" title="interface in org.eclipse.emf.cdo.view">CDOViewOpener</a>&nbsp;viewOpener,
-                                 <a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionOpener.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionOpener</a>&nbsp;transactionOpener,
-                                 <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;leftPoint,
-                                 <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;rightPoint,
-                                 <a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView)</pre>
+<pre class="methodSignature">public static&nbsp;boolean&nbsp;openDialog&#8203;(<a href="../../view/CDOViewOpener.html" title="interface in org.eclipse.emf.cdo.view">CDOViewOpener</a>&nbsp;viewOpener,
+                                 <a href="../../transaction/CDOTransactionOpener.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionOpener</a>&nbsp;transactionOpener,
+                                 <a href="../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;leftPoint,
+                                 <a href="../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;rightPoint,
+                                 <a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.3</dd>
 </dl>
 </li>
 </ul>
-<a name="openDialog-org.eclipse.emf.cdo.common.commit.CDOCommitInfo-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-">
+<a id="openDialog(org.eclipse.emf.cdo.common.commit.CDOCommitInfo,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>openDialog</h4>
-<pre>public static&nbsp;boolean&nbsp;openDialog(<a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;rightCommitInfo,
-                                 <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;leftPoint)</pre>
+<pre class="methodSignature">public static&nbsp;boolean&nbsp;openDialog&#8203;(<a href="../../common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;rightCommitInfo,
+                                 <a href="../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;leftPoint)</pre>
 </li>
 </ul>
-<a name="openDialog-org.eclipse.emf.cdo.common.commit.CDOCommitInfo-">
+<a id="openDialog(org.eclipse.emf.cdo.common.commit.CDOCommitInfo)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>openDialog</h4>
-<pre>public static&nbsp;boolean&nbsp;openDialog(<a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;commitInfo)</pre>
+<pre class="methodSignature">public static&nbsp;boolean&nbsp;openDialog&#8203;(<a href="../../common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;commitInfo)</pre>
 </li>
 </ul>
-<a name="openDialog-org.eclipse.emf.cdo.view.CDOView-org.eclipse.emf.cdo.view.CDOView-org.eclipse.emf.cdo.view.CDOView:A-">
+<a id="openDialog(org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView[])">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>openDialog</h4>
-<pre>public static&nbsp;boolean&nbsp;openDialog(<a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;leftView,
-                                 <a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView,
-                                 <a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView)</pre>
+<pre class="methodSignature">public static&nbsp;boolean&nbsp;openDialog&#8203;(<a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;leftView,
+                                 <a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView,
+                                 <a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView)</pre>
 </li>
 </ul>
-<a name="openDialog-org.eclipse.emf.cdo.view.CDOView-org.eclipse.emf.cdo.view.CDOView-org.eclipse.emf.cdo.view.CDOView:A-org.eclipse.emf.cdo.view.CDOViewOpener-">
+<a id="openDialog(org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView[],org.eclipse.emf.cdo.view.CDOViewOpener)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>openDialog</h4>
-<pre>public static&nbsp;boolean&nbsp;openDialog(<a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;leftView,
-                                 <a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView,
-                                 <a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView,
-                                 <a href="../../../../../../org/eclipse/emf/cdo/view/CDOViewOpener.html" title="interface in org.eclipse.emf.cdo.view">CDOViewOpener</a>&nbsp;viewOpener)</pre>
+<pre class="methodSignature">public static&nbsp;boolean&nbsp;openDialog&#8203;(<a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;leftView,
+                                 <a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView,
+                                 <a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView,
+                                 <a href="../../view/CDOViewOpener.html" title="interface in org.eclipse.emf.cdo.view">CDOViewOpener</a>&nbsp;viewOpener)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.3</dd>
 </dl>
 </li>
 </ul>
-<a name="openDialog-org.eclipse.emf.cdo.view.CDOView-org.eclipse.emf.cdo.view.CDOView-java.util.Set-">
+<a id="openDialog(org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView,java.util.Set)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>openDialog</h4>
-<pre>public static&nbsp;boolean&nbsp;openDialog(<a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;leftView,
-                                 <a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView,
-                                 java.util.Set&lt;<a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;affectedIDs)</pre>
+<pre class="methodSignature">public static&nbsp;boolean&nbsp;openDialog&#8203;(<a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;leftView,
+                                 <a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView,
+                                 java.util.Set&lt;<a href="../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;affectedIDs)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.4</dd>
 </dl>
 </li>
 </ul>
-<a name="openDialog-org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil.Input-org.eclipse.emf.cdo.view.CDOView-">
+<a id="openDialog(org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil.Input,org.eclipse.emf.cdo.view.CDOView)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>openDialog</h4>
-<pre>public static&nbsp;boolean&nbsp;openDialog(<a href="../../../../../../org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.Input.html" title="class in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.Input</a>&nbsp;input,
-                                 <a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView)</pre>
+<pre class="methodSignature">public static&nbsp;boolean&nbsp;openDialog&#8203;(<a href="CDOCompareEditorUtil.Input.html" title="class in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.Input</a>&nbsp;input,
+                                 <a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.4</dd>
 </dl>
 </li>
 </ul>
-<a name="createComparisonInput-org.eclipse.emf.cdo.view.CDOView-org.eclipse.emf.cdo.view.CDOView-org.eclipse.emf.cdo.view.CDOView:A-org.eclipse.emf.cdo.view.CDOViewOpener-">
+<a id="createComparisonInput(org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView[],org.eclipse.emf.cdo.view.CDOViewOpener)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createComparisonInput</h4>
-<pre>public static&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.Input.html" title="class in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.Input</a>&nbsp;createComparisonInput(<a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;leftView,
-                                                               <a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView,
-                                                               <a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView,
-                                                               <a href="../../../../../../org/eclipse/emf/cdo/view/CDOViewOpener.html" title="interface in org.eclipse.emf.cdo.view">CDOViewOpener</a>&nbsp;viewOpener)</pre>
+<pre class="methodSignature">public static&nbsp;<a href="CDOCompareEditorUtil.Input.html" title="class in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.Input</a>&nbsp;createComparisonInput&#8203;(<a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;leftView,
+                                                               <a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView,
+                                                               <a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView,
+                                                               <a href="../../view/CDOViewOpener.html" title="interface in org.eclipse.emf.cdo.view">CDOViewOpener</a>&nbsp;viewOpener)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.3</dd>
 </dl>
 </li>
 </ul>
-<a name="createComparisonInput-org.eclipse.emf.cdo.view.CDOView-org.eclipse.emf.cdo.view.CDOView-java.util.Set-">
+<a id="createComparisonInput(org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView,java.util.Set)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createComparisonInput</h4>
-<pre>public static&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.Input.html" title="class in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.Input</a>&nbsp;createComparisonInput(<a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;leftView,
-                                                               <a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView,
-                                                               java.util.Set&lt;<a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;affectedIDs)</pre>
+<pre class="methodSignature">public static&nbsp;<a href="CDOCompareEditorUtil.Input.html" title="class in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.Input</a>&nbsp;createComparisonInput&#8203;(<a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;leftView,
+                                                               <a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView,
+                                                               java.util.Set&lt;<a href="../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;affectedIDs)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.4</dd>
 </dl>
 </li>
 </ul>
-<a name="createComparisonInput-org.eclipse.emf.cdo.view.CDOView-org.eclipse.emf.cdo.view.CDOView-org.eclipse.emf.compare.Comparison-">
+<a id="createComparisonInput(org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.compare.Comparison)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createComparisonInput</h4>
-<pre>public static&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.Input.html" title="class in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.Input</a>&nbsp;createComparisonInput(<a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;leftView,
-                                                               <a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView,
+<pre class="methodSignature">public static&nbsp;<a href="CDOCompareEditorUtil.Input.html" title="class in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.Input</a>&nbsp;createComparisonInput&#8203;(<a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;leftView,
+                                                               <a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView,
                                                                org.eclipse.emf.compare.Comparison&nbsp;comparison)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -706,13 +764,13 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a name="runWithTitle-java.lang.String-java.lang.Runnable-">
+<a id="runWithTitle(java.lang.String,java.lang.Runnable)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>runWithTitle</h4>
-<pre>public static&nbsp;void&nbsp;runWithTitle(java.lang.String&nbsp;title,
+<pre class="methodSignature">public static&nbsp;void&nbsp;runWithTitle&#8203;(java.lang.String&nbsp;title,
                                 java.lang.Runnable&nbsp;runnable)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -720,39 +778,52 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a name="isSuppressCommit--">
+<a id="setInputConsumer(java.util.function.Consumer)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setInputConsumer</h4>
+<pre class="methodSignature">public static&nbsp;void&nbsp;setInputConsumer&#8203;(java.util.function.Consumer&lt;<a href="CDOCompareEditorUtil.Input.html" title="class in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.Input</a>&gt;&nbsp;consumer)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.6</dd>
+</dl>
+</li>
+</ul>
+<a id="isSuppressCommit()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>isSuppressCommit</h4>
-<pre>public static&nbsp;boolean&nbsp;isSuppressCommit()</pre>
+<pre class="methodSignature">public static&nbsp;boolean&nbsp;isSuppressCommit()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.3</dd>
 </dl>
 </li>
 </ul>
-<a name="setSuppressCommit-boolean-">
+<a id="setSuppressCommit(boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setSuppressCommit</h4>
-<pre>public static&nbsp;void&nbsp;setSuppressCommit(boolean&nbsp;suppressCommit)</pre>
+<pre class="methodSignature">public static&nbsp;void&nbsp;setSuppressCommit&#8203;(boolean&nbsp;suppressCommit)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.3</dd>
 </dl>
 </li>
 </ul>
-<a name="addDisposeRunnables-java.lang.Runnable...-">
+<a id="addDisposeRunnables(java.lang.Runnable...)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>addDisposeRunnables</h4>
-<pre>public static&nbsp;void&nbsp;addDisposeRunnables(java.lang.Runnable...&nbsp;disposeRunnables)</pre>
+<pre class="methodSignature">public static&nbsp;void&nbsp;addDisposeRunnables&#8203;(java.lang.Runnable...&nbsp;disposeRunnables)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.3</dd>
@@ -761,21 +832,25 @@ extends java.lang.Object</pre>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/CDOCompareEditorUtil.html">Use</a></li>
@@ -785,16 +860,8 @@ extends java.lang.Object</pre>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev&nbsp;Class</li>
-<li><a href="../../../../../../org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.Input.html" title="class in org.eclipse.emf.cdo.ui.compare"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.html" target="_top">Frames</a></li>
-<li><a href="CDOCompareEditorUtil.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -807,26 +874,31 @@ extends java.lang.Object</pre>
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
-<li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
 <li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
-<li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

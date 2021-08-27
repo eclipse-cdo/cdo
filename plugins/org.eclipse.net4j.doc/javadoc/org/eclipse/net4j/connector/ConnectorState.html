@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>ConnectorState (Net4j Signalling Platform Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../script.js"></script>
+<script type="text/javascript" src="../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":9,"i1":9};
+var data = {"i0":9,"i1":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/ConnectorState.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../org/eclipse/net4j/connector/ConnectorException.html" title="class in org.eclipse.net4j.connector"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../index.html?org/eclipse/net4j/connector/ConnectorState.html" target="_top">Frames</a></li>
-<li><a href="ConnectorState.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,6 +82,9 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -85,13 +101,22 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.net4j.connector</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.net4j.connector</a></div>
 <h2 title="Enum ConnectorState" class="title">Enum ConnectorState</h2>
 </div>
 <div class="contentContainer">
@@ -99,7 +124,7 @@ var activeTableTab = "activeTableTab";
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li>java.lang.Enum&lt;<a href="../../../../org/eclipse/net4j/connector/ConnectorState.html" title="enum in org.eclipse.net4j.connector">ConnectorState</a>&gt;</li>
+<li>java.lang.Enum&lt;<a href="ConnectorState.html" title="enum in org.eclipse.net4j.connector">ConnectorState</a>&gt;</li>
 <li>
 <ul class="inheritance">
 <li>org.eclipse.net4j.connector.ConnectorState</li>
@@ -113,18 +138,17 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd>java.io.Serializable, java.lang.Comparable&lt;<a href="../../../../org/eclipse/net4j/connector/ConnectorState.html" title="enum in org.eclipse.net4j.connector">ConnectorState</a>&gt;</dd>
+<dd><code>java.io.Serializable</code>, <code>java.lang.Comparable&lt;<a href="ConnectorState.html" title="enum in org.eclipse.net4j.connector">ConnectorState</a>&gt;</code></dd>
 </dl>
 <hr>
-<br>
 <pre>public enum <span class="typeNameLabel">ConnectorState</span>
-extends java.lang.Enum&lt;<a href="../../../../org/eclipse/net4j/connector/ConnectorState.html" title="enum in org.eclipse.net4j.connector">ConnectorState</a>&gt;</pre>
-<div class="block">Enumerates the lifecycle states of an <a href="../../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector"><code>IConnector</code></a>.</div>
+extends java.lang.Enum&lt;<a href="ConnectorState.html" title="enum in org.eclipse.net4j.connector">ConnectorState</a>&gt;</pre>
+<div class="block">Enumerates the lifecycle states of an <a href="IConnector.html" title="interface in org.eclipse.net4j.connector"><code>IConnector</code></a>.</div>
 <dl>
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>Eike Stepper</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../org/eclipse/net4j/connector/IConnector.html#getState--"><code>IConnector.getState()</code></a></dd>
+<dd><a href="IConnector.html#getState()"><code>IConnector.getState()</code></a></dd>
 <dt><span class="simpleTagLabel">No Extend</span></dt>
 <dd>This interface is not intended to be extended by clients.</dd>
 </dl>
@@ -135,78 +159,89 @@ extends java.lang.Enum&lt;<a href="../../../../org/eclipse/net4j/connector/Conne
 <ul class="blockList">
 <li class="blockList">
 <!-- =========== ENUM CONSTANT SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="enum.constant.summary">
+<li class="blockList"><a id="enum.constant.summary">
 <!--   -->
 </a>
 <h3>Enum Constant Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Enum Constant Summary table, listing enum constants, and an explanation">
+<table class="memberSummary">
 <caption><span>Enum Constants</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Enum Constant and Description</th>
+<th class="colFirst" scope="col">Enum Constant</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/connector/ConnectorState.html#CONNECTED">CONNECTED</a></span></code>
-<div class="block">Indicates that the <a href="../../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector"><code>IConnector</code></a> has successfully managed to establish and negotiate the underlying physical
+<th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#CONNECTED">CONNECTED</a></span></code></th>
+<td class="colLast">
+<div class="block">Indicates that the <a href="IConnector.html" title="interface in org.eclipse.net4j.connector"><code>IConnector</code></a> has successfully managed to establish and negotiate the underlying physical
  connection and is ready now to perform actual communications.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/connector/ConnectorState.html#CONNECTING">CONNECTING</a></span></code>
-<div class="block">Indicates that the <a href="../../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector"><code>IConnector</code></a> is currently trying to establish an underlying physical connection like a TCP
+<th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#CONNECTING">CONNECTING</a></span></code></th>
+<td class="colLast">
+<div class="block">Indicates that the <a href="IConnector.html" title="interface in org.eclipse.net4j.connector"><code>IConnector</code></a> is currently trying to establish an underlying physical connection like a TCP
  socket connection.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/connector/ConnectorState.html#DISCONNECTED">DISCONNECTED</a></span></code>
-<div class="block">Indicates that the <a href="../../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector"><code>IConnector</code></a> has not been connected yet or has been disconnected after being connected
+<th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#DISCONNECTED">DISCONNECTED</a></span></code></th>
+<td class="colLast">
+<div class="block">Indicates that the <a href="IConnector.html" title="interface in org.eclipse.net4j.connector"><code>IConnector</code></a> has not been connected yet or has been disconnected after being connected
  previously.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/connector/ConnectorState.html#NEGOTIATING">NEGOTIATING</a></span></code>
-<div class="block">Indicates that the <a href="../../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector"><code>IConnector</code></a> has successfully managed to establish the underlying physical connection and
- has currently delegated control over this connection to an <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/INegotiator.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security"><code>INegotiator</code></a>.</div>
+<th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#NEGOTIATING">NEGOTIATING</a></span></code></th>
+<td class="colLast">
+<div class="block">Indicates that the <a href="IConnector.html" title="interface in org.eclipse.net4j.connector"><code>IConnector</code></a> has successfully managed to establish the underlying physical connection and
+ has currently delegated control over this connection to an <code>INegotiator</code>.</div>
 </td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>static <a href="../../../../org/eclipse/net4j/connector/ConnectorState.html" title="enum in org.eclipse.net4j.connector">ConnectorState</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/connector/ConnectorState.html#valueOf-java.lang.String-">valueOf</a></span>(java.lang.String&nbsp;name)</code>
+<td class="colFirst"><code>static <a href="ConnectorState.html" title="enum in org.eclipse.net4j.connector">ConnectorState</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#valueOf(java.lang.String)">valueOf</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
+<td class="colLast">
 <div class="block">Returns the enum constant of this type with the specified name.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>static <a href="../../../../org/eclipse/net4j/connector/ConnectorState.html" title="enum in org.eclipse.net4j.connector">ConnectorState</a>[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/connector/ConnectorState.html#values--">values</a></span>()</code>
+<td class="colFirst"><code>static <a href="ConnectorState.html" title="enum in org.eclipse.net4j.connector">ConnectorState</a>[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#values()">values</a></span>()</code></th>
+<td class="colLast">
 <div class="block">Returns an array containing the constants of this enum type, in
 the order they are declared.</div>
 </td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Enum">
+<li class="blockList"><a id="methods.inherited.from.class.java.lang.Enum">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Enum</h3>
 <code>clone, compareTo, equals, finalize, getDeclaringClass, hashCode, name, ordinal, toString, valueOf</code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
+<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
@@ -214,6 +249,7 @@ the order they are declared.</div>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -221,113 +257,116 @@ the order they are declared.</div>
 <ul class="blockList">
 <li class="blockList">
 <!-- ============ ENUM CONSTANT DETAIL =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="enum.constant.detail">
+<li class="blockList"><a id="enum.constant.detail">
 <!--   -->
 </a>
 <h3>Enum Constant Detail</h3>
-<a name="DISCONNECTED">
+<a id="DISCONNECTED">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>DISCONNECTED</h4>
-<pre>public static final&nbsp;<a href="../../../../org/eclipse/net4j/connector/ConnectorState.html" title="enum in org.eclipse.net4j.connector">ConnectorState</a> DISCONNECTED</pre>
-<div class="block">Indicates that the <a href="../../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector"><code>IConnector</code></a> has not been connected yet or has been disconnected after being connected
+<pre>public static final&nbsp;<a href="ConnectorState.html" title="enum in org.eclipse.net4j.connector">ConnectorState</a> DISCONNECTED</pre>
+<div class="block">Indicates that the <a href="IConnector.html" title="interface in org.eclipse.net4j.connector"><code>IConnector</code></a> has not been connected yet or has been disconnected after being connected
  previously.
  <p>
  A connector is <code>DISCONNECTED</code> if and only if it is not
- <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/LifecycleUtil.html?is-external=true#isActive-java.lang.Object-" title="class or interface in org.eclipse.net4j.util.lifecycle"><code>active</code></a>. A transition to <a href="../../../../org/eclipse/net4j/connector/ConnectorState.html#CONNECTING"><code>CONNECTING</code></a>
- can be triggered by calling <a href="../../../../org/eclipse/net4j/connector/IConnector.html#connect-long-"><code>IConnector.connect(long)</code></a> or <a href="../../../../org/eclipse/net4j/connector/IConnector.html#connectAsync--"><code>IConnector.connectAsync()</code></a>.</div>
+ <code>active</code>. A transition to <a href="#CONNECTING"><code>CONNECTING</code></a>
+ can be triggered by calling <a href="IConnector.html#connect(long)"><code>IConnector.connect(long)</code></a> or <a href="IConnector.html#connectAsync()"><code>IConnector.connectAsync()</code></a>.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../org/eclipse/net4j/connector/IConnector.html#getState--"><code>IConnector.getState()</code></a>, 
-<a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#isActive--" title="class or interface in org.eclipse.net4j.util.lifecycle"><code>ILifecycle.isActive()</code></a></dd>
+<dd><a href="IConnector.html#getState()"><code>IConnector.getState()</code></a>, 
+<code>ILifecycle.isActive()</code></dd>
 </dl>
 </li>
 </ul>
-<a name="CONNECTING">
+<a id="CONNECTING">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>CONNECTING</h4>
-<pre>public static final&nbsp;<a href="../../../../org/eclipse/net4j/connector/ConnectorState.html" title="enum in org.eclipse.net4j.connector">ConnectorState</a> CONNECTING</pre>
-<div class="block">Indicates that the <a href="../../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector"><code>IConnector</code></a> is currently trying to establish an underlying physical connection like a TCP
+<pre>public static final&nbsp;<a href="ConnectorState.html" title="enum in org.eclipse.net4j.connector">ConnectorState</a> CONNECTING</pre>
+<div class="block">Indicates that the <a href="IConnector.html" title="interface in org.eclipse.net4j.connector"><code>IConnector</code></a> is currently trying to establish an underlying physical connection like a TCP
  socket connection.
  <p>
  A connector can only be <code>CONNECTING</code> if it is
- <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/LifecycleUtil.html?is-external=true#isActive-java.lang.Object-" title="class or interface in org.eclipse.net4j.util.lifecycle"><code>active</code></a>. As soon as the underlying physical
- connection is successfully established the state of the connector automatically transitions to <a href="../../../../org/eclipse/net4j/connector/ConnectorState.html#NEGOTIATING"><code>NEGOTIATING</code></a>.</div>
+ <code>active</code>. As soon as the underlying physical
+ connection is successfully established the state of the connector automatically transitions to <a href="#NEGOTIATING"><code>NEGOTIATING</code></a>.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../org/eclipse/net4j/connector/IConnector.html#getState--"><code>IConnector.getState()</code></a>, 
-<a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#isActive--" title="class or interface in org.eclipse.net4j.util.lifecycle"><code>ILifecycle.isActive()</code></a></dd>
+<dd><a href="IConnector.html#getState()"><code>IConnector.getState()</code></a>, 
+<code>ILifecycle.isActive()</code></dd>
 </dl>
 </li>
 </ul>
-<a name="NEGOTIATING">
+<a id="NEGOTIATING">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>NEGOTIATING</h4>
-<pre>public static final&nbsp;<a href="../../../../org/eclipse/net4j/connector/ConnectorState.html" title="enum in org.eclipse.net4j.connector">ConnectorState</a> NEGOTIATING</pre>
-<div class="block">Indicates that the <a href="../../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector"><code>IConnector</code></a> has successfully managed to establish the underlying physical connection and
- has currently delegated control over this connection to an <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/INegotiator.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security"><code>INegotiator</code></a>.
+<pre>public static final&nbsp;<a href="ConnectorState.html" title="enum in org.eclipse.net4j.connector">ConnectorState</a> NEGOTIATING</pre>
+<div class="block">Indicates that the <a href="IConnector.html" title="interface in org.eclipse.net4j.connector"><code>IConnector</code></a> has successfully managed to establish the underlying physical connection and
+ has currently delegated control over this connection to an <code>INegotiator</code>.
  <p>
  A connector can only be <code>NEGOTIATING</code> if it is
- <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/LifecycleUtil.html?is-external=true#isActive-java.lang.Object-" title="class or interface in org.eclipse.net4j.util.lifecycle"><code>active</code></a> and a negotiator has been supplied.
+ <code>active</code> and a negotiator has been supplied.
  As soon as the negotiator has successfully negotiated both peers (or a negotiator has not been supplied) the state
- of the connector automatically transitions to <a href="../../../../org/eclipse/net4j/connector/ConnectorState.html#CONNECTED"><code>CONNECTED</code></a>.
+ of the connector automatically transitions to <a href="#CONNECTED"><code>CONNECTED</code></a>.
  <p>
  Negotiators can implement arbitrary handshake protocols, challenge-response sequences or other authentication
  procedures. They can also be used to initially setup connection encryption if the connector implementation is not
  able to do so.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../org/eclipse/net4j/connector/IConnector.html#getState--"><code>IConnector.getState()</code></a>, 
-<a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#isActive--" title="class or interface in org.eclipse.net4j.util.lifecycle"><code>ILifecycle.isActive()</code></a></dd>
+<dd><a href="IConnector.html#getState()"><code>IConnector.getState()</code></a>, 
+<code>ILifecycle.isActive()</code></dd>
 </dl>
 </li>
 </ul>
-<a name="CONNECTED">
+<a id="CONNECTED">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>CONNECTED</h4>
-<pre>public static final&nbsp;<a href="../../../../org/eclipse/net4j/connector/ConnectorState.html" title="enum in org.eclipse.net4j.connector">ConnectorState</a> CONNECTED</pre>
-<div class="block">Indicates that the <a href="../../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector"><code>IConnector</code></a> has successfully managed to establish and negotiate the underlying physical
+<pre>public static final&nbsp;<a href="ConnectorState.html" title="enum in org.eclipse.net4j.connector">ConnectorState</a> CONNECTED</pre>
+<div class="block">Indicates that the <a href="IConnector.html" title="interface in org.eclipse.net4j.connector"><code>IConnector</code></a> has successfully managed to establish and negotiate the underlying physical
  connection and is ready now to perform actual communications.
  <p>
  A connector can only be <code>CONNECTED</code> if it is
- <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/LifecycleUtil.html?is-external=true#isActive-java.lang.Object-" title="class or interface in org.eclipse.net4j.util.lifecycle"><code>active</code></a>. A transition to
- <a href="../../../../org/eclipse/net4j/connector/ConnectorState.html#DISCONNECTED"><code>DISCONNECTED</code></a> can be triggered by calling <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true#close--" title="class or interface in org.eclipse.net4j.util.collection"><code>Closeable.close()</code></a>.</div>
+ <code>active</code>. A transition to
+ <a href="#DISCONNECTED"><code>DISCONNECTED</code></a> can be triggered by calling <code>Closeable.close()</code>.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../org/eclipse/net4j/connector/IConnector.html#getState--"><code>IConnector.getState()</code></a>, 
-<a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#isActive--" title="class or interface in org.eclipse.net4j.util.lifecycle"><code>ILifecycle.isActive()</code></a></dd>
+<dd><a href="IConnector.html#getState()"><code>IConnector.getState()</code></a>, 
+<code>ILifecycle.isActive()</code></dd>
 </dl>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="values--">
+<a id="values()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>values</h4>
-<pre>public static&nbsp;<a href="../../../../org/eclipse/net4j/connector/ConnectorState.html" title="enum in org.eclipse.net4j.connector">ConnectorState</a>[]&nbsp;values()</pre>
+<pre class="methodSignature">public static&nbsp;<a href="ConnectorState.html" title="enum in org.eclipse.net4j.connector">ConnectorState</a>[]&nbsp;values()</pre>
 <div class="block">Returns an array containing the constants of this enum type, in
-the order they are declared.  This method may be used to iterate
+the order they are declared. This method may be used to iterate
 over the constants as follows:
 <pre>
 for (ConnectorState c : ConnectorState.values())
@@ -339,13 +378,13 @@ for (ConnectorState c : ConnectorState.values())
 </dl>
 </li>
 </ul>
-<a name="valueOf-java.lang.String-">
+<a id="valueOf(java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>valueOf</h4>
-<pre>public static&nbsp;<a href="../../../../org/eclipse/net4j/connector/ConnectorState.html" title="enum in org.eclipse.net4j.connector">ConnectorState</a>&nbsp;valueOf(java.lang.String&nbsp;name)</pre>
+<pre class="methodSignature">public static&nbsp;<a href="ConnectorState.html" title="enum in org.eclipse.net4j.connector">ConnectorState</a>&nbsp;valueOf&#8203;(java.lang.String&nbsp;name)</pre>
 <div class="block">Returns the enum constant of this type with the specified name.
 The string must match <i>exactly</i> an identifier used to declare an
 enum constant in this type.  (Extraneous whitespace characters are 
@@ -363,21 +402,25 @@ not permitted.)</div>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/ConnectorState.html">Use</a></li>
@@ -387,16 +430,8 @@ not permitted.)</div>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../org/eclipse/net4j/connector/ConnectorException.html" title="class in org.eclipse.net4j.connector"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../index.html?org/eclipse/net4j/connector/ConnectorState.html" target="_top">Frames</a></li>
-<li><a href="ConnectorState.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -409,6 +444,9 @@ not permitted.)</div>
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -425,10 +463,12 @@ not permitted.)</div>
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

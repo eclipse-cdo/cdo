@@ -3,6 +3,14 @@
 
 <toc label="CDO Model Repository Documentation" topic="html/Overview.html">
   <topic label="Overview" href="html/Overview.html" />
+  <topic label="Developing Client Applications" href="html/client/index.html">
+    <topic label="Understanding the Architecture of a Client Application" href="html/client/Doc01_Architecture.html" />
+    <topic label="Preparing EMF Models for CDO" href="html/client/Doc02_PreparingModels.html" />
+    <topic label="View Providers" href="html/client/Doc03_ViewProviders.html" />
+  </topic>
+  <topic label="Dealing with Servers" href="html/server/index.html">
+    <topic label="Understanding the Architecture of a Repository" href="html/server/Architecture.html" />
+  </topic>
   <topic label="User's Guide" href="html/users/index.html">
     <topic label="Elements of the User Interface" href="html/users/Doc01_UserInterface.html" />
     <topic label="Managing Repositories" href="html/users/Doc02_ManagingRepositories.html" />
@@ -19,16 +27,6 @@
     <topic label="Configuring Repositories" href="html/operators/Doc01_ConfiguringRepositories.html" />
     <topic label="Configuring Acceptors" href="html/operators/Doc02_ConfiguringAcceptors.html" />
     <topic label="Managing Security" href="http://wiki.eclipse.org/CDO/Security_Manager" icon="external" />
-  </topic>
-  <topic label="Programmer's Guide" href="html/programmers/index.html">
-    <topic label="Developing Client Applications" href="html/programmers/client/index.html">
-      <topic label="Understanding the Architecture of a Client Application" href="html/programmers/client/Doc01_Architecture.html" />
-      <topic label="Preparing EMF Models for CDO" href="html/programmers/client/Doc02_PreparingModels.html" />
-      <topic label="View Providers" href="html/programmers/client/Doc03_ViewProviders.html" />
-    </topic>
-    <topic label="Dealing with Servers" href="html/programmers/server/index.html">
-      <topic label="Understanding the Architecture of a Repository" href="html/programmers/server/Architecture.html" />
-    </topic>
   </topic>
   <topic label="Reference" href="html/reference/index.html">
     <topic label="API Reference" href="javadoc/overview-summary.html">
@@ -97,6 +95,7 @@
         <topic label="org.eclipse.emf.cdo.spi.common.model" href="javadoc/org/eclipse/emf/cdo/spi/common/model/package-summary.html" icon="package" />
         <topic label="org.eclipse.emf.cdo.spi.common.protocol" href="javadoc/org/eclipse/emf/cdo/spi/common/protocol/package-summary.html" icon="package" />
         <topic label="org.eclipse.emf.cdo.spi.common.revision" href="javadoc/org/eclipse/emf/cdo/spi/common/revision/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.spi.common.util" href="javadoc/org/eclipse/emf/cdo/spi/common/util/package-summary.html" icon="package" />
       </topic>
       <topic label="CDO Model Repository Explorer" href="javadoc/org/eclipse/emf/cdo/explorer/package-summary.html" icon="plugin">
         <topic label="org.eclipse.emf.cdo.explorer" href="javadoc/org/eclipse/emf/cdo/explorer/package-summary.html" icon="package" />

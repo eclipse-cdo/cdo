@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>Uses of Package org.eclipse.emf.cdo.security (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,39 +28,43 @@
     catch(err) {
     }
 //-->
-</script>
+var pathtoroot = "../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li>Class</li>
 <li class="navBarCell1Rev">Use</li>
+<li><a href="package-tree.html">Tree</a></li>
 <li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../help-doc.html">Help</a></li>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev</li>
-<li>Next</li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/emf/cdo/security/package-use.html" target="_top">Frames</a></li>
-<li><a href="package-use.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -63,723 +77,767 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
+<main role="main">
 <div class="header">
 <h1 title="Uses of Package org.eclipse.emf.cdo.security" class="title">Uses of Package<br>org.eclipse.emf.cdo.security</h1>
 </div>
 <div class="contentContainer">
 <ul class="blockList">
 <li class="blockList">
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing packages, and an explanation">
-<caption><span>Packages that use <a href="../../../../../org/eclipse/emf/cdo/security/package-summary.html">org.eclipse.emf.cdo.security</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Packages that use <a href="package-summary.html">org.eclipse.emf.cdo.security</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Package</th>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.security">org.eclipse.emf.cdo.security</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.security">org.eclipse.emf.cdo.security</a></th>
 <td class="colLast">
 <div class="block">The generated EMF API of the CDO security model.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.security.impl">org.eclipse.emf.cdo.security.impl</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.security.impl">org.eclipse.emf.cdo.security.impl</a></th>
 <td class="colLast">
 <div class="block">The generated EMF implementation of the CDO security model.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.security.util">org.eclipse.emf.cdo.security.util</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.security.util">org.eclipse.emf.cdo.security.util</a></th>
 <td class="colLast">
 <div class="block">The generated EMF utilities of the CDO security model.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.server.security">org.eclipse.emf.cdo.server.security</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.server.security">org.eclipse.emf.cdo.server.security</a></th>
 <td class="colLast">
-<div class="block">Server integration of the <a href="../../../../../org/eclipse/emf/cdo/security/Realm.html" title="interface in org.eclipse.emf.cdo.security"><code>Security</code></a> model.</div>
+<div class="block">Server integration of the <a href="Realm.html" title="interface in org.eclipse.emf.cdo.security"><code>Security</code></a> model.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.server.spi.security">org.eclipse.emf.cdo.server.spi.security</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.server.spi.security">org.eclipse.emf.cdo.server.spi.security</a></th>
 <td class="colLast">
-<div class="block">Server provider interfaces (SPI) for the server integration of the <a href="../../../../../org/eclipse/emf/cdo/security/Realm.html" title="interface in org.eclipse.emf.cdo.security"><code>Security</code></a> model.</div>
+<div class="block">Server provider interfaces (SPI) for the server integration of the <a href="Realm.html" title="interface in org.eclipse.emf.cdo.security"><code>Security</code></a> model.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.security">
+<li class="blockList"><a id="org.eclipse.emf.cdo.security">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../org/eclipse/emf/cdo/security/package-summary.html">org.eclipse.emf.cdo.security</a> used by <a href="../../../../../org/eclipse/emf/cdo/security/package-summary.html">org.eclipse.emf.cdo.security</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.emf.cdo.security</a> used by <a href="package-summary.html">org.eclipse.emf.cdo.security</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/Access.html#org.eclipse.emf.cdo.security">Access</a>
+<th class="colFirst" scope="row"><a href="class-use/Access.html#org.eclipse.emf.cdo.security">Access</a></th>
+<td class="colLast">
 <div class="block">A representation of the literals of the enumeration '<em><b>Access</b></em>',
  and utility methods for working with them.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/AndFilter.html#org.eclipse.emf.cdo.security">AndFilter</a>
+<th class="colFirst" scope="row"><a href="class-use/AndFilter.html#org.eclipse.emf.cdo.security">AndFilter</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>And Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/Assignee.html#org.eclipse.emf.cdo.security">Assignee</a>
+<th class="colFirst" scope="row"><a href="class-use/Assignee.html#org.eclipse.emf.cdo.security">Assignee</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Assignee</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/ClassFilter.html#org.eclipse.emf.cdo.security">ClassFilter</a>
+<th class="colFirst" scope="row"><a href="class-use/ClassFilter.html#org.eclipse.emf.cdo.security">ClassFilter</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Class Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/ClassPermission.html#org.eclipse.emf.cdo.security">ClassPermission</a>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">As of 4.3 use <a href="../../../../../org/eclipse/emf/cdo/security/FilterPermission.html" title="interface in org.eclipse.emf.cdo.security"><code>FilterPermission</code></a> and <a href="../../../../../org/eclipse/emf/cdo/security/ClassFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>ClassFilter</code></a>.
- <!-- end-user-doc -->
-
- <p>
- The following features are supported:
- </p>
- <ul>
-   <li><a href="../../../../../org/eclipse/emf/cdo/security/ClassPermission.html#getApplicableClass--"><code><em>Applicable Class</em></code></a></li>
- </ul></span></div>
+<th class="colFirst" scope="row"><a href="class-use/ClassPermission.html#org.eclipse.emf.cdo.security">ClassPermission</a></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.3 use <a href="FilterPermission.html" title="interface in org.eclipse.emf.cdo.security"><code>FilterPermission</code></a> and <a href="ClassFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>ClassFilter</code></a>.</div>
 </div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/CombinedFilter.html#org.eclipse.emf.cdo.security">CombinedFilter</a>
+<th class="colFirst" scope="row"><a href="class-use/CombinedFilter.html#org.eclipse.emf.cdo.security">CombinedFilter</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Combined Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/Directory.html#org.eclipse.emf.cdo.security">Directory</a>
+<th class="colFirst" scope="row"><a href="class-use/Directory.html#org.eclipse.emf.cdo.security">Directory</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Container</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/ExpressionFilter.html#org.eclipse.emf.cdo.security">ExpressionFilter</a>
+<th class="colFirst" scope="row"><a href="class-use/ExpressionFilter.html#org.eclipse.emf.cdo.security">ExpressionFilter</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Expression Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/FilterPermission.html#org.eclipse.emf.cdo.security">FilterPermission</a>
+<th class="colFirst" scope="row"><a href="class-use/FilterPermission.html#org.eclipse.emf.cdo.security">FilterPermission</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Filter Permission</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/Group.html#org.eclipse.emf.cdo.security">Group</a>
+<th class="colFirst" scope="row"><a href="class-use/Group.html#org.eclipse.emf.cdo.security">Group</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Group</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/LinkedFilter.html#org.eclipse.emf.cdo.security">LinkedFilter</a>
+<th class="colFirst" scope="row"><a href="class-use/LinkedFilter.html#org.eclipse.emf.cdo.security">LinkedFilter</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Reference Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/NotFilter.html#org.eclipse.emf.cdo.security">NotFilter</a>
+<th class="colFirst" scope="row"><a href="class-use/NotFilter.html#org.eclipse.emf.cdo.security">NotFilter</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Not Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/ObjectFilter.html#org.eclipse.emf.cdo.security">ObjectFilter</a>
+<th class="colFirst" scope="row"><a href="class-use/ObjectFilter.html#org.eclipse.emf.cdo.security">ObjectFilter</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Object Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/OrFilter.html#org.eclipse.emf.cdo.security">OrFilter</a>
+<th class="colFirst" scope="row"><a href="class-use/OrFilter.html#org.eclipse.emf.cdo.security">OrFilter</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Or Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/PackageFilter.html#org.eclipse.emf.cdo.security">PackageFilter</a>
+<th class="colFirst" scope="row"><a href="class-use/PackageFilter.html#org.eclipse.emf.cdo.security">PackageFilter</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Package Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/PackagePermission.html#org.eclipse.emf.cdo.security">PackagePermission</a>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">As of 4.3 use <a href="../../../../../org/eclipse/emf/cdo/security/FilterPermission.html" title="interface in org.eclipse.emf.cdo.security"><code>FilterPermission</code></a> and <a href="../../../../../org/eclipse/emf/cdo/security/PackageFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>PackageFilter</code></a>.
- <!-- end-user-doc -->
-
- <p>
- The following features are supported:
- </p>
- <ul>
-   <li><a href="../../../../../org/eclipse/emf/cdo/security/PackagePermission.html#getApplicablePackage--"><code><em>Applicable Package</em></code></a></li>
- </ul></span></div>
+<th class="colFirst" scope="row"><a href="class-use/PackagePermission.html#org.eclipse.emf.cdo.security">PackagePermission</a></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.3 use <a href="FilterPermission.html" title="interface in org.eclipse.emf.cdo.security"><code>FilterPermission</code></a> and <a href="PackageFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>PackageFilter</code></a>.</div>
 </div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/PatternStyle.html#org.eclipse.emf.cdo.security">PatternStyle</a>
+<th class="colFirst" scope="row"><a href="class-use/PatternStyle.html#org.eclipse.emf.cdo.security">PatternStyle</a></th>
+<td class="colLast">
 <div class="block">A representation of the literals of the enumeration '<em><b>PatternStyle</b></em>',
  and utility methods for working with them.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/Permission.html#org.eclipse.emf.cdo.security">Permission</a>
+<th class="colFirst" scope="row"><a href="class-use/Permission.html#org.eclipse.emf.cdo.security">Permission</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Permission</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/PermissionFilter.html#org.eclipse.emf.cdo.security">PermissionFilter</a>
+<th class="colFirst" scope="row"><a href="class-use/PermissionFilter.html#org.eclipse.emf.cdo.security">PermissionFilter</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Permission Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/Realm.html#org.eclipse.emf.cdo.security">Realm</a>
+<th class="colFirst" scope="row"><a href="class-use/Realm.html#org.eclipse.emf.cdo.security">Realm</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Realm</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/ResourceFilter.html#org.eclipse.emf.cdo.security">ResourceFilter</a>
+<th class="colFirst" scope="row"><a href="class-use/ResourceFilter.html#org.eclipse.emf.cdo.security">ResourceFilter</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Resource Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/ResourcePermission.html#org.eclipse.emf.cdo.security">ResourcePermission</a>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">As of 4.3 use <a href="../../../../../org/eclipse/emf/cdo/security/FilterPermission.html" title="interface in org.eclipse.emf.cdo.security"><code>FilterPermission</code></a> and <a href="../../../../../org/eclipse/emf/cdo/security/ResourceFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>ResourceFilter</code></a>.
- <!-- end-user-doc -->
-
- <p>
- The following features are supported:
- </p>
- <ul>
-   <li><a href="../../../../../org/eclipse/emf/cdo/security/ResourcePermission.html#getPattern--"><code><em>Pattern</em></code></a></li>
- </ul></span></div>
+<th class="colFirst" scope="row"><a href="class-use/ResourcePermission.html#org.eclipse.emf.cdo.security">ResourcePermission</a></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.3 use <a href="FilterPermission.html" title="interface in org.eclipse.emf.cdo.security"><code>FilterPermission</code></a> and <a href="ResourceFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>ResourceFilter</code></a>.</div>
 </div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/Role.html#org.eclipse.emf.cdo.security">Role</a>
+<th class="colFirst" scope="row"><a href="class-use/Role.html#org.eclipse.emf.cdo.security">Role</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Role</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/SecurityElement.html#org.eclipse.emf.cdo.security">SecurityElement</a>
+<th class="colFirst" scope="row"><a href="class-use/SecurityElement.html#org.eclipse.emf.cdo.security">SecurityElement</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Element</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/SecurityFactory.html#org.eclipse.emf.cdo.security">SecurityFactory</a>
+<th class="colFirst" scope="row"><a href="class-use/SecurityFactory.html#org.eclipse.emf.cdo.security">SecurityFactory</a></th>
+<td class="colLast">
 <div class="block">The <b>Factory</b> for the model.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/SecurityItem.html#org.eclipse.emf.cdo.security">SecurityItem</a>
+<th class="colFirst" scope="row"><a href="class-use/SecurityItem.html#org.eclipse.emf.cdo.security">SecurityItem</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Item</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/SecurityItemContainer.html#org.eclipse.emf.cdo.security">SecurityItemContainer</a>
-<div class="block">A <a href="../../../../../org/eclipse/emf/cdo/security/SecurityItemProvider.html" title="interface in org.eclipse.emf.cdo.security"><code>security item provider</code></a> that <a href="../../../../../org/eclipse/emf/cdo/security/SecurityItem.html" title="interface in org.eclipse.emf.cdo.security"><code>items</code></a>
- such as <a href="../../../../../org/eclipse/emf/cdo/security/User.html" title="interface in org.eclipse.emf.cdo.security"><code>users</code></a> or <a href="../../../../../org/eclipse/emf/cdo/security/Role.html" title="interface in org.eclipse.emf.cdo.security"><code>roles</code></a> can be added to or removed from.</div>
+<th class="colFirst" scope="row"><a href="class-use/SecurityItemContainer.html#org.eclipse.emf.cdo.security">SecurityItemContainer</a></th>
+<td class="colLast">
+<div class="block">A <a href="SecurityItemProvider.html" title="interface in org.eclipse.emf.cdo.security"><code>security item provider</code></a> that <a href="SecurityItem.html" title="interface in org.eclipse.emf.cdo.security"><code>items</code></a>
+ such as <a href="User.html" title="interface in org.eclipse.emf.cdo.security"><code>users</code></a> or <a href="Role.html" title="interface in org.eclipse.emf.cdo.security"><code>roles</code></a> can be added to or removed from.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/SecurityItemProvider.html#org.eclipse.emf.cdo.security">SecurityItemProvider</a>
-<div class="block">Provides <a href="../../../../../org/eclipse/emf/cdo/security/SecurityItem.html" title="interface in org.eclipse.emf.cdo.security"><code>security items</code></a> such as <a href="../../../../../org/eclipse/emf/cdo/security/User.html" title="interface in org.eclipse.emf.cdo.security"><code>users</code></a> or <a href="../../../../../org/eclipse/emf/cdo/security/Role.html" title="interface in org.eclipse.emf.cdo.security"><code>roles</code></a> by their given IDs.</div>
+<th class="colFirst" scope="row"><a href="class-use/SecurityItemProvider.html#org.eclipse.emf.cdo.security">SecurityItemProvider</a></th>
+<td class="colLast">
+<div class="block">Provides <a href="SecurityItem.html" title="interface in org.eclipse.emf.cdo.security"><code>security items</code></a> such as <a href="User.html" title="interface in org.eclipse.emf.cdo.security"><code>users</code></a> or <a href="Role.html" title="interface in org.eclipse.emf.cdo.security"><code>roles</code></a> by their given IDs.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/SecurityPackage.html#org.eclipse.emf.cdo.security">SecurityPackage</a>
+<th class="colFirst" scope="row"><a href="class-use/SecurityPackage.html#org.eclipse.emf.cdo.security">SecurityPackage</a></th>
+<td class="colLast">
 <div class="block">The <b>Package</b> for the model.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/User.html#org.eclipse.emf.cdo.security">User</a>
+<th class="colFirst" scope="row"><a href="class-use/User.html#org.eclipse.emf.cdo.security">User</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>User</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/UserPassword.html#org.eclipse.emf.cdo.security">UserPassword</a>
+<th class="colFirst" scope="row"><a href="class-use/UserPassword.html#org.eclipse.emf.cdo.security">UserPassword</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>User Password</b></em>'.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.security.impl">
+<li class="blockList"><a id="org.eclipse.emf.cdo.security.impl">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../org/eclipse/emf/cdo/security/package-summary.html">org.eclipse.emf.cdo.security</a> used by <a href="../../../../../org/eclipse/emf/cdo/security/impl/package-summary.html">org.eclipse.emf.cdo.security.impl</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.emf.cdo.security</a> used by <a href="impl/package-summary.html">org.eclipse.emf.cdo.security.impl</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/Access.html#org.eclipse.emf.cdo.security.impl">Access</a>
+<th class="colFirst" scope="row"><a href="class-use/Access.html#org.eclipse.emf.cdo.security.impl">Access</a></th>
+<td class="colLast">
 <div class="block">A representation of the literals of the enumeration '<em><b>Access</b></em>',
  and utility methods for working with them.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/AndFilter.html#org.eclipse.emf.cdo.security.impl">AndFilter</a>
+<th class="colFirst" scope="row"><a href="class-use/AndFilter.html#org.eclipse.emf.cdo.security.impl">AndFilter</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>And Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/Assignee.html#org.eclipse.emf.cdo.security.impl">Assignee</a>
+<th class="colFirst" scope="row"><a href="class-use/Assignee.html#org.eclipse.emf.cdo.security.impl">Assignee</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Assignee</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/ClassFilter.html#org.eclipse.emf.cdo.security.impl">ClassFilter</a>
+<th class="colFirst" scope="row"><a href="class-use/ClassFilter.html#org.eclipse.emf.cdo.security.impl">ClassFilter</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Class Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/ClassPermission.html#org.eclipse.emf.cdo.security.impl">ClassPermission</a>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">As of 4.3 use <a href="../../../../../org/eclipse/emf/cdo/security/FilterPermission.html" title="interface in org.eclipse.emf.cdo.security"><code>FilterPermission</code></a> and <a href="../../../../../org/eclipse/emf/cdo/security/ClassFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>ClassFilter</code></a>.
- <!-- end-user-doc -->
-
- <p>
- The following features are supported:
- </p>
- <ul>
-   <li><a href="../../../../../org/eclipse/emf/cdo/security/ClassPermission.html#getApplicableClass--"><code><em>Applicable Class</em></code></a></li>
- </ul></span></div>
+<th class="colFirst" scope="row"><a href="class-use/ClassPermission.html#org.eclipse.emf.cdo.security.impl">ClassPermission</a></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.3 use <a href="FilterPermission.html" title="interface in org.eclipse.emf.cdo.security"><code>FilterPermission</code></a> and <a href="ClassFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>ClassFilter</code></a>.</div>
 </div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/CombinedFilter.html#org.eclipse.emf.cdo.security.impl">CombinedFilter</a>
+<th class="colFirst" scope="row"><a href="class-use/CombinedFilter.html#org.eclipse.emf.cdo.security.impl">CombinedFilter</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Combined Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/Directory.html#org.eclipse.emf.cdo.security.impl">Directory</a>
+<th class="colFirst" scope="row"><a href="class-use/Directory.html#org.eclipse.emf.cdo.security.impl">Directory</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Container</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/ExpressionFilter.html#org.eclipse.emf.cdo.security.impl">ExpressionFilter</a>
+<th class="colFirst" scope="row"><a href="class-use/ExpressionFilter.html#org.eclipse.emf.cdo.security.impl">ExpressionFilter</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Expression Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/FilterPermission.html#org.eclipse.emf.cdo.security.impl">FilterPermission</a>
+<th class="colFirst" scope="row"><a href="class-use/FilterPermission.html#org.eclipse.emf.cdo.security.impl">FilterPermission</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Filter Permission</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/Group.html#org.eclipse.emf.cdo.security.impl">Group</a>
+<th class="colFirst" scope="row"><a href="class-use/Group.html#org.eclipse.emf.cdo.security.impl">Group</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Group</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/LinkedFilter.html#org.eclipse.emf.cdo.security.impl">LinkedFilter</a>
+<th class="colFirst" scope="row"><a href="class-use/LinkedFilter.html#org.eclipse.emf.cdo.security.impl">LinkedFilter</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Reference Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/NotFilter.html#org.eclipse.emf.cdo.security.impl">NotFilter</a>
+<th class="colFirst" scope="row"><a href="class-use/NotFilter.html#org.eclipse.emf.cdo.security.impl">NotFilter</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Not Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/ObjectFilter.html#org.eclipse.emf.cdo.security.impl">ObjectFilter</a>
+<th class="colFirst" scope="row"><a href="class-use/ObjectFilter.html#org.eclipse.emf.cdo.security.impl">ObjectFilter</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Object Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/ObjectPermission.html#org.eclipse.emf.cdo.security.impl">ObjectPermission</a>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">As of 4.3 use <a href="../../../../../org/eclipse/emf/cdo/security/FilterPermission.html" title="interface in org.eclipse.emf.cdo.security"><code>FilterPermission</code></a> and <a href="../../../../../org/eclipse/emf/cdo/security/ObjectFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>ObjectFilter</code></a>.
- <!-- end-user-doc --></span></div>
+<th class="colFirst" scope="row"><a href="class-use/ObjectPermission.html#org.eclipse.emf.cdo.security.impl">ObjectPermission</a></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.3 use <a href="FilterPermission.html" title="interface in org.eclipse.emf.cdo.security"><code>FilterPermission</code></a> and <a href="ObjectFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>ObjectFilter</code></a>.</div>
 </div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/OrFilter.html#org.eclipse.emf.cdo.security.impl">OrFilter</a>
+<th class="colFirst" scope="row"><a href="class-use/OrFilter.html#org.eclipse.emf.cdo.security.impl">OrFilter</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Or Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/PackageFilter.html#org.eclipse.emf.cdo.security.impl">PackageFilter</a>
+<th class="colFirst" scope="row"><a href="class-use/PackageFilter.html#org.eclipse.emf.cdo.security.impl">PackageFilter</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Package Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/PackagePermission.html#org.eclipse.emf.cdo.security.impl">PackagePermission</a>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">As of 4.3 use <a href="../../../../../org/eclipse/emf/cdo/security/FilterPermission.html" title="interface in org.eclipse.emf.cdo.security"><code>FilterPermission</code></a> and <a href="../../../../../org/eclipse/emf/cdo/security/PackageFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>PackageFilter</code></a>.
- <!-- end-user-doc -->
-
- <p>
- The following features are supported:
- </p>
- <ul>
-   <li><a href="../../../../../org/eclipse/emf/cdo/security/PackagePermission.html#getApplicablePackage--"><code><em>Applicable Package</em></code></a></li>
- </ul></span></div>
+<th class="colFirst" scope="row"><a href="class-use/PackagePermission.html#org.eclipse.emf.cdo.security.impl">PackagePermission</a></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.3 use <a href="FilterPermission.html" title="interface in org.eclipse.emf.cdo.security"><code>FilterPermission</code></a> and <a href="PackageFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>PackageFilter</code></a>.</div>
 </div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/PatternStyle.html#org.eclipse.emf.cdo.security.impl">PatternStyle</a>
+<th class="colFirst" scope="row"><a href="class-use/PatternStyle.html#org.eclipse.emf.cdo.security.impl">PatternStyle</a></th>
+<td class="colLast">
 <div class="block">A representation of the literals of the enumeration '<em><b>PatternStyle</b></em>',
  and utility methods for working with them.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/Permission.html#org.eclipse.emf.cdo.security.impl">Permission</a>
+<th class="colFirst" scope="row"><a href="class-use/Permission.html#org.eclipse.emf.cdo.security.impl">Permission</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Permission</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/PermissionFilter.html#org.eclipse.emf.cdo.security.impl">PermissionFilter</a>
+<th class="colFirst" scope="row"><a href="class-use/PermissionFilter.html#org.eclipse.emf.cdo.security.impl">PermissionFilter</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Permission Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/Realm.html#org.eclipse.emf.cdo.security.impl">Realm</a>
+<th class="colFirst" scope="row"><a href="class-use/Realm.html#org.eclipse.emf.cdo.security.impl">Realm</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Realm</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/ResourceFilter.html#org.eclipse.emf.cdo.security.impl">ResourceFilter</a>
+<th class="colFirst" scope="row"><a href="class-use/ResourceFilter.html#org.eclipse.emf.cdo.security.impl">ResourceFilter</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Resource Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/ResourcePermission.html#org.eclipse.emf.cdo.security.impl">ResourcePermission</a>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">As of 4.3 use <a href="../../../../../org/eclipse/emf/cdo/security/FilterPermission.html" title="interface in org.eclipse.emf.cdo.security"><code>FilterPermission</code></a> and <a href="../../../../../org/eclipse/emf/cdo/security/ResourceFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>ResourceFilter</code></a>.
- <!-- end-user-doc -->
-
- <p>
- The following features are supported:
- </p>
- <ul>
-   <li><a href="../../../../../org/eclipse/emf/cdo/security/ResourcePermission.html#getPattern--"><code><em>Pattern</em></code></a></li>
- </ul></span></div>
+<th class="colFirst" scope="row"><a href="class-use/ResourcePermission.html#org.eclipse.emf.cdo.security.impl">ResourcePermission</a></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.3 use <a href="FilterPermission.html" title="interface in org.eclipse.emf.cdo.security"><code>FilterPermission</code></a> and <a href="ResourceFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>ResourceFilter</code></a>.</div>
 </div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/Role.html#org.eclipse.emf.cdo.security.impl">Role</a>
+<th class="colFirst" scope="row"><a href="class-use/Role.html#org.eclipse.emf.cdo.security.impl">Role</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Role</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/SecurityElement.html#org.eclipse.emf.cdo.security.impl">SecurityElement</a>
+<th class="colFirst" scope="row"><a href="class-use/SecurityElement.html#org.eclipse.emf.cdo.security.impl">SecurityElement</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Element</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/SecurityFactory.html#org.eclipse.emf.cdo.security.impl">SecurityFactory</a>
+<th class="colFirst" scope="row"><a href="class-use/SecurityFactory.html#org.eclipse.emf.cdo.security.impl">SecurityFactory</a></th>
+<td class="colLast">
 <div class="block">The <b>Factory</b> for the model.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/SecurityItem.html#org.eclipse.emf.cdo.security.impl">SecurityItem</a>
+<th class="colFirst" scope="row"><a href="class-use/SecurityItem.html#org.eclipse.emf.cdo.security.impl">SecurityItem</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Item</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/SecurityItemContainer.html#org.eclipse.emf.cdo.security.impl">SecurityItemContainer</a>
-<div class="block">A <a href="../../../../../org/eclipse/emf/cdo/security/SecurityItemProvider.html" title="interface in org.eclipse.emf.cdo.security"><code>security item provider</code></a> that <a href="../../../../../org/eclipse/emf/cdo/security/SecurityItem.html" title="interface in org.eclipse.emf.cdo.security"><code>items</code></a>
- such as <a href="../../../../../org/eclipse/emf/cdo/security/User.html" title="interface in org.eclipse.emf.cdo.security"><code>users</code></a> or <a href="../../../../../org/eclipse/emf/cdo/security/Role.html" title="interface in org.eclipse.emf.cdo.security"><code>roles</code></a> can be added to or removed from.</div>
+<th class="colFirst" scope="row"><a href="class-use/SecurityItemContainer.html#org.eclipse.emf.cdo.security.impl">SecurityItemContainer</a></th>
+<td class="colLast">
+<div class="block">A <a href="SecurityItemProvider.html" title="interface in org.eclipse.emf.cdo.security"><code>security item provider</code></a> that <a href="SecurityItem.html" title="interface in org.eclipse.emf.cdo.security"><code>items</code></a>
+ such as <a href="User.html" title="interface in org.eclipse.emf.cdo.security"><code>users</code></a> or <a href="Role.html" title="interface in org.eclipse.emf.cdo.security"><code>roles</code></a> can be added to or removed from.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/SecurityItemProvider.html#org.eclipse.emf.cdo.security.impl">SecurityItemProvider</a>
-<div class="block">Provides <a href="../../../../../org/eclipse/emf/cdo/security/SecurityItem.html" title="interface in org.eclipse.emf.cdo.security"><code>security items</code></a> such as <a href="../../../../../org/eclipse/emf/cdo/security/User.html" title="interface in org.eclipse.emf.cdo.security"><code>users</code></a> or <a href="../../../../../org/eclipse/emf/cdo/security/Role.html" title="interface in org.eclipse.emf.cdo.security"><code>roles</code></a> by their given IDs.</div>
+<th class="colFirst" scope="row"><a href="class-use/SecurityItemProvider.html#org.eclipse.emf.cdo.security.impl">SecurityItemProvider</a></th>
+<td class="colLast">
+<div class="block">Provides <a href="SecurityItem.html" title="interface in org.eclipse.emf.cdo.security"><code>security items</code></a> such as <a href="User.html" title="interface in org.eclipse.emf.cdo.security"><code>users</code></a> or <a href="Role.html" title="interface in org.eclipse.emf.cdo.security"><code>roles</code></a> by their given IDs.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/SecurityPackage.html#org.eclipse.emf.cdo.security.impl">SecurityPackage</a>
+<th class="colFirst" scope="row"><a href="class-use/SecurityPackage.html#org.eclipse.emf.cdo.security.impl">SecurityPackage</a></th>
+<td class="colLast">
 <div class="block">The <b>Package</b> for the model.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/User.html#org.eclipse.emf.cdo.security.impl">User</a>
+<th class="colFirst" scope="row"><a href="class-use/User.html#org.eclipse.emf.cdo.security.impl">User</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>User</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/UserPassword.html#org.eclipse.emf.cdo.security.impl">UserPassword</a>
+<th class="colFirst" scope="row"><a href="class-use/UserPassword.html#org.eclipse.emf.cdo.security.impl">UserPassword</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>User Password</b></em>'.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.security.util">
+<li class="blockList"><a id="org.eclipse.emf.cdo.security.util">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../org/eclipse/emf/cdo/security/package-summary.html">org.eclipse.emf.cdo.security</a> used by <a href="../../../../../org/eclipse/emf/cdo/security/util/package-summary.html">org.eclipse.emf.cdo.security.util</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.emf.cdo.security</a> used by <a href="util/package-summary.html">org.eclipse.emf.cdo.security.util</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/Access.html#org.eclipse.emf.cdo.security.util">Access</a>
+<th class="colFirst" scope="row"><a href="class-use/Access.html#org.eclipse.emf.cdo.security.util">Access</a></th>
+<td class="colLast">
 <div class="block">A representation of the literals of the enumeration '<em><b>Access</b></em>',
  and utility methods for working with them.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/AndFilter.html#org.eclipse.emf.cdo.security.util">AndFilter</a>
+<th class="colFirst" scope="row"><a href="class-use/AndFilter.html#org.eclipse.emf.cdo.security.util">AndFilter</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>And Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/Assignee.html#org.eclipse.emf.cdo.security.util">Assignee</a>
+<th class="colFirst" scope="row"><a href="class-use/Assignee.html#org.eclipse.emf.cdo.security.util">Assignee</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Assignee</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/ClassFilter.html#org.eclipse.emf.cdo.security.util">ClassFilter</a>
+<th class="colFirst" scope="row"><a href="class-use/ClassFilter.html#org.eclipse.emf.cdo.security.util">ClassFilter</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Class Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/ClassPermission.html#org.eclipse.emf.cdo.security.util">ClassPermission</a>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">As of 4.3 use <a href="../../../../../org/eclipse/emf/cdo/security/FilterPermission.html" title="interface in org.eclipse.emf.cdo.security"><code>FilterPermission</code></a> and <a href="../../../../../org/eclipse/emf/cdo/security/ClassFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>ClassFilter</code></a>.
- <!-- end-user-doc -->
-
- <p>
- The following features are supported:
- </p>
- <ul>
-   <li><a href="../../../../../org/eclipse/emf/cdo/security/ClassPermission.html#getApplicableClass--"><code><em>Applicable Class</em></code></a></li>
- </ul></span></div>
+<th class="colFirst" scope="row"><a href="class-use/ClassPermission.html#org.eclipse.emf.cdo.security.util">ClassPermission</a></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.3 use <a href="FilterPermission.html" title="interface in org.eclipse.emf.cdo.security"><code>FilterPermission</code></a> and <a href="ClassFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>ClassFilter</code></a>.</div>
 </div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/CombinedFilter.html#org.eclipse.emf.cdo.security.util">CombinedFilter</a>
+<th class="colFirst" scope="row"><a href="class-use/CombinedFilter.html#org.eclipse.emf.cdo.security.util">CombinedFilter</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Combined Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/Directory.html#org.eclipse.emf.cdo.security.util">Directory</a>
+<th class="colFirst" scope="row"><a href="class-use/Directory.html#org.eclipse.emf.cdo.security.util">Directory</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Container</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/ExpressionFilter.html#org.eclipse.emf.cdo.security.util">ExpressionFilter</a>
+<th class="colFirst" scope="row"><a href="class-use/ExpressionFilter.html#org.eclipse.emf.cdo.security.util">ExpressionFilter</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Expression Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/FilterPermission.html#org.eclipse.emf.cdo.security.util">FilterPermission</a>
+<th class="colFirst" scope="row"><a href="class-use/FilterPermission.html#org.eclipse.emf.cdo.security.util">FilterPermission</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Filter Permission</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/Group.html#org.eclipse.emf.cdo.security.util">Group</a>
+<th class="colFirst" scope="row"><a href="class-use/Group.html#org.eclipse.emf.cdo.security.util">Group</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Group</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/LinkedFilter.html#org.eclipse.emf.cdo.security.util">LinkedFilter</a>
+<th class="colFirst" scope="row"><a href="class-use/LinkedFilter.html#org.eclipse.emf.cdo.security.util">LinkedFilter</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Reference Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/NotFilter.html#org.eclipse.emf.cdo.security.util">NotFilter</a>
+<th class="colFirst" scope="row"><a href="class-use/NotFilter.html#org.eclipse.emf.cdo.security.util">NotFilter</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Not Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/ObjectFilter.html#org.eclipse.emf.cdo.security.util">ObjectFilter</a>
+<th class="colFirst" scope="row"><a href="class-use/ObjectFilter.html#org.eclipse.emf.cdo.security.util">ObjectFilter</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Object Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/ObjectPermission.html#org.eclipse.emf.cdo.security.util">ObjectPermission</a>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">As of 4.3 use <a href="../../../../../org/eclipse/emf/cdo/security/FilterPermission.html" title="interface in org.eclipse.emf.cdo.security"><code>FilterPermission</code></a> and <a href="../../../../../org/eclipse/emf/cdo/security/ObjectFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>ObjectFilter</code></a>.
- <!-- end-user-doc --></span></div>
+<th class="colFirst" scope="row"><a href="class-use/ObjectPermission.html#org.eclipse.emf.cdo.security.util">ObjectPermission</a></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.3 use <a href="FilterPermission.html" title="interface in org.eclipse.emf.cdo.security"><code>FilterPermission</code></a> and <a href="ObjectFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>ObjectFilter</code></a>.</div>
 </div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/OrFilter.html#org.eclipse.emf.cdo.security.util">OrFilter</a>
+<th class="colFirst" scope="row"><a href="class-use/OrFilter.html#org.eclipse.emf.cdo.security.util">OrFilter</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Or Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/PackageFilter.html#org.eclipse.emf.cdo.security.util">PackageFilter</a>
+<th class="colFirst" scope="row"><a href="class-use/PackageFilter.html#org.eclipse.emf.cdo.security.util">PackageFilter</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Package Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/PackagePermission.html#org.eclipse.emf.cdo.security.util">PackagePermission</a>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">As of 4.3 use <a href="../../../../../org/eclipse/emf/cdo/security/FilterPermission.html" title="interface in org.eclipse.emf.cdo.security"><code>FilterPermission</code></a> and <a href="../../../../../org/eclipse/emf/cdo/security/PackageFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>PackageFilter</code></a>.
- <!-- end-user-doc -->
-
- <p>
- The following features are supported:
- </p>
- <ul>
-   <li><a href="../../../../../org/eclipse/emf/cdo/security/PackagePermission.html#getApplicablePackage--"><code><em>Applicable Package</em></code></a></li>
- </ul></span></div>
+<th class="colFirst" scope="row"><a href="class-use/PackagePermission.html#org.eclipse.emf.cdo.security.util">PackagePermission</a></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.3 use <a href="FilterPermission.html" title="interface in org.eclipse.emf.cdo.security"><code>FilterPermission</code></a> and <a href="PackageFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>PackageFilter</code></a>.</div>
 </div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/PatternStyle.html#org.eclipse.emf.cdo.security.util">PatternStyle</a>
+<th class="colFirst" scope="row"><a href="class-use/PatternStyle.html#org.eclipse.emf.cdo.security.util">PatternStyle</a></th>
+<td class="colLast">
 <div class="block">A representation of the literals of the enumeration '<em><b>PatternStyle</b></em>',
  and utility methods for working with them.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/Permission.html#org.eclipse.emf.cdo.security.util">Permission</a>
+<th class="colFirst" scope="row"><a href="class-use/Permission.html#org.eclipse.emf.cdo.security.util">Permission</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Permission</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/PermissionFilter.html#org.eclipse.emf.cdo.security.util">PermissionFilter</a>
+<th class="colFirst" scope="row"><a href="class-use/PermissionFilter.html#org.eclipse.emf.cdo.security.util">PermissionFilter</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Permission Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/Realm.html#org.eclipse.emf.cdo.security.util">Realm</a>
+<th class="colFirst" scope="row"><a href="class-use/Realm.html#org.eclipse.emf.cdo.security.util">Realm</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Realm</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/ResourceFilter.html#org.eclipse.emf.cdo.security.util">ResourceFilter</a>
+<th class="colFirst" scope="row"><a href="class-use/ResourceFilter.html#org.eclipse.emf.cdo.security.util">ResourceFilter</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Resource Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/ResourcePermission.html#org.eclipse.emf.cdo.security.util">ResourcePermission</a>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">As of 4.3 use <a href="../../../../../org/eclipse/emf/cdo/security/FilterPermission.html" title="interface in org.eclipse.emf.cdo.security"><code>FilterPermission</code></a> and <a href="../../../../../org/eclipse/emf/cdo/security/ResourceFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>ResourceFilter</code></a>.
- <!-- end-user-doc -->
-
- <p>
- The following features are supported:
- </p>
- <ul>
-   <li><a href="../../../../../org/eclipse/emf/cdo/security/ResourcePermission.html#getPattern--"><code><em>Pattern</em></code></a></li>
- </ul></span></div>
+<th class="colFirst" scope="row"><a href="class-use/ResourcePermission.html#org.eclipse.emf.cdo.security.util">ResourcePermission</a></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.3 use <a href="FilterPermission.html" title="interface in org.eclipse.emf.cdo.security"><code>FilterPermission</code></a> and <a href="ResourceFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>ResourceFilter</code></a>.</div>
 </div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/Role.html#org.eclipse.emf.cdo.security.util">Role</a>
+<th class="colFirst" scope="row"><a href="class-use/Role.html#org.eclipse.emf.cdo.security.util">Role</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Role</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/SecurityElement.html#org.eclipse.emf.cdo.security.util">SecurityElement</a>
+<th class="colFirst" scope="row"><a href="class-use/SecurityElement.html#org.eclipse.emf.cdo.security.util">SecurityElement</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Element</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/SecurityItem.html#org.eclipse.emf.cdo.security.util">SecurityItem</a>
+<th class="colFirst" scope="row"><a href="class-use/SecurityItem.html#org.eclipse.emf.cdo.security.util">SecurityItem</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Item</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/SecurityPackage.html#org.eclipse.emf.cdo.security.util">SecurityPackage</a>
+<th class="colFirst" scope="row"><a href="class-use/SecurityPackage.html#org.eclipse.emf.cdo.security.util">SecurityPackage</a></th>
+<td class="colLast">
 <div class="block">The <b>Package</b> for the model.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/User.html#org.eclipse.emf.cdo.security.util">User</a>
+<th class="colFirst" scope="row"><a href="class-use/User.html#org.eclipse.emf.cdo.security.util">User</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>User</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/UserPassword.html#org.eclipse.emf.cdo.security.util">UserPassword</a>
+<th class="colFirst" scope="row"><a href="class-use/UserPassword.html#org.eclipse.emf.cdo.security.util">UserPassword</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>User Password</b></em>'.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.server.security">
+<li class="blockList"><a id="org.eclipse.emf.cdo.server.security">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../org/eclipse/emf/cdo/security/package-summary.html">org.eclipse.emf.cdo.security</a> used by <a href="../../../../../org/eclipse/emf/cdo/server/security/package-summary.html">org.eclipse.emf.cdo.server.security</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.emf.cdo.security</a> used by <a href="../server/security/package-summary.html">org.eclipse.emf.cdo.server.security</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/Realm.html#org.eclipse.emf.cdo.server.security">Realm</a>
+<th class="colFirst" scope="row"><a href="class-use/Realm.html#org.eclipse.emf.cdo.server.security">Realm</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Realm</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/SecurityItemContainer.html#org.eclipse.emf.cdo.server.security">SecurityItemContainer</a>
-<div class="block">A <a href="../../../../../org/eclipse/emf/cdo/security/SecurityItemProvider.html" title="interface in org.eclipse.emf.cdo.security"><code>security item provider</code></a> that <a href="../../../../../org/eclipse/emf/cdo/security/SecurityItem.html" title="interface in org.eclipse.emf.cdo.security"><code>items</code></a>
- such as <a href="../../../../../org/eclipse/emf/cdo/security/User.html" title="interface in org.eclipse.emf.cdo.security"><code>users</code></a> or <a href="../../../../../org/eclipse/emf/cdo/security/Role.html" title="interface in org.eclipse.emf.cdo.security"><code>roles</code></a> can be added to or removed from.</div>
+<th class="colFirst" scope="row"><a href="class-use/SecurityItemContainer.html#org.eclipse.emf.cdo.server.security">SecurityItemContainer</a></th>
+<td class="colLast">
+<div class="block">A <a href="SecurityItemProvider.html" title="interface in org.eclipse.emf.cdo.security"><code>security item provider</code></a> that <a href="SecurityItem.html" title="interface in org.eclipse.emf.cdo.security"><code>items</code></a>
+ such as <a href="User.html" title="interface in org.eclipse.emf.cdo.security"><code>users</code></a> or <a href="Role.html" title="interface in org.eclipse.emf.cdo.security"><code>roles</code></a> can be added to or removed from.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/SecurityItemProvider.html#org.eclipse.emf.cdo.server.security">SecurityItemProvider</a>
-<div class="block">Provides <a href="../../../../../org/eclipse/emf/cdo/security/SecurityItem.html" title="interface in org.eclipse.emf.cdo.security"><code>security items</code></a> such as <a href="../../../../../org/eclipse/emf/cdo/security/User.html" title="interface in org.eclipse.emf.cdo.security"><code>users</code></a> or <a href="../../../../../org/eclipse/emf/cdo/security/Role.html" title="interface in org.eclipse.emf.cdo.security"><code>roles</code></a> by their given IDs.</div>
+<th class="colFirst" scope="row"><a href="class-use/SecurityItemProvider.html#org.eclipse.emf.cdo.server.security">SecurityItemProvider</a></th>
+<td class="colLast">
+<div class="block">Provides <a href="SecurityItem.html" title="interface in org.eclipse.emf.cdo.security"><code>security items</code></a> such as <a href="User.html" title="interface in org.eclipse.emf.cdo.security"><code>users</code></a> or <a href="Role.html" title="interface in org.eclipse.emf.cdo.security"><code>roles</code></a> by their given IDs.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.server.spi.security">
+<li class="blockList"><a id="org.eclipse.emf.cdo.server.spi.security">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../org/eclipse/emf/cdo/security/package-summary.html">org.eclipse.emf.cdo.security</a> used by <a href="../../../../../org/eclipse/emf/cdo/server/spi/security/package-summary.html">org.eclipse.emf.cdo.server.spi.security</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.emf.cdo.security</a> used by <a href="../server/spi/security/package-summary.html">org.eclipse.emf.cdo.server.spi.security</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/Access.html#org.eclipse.emf.cdo.server.spi.security">Access</a>
+<th class="colFirst" scope="row"><a href="class-use/Access.html#org.eclipse.emf.cdo.server.spi.security">Access</a></th>
+<td class="colLast">
 <div class="block">A representation of the literals of the enumeration '<em><b>Access</b></em>',
  and utility methods for working with them.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/Realm.html#org.eclipse.emf.cdo.server.spi.security">Realm</a>
+<th class="colFirst" scope="row"><a href="class-use/Realm.html#org.eclipse.emf.cdo.server.spi.security">Realm</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Realm</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/Role.html#org.eclipse.emf.cdo.server.spi.security">Role</a>
+<th class="colFirst" scope="row"><a href="class-use/Role.html#org.eclipse.emf.cdo.server.spi.security">Role</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Role</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/SecurityItemContainer.html#org.eclipse.emf.cdo.server.spi.security">SecurityItemContainer</a>
-<div class="block">A <a href="../../../../../org/eclipse/emf/cdo/security/SecurityItemProvider.html" title="interface in org.eclipse.emf.cdo.security"><code>security item provider</code></a> that <a href="../../../../../org/eclipse/emf/cdo/security/SecurityItem.html" title="interface in org.eclipse.emf.cdo.security"><code>items</code></a>
- such as <a href="../../../../../org/eclipse/emf/cdo/security/User.html" title="interface in org.eclipse.emf.cdo.security"><code>users</code></a> or <a href="../../../../../org/eclipse/emf/cdo/security/Role.html" title="interface in org.eclipse.emf.cdo.security"><code>roles</code></a> can be added to or removed from.</div>
+<th class="colFirst" scope="row"><a href="class-use/SecurityItemContainer.html#org.eclipse.emf.cdo.server.spi.security">SecurityItemContainer</a></th>
+<td class="colLast">
+<div class="block">A <a href="SecurityItemProvider.html" title="interface in org.eclipse.emf.cdo.security"><code>security item provider</code></a> that <a href="SecurityItem.html" title="interface in org.eclipse.emf.cdo.security"><code>items</code></a>
+ such as <a href="User.html" title="interface in org.eclipse.emf.cdo.security"><code>users</code></a> or <a href="Role.html" title="interface in org.eclipse.emf.cdo.security"><code>roles</code></a> can be added to or removed from.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/SecurityItemProvider.html#org.eclipse.emf.cdo.server.spi.security">SecurityItemProvider</a>
-<div class="block">Provides <a href="../../../../../org/eclipse/emf/cdo/security/SecurityItem.html" title="interface in org.eclipse.emf.cdo.security"><code>security items</code></a> such as <a href="../../../../../org/eclipse/emf/cdo/security/User.html" title="interface in org.eclipse.emf.cdo.security"><code>users</code></a> or <a href="../../../../../org/eclipse/emf/cdo/security/Role.html" title="interface in org.eclipse.emf.cdo.security"><code>roles</code></a> by their given IDs.</div>
+<th class="colFirst" scope="row"><a href="class-use/SecurityItemProvider.html#org.eclipse.emf.cdo.server.spi.security">SecurityItemProvider</a></th>
+<td class="colLast">
+<div class="block">Provides <a href="SecurityItem.html" title="interface in org.eclipse.emf.cdo.security"><code>security items</code></a> such as <a href="User.html" title="interface in org.eclipse.emf.cdo.security"><code>users</code></a> or <a href="Role.html" title="interface in org.eclipse.emf.cdo.security"><code>roles</code></a> by their given IDs.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/security/class-use/User.html#org.eclipse.emf.cdo.server.spi.security">User</a>
+<th class="colFirst" scope="row"><a href="class-use/User.html#org.eclipse.emf.cdo.server.spi.security">User</a></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>User</b></em>'.</div>
 </td>
 </tr>
@@ -788,35 +846,31 @@
 </li>
 </ul>
 </div>
+</main>
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li>Class</li>
 <li class="navBarCell1Rev">Use</li>
+<li><a href="package-tree.html">Tree</a></li>
 <li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../help-doc.html">Help</a></li>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev</li>
-<li>Next</li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/emf/cdo/security/package-use.html" target="_top">Frames</a></li>
-<li><a href="package-use.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -829,11 +883,16 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

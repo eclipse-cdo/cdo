@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>Uses of Package org.eclipse.net4j.util.io (Net4j Utilities Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,39 +28,43 @@
     catch(err) {
     }
 //-->
-</script>
+var pathtoroot = "../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li>Class</li>
 <li class="navBarCell1Rev">Use</li>
+<li><a href="package-tree.html">Tree</a></li>
 <li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../help-doc.html">Help</a></li>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev</li>
-<li>Next</li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/net4j/util/io/package-use.html" target="_top">Frames</a></li>
-<li><a href="package-use.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -63,44 +77,56 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
+<main role="main">
 <div class="header">
 <h1 title="Uses of Package org.eclipse.net4j.util.io" class="title">Uses of Package<br>org.eclipse.net4j.util.io</h1>
 </div>
 <div class="contentContainer">
 <ul class="blockList">
 <li class="blockList">
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing packages, and an explanation">
-<caption><span>Packages that use <a href="../../../../../org/eclipse/net4j/util/io/package-summary.html">org.eclipse.net4j.util.io</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Packages that use <a href="package-summary.html">org.eclipse.net4j.util.io</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Package</th>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.util.container">org.eclipse.net4j.util.container</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.util.container">org.eclipse.net4j.util.container</a></th>
 <td class="colLast">
 <div class="block">A framework of notifying collections and wiring containers.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.util.io">org.eclipse.net4j.util.io</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.util.io">org.eclipse.net4j.util.io</a></th>
 <td class="colLast">
 <div class="block">Interfaces and classes for I/O.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.util.security">org.eclipse.net4j.util.security</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.util.security">org.eclipse.net4j.util.security</a></th>
 <td class="colLast">
 <div class="block">Interfaces and classes for security, negotiation, authentication, authorization and cryptography.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.util.ui.dnd">org.eclipse.net4j.util.ui.dnd</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.util.ui.dnd">org.eclipse.net4j.util.ui.dnd</a></th>
 <td class="colLast">
 <div class="block">Helpers for drag and drop support.</div>
 </td>
@@ -108,189 +134,222 @@
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.container">
+<li class="blockList"><a id="org.eclipse.net4j.util.container">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../org/eclipse/net4j/util/io/package-summary.html">org.eclipse.net4j.util.io</a> used by <a href="../../../../../org/eclipse/net4j/util/container/package-summary.html">org.eclipse.net4j.util.container</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.net4j.util.io</a> used by <a href="../container/package-summary.html">org.eclipse.net4j.util.container</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/io/class-use/IORuntimeException.html#org.eclipse.net4j.util.container">IORuntimeException</a>&nbsp;</td>
+<th class="colFirst" scope="row"><a href="class-use/IORuntimeException.html#org.eclipse.net4j.util.container">IORuntimeException</a></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.io">
+<li class="blockList"><a id="org.eclipse.net4j.util.io">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../org/eclipse/net4j/util/io/package-summary.html">org.eclipse.net4j.util.io</a> used by <a href="../../../../../org/eclipse/net4j/util/io/package-summary.html">org.eclipse.net4j.util.io</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.net4j.util.io</a> used by <a href="package-summary.html">org.eclipse.net4j.util.io</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/io/class-use/DelegatingInputStream.html#org.eclipse.net4j.util.io">DelegatingInputStream</a>
+<th class="colFirst" scope="row"><a href="class-use/DelegatingInputStream.html#org.eclipse.net4j.util.io">DelegatingInputStream</a></th>
+<td class="colLast">
 <div class="block">A <code>DelegatingInputStream</code> contains some other input stream, which it uses as its basic source of data,
  possibly transforming the data along the way or providing additional functionality.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/io/class-use/DelegatingOutputStream.html#org.eclipse.net4j.util.io">DelegatingOutputStream</a>
+<th class="colFirst" scope="row"><a href="class-use/DelegatingOutputStream.html#org.eclipse.net4j.util.io">DelegatingOutputStream</a></th>
+<td class="colLast">
 <div class="block">This class is the superclass of all classes that filter output streams.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/io/class-use/DelegatingStreamWrapper.html#org.eclipse.net4j.util.io">DelegatingStreamWrapper</a>&nbsp;</td>
+<th class="colFirst" scope="row"><a href="class-use/DelegatingStreamWrapper.html#org.eclipse.net4j.util.io">DelegatingStreamWrapper</a></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/io/class-use/ExtendedDataInput.html#org.eclipse.net4j.util.io">ExtendedDataInput</a>&nbsp;</td>
+<th class="colFirst" scope="row"><a href="class-use/ExtendedDataInput.html#org.eclipse.net4j.util.io">ExtendedDataInput</a></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/io/class-use/ExtendedDataInputStream.html#org.eclipse.net4j.util.io">ExtendedDataInputStream</a>&nbsp;</td>
+<th class="colFirst" scope="row"><a href="class-use/ExtendedDataInputStream.html#org.eclipse.net4j.util.io">ExtendedDataInputStream</a></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/io/class-use/ExtendedDataOutput.html#org.eclipse.net4j.util.io">ExtendedDataOutput</a>&nbsp;</td>
+<th class="colFirst" scope="row"><a href="class-use/ExtendedDataOutput.html#org.eclipse.net4j.util.io">ExtendedDataOutput</a></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/io/class-use/ExtendedDataOutputStream.html#org.eclipse.net4j.util.io">ExtendedDataOutputStream</a>&nbsp;</td>
+<th class="colFirst" scope="row"><a href="class-use/ExtendedDataOutputStream.html#org.eclipse.net4j.util.io">ExtendedDataOutputStream</a></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/io/class-use/ExtendedInputHandler.html#org.eclipse.net4j.util.io">ExtendedInputHandler</a>&nbsp;</td>
+<th class="colFirst" scope="row"><a href="class-use/ExtendedInputHandler.html#org.eclipse.net4j.util.io">ExtendedInputHandler</a></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/io/class-use/ExtendedIOHandler.html#org.eclipse.net4j.util.io">ExtendedIOHandler</a>&nbsp;</td>
+<th class="colFirst" scope="row"><a href="class-use/ExtendedIOHandler.html#org.eclipse.net4j.util.io">ExtendedIOHandler</a></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/io/class-use/ExtendedIOUtil.ClassResolver.html#org.eclipse.net4j.util.io">ExtendedIOUtil.ClassResolver</a>&nbsp;</td>
+<th class="colFirst" scope="row"><a href="class-use/ExtendedIOUtil.ClassResolver.html#org.eclipse.net4j.util.io">ExtendedIOUtil.ClassResolver</a></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/io/class-use/ExtendedOutputHandler.html#org.eclipse.net4j.util.io">ExtendedOutputHandler</a>&nbsp;</td>
+<th class="colFirst" scope="row"><a href="class-use/ExtendedOutputHandler.html#org.eclipse.net4j.util.io">ExtendedOutputHandler</a></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/io/class-use/FileLock.html#org.eclipse.net4j.util.io">FileLock</a>&nbsp;</td>
+<th class="colFirst" scope="row"><a href="class-use/FileLock.html#org.eclipse.net4j.util.io">FileLock</a></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/io/class-use/IOFilter.html#org.eclipse.net4j.util.io">IOFilter</a>&nbsp;</td>
+<th class="colFirst" scope="row"><a href="class-use/IOFilter.html#org.eclipse.net4j.util.io">IOFilter</a></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/io/class-use/IORunnable.html#org.eclipse.net4j.util.io">IORunnable</a>&nbsp;</td>
+<th class="colFirst" scope="row"><a href="class-use/IORunnable.html#org.eclipse.net4j.util.io">IORunnable</a></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/io/class-use/IORuntimeException.html#org.eclipse.net4j.util.io">IORuntimeException</a>&nbsp;</td>
+<th class="colFirst" scope="row"><a href="class-use/IORuntimeException.html#org.eclipse.net4j.util.io">IORuntimeException</a></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/io/class-use/IOVisitor.html#org.eclipse.net4j.util.io">IOVisitor</a>&nbsp;</td>
+<th class="colFirst" scope="row"><a href="class-use/IOVisitor.html#org.eclipse.net4j.util.io">IOVisitor</a></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/io/class-use/IStreamWrapper.html#org.eclipse.net4j.util.io">IStreamWrapper</a>&nbsp;</td>
+<th class="colFirst" scope="row"><a href="class-use/IStreamWrapper.html#org.eclipse.net4j.util.io">IStreamWrapper</a></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/io/class-use/IStreamWrapper.Factory.html#org.eclipse.net4j.util.io">IStreamWrapper.Factory</a>&nbsp;</td>
+<th class="colFirst" scope="row"><a href="class-use/IStreamWrapper.Factory.html#org.eclipse.net4j.util.io">IStreamWrapper.Factory</a></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/io/class-use/SortedFileMap.html#org.eclipse.net4j.util.io">SortedFileMap</a>&nbsp;</td>
+<th class="colFirst" scope="row"><a href="class-use/SortedFileMap.html#org.eclipse.net4j.util.io">SortedFileMap</a></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/io/class-use/StringCompressor.html#org.eclipse.net4j.util.io">StringCompressor</a>&nbsp;</td>
+<th class="colFirst" scope="row"><a href="class-use/StringCompressor.html#org.eclipse.net4j.util.io">StringCompressor</a></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/io/class-use/StringIO.html#org.eclipse.net4j.util.io">StringIO</a>&nbsp;</td>
+<th class="colFirst" scope="row"><a href="class-use/StringIO.html#org.eclipse.net4j.util.io">StringIO</a></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/io/class-use/XMLOutput.html#org.eclipse.net4j.util.io">XMLOutput</a>&nbsp;</td>
+<th class="colFirst" scope="row"><a href="class-use/XMLOutput.html#org.eclipse.net4j.util.io">XMLOutput</a></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/io/class-use/XORInputStream.html#org.eclipse.net4j.util.io">XORInputStream</a>&nbsp;</td>
+<th class="colFirst" scope="row"><a href="class-use/XORInputStream.html#org.eclipse.net4j.util.io">XORInputStream</a></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/io/class-use/XOROutputStream.html#org.eclipse.net4j.util.io">XOROutputStream</a>&nbsp;</td>
+<th class="colFirst" scope="row"><a href="class-use/XOROutputStream.html#org.eclipse.net4j.util.io">XOROutputStream</a></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/io/class-use/ZIPUtil.EntryContext.html#org.eclipse.net4j.util.io">ZIPUtil.EntryContext</a>&nbsp;</td>
+<th class="colFirst" scope="row"><a href="class-use/ZIPUtil.EntryContext.html#org.eclipse.net4j.util.io">ZIPUtil.EntryContext</a></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/io/class-use/ZIPUtil.UnzipHandler.html#org.eclipse.net4j.util.io">ZIPUtil.UnzipHandler</a>&nbsp;</td>
+<th class="colFirst" scope="row"><a href="class-use/ZIPUtil.UnzipHandler.html#org.eclipse.net4j.util.io">ZIPUtil.UnzipHandler</a></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/io/class-use/ZIPUtil.ZipEntryHandler.html#org.eclipse.net4j.util.io">ZIPUtil.ZipEntryHandler</a>&nbsp;</td>
+<th class="colFirst" scope="row"><a href="class-use/ZIPUtil.ZipEntryHandler.html#org.eclipse.net4j.util.io">ZIPUtil.ZipEntryHandler</a></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.security">
+<li class="blockList"><a id="org.eclipse.net4j.util.security">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../org/eclipse/net4j/util/io/package-summary.html">org.eclipse.net4j.util.io</a> used by <a href="../../../../../org/eclipse/net4j/util/security/package-summary.html">org.eclipse.net4j.util.security</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.net4j.util.io</a> used by <a href="../security/package-summary.html">org.eclipse.net4j.util.security</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/io/class-use/ExtendedDataInput.html#org.eclipse.net4j.util.security">ExtendedDataInput</a>&nbsp;</td>
+<th class="colFirst" scope="row"><a href="class-use/ExtendedDataInput.html#org.eclipse.net4j.util.security">ExtendedDataInput</a></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/io/class-use/ExtendedDataOutput.html#org.eclipse.net4j.util.security">ExtendedDataOutput</a>&nbsp;</td>
+<th class="colFirst" scope="row"><a href="class-use/ExtendedDataOutput.html#org.eclipse.net4j.util.security">ExtendedDataOutput</a></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/io/class-use/IORuntimeException.html#org.eclipse.net4j.util.security">IORuntimeException</a>&nbsp;</td>
+<th class="colFirst" scope="row"><a href="class-use/IORuntimeException.html#org.eclipse.net4j.util.security">IORuntimeException</a></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.ui.dnd">
+<li class="blockList"><a id="org.eclipse.net4j.util.ui.dnd">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../org/eclipse/net4j/util/io/package-summary.html">org.eclipse.net4j.util.io</a> used by <a href="../../../../../org/eclipse/net4j/util/ui/dnd/package-summary.html">org.eclipse.net4j.util.ui.dnd</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.net4j.util.io</a> used by <a href="../ui/dnd/package-summary.html">org.eclipse.net4j.util.ui.dnd</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/io/class-use/ExtendedDataInputStream.html#org.eclipse.net4j.util.ui.dnd">ExtendedDataInputStream</a>&nbsp;</td>
+<th class="colFirst" scope="row"><a href="class-use/ExtendedDataInputStream.html#org.eclipse.net4j.util.ui.dnd">ExtendedDataInputStream</a></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/io/class-use/ExtendedDataOutputStream.html#org.eclipse.net4j.util.ui.dnd">ExtendedDataOutputStream</a>&nbsp;</td>
+<th class="colFirst" scope="row"><a href="class-use/ExtendedDataOutputStream.html#org.eclipse.net4j.util.ui.dnd">ExtendedDataOutputStream</a></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
 </li>
 </ul>
 </div>
+</main>
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li>Class</li>
 <li class="navBarCell1Rev">Use</li>
+<li><a href="package-tree.html">Tree</a></li>
 <li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../help-doc.html">Help</a></li>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev</li>
-<li>Next</li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/net4j/util/io/package-use.html" target="_top">Frames</a></li>
-<li><a href="package-use.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -303,11 +362,16 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

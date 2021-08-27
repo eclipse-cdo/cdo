@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>ExtendedDataOutput.Delegating (Net4j Utilities Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/ExtendedDataOutput.Delegating.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.Stream.html" title="class in org.eclipse.net4j.util.io"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/net4j/util/io/ExtendedDataOutput.Delegating.html" target="_top">Frames</a></li>
-<li><a href="ExtendedDataOutput.Delegating.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,11 +82,14 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
@@ -85,13 +101,22 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.net4j.util.io</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.net4j.util.io</a></div>
 <h2 title="Class ExtendedDataOutput.Delegating" class="title">Class ExtendedDataOutput.Delegating</h2>
 </div>
 <div class="contentContainer">
@@ -108,17 +133,16 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd>java.io.Closeable, java.io.DataOutput, java.lang.AutoCloseable, <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a></dd>
+<dd><code>java.io.Closeable</code>, <code>java.io.DataOutput</code>, <code>java.lang.AutoCloseable</code>, <code><a href="ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a></code></dd>
 </dl>
 <dl>
 <dt>Enclosing interface:</dt>
-<dd><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a></dd>
+<dd><a href="ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a></dd>
 </dl>
 <hr>
-<br>
 <pre>public static class <span class="typeNameLabel">ExtendedDataOutput.Delegating</span>
 extends java.lang.Object
-implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a>, java.io.Closeable</pre>
+implements <a href="ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a>, java.io.Closeable</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
@@ -132,146 +156,177 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="nested.class.summary">
+<li class="blockList"><a id="nested.class.summary">
 <!--   -->
 </a>
 <h3>Nested Class Summary</h3>
 <ul class="blockList">
-<li class="blockList"><a name="nested.classes.inherited.from.class.org.eclipse.net4j.util.io.ExtendedDataOutput">
+<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.net4j.util.io.ExtendedDataOutput">
 <!--   -->
 </a>
-<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.io.<a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a></h3>
-<code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.Delegating.html" title="class in org.eclipse.net4j.util.io">ExtendedDataOutput.Delegating</a>, <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.Stream.html" title="class in org.eclipse.net4j.util.io">ExtendedDataOutput.Stream</a></code></li>
+<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.io.<a href="ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a></h3>
+<code><a href="ExtendedDataOutput.Delegating.html" title="class in org.eclipse.net4j.util.io">ExtendedDataOutput.Delegating</a>, <a href="ExtendedDataOutput.Stream.html" title="class in org.eclipse.net4j.util.io">ExtendedDataOutput.Stream</a></code></li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.summary">
+<li class="blockList"><a id="constructor.summary">
 <!--   -->
 </a>
 <h3>Constructor Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
+<table class="memberSummary">
 <caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Constructor and Description</th>
+<th class="colFirst" scope="col">Constructor</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.Delegating.html#Delegating-org.eclipse.net4j.util.io.ExtendedDataOutput-">Delegating</a></span>(<a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a>&nbsp;delegate)</code>&nbsp;</td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(org.eclipse.net4j.util.io.ExtendedDataOutput)">Delegating</a></span>&#8203;(<a href="ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a>&nbsp;delegate)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.Delegating.html#close--">close</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#close()">close</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.Delegating.html#getDelegate--">getDelegate</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDelegate()">getDelegate</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.Delegating.html#write-byte:A-">write</a></span>(byte[]&nbsp;b)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#write(byte%5B%5D)">write</a></span>&#8203;(byte[]&nbsp;b)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.Delegating.html#write-byte:A-int-int-">write</a></span>(byte[]&nbsp;b,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#write(byte%5B%5D,int,int)">write</a></span>&#8203;(byte[]&nbsp;b,
      int&nbsp;off,
-     int&nbsp;len)</code>&nbsp;</td>
+     int&nbsp;len)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.Delegating.html#write-int-">write</a></span>(int&nbsp;b)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#write(int)">write</a></span>&#8203;(int&nbsp;b)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.Delegating.html#writeBoolean-boolean-">writeBoolean</a></span>(boolean&nbsp;v)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#writeBoolean(boolean)">writeBoolean</a></span>&#8203;(boolean&nbsp;v)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.Delegating.html#writeByte-int-">writeByte</a></span>(int&nbsp;v)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#writeByte(int)">writeByte</a></span>&#8203;(int&nbsp;v)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.Delegating.html#writeByteArray-byte:A-">writeByteArray</a></span>(byte[]&nbsp;b)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#writeByteArray(byte%5B%5D)">writeByteArray</a></span>&#8203;(byte[]&nbsp;b)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.Delegating.html#writeBytes-java.lang.String-">writeBytes</a></span>(java.lang.String&nbsp;s)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#writeBytes(java.lang.String)">writeBytes</a></span>&#8203;(java.lang.String&nbsp;s)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.Delegating.html#writeChar-int-">writeChar</a></span>(int&nbsp;v)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#writeChar(int)">writeChar</a></span>&#8203;(int&nbsp;v)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.Delegating.html#writeChars-java.lang.String-">writeChars</a></span>(java.lang.String&nbsp;s)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#writeChars(java.lang.String)">writeChars</a></span>&#8203;(java.lang.String&nbsp;s)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.Delegating.html#writeDouble-double-">writeDouble</a></span>(double&nbsp;v)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#writeDouble(double)">writeDouble</a></span>&#8203;(double&nbsp;v)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.Delegating.html#writeEnum-java.lang.Enum-">writeEnum</a></span>(java.lang.Enum&lt;?&gt;&nbsp;literal)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#writeEnum(java.lang.Enum)">writeEnum</a></span>&#8203;(java.lang.Enum&lt;?&gt;&nbsp;literal)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.Delegating.html#writeException-java.lang.Throwable-">writeException</a></span>(java.lang.Throwable&nbsp;t)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#writeException(java.lang.Throwable)">writeException</a></span>&#8203;(java.lang.Throwable&nbsp;t)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.Delegating.html#writeFloat-float-">writeFloat</a></span>(float&nbsp;v)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#writeFloat(float)">writeFloat</a></span>&#8203;(float&nbsp;v)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i15" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.Delegating.html#writeInt-int-">writeInt</a></span>(int&nbsp;v)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#writeInt(int)">writeInt</a></span>&#8203;(int&nbsp;v)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i16" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.Delegating.html#writeLong-long-">writeLong</a></span>(long&nbsp;v)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#writeLong(long)">writeLong</a></span>&#8203;(long&nbsp;v)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i17" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.Delegating.html#writeObject-java.lang.Object-">writeObject</a></span>(java.lang.Object&nbsp;object)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#writeObject(java.lang.Object)">writeObject</a></span>&#8203;(java.lang.Object&nbsp;object)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i18" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.Delegating.html#writeShort-int-">writeShort</a></span>(int&nbsp;v)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#writeShort(int)">writeShort</a></span>&#8203;(int&nbsp;v)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i19" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.Delegating.html#writeString-java.lang.String-">writeString</a></span>(java.lang.String&nbsp;str)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#writeString(java.lang.String)">writeString</a></span>&#8203;(java.lang.String&nbsp;str)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i20" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.Delegating.html#writeUTF-java.lang.String-">writeUTF</a></span>(java.lang.String&nbsp;str)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#writeUTF(java.lang.String)">writeUTF</a></span>&#8203;(java.lang.String&nbsp;str)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i21" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.Delegating.html#writeVarInt-int-">writeVarInt</a></span>(int&nbsp;v)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#writeVarInt(int)">writeVarInt</a></span>&#8203;(int&nbsp;v)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i22" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.Delegating.html#writeVarLong-long-">writeVarLong</a></span>(long&nbsp;v)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#writeVarLong(long)">writeVarLong</a></span>&#8203;(long&nbsp;v)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
+<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
@@ -279,6 +334,7 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -286,44 +342,47 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.
 <ul class="blockList">
 <li class="blockList">
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.detail">
+<li class="blockList"><a id="constructor.detail">
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="Delegating-org.eclipse.net4j.util.io.ExtendedDataOutput-">
+<a id="&lt;init&gt;(org.eclipse.net4j.util.io.ExtendedDataOutput)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>Delegating</h4>
-<pre>public&nbsp;Delegating(<a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a>&nbsp;delegate)</pre>
+<pre>public&nbsp;Delegating&#8203;(<a href="ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a>&nbsp;delegate)</pre>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="getDelegate--">
+<a id="getDelegate()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getDelegate</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a>&nbsp;getDelegate()</pre>
+<pre class="methodSignature">public&nbsp;<a href="ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a>&nbsp;getDelegate()</pre>
 </li>
 </ul>
-<a name="write-byte:A-int-int-">
+<a id="write(byte[],int,int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>write</h4>
-<pre>public&nbsp;void&nbsp;write(byte[]&nbsp;b,
+<pre class="methodSignature">public&nbsp;void&nbsp;write&#8203;(byte[]&nbsp;b,
                   int&nbsp;off,
                   int&nbsp;len)
            throws java.io.IOException</pre>
@@ -335,13 +394,13 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.
 </dl>
 </li>
 </ul>
-<a name="write-byte:A-">
+<a id="write(byte[])">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>write</h4>
-<pre>public&nbsp;void&nbsp;write(byte[]&nbsp;b)
+<pre class="methodSignature">public&nbsp;void&nbsp;write&#8203;(byte[]&nbsp;b)
            throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
@@ -351,13 +410,13 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.
 </dl>
 </li>
 </ul>
-<a name="write-int-">
+<a id="write(int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>write</h4>
-<pre>public&nbsp;void&nbsp;write(int&nbsp;b)
+<pre class="methodSignature">public&nbsp;void&nbsp;write&#8203;(int&nbsp;b)
            throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
@@ -367,13 +426,13 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.
 </dl>
 </li>
 </ul>
-<a name="writeBoolean-boolean-">
+<a id="writeBoolean(boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>writeBoolean</h4>
-<pre>public&nbsp;void&nbsp;writeBoolean(boolean&nbsp;v)
+<pre class="methodSignature">public&nbsp;void&nbsp;writeBoolean&#8203;(boolean&nbsp;v)
                   throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
@@ -383,13 +442,13 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.
 </dl>
 </li>
 </ul>
-<a name="writeByte-int-">
+<a id="writeByte(int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>writeByte</h4>
-<pre>public&nbsp;void&nbsp;writeByte(int&nbsp;v)
+<pre class="methodSignature">public&nbsp;void&nbsp;writeByte&#8203;(int&nbsp;v)
                throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
@@ -399,29 +458,29 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.
 </dl>
 </li>
 </ul>
-<a name="writeByteArray-byte:A-">
+<a id="writeByteArray(byte[])">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>writeByteArray</h4>
-<pre>public&nbsp;void&nbsp;writeByteArray(byte[]&nbsp;b)
+<pre class="methodSignature">public&nbsp;void&nbsp;writeByteArray&#8203;(byte[]&nbsp;b)
                     throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html#writeByteArray-byte:A-">writeByteArray</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a></code></dd>
+<dd><code><a href="ExtendedDataOutput.html#writeByteArray(byte%5B%5D)">writeByteArray</a></code>&nbsp;in interface&nbsp;<code><a href="ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.io.IOException</code></dd>
 </dl>
 </li>
 </ul>
-<a name="writeBytes-java.lang.String-">
+<a id="writeBytes(java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>writeBytes</h4>
-<pre>public&nbsp;void&nbsp;writeBytes(java.lang.String&nbsp;s)
+<pre class="methodSignature">public&nbsp;void&nbsp;writeBytes&#8203;(java.lang.String&nbsp;s)
                 throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
@@ -431,13 +490,13 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.
 </dl>
 </li>
 </ul>
-<a name="writeChar-int-">
+<a id="writeChar(int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>writeChar</h4>
-<pre>public&nbsp;void&nbsp;writeChar(int&nbsp;v)
+<pre class="methodSignature">public&nbsp;void&nbsp;writeChar&#8203;(int&nbsp;v)
                throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
@@ -447,13 +506,13 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.
 </dl>
 </li>
 </ul>
-<a name="writeChars-java.lang.String-">
+<a id="writeChars(java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>writeChars</h4>
-<pre>public&nbsp;void&nbsp;writeChars(java.lang.String&nbsp;s)
+<pre class="methodSignature">public&nbsp;void&nbsp;writeChars&#8203;(java.lang.String&nbsp;s)
                 throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
@@ -463,13 +522,13 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.
 </dl>
 </li>
 </ul>
-<a name="writeDouble-double-">
+<a id="writeDouble(double)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>writeDouble</h4>
-<pre>public&nbsp;void&nbsp;writeDouble(double&nbsp;v)
+<pre class="methodSignature">public&nbsp;void&nbsp;writeDouble&#8203;(double&nbsp;v)
                  throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
@@ -479,13 +538,13 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.
 </dl>
 </li>
 </ul>
-<a name="writeFloat-float-">
+<a id="writeFloat(float)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>writeFloat</h4>
-<pre>public&nbsp;void&nbsp;writeFloat(float&nbsp;v)
+<pre class="methodSignature">public&nbsp;void&nbsp;writeFloat&#8203;(float&nbsp;v)
                 throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
@@ -495,13 +554,13 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.
 </dl>
 </li>
 </ul>
-<a name="writeInt-int-">
+<a id="writeInt(int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>writeInt</h4>
-<pre>public&nbsp;void&nbsp;writeInt(int&nbsp;v)
+<pre class="methodSignature">public&nbsp;void&nbsp;writeInt&#8203;(int&nbsp;v)
               throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
@@ -511,13 +570,13 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.
 </dl>
 </li>
 </ul>
-<a name="writeLong-long-">
+<a id="writeLong(long)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>writeLong</h4>
-<pre>public&nbsp;void&nbsp;writeLong(long&nbsp;v)
+<pre class="methodSignature">public&nbsp;void&nbsp;writeLong&#8203;(long&nbsp;v)
                throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
@@ -527,29 +586,29 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.
 </dl>
 </li>
 </ul>
-<a name="writeObject-java.lang.Object-">
+<a id="writeObject(java.lang.Object)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>writeObject</h4>
-<pre>public&nbsp;void&nbsp;writeObject(java.lang.Object&nbsp;object)
+<pre class="methodSignature">public&nbsp;void&nbsp;writeObject&#8203;(java.lang.Object&nbsp;object)
                  throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html#writeObject-java.lang.Object-">writeObject</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a></code></dd>
+<dd><code><a href="ExtendedDataOutput.html#writeObject(java.lang.Object)">writeObject</a></code>&nbsp;in interface&nbsp;<code><a href="ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.io.IOException</code></dd>
 </dl>
 </li>
 </ul>
-<a name="writeShort-int-">
+<a id="writeShort(int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>writeShort</h4>
-<pre>public&nbsp;void&nbsp;writeShort(int&nbsp;v)
+<pre class="methodSignature">public&nbsp;void&nbsp;writeShort&#8203;(int&nbsp;v)
                 throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
@@ -559,33 +618,33 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.
 </dl>
 </li>
 </ul>
-<a name="writeString-java.lang.String-">
+<a id="writeString(java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>writeString</h4>
-<pre>public&nbsp;void&nbsp;writeString(java.lang.String&nbsp;str)
+<pre class="methodSignature">public&nbsp;void&nbsp;writeString&#8203;(java.lang.String&nbsp;str)
                  throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html#writeString-java.lang.String-">writeString</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a></code></dd>
+<dd><code><a href="ExtendedDataOutput.html#writeString(java.lang.String)">writeString</a></code>&nbsp;in interface&nbsp;<code><a href="ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.io.IOException</code></dd>
 </dl>
 </li>
 </ul>
-<a name="writeEnum-java.lang.Enum-">
+<a id="writeEnum(java.lang.Enum)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>writeEnum</h4>
-<pre>public&nbsp;void&nbsp;writeEnum(java.lang.Enum&lt;?&gt;&nbsp;literal)
+<pre class="methodSignature">public&nbsp;void&nbsp;writeEnum&#8203;(java.lang.Enum&lt;?&gt;&nbsp;literal)
                throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html#writeEnum-java.lang.Enum-">writeEnum</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a></code></dd>
+<dd><code><a href="ExtendedDataOutput.html#writeEnum(java.lang.Enum)">writeEnum</a></code>&nbsp;in interface&nbsp;<code><a href="ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.io.IOException</code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -593,17 +652,17 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.
 </dl>
 </li>
 </ul>
-<a name="writeException-java.lang.Throwable-">
+<a id="writeException(java.lang.Throwable)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>writeException</h4>
-<pre>public&nbsp;void&nbsp;writeException(java.lang.Throwable&nbsp;t)
+<pre class="methodSignature">public&nbsp;void&nbsp;writeException&#8203;(java.lang.Throwable&nbsp;t)
                     throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html#writeException-java.lang.Throwable-">writeException</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a></code></dd>
+<dd><code><a href="ExtendedDataOutput.html#writeException(java.lang.Throwable)">writeException</a></code>&nbsp;in interface&nbsp;<code><a href="ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.io.IOException</code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -611,13 +670,13 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.
 </dl>
 </li>
 </ul>
-<a name="writeUTF-java.lang.String-">
+<a id="writeUTF(java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>writeUTF</h4>
-<pre>public&nbsp;void&nbsp;writeUTF(java.lang.String&nbsp;str)
+<pre class="methodSignature">public&nbsp;void&nbsp;writeUTF&#8203;(java.lang.String&nbsp;str)
               throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
@@ -627,17 +686,17 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.
 </dl>
 </li>
 </ul>
-<a name="writeVarInt-int-">
+<a id="writeVarInt(int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>writeVarInt</h4>
-<pre>public&nbsp;void&nbsp;writeVarInt(int&nbsp;v)
+<pre class="methodSignature">public&nbsp;void&nbsp;writeVarInt&#8203;(int&nbsp;v)
                  throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html#writeVarInt-int-">writeVarInt</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a></code></dd>
+<dd><code><a href="ExtendedDataOutput.html#writeVarInt(int)">writeVarInt</a></code>&nbsp;in interface&nbsp;<code><a href="ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.io.IOException</code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -645,17 +704,17 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.
 </dl>
 </li>
 </ul>
-<a name="writeVarLong-long-">
+<a id="writeVarLong(long)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>writeVarLong</h4>
-<pre>public&nbsp;void&nbsp;writeVarLong(long&nbsp;v)
+<pre class="methodSignature">public&nbsp;void&nbsp;writeVarLong&#8203;(long&nbsp;v)
                   throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html#writeVarLong-long-">writeVarLong</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a></code></dd>
+<dd><code><a href="ExtendedDataOutput.html#writeVarLong(long)">writeVarLong</a></code>&nbsp;in interface&nbsp;<code><a href="ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.io.IOException</code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -663,19 +722,19 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.
 </dl>
 </li>
 </ul>
-<a name="close--">
+<a id="close()">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>close</h4>
-<pre>public&nbsp;void&nbsp;close()
+<pre class="methodSignature">public&nbsp;void&nbsp;close()
            throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>close</code>&nbsp;in interface&nbsp;<code>java.io.Closeable</code></dd>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code>close</code>&nbsp;in interface&nbsp;<code>java.lang.AutoCloseable</code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code>close</code>&nbsp;in interface&nbsp;<code>java.io.Closeable</code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.io.IOException</code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -685,21 +744,25 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/ExtendedDataOutput.Delegating.html">Use</a></li>
@@ -709,16 +772,8 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.Stream.html" title="class in org.eclipse.net4j.util.io"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/net4j/util/io/ExtendedDataOutput.Delegating.html" target="_top">Frames</a></li>
-<li><a href="ExtendedDataOutput.Delegating.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -731,11 +786,14 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
@@ -747,10 +805,12 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

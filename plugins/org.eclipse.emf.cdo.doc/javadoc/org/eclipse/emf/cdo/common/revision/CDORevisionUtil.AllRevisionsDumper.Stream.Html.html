@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>CDORevisionUtil.AllRevisionsDumper.Stream.Html (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/CDORevisionUtil.AllRevisionsDumper.Stream.Html.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.AllRevisionsDumper.Stream.html" title="class in org.eclipse.emf.cdo.common.revision"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.AllRevisionsDumper.Stream.Plain.html" title="class in org.eclipse.emf.cdo.common.revision"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/emf/cdo/common/revision/CDORevisionUtil.AllRevisionsDumper.Stream.Html.html" target="_top">Frames</a></li>
-<li><a href="CDORevisionUtil.AllRevisionsDumper.Stream.Html.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,11 +82,14 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li><a href="#nested.classes.inherited.from.class.org.eclipse.emf.cdo.common.revision.CDORevisionUtil.AllRevisionsDumper.Stream">Nested</a>&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
@@ -85,13 +101,22 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.emf.cdo.common.revision</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.cdo.common.revision</a></div>
 <h2 title="Class CDORevisionUtil.AllRevisionsDumper.Stream.Html" class="title">Class CDORevisionUtil.AllRevisionsDumper.Stream.Html</h2>
 </div>
 <div class="contentContainer">
@@ -99,10 +124,10 @@ var activeTableTab = "activeTableTab";
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.AllRevisionsDumper.html" title="class in org.eclipse.emf.cdo.common.revision">org.eclipse.emf.cdo.common.revision.CDORevisionUtil.AllRevisionsDumper</a></li>
+<li><a href="CDORevisionUtil.AllRevisionsDumper.html" title="class in org.eclipse.emf.cdo.common.revision">org.eclipse.emf.cdo.common.revision.CDORevisionUtil.AllRevisionsDumper</a></li>
 <li>
 <ul class="inheritance">
-<li><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.AllRevisionsDumper.Stream.html" title="class in org.eclipse.emf.cdo.common.revision">org.eclipse.emf.cdo.common.revision.CDORevisionUtil.AllRevisionsDumper.Stream</a></li>
+<li><a href="CDORevisionUtil.AllRevisionsDumper.Stream.html" title="class in org.eclipse.emf.cdo.common.revision">org.eclipse.emf.cdo.common.revision.CDORevisionUtil.AllRevisionsDumper.Stream</a></li>
 <li>
 <ul class="inheritance">
 <li>org.eclipse.emf.cdo.common.revision.CDORevisionUtil.AllRevisionsDumper.Stream.Html</li>
@@ -118,13 +143,12 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>Enclosing class:</dt>
-<dd><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.AllRevisionsDumper.Stream.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionUtil.AllRevisionsDumper.Stream</a></dd>
+<dd><a href="CDORevisionUtil.AllRevisionsDumper.Stream.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionUtil.AllRevisionsDumper.Stream</a></dd>
 </dl>
 <hr>
-<br>
 <pre>public static class <span class="typeNameLabel">CDORevisionUtil.AllRevisionsDumper.Stream.Html</span>
-extends <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.AllRevisionsDumper.Stream.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionUtil.AllRevisionsDumper.Stream</a></pre>
-<div class="block">A <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.AllRevisionsDumper.Stream.html" title="class in org.eclipse.emf.cdo.common.revision"><code>revision dumper</code></a> that directs all output as HTML text to a stream.</div>
+extends <a href="CDORevisionUtil.AllRevisionsDumper.Stream.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionUtil.AllRevisionsDumper.Stream</a></pre>
+<div class="block">A <a href="CDORevisionUtil.AllRevisionsDumper.Stream.html" title="class in org.eclipse.emf.cdo.common.revision"><code>revision dumper</code></a> that directs all output as HTML text to a stream.</div>
 <dl>
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>Eike Stepper</dd>
@@ -136,95 +160,108 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisi
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="nested.class.summary">
+<li class="blockList"><a id="nested.class.summary">
 <!--   -->
 </a>
 <h3>Nested Class Summary</h3>
 <ul class="blockList">
-<li class="blockList"><a name="nested.classes.inherited.from.class.org.eclipse.emf.cdo.common.revision.CDORevisionUtil.AllRevisionsDumper.Stream">
+<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.emf.cdo.common.revision.CDORevisionUtil.AllRevisionsDumper.Stream">
 <!--   -->
 </a>
-<h3>Nested classes/interfaces inherited from class&nbsp;org.eclipse.emf.cdo.common.revision.<a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.AllRevisionsDumper.Stream.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionUtil.AllRevisionsDumper.Stream</a></h3>
-<code><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.AllRevisionsDumper.Stream.Html.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionUtil.AllRevisionsDumper.Stream.Html</a>, <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.AllRevisionsDumper.Stream.Plain.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionUtil.AllRevisionsDumper.Stream.Plain</a></code></li>
+<h3>Nested classes/interfaces inherited from class&nbsp;org.eclipse.emf.cdo.common.revision.<a href="CDORevisionUtil.AllRevisionsDumper.Stream.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionUtil.AllRevisionsDumper.Stream</a></h3>
+<code><a href="CDORevisionUtil.AllRevisionsDumper.Stream.Html.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionUtil.AllRevisionsDumper.Stream.Html</a>, <a href="CDORevisionUtil.AllRevisionsDumper.Stream.Plain.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionUtil.AllRevisionsDumper.Stream.Plain</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="nested.classes.inherited.from.class.org.eclipse.emf.cdo.common.revision.CDORevisionUtil.AllRevisionsDumper">
+<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.emf.cdo.common.revision.CDORevisionUtil.AllRevisionsDumper">
 <!--   -->
 </a>
-<h3>Nested classes/interfaces inherited from class&nbsp;org.eclipse.emf.cdo.common.revision.<a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.AllRevisionsDumper.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionUtil.AllRevisionsDumper</a></h3>
-<code><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.AllRevisionsDumper.Stream.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionUtil.AllRevisionsDumper.Stream</a></code></li>
+<h3>Nested classes/interfaces inherited from class&nbsp;org.eclipse.emf.cdo.common.revision.<a href="CDORevisionUtil.AllRevisionsDumper.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionUtil.AllRevisionsDumper</a></h3>
+<code><a href="CDORevisionUtil.AllRevisionsDumper.Stream.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionUtil.AllRevisionsDumper.Stream</a></code></li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.summary">
+<li class="blockList"><a id="constructor.summary">
 <!--   -->
 </a>
 <h3>Constructor Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
+<table class="memberSummary">
 <caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Constructor and Description</th>
+<th class="colFirst" scope="col">Constructor</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.AllRevisionsDumper.Stream.Html.html#Html-java.util.Map-java.io.PrintStream-">Html</a></span>(java.util.Map&lt;<a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>,java.util.List&lt;<a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&gt;&nbsp;map,
-    java.io.PrintStream&nbsp;out)</code>&nbsp;</td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.util.Map,java.io.PrintStream)">Html</a></span>&#8203;(java.util.Map&lt;<a href="../branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>,&#8203;java.util.List&lt;<a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&gt;&nbsp;map,
+    java.io.PrintStream&nbsp;out)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.AllRevisionsDumper.Stream.Html.html#dumpBranch-org.eclipse.emf.cdo.common.branch.CDOBranch-">dumpBranch</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dumpBranch(org.eclipse.emf.cdo.common.branch.CDOBranch)">dumpBranch</a></span>&#8203;(<a href="../branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.AllRevisionsDumper.Stream.Html.html#dumpEnd-java.util.List-">dumpEnd</a></span>(java.util.List&lt;<a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&gt;&nbsp;branches)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dumpEnd(java.util.List)">dumpEnd</a></span>&#8203;(java.util.List&lt;<a href="../branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&gt;&nbsp;branches)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.AllRevisionsDumper.Stream.Html.html#dumpRevision-org.eclipse.emf.cdo.common.revision.CDORevision-">dumpRevision</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dumpRevision(org.eclipse.emf.cdo.common.revision.CDORevision)">dumpRevision</a></span>&#8203;(<a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.AllRevisionsDumper.Stream.Html.html#dumpRevision-org.eclipse.emf.cdo.common.revision.CDORevision-java.io.PrintStream-">dumpRevision</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
-            java.io.PrintStream&nbsp;out)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dumpRevision(org.eclipse.emf.cdo.common.revision.CDORevision,java.io.PrintStream)">dumpRevision</a></span>&#8203;(<a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
+            java.io.PrintStream&nbsp;out)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.AllRevisionsDumper.Stream.Html.html#dumpStart-java.util.List-">dumpStart</a></span>(java.util.List&lt;<a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&gt;&nbsp;branches)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dumpStart(java.util.List)">dumpStart</a></span>&#8203;(java.util.List&lt;<a href="../branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&gt;&nbsp;branches)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.emf.cdo.common.revision.CDORevisionUtil.AllRevisionsDumper.Stream">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.cdo.common.revision.CDORevisionUtil.AllRevisionsDumper.Stream">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.emf.cdo.common.revision.<a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.AllRevisionsDumper.Stream.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionUtil.AllRevisionsDumper.Stream</a></h3>
-<code><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.AllRevisionsDumper.Stream.html#out--">out</a></code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.emf.cdo.common.revision.<a href="CDORevisionUtil.AllRevisionsDumper.Stream.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionUtil.AllRevisionsDumper.Stream</a></h3>
+<code><a href="CDORevisionUtil.AllRevisionsDumper.Stream.html#out()">out</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.emf.cdo.common.revision.CDORevisionUtil.AllRevisionsDumper">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.cdo.common.revision.CDORevisionUtil.AllRevisionsDumper">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.emf.cdo.common.revision.<a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.AllRevisionsDumper.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionUtil.AllRevisionsDumper</a></h3>
-<code><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.AllRevisionsDumper.html#dump--">dump</a>, <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.AllRevisionsDumper.html#getMap--">getMap</a></code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.emf.cdo.common.revision.<a href="CDORevisionUtil.AllRevisionsDumper.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionUtil.AllRevisionsDumper</a></h3>
+<code><a href="CDORevisionUtil.AllRevisionsDumper.html#dump()">dump</a>, <a href="CDORevisionUtil.AllRevisionsDumper.html#getMap()">getMap</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
+<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
@@ -232,6 +269,7 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisi
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -239,108 +277,115 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisi
 <ul class="blockList">
 <li class="blockList">
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.detail">
+<li class="blockList"><a id="constructor.detail">
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="Html-java.util.Map-java.io.PrintStream-">
+<a id="&lt;init&gt;(java.util.Map,java.io.PrintStream)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>Html</h4>
-<pre>public&nbsp;Html(java.util.Map&lt;<a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>,java.util.List&lt;<a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&gt;&nbsp;map,
+<pre>public&nbsp;Html&#8203;(java.util.Map&lt;<a href="../branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>,&#8203;java.util.List&lt;<a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&gt;&nbsp;map,
             java.io.PrintStream&nbsp;out)</pre>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="dumpStart-java.util.List-">
+<a id="dumpStart(java.util.List)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>dumpStart</h4>
-<pre>protected&nbsp;void&nbsp;dumpStart(java.util.List&lt;<a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&gt;&nbsp;branches)</pre>
+<pre class="methodSignature">protected&nbsp;void&nbsp;dumpStart&#8203;(java.util.List&lt;<a href="../branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&gt;&nbsp;branches)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.AllRevisionsDumper.html#dumpStart-java.util.List-">dumpStart</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.AllRevisionsDumper.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionUtil.AllRevisionsDumper</a></code></dd>
+<dd><code><a href="CDORevisionUtil.AllRevisionsDumper.html#dumpStart(java.util.List)">dumpStart</a></code>&nbsp;in class&nbsp;<code><a href="CDORevisionUtil.AllRevisionsDumper.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionUtil.AllRevisionsDumper</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="dumpEnd-java.util.List-">
+<a id="dumpEnd(java.util.List)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>dumpEnd</h4>
-<pre>protected&nbsp;void&nbsp;dumpEnd(java.util.List&lt;<a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&gt;&nbsp;branches)</pre>
+<pre class="methodSignature">protected&nbsp;void&nbsp;dumpEnd&#8203;(java.util.List&lt;<a href="../branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&gt;&nbsp;branches)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.AllRevisionsDumper.html#dumpEnd-java.util.List-">dumpEnd</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.AllRevisionsDumper.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionUtil.AllRevisionsDumper</a></code></dd>
+<dd><code><a href="CDORevisionUtil.AllRevisionsDumper.html#dumpEnd(java.util.List)">dumpEnd</a></code>&nbsp;in class&nbsp;<code><a href="CDORevisionUtil.AllRevisionsDumper.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionUtil.AllRevisionsDumper</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="dumpBranch-org.eclipse.emf.cdo.common.branch.CDOBranch-">
+<a id="dumpBranch(org.eclipse.emf.cdo.common.branch.CDOBranch)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>dumpBranch</h4>
-<pre>protected&nbsp;void&nbsp;dumpBranch(<a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch)</pre>
+<pre class="methodSignature">protected&nbsp;void&nbsp;dumpBranch&#8203;(<a href="../branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.AllRevisionsDumper.html#dumpBranch-org.eclipse.emf.cdo.common.branch.CDOBranch-">dumpBranch</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.AllRevisionsDumper.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionUtil.AllRevisionsDumper</a></code></dd>
+<dd><code><a href="CDORevisionUtil.AllRevisionsDumper.html#dumpBranch(org.eclipse.emf.cdo.common.branch.CDOBranch)">dumpBranch</a></code>&nbsp;in class&nbsp;<code><a href="CDORevisionUtil.AllRevisionsDumper.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionUtil.AllRevisionsDumper</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="dumpRevision-org.eclipse.emf.cdo.common.revision.CDORevision-">
+<a id="dumpRevision(org.eclipse.emf.cdo.common.revision.CDORevision)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>dumpRevision</h4>
-<pre>protected&nbsp;void&nbsp;dumpRevision(<a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</pre>
+<pre class="methodSignature">protected&nbsp;void&nbsp;dumpRevision&#8203;(<a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.AllRevisionsDumper.html#dumpRevision-org.eclipse.emf.cdo.common.revision.CDORevision-">dumpRevision</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.AllRevisionsDumper.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionUtil.AllRevisionsDumper</a></code></dd>
+<dd><code><a href="CDORevisionUtil.AllRevisionsDumper.html#dumpRevision(org.eclipse.emf.cdo.common.revision.CDORevision)">dumpRevision</a></code>&nbsp;in class&nbsp;<code><a href="CDORevisionUtil.AllRevisionsDumper.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionUtil.AllRevisionsDumper</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="dumpRevision-org.eclipse.emf.cdo.common.revision.CDORevision-java.io.PrintStream-">
+<a id="dumpRevision(org.eclipse.emf.cdo.common.revision.CDORevision,java.io.PrintStream)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>dumpRevision</h4>
-<pre>protected&nbsp;void&nbsp;dumpRevision(<a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
+<pre class="methodSignature">protected&nbsp;void&nbsp;dumpRevision&#8203;(<a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
                             java.io.PrintStream&nbsp;out)</pre>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/CDORevisionUtil.AllRevisionsDumper.Stream.Html.html">Use</a></li>
@@ -350,16 +395,8 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisi
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.AllRevisionsDumper.Stream.html" title="class in org.eclipse.emf.cdo.common.revision"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.AllRevisionsDumper.Stream.Plain.html" title="class in org.eclipse.emf.cdo.common.revision"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/emf/cdo/common/revision/CDORevisionUtil.AllRevisionsDumper.Stream.Html.html" target="_top">Frames</a></li>
-<li><a href="CDORevisionUtil.AllRevisionsDumper.Stream.Html.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -372,11 +409,14 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisi
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li><a href="#nested.classes.inherited.from.class.org.eclipse.emf.cdo.common.revision.CDORevisionUtil.AllRevisionsDumper.Stream">Nested</a>&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
@@ -388,10 +428,12 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisi
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

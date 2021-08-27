@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>ZIPUtil (Net4j Utilities Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":9,"i1":9,"i2":9,"i3":9};
+var data = {"i0":9,"i1":9,"i2":9,"i3":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/ZIPUtil.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/net4j/util/io/XORStreamWrapper.html" title="class in org.eclipse.net4j.util.io"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/net4j/util/io/ZIPUtil.EntryContext.html" title="class in org.eclipse.net4j.util.io"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/net4j/util/io/ZIPUtil.html" target="_top">Frames</a></li>
-<li><a href="ZIPUtil.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,6 +82,9 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -85,13 +101,22 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.net4j.util.io</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.net4j.util.io</a></div>
 <h2 title="Class ZIPUtil" class="title">Class ZIPUtil</h2>
 </div>
 <div class="contentContainer">
@@ -107,7 +132,6 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<br>
 <pre>public final class <span class="typeNameLabel">ZIPUtil</span>
 extends java.lang.Object</pre>
 <dl>
@@ -121,103 +145,122 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="nested.class.summary">
+<li class="blockList"><a id="nested.class.summary">
 <!--   -->
 </a>
 <h3>Nested Class Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Nested Class Summary table, listing nested classes, and an explanation">
+<table class="memberSummary">
 <caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Class and Description</th>
+<th class="colSecond" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ZIPUtil.EntryContext.html" title="class in org.eclipse.net4j.util.io">ZIPUtil.EntryContext</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="ZIPUtil.EntryContext.html" title="class in org.eclipse.net4j.util.io">ZIPUtil.EntryContext</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ZIPUtil.FileSystemUnzipHandler.html" title="class in org.eclipse.net4j.util.io">ZIPUtil.FileSystemUnzipHandler</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="ZIPUtil.FileSystemUnzipHandler.html" title="class in org.eclipse.net4j.util.io">ZIPUtil.FileSystemUnzipHandler</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ZIPUtil.FileSystemZipHandler.html" title="class in org.eclipse.net4j.util.io">ZIPUtil.FileSystemZipHandler</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="ZIPUtil.FileSystemZipHandler.html" title="class in org.eclipse.net4j.util.io">ZIPUtil.FileSystemZipHandler</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ZIPUtil.UnzipHandler.html" title="interface in org.eclipse.net4j.util.io">ZIPUtil.UnzipHandler</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="ZIPUtil.UnzipHandler.html" title="interface in org.eclipse.net4j.util.io">ZIPUtil.UnzipHandler</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ZIPUtil.ZipEntryHandler.html" title="interface in org.eclipse.net4j.util.io">ZIPUtil.ZipEntryHandler</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="ZIPUtil.ZipEntryHandler.html" title="interface in org.eclipse.net4j.util.io">ZIPUtil.ZipEntryHandler</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- =========== FIELD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.summary">
+<li class="blockList"><a id="field.summary">
 <!--   -->
 </a>
 <h3>Field Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Field Summary table, listing fields, and an explanation">
+<table class="memberSummary">
 <caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Field and Description</th>
+<th class="colSecond" scope="col">Field</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ZIPUtil.html#DEFALULT_BUFFER_SIZE">DEFALULT_BUFFER_SIZE</a></span></code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">As of 3.4 use <a href="../../../../../org/eclipse/net4j/util/io/ZIPUtil.html#DEFAULT_BUFFER_SIZE"><code>DEFAULT_BUFFER_SIZE</code></a>.</span></div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#DEFALULT_BUFFER_SIZE">DEFALULT_BUFFER_SIZE</a></span></code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 3.4 use <a href="#DEFAULT_BUFFER_SIZE"><code>DEFAULT_BUFFER_SIZE</code></a>.</div>
 </div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ZIPUtil.html#DEFAULT_BUFFER_SIZE">DEFAULT_BUFFER_SIZE</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#DEFAULT_BUFFER_SIZE">DEFAULT_BUFFER_SIZE</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ZIPUtil.html#unzip-java.io.File-java.io.File-">unzip</a></span>(java.io.File&nbsp;zipFile,
-     java.io.File&nbsp;targetFolder)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#unzip(java.io.File,java.io.File)">unzip</a></span>&#8203;(java.io.File&nbsp;zipFile,
+     java.io.File&nbsp;targetFolder)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ZIPUtil.html#unzip-java.io.File-org.eclipse.net4j.util.io.ZIPUtil.UnzipHandler-">unzip</a></span>(java.io.File&nbsp;zipFile,
-     <a href="../../../../../org/eclipse/net4j/util/io/ZIPUtil.UnzipHandler.html" title="interface in org.eclipse.net4j.util.io">ZIPUtil.UnzipHandler</a>&nbsp;handler)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#unzip(java.io.File,org.eclipse.net4j.util.io.ZIPUtil.UnzipHandler)">unzip</a></span>&#8203;(java.io.File&nbsp;zipFile,
+     <a href="ZIPUtil.UnzipHandler.html" title="interface in org.eclipse.net4j.util.io">ZIPUtil.UnzipHandler</a>&nbsp;handler)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ZIPUtil.html#zip-java.io.File-boolean-java.io.File-">zip</a></span>(java.io.File&nbsp;sourceFolder,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#zip(java.io.File,boolean,java.io.File)">zip</a></span>&#8203;(java.io.File&nbsp;sourceFolder,
    boolean&nbsp;excludeRoot,
-   java.io.File&nbsp;zipFile)</code>&nbsp;</td>
+   java.io.File&nbsp;zipFile)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ZIPUtil.html#zip-org.eclipse.net4j.util.io.ZIPUtil.ZipEntryHandler-java.io.File-">zip</a></span>(<a href="../../../../../org/eclipse/net4j/util/io/ZIPUtil.ZipEntryHandler.html" title="interface in org.eclipse.net4j.util.io">ZIPUtil.ZipEntryHandler</a>&nbsp;handler,
-   java.io.File&nbsp;zipFile)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#zip(org.eclipse.net4j.util.io.ZIPUtil.ZipEntryHandler,java.io.File)">zip</a></span>&#8203;(<a href="ZIPUtil.ZipEntryHandler.html" title="interface in org.eclipse.net4j.util.io">ZIPUtil.ZipEntryHandler</a>&nbsp;handler,
+   java.io.File&nbsp;zipFile)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
+<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
@@ -225,6 +268,7 @@ extends java.lang.Object</pre>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -232,12 +276,13 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <!-- ============ FIELD DETAIL =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.detail">
+<li class="blockList"><a id="field.detail">
 <!--   -->
 </a>
 <h3>Field Detail</h3>
-<a name="DEFALULT_BUFFER_SIZE">
+<a id="DEFALULT_BUFFER_SIZE">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -245,14 +290,16 @@ extends java.lang.Object</pre>
 <h4>DEFALULT_BUFFER_SIZE</h4>
 <pre>@Deprecated
 public static final&nbsp;int DEFALULT_BUFFER_SIZE</pre>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">As of 3.4 use <a href="../../../../../org/eclipse/net4j/util/io/ZIPUtil.html#DEFAULT_BUFFER_SIZE"><code>DEFAULT_BUFFER_SIZE</code></a>.</span></div>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 3.4 use <a href="#DEFAULT_BUFFER_SIZE"><code>DEFAULT_BUFFER_SIZE</code></a>.</div>
+</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../../constant-values.html#org.eclipse.net4j.util.io.ZIPUtil.DEFALULT_BUFFER_SIZE">Constant Field Values</a></dd>
 </dl>
 </li>
 </ul>
-<a name="DEFAULT_BUFFER_SIZE">
+<a id="DEFAULT_BUFFER_SIZE">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -269,85 +316,91 @@ public static final&nbsp;int DEFALULT_BUFFER_SIZE</pre>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="zip-org.eclipse.net4j.util.io.ZIPUtil.ZipEntryHandler-java.io.File-">
+<a id="zip(org.eclipse.net4j.util.io.ZIPUtil.ZipEntryHandler,java.io.File)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>zip</h4>
-<pre>public static&nbsp;void&nbsp;zip(<a href="../../../../../org/eclipse/net4j/util/io/ZIPUtil.ZipEntryHandler.html" title="interface in org.eclipse.net4j.util.io">ZIPUtil.ZipEntryHandler</a>&nbsp;handler,
+<pre class="methodSignature">public static&nbsp;void&nbsp;zip&#8203;(<a href="ZIPUtil.ZipEntryHandler.html" title="interface in org.eclipse.net4j.util.io">ZIPUtil.ZipEntryHandler</a>&nbsp;handler,
                        java.io.File&nbsp;zipFile)
-                throws <a href="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></pre>
+                throws <a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></code></dd>
+<dd><code><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="zip-java.io.File-boolean-java.io.File-">
+<a id="zip(java.io.File,boolean,java.io.File)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>zip</h4>
-<pre>public static&nbsp;void&nbsp;zip(java.io.File&nbsp;sourceFolder,
+<pre class="methodSignature">public static&nbsp;void&nbsp;zip&#8203;(java.io.File&nbsp;sourceFolder,
                        boolean&nbsp;excludeRoot,
                        java.io.File&nbsp;zipFile)</pre>
 </li>
 </ul>
-<a name="unzip-java.io.File-org.eclipse.net4j.util.io.ZIPUtil.UnzipHandler-">
+<a id="unzip(java.io.File,org.eclipse.net4j.util.io.ZIPUtil.UnzipHandler)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>unzip</h4>
-<pre>public static&nbsp;void&nbsp;unzip(java.io.File&nbsp;zipFile,
-                         <a href="../../../../../org/eclipse/net4j/util/io/ZIPUtil.UnzipHandler.html" title="interface in org.eclipse.net4j.util.io">ZIPUtil.UnzipHandler</a>&nbsp;handler)
-                  throws <a href="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></pre>
+<pre class="methodSignature">public static&nbsp;void&nbsp;unzip&#8203;(java.io.File&nbsp;zipFile,
+                         <a href="ZIPUtil.UnzipHandler.html" title="interface in org.eclipse.net4j.util.io">ZIPUtil.UnzipHandler</a>&nbsp;handler)
+                  throws <a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></code></dd>
+<dd><code><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="unzip-java.io.File-java.io.File-">
+<a id="unzip(java.io.File,java.io.File)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>unzip</h4>
-<pre>public static&nbsp;void&nbsp;unzip(java.io.File&nbsp;zipFile,
+<pre class="methodSignature">public static&nbsp;void&nbsp;unzip&#8203;(java.io.File&nbsp;zipFile,
                          java.io.File&nbsp;targetFolder)
-                  throws <a href="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></pre>
+                  throws <a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></code></dd>
+<dd><code><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></code></dd>
 </dl>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/ZIPUtil.html">Use</a></li>
@@ -357,16 +410,8 @@ public static final&nbsp;int DEFALULT_BUFFER_SIZE</pre>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/net4j/util/io/XORStreamWrapper.html" title="class in org.eclipse.net4j.util.io"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/net4j/util/io/ZIPUtil.EntryContext.html" title="class in org.eclipse.net4j.util.io"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/net4j/util/io/ZIPUtil.html" target="_top">Frames</a></li>
-<li><a href="ZIPUtil.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -379,6 +424,9 @@ public static final&nbsp;int DEFALULT_BUFFER_SIZE</pre>
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -395,10 +443,12 @@ public static final&nbsp;int DEFALULT_BUFFER_SIZE</pre>
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

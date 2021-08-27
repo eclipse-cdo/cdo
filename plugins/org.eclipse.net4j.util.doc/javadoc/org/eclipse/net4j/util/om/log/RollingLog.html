@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>RollingLog (Net4j Utilities Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":9,"i13":10,"i14":10,"i15":9,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":9,"i13":10,"i14":10,"i15":9,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/RollingLog.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/net4j/util/om/log/PrintLogHandler.html" title="class in org.eclipse.net4j.util.om.log"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.LogLine.html" title="class in org.eclipse.net4j.util.om.log"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/net4j/util/om/log/RollingLog.html" target="_top">Frames</a></li>
-<li><a href="RollingLog.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,12 +82,15 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
-<li><a href="#fields.inherited.from.class.org.eclipse.net4j.util.concurrent.Worker">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
@@ -85,13 +101,22 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.net4j.util.om.log</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.net4j.util.om.log</a></div>
 <h2 title="Class RollingLog" class="title">Class RollingLog</h2>
 </div>
 <div class="contentContainer">
@@ -99,13 +124,13 @@ var activeTableTab = "activeTableTab";
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li><a href="../../../../../../org/eclipse/net4j/util/event/Notifier.html" title="class in org.eclipse.net4j.util.event">org.eclipse.net4j.util.event.Notifier</a></li>
+<li><a href="../../event/Notifier.html" title="class in org.eclipse.net4j.util.event">org.eclipse.net4j.util.event.Notifier</a></li>
 <li>
 <ul class="inheritance">
-<li><a href="../../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">org.eclipse.net4j.util.lifecycle.Lifecycle</a></li>
+<li><a href="../../lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">org.eclipse.net4j.util.lifecycle.Lifecycle</a></li>
 <li>
 <ul class="inheritance">
-<li><a href="../../../../../../org/eclipse/net4j/util/concurrent/Worker.html" title="class in org.eclipse.net4j.util.concurrent">org.eclipse.net4j.util.concurrent.Worker</a></li>
+<li><a href="../../concurrent/Worker.html" title="class in org.eclipse.net4j.util.concurrent">org.eclipse.net4j.util.concurrent.Worker</a></li>
 <li>
 <ul class="inheritance">
 <li>org.eclipse.net4j.util.om.log.RollingLog</li>
@@ -123,13 +148,12 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd>java.lang.Iterable&lt;<a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.LogLine.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.LogLine</a>&gt;, <a href="../../../../../../org/eclipse/net4j/util/event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a>, <a href="../../../../../../org/eclipse/net4j/util/lifecycle/IDeactivateable.html" title="interface in org.eclipse.net4j.util.lifecycle">IDeactivateable</a>, <a href="../../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a>, <a href="../../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.DeferrableActivation.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle.DeferrableActivation</a>, <a href="../../../../../../org/eclipse/net4j/util/om/log/Log.html" title="interface in org.eclipse.net4j.util.om.log">Log</a></dd>
+<dd><code>java.lang.Iterable&lt;<a href="RollingLog.LogLine.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.LogLine</a>&gt;</code>, <code><a href="../../event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a></code>, <code><a href="../../event/INotifier.INotifier2.html" title="interface in org.eclipse.net4j.util.event">INotifier.INotifier2</a></code>, <code><a href="../../lifecycle/IDeactivateable.html" title="interface in org.eclipse.net4j.util.lifecycle">IDeactivateable</a></code>, <code><a href="../../lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a></code>, <code><a href="../../lifecycle/ILifecycle.DeferrableActivation.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle.DeferrableActivation</a></code>, <code><a href="Log.html" title="interface in org.eclipse.net4j.util.om.log">Log</a></code></dd>
 </dl>
 <hr>
-<br>
 <pre>public class <span class="typeNameLabel">RollingLog</span>
-extends <a href="../../../../../../org/eclipse/net4j/util/concurrent/Worker.html" title="class in org.eclipse.net4j.util.concurrent">Worker</a>
-implements <a href="../../../../../../org/eclipse/net4j/util/om/log/Log.html" title="interface in org.eclipse.net4j.util.om.log">Log</a>, java.lang.Iterable&lt;<a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.LogLine.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.LogLine</a>&gt;</pre>
+extends <a href="../../concurrent/Worker.html" title="class in org.eclipse.net4j.util.concurrent">Worker</a>
+implements <a href="Log.html" title="interface in org.eclipse.net4j.util.om.log">Log</a>, java.lang.Iterable&lt;<a href="RollingLog.LogLine.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.LogLine</a>&gt;</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.8</dd>
@@ -143,255 +167,304 @@ implements <a href="../../../../../../org/eclipse/net4j/util/om/log/Log.html" ti
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="nested.class.summary">
+<li class="blockList"><a id="nested.class.summary">
 <!--   -->
 </a>
 <h3>Nested Class Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Nested Class Summary table, listing nested classes, and an explanation">
+<table class="memberSummary">
 <caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Class and Description</th>
+<th class="colSecond" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.LogLine.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.LogLine</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="RollingLog.LogLine.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.LogLine</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.PropertiesEvent.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.PropertiesEvent</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="RollingLog.PropertiesEvent.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.PropertiesEvent</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.RecoveryEvent.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.RecoveryEvent</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="RollingLog.RecoveryEvent.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.RecoveryEvent</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.RollingLogEvent.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.RollingLogEvent</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="RollingLog.RollingLogEvent.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.RollingLogEvent</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.SplitEvent.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.SplitEvent</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="RollingLog.SplitEvent.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.SplitEvent</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="nested.classes.inherited.from.class.org.eclipse.net4j.util.concurrent.Worker">
+<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.net4j.util.concurrent.Worker">
 <!--   -->
 </a>
-<h3>Nested classes/interfaces inherited from class&nbsp;org.eclipse.net4j.util.concurrent.<a href="../../../../../../org/eclipse/net4j/util/concurrent/Worker.html" title="class in org.eclipse.net4j.util.concurrent">Worker</a></h3>
-<code><a href="../../../../../../org/eclipse/net4j/util/concurrent/Worker.WorkContext.html" title="class in org.eclipse.net4j.util.concurrent">Worker.WorkContext</a></code></li>
+<h3>Nested classes/interfaces inherited from class&nbsp;org.eclipse.net4j.util.concurrent.<a href="../../concurrent/Worker.html" title="class in org.eclipse.net4j.util.concurrent">Worker</a></h3>
+<code><a href="../../concurrent/Worker.WorkContext.html" title="class in org.eclipse.net4j.util.concurrent">Worker.WorkContext</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="nested.classes.inherited.from.class.org.eclipse.net4j.util.lifecycle.ILifecycle">
+<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.net4j.util.lifecycle.ILifecycle">
 <!--   -->
 </a>
-<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.lifecycle.<a href="../../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a></h3>
-<code><a href="../../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.DeferrableActivation.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle.DeferrableActivation</a></code></li>
+<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.lifecycle.<a href="../../lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a></h3>
+<code><a href="../../lifecycle/ILifecycle.DeferrableActivation.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle.DeferrableActivation</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.net4j.util.event.INotifier">
+<!--   -->
+</a>
+<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.event.<a href="../../event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a></h3>
+<code><a href="../../event/INotifier.INotifier2.html" title="interface in org.eclipse.net4j.util.event">INotifier.INotifier2</a></code></li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- =========== FIELD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.summary">
+<li class="blockList"><a id="field.summary">
 <!--   -->
 </a>
 <h3>Field Summary</h3>
 <ul class="blockList">
-<li class="blockList"><a name="fields.inherited.from.class.org.eclipse.net4j.util.concurrent.Worker">
+<li class="blockList"><a id="fields.inherited.from.class.org.eclipse.net4j.util.concurrent.Worker">
 <!--   -->
 </a>
-<h3>Fields inherited from class&nbsp;org.eclipse.net4j.util.concurrent.<a href="../../../../../../org/eclipse/net4j/util/concurrent/Worker.html" title="class in org.eclipse.net4j.util.concurrent">Worker</a></h3>
-<code><a href="../../../../../../org/eclipse/net4j/util/concurrent/Worker.html#DEFAULT_ERROR_HANDLER">DEFAULT_ERROR_HANDLER</a>, <a href="../../../../../../org/eclipse/net4j/util/concurrent/Worker.html#DEFAULT_TIMEOUT">DEFAULT_TIMEOUT</a></code></li>
+<h3>Fields inherited from class&nbsp;org.eclipse.net4j.util.concurrent.<a href="../../concurrent/Worker.html" title="class in org.eclipse.net4j.util.concurrent">Worker</a></h3>
+<code><a href="../../concurrent/Worker.html#DEFAULT_ERROR_HANDLER">DEFAULT_ERROR_HANDLER</a>, <a href="../../concurrent/Worker.html#DEFAULT_TIMEOUT">DEFAULT_TIMEOUT</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="fields.inherited.from.class.org.eclipse.net4j.util.lifecycle.Lifecycle">
+<li class="blockList"><a id="fields.inherited.from.class.org.eclipse.net4j.util.lifecycle.Lifecycle">
 <!--   -->
 </a>
-<h3>Fields inherited from class&nbsp;org.eclipse.net4j.util.lifecycle.<a href="../../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a></h3>
-<code><a href="../../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#USE_LABEL">USE_LABEL</a></code></li>
+<h3>Fields inherited from class&nbsp;org.eclipse.net4j.util.lifecycle.<a href="../../lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a></h3>
+<code><a href="../../lifecycle/Lifecycle.html#USE_LABEL">USE_LABEL</a></code></li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.summary">
+<li class="blockList"><a id="constructor.summary">
 <!--   -->
 </a>
 <h3>Constructor Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
+<table class="memberSummary">
 <caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Constructor and Description</th>
+<th class="colFirst" scope="col">Constructor</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.html#RollingLog-java.lang.String-long-boolean-">RollingLog</a></span>(java.lang.String&nbsp;logFile,
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String,long,boolean)">RollingLog</a></span>&#8203;(java.lang.String&nbsp;logFile,
           long&nbsp;logSize,
-          boolean&nbsp;append)</code>&nbsp;</td>
+          boolean&nbsp;append)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.html#commit--">commit</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#commit()">commit</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>protected <a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.LogLine.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.LogLine</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.html#createLogLine-java.lang.String-">createLogLine</a></span>(java.lang.String&nbsp;message)</code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="RollingLog.LogLine.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.LogLine</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createLogLine(java.lang.String)">createLogLine</a></span>&#8203;(java.lang.String&nbsp;message)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.html#doActivate--">doActivate</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#doActivate()">doActivate</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.html#doDeactivate--">doDeactivate</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#doDeactivate()">doDeactivate</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.html#getFileNumber--">getFileNumber</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getFileNumber()">getFileNumber</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.html#getLogFile--">getLogFile</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLogFile()">getLogFile</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>long</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.html#getLogLineCounter--">getLogLineCounter</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLogLineCounter()">getLogLineCounter</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>long</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.html#getLogSize--">getLogSize</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLogSize()">getLogSize</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>protected java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.html#getThreadInfo--">getThreadInfo</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getThreadInfo()">getThreadInfo</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>long</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.html#getWriteInterval--">getWriteInterval</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getWriteInterval()">getWriteInterval</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.html#isWriteBulk--">isWriteBulk</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isWriteBulk()">isWriteBulk</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i11" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../org/eclipse/net4j/util/collection/CloseableIterator.html" title="interface in org.eclipse.net4j.util.collection">CloseableIterator</a>&lt;<a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.LogLine.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.LogLine</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.html#iterator--">iterator</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../../collection/CloseableIterator.html" title="interface in org.eclipse.net4j.util.collection">CloseableIterator</a>&lt;<a href="RollingLog.LogLine.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.LogLine</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#iterator()">iterator</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i12" class="altColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/net4j/util/collection/CloseableIterator.html" title="interface in org.eclipse.net4j.util.collection">CloseableIterator</a>&lt;<a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.LogLine.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.LogLine</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.html#iterator-java.lang.String-">iterator</a></span>(java.lang.String&nbsp;logFile)</code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="../../collection/CloseableIterator.html" title="interface in org.eclipse.net4j.util.collection">CloseableIterator</a>&lt;<a href="RollingLog.LogLine.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.LogLine</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#iterator(java.lang.String)">iterator</a></span>&#8203;(java.lang.String&nbsp;logFile)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.html#load-java.util.Properties-">load</a></span>(java.util.Properties&nbsp;properties)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#load(java.util.Properties)">load</a></span>&#8203;(java.util.Properties&nbsp;properties)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.html#log-java.lang.String-">log</a></span>(java.lang.String&nbsp;message)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#log(java.lang.String)">log</a></span>&#8203;(java.lang.String&nbsp;message)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i15" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.html#main-java.lang.String:A-">main</a></span>(java.lang.String[]&nbsp;args)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#main(java.lang.String%5B%5D)">main</a></span>&#8203;(java.lang.String[]&nbsp;args)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i16" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.html#recovery-java.util.Properties-org.eclipse.net4j.util.om.log.RollingLog.LogLine-">recovery</a></span>(java.util.Properties&nbsp;properties,
-        <a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.LogLine.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.LogLine</a>&nbsp;logLine)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#recovery(java.util.Properties,org.eclipse.net4j.util.om.log.RollingLog.LogLine)">recovery</a></span>&#8203;(java.util.Properties&nbsp;properties,
+        <a href="RollingLog.LogLine.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.LogLine</a>&nbsp;logLine)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i17" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.html#save-java.util.Properties-">save</a></span>(java.util.Properties&nbsp;properties)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#save(java.util.Properties)">save</a></span>&#8203;(java.util.Properties&nbsp;properties)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i18" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.html#setWriteBulk-boolean-">setWriteBulk</a></span>(boolean&nbsp;writeBulk)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setWriteBulk(boolean)">setWriteBulk</a></span>&#8203;(boolean&nbsp;writeBulk)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i19" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.html#setWriteInterval-long-">setWriteInterval</a></span>(long&nbsp;writeInterval)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setWriteInterval(long)">setWriteInterval</a></span>&#8203;(long&nbsp;writeInterval)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i20" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.html#toString--">toString</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i21" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.html#work-org.eclipse.net4j.util.concurrent.Worker.WorkContext-">work</a></span>(<a href="../../../../../../org/eclipse/net4j/util/concurrent/Worker.WorkContext.html" title="class in org.eclipse.net4j.util.concurrent">Worker.WorkContext</a>&nbsp;context)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#work(org.eclipse.net4j.util.concurrent.Worker.WorkContext)">work</a></span>&#8203;(<a href="../../concurrent/Worker.WorkContext.html" title="class in org.eclipse.net4j.util.concurrent">Worker.WorkContext</a>&nbsp;context)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i22" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.html#writeLogLine-org.eclipse.net4j.util.om.log.RollingLog.LogLine-java.io.PrintStream-">writeLogLine</a></span>(<a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.LogLine.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.LogLine</a>&nbsp;logLine,
-            java.io.PrintStream&nbsp;out)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#writeLogLine(org.eclipse.net4j.util.om.log.RollingLog.LogLine,java.io.PrintStream)">writeLogLine</a></span>&#8203;(<a href="RollingLog.LogLine.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.LogLine</a>&nbsp;logLine,
+            java.io.PrintStream&nbsp;out)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i23" class="rowColor">
 <td class="colFirst"><code>protected long</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.html#writeLogLines-java.util.List-">writeLogLines</a></span>(java.util.List&lt;<a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.LogLine.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.LogLine</a>&gt;&nbsp;logLines)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#writeLogLines(java.util.List)">writeLogLines</a></span>&#8203;(java.util.List&lt;<a href="RollingLog.LogLine.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.LogLine</a>&gt;&nbsp;logLines)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i24" class="altColor">
 <td class="colFirst"><code>protected long</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.html#writeLogLines-java.util.List-java.io.PrintStream-">writeLogLines</a></span>(java.util.List&lt;<a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.LogLine.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.LogLine</a>&gt;&nbsp;logLines,
-             java.io.PrintStream&nbsp;out)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#writeLogLines(java.util.List,java.io.PrintStream)">writeLogLines</a></span>&#8203;(java.util.List&lt;<a href="RollingLog.LogLine.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.LogLine</a>&gt;&nbsp;logLines,
+             java.io.PrintStream&nbsp;out)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.concurrent.Worker">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.concurrent.Worker">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.concurrent.<a href="../../../../../../org/eclipse/net4j/util/concurrent/Worker.html" title="class in org.eclipse.net4j.util.concurrent">Worker</a></h3>
-<code><a href="../../../../../../org/eclipse/net4j/util/concurrent/Worker.html#getActivationTimeout--">getActivationTimeout</a>, <a href="../../../../../../org/eclipse/net4j/util/concurrent/Worker.html#getDeactivationTimeout--">getDeactivationTimeout</a>, <a href="../../../../../../org/eclipse/net4j/util/concurrent/Worker.html#getGlobalErrorHandler--">getGlobalErrorHandler</a>, <a href="../../../../../../org/eclipse/net4j/util/concurrent/Worker.html#getThreadName--">getThreadName</a>, <a href="../../../../../../org/eclipse/net4j/util/concurrent/Worker.html#getWorkerThread--">getWorkerThread</a>, <a href="../../../../../../org/eclipse/net4j/util/concurrent/Worker.html#handleError-java.lang.Exception-">handleError</a>, <a href="../../../../../../org/eclipse/net4j/util/concurrent/Worker.html#isDaemon--">isDaemon</a>, <a href="../../../../../../org/eclipse/net4j/util/concurrent/Worker.html#setActivationTimeout-long-">setActivationTimeout</a>, <a href="../../../../../../org/eclipse/net4j/util/concurrent/Worker.html#setDaemon-boolean-">setDaemon</a>, <a href="../../../../../../org/eclipse/net4j/util/concurrent/Worker.html#setDeactivationTimeout-long-">setDeactivationTimeout</a>, <a href="../../../../../../org/eclipse/net4j/util/concurrent/Worker.html#setGlobalErrorHandler-org.eclipse.net4j.util.IErrorHandler-">setGlobalErrorHandler</a></code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.concurrent.<a href="../../concurrent/Worker.html" title="class in org.eclipse.net4j.util.concurrent">Worker</a></h3>
+<code><a href="../../concurrent/Worker.html#getActivationTimeout()">getActivationTimeout</a>, <a href="../../concurrent/Worker.html#getDeactivationTimeout()">getDeactivationTimeout</a>, <a href="../../concurrent/Worker.html#getGlobalErrorHandler()">getGlobalErrorHandler</a>, <a href="../../concurrent/Worker.html#getThreadName()">getThreadName</a>, <a href="../../concurrent/Worker.html#getWorkerThread()">getWorkerThread</a>, <a href="../../concurrent/Worker.html#handleError(java.lang.Exception)">handleError</a>, <a href="../../concurrent/Worker.html#isDaemon()">isDaemon</a>, <a href="../../concurrent/Worker.html#setActivationTimeout(long)">setActivationTimeout</a>, <a href="../../concurrent/Worker.html#setDaemon(boolean)">setDaemon</a>, <a href="../../concurrent/Worker.html#setDeactivationTimeout(long)">setDeactivationTimeout</a>, <a href="../../concurrent/Worker.html#setGlobalErrorHandler(org.eclipse.net4j.util.IErrorHandler)">setGlobalErrorHandler</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.lifecycle.Lifecycle">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.lifecycle.Lifecycle">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.lifecycle.<a href="../../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a></h3>
-<code><a href="../../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#activate--">activate</a>, <a href="../../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkActive--">checkActive</a>, <a href="../../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkArg-boolean-java.lang.String-">checkArg</a>, <a href="../../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkArg-java.lang.Object-java.lang.String-">checkArg</a>, <a href="../../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkInactive--">checkInactive</a>, <a href="../../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkNull-java.lang.Object-java.lang.String-">checkNull</a>, <a href="../../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkState-boolean-java.lang.String-">checkState</a>, <a href="../../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkState-java.lang.Object-java.lang.String-">checkState</a>, <a href="../../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#deactivate--">deactivate</a>, <a href="../../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#deferredActivate-boolean-">deferredActivate</a>, <a href="../../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#doAfterActivate--">doAfterActivate</a>, <a href="../../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#doBeforeActivate--">doBeforeActivate</a>, <a href="../../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#doBeforeDeactivate--">doBeforeDeactivate</a>, <a href="../../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#dump--">dump</a>, <a href="../../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#getLifecycleState--">getLifecycleState</a>, <a href="../../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#isActive--">isActive</a>, <a href="../../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#isDeferredActivation--">isDeferredActivation</a></code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.lifecycle.<a href="../../lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a></h3>
+<code><a href="../../lifecycle/Lifecycle.html#activate()">activate</a>, <a href="../../lifecycle/Lifecycle.html#checkActive()">checkActive</a>, <a href="../../lifecycle/Lifecycle.html#checkArg(boolean,java.lang.String)">checkArg</a>, <a href="../../lifecycle/Lifecycle.html#checkArg(java.lang.Object,java.lang.String)">checkArg</a>, <a href="../../lifecycle/Lifecycle.html#checkInactive()">checkInactive</a>, <a href="../../lifecycle/Lifecycle.html#checkNull(java.lang.Object,java.lang.String)">checkNull</a>, <a href="../../lifecycle/Lifecycle.html#checkState(boolean,java.lang.String)">checkState</a>, <a href="../../lifecycle/Lifecycle.html#checkState(java.lang.Object,java.lang.String)">checkState</a>, <a href="../../lifecycle/Lifecycle.html#deactivate()">deactivate</a>, <a href="../../lifecycle/Lifecycle.html#deferredActivate(boolean)">deferredActivate</a>, <a href="../../lifecycle/Lifecycle.html#doAfterActivate()">doAfterActivate</a>, <a href="../../lifecycle/Lifecycle.html#doBeforeActivate()">doBeforeActivate</a>, <a href="../../lifecycle/Lifecycle.html#doBeforeDeactivate()">doBeforeDeactivate</a>, <a href="../../lifecycle/Lifecycle.html#dump()">dump</a>, <a href="../../lifecycle/Lifecycle.html#getLifecycleState()">getLifecycleState</a>, <a href="../../lifecycle/Lifecycle.html#isActive()">isActive</a>, <a href="../../lifecycle/Lifecycle.html#isDeferredActivation()">isDeferredActivation</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.event.Notifier">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.event.Notifier">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.event.<a href="../../../../../../org/eclipse/net4j/util/event/Notifier.html" title="class in org.eclipse.net4j.util.event">Notifier</a></h3>
-<code><a href="../../../../../../org/eclipse/net4j/util/event/Notifier.html#addListener-org.eclipse.net4j.util.event.IListener-">addListener</a>, <a href="../../../../../../org/eclipse/net4j/util/event/Notifier.html#fireEvent--">fireEvent</a>, <a href="../../../../../../org/eclipse/net4j/util/event/Notifier.html#fireEvent-org.eclipse.net4j.util.event.IEvent-">fireEvent</a>, <a href="../../../../../../org/eclipse/net4j/util/event/Notifier.html#fireEvent-org.eclipse.net4j.util.event.IEvent-org.eclipse.net4j.util.event.IListener:A-">fireEvent</a>, <a href="../../../../../../org/eclipse/net4j/util/event/Notifier.html#fireThrowable-java.lang.Throwable-">fireThrowable</a>, <a href="../../../../../../org/eclipse/net4j/util/event/Notifier.html#firstListenerAdded--">firstListenerAdded</a>, <a href="../../../../../../org/eclipse/net4j/util/event/Notifier.html#getListeners--">getListeners</a>, <a href="../../../../../../org/eclipse/net4j/util/event/Notifier.html#getNotificationService--">getNotificationService</a>, <a href="../../../../../../org/eclipse/net4j/util/event/Notifier.html#hasListeners--">hasListeners</a>, <a href="../../../../../../org/eclipse/net4j/util/event/Notifier.html#lastListenerRemoved--">lastListenerRemoved</a>, <a href="../../../../../../org/eclipse/net4j/util/event/Notifier.html#removeListener-org.eclipse.net4j.util.event.IListener-">removeListener</a></code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.event.<a href="../../event/Notifier.html" title="class in org.eclipse.net4j.util.event">Notifier</a></h3>
+<code><a href="../../event/Notifier.html#addListener(org.eclipse.net4j.util.event.IListener)">addListener</a>, <a href="../../event/Notifier.html#addUniqueListener(org.eclipse.net4j.util.event.IListener)">addUniqueListener</a>, <a href="../../event/Notifier.html#fireEvent()">fireEvent</a>, <a href="../../event/Notifier.html#fireEvent(org.eclipse.net4j.util.event.IEvent)">fireEvent</a>, <a href="../../event/Notifier.html#fireEvent(org.eclipse.net4j.util.event.IEvent,org.eclipse.net4j.util.event.IListener%5B%5D)">fireEvent</a>, <a href="../../event/Notifier.html#fireThrowable(java.lang.Throwable)">fireThrowable</a>, <a href="../../event/Notifier.html#firstListenerAdded()">firstListenerAdded</a>, <a href="../../event/Notifier.html#getListeners()">getListeners</a>, <a href="../../event/Notifier.html#getNotificationService()">getNotificationService</a>, <a href="../../event/Notifier.html#hasListener(org.eclipse.net4j.util.event.IListener)">hasListener</a>, <a href="../../event/Notifier.html#hasListeners()">hasListeners</a>, <a href="../../event/Notifier.html#lastListenerRemoved()">lastListenerRemoved</a>, <a href="../../event/Notifier.html#listenerAdded(org.eclipse.net4j.util.event.IListener)">listenerAdded</a>, <a href="../../event/Notifier.html#listenerRemoved(org.eclipse.net4j.util.event.IListener)">listenerRemoved</a>, <a href="../../event/Notifier.html#removeListener(org.eclipse.net4j.util.event.IListener)">removeListener</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
+<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
 <code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, wait, wait, wait</code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Iterable">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.event.INotifier">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.event.<a href="../../event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a></h3>
+<code><a href="../../event/INotifier.html#addListener(org.eclipse.net4j.util.event.IListener)">addListener</a>, <a href="../../event/INotifier.html#getListeners()">getListeners</a>, <a href="../../event/INotifier.html#hasListeners()">hasListeners</a>, <a href="../../event/INotifier.html#removeListener(org.eclipse.net4j.util.event.IListener)">removeListener</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a id="methods.inherited.from.class.java.lang.Iterable">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;java.lang.Iterable</h3>
 <code>forEach, spliterator</code></li>
 </ul>
-<ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.event.INotifier">
-<!--   -->
-</a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.event.<a href="../../../../../../org/eclipse/net4j/util/event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a></h3>
-<code><a href="../../../../../../org/eclipse/net4j/util/event/INotifier.html#addListener-org.eclipse.net4j.util.event.IListener-">addListener</a>, <a href="../../../../../../org/eclipse/net4j/util/event/INotifier.html#getListeners--">getListeners</a>, <a href="../../../../../../org/eclipse/net4j/util/event/INotifier.html#hasListeners--">hasListeners</a>, <a href="../../../../../../org/eclipse/net4j/util/event/INotifier.html#removeListener-org.eclipse.net4j.util.event.IListener-">removeListener</a></code></li>
-</ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -399,122 +472,125 @@ implements <a href="../../../../../../org/eclipse/net4j/util/om/log/Log.html" ti
 <ul class="blockList">
 <li class="blockList">
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.detail">
+<li class="blockList"><a id="constructor.detail">
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="RollingLog-java.lang.String-long-boolean-">
+<a id="&lt;init&gt;(java.lang.String,long,boolean)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>RollingLog</h4>
-<pre>public&nbsp;RollingLog(java.lang.String&nbsp;logFile,
+<pre>public&nbsp;RollingLog&#8203;(java.lang.String&nbsp;logFile,
                   long&nbsp;logSize,
                   boolean&nbsp;append)</pre>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="getLogFile--">
+<a id="getLogFile()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getLogFile</h4>
-<pre>public final&nbsp;java.lang.String&nbsp;getLogFile()</pre>
+<pre class="methodSignature">public final&nbsp;java.lang.String&nbsp;getLogFile()</pre>
 </li>
 </ul>
-<a name="getLogSize--">
+<a id="getLogSize()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getLogSize</h4>
-<pre>public final&nbsp;long&nbsp;getLogSize()</pre>
+<pre class="methodSignature">public final&nbsp;long&nbsp;getLogSize()</pre>
 </li>
 </ul>
-<a name="getLogLineCounter--">
+<a id="getLogLineCounter()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getLogLineCounter</h4>
-<pre>public final&nbsp;long&nbsp;getLogLineCounter()</pre>
+<pre class="methodSignature">public final&nbsp;long&nbsp;getLogLineCounter()</pre>
 </li>
 </ul>
-<a name="getFileNumber--">
+<a id="getFileNumber()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getFileNumber</h4>
-<pre>public final&nbsp;int&nbsp;getFileNumber()</pre>
+<pre class="methodSignature">public final&nbsp;int&nbsp;getFileNumber()</pre>
 </li>
 </ul>
-<a name="getWriteInterval--">
+<a id="getWriteInterval()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getWriteInterval</h4>
-<pre>public&nbsp;long&nbsp;getWriteInterval()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;getWriteInterval()</pre>
 </li>
 </ul>
-<a name="setWriteInterval-long-">
+<a id="setWriteInterval(long)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setWriteInterval</h4>
-<pre>public&nbsp;void&nbsp;setWriteInterval(long&nbsp;writeInterval)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setWriteInterval&#8203;(long&nbsp;writeInterval)</pre>
 </li>
 </ul>
-<a name="isWriteBulk--">
+<a id="isWriteBulk()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>isWriteBulk</h4>
-<pre>public&nbsp;boolean&nbsp;isWriteBulk()</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;isWriteBulk()</pre>
 </li>
 </ul>
-<a name="setWriteBulk-boolean-">
+<a id="setWriteBulk(boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setWriteBulk</h4>
-<pre>public&nbsp;void&nbsp;setWriteBulk(boolean&nbsp;writeBulk)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setWriteBulk&#8203;(boolean&nbsp;writeBulk)</pre>
 </li>
 </ul>
-<a name="log-java.lang.String-">
+<a id="log(java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>log</h4>
-<pre>public final&nbsp;void&nbsp;log(java.lang.String&nbsp;message)</pre>
+<pre class="methodSignature">public final&nbsp;void&nbsp;log&#8203;(java.lang.String&nbsp;message)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../../org/eclipse/net4j/util/om/log/Log.html#log-java.lang.String-">log</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../org/eclipse/net4j/util/om/log/Log.html" title="interface in org.eclipse.net4j.util.om.log">Log</a></code></dd>
+<dd><code><a href="Log.html#log(java.lang.String)">log</a></code>&nbsp;in interface&nbsp;<code><a href="Log.html" title="interface in org.eclipse.net4j.util.om.log">Log</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="commit--">
+<a id="commit()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>commit</h4>
-<pre>public final&nbsp;void&nbsp;commit()
+<pre class="methodSignature">public final&nbsp;void&nbsp;commit()
                   throws java.lang.InterruptedException</pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -522,190 +598,194 @@ implements <a href="../../../../../../org/eclipse/net4j/util/om/log/Log.html" ti
 </dl>
 </li>
 </ul>
-<a name="work-org.eclipse.net4j.util.concurrent.Worker.WorkContext-">
+<a id="work(org.eclipse.net4j.util.concurrent.Worker.WorkContext)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>work</h4>
-<pre>protected final&nbsp;void&nbsp;work(<a href="../../../../../../org/eclipse/net4j/util/concurrent/Worker.WorkContext.html" title="class in org.eclipse.net4j.util.concurrent">Worker.WorkContext</a>&nbsp;context)
+<pre class="methodSignature">protected final&nbsp;void&nbsp;work&#8203;(<a href="../../concurrent/Worker.WorkContext.html" title="class in org.eclipse.net4j.util.concurrent">Worker.WorkContext</a>&nbsp;context)
                    throws java.lang.Exception</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../../org/eclipse/net4j/util/concurrent/Worker.html#work-org.eclipse.net4j.util.concurrent.Worker.WorkContext-">work</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../org/eclipse/net4j/util/concurrent/Worker.html" title="class in org.eclipse.net4j.util.concurrent">Worker</a></code></dd>
+<dd><code><a href="../../concurrent/Worker.html#work(org.eclipse.net4j.util.concurrent.Worker.WorkContext)">work</a></code>&nbsp;in class&nbsp;<code><a href="../../concurrent/Worker.html" title="class in org.eclipse.net4j.util.concurrent">Worker</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.lang.Exception</code></dd>
 </dl>
 </li>
 </ul>
-<a name="createLogLine-java.lang.String-">
+<a id="createLogLine(java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createLogLine</h4>
-<pre>protected&nbsp;<a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.LogLine.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.LogLine</a>&nbsp;createLogLine(java.lang.String&nbsp;message)</pre>
+<pre class="methodSignature">protected&nbsp;<a href="RollingLog.LogLine.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.LogLine</a>&nbsp;createLogLine&#8203;(java.lang.String&nbsp;message)</pre>
 </li>
 </ul>
-<a name="writeLogLines-java.util.List-">
+<a id="writeLogLines(java.util.List)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>writeLogLines</h4>
-<pre>protected&nbsp;long&nbsp;writeLogLines(java.util.List&lt;<a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.LogLine.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.LogLine</a>&gt;&nbsp;logLines)</pre>
+<pre class="methodSignature">protected&nbsp;long&nbsp;writeLogLines&#8203;(java.util.List&lt;<a href="RollingLog.LogLine.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.LogLine</a>&gt;&nbsp;logLines)</pre>
 </li>
 </ul>
-<a name="writeLogLines-java.util.List-java.io.PrintStream-">
+<a id="writeLogLines(java.util.List,java.io.PrintStream)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>writeLogLines</h4>
-<pre>protected&nbsp;long&nbsp;writeLogLines(java.util.List&lt;<a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.LogLine.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.LogLine</a>&gt;&nbsp;logLines,
+<pre class="methodSignature">protected&nbsp;long&nbsp;writeLogLines&#8203;(java.util.List&lt;<a href="RollingLog.LogLine.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.LogLine</a>&gt;&nbsp;logLines,
                              java.io.PrintStream&nbsp;out)</pre>
 </li>
 </ul>
-<a name="writeLogLine-org.eclipse.net4j.util.om.log.RollingLog.LogLine-java.io.PrintStream-">
+<a id="writeLogLine(org.eclipse.net4j.util.om.log.RollingLog.LogLine,java.io.PrintStream)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>writeLogLine</h4>
-<pre>protected&nbsp;void&nbsp;writeLogLine(<a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.LogLine.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.LogLine</a>&nbsp;logLine,
+<pre class="methodSignature">protected&nbsp;void&nbsp;writeLogLine&#8203;(<a href="RollingLog.LogLine.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.LogLine</a>&nbsp;logLine,
                             java.io.PrintStream&nbsp;out)</pre>
 </li>
 </ul>
-<a name="getThreadInfo--">
+<a id="getThreadInfo()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getThreadInfo</h4>
-<pre>protected&nbsp;java.lang.String&nbsp;getThreadInfo()</pre>
+<pre class="methodSignature">protected&nbsp;java.lang.String&nbsp;getThreadInfo()</pre>
 </li>
 </ul>
-<a name="doActivate--">
+<a id="doActivate()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>doActivate</h4>
-<pre>protected&nbsp;void&nbsp;doActivate()
+<pre class="methodSignature">protected&nbsp;void&nbsp;doActivate()
                    throws java.lang.Exception</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../../../../../../org/eclipse/net4j/util/concurrent/Worker.html#doActivate--">doActivate</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../org/eclipse/net4j/util/concurrent/Worker.html" title="class in org.eclipse.net4j.util.concurrent">Worker</a></code></dd>
+<dd><code><a href="../../concurrent/Worker.html#doActivate()">doActivate</a></code>&nbsp;in class&nbsp;<code><a href="../../concurrent/Worker.html" title="class in org.eclipse.net4j.util.concurrent">Worker</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.lang.Exception</code></dd>
 </dl>
 </li>
 </ul>
-<a name="doDeactivate--">
+<a id="doDeactivate()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>doDeactivate</h4>
-<pre>protected&nbsp;void&nbsp;doDeactivate()
+<pre class="methodSignature">protected&nbsp;void&nbsp;doDeactivate()
                      throws java.lang.Exception</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../../../../../../org/eclipse/net4j/util/concurrent/Worker.html#doDeactivate--">doDeactivate</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../org/eclipse/net4j/util/concurrent/Worker.html" title="class in org.eclipse.net4j.util.concurrent">Worker</a></code></dd>
+<dd><code><a href="../../concurrent/Worker.html#doDeactivate()">doDeactivate</a></code>&nbsp;in class&nbsp;<code><a href="../../concurrent/Worker.html" title="class in org.eclipse.net4j.util.concurrent">Worker</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.lang.Exception</code></dd>
 </dl>
 </li>
 </ul>
-<a name="recovery-java.util.Properties-org.eclipse.net4j.util.om.log.RollingLog.LogLine-">
+<a id="recovery(java.util.Properties,org.eclipse.net4j.util.om.log.RollingLog.LogLine)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>recovery</h4>
-<pre>protected&nbsp;void&nbsp;recovery(java.util.Properties&nbsp;properties,
-                        <a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.LogLine.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.LogLine</a>&nbsp;logLine)</pre>
+<pre class="methodSignature">protected&nbsp;void&nbsp;recovery&#8203;(java.util.Properties&nbsp;properties,
+                        <a href="RollingLog.LogLine.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.LogLine</a>&nbsp;logLine)</pre>
 </li>
 </ul>
-<a name="load-java.util.Properties-">
+<a id="load(java.util.Properties)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>load</h4>
-<pre>protected&nbsp;void&nbsp;load(java.util.Properties&nbsp;properties)</pre>
+<pre class="methodSignature">protected&nbsp;void&nbsp;load&#8203;(java.util.Properties&nbsp;properties)</pre>
 </li>
 </ul>
-<a name="save-java.util.Properties-">
+<a id="save(java.util.Properties)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>save</h4>
-<pre>protected&nbsp;void&nbsp;save(java.util.Properties&nbsp;properties)</pre>
+<pre class="methodSignature">protected&nbsp;void&nbsp;save&#8203;(java.util.Properties&nbsp;properties)</pre>
 </li>
 </ul>
-<a name="toString--">
+<a id="toString()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>toString</h4>
-<pre>public&nbsp;java.lang.String&nbsp;toString()</pre>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;toString()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#toString--">toString</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a></code></dd>
+<dd><code><a href="../../lifecycle/Lifecycle.html#toString()">toString</a></code>&nbsp;in class&nbsp;<code><a href="../../lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="iterator--">
+<a id="iterator()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>iterator</h4>
-<pre>public final&nbsp;<a href="../../../../../../org/eclipse/net4j/util/collection/CloseableIterator.html" title="interface in org.eclipse.net4j.util.collection">CloseableIterator</a>&lt;<a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.LogLine.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.LogLine</a>&gt;&nbsp;iterator()</pre>
+<pre class="methodSignature">public final&nbsp;<a href="../../collection/CloseableIterator.html" title="interface in org.eclipse.net4j.util.collection">CloseableIterator</a>&lt;<a href="RollingLog.LogLine.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.LogLine</a>&gt;&nbsp;iterator()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>iterator</code>&nbsp;in interface&nbsp;<code>java.lang.Iterable&lt;<a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.LogLine.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.LogLine</a>&gt;</code></dd>
+<dd><code>iterator</code>&nbsp;in interface&nbsp;<code>java.lang.Iterable&lt;<a href="RollingLog.LogLine.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.LogLine</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="iterator-java.lang.String-">
+<a id="iterator(java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>iterator</h4>
-<pre>public static&nbsp;<a href="../../../../../../org/eclipse/net4j/util/collection/CloseableIterator.html" title="interface in org.eclipse.net4j.util.collection">CloseableIterator</a>&lt;<a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.LogLine.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.LogLine</a>&gt;&nbsp;iterator(java.lang.String&nbsp;logFile)</pre>
+<pre class="methodSignature">public static&nbsp;<a href="../../collection/CloseableIterator.html" title="interface in org.eclipse.net4j.util.collection">CloseableIterator</a>&lt;<a href="RollingLog.LogLine.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.LogLine</a>&gt;&nbsp;iterator&#8203;(java.lang.String&nbsp;logFile)</pre>
 </li>
 </ul>
-<a name="main-java.lang.String:A-">
+<a id="main(java.lang.String[])">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>main</h4>
-<pre>public static&nbsp;void&nbsp;main(java.lang.String[]&nbsp;args)</pre>
+<pre class="methodSignature">public static&nbsp;void&nbsp;main&#8203;(java.lang.String[]&nbsp;args)</pre>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/RollingLog.html">Use</a></li>
@@ -715,16 +795,8 @@ implements <a href="../../../../../../org/eclipse/net4j/util/om/log/Log.html" ti
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/net4j/util/om/log/PrintLogHandler.html" title="class in org.eclipse.net4j.util.om.log"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.LogLine.html" title="class in org.eclipse.net4j.util.om.log"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/net4j/util/om/log/RollingLog.html" target="_top">Frames</a></li>
-<li><a href="RollingLog.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -737,12 +809,15 @@ implements <a href="../../../../../../org/eclipse/net4j/util/om/log/Log.html" ti
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
-<li><a href="#fields.inherited.from.class.org.eclipse.net4j.util.concurrent.Worker">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
@@ -753,10 +828,12 @@ implements <a href="../../../../../../org/eclipse/net4j/util/om/log/Log.html" ti
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

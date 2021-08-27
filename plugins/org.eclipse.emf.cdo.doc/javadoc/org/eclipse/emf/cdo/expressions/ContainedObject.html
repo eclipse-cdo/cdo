@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>ContainedObject (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6};
+var data = {"i0":6,"i1":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/ContainedObject.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/emf/cdo/expressions/CharValue.html" title="interface in org.eclipse.emf.cdo.expressions"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/emf/cdo/expressions/ContextAccess.html" title="interface in org.eclipse.emf.cdo.expressions"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/emf/cdo/expressions/ContainedObject.html" target="_top">Frames</a></li>
-<li><a href="ContainedObject.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,6 +82,9 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -85,13 +101,22 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.emf.cdo.expressions</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.cdo.expressions</a></div>
 <h2 title="Interface ContainedObject" class="title">Interface ContainedObject</h2>
 </div>
 <div class="contentContainer">
@@ -100,16 +125,15 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>, <a href="../../../../../org/eclipse/emf/cdo/common/id/CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>, <a href="../../../../../org/eclipse/emf/cdo/expressions/Expression.html" title="interface in org.eclipse.emf.cdo.expressions">Expression</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notifier.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notifier</a></dd>
+<dd><code><a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a></code>, <code><a href="../common/id/CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a></code>, <code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a></code>, <code><a href="Expression.html" title="interface in org.eclipse.emf.cdo.expressions">Expression</a></code>, <code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notifier.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">Notifier</a></code></dd>
 </dl>
 <dl>
 <dt>All Known Implementing Classes:</dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/expressions/impl/ContainedObjectImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">ContainedObjectImpl</a></dd>
+<dd><code><a href="impl/ContainedObjectImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">ContainedObjectImpl</a></code></dd>
 </dl>
 <hr>
-<br>
 <pre>public interface <span class="typeNameLabel">ContainedObject</span>
-extends <a href="../../../../../org/eclipse/emf/cdo/expressions/Expression.html" title="interface in org.eclipse.emf.cdo.expressions">Expression</a></pre>
+extends <a href="Expression.html" title="interface in org.eclipse.emf.cdo.expressions">Expression</a></pre>
 <div class="block"><!-- begin-user-doc -->
  A representation of the model object '<em><b>Contained Object</b></em>'.
  <!-- end-user-doc -->
@@ -118,11 +142,11 @@ extends <a href="../../../../../org/eclipse/emf/cdo/expressions/Expression.html"
  The following features are supported:
  </p>
  <ul>
-   <li><a href="../../../../../org/eclipse/emf/cdo/expressions/ContainedObject.html#getObject--"><code><em>Object</em></code></a></li>
+   <li><a href="#getObject()"><code><em>Object</em></code></a></li>
  </ul></div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/expressions/ExpressionsPackage.html#getContainedObject--"><code>ExpressionsPackage.getContainedObject()</code></a></dd>
+<dd><a href="ExpressionsPackage.html#getContainedObject()"><code>ExpressionsPackage.getContainedObject()</code></a></dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 <dt><span class="simpleTagLabel">Model</span></dt>
 </dl>
@@ -133,60 +157,65 @@ extends <a href="../../../../../org/eclipse/emf/cdo/expressions/Expression.html"
 <ul class="blockList">
 <li class="blockList">
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/expressions/ContainedObject.html#getObject--">getObject</a></span>()</code>
+<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getObject()">getObject</a></span>()</code></th>
+<td class="colLast">
 <div class="block">Returns the value of the '<em><b>Object</b></em>' containment reference.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/expressions/ContainedObject.html#setObject-org.eclipse.emf.ecore.EObject-">setObject</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&nbsp;value)</code>
-<div class="block">Sets the value of the '<a href="../../../../../org/eclipse/emf/cdo/expressions/ContainedObject.html#getObject--"><code><em>Object</em></code></a>' containment reference.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setObject(org.eclipse.emf.ecore.EObject)">setObject</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&nbsp;value)</code></th>
+<td class="colLast">
+<div class="block">Sets the value of the '<a href="#getObject()"><code><em>Object</em></code></a>' containment reference.</div>
 </td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.emf.cdo.expressions.Expression">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.cdo.CDOObject">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.expressions.<a href="../../../../../org/eclipse/emf/cdo/expressions/Expression.html" title="interface in org.eclipse.emf.cdo.expressions">Expression</a></h3>
-<code><a href="../../../../../org/eclipse/emf/cdo/expressions/Expression.html#evaluate-org.eclipse.emf.cdo.expressions.EvaluationContext-">evaluate</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.<a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a></h3>
+<code><a href="../CDOObject.html#cdoConflict()">cdoConflict</a>, <a href="../CDOObject.html#cdoDirectResource()">cdoDirectResource</a>, <a href="../CDOObject.html#cdoHistory()">cdoHistory</a>, <a href="../CDOObject.html#cdoID()">cdoID</a>, <a href="../CDOObject.html#cdoInvalid()">cdoInvalid</a>, <a href="../CDOObject.html#cdoLockState()">cdoLockState</a>, <a href="../CDOObject.html#cdoPermission()">cdoPermission</a>, <a href="../CDOObject.html#cdoPrefetch(int)">cdoPrefetch</a>, <a href="../CDOObject.html#cdoReadLock()">cdoReadLock</a>, <a href="../CDOObject.html#cdoReload()">cdoReload</a>, <a href="../CDOObject.html#cdoResource()">cdoResource</a>, <a href="../CDOObject.html#cdoRevision()">cdoRevision</a>, <a href="../CDOObject.html#cdoRevision(boolean)">cdoRevision</a>, <a href="../CDOObject.html#cdoState()">cdoState</a>, <a href="../CDOObject.html#cdoView()">cdoView</a>, <a href="../CDOObject.html#cdoWriteLock()">cdoWriteLock</a>, <a href="../CDOObject.html#cdoWriteOption()">cdoWriteOption</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.emf.cdo.CDOObject">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.ecore.EObject">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a></h3>
-<code><a href="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoConflict--">cdoConflict</a>, <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoDirectResource--">cdoDirectResource</a>, <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoHistory--">cdoHistory</a>, <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoID--">cdoID</a>, <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoInvalid--">cdoInvalid</a>, <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoLockState--">cdoLockState</a>, <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoPermission--">cdoPermission</a>, <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoPrefetch-int-">cdoPrefetch</a>, <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoReadLock--">cdoReadLock</a>, <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoReload--">cdoReload</a>, <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoResource--">cdoResource</a>, <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoRevision--">cdoRevision</a>, <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoRevision-boolean-">cdoRevision</a>, <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoState--">cdoState</a>, <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoView--">cdoView</a>, <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoWriteLock--">cdoWriteLock</a>, <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoWriteOption--">cdoWriteOption</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.emf.ecore.<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a></h3>
+<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eAllContents()" title="class or interface in org.eclipse.emf.ecore" class="externalLink">eAllContents</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eClass()" title="class or interface in org.eclipse.emf.ecore" class="externalLink">eClass</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eContainer()" title="class or interface in org.eclipse.emf.ecore" class="externalLink">eContainer</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eContainingFeature()" title="class or interface in org.eclipse.emf.ecore" class="externalLink">eContainingFeature</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eContainmentFeature()" title="class or interface in org.eclipse.emf.ecore" class="externalLink">eContainmentFeature</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eContents()" title="class or interface in org.eclipse.emf.ecore" class="externalLink">eContents</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eCrossReferences()" title="class or interface in org.eclipse.emf.ecore" class="externalLink">eCrossReferences</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eGet(org.eclipse.emf.ecore.EStructuralFeature)" title="class or interface in org.eclipse.emf.ecore" class="externalLink">eGet</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eGet(org.eclipse.emf.ecore.EStructuralFeature,boolean)" title="class or interface in org.eclipse.emf.ecore" class="externalLink">eGet</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eInvoke(org.eclipse.emf.ecore.EOperation,org.eclipse.emf.common.util.EList)" title="class or interface in org.eclipse.emf.ecore" class="externalLink">eInvoke</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eIsProxy()" title="class or interface in org.eclipse.emf.ecore" class="externalLink">eIsProxy</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eIsSet(org.eclipse.emf.ecore.EStructuralFeature)" title="class or interface in org.eclipse.emf.ecore" class="externalLink">eIsSet</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eResource()" title="class or interface in org.eclipse.emf.ecore" class="externalLink">eResource</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eSet(org.eclipse.emf.ecore.EStructuralFeature,java.lang.Object)" title="class or interface in org.eclipse.emf.ecore" class="externalLink">eSet</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eUnset(org.eclipse.emf.ecore.EStructuralFeature)" title="class or interface in org.eclipse.emf.ecore" class="externalLink">eUnset</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.emf.ecore.EObject">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.cdo.expressions.Expression">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.emf.ecore.<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a></h3>
-<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eAllContents--" title="class or interface in org.eclipse.emf.ecore">eAllContents</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eClass--" title="class or interface in org.eclipse.emf.ecore">eClass</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eContainer--" title="class or interface in org.eclipse.emf.ecore">eContainer</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eContainingFeature--" title="class or interface in org.eclipse.emf.ecore">eContainingFeature</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eContainmentFeature--" title="class or interface in org.eclipse.emf.ecore">eContainmentFeature</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eContents--" title="class or interface in org.eclipse.emf.ecore">eContents</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eCrossReferences--" title="class or interface in org.eclipse.emf.ecore">eCrossReferences</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eGet-org.eclipse.emf.ecore.EStructuralFeature-" title="class or interface in org.eclipse.emf.ecore">eGet</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eGet-org.eclipse.emf.ecore.EStructuralFeature-boolean-" title="class or interface in org.eclipse.emf.ecore">eGet</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eInvoke-org.eclipse.emf.ecore.EOperation-org.eclipse.emf.common.util.EList-" title="class or interface in org.eclipse.emf.ecore">eInvoke</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eIsProxy--" title="class or interface in org.eclipse.emf.ecore">eIsProxy</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eIsSet-org.eclipse.emf.ecore.EStructuralFeature-" title="class or interface in org.eclipse.emf.ecore">eIsSet</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eResource--" title="class or interface in org.eclipse.emf.ecore">eResource</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eSet-org.eclipse.emf.ecore.EStructuralFeature-java.lang.Object-" title="class or interface in org.eclipse.emf.ecore">eSet</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eUnset-org.eclipse.emf.ecore.EStructuralFeature-" title="class or interface in org.eclipse.emf.ecore">eUnset</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.expressions.<a href="Expression.html" title="interface in org.eclipse.emf.cdo.expressions">Expression</a></h3>
+<code><a href="Expression.html#evaluate(org.eclipse.emf.cdo.expressions.EvaluationContext)">evaluate</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.emf.common.notify.Notifier">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.common.notify.Notifier">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.emf.common.notify.<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notifier.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notifier</a></h3>
-<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notifier.html?is-external=true#eAdapters--" title="class or interface in org.eclipse.emf.common.notify">eAdapters</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notifier.html?is-external=true#eDeliver--" title="class or interface in org.eclipse.emf.common.notify">eDeliver</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notifier.html?is-external=true#eNotify-org.eclipse.emf.common.notify.Notification-" title="class or interface in org.eclipse.emf.common.notify">eNotify</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notifier.html?is-external=true#eSetDeliver-boolean-" title="class or interface in org.eclipse.emf.common.notify">eSetDeliver</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.emf.common.notify.<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notifier.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">Notifier</a></h3>
+<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notifier.html?is-external=true#eAdapters()" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">eAdapters</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notifier.html?is-external=true#eDeliver()" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">eDeliver</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notifier.html?is-external=true#eNotify(org.eclipse.emf.common.notify.Notification)" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">eNotify</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notifier.html?is-external=true#eSetDeliver(boolean)" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">eSetDeliver</a></code></li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -194,18 +223,19 @@ extends <a href="../../../../../org/eclipse/emf/cdo/expressions/Expression.html"
 <ul class="blockList">
 <li class="blockList">
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="getObject--">
+<a id="getObject()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getObject</h4>
-<pre><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&nbsp;getObject()</pre>
+<pre class="methodSignature"><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&nbsp;getObject()</pre>
 <div class="block">Returns the value of the '<em><b>Object</b></em>' containment reference.
  <!-- begin-user-doc -->
  <p>
@@ -217,50 +247,54 @@ extends <a href="../../../../../org/eclipse/emf/cdo/expressions/Expression.html"
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the value of the '<em>Object</em>' containment reference.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/expressions/ContainedObject.html#setObject-org.eclipse.emf.ecore.EObject-"><code>setObject(EObject)</code></a>, 
-<a href="../../../../../org/eclipse/emf/cdo/expressions/ExpressionsPackage.html#getContainedObject_Object--"><code>ExpressionsPackage.getContainedObject_Object()</code></a></dd>
+<dd><a href="#setObject(org.eclipse.emf.ecore.EObject)"><code>setObject(EObject)</code></a>, 
+<a href="ExpressionsPackage.html#getContainedObject_Object()"><code>ExpressionsPackage.getContainedObject_Object()</code></a></dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 <dt><span class="simpleTagLabel">Model</span></dt>
 <dd>containment="true"</dd>
 </dl>
 </li>
 </ul>
-<a name="setObject-org.eclipse.emf.ecore.EObject-">
+<a id="setObject(org.eclipse.emf.ecore.EObject)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>setObject</h4>
-<pre>void&nbsp;setObject(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&nbsp;value)</pre>
-<div class="block">Sets the value of the '<a href="../../../../../org/eclipse/emf/cdo/expressions/ContainedObject.html#getObject--"><code><em>Object</em></code></a>' containment reference.
+<pre class="methodSignature">void&nbsp;setObject&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&nbsp;value)</pre>
+<div class="block">Sets the value of the '<a href="#getObject()"><code><em>Object</em></code></a>' containment reference.
  <!-- begin-user-doc -->
  <!-- end-user-doc --></div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>value</code> - the new value of the '<em>Object</em>' containment reference.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/expressions/ContainedObject.html#getObject--"><code>getObject()</code></a></dd>
+<dd><a href="#getObject()"><code>getObject()</code></a></dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/ContainedObject.html">Use</a></li>
@@ -270,16 +304,8 @@ extends <a href="../../../../../org/eclipse/emf/cdo/expressions/Expression.html"
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/emf/cdo/expressions/CharValue.html" title="interface in org.eclipse.emf.cdo.expressions"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/emf/cdo/expressions/ContextAccess.html" title="interface in org.eclipse.emf.cdo.expressions"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/emf/cdo/expressions/ContainedObject.html" target="_top">Frames</a></li>
-<li><a href="ContainedObject.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -292,6 +318,9 @@ extends <a href="../../../../../org/eclipse/emf/cdo/expressions/Expression.html"
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -308,10 +337,12 @@ extends <a href="../../../../../org/eclipse/emf/cdo/expressions/Expression.html"
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

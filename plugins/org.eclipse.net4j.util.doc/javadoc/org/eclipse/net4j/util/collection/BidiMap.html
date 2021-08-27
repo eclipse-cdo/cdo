@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>BidiMap (Net4j Utilities Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/BidiMap.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/net4j/util/collection/ArrayIterator.html" title="class in org.eclipse.net4j.util.collection"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/net4j/util/collection/BidiMapper.html" title="class in org.eclipse.net4j.util.collection"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/net4j/util/collection/BidiMap.html" target="_top">Frames</a></li>
-<li><a href="BidiMap.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,11 +82,14 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li><a href="#nested.classes.inherited.from.class.java.util.AbstractMap">Nested</a>&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
@@ -85,24 +101,33 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.net4j.util.collection</div>
-<h2 title="Class BidiMap" class="title">Class BidiMap&lt;K,V&gt;</h2>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.net4j.util.collection</a></div>
+<h2 title="Class BidiMap" class="title">Class BidiMap&lt;K,&#8203;V&gt;</h2>
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li>java.util.AbstractMap&lt;K,V&gt;</li>
+<li>java.util.AbstractMap&lt;K,&#8203;V&gt;</li>
 <li>
 <ul class="inheritance">
-<li>org.eclipse.net4j.util.collection.BidiMap&lt;K,V&gt;</li>
+<li>org.eclipse.net4j.util.collection.BidiMap&lt;K,&#8203;V&gt;</li>
 </ul>
 </li>
 </ul>
@@ -113,12 +138,11 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd>java.util.Map&lt;K,V&gt;</dd>
+<dd><code>java.util.Map&lt;K,&#8203;V&gt;</code></dd>
 </dl>
 <hr>
-<br>
-<pre>public class <span class="typeNameLabel">BidiMap&lt;K,V&gt;</span>
-extends java.util.AbstractMap&lt;K,V&gt;</pre>
+<pre>public class <span class="typeNameLabel">BidiMap&lt;K,&#8203;V&gt;</span>
+extends java.util.AbstractMap&lt;K,&#8203;V&gt;</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.6</dd>
@@ -132,123 +156,143 @@ extends java.util.AbstractMap&lt;K,V&gt;</pre>
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="nested.class.summary">
+<li class="blockList"><a id="nested.class.summary">
 <!--   -->
 </a>
 <h3>Nested Class Summary</h3>
 <ul class="blockList">
-<li class="blockList"><a name="nested.classes.inherited.from.class.java.util.AbstractMap">
+<li class="blockList"><a id="nested.classes.inherited.from.class.java.util.AbstractMap">
 <!--   -->
 </a>
 <h3>Nested classes/interfaces inherited from class&nbsp;java.util.AbstractMap</h3>
-<code>java.util.AbstractMap.SimpleEntry&lt;K,V&gt;, java.util.AbstractMap.SimpleImmutableEntry&lt;K,V&gt;</code></li>
+<code>java.util.AbstractMap.SimpleEntry&lt;K extends java.lang.Object,&#8203;V extends java.lang.Object&gt;, java.util.AbstractMap.SimpleImmutableEntry&lt;K extends java.lang.Object,&#8203;V extends java.lang.Object&gt;</code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="nested.classes.inherited.from.class.java.util.Map">
+<li class="blockList"><a id="nested.classes.inherited.from.class.java.util.Map">
 <!--   -->
 </a>
 <h3>Nested classes/interfaces inherited from interface&nbsp;java.util.Map</h3>
-<code>java.util.Map.Entry&lt;K,V&gt;</code></li>
+<code>java.util.Map.Entry&lt;K extends java.lang.Object,&#8203;V extends java.lang.Object&gt;</code></li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.summary">
+<li class="blockList"><a id="constructor.summary">
 <!--   -->
 </a>
 <h3>Constructor Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
+<table class="memberSummary">
 <caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Constructor and Description</th>
+<th class="colFirst" scope="col">Constructor</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html#BidiMap-java.lang.Class-java.lang.Class-">BidiMap</a></span>(java.lang.Class&lt;<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">K</a>&gt;&nbsp;keyClass,
-       java.lang.Class&lt;<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">V</a>&gt;&nbsp;valueClass)</code>&nbsp;</td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.Class,java.lang.Class)">BidiMap</a></span>&#8203;(java.lang.Class&lt;<a href="BidiMap.html" title="type parameter in BidiMap">K</a>&gt;&nbsp;keyClass,
+       java.lang.Class&lt;<a href="BidiMap.html" title="type parameter in BidiMap">V</a>&gt;&nbsp;valueClass)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html#clear--">clear</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clear()">clear</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html#containsKey-java.lang.Object-">containsKey</a></span>(java.lang.Object&nbsp;key)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#containsKey(java.lang.Object)">containsKey</a></span>&#8203;(java.lang.Object&nbsp;key)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html#containsValue-java.lang.Object-">containsValue</a></span>(java.lang.Object&nbsp;value)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#containsValue(java.lang.Object)">containsValue</a></span>&#8203;(java.lang.Object&nbsp;value)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>java.util.Set&lt;java.util.Map.Entry&lt;<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">K</a>,<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">V</a>&gt;&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html#entrySet--">entrySet</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>java.util.Set&lt;java.util.Map.Entry&lt;<a href="BidiMap.html" title="type parameter in BidiMap">K</a>,&#8203;<a href="BidiMap.html" title="type parameter in BidiMap">V</a>&gt;&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#entrySet()">entrySet</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">V</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html#get-java.lang.Object-">get</a></span>(java.lang.Object&nbsp;key)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="BidiMap.html" title="type parameter in BidiMap">V</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#get(java.lang.Object)">get</a></span>&#8203;(java.lang.Object&nbsp;key)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code>java.lang.Class&lt;<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">K</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html#getKeyClass--">getKeyClass</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>java.lang.Class&lt;<a href="BidiMap.html" title="type parameter in BidiMap">K</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getKeyClass()">getKeyClass</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code>java.lang.Class&lt;<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">V</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html#getValueClass--">getValueClass</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>java.lang.Class&lt;<a href="BidiMap.html" title="type parameter in BidiMap">V</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getValueClass()">getValueClass</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code>java.util.Map&lt;<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">V</a>,<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">K</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html#invert--">invert</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>java.util.Map&lt;<a href="BidiMap.html" title="type parameter in BidiMap">V</a>,&#8203;<a href="BidiMap.html" title="type parameter in BidiMap">K</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#invert()">invert</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html#isEmpty--">isEmpty</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isEmpty()">isEmpty</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">V</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html#put-K-V-">put</a></span>(<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">K</a>&nbsp;key,
-   <a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">V</a>&nbsp;value)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="BidiMap.html" title="type parameter in BidiMap">V</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#put(K,V)">put</a></span>&#8203;(<a href="BidiMap.html" title="type parameter in BidiMap">K</a>&nbsp;key,
+   <a href="BidiMap.html" title="type parameter in BidiMap">V</a>&nbsp;value)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">V</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html#remove-java.lang.Object-">remove</a></span>(java.lang.Object&nbsp;key)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="BidiMap.html" title="type parameter in BidiMap">V</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#remove(java.lang.Object)">remove</a></span>&#8203;(java.lang.Object&nbsp;key)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html#size--">size</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#size()">size</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.util.AbstractMap">
+<li class="blockList"><a id="methods.inherited.from.class.java.util.AbstractMap">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.util.AbstractMap</h3>
 <code>clone, equals, hashCode, keySet, putAll, toString, values</code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
+<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
 <code>finalize, getClass, notify, notifyAll, wait, wait, wait</code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.util.Map">
+<li class="blockList"><a id="methods.inherited.from.class.java.util.Map">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;java.util.Map</h3>
@@ -256,6 +300,7 @@ extends java.util.AbstractMap&lt;K,V&gt;</pre>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -263,211 +308,218 @@ extends java.util.AbstractMap&lt;K,V&gt;</pre>
 <ul class="blockList">
 <li class="blockList">
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.detail">
+<li class="blockList"><a id="constructor.detail">
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="BidiMap-java.lang.Class-java.lang.Class-">
+<a id="&lt;init&gt;(java.lang.Class,java.lang.Class)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>BidiMap</h4>
-<pre>public&nbsp;BidiMap(java.lang.Class&lt;<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">K</a>&gt;&nbsp;keyClass,
-               java.lang.Class&lt;<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">V</a>&gt;&nbsp;valueClass)</pre>
+<pre>public&nbsp;BidiMap&#8203;(java.lang.Class&lt;<a href="BidiMap.html" title="type parameter in BidiMap">K</a>&gt;&nbsp;keyClass,
+               java.lang.Class&lt;<a href="BidiMap.html" title="type parameter in BidiMap">V</a>&gt;&nbsp;valueClass)</pre>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="getKeyClass--">
+<a id="getKeyClass()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getKeyClass</h4>
-<pre>public final&nbsp;java.lang.Class&lt;<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">K</a>&gt;&nbsp;getKeyClass()</pre>
+<pre class="methodSignature">public final&nbsp;java.lang.Class&lt;<a href="BidiMap.html" title="type parameter in BidiMap">K</a>&gt;&nbsp;getKeyClass()</pre>
 </li>
 </ul>
-<a name="getValueClass--">
+<a id="getValueClass()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getValueClass</h4>
-<pre>public final&nbsp;java.lang.Class&lt;<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">V</a>&gt;&nbsp;getValueClass()</pre>
+<pre class="methodSignature">public final&nbsp;java.lang.Class&lt;<a href="BidiMap.html" title="type parameter in BidiMap">V</a>&gt;&nbsp;getValueClass()</pre>
 </li>
 </ul>
-<a name="invert--">
+<a id="invert()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>invert</h4>
-<pre>public final&nbsp;java.util.Map&lt;<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">V</a>,<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">K</a>&gt;&nbsp;invert()</pre>
+<pre class="methodSignature">public final&nbsp;java.util.Map&lt;<a href="BidiMap.html" title="type parameter in BidiMap">V</a>,&#8203;<a href="BidiMap.html" title="type parameter in BidiMap">K</a>&gt;&nbsp;invert()</pre>
 </li>
 </ul>
-<a name="put-java.lang.Object-java.lang.Object-">
+<a id="put(java.lang.Object,java.lang.Object)">
 <!--   -->
-</a><a name="put-K-V-">
+</a><a id="put(K,V)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>put</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">V</a>&nbsp;put(<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">K</a>&nbsp;key,
-             <a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">V</a>&nbsp;value)</pre>
+<pre class="methodSignature">public&nbsp;<a href="BidiMap.html" title="type parameter in BidiMap">V</a>&nbsp;put&#8203;(<a href="BidiMap.html" title="type parameter in BidiMap">K</a>&nbsp;key,
+             <a href="BidiMap.html" title="type parameter in BidiMap">V</a>&nbsp;value)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>put</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">K</a>,<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">V</a>&gt;</code></dd>
+<dd><code>put</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="BidiMap.html" title="type parameter in BidiMap">K</a>,&#8203;<a href="BidiMap.html" title="type parameter in BidiMap">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>put</code>&nbsp;in class&nbsp;<code>java.util.AbstractMap&lt;<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">K</a>,<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">V</a>&gt;</code></dd>
+<dd><code>put</code>&nbsp;in class&nbsp;<code>java.util.AbstractMap&lt;<a href="BidiMap.html" title="type parameter in BidiMap">K</a>,&#8203;<a href="BidiMap.html" title="type parameter in BidiMap">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="remove-java.lang.Object-">
+<a id="remove(java.lang.Object)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>remove</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">V</a>&nbsp;remove(java.lang.Object&nbsp;key)</pre>
+<pre class="methodSignature">public&nbsp;<a href="BidiMap.html" title="type parameter in BidiMap">V</a>&nbsp;remove&#8203;(java.lang.Object&nbsp;key)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>remove</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">K</a>,<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">V</a>&gt;</code></dd>
+<dd><code>remove</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="BidiMap.html" title="type parameter in BidiMap">K</a>,&#8203;<a href="BidiMap.html" title="type parameter in BidiMap">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>remove</code>&nbsp;in class&nbsp;<code>java.util.AbstractMap&lt;<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">K</a>,<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">V</a>&gt;</code></dd>
+<dd><code>remove</code>&nbsp;in class&nbsp;<code>java.util.AbstractMap&lt;<a href="BidiMap.html" title="type parameter in BidiMap">K</a>,&#8203;<a href="BidiMap.html" title="type parameter in BidiMap">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="clear--">
+<a id="clear()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>clear</h4>
-<pre>public&nbsp;void&nbsp;clear()</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;clear()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>clear</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">K</a>,<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">V</a>&gt;</code></dd>
+<dd><code>clear</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="BidiMap.html" title="type parameter in BidiMap">K</a>,&#8203;<a href="BidiMap.html" title="type parameter in BidiMap">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>clear</code>&nbsp;in class&nbsp;<code>java.util.AbstractMap&lt;<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">K</a>,<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">V</a>&gt;</code></dd>
+<dd><code>clear</code>&nbsp;in class&nbsp;<code>java.util.AbstractMap&lt;<a href="BidiMap.html" title="type parameter in BidiMap">K</a>,&#8203;<a href="BidiMap.html" title="type parameter in BidiMap">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="size--">
+<a id="size()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>size</h4>
-<pre>public&nbsp;int&nbsp;size()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;size()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>size</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">K</a>,<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">V</a>&gt;</code></dd>
+<dd><code>size</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="BidiMap.html" title="type parameter in BidiMap">K</a>,&#8203;<a href="BidiMap.html" title="type parameter in BidiMap">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>size</code>&nbsp;in class&nbsp;<code>java.util.AbstractMap&lt;<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">K</a>,<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">V</a>&gt;</code></dd>
+<dd><code>size</code>&nbsp;in class&nbsp;<code>java.util.AbstractMap&lt;<a href="BidiMap.html" title="type parameter in BidiMap">K</a>,&#8203;<a href="BidiMap.html" title="type parameter in BidiMap">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="isEmpty--">
+<a id="isEmpty()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>isEmpty</h4>
-<pre>public&nbsp;boolean&nbsp;isEmpty()</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;isEmpty()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>isEmpty</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">K</a>,<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">V</a>&gt;</code></dd>
+<dd><code>isEmpty</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="BidiMap.html" title="type parameter in BidiMap">K</a>,&#8203;<a href="BidiMap.html" title="type parameter in BidiMap">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>isEmpty</code>&nbsp;in class&nbsp;<code>java.util.AbstractMap&lt;<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">K</a>,<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">V</a>&gt;</code></dd>
+<dd><code>isEmpty</code>&nbsp;in class&nbsp;<code>java.util.AbstractMap&lt;<a href="BidiMap.html" title="type parameter in BidiMap">K</a>,&#8203;<a href="BidiMap.html" title="type parameter in BidiMap">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="containsKey-java.lang.Object-">
+<a id="containsKey(java.lang.Object)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>containsKey</h4>
-<pre>public&nbsp;boolean&nbsp;containsKey(java.lang.Object&nbsp;key)</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;containsKey&#8203;(java.lang.Object&nbsp;key)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>containsKey</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">K</a>,<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">V</a>&gt;</code></dd>
+<dd><code>containsKey</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="BidiMap.html" title="type parameter in BidiMap">K</a>,&#8203;<a href="BidiMap.html" title="type parameter in BidiMap">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>containsKey</code>&nbsp;in class&nbsp;<code>java.util.AbstractMap&lt;<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">K</a>,<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">V</a>&gt;</code></dd>
+<dd><code>containsKey</code>&nbsp;in class&nbsp;<code>java.util.AbstractMap&lt;<a href="BidiMap.html" title="type parameter in BidiMap">K</a>,&#8203;<a href="BidiMap.html" title="type parameter in BidiMap">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="containsValue-java.lang.Object-">
+<a id="containsValue(java.lang.Object)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>containsValue</h4>
-<pre>public&nbsp;boolean&nbsp;containsValue(java.lang.Object&nbsp;value)</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;containsValue&#8203;(java.lang.Object&nbsp;value)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>containsValue</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">K</a>,<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">V</a>&gt;</code></dd>
+<dd><code>containsValue</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="BidiMap.html" title="type parameter in BidiMap">K</a>,&#8203;<a href="BidiMap.html" title="type parameter in BidiMap">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>containsValue</code>&nbsp;in class&nbsp;<code>java.util.AbstractMap&lt;<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">K</a>,<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">V</a>&gt;</code></dd>
+<dd><code>containsValue</code>&nbsp;in class&nbsp;<code>java.util.AbstractMap&lt;<a href="BidiMap.html" title="type parameter in BidiMap">K</a>,&#8203;<a href="BidiMap.html" title="type parameter in BidiMap">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="get-java.lang.Object-">
+<a id="get(java.lang.Object)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>get</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">V</a>&nbsp;get(java.lang.Object&nbsp;key)</pre>
+<pre class="methodSignature">public&nbsp;<a href="BidiMap.html" title="type parameter in BidiMap">V</a>&nbsp;get&#8203;(java.lang.Object&nbsp;key)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>get</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">K</a>,<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">V</a>&gt;</code></dd>
+<dd><code>get</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="BidiMap.html" title="type parameter in BidiMap">K</a>,&#8203;<a href="BidiMap.html" title="type parameter in BidiMap">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>get</code>&nbsp;in class&nbsp;<code>java.util.AbstractMap&lt;<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">K</a>,<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">V</a>&gt;</code></dd>
+<dd><code>get</code>&nbsp;in class&nbsp;<code>java.util.AbstractMap&lt;<a href="BidiMap.html" title="type parameter in BidiMap">K</a>,&#8203;<a href="BidiMap.html" title="type parameter in BidiMap">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="entrySet--">
+<a id="entrySet()">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>entrySet</h4>
-<pre>public&nbsp;java.util.Set&lt;java.util.Map.Entry&lt;<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">K</a>,<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">V</a>&gt;&gt;&nbsp;entrySet()</pre>
+<pre class="methodSignature">public&nbsp;java.util.Set&lt;java.util.Map.Entry&lt;<a href="BidiMap.html" title="type parameter in BidiMap">K</a>,&#8203;<a href="BidiMap.html" title="type parameter in BidiMap">V</a>&gt;&gt;&nbsp;entrySet()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>entrySet</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">K</a>,<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">V</a>&gt;</code></dd>
+<dd><code>entrySet</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="BidiMap.html" title="type parameter in BidiMap">K</a>,&#8203;<a href="BidiMap.html" title="type parameter in BidiMap">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>entrySet</code>&nbsp;in class&nbsp;<code>java.util.AbstractMap&lt;<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">K</a>,<a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="type parameter in BidiMap">V</a>&gt;</code></dd>
+<dd><code>entrySet</code>&nbsp;in class&nbsp;<code>java.util.AbstractMap&lt;<a href="BidiMap.html" title="type parameter in BidiMap">K</a>,&#8203;<a href="BidiMap.html" title="type parameter in BidiMap">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/BidiMap.html">Use</a></li>
@@ -477,16 +529,8 @@ extends java.util.AbstractMap&lt;K,V&gt;</pre>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/net4j/util/collection/ArrayIterator.html" title="class in org.eclipse.net4j.util.collection"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/net4j/util/collection/BidiMapper.html" title="class in org.eclipse.net4j.util.collection"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/net4j/util/collection/BidiMap.html" target="_top">Frames</a></li>
-<li><a href="BidiMap.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -499,11 +543,14 @@ extends java.util.AbstractMap&lt;K,V&gt;</pre>
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li><a href="#nested.classes.inherited.from.class.java.util.AbstractMap">Nested</a>&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
@@ -515,10 +562,12 @@ extends java.util.AbstractMap&lt;K,V&gt;</pre>
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

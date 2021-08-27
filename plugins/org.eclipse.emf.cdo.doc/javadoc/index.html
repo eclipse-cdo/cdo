@@ -1,75 +1,674 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
-<title>CDO Model Repository Documentation</title>
-<script type="text/javascript">
-    tmpTargetPage = "" + window.location.search;
-    if (tmpTargetPage != "" && tmpTargetPage != "undefined")
-        tmpTargetPage = tmpTargetPage.substring(1);
-    if (tmpTargetPage.indexOf(":") != -1 || (tmpTargetPage != "" && !validURL(tmpTargetPage)))
-        tmpTargetPage = "undefined";
-    targetPage = tmpTargetPage;
-    function validURL(url) {
-        try {
-            url = decodeURIComponent(url);
-        }
-        catch (error) {
-            return false;
-        }
-        var pos = url.indexOf(".html");
-        if (pos == -1 || pos != url.length - 5)
-            return false;
-        var allowNumber = false;
-        var allowSep = false;
-        var seenDot = false;
-        for (var i = 0; i < url.length - 5; i++) {
-            var ch = url.charAt(i);
-            if ('a' <= ch && ch <= 'z' ||
-                    'A' <= ch && ch <= 'Z' ||
-                    ch == '$' ||
-                    ch == '_' ||
-                    ch.charCodeAt(0) > 127) {
-                allowNumber = true;
-                allowSep = true;
-            } else if ('0' <= ch && ch <= '9'
-                    || ch == '-') {
-                if (!allowNumber)
-                     return false;
-            } else if (ch == '/' || ch == '.') {
-                if (!allowSep)
-                    return false;
-                allowNumber = false;
-                allowSep = false;
-                if (ch == '.')
-                     seenDot = true;
-                if (ch == '/' && seenDot)
-                     return false;
-            } else {
-                return false;
-            }
-        }
-        return true;
-    }
-    function loadFrames() {
-        if (targetPage != "" && targetPage != "undefined")
-             top.classFrame.location = top.targetPage;
-    }
-</script>
+<title>Overview (CDO Model Repository Documentation)</title>
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
+<link rel="stylesheet" type="text/css" href="stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="jquery/jquery-ui.css" title="Style">
+<script type="text/javascript" src="script.js"></script>
+<script type="text/javascript" src="jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="jquery/jquery-ui.js"></script>
 </head>
-<frameset cols="20%,80%" title="Documentation frame" onload="top.loadFrames()">
-<frameset rows="30%,70%" title="Left frames" onload="top.loadFrames()">
-<frame src="overview-frame.html" name="packageListFrame" title="All Packages">
-<frame src="allclasses-frame.html" name="packageFrame" title="All classes and interfaces (except non-static nested types)">
-</frameset>
-<frame src="overview-summary.html" name="classFrame" title="Package, class and interface descriptions" scrolling="yes">
-<noframes>
+<body>
+<script type="text/javascript"><!--
+    try {
+        if (location.href.indexOf('is-external=true') == -1) {
+            parent.document.title="Overview (CDO Model Repository Documentation)";
+        }
+    }
+    catch(err) {
+    }
+//-->
+var data = {"i0":1,"i1":2,"i2":256,"i3":256,"i4":256,"i5":256,"i6":256,"i7":256,"i8":256,"i9":256,"i10":256,"i11":256,"i12":256,"i13":256,"i14":256,"i15":256,"i16":4,"i17":8,"i18":1,"i19":1,"i20":8,"i21":1,"i22":1,"i23":1,"i24":8,"i25":1,"i26":512,"i27":512,"i28":512,"i29":1024,"i30":1024,"i31":2048,"i32":1024,"i33":16,"i34":4096,"i35":4096,"i36":8192,"i37":16384,"i38":4096,"i39":32768,"i40":65536,"i41":131072,"i42":131072,"i43":262144,"i44":524288,"i45":32768,"i46":1048576,"i47":2097152,"i48":4194304,"i49":8388608,"i50":65536,"i51":8388608,"i52":1,"i53":1,"i54":256,"i55":256,"i56":256,"i57":256,"i58":256,"i59":256,"i60":256,"i61":256,"i62":256,"i63":256,"i64":32768,"i65":16777216,"i66":128,"i67":1,"i68":16777216,"i69":33554432,"i70":67108864,"i71":134217728,"i72":67108864,"i73":67108864,"i74":32,"i75":64,"i76":32,"i77":1,"i78":1,"i79":128,"i80":1,"i81":1};
+var tabs = {65535:["t0","All Packages"],1:["t1","CDO Model Repository Client"],2:["t2","CDO Model Repository Client Admin Support"],4:["t4","CDO Model Repository Client Compare Support"],8:["t8","CDO Model Repository Client Edit Support"],16:["t16","CDO Model Repository Client Net4j Support"],32:["t32","CDO Model Repository Client UI"],64:["t64","CDO Model Repository Client UI Compare"],128:["t128","CDO Model Repository Client Workspace"],256:["t256","CDO Model Repository Common"],512:["t512","CDO Model Repository Explorer"],1024:["t1024","CDO Model Repository Expressions"],2048:["t2048","CDO Model Repository Expressions Edit Support"],4096:["t4096","CDO Model Repository Security"],8192:["t8192","CDO Model Repository Security Edit Support"],16384:["t16384","CDO Model Repository Security UI"],32768:["t32768","CDO Model Repository Server"],65536:["t65536","CDO Model Repository Server Admin Support"],131072:["t131072","CDO Model Repository Server DB"],262144:["t262144","CDO Model Repository Server Embedded Support"],524288:["t524288","CDO Model Repository Server Lissome"],1048576:["t1048576","CDO Model Repository Server MongoDB"],2097152:["t2097152","CDO Model Repository Server Net4j Support"],4194304:["t4194304","CDO Model Repository Server OCL Support"],8388608:["t8388608","CDO Model Repository Server Security Support"],16777216:["t16777216","CDO Transfer Framework"],33554432:["t33554432","CDO Transfer Framework (Repository Support)"],67108864:["t67108864","CDO Transfer Framework (UI)"],134217728:["t134217728","CDO Transfer Framework (Workspace Support)"]};
+var altColor = "altColor";
+var rowColor = "rowColor";
+var tableTab = "tableTab";
+var activeTableTab = "activeTableTab";
+var pathtoroot = "./";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
-<h2>Frame Alert</h2>
-<p>This document is designed to be viewed using the frames feature. If you see this message, you are using a non-frame-capable web client. Link to <a href="overview-summary.html">Non-frame version</a>.</p>
-</noframes>
-</frameset>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
+<!-- ========= START OF TOP NAVBAR ======= -->
+<div class="topNav"><a id="navbar.top">
+<!--   -->
+</a>
+<div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
+<a id="navbar.top.firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li class="navBarCell1Rev">Overview</li>
+<li>Package</li>
+<li>Class</li>
+<li>Use</li>
+<li><a href="deprecated-list.html">Deprecated</a></li>
+<li><a href="index-all.html">Index</a></li>
+<li><a href="help-doc.html">Help</a></li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList" id="allclasses_navbar_top">
+<li><a href="allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_top");
+  if(window==top) {
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
+  }
+  //-->
+</script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+</div>
+<a id="skip.navbar.top">
+<!--   -->
+</a></div>
+<!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
+<div class="header">
+<h1 class="title"><h1>CDO Model Repository Documentation</h1></h1>
+</div>
+<main role="main">
+<div class="contentContainer">
+<div class="block"><p>
+CDO is both a development-time model repository and a run-time persistence framework; being highly optimized it supports object graphs of arbitrary size.
+</p>
+        
+<img src="resources/CDOOverview.png"/>
+        
+<p>
+CDO offers transactions with save points, explicit locking, change notification, remote queries, temporality, branching, merging, offline and fail-over modes.
+The storage back-end is pluggable and migrations between direct JDBC, Hibernate, Objectivity/DB, MongoDB or DB4O are seamless for CDO applications. 
+</p></div>
+</div>
+<div class="contentContainer">
+<table class="overviewSummary">
+<caption><span id="t0" class="activeTableTab"><span>All Packages</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">CDO Model Repository Client</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">CDO Model Repository Client Admin Support</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(4);">CDO Model Repository Client Compare Support</a></span><span class="tabEnd">&nbsp;</span></span><span id="t8" class="tableTab"><span><a href="javascript:show(8);">CDO Model Repository Client Edit Support</a></span><span class="tabEnd">&nbsp;</span></span><span id="t16" class="tableTab"><span><a href="javascript:show(16);">CDO Model Repository Client Net4j Support</a></span><span class="tabEnd">&nbsp;</span></span><span id="t32" class="tableTab"><span><a href="javascript:show(32);">CDO Model Repository Client UI</a></span><span class="tabEnd">&nbsp;</span></span><span id="t64" class="tableTab"><span><a href="javascript:show(64);">CDO Model Repository Client UI Compare</a></span><span class="tabEnd">&nbsp;</span></span><span id="t128" class="tableTab"><span><a href="javascript:show(128);">CDO Model Repository Client Workspace</a></span><span class="tabEnd">&nbsp;</span></span><span id="t256" class="tableTab"><span><a href="javascript:show(256);">CDO Model Repository Common</a></span><span class="tabEnd">&nbsp;</span></span><span id="t512" class="tableTab"><span><a href="javascript:show(512);">CDO Model Repository Explorer</a></span><span class="tabEnd">&nbsp;</span></span><span id="t1024" class="tableTab"><span><a href="javascript:show(1024);">CDO Model Repository Expressions</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2048" class="tableTab"><span><a href="javascript:show(2048);">CDO Model Repository Expressions Edit Support</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4096" class="tableTab"><span><a href="javascript:show(4096);">CDO Model Repository Security</a></span><span class="tabEnd">&nbsp;</span></span><span id="t8192" class="tableTab"><span><a href="javascript:show(8192);">CDO Model Repository Security Edit Support</a></span><span class="tabEnd">&nbsp;</span></span><span id="t16384" class="tableTab"><span><a href="javascript:show(16384);">CDO Model Repository Security UI</a></span><span class="tabEnd">&nbsp;</span></span><span id="t32768" class="tableTab"><span><a href="javascript:show(32768);">CDO Model Repository Server</a></span><span class="tabEnd">&nbsp;</span></span><span id="t65536" class="tableTab"><span><a href="javascript:show(65536);">CDO Model Repository Server Admin Support</a></span><span class="tabEnd">&nbsp;</span></span><span id="t131072" class="tableTab"><span><a href="javascript:show(131072);">CDO Model Repository Server DB</a></span><span class="tabEnd">&nbsp;</span></span><span id="t262144" class="tableTab"><span><a href="javascript:show(262144);">CDO Model Repository Server Embedded Support</a></span><span class="tabEnd">&nbsp;</span></span><span id="t524288" class="tableTab"><span><a href="javascript:show(524288);">CDO Model Repository Server Lissome</a></span><span class="tabEnd">&nbsp;</span></span><span id="t1048576" class="tableTab"><span><a href="javascript:show(1048576);">CDO Model Repository Server MongoDB</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2097152" class="tableTab"><span><a href="javascript:show(2097152);">CDO Model Repository Server Net4j Support</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4194304" class="tableTab"><span><a href="javascript:show(4194304);">CDO Model Repository Server OCL Support</a></span><span class="tabEnd">&nbsp;</span></span><span id="t8388608" class="tableTab"><span><a href="javascript:show(8388608);">CDO Model Repository Server Security Support</a></span><span class="tabEnd">&nbsp;</span></span><span id="t16777216" class="tableTab"><span><a href="javascript:show(16777216);">CDO Transfer Framework</a></span><span class="tabEnd">&nbsp;</span></span><span id="t33554432" class="tableTab"><span><a href="javascript:show(33554432);">CDO Transfer Framework (Repository Support)</a></span><span class="tabEnd">&nbsp;</span></span><span id="t67108864" class="tableTab"><span><a href="javascript:show(67108864);">CDO Transfer Framework (UI)</a></span><span class="tabEnd">&nbsp;</span></span><span id="t134217728" class="tableTab"><span><a href="javascript:show(134217728);">CDO Transfer Framework (Workspace Support)</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<tr>
+<th class="colFirst" scope="col">Package</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor" id="i0">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/package-summary.html">org.eclipse.emf.cdo</a></th>
+<td class="colLast">
+<div class="block">Client concepts like <a href="org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>CDOObject</code></a> and <a href="org/eclipse/emf/cdo/CDOState.html" title="enum in org.eclipse.emf.cdo"><code>CDOState</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i1">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/admin/package-summary.html">org.eclipse.emf.cdo.admin</a></th>
+<td class="colLast">
+<div class="block">Client side of the protocol to administer CDO repositories remotely.</div>
+</td>
+</tr>
+<tr class="altColor" id="i2">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/common/package-summary.html">org.eclipse.emf.cdo.common</a></th>
+<td class="colLast">
+<div class="block">Common concepts that are differently extended in clients and servers.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i3">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/common/admin/package-summary.html">org.eclipse.emf.cdo.common.admin</a></th>
+<td class="colLast">
+<div class="block">Common concepts for the protocol to administer CDO repositories remotely.</div>
+</td>
+</tr>
+<tr class="altColor" id="i4">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/common/branch/package-summary.html">org.eclipse.emf.cdo.common.branch</a></th>
+<td class="colLast">
+<div class="block">Common concepts for dealing with branches.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i5">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/common/commit/package-summary.html">org.eclipse.emf.cdo.common.commit</a></th>
+<td class="colLast">
+<div class="block">Common concepts for dealing with commits and change sets.</div>
+</td>
+</tr>
+<tr class="altColor" id="i6">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/common/commit/handler/package-summary.html">org.eclipse.emf.cdo.common.commit.handler</a></th>
+<td class="colLast">
+<div class="block">Some useful commit info handler implementations.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i7">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/common/id/package-summary.html">org.eclipse.emf.cdo.common.id</a></th>
+<td class="colLast">
+<div class="block">Common concepts for dealing with object and revision IDs.</div>
+</td>
+</tr>
+<tr class="altColor" id="i8">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/common/lob/package-summary.html">org.eclipse.emf.cdo.common.lob</a></th>
+<td class="colLast">
+<div class="block">Common concepts for dealing with large binary objects and large character objects.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i9">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/common/lock/package-summary.html">org.eclipse.emf.cdo.common.lock</a></th>
+<td class="colLast">
+<div class="block">Common concepts for dealing with durable locks and views.</div>
+</td>
+</tr>
+<tr class="altColor" id="i10">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/common/model/package-summary.html">org.eclipse.emf.cdo.common.model</a></th>
+<td class="colLast">
+<div class="block">Common concepts for dealing with models and types.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i11">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/common/protocol/package-summary.html">org.eclipse.emf.cdo.common.protocol</a></th>
+<td class="colLast">
+<div class="block">Common concepts for dealing with protocols and CDO-specific I/O.</div>
+</td>
+</tr>
+<tr class="altColor" id="i12">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/common/revision/package-summary.html">org.eclipse.emf.cdo.common.revision</a></th>
+<td class="colLast">
+<div class="block">Common concepts for dealing with revisions and revision lists.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i13">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/common/revision/delta/package-summary.html">org.eclipse.emf.cdo.common.revision.delta</a></th>
+<td class="colLast">
+<div class="block">Common concepts for dealing with revision deltas and feature deltas.</div>
+</td>
+</tr>
+<tr class="altColor" id="i14">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/common/security/package-summary.html">org.eclipse.emf.cdo.common.security</a></th>
+<td class="colLast">
+<div class="block">Common concepts for dealing with permissions and protectable entities.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i15">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/common/util/package-summary.html">org.eclipse.emf.cdo.common.util</a></th>
+<td class="colLast">
+<div class="block">Common utility classes, some common interfaces and exceptions.</div>
+</td>
+</tr>
+<tr class="altColor" id="i16">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/compare/package-summary.html">org.eclipse.emf.cdo.compare</a></th>
+<td class="colLast">
+<div class="block">Client concepts for integrating EMF Compare with CDO.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i17">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/edit/package-summary.html">org.eclipse.emf.cdo.edit</a></th>
+<td class="colLast">
+<div class="block">Useful base classes that can be referenced from custom EMF generator models.</div>
+</td>
+</tr>
+<tr class="altColor" id="i18">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/eresource/package-summary.html">org.eclipse.emf.cdo.eresource</a></th>
+<td class="colLast">
+<div class="block">The generated EMF API of the CDO repository file system.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i19">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/eresource/impl/package-summary.html">org.eclipse.emf.cdo.eresource.impl</a></th>
+<td class="colLast">
+<div class="block">The generated EMF implementation of the CDO repository file system.</div>
+</td>
+</tr>
+<tr class="altColor" id="i20">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/eresource/provider/package-summary.html">org.eclipse.emf.cdo.eresource.provider</a></th>
+<td class="colLast">
+<div class="block">The generated EMF edit support of the CDO repository file system.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i21">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/eresource/util/package-summary.html">org.eclipse.emf.cdo.eresource.util</a></th>
+<td class="colLast">
+<div class="block">The generated EMF utilities of the CDO repository file system.</div>
+</td>
+</tr>
+<tr class="altColor" id="i22">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/etypes/package-summary.html">org.eclipse.emf.cdo.etypes</a></th>
+<td class="colLast">
+<div class="block">The generated EMF API of the CDO system data types and native annotations.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i23">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/etypes/impl/package-summary.html">org.eclipse.emf.cdo.etypes.impl</a></th>
+<td class="colLast">
+<div class="block">The generated EMF implementation of the CDO system data types and native annotations.</div>
+</td>
+</tr>
+<tr class="altColor" id="i24">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/etypes/provider/package-summary.html">org.eclipse.emf.cdo.etypes.provider</a></th>
+<td class="colLast">
+<div class="block">The generated EMF edit support of the CDO system data types and native annotations.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i25">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/etypes/util/package-summary.html">org.eclipse.emf.cdo.etypes.util</a></th>
+<td class="colLast">
+<div class="block">The generated EMF utilities of the CDO system data types and native annotations.</div>
+</td>
+</tr>
+<tr class="altColor" id="i26">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/explorer/package-summary.html">org.eclipse.emf.cdo.explorer</a></th>
+<td class="colLast">
+<div class="block">Base interfaces and a utility class for <a href="org/eclipse/emf/cdo/explorer/repositories/CDORepository.html" title="interface in org.eclipse.emf.cdo.explorer.repositories"><code>repositories</code></a>
+ and <a href="org/eclipse/emf/cdo/explorer/checkouts/CDOCheckout.html" title="interface in org.eclipse.emf.cdo.explorer.checkouts"><code>checkouts</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i27">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/explorer/checkouts/package-summary.html">org.eclipse.emf.cdo.explorer.checkouts</a></th>
+<td class="colLast">
+<div class="block">Interfaces for working with <a href="org/eclipse/emf/cdo/explorer/checkouts/CDOCheckout.html" title="interface in org.eclipse.emf.cdo.explorer.checkouts"><code>checkouts</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor" id="i28">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/explorer/repositories/package-summary.html">org.eclipse.emf.cdo.explorer.repositories</a></th>
+<td class="colLast">
+<div class="block">Interfaces for working with <a href="org/eclipse/emf/cdo/explorer/repositories/CDORepository.html" title="interface in org.eclipse.emf.cdo.explorer.repositories"><code>repositories</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i29">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/expressions/package-summary.html">org.eclipse.emf.cdo.expressions</a></th>
+<td class="colLast">
+<div class="block">The generated EMF API of the CDO expressions model.</div>
+</td>
+</tr>
+<tr class="altColor" id="i30">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/expressions/impl/package-summary.html">org.eclipse.emf.cdo.expressions.impl</a></th>
+<td class="colLast">
+<div class="block">The generated EMF implementation of the CDO expressions model.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i31">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/expressions/provider/package-summary.html">org.eclipse.emf.cdo.expressions.provider</a></th>
+<td class="colLast">
+<div class="block">The generated EMF edit support of the CDO expressions model.</div>
+</td>
+</tr>
+<tr class="altColor" id="i32">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/expressions/util/package-summary.html">org.eclipse.emf.cdo.expressions.util</a></th>
+<td class="colLast">
+<div class="block">The generated EMF utilities of the CDO expressions model.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i33">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/net4j/package-summary.html">org.eclipse.emf.cdo.net4j</a></th>
+<td class="colLast">
+<div class="block">Client concepts for dealing with Net4j-based sessions to remote repositories.</div>
+</td>
+</tr>
+<tr class="altColor" id="i34">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/security/package-summary.html">org.eclipse.emf.cdo.security</a></th>
+<td class="colLast">
+<div class="block">The generated EMF API of the CDO security model.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i35">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/security/impl/package-summary.html">org.eclipse.emf.cdo.security.impl</a></th>
+<td class="colLast">
+<div class="block">The generated EMF implementation of the CDO security model.</div>
+</td>
+</tr>
+<tr class="altColor" id="i36">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/security/provider/package-summary.html">org.eclipse.emf.cdo.security.provider</a></th>
+<td class="colLast">
+<div class="block">The generated EMF edit support of the CDO security model.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i37">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/security/ui/package-summary.html">org.eclipse.emf.cdo.security.ui</a></th>
+<td class="colLast">
+<div class="block">Concepts and default implementations for the CDO security user interface.</div>
+</td>
+</tr>
+<tr class="altColor" id="i38">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/security/util/package-summary.html">org.eclipse.emf.cdo.security.util</a></th>
+<td class="colLast">
+<div class="block">The generated EMF utilities of the CDO security model.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i39">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/server/package-summary.html">org.eclipse.emf.cdo.server</a></th>
+<td class="colLast">
+<div class="block">Server concepts for dealing with repositories and stores.</div>
+</td>
+</tr>
+<tr class="altColor" id="i40">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/server/admin/package-summary.html">org.eclipse.emf.cdo.server.admin</a></th>
+<td class="colLast">
+<div class="block">Server side of the protocol to administer CDO repositories remotely.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i41">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/server/db/package-summary.html">org.eclipse.emf.cdo.server.db</a></th>
+<td class="colLast">
+<div class="block">Server concepts for dealing with DB stores and accessors.</div>
+</td>
+</tr>
+<tr class="altColor" id="i42">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/server/db/mapping/package-summary.html">org.eclipse.emf.cdo.server.db.mapping</a></th>
+<td class="colLast">
+<div class="block">Server concepts for dealing with mapping strategies and mappings for classes, lists and types.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i43">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/server/embedded/package-summary.html">org.eclipse.emf.cdo.server.embedded</a></th>
+<td class="colLast">
+<div class="block">Server concepts for dealing with Net4j-based repositories and fail-over infrastructure.</div>
+</td>
+</tr>
+<tr class="altColor" id="i44">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/server/lissome/package-summary.html">org.eclipse.emf.cdo.server.lissome</a></th>
+<td class="colLast">
+<div class="block">Server concepts for dealing with DB stores and accessors.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i45">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/server/mem/package-summary.html">org.eclipse.emf.cdo.server.mem</a></th>
+<td class="colLast">
+<div class="block">Server concepts for dealing with in-memory stores.</div>
+</td>
+</tr>
+<tr class="altColor" id="i46">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/server/mongodb/package-summary.html">org.eclipse.emf.cdo.server.mongodb</a></th>
+<td class="colLast">
+<div class="block">Server concepts for dealing with MongoDB stores and accessors.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i47">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/server/net4j/package-summary.html">org.eclipse.emf.cdo.server.net4j</a></th>
+<td class="colLast">
+<div class="block">Server concepts for dealing with Net4j-based repositories and fail-over infrastructure.</div>
+</td>
+</tr>
+<tr class="altColor" id="i48">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/server/ocl/package-summary.html">org.eclipse.emf.cdo.server.ocl</a></th>
+<td class="colLast">
+<div class="block">Server implementation of a generic OCL query handler.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i49">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/server/security/package-summary.html">org.eclipse.emf.cdo.server.security</a></th>
+<td class="colLast">
+<div class="block">Server integration of the <a href="org/eclipse/emf/cdo/security/Realm.html" title="interface in org.eclipse.emf.cdo.security"><code>Security</code></a> model.</div>
+</td>
+</tr>
+<tr class="altColor" id="i50">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/server/spi/admin/package-summary.html">org.eclipse.emf.cdo.server.spi.admin</a></th>
+<td class="colLast">
+<div class="block">Server provider interfaces (SPI) for the protocol to administer CDO repositories remotely.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i51">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/server/spi/security/package-summary.html">org.eclipse.emf.cdo.server.spi.security</a></th>
+<td class="colLast">
+<div class="block">Server provider interfaces (SPI) for the server integration of the <a href="org/eclipse/emf/cdo/security/Realm.html" title="interface in org.eclipse.emf.cdo.security"><code>Security</code></a> model.</div>
+</td>
+</tr>
+<tr class="altColor" id="i52">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/session/package-summary.html">org.eclipse.emf.cdo.session</a></th>
+<td class="colLast">
+<div class="block">Client concepts for dealing with sessions to CDO repositories.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i53">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/session/remote/package-summary.html">org.eclipse.emf.cdo.session.remote</a></th>
+<td class="colLast">
+<div class="block">Client concepts for the communication and collaboration with other sessions.</div>
+</td>
+</tr>
+<tr class="altColor" id="i54">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/spi/common/package-summary.html">org.eclipse.emf.cdo.spi.common</a></th>
+<td class="colLast">
+<div class="block">Common service provider interfaces and useful base implementations.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i55">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/spi/common/admin/package-summary.html">org.eclipse.emf.cdo.spi.common.admin</a></th>
+<td class="colLast">
+<div class="block">Common concepts for dealing with protocols and CDO administration-specific I/O.</div>
+</td>
+</tr>
+<tr class="altColor" id="i56">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/spi/common/branch/package-summary.html">org.eclipse.emf.cdo.spi.common.branch</a></th>
+<td class="colLast">
+<div class="block">Common service provider interfaces and useful base implementations for dealing with branches.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i57">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/spi/common/commit/package-summary.html">org.eclipse.emf.cdo.spi.common.commit</a></th>
+<td class="colLast">
+<div class="block">Common service provider interfaces and useful base implementations for dealing with commits and change sets.</div>
+</td>
+</tr>
+<tr class="altColor" id="i58">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/spi/common/id/package-summary.html">org.eclipse.emf.cdo.spi.common.id</a></th>
+<td class="colLast">
+<div class="block">Common service provider interfaces and useful base implementations for dealing with object and revision IDs.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i59">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/spi/common/lock/package-summary.html">org.eclipse.emf.cdo.spi.common.lock</a></th>
+<td class="colLast">
+<div class="block">Common service provider interfaces and useful base implementations for dealing with object locks.</div>
+</td>
+</tr>
+<tr class="altColor" id="i60">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/spi/common/model/package-summary.html">org.eclipse.emf.cdo.spi.common.model</a></th>
+<td class="colLast">
+<div class="block">Common service provider interfaces and useful base implementations for dealing with models and types</div>
+</td>
+</tr>
+<tr class="rowColor" id="i61">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/spi/common/protocol/package-summary.html">org.eclipse.emf.cdo.spi.common.protocol</a></th>
+<td class="colLast">
+<div class="block">Common base implementations for dealing with I/O of CDO data structures.</div>
+</td>
+</tr>
+<tr class="altColor" id="i62">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/spi/common/revision/package-summary.html">org.eclipse.emf.cdo.spi.common.revision</a></th>
+<td class="colLast">
+<div class="block">Common service provider interfaces and useful base implementations for dealing with revisions and deltas.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i63">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/spi/common/util/package-summary.html">org.eclipse.emf.cdo.spi.common.util</a></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor" id="i64">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/spi/server/package-summary.html">org.eclipse.emf.cdo.spi.server</a></th>
+<td class="colLast">
+<div class="block">Server service provider interfaces and useful base implementations.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i65">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/spi/transfer/package-summary.html">org.eclipse.emf.cdo.spi.transfer</a></th>
+<td class="colLast">
+<div class="block">Service provider concepts for dealing with transfers of <a href="org/eclipse/emf/cdo/eresource/CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resources</code></a>
+ between <a href="org/eclipse/emf/cdo/transfer/CDOTransferSystem.html" title="class in org.eclipse.emf.cdo.transfer"><code>systems</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor" id="i66">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/spi/workspace/package-summary.html">org.eclipse.emf.cdo.spi.workspace</a></th>
+<td class="colLast">
+<div class="block">Server provider interfaces (SPI) for CDO <a href="org/eclipse/emf/cdo/workspace/CDOWorkspace.html" title="interface in org.eclipse.emf.cdo.workspace"><code>workspaces</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i67">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/transaction/package-summary.html">org.eclipse.emf.cdo.transaction</a></th>
+<td class="colLast">
+<div class="block">Client concepts for dealing with transactions, distributed transactions and their save points.</div>
+</td>
+</tr>
+<tr class="altColor" id="i68">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/transfer/package-summary.html">org.eclipse.emf.cdo.transfer</a></th>
+<td class="colLast">
+<div class="block">Client concepts for dealing with transfers of <a href="org/eclipse/emf/cdo/eresource/CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resources</code></a>
+ between <a href="org/eclipse/emf/cdo/transfer/CDOTransferSystem.html" title="class in org.eclipse.emf.cdo.transfer"><code>systems</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i69">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/transfer/spi/repository/package-summary.html">org.eclipse.emf.cdo.transfer.spi.repository</a></th>
+<td class="colLast">
+<div class="block">Client concepts for dealing with transfers of <a href="org/eclipse/emf/cdo/eresource/CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resources</code></a>
+ between <a href="org/eclipse/emf/cdo/transfer/CDOTransferSystem.html" title="class in org.eclipse.emf.cdo.transfer"><code>systems</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor" id="i70">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/transfer/spi/ui/package-summary.html">org.eclipse.emf.cdo.transfer.spi.ui</a></th>
+<td class="colLast">
+<div class="block">Service provider concepts for dealing with transfers of <a href="org/eclipse/emf/cdo/eresource/CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resources</code></a>
+ between <a href="org/eclipse/emf/cdo/transfer/CDOTransferSystem.html" title="class in org.eclipse.emf.cdo.transfer"><code>systems</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i71">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/transfer/spi/workspace/package-summary.html">org.eclipse.emf.cdo.transfer.spi.workspace</a></th>
+<td class="colLast">
+<div class="block">Client concepts for dealing with transfers of <a href="org/eclipse/emf/cdo/eresource/CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resources</code></a>
+ between <a href="org/eclipse/emf/cdo/transfer/CDOTransferSystem.html" title="class in org.eclipse.emf.cdo.transfer"><code>systems</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor" id="i72">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/transfer/ui/package-summary.html">org.eclipse.emf.cdo.transfer.ui</a></th>
+<td class="colLast">
+<div class="block">Reusable implementatins of common JFace concepts for dealing with transfers of <a href="org/eclipse/emf/cdo/eresource/CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resources</code></a>
+ between <a href="org/eclipse/emf/cdo/transfer/CDOTransferSystem.html" title="class in org.eclipse.emf.cdo.transfer"><code>systems</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i73">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/transfer/ui/swt/package-summary.html">org.eclipse.emf.cdo.transfer.ui.swt</a></th>
+<td class="colLast">
+<div class="block">Reusable <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets" class="externalLink"><code>controls</code></a> for dealing with transfers of <a href="org/eclipse/emf/cdo/eresource/CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resources</code></a>
+ between <a href="org/eclipse/emf/cdo/transfer/CDOTransferSystem.html" title="class in org.eclipse.emf.cdo.transfer"><code>systems</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor" id="i74">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/ui/package-summary.html">org.eclipse.emf.cdo.ui</a></th>
+<td class="colLast">
+<div class="block">Reusable UI components specific to the CDO Model Repository.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i75">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/ui/compare/package-summary.html">org.eclipse.emf.cdo.ui.compare</a></th>
+<td class="colLast">
+<div class="block">Classes that help to open EMF Compare user interfaces on CDO models.</div>
+</td>
+</tr>
+<tr class="altColor" id="i76">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/ui/widgets/package-summary.html">org.eclipse.emf.cdo.ui.widgets</a></th>
+<td class="colLast">
+<div class="block">A library with reusable widgets.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i77">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/util/package-summary.html">org.eclipse.emf.cdo.util</a></th>
+<td class="colLast">
+<div class="block">Client utility classes, some common interfaces and exceptions.</div>
+</td>
+</tr>
+<tr class="altColor" id="i78">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/view/package-summary.html">org.eclipse.emf.cdo.view</a></th>
+<td class="colLast">
+<div class="block">Client concepts for dealing with views, view sets, queries, CDO objects and EMF resource sets.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i79">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/cdo/workspace/package-summary.html">org.eclipse.emf.cdo.workspace</a></th>
+<td class="colLast">
+<div class="block">Concepts to checkout, open and further operate CDO <a href="org/eclipse/emf/cdo/workspace/CDOWorkspace.html" title="interface in org.eclipse.emf.cdo.workspace"><code>workspaces</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor" id="i80">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/internal/cdo/package-summary.html">org.eclipse.emf.internal.cdo</a></th>
+<td class="colLast">
+<div class="block">Exposes <a href="org/eclipse/emf/internal/cdo/CDOObjectImpl.html" title="class in org.eclipse.emf.internal.cdo"><code>CDOObjectImpl</code></a> for extension in generated EMF models.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i81">
+<th class="colFirst" scope="row"><a href="org/eclipse/emf/spi/cdo/package-summary.html">org.eclipse.emf.spi.cdo</a></th>
+<td class="colLast">
+<div class="block">Client service provider interfaces and useful base implementations.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</main>
+<footer role="contentinfo">
+<nav role="navigation">
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<div class="bottomNav"><a id="navbar.bottom">
+<!--   -->
+</a>
+<div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
+<a id="navbar.bottom.firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li class="navBarCell1Rev">Overview</li>
+<li>Package</li>
+<li>Class</li>
+<li>Use</li>
+<li><a href="deprecated-list.html">Deprecated</a></li>
+<li><a href="index-all.html">Index</a></li>
+<li><a href="help-doc.html">Help</a></li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList" id="allclasses_navbar_bottom">
+<li><a href="allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_bottom");
+  if(window==top) {
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
+  }
+  //-->
+</script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+</div>
+<a id="skip.navbar.bottom">
+<!--   -->
+</a></div>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
+</body>
 </html>

@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>ContainerPathItemProvider (Net4j Utilities Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":42,"i1":42,"i2":42,"i3":42,"i4":42,"i5":42,"i6":42};
+var data = {"i0":42,"i1":42,"i2":42,"i3":42,"i4":42,"i5":42,"i6":42};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/ContainerPathItemProvider.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerNameSorter.html" title="class in org.eclipse.net4j.util.ui.views"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html" title="class in org.eclipse.net4j.util.ui.views"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/net4j/util/ui/views/ContainerPathItemProvider.html" target="_top">Frames</a></li>
-<li><a href="ContainerPathItemProvider.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,12 +82,15 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li><a href="#nested.classes.inherited.from.class.org.eclipse.net4j.util.ui.views.ContainerItemProvider">Nested</a>&nbsp;|&nbsp;</li>
-<li><a href="#fields.inherited.from.class.org.eclipse.net4j.util.ui.views.ContainerItemProvider">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
@@ -85,33 +101,42 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.net4j.util.ui.views</div>
-<h2 title="Class ContainerPathItemProvider" class="title">Class ContainerPathItemProvider&lt;CONTAINER extends <a href="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;&gt;</h2>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.net4j.util.ui.views</a></div>
+<h2 title="Class ContainerPathItemProvider" class="title">Class ContainerPathItemProvider&lt;CONTAINER extends <a href="../../container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;&gt;</h2>
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerComparator.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">org.eclipse.jface.viewers.ViewerComparator</a></li>
+<li><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerComparator.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">org.eclipse.jface.viewers.ViewerComparator</a></li>
 <li>
 <ul class="inheritance">
-<li><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerSorter.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">org.eclipse.jface.viewers.ViewerSorter</a></li>
+<li><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerSorter.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">org.eclipse.jface.viewers.ViewerSorter</a></li>
 <li>
 <ul class="inheritance">
-<li><a href="../../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html" title="class in org.eclipse.net4j.util.ui">org.eclipse.net4j.util.ui.StructuredContentProvider</a>&lt;INPUT&gt;</li>
+<li><a href="../StructuredContentProvider.html" title="class in org.eclipse.net4j.util.ui">org.eclipse.net4j.util.ui.StructuredContentProvider</a>&lt;INPUT&gt;</li>
 <li>
 <ul class="inheritance">
-<li><a href="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html" title="class in org.eclipse.net4j.util.ui.views">org.eclipse.net4j.util.ui.views.ItemProvider</a>&lt;CONTAINER&gt;</li>
+<li><a href="ItemProvider.html" title="class in org.eclipse.net4j.util.ui.views">org.eclipse.net4j.util.ui.views.ItemProvider</a>&lt;CONTAINER&gt;</li>
 <li>
 <ul class="inheritance">
-<li><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html" title="class in org.eclipse.net4j.util.ui.views">org.eclipse.net4j.util.ui.views.ContainerItemProvider</a>&lt;CONTAINER&gt;</li>
+<li><a href="ContainerItemProvider.html" title="class in org.eclipse.net4j.util.ui.views">org.eclipse.net4j.util.ui.views.ContainerItemProvider</a>&lt;CONTAINER&gt;</li>
 <li>
 <ul class="inheritance">
 <li>org.eclipse.net4j.util.ui.views.ContainerPathItemProvider&lt;CONTAINER&gt;</li>
@@ -133,15 +158,14 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd>java.util.EventListener, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/DelegatingStyledCellLabelProvider.IStyledLabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">DelegatingStyledCellLabelProvider.IStyledLabelProvider</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IBaseLabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IBaseLabelProvider</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IColorProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IColorProvider</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IContentProvider</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IFontProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IFontProvider</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ILabelProvider</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IStructuredContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IStructuredContentProvider</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ITreeContentProvider</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreePathContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ITreePathContentProvider</a>, <a href="../../../../../../org/eclipse/net4j/util/event/IListener.html" title="interface in org.eclipse.net4j.util.event">IListener</a></dd>
+<dd><code>java.util.EventListener</code>, <code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/DelegatingStyledCellLabelProvider.IStyledLabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">DelegatingStyledCellLabelProvider.IStyledLabelProvider</a></code>, <code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IBaseLabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">IBaseLabelProvider</a></code>, <code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IColorProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">IColorProvider</a></code>, <code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">IContentProvider</a></code>, <code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IFontProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">IFontProvider</a></code>, <code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">ILabelProvider</a></code>, <code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IStructuredContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">IStructuredContentProvider</a></code>, <code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">ITreeContentProvider</a></code>, <code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreePathContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">ITreePathContentProvider</a></code>, <code><a href="../../event/IListener.html" title="interface in org.eclipse.net4j.util.event">IListener</a></code></dd>
 </dl>
 <hr>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
-<br>
 <pre>@Deprecated
-public class <span class="typeNameLabel">ContainerPathItemProvider&lt;CONTAINER extends <a href="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;&gt;</span>
-extends <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider</a>&lt;CONTAINER&gt;
-implements <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreePathContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ITreePathContentProvider</a></pre>
+public class <span class="typeNameLabel">ContainerPathItemProvider&lt;CONTAINER extends <a href="../../container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;&gt;</span>
+extends <a href="ContainerItemProvider.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider</a>&lt;CONTAINER&gt;
+implements <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreePathContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">ITreePathContentProvider</a></pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <dl>
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>Eike Stepper</dd>
@@ -153,194 +177,213 @@ implements <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="nested.class.summary">
+<li class="blockList"><a id="nested.class.summary">
 <!--   -->
 </a>
 <h3>Nested Class Summary</h3>
 <ul class="blockList">
-<li class="blockList"><a name="nested.classes.inherited.from.class.org.eclipse.net4j.util.ui.views.ContainerItemProvider">
+<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.net4j.util.ui.views.ContainerItemProvider">
 <!--   -->
 </a>
-<h3>Nested classes/interfaces inherited from class&nbsp;org.eclipse.net4j.util.ui.views.<a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider</a></h3>
-<code><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.AbstractContainerNode.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider.AbstractContainerNode</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.AbstractNode.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider.AbstractNode</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.ContainerNode.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider.ContainerNode</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.ErrorElement.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider.ErrorElement</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.LazyElement.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider.LazyElement</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.LeafNode.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider.LeafNode</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.SlowElement.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider.SlowElement</a></code></li>
+<h3>Nested classes/interfaces inherited from class&nbsp;org.eclipse.net4j.util.ui.views.<a href="ContainerItemProvider.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider</a></h3>
+<code><a href="ContainerItemProvider.AbstractContainerNode.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider.AbstractContainerNode</a>, <a href="ContainerItemProvider.AbstractNode.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider.AbstractNode</a>, <a href="ContainerItemProvider.ContainerNode.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider.ContainerNode</a>, <a href="ContainerItemProvider.ErrorElement.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider.ErrorElement</a>, <a href="ContainerItemProvider.FixedChildrenNode.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider.FixedChildrenNode</a>, <a href="ContainerItemProvider.LazyElement.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider.LazyElement</a>, <a href="ContainerItemProvider.LeafNode.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider.LeafNode</a>, <a href="ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a>, <a href="ContainerItemProvider.SlowElement.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider.SlowElement</a></code></li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- =========== FIELD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.summary">
+<li class="blockList"><a id="field.summary">
 <!--   -->
 </a>
 <h3>Field Summary</h3>
 <ul class="blockList">
-<li class="blockList"><a name="fields.inherited.from.class.org.eclipse.net4j.util.ui.views.ContainerItemProvider">
+<li class="blockList"><a id="fields.inherited.from.class.org.eclipse.net4j.util.ui.views.ContainerItemProvider">
 <!--   -->
 </a>
-<h3>Fields inherited from class&nbsp;org.eclipse.net4j.util.ui.views.<a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider</a></h3>
-<code><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#ERROR_IMAGE">ERROR_IMAGE</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#PENDING_COLOR">PENDING_COLOR</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#PENDING_IMAGE">PENDING_IMAGE</a></code></li>
+<h3>Fields inherited from class&nbsp;org.eclipse.net4j.util.ui.views.<a href="ContainerItemProvider.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider</a></h3>
+<code><a href="ContainerItemProvider.html#ERROR_IMAGE">ERROR_IMAGE</a>, <a href="ContainerItemProvider.html#PENDING_COLOR">PENDING_COLOR</a>, <a href="ContainerItemProvider.html#PENDING_IMAGE">PENDING_IMAGE</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="fields.inherited.from.class.org.eclipse.net4j.util.ui.views.ItemProvider">
+<li class="blockList"><a id="fields.inherited.from.class.org.eclipse.net4j.util.ui.views.ItemProvider">
 <!--   -->
 </a>
-<h3>Fields inherited from class&nbsp;org.eclipse.net4j.util.ui.views.<a href="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html" title="class in org.eclipse.net4j.util.ui.views">ItemProvider</a></h3>
-<code><a href="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html#NO_ELEMENTS">NO_ELEMENTS</a></code></li>
+<h3>Fields inherited from class&nbsp;org.eclipse.net4j.util.ui.views.<a href="ItemProvider.html" title="class in org.eclipse.net4j.util.ui.views">ItemProvider</a></h3>
+<code><a href="ItemProvider.html#NO_ELEMENTS">NO_ELEMENTS</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="fields.inherited.from.class.org.eclipse.jface.viewers.ViewerSorter">
+<li class="blockList"><a id="fields.inherited.from.class.org.eclipse.jface.viewers.ViewerSorter">
 <!--   -->
 </a>
-<h3>Fields inherited from class&nbsp;org.eclipse.jface.viewers.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerSorter.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ViewerSorter</a></h3>
-<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerSorter.html?is-external=true#collator" title="class or interface in org.eclipse.jface.viewers">collator</a></code></li>
+<h3>Fields inherited from class&nbsp;org.eclipse.jface.viewers.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerSorter.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">ViewerSorter</a></h3>
+<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerSorter.html?is-external=true#collator" title="class or interface in org.eclipse.jface.viewers" class="externalLink">collator</a></code></li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.summary">
+<li class="blockList"><a id="constructor.summary">
 <!--   -->
 </a>
 <h3>Constructor Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
+<table class="memberSummary">
 <caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Constructor and Description</th>
+<th class="colFirst" scope="col">Constructor</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerPathItemProvider.html#ContainerPathItemProvider--">ContainerPathItemProvider</a></span>()</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">ContainerPathItemProvider</a></span>()</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 &nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerPathItemProvider.html#ContainerPathItemProvider-org.eclipse.net4j.util.ui.views.IElementFilter-">ContainerPathItemProvider</a></span>(<a href="../../../../../../org/eclipse/net4j/util/ui/views/IElementFilter.html" title="interface in org.eclipse.net4j.util.ui.views">IElementFilter</a>&nbsp;rootElementFilter)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(org.eclipse.net4j.util.ui.views.IElementFilter)">ContainerPathItemProvider</a></span>&#8203;(<a href="IElementFilter.html" title="interface in org.eclipse.net4j.util.ui.views">IElementFilter</a>&nbsp;rootElementFilter)</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 &nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t6" class="tableTab"><span><a href="javascript:show(32);">Deprecated Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerPathItemProvider.html#addNode-java.lang.Object-org.eclipse.net4j.util.ui.views.ContainerItemProvider.Node-">addNode</a></span>(java.lang.Object&nbsp;element,
-       <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a>&nbsp;node)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addNode(java.lang.Object,org.eclipse.net4j.util.ui.views.ContainerItemProvider.Node)">addNode</a></span>&#8203;(java.lang.Object&nbsp;element,
+       <a href="ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a>&nbsp;node)</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 &nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerPathItemProvider.html#disconnectInput-CONTAINER-">disconnectInput</a></span>(<a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerPathItemProvider.html" title="type parameter in ContainerPathItemProvider">CONTAINER</a>&nbsp;input)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#disconnectInput(CONTAINER)">disconnectInput</a></span>&#8203;(<a href="ContainerPathItemProvider.html" title="type parameter in ContainerPathItemProvider">CONTAINER</a>&nbsp;input)</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 &nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>java.lang.Object[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerPathItemProvider.html#getChildren-org.eclipse.jface.viewers.TreePath-">getChildren</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/TreePath.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">TreePath</a>&nbsp;path)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getChildren(org.eclipse.jface.viewers.TreePath)">getChildren</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/TreePath.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">TreePath</a>&nbsp;path)</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 &nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>protected <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/TreePath.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">TreePath</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerPathItemProvider.html#getParentPath-org.eclipse.net4j.util.ui.views.ContainerItemProvider.Node-">getParentPath</a></span>(<a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a>&nbsp;node)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<td class="colFirst"><code>protected <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/TreePath.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">TreePath</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getParentPath(org.eclipse.net4j.util.ui.views.ContainerItemProvider.Node)">getParentPath</a></span>&#8203;(<a href="ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a>&nbsp;node)</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 &nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/TreePath.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">TreePath</a>[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerPathItemProvider.html#getParents-java.lang.Object-">getParents</a></span>(java.lang.Object&nbsp;element)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<td class="colFirst"><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/TreePath.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">TreePath</a>[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getParents(java.lang.Object)">getParents</a></span>&#8203;(java.lang.Object&nbsp;element)</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 &nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerPathItemProvider.html#hasChildren-org.eclipse.jface.viewers.TreePath-">hasChildren</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/TreePath.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">TreePath</a>&nbsp;path)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hasChildren(org.eclipse.jface.viewers.TreePath)">hasChildren</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/TreePath.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">TreePath</a>&nbsp;path)</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 &nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code>protected <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerPathItemProvider.html#removeNode-java.lang.Object-">removeNode</a></span>(java.lang.Object&nbsp;element)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<td class="colFirst"><code>protected <a href="ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeNode(java.lang.Object)">removeNode</a></span>&#8203;(java.lang.Object&nbsp;element)</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 &nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.ui.views.ContainerItemProvider">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.ui.views.ContainerItemProvider">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.ui.views.<a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider</a></h3>
-<code><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#clearNodesCache--">clearNodesCache</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#connectInput-CONTAINER-">connectInput</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#createContaineNode-org.eclipse.net4j.util.ui.views.ContainerItemProvider.Node-java.lang.Object-">createContaineNode</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#createLeafNode-org.eclipse.net4j.util.ui.views.ContainerItemProvider.Node-java.lang.Object-">createLeafNode</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#createNode-org.eclipse.net4j.util.ui.views.ContainerItemProvider.Node-java.lang.Object-">createNode</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#createSlowElement-org.eclipse.net4j.util.container.IContainer-">createSlowElement</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#createSlowInput-java.lang.String-">createSlowInput</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#elementAdded-java.lang.Object-java.lang.Object-">elementAdded</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#elementRemoved-java.lang.Object-java.lang.Object-">elementRemoved</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#executeRunnable-java.lang.Runnable-">executeRunnable</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#fillContextMenu-org.eclipse.jface.action.IMenuManager-org.eclipse.jface.viewers.ITreeSelection-">fillContextMenu</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#filterRootElement-java.lang.Object-">filterRootElement</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#getChildren-java.lang.Object-">getChildren</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#getContainerChildren-org.eclipse.net4j.util.ui.views.ContainerItemProvider.AbstractContainerNode-org.eclipse.net4j.util.container.IContainer-">getContainerChildren</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#getErrorText-org.eclipse.net4j.util.container.IContainer-">getErrorText</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#getFont-java.lang.Object-">getFont</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#getForeground-java.lang.Object-">getForeground</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#getImage-java.lang.Object-">getImage</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#getNode-java.lang.Object-">getNode</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#getNodes--">getNodes</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#getParent-java.lang.Object-">getParent</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#getRoot--">getRoot</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#getRootElementFilter--">getRootElementFilter</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#getSlowText-org.eclipse.net4j.util.container.IContainer-">getSlowText</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#handleElementEvent-org.eclipse.net4j.util.event.IEvent-">handleElementEvent</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#handleInactiveElement-java.util.Iterator-org.eclipse.net4j.util.ui.views.ContainerItemProvider.Node-">handleInactiveElement</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#hasChildren-java.lang.Object-">hasChildren</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#isComputeChildrenEagerly--">isComputeChildrenEagerly</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#isSlow-org.eclipse.net4j.util.container.IContainer-">isSlow</a></code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.ui.views.<a href="ContainerItemProvider.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider</a></h3>
+<code><a href="ContainerItemProvider.html#clearNodesCache()">clearNodesCache</a>, <a href="ContainerItemProvider.html#connectInput(CONTAINER)">connectInput</a>, <a href="ContainerItemProvider.html#createContaineNode(org.eclipse.net4j.util.ui.views.ContainerItemProvider.Node,java.lang.Object)">createContaineNode</a>, <a href="ContainerItemProvider.html#createLeafNode(org.eclipse.net4j.util.ui.views.ContainerItemProvider.Node,java.lang.Object)">createLeafNode</a>, <a href="ContainerItemProvider.html#createNode(org.eclipse.net4j.util.ui.views.ContainerItemProvider.Node,java.lang.Object)">createNode</a>, <a href="ContainerItemProvider.html#createSlowElement(org.eclipse.net4j.util.container.IContainer)">createSlowElement</a>, <a href="ContainerItemProvider.html#createSlowInput(java.lang.String)">createSlowInput</a>, <a href="ContainerItemProvider.html#elementAdded(java.lang.Object,java.lang.Object)">elementAdded</a>, <a href="ContainerItemProvider.html#elementRemoved(java.lang.Object,java.lang.Object)">elementRemoved</a>, <a href="ContainerItemProvider.html#executeRunnable(java.lang.Runnable)">executeRunnable</a>, <a href="ContainerItemProvider.html#fillContextMenu(org.eclipse.jface.action.IMenuManager,org.eclipse.jface.viewers.ITreeSelection)">fillContextMenu</a>, <a href="ContainerItemProvider.html#filterRootElement(java.lang.Object)">filterRootElement</a>, <a href="ContainerItemProvider.html#getChildren(java.lang.Object)">getChildren</a>, <a href="ContainerItemProvider.html#getContainerChildren(org.eclipse.net4j.util.ui.views.ContainerItemProvider.AbstractContainerNode,org.eclipse.net4j.util.container.IContainer)">getContainerChildren</a>, <a href="ContainerItemProvider.html#getErrorText(org.eclipse.net4j.util.container.IContainer)">getErrorText</a>, <a href="ContainerItemProvider.html#getFont(java.lang.Object)">getFont</a>, <a href="ContainerItemProvider.html#getForeground(java.lang.Object)">getForeground</a>, <a href="ContainerItemProvider.html#getImage(java.lang.Object)">getImage</a>, <a href="ContainerItemProvider.html#getNode(java.lang.Object)">getNode</a>, <a href="ContainerItemProvider.html#getNodes()">getNodes</a>, <a href="ContainerItemProvider.html#getParent(java.lang.Object)">getParent</a>, <a href="ContainerItemProvider.html#getRoot()">getRoot</a>, <a href="ContainerItemProvider.html#getRootElementFilter()">getRootElementFilter</a>, <a href="ContainerItemProvider.html#getSlowText(org.eclipse.net4j.util.container.IContainer)">getSlowText</a>, <a href="ContainerItemProvider.html#handleElementEvent(org.eclipse.net4j.util.event.IEvent)">handleElementEvent</a>, <a href="ContainerItemProvider.html#handleInactiveElement(java.util.Iterator,org.eclipse.net4j.util.ui.views.ContainerItemProvider.Node)">handleInactiveElement</a>, <a href="ContainerItemProvider.html#hasChildren(java.lang.Object)">hasChildren</a>, <a href="ContainerItemProvider.html#isComputeChildrenEagerly()">isComputeChildrenEagerly</a>, <a href="ContainerItemProvider.html#isSlow(org.eclipse.net4j.util.container.IContainer)">isSlow</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.ui.views.ItemProvider">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.ui.views.ItemProvider">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.ui.views.<a href="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html" title="class in org.eclipse.net4j.util.ui.views">ItemProvider</a></h3>
-<code><a href="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html#addListener-org.eclipse.jface.viewers.ILabelProviderListener-">addListener</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html#fireLabelProviderChanged--">fireLabelProviderChanged</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html#fireLabelProviderChanged-java.lang.Object-">fireLabelProviderChanged</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html#fireLabelProviderChanged-java.lang.Object:A-">fireLabelProviderChanged</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html#getBackground-java.lang.Object-">getBackground</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html#getElements-java.lang.Object-">getElements</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html#getListeners--">getListeners</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html#getStyledText-java.lang.Object-">getStyledText</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html#getText-java.lang.Object-">getText</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html#isLabelProperty-java.lang.Object-java.lang.String-">isLabelProperty</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html#removeListener-org.eclipse.jface.viewers.ILabelProviderListener-">removeListener</a></code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.ui.views.<a href="ItemProvider.html" title="class in org.eclipse.net4j.util.ui.views">ItemProvider</a></h3>
+<code><a href="ItemProvider.html#addListener(org.eclipse.jface.viewers.ILabelProviderListener)">addListener</a>, <a href="ItemProvider.html#fireLabelProviderChanged()">fireLabelProviderChanged</a>, <a href="ItemProvider.html#fireLabelProviderChanged(java.lang.Object)">fireLabelProviderChanged</a>, <a href="ItemProvider.html#fireLabelProviderChanged(java.lang.Object%5B%5D)">fireLabelProviderChanged</a>, <a href="ItemProvider.html#getBackground(java.lang.Object)">getBackground</a>, <a href="ItemProvider.html#getElements(java.lang.Object)">getElements</a>, <a href="ItemProvider.html#getListeners()">getListeners</a>, <a href="ItemProvider.html#getStyledText(java.lang.Object)">getStyledText</a>, <a href="ItemProvider.html#getText(java.lang.Object)">getText</a>, <a href="ItemProvider.html#isLabelProperty(java.lang.Object,java.lang.String)">isLabelProperty</a>, <a href="ItemProvider.html#removeListener(org.eclipse.jface.viewers.ILabelProviderListener)">removeListener</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.ui.StructuredContentProvider">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.ui.StructuredContentProvider">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.ui.<a href="../../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html" title="class in org.eclipse.net4j.util.ui">StructuredContentProvider</a></h3>
-<code><a href="../../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html#dispose--">dispose</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html#expandElement-java.lang.Object-int-">expandElement</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html#getBoldFont--">getBoldFont</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html#getDisplay--">getDisplay</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html#getInput--">getInput</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html#getItalicFont--">getItalicFont</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html#getViewer--">getViewer</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html#inputChanged-org.eclipse.jface.viewers.Viewer-java.lang.Object-java.lang.Object-">inputChanged</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html#notifyEvent-org.eclipse.net4j.util.event.IEvent-">notifyEvent</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html#refreshElement-java.lang.Object-boolean-">refreshElement</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html#refreshSynced-java.lang.Object-boolean-">refreshSynced</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html#refreshViewer-boolean-">refreshViewer</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html#revealElement-java.lang.Object-">revealElement</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html#selectElement-java.lang.Object-boolean-">selectElement</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html#updateLabels-java.lang.Object-">updateLabels</a></code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.ui.<a href="../StructuredContentProvider.html" title="class in org.eclipse.net4j.util.ui">StructuredContentProvider</a></h3>
+<code><a href="../StructuredContentProvider.html#dispose()">dispose</a>, <a href="../StructuredContentProvider.html#expandElement(java.lang.Object,int)">expandElement</a>, <a href="../StructuredContentProvider.html#getBoldFont()">getBoldFont</a>, <a href="../StructuredContentProvider.html#getDisplay()">getDisplay</a>, <a href="../StructuredContentProvider.html#getInput()">getInput</a>, <a href="../StructuredContentProvider.html#getItalicFont()">getItalicFont</a>, <a href="../StructuredContentProvider.html#getViewer()">getViewer</a>, <a href="../StructuredContentProvider.html#inputChanged(org.eclipse.jface.viewers.Viewer,java.lang.Object,java.lang.Object)">inputChanged</a>, <a href="../StructuredContentProvider.html#notifyEvent(org.eclipse.net4j.util.event.IEvent)">notifyEvent</a>, <a href="../StructuredContentProvider.html#refreshElement(java.lang.Object,boolean)">refreshElement</a>, <a href="../StructuredContentProvider.html#refreshSynced(java.lang.Object,boolean)">refreshSynced</a>, <a href="../StructuredContentProvider.html#refreshViewer(boolean)">refreshViewer</a>, <a href="../StructuredContentProvider.html#revealElement(java.lang.Object)">revealElement</a>, <a href="../StructuredContentProvider.html#selectElement(java.lang.Object,boolean)">selectElement</a>, <a href="../StructuredContentProvider.html#updateLabels(java.lang.Object)">updateLabels</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.jface.viewers.ViewerSorter">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.jface.viewers.ViewerSorter">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.jface.viewers.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerSorter.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ViewerSorter</a></h3>
-<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerSorter.html?is-external=true#getCollator--" title="class or interface in org.eclipse.jface.viewers">getCollator</a></code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.jface.viewers.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerSorter.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">ViewerSorter</a></h3>
+<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerSorter.html?is-external=true#getCollator()" title="class or interface in org.eclipse.jface.viewers" class="externalLink">getCollator</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.jface.viewers.ViewerComparator">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.jface.viewers.ViewerComparator">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.jface.viewers.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerComparator.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ViewerComparator</a></h3>
-<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerComparator.html?is-external=true#category-java.lang.Object-" title="class or interface in org.eclipse.jface.viewers">category</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerComparator.html?is-external=true#compare-org.eclipse.jface.viewers.Viewer-java.lang.Object-java.lang.Object-" title="class or interface in org.eclipse.jface.viewers">compare</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerComparator.html?is-external=true#getComparator--" title="class or interface in org.eclipse.jface.viewers">getComparator</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerComparator.html?is-external=true#isSorterProperty-java.lang.Object-java.lang.String-" title="class or interface in org.eclipse.jface.viewers">isSorterProperty</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerComparator.html?is-external=true#sort-org.eclipse.jface.viewers.Viewer-java.lang.Object:A-" title="class or interface in org.eclipse.jface.viewers">sort</a></code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.jface.viewers.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerComparator.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">ViewerComparator</a></h3>
+<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerComparator.html?is-external=true#category(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers" class="externalLink">category</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerComparator.html?is-external=true#compare(org.eclipse.jface.viewers.Viewer,java.lang.Object,java.lang.Object)" title="class or interface in org.eclipse.jface.viewers" class="externalLink">compare</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerComparator.html?is-external=true#getComparator()" title="class or interface in org.eclipse.jface.viewers" class="externalLink">getComparator</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerComparator.html?is-external=true#isSorterProperty(java.lang.Object,java.lang.String)" title="class or interface in org.eclipse.jface.viewers" class="externalLink">isSorterProperty</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerComparator.html?is-external=true#sort(org.eclipse.jface.viewers.Viewer,java.lang.Object%5B%5D)" title="class or interface in org.eclipse.jface.viewers" class="externalLink">sort</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
+<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
 <code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.jface.viewers.ITreePathContentProvider">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.jface.viewers.IBaseLabelProvider">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.jface.viewers.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreePathContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ITreePathContentProvider</a></h3>
-<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreePathContentProvider.html?is-external=true#getElements-java.lang.Object-" title="class or interface in org.eclipse.jface.viewers">getElements</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.jface.viewers.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IBaseLabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">IBaseLabelProvider</a></h3>
+<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IBaseLabelProvider.html?is-external=true#dispose()" title="class or interface in org.eclipse.jface.viewers" class="externalLink">dispose</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.jface.viewers.IContentProvider">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.jface.viewers.IContentProvider">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.jface.viewers.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IContentProvider</a></h3>
-<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IContentProvider.html?is-external=true#dispose--" title="class or interface in org.eclipse.jface.viewers">dispose</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IContentProvider.html?is-external=true#inputChanged-org.eclipse.jface.viewers.Viewer-java.lang.Object-java.lang.Object-" title="class or interface in org.eclipse.jface.viewers">inputChanged</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.jface.viewers.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">IContentProvider</a></h3>
+<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IContentProvider.html?is-external=true#dispose()" title="class or interface in org.eclipse.jface.viewers" class="externalLink">dispose</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IContentProvider.html?is-external=true#inputChanged(org.eclipse.jface.viewers.Viewer,java.lang.Object,java.lang.Object)" title="class or interface in org.eclipse.jface.viewers" class="externalLink">inputChanged</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.jface.viewers.IBaseLabelProvider">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.jface.viewers.ITreePathContentProvider">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.jface.viewers.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IBaseLabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IBaseLabelProvider</a></h3>
-<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IBaseLabelProvider.html?is-external=true#dispose--" title="class or interface in org.eclipse.jface.viewers">dispose</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.jface.viewers.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreePathContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">ITreePathContentProvider</a></h3>
+<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreePathContentProvider.html?is-external=true#getElements(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers" class="externalLink">getElements</a></code></li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -348,153 +391,160 @@ implements <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/
 <ul class="blockList">
 <li class="blockList">
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.detail">
+<li class="blockList"><a id="constructor.detail">
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="ContainerPathItemProvider--">
+<a id="&lt;init&gt;()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>ContainerPathItemProvider</h4>
 <pre>public&nbsp;ContainerPathItemProvider()</pre>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 </li>
 </ul>
-<a name="ContainerPathItemProvider-org.eclipse.net4j.util.ui.views.IElementFilter-">
+<a id="&lt;init&gt;(org.eclipse.net4j.util.ui.views.IElementFilter)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>ContainerPathItemProvider</h4>
-<pre>public&nbsp;ContainerPathItemProvider(<a href="../../../../../../org/eclipse/net4j/util/ui/views/IElementFilter.html" title="interface in org.eclipse.net4j.util.ui.views">IElementFilter</a>&nbsp;rootElementFilter)</pre>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<pre>public&nbsp;ContainerPathItemProvider&#8203;(<a href="IElementFilter.html" title="interface in org.eclipse.net4j.util.ui.views">IElementFilter</a>&nbsp;rootElementFilter)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="hasChildren-org.eclipse.jface.viewers.TreePath-">
+<a id="hasChildren(org.eclipse.jface.viewers.TreePath)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>hasChildren</h4>
-<pre>public&nbsp;boolean&nbsp;hasChildren(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/TreePath.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">TreePath</a>&nbsp;path)</pre>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;hasChildren&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/TreePath.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">TreePath</a>&nbsp;path)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreePathContentProvider.html?is-external=true#hasChildren-org.eclipse.jface.viewers.TreePath-" title="class or interface in org.eclipse.jface.viewers">hasChildren</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreePathContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ITreePathContentProvider</a></code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreePathContentProvider.html?is-external=true#hasChildren(org.eclipse.jface.viewers.TreePath)" title="class or interface in org.eclipse.jface.viewers" class="externalLink">hasChildren</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreePathContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">ITreePathContentProvider</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="getChildren-org.eclipse.jface.viewers.TreePath-">
+<a id="getChildren(org.eclipse.jface.viewers.TreePath)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getChildren</h4>
-<pre>public&nbsp;java.lang.Object[]&nbsp;getChildren(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/TreePath.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">TreePath</a>&nbsp;path)</pre>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<pre class="methodSignature">public&nbsp;java.lang.Object[]&nbsp;getChildren&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/TreePath.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">TreePath</a>&nbsp;path)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreePathContentProvider.html?is-external=true#getChildren-org.eclipse.jface.viewers.TreePath-" title="class or interface in org.eclipse.jface.viewers">getChildren</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreePathContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ITreePathContentProvider</a></code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreePathContentProvider.html?is-external=true#getChildren(org.eclipse.jface.viewers.TreePath)" title="class or interface in org.eclipse.jface.viewers" class="externalLink">getChildren</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreePathContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">ITreePathContentProvider</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="getParents-java.lang.Object-">
+<a id="getParents(java.lang.Object)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getParents</h4>
-<pre>public&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/TreePath.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">TreePath</a>[]&nbsp;getParents(java.lang.Object&nbsp;element)</pre>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<pre class="methodSignature">public&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/TreePath.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">TreePath</a>[]&nbsp;getParents&#8203;(java.lang.Object&nbsp;element)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreePathContentProvider.html?is-external=true#getParents-java.lang.Object-" title="class or interface in org.eclipse.jface.viewers">getParents</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreePathContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ITreePathContentProvider</a></code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreePathContentProvider.html?is-external=true#getParents(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers" class="externalLink">getParents</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreePathContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">ITreePathContentProvider</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="addNode-java.lang.Object-org.eclipse.net4j.util.ui.views.ContainerItemProvider.Node-">
+<a id="addNode(java.lang.Object,org.eclipse.net4j.util.ui.views.ContainerItemProvider.Node)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>addNode</h4>
-<pre>protected&nbsp;void&nbsp;addNode(java.lang.Object&nbsp;element,
-                       <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a>&nbsp;node)</pre>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<pre class="methodSignature">protected&nbsp;void&nbsp;addNode&#8203;(java.lang.Object&nbsp;element,
+                       <a href="ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a>&nbsp;node)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#addNode-java.lang.Object-org.eclipse.net4j.util.ui.views.ContainerItemProvider.Node-">addNode</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider</a>&lt;<a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerPathItemProvider.html" title="type parameter in ContainerPathItemProvider">CONTAINER</a> extends <a href="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;&gt;</code></dd>
+<dd><code><a href="ContainerItemProvider.html#addNode(java.lang.Object,org.eclipse.net4j.util.ui.views.ContainerItemProvider.Node)">addNode</a></code>&nbsp;in class&nbsp;<code><a href="ContainerItemProvider.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider</a>&lt;<a href="ContainerPathItemProvider.html" title="type parameter in ContainerPathItemProvider">CONTAINER</a> extends <a href="../../container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="removeNode-java.lang.Object-">
+<a id="removeNode(java.lang.Object)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>removeNode</h4>
-<pre>protected&nbsp;<a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a>&nbsp;removeNode(java.lang.Object&nbsp;element)</pre>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<pre class="methodSignature">protected&nbsp;<a href="ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a>&nbsp;removeNode&#8203;(java.lang.Object&nbsp;element)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#removeNode-java.lang.Object-">removeNode</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider</a>&lt;<a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerPathItemProvider.html" title="type parameter in ContainerPathItemProvider">CONTAINER</a> extends <a href="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;&gt;</code></dd>
+<dd><code><a href="ContainerItemProvider.html#removeNode(java.lang.Object)">removeNode</a></code>&nbsp;in class&nbsp;<code><a href="ContainerItemProvider.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider</a>&lt;<a href="ContainerPathItemProvider.html" title="type parameter in ContainerPathItemProvider">CONTAINER</a> extends <a href="../../container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="disconnectInput-org.eclipse.net4j.util.container.IContainer-">
+<a id="disconnectInput(org.eclipse.net4j.util.container.IContainer)">
 <!--   -->
-</a><a name="disconnectInput-CONTAINER-">
+</a><a id="disconnectInput(CONTAINER)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>disconnectInput</h4>
-<pre>protected&nbsp;void&nbsp;disconnectInput(<a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerPathItemProvider.html" title="type parameter in ContainerPathItemProvider">CONTAINER</a>&nbsp;input)</pre>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<pre class="methodSignature">protected&nbsp;void&nbsp;disconnectInput&#8203;(<a href="ContainerPathItemProvider.html" title="type parameter in ContainerPathItemProvider">CONTAINER</a>&nbsp;input)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#disconnectInput-CONTAINER-">disconnectInput</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider</a>&lt;<a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerPathItemProvider.html" title="type parameter in ContainerPathItemProvider">CONTAINER</a> extends <a href="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;&gt;</code></dd>
+<dd><code><a href="ContainerItemProvider.html#disconnectInput(CONTAINER)">disconnectInput</a></code>&nbsp;in class&nbsp;<code><a href="ContainerItemProvider.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider</a>&lt;<a href="ContainerPathItemProvider.html" title="type parameter in ContainerPathItemProvider">CONTAINER</a> extends <a href="../../container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="getParentPath-org.eclipse.net4j.util.ui.views.ContainerItemProvider.Node-">
+<a id="getParentPath(org.eclipse.net4j.util.ui.views.ContainerItemProvider.Node)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getParentPath</h4>
-<pre>protected&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/TreePath.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">TreePath</a>&nbsp;getParentPath(<a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a>&nbsp;node)</pre>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<pre class="methodSignature">protected&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/TreePath.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">TreePath</a>&nbsp;getParentPath&#8203;(<a href="ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a>&nbsp;node)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/ContainerPathItemProvider.html">Use</a></li>
@@ -504,16 +554,8 @@ implements <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerNameSorter.html" title="class in org.eclipse.net4j.util.ui.views"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html" title="class in org.eclipse.net4j.util.ui.views"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/net4j/util/ui/views/ContainerPathItemProvider.html" target="_top">Frames</a></li>
-<li><a href="ContainerPathItemProvider.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -526,12 +568,15 @@ implements <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li><a href="#nested.classes.inherited.from.class.org.eclipse.net4j.util.ui.views.ContainerItemProvider">Nested</a>&nbsp;|&nbsp;</li>
-<li><a href="#fields.inherited.from.class.org.eclipse.net4j.util.ui.views.ContainerItemProvider">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
@@ -542,10 +587,12 @@ implements <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

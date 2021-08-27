@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>SubProgressMonitor (Net4j Utilities Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/SubProgressMonitor.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/net4j/util/om/monitor/SubMonitor.ProbingMode.html" title="enum in org.eclipse.net4j.util.om.monitor"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../../org/eclipse/net4j/util/om/monitor/TimeoutMonitor.html" title="class in org.eclipse.net4j.util.om.monitor"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/net4j/util/om/monitor/SubProgressMonitor.html" target="_top">Frames</a></li>
-<li><a href="SubProgressMonitor.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,12 +82,15 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li><a href="#fields.inherited.from.class.org.eclipse.core.runtime.SubProgressMonitor">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
@@ -85,13 +101,22 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.net4j.util.om.monitor</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.net4j.util.om.monitor</a></div>
 <h2 title="Class SubProgressMonitor" class="title">Class SubProgressMonitor</h2>
 </div>
 <div class="contentContainer">
@@ -99,10 +124,10 @@ var activeTableTab = "activeTableTab";
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/ProgressMonitorWrapper.html?is-external=true" title="class or interface in org.eclipse.core.runtime">org.eclipse.core.runtime.ProgressMonitorWrapper</a></li>
+<li><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/ProgressMonitorWrapper.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">org.eclipse.core.runtime.ProgressMonitorWrapper</a></li>
 <li>
 <ul class="inheritance">
-<li><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/SubProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">org.eclipse.core.runtime.SubProgressMonitor</a></li>
+<li><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/SubProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">org.eclipse.core.runtime.SubProgressMonitor</a></li>
 <li>
 <ul class="inheritance">
 <li>org.eclipse.net4j.util.om.monitor.SubProgressMonitor</li>
@@ -118,16 +143,15 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitorWithBlocking.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitorWithBlocking</a></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IProgressMonitor</a></code>, <code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitorWithBlocking.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IProgressMonitorWithBlocking</a></code></dd>
 </dl>
 <dl>
 <dt>Direct Known Subclasses:</dt>
-<dd><a href="../../../../../../org/eclipse/net4j/util/om/monitor/EclipseMonitor.SynchronizedSubProgressMonitor.html" title="class in org.eclipse.net4j.util.om.monitor">EclipseMonitor.SynchronizedSubProgressMonitor</a></dd>
+<dd><code><a href="EclipseMonitor.SynchronizedSubProgressMonitor.html" title="class in org.eclipse.net4j.util.om.monitor">EclipseMonitor.SynchronizedSubProgressMonitor</a></code></dd>
 </dl>
 <hr>
-<br>
 <pre>public class <span class="typeNameLabel">SubProgressMonitor</span>
-extends <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/SubProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">SubProgressMonitor</a></pre>
+extends <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/SubProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">SubProgressMonitor</a></pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.6</dd>
@@ -141,100 +165,122 @@ extends <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/ref
 <ul class="blockList">
 <li class="blockList">
 <!-- =========== FIELD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.summary">
+<li class="blockList"><a id="field.summary">
 <!--   -->
 </a>
 <h3>Field Summary</h3>
 <ul class="blockList">
-<li class="blockList"><a name="fields.inherited.from.class.org.eclipse.core.runtime.SubProgressMonitor">
+<li class="blockList"><a id="fields.inherited.from.class.org.eclipse.core.runtime.SubProgressMonitor">
 <!--   -->
 </a>
-<h3>Fields inherited from class&nbsp;org.eclipse.core.runtime.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/SubProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">SubProgressMonitor</a></h3>
-<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/SubProgressMonitor.html?is-external=true#PREPEND_MAIN_LABEL_TO_SUBTASK" title="class or interface in org.eclipse.core.runtime">PREPEND_MAIN_LABEL_TO_SUBTASK</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/SubProgressMonitor.html?is-external=true#SUPPRESS_SUBTASK_LABEL" title="class or interface in org.eclipse.core.runtime">SUPPRESS_SUBTASK_LABEL</a></code></li>
+<h3>Fields inherited from class&nbsp;org.eclipse.core.runtime.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/SubProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">SubProgressMonitor</a></h3>
+<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/SubProgressMonitor.html?is-external=true#PREPEND_MAIN_LABEL_TO_SUBTASK" title="class or interface in org.eclipse.core.runtime" class="externalLink">PREPEND_MAIN_LABEL_TO_SUBTASK</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/SubProgressMonitor.html?is-external=true#SUPPRESS_SUBTASK_LABEL" title="class or interface in org.eclipse.core.runtime" class="externalLink">SUPPRESS_SUBTASK_LABEL</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="fields.inherited.from.class.org.eclipse.core.runtime.IProgressMonitor">
+<li class="blockList"><a id="fields.inherited.from.class.org.eclipse.core.runtime.IProgressMonitor">
 <!--   -->
 </a>
-<h3>Fields inherited from interface&nbsp;org.eclipse.core.runtime.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</a></h3>
-<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true#UNKNOWN" title="class or interface in org.eclipse.core.runtime">UNKNOWN</a></code></li>
+<h3>Fields inherited from interface&nbsp;org.eclipse.core.runtime.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IProgressMonitor</a></h3>
+<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true#UNKNOWN" title="class or interface in org.eclipse.core.runtime" class="externalLink">UNKNOWN</a></code></li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.summary">
+<li class="blockList"><a id="constructor.summary">
 <!--   -->
 </a>
 <h3>Constructor Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
+<table class="memberSummary">
 <caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Constructor and Description</th>
+<th class="colFirst" scope="col">Constructor</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/monitor/SubProgressMonitor.html#SubProgressMonitor-org.eclipse.core.runtime.IProgressMonitor-int-">SubProgressMonitor</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</a>&nbsp;monitor,
-                  int&nbsp;ticks)</code>&nbsp;</td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(org.eclipse.core.runtime.IProgressMonitor,int)">SubProgressMonitor</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IProgressMonitor</a>&nbsp;monitor,
+                  int&nbsp;ticks)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/monitor/SubProgressMonitor.html#SubProgressMonitor-org.eclipse.core.runtime.IProgressMonitor-int-int-">SubProgressMonitor</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</a>&nbsp;monitor,
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(org.eclipse.core.runtime.IProgressMonitor,int,int)">SubProgressMonitor</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IProgressMonitor</a>&nbsp;monitor,
                   int&nbsp;ticks,
-                  int&nbsp;style)</code>&nbsp;</td>
+                  int&nbsp;style)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/monitor/SubProgressMonitor.html#beginTask-java.lang.String-int-">beginTask</a></span>(java.lang.String&nbsp;name,
-         int&nbsp;totalWork)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#beginTask(java.lang.String,int)">beginTask</a></span>&#8203;(java.lang.String&nbsp;name,
+         int&nbsp;totalWork)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/monitor/SubProgressMonitor.html#done--">done</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#done()">done</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/monitor/SubProgressMonitor.html#internalWorked-double-">internalWorked</a></span>(double&nbsp;work)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#internalWorked(double)">internalWorked</a></span>&#8203;(double&nbsp;work)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/monitor/SubProgressMonitor.html#subTask-java.lang.String-">subTask</a></span>(java.lang.String&nbsp;name)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#subTask(java.lang.String)">subTask</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/monitor/SubProgressMonitor.html#worked-int-">worked</a></span>(int&nbsp;work)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#worked(int)">worked</a></span>&#8203;(int&nbsp;work)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.core.runtime.ProgressMonitorWrapper">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.core.runtime.ProgressMonitorWrapper">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.core.runtime.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/ProgressMonitorWrapper.html?is-external=true" title="class or interface in org.eclipse.core.runtime">ProgressMonitorWrapper</a></h3>
-<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/ProgressMonitorWrapper.html?is-external=true#clearBlocked--" title="class or interface in org.eclipse.core.runtime">clearBlocked</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/ProgressMonitorWrapper.html?is-external=true#getWrappedProgressMonitor--" title="class or interface in org.eclipse.core.runtime">getWrappedProgressMonitor</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/ProgressMonitorWrapper.html?is-external=true#isCanceled--" title="class or interface in org.eclipse.core.runtime">isCanceled</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/ProgressMonitorWrapper.html?is-external=true#setBlocked-org.eclipse.core.runtime.IStatus-" title="class or interface in org.eclipse.core.runtime">setBlocked</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/ProgressMonitorWrapper.html?is-external=true#setCanceled-boolean-" title="class or interface in org.eclipse.core.runtime">setCanceled</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/ProgressMonitorWrapper.html?is-external=true#setTaskName-java.lang.String-" title="class or interface in org.eclipse.core.runtime">setTaskName</a></code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.core.runtime.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/ProgressMonitorWrapper.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">ProgressMonitorWrapper</a></h3>
+<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/ProgressMonitorWrapper.html?is-external=true#clearBlocked()" title="class or interface in org.eclipse.core.runtime" class="externalLink">clearBlocked</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/ProgressMonitorWrapper.html?is-external=true#getWrappedProgressMonitor()" title="class or interface in org.eclipse.core.runtime" class="externalLink">getWrappedProgressMonitor</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/ProgressMonitorWrapper.html?is-external=true#isCanceled()" title="class or interface in org.eclipse.core.runtime" class="externalLink">isCanceled</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/ProgressMonitorWrapper.html?is-external=true#setBlocked(org.eclipse.core.runtime.IStatus)" title="class or interface in org.eclipse.core.runtime" class="externalLink">setBlocked</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/ProgressMonitorWrapper.html?is-external=true#setCanceled(boolean)" title="class or interface in org.eclipse.core.runtime" class="externalLink">setCanceled</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/ProgressMonitorWrapper.html?is-external=true#setTaskName(java.lang.String)" title="class or interface in org.eclipse.core.runtime" class="externalLink">setTaskName</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
+<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
 <code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
 </ul>
+<ul class="blockList">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.core.runtime.IProgressMonitor">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;org.eclipse.core.runtime.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IProgressMonitor</a></h3>
+<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true#slice(int)" title="class or interface in org.eclipse.core.runtime" class="externalLink">slice</a></code></li>
+</ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -242,133 +288,140 @@ extends <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/ref
 <ul class="blockList">
 <li class="blockList">
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.detail">
+<li class="blockList"><a id="constructor.detail">
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="SubProgressMonitor-org.eclipse.core.runtime.IProgressMonitor-int-int-">
+<a id="&lt;init&gt;(org.eclipse.core.runtime.IProgressMonitor,int,int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>SubProgressMonitor</h4>
-<pre>public&nbsp;SubProgressMonitor(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</a>&nbsp;monitor,
+<pre>public&nbsp;SubProgressMonitor&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IProgressMonitor</a>&nbsp;monitor,
                           int&nbsp;ticks,
                           int&nbsp;style)</pre>
 </li>
 </ul>
-<a name="SubProgressMonitor-org.eclipse.core.runtime.IProgressMonitor-int-">
+<a id="&lt;init&gt;(org.eclipse.core.runtime.IProgressMonitor,int)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>SubProgressMonitor</h4>
-<pre>public&nbsp;SubProgressMonitor(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</a>&nbsp;monitor,
+<pre>public&nbsp;SubProgressMonitor&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IProgressMonitor</a>&nbsp;monitor,
                           int&nbsp;ticks)</pre>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="beginTask-java.lang.String-int-">
+<a id="beginTask(java.lang.String,int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>beginTask</h4>
-<pre>public&nbsp;void&nbsp;beginTask(java.lang.String&nbsp;name,
+<pre class="methodSignature">public&nbsp;void&nbsp;beginTask&#8203;(java.lang.String&nbsp;name,
                       int&nbsp;totalWork)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true#beginTask-java.lang.String-int-" title="class or interface in org.eclipse.core.runtime">beginTask</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</a></code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true#beginTask(java.lang.String,int)" title="class or interface in org.eclipse.core.runtime" class="externalLink">beginTask</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IProgressMonitor</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/SubProgressMonitor.html?is-external=true#beginTask-java.lang.String-int-" title="class or interface in org.eclipse.core.runtime">beginTask</a></code>&nbsp;in class&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/SubProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">SubProgressMonitor</a></code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/SubProgressMonitor.html?is-external=true#beginTask(java.lang.String,int)" title="class or interface in org.eclipse.core.runtime" class="externalLink">beginTask</a></code>&nbsp;in class&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/SubProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">SubProgressMonitor</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="done--">
+<a id="done()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>done</h4>
-<pre>public&nbsp;void&nbsp;done()</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;done()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true#done--" title="class or interface in org.eclipse.core.runtime">done</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</a></code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true#done()" title="class or interface in org.eclipse.core.runtime" class="externalLink">done</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IProgressMonitor</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/SubProgressMonitor.html?is-external=true#done--" title="class or interface in org.eclipse.core.runtime">done</a></code>&nbsp;in class&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/SubProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">SubProgressMonitor</a></code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/SubProgressMonitor.html?is-external=true#done()" title="class or interface in org.eclipse.core.runtime" class="externalLink">done</a></code>&nbsp;in class&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/SubProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">SubProgressMonitor</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="internalWorked-double-">
+<a id="internalWorked(double)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>internalWorked</h4>
-<pre>public&nbsp;void&nbsp;internalWorked(double&nbsp;work)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;internalWorked&#8203;(double&nbsp;work)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true#internalWorked-double-" title="class or interface in org.eclipse.core.runtime">internalWorked</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</a></code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true#internalWorked(double)" title="class or interface in org.eclipse.core.runtime" class="externalLink">internalWorked</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IProgressMonitor</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/SubProgressMonitor.html?is-external=true#internalWorked-double-" title="class or interface in org.eclipse.core.runtime">internalWorked</a></code>&nbsp;in class&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/SubProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">SubProgressMonitor</a></code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/SubProgressMonitor.html?is-external=true#internalWorked(double)" title="class or interface in org.eclipse.core.runtime" class="externalLink">internalWorked</a></code>&nbsp;in class&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/SubProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">SubProgressMonitor</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="subTask-java.lang.String-">
+<a id="subTask(java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>subTask</h4>
-<pre>public&nbsp;void&nbsp;subTask(java.lang.String&nbsp;name)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;subTask&#8203;(java.lang.String&nbsp;name)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true#subTask-java.lang.String-" title="class or interface in org.eclipse.core.runtime">subTask</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</a></code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true#subTask(java.lang.String)" title="class or interface in org.eclipse.core.runtime" class="externalLink">subTask</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IProgressMonitor</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/SubProgressMonitor.html?is-external=true#subTask-java.lang.String-" title="class or interface in org.eclipse.core.runtime">subTask</a></code>&nbsp;in class&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/SubProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">SubProgressMonitor</a></code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/SubProgressMonitor.html?is-external=true#subTask(java.lang.String)" title="class or interface in org.eclipse.core.runtime" class="externalLink">subTask</a></code>&nbsp;in class&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/SubProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">SubProgressMonitor</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="worked-int-">
+<a id="worked(int)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>worked</h4>
-<pre>public&nbsp;void&nbsp;worked(int&nbsp;work)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;worked&#8203;(int&nbsp;work)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true#worked-int-" title="class or interface in org.eclipse.core.runtime">worked</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</a></code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true#worked(int)" title="class or interface in org.eclipse.core.runtime" class="externalLink">worked</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IProgressMonitor</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/SubProgressMonitor.html?is-external=true#worked-int-" title="class or interface in org.eclipse.core.runtime">worked</a></code>&nbsp;in class&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/SubProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">SubProgressMonitor</a></code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/SubProgressMonitor.html?is-external=true#worked(int)" title="class or interface in org.eclipse.core.runtime" class="externalLink">worked</a></code>&nbsp;in class&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/SubProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">SubProgressMonitor</a></code></dd>
 </dl>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/SubProgressMonitor.html">Use</a></li>
@@ -378,16 +431,8 @@ extends <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/ref
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/net4j/util/om/monitor/SubMonitor.ProbingMode.html" title="enum in org.eclipse.net4j.util.om.monitor"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../../org/eclipse/net4j/util/om/monitor/TimeoutMonitor.html" title="class in org.eclipse.net4j.util.om.monitor"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/net4j/util/om/monitor/SubProgressMonitor.html" target="_top">Frames</a></li>
-<li><a href="SubProgressMonitor.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -400,12 +445,15 @@ extends <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/ref
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li><a href="#fields.inherited.from.class.org.eclipse.core.runtime.SubProgressMonitor">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
@@ -416,10 +464,12 @@ extends <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/ref
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

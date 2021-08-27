@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>GrowingRandomAccessList (Net4j Utilities Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/GrowingRandomAccessList.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/net4j/util/collection/FastList.html" title="class in org.eclipse.net4j.util.collection"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/net4j/util/collection/HashBag.html" title="class in org.eclipse.net4j.util.collection"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" target="_top">Frames</a></li>
-<li><a href="GrowingRandomAccessList.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,12 +82,15 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li><a href="#fields.inherited.from.class.java.util.AbstractList">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
@@ -85,13 +101,22 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.net4j.util.collection</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.net4j.util.collection</a></div>
 <h2 title="Class GrowingRandomAccessList" class="title">Class GrowingRandomAccessList&lt;E&gt;</h2>
 </div>
 <div class="contentContainer">
@@ -118,10 +143,9 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd>java.lang.Iterable&lt;E&gt;, java.util.Collection&lt;E&gt;, java.util.List&lt;E&gt;, java.util.Queue&lt;E&gt;, java.util.RandomAccess</dd>
+<dd><code>java.lang.Iterable&lt;E&gt;</code>, <code>java.util.Collection&lt;E&gt;</code>, <code>java.util.List&lt;E&gt;</code>, <code>java.util.Queue&lt;E&gt;</code>, <code>java.util.RandomAccess</code></dd>
 </dl>
 <hr>
-<br>
 <pre>public class <span class="typeNameLabel">GrowingRandomAccessList&lt;E&gt;</span>
 extends java.util.AbstractList&lt;E&gt;
 implements java.util.Queue&lt;E&gt;, java.util.RandomAccess</pre>
@@ -138,13 +162,14 @@ implements java.util.Queue&lt;E&gt;, java.util.RandomAccess</pre>
 <ul class="blockList">
 <li class="blockList">
 <!-- =========== FIELD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.summary">
+<li class="blockList"><a id="field.summary">
 <!--   -->
 </a>
 <h3>Field Summary</h3>
 <ul class="blockList">
-<li class="blockList"><a name="fields.inherited.from.class.java.util.AbstractList">
+<li class="blockList"><a id="fields.inherited.from.class.java.util.AbstractList">
 <!--   -->
 </a>
 <h3>Fields inherited from class&nbsp;java.util.AbstractList</h3>
@@ -152,221 +177,264 @@ implements java.util.Queue&lt;E&gt;, java.util.RandomAccess</pre>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.summary">
+<li class="blockList"><a id="constructor.summary">
 <!--   -->
 </a>
 <h3>Constructor Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
+<table class="memberSummary">
 <caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Constructor and Description</th>
+<th class="colFirst" scope="col">Constructor</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#GrowingRandomAccessList-java.lang.Class-int-">GrowingRandomAccessList</a></span>(java.lang.Class&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;&nbsp;componentType,
-                       int&nbsp;pageCapacity)</code>&nbsp;</td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.Class,int)">GrowingRandomAccessList</a></span>&#8203;(java.lang.Class&lt;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;&nbsp;componentType,
+                       int&nbsp;pageCapacity)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#add-E-">add</a></span>(<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;e)</code>&nbsp;</td>
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#add(int,E)">add</a></span>&#8203;(int&nbsp;index,
+   <a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;element)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#add-int-E-">add</a></span>(int&nbsp;index,
-   <a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;element)</code>&nbsp;</td>
+<td class="colFirst"><code>boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#add(E)">add</a></span>&#8203;(<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;e)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#addAll-int-java.util.Collection-">addAll</a></span>(int&nbsp;index,
-      java.util.Collection&lt;? extends <a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;&nbsp;c)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addAll(int,java.util.Collection)">addAll</a></span>&#8203;(int&nbsp;index,
+      java.util.Collection&lt;? extends <a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;&nbsp;c)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#addFirst-E-">addFirst</a></span>(<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;e)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addFirst(E)">addFirst</a></span>&#8203;(<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;e)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#addLast-E-">addLast</a></span>(<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;e)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addLast(E)">addLast</a></span>&#8203;(<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;e)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#clear--">clear</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clear()">clear</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code>protected <a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#createPage--">createPage</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createPage()">createPage</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code>java.util.Iterator&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#descendingIterator--">descendingIterator</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>java.util.Iterator&lt;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#descendingIterator()">descendingIterator</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#element--">element</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#element()">element</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#get-int-">get</a></span>(int&nbsp;index)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#get(int)">get</a></span>&#8203;(int&nbsp;index)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#getFirst--">getFirst</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getFirst()">getFirst</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i11" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#getLast--">getLast</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLast()">getLast</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i12" class="altColor">
-<td class="colFirst"><code>protected <a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#getPage-int-">getPage</a></span>(int&nbsp;index)</code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPage(int)">getPage</a></span>&#8203;(int&nbsp;index)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code>protected int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#getPageIndex-int-">getPageIndex</a></span>(int&nbsp;index)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPageIndex(int)">getPageIndex</a></span>&#8203;(int&nbsp;index)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#offer-E-">offer</a></span>(<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;e)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#offer(E)">offer</a></span>&#8203;(<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;e)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i15" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#offerFirst-E-">offerFirst</a></span>(<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;e)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#offerFirst(E)">offerFirst</a></span>&#8203;(<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;e)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i16" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#offerLast-E-">offerLast</a></span>(<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;e)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#offerLast(E)">offerLast</a></span>&#8203;(<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;e)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i17" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#peek--">peek</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#peek()">peek</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i18" class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#peekFirst--">peekFirst</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#peekFirst()">peekFirst</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i19" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#peekLast--">peekLast</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#peekLast()">peekLast</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i20" class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#poll--">poll</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#poll()">poll</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i21" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#pollFirst--">pollFirst</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#pollFirst()">pollFirst</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i22" class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#pollLast--">pollLast</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#pollLast()">pollLast</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i23" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#pop--">pop</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#pop()">pop</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i24" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#push-E-">push</a></span>(<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;e)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#push(E)">push</a></span>&#8203;(<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;e)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i25" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#remove--">remove</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#remove()">remove</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i26" class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#remove-int-">remove</a></span>(int&nbsp;index)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#remove(int)">remove</a></span>&#8203;(int&nbsp;index)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i27" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#remove-java.lang.Object-">remove</a></span>(java.lang.Object&nbsp;o)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#remove(java.lang.Object)">remove</a></span>&#8203;(java.lang.Object&nbsp;o)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i28" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#removeAll-java.util.Collection-">removeAll</a></span>(java.util.Collection&lt;?&gt;&nbsp;c)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeAll(java.util.Collection)">removeAll</a></span>&#8203;(java.util.Collection&lt;?&gt;&nbsp;c)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i29" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#removeFirst--">removeFirst</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeFirst()">removeFirst</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i30" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#removeFirstOccurrence-java.lang.Object-">removeFirstOccurrence</a></span>(java.lang.Object&nbsp;o)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeFirstOccurrence(java.lang.Object)">removeFirstOccurrence</a></span>&#8203;(java.lang.Object&nbsp;o)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i31" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#removeLast--">removeLast</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeLast()">removeLast</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i32" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#removeLastOccurrence-java.lang.Object-">removeLastOccurrence</a></span>(java.lang.Object&nbsp;o)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeLastOccurrence(java.lang.Object)">removeLastOccurrence</a></span>&#8203;(java.lang.Object&nbsp;o)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i33" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#retainAll-java.util.Collection-">retainAll</a></span>(java.util.Collection&lt;?&gt;&nbsp;c)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retainAll(java.util.Collection)">retainAll</a></span>&#8203;(java.util.Collection&lt;?&gt;&nbsp;c)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i34" class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#set-int-E-">set</a></span>(int&nbsp;index,
-   <a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;element)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#set(int,E)">set</a></span>&#8203;(int&nbsp;index,
+   <a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;element)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i35" class="rowColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#size--">size</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#size()">size</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.util.AbstractList">
+<li class="blockList"><a id="methods.inherited.from.class.java.util.AbstractList">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.util.AbstractList</h3>
 <code>equals, hashCode, indexOf, iterator, lastIndexOf, listIterator, listIterator, removeRange, subList</code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.util.AbstractCollection">
+<li class="blockList"><a id="methods.inherited.from.class.java.util.AbstractCollection">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.util.AbstractCollection</h3>
 <code>addAll, contains, containsAll, isEmpty, toArray, toArray, toString</code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
+<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
 <code>clone, finalize, getClass, notify, notifyAll, wait, wait, wait</code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.util.Collection">
+<li class="blockList"><a id="methods.inherited.from.class.java.util.Collection">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;java.util.Collection</h3>
-<code>addAll, contains, containsAll, equals, hashCode, isEmpty, iterator, parallelStream, removeIf, spliterator, stream, toArray, toArray</code></li>
+<code>parallelStream, removeIf, stream, toArray</code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Iterable">
+<li class="blockList"><a id="methods.inherited.from.class.java.lang.Iterable">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;java.lang.Iterable</h3>
 <code>forEach</code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.util.List">
+<li class="blockList"><a id="methods.inherited.from.class.java.util.List">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;java.util.List</h3>
@@ -374,6 +442,7 @@ implements java.util.Queue&lt;E&gt;, java.util.RandomAccess</pre>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -381,491 +450,498 @@ implements java.util.Queue&lt;E&gt;, java.util.RandomAccess</pre>
 <ul class="blockList">
 <li class="blockList">
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.detail">
+<li class="blockList"><a id="constructor.detail">
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="GrowingRandomAccessList-java.lang.Class-int-">
+<a id="&lt;init&gt;(java.lang.Class,int)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>GrowingRandomAccessList</h4>
-<pre>public&nbsp;GrowingRandomAccessList(java.lang.Class&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;&nbsp;componentType,
+<pre>public&nbsp;GrowingRandomAccessList&#8203;(java.lang.Class&lt;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;&nbsp;componentType,
                                int&nbsp;pageCapacity)</pre>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="get-int-">
+<a id="get(int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>get</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;get(int&nbsp;index)</pre>
+<pre class="methodSignature">public&nbsp;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;get&#8203;(int&nbsp;index)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>get</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dd><code>get</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>get</code>&nbsp;in class&nbsp;<code>java.util.AbstractList&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dd><code>get</code>&nbsp;in class&nbsp;<code>java.util.AbstractList&lt;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="size--">
+<a id="size()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>size</h4>
-<pre>public&nbsp;int&nbsp;size()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;size()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>size</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dd><code>size</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>size</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dd><code>size</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>size</code>&nbsp;in class&nbsp;<code>java.util.AbstractCollection&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dd><code>size</code>&nbsp;in class&nbsp;<code>java.util.AbstractCollection&lt;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="addFirst-java.lang.Object-">
+<a id="addFirst(java.lang.Object)">
 <!--   -->
-</a><a name="addFirst-E-">
+</a><a id="addFirst(E)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>addFirst</h4>
-<pre>public&nbsp;void&nbsp;addFirst(<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;e)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;addFirst&#8203;(<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;e)</pre>
 </li>
 </ul>
-<a name="addLast-java.lang.Object-">
+<a id="addLast(java.lang.Object)">
 <!--   -->
-</a><a name="addLast-E-">
+</a><a id="addLast(E)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>addLast</h4>
-<pre>public&nbsp;void&nbsp;addLast(<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;e)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;addLast&#8203;(<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;e)</pre>
 </li>
 </ul>
-<a name="add-java.lang.Object-">
+<a id="add(java.lang.Object)">
 <!--   -->
-</a><a name="add-E-">
+</a><a id="add(E)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>add</h4>
-<pre>public&nbsp;boolean&nbsp;add(<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;e)</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;add&#8203;(<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;e)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>add</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dd><code>add</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>add</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dd><code>add</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>add</code>&nbsp;in interface&nbsp;<code>java.util.Queue&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dd><code>add</code>&nbsp;in interface&nbsp;<code>java.util.Queue&lt;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>add</code>&nbsp;in class&nbsp;<code>java.util.AbstractList&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dd><code>add</code>&nbsp;in class&nbsp;<code>java.util.AbstractList&lt;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="set-int-java.lang.Object-">
+<a id="set(int,java.lang.Object)">
 <!--   -->
-</a><a name="set-int-E-">
+</a><a id="set(int,E)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>set</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;set(int&nbsp;index,
-             <a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;element)</pre>
+<pre class="methodSignature">public&nbsp;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;set&#8203;(int&nbsp;index,
+             <a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;element)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>set</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dd><code>set</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>set</code>&nbsp;in class&nbsp;<code>java.util.AbstractList&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dd><code>set</code>&nbsp;in class&nbsp;<code>java.util.AbstractList&lt;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="add-int-java.lang.Object-">
+<a id="add(int,java.lang.Object)">
 <!--   -->
-</a><a name="add-int-E-">
+</a><a id="add(int,E)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>add</h4>
-<pre>public&nbsp;void&nbsp;add(int&nbsp;index,
-                <a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;element)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;add&#8203;(int&nbsp;index,
+                <a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;element)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>add</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dd><code>add</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>add</code>&nbsp;in class&nbsp;<code>java.util.AbstractList&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dd><code>add</code>&nbsp;in class&nbsp;<code>java.util.AbstractList&lt;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="remove-int-">
+<a id="remove(int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>remove</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;remove(int&nbsp;index)</pre>
+<pre class="methodSignature">public&nbsp;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;remove&#8203;(int&nbsp;index)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>remove</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dd><code>remove</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>remove</code>&nbsp;in class&nbsp;<code>java.util.AbstractList&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dd><code>remove</code>&nbsp;in class&nbsp;<code>java.util.AbstractList&lt;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="clear--">
+<a id="clear()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>clear</h4>
-<pre>public&nbsp;void&nbsp;clear()</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;clear()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>clear</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dd><code>clear</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>clear</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dd><code>clear</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>clear</code>&nbsp;in class&nbsp;<code>java.util.AbstractList&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dd><code>clear</code>&nbsp;in class&nbsp;<code>java.util.AbstractList&lt;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="addAll-int-java.util.Collection-">
+<a id="addAll(int,java.util.Collection)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>addAll</h4>
-<pre>public&nbsp;boolean&nbsp;addAll(int&nbsp;index,
-                      java.util.Collection&lt;? extends <a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;&nbsp;c)</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;addAll&#8203;(int&nbsp;index,
+                      java.util.Collection&lt;? extends <a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;&nbsp;c)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>addAll</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dd><code>addAll</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>addAll</code>&nbsp;in class&nbsp;<code>java.util.AbstractList&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dd><code>addAll</code>&nbsp;in class&nbsp;<code>java.util.AbstractList&lt;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="remove-java.lang.Object-">
+<a id="remove(java.lang.Object)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>remove</h4>
-<pre>public&nbsp;boolean&nbsp;remove(java.lang.Object&nbsp;o)</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;remove&#8203;(java.lang.Object&nbsp;o)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>remove</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dd><code>remove</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>remove</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dd><code>remove</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>remove</code>&nbsp;in class&nbsp;<code>java.util.AbstractCollection&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dd><code>remove</code>&nbsp;in class&nbsp;<code>java.util.AbstractCollection&lt;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="removeAll-java.util.Collection-">
+<a id="removeAll(java.util.Collection)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>removeAll</h4>
-<pre>public&nbsp;boolean&nbsp;removeAll(java.util.Collection&lt;?&gt;&nbsp;c)</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;removeAll&#8203;(java.util.Collection&lt;?&gt;&nbsp;c)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>removeAll</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dd><code>removeAll</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>removeAll</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dd><code>removeAll</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>removeAll</code>&nbsp;in class&nbsp;<code>java.util.AbstractCollection&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dd><code>removeAll</code>&nbsp;in class&nbsp;<code>java.util.AbstractCollection&lt;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="retainAll-java.util.Collection-">
+<a id="retainAll(java.util.Collection)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>retainAll</h4>
-<pre>public&nbsp;boolean&nbsp;retainAll(java.util.Collection&lt;?&gt;&nbsp;c)</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;retainAll&#8203;(java.util.Collection&lt;?&gt;&nbsp;c)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>retainAll</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dd><code>retainAll</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>retainAll</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dd><code>retainAll</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>retainAll</code>&nbsp;in class&nbsp;<code>java.util.AbstractCollection&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dd><code>retainAll</code>&nbsp;in class&nbsp;<code>java.util.AbstractCollection&lt;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="offerFirst-java.lang.Object-">
+<a id="offerFirst(java.lang.Object)">
 <!--   -->
-</a><a name="offerFirst-E-">
+</a><a id="offerFirst(E)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>offerFirst</h4>
-<pre>public&nbsp;boolean&nbsp;offerFirst(<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;e)</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;offerFirst&#8203;(<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;e)</pre>
 </li>
 </ul>
-<a name="offerLast-java.lang.Object-">
+<a id="offerLast(java.lang.Object)">
 <!--   -->
-</a><a name="offerLast-E-">
+</a><a id="offerLast(E)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>offerLast</h4>
-<pre>public&nbsp;boolean&nbsp;offerLast(<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;e)</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;offerLast&#8203;(<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;e)</pre>
 </li>
 </ul>
-<a name="removeFirst--">
+<a id="removeFirst()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>removeFirst</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;removeFirst()</pre>
+<pre class="methodSignature">public&nbsp;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;removeFirst()</pre>
 </li>
 </ul>
-<a name="removeLast--">
+<a id="removeLast()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>removeLast</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;removeLast()</pre>
+<pre class="methodSignature">public&nbsp;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;removeLast()</pre>
 </li>
 </ul>
-<a name="pollFirst--">
+<a id="pollFirst()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>pollFirst</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;pollFirst()</pre>
+<pre class="methodSignature">public&nbsp;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;pollFirst()</pre>
 </li>
 </ul>
-<a name="pollLast--">
+<a id="pollLast()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>pollLast</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;pollLast()</pre>
+<pre class="methodSignature">public&nbsp;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;pollLast()</pre>
 </li>
 </ul>
-<a name="getFirst--">
+<a id="getFirst()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getFirst</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;getFirst()</pre>
+<pre class="methodSignature">public&nbsp;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;getFirst()</pre>
 </li>
 </ul>
-<a name="getLast--">
+<a id="getLast()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getLast</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;getLast()</pre>
+<pre class="methodSignature">public&nbsp;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;getLast()</pre>
 </li>
 </ul>
-<a name="peekFirst--">
+<a id="peekFirst()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>peekFirst</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;peekFirst()</pre>
+<pre class="methodSignature">public&nbsp;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;peekFirst()</pre>
 </li>
 </ul>
-<a name="peekLast--">
+<a id="peekLast()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>peekLast</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;peekLast()</pre>
+<pre class="methodSignature">public&nbsp;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;peekLast()</pre>
 </li>
 </ul>
-<a name="removeFirstOccurrence-java.lang.Object-">
+<a id="removeFirstOccurrence(java.lang.Object)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>removeFirstOccurrence</h4>
-<pre>public&nbsp;boolean&nbsp;removeFirstOccurrence(java.lang.Object&nbsp;o)</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;removeFirstOccurrence&#8203;(java.lang.Object&nbsp;o)</pre>
 </li>
 </ul>
-<a name="removeLastOccurrence-java.lang.Object-">
+<a id="removeLastOccurrence(java.lang.Object)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>removeLastOccurrence</h4>
-<pre>public&nbsp;boolean&nbsp;removeLastOccurrence(java.lang.Object&nbsp;o)</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;removeLastOccurrence&#8203;(java.lang.Object&nbsp;o)</pre>
 </li>
 </ul>
-<a name="offer-java.lang.Object-">
+<a id="offer(java.lang.Object)">
 <!--   -->
-</a><a name="offer-E-">
+</a><a id="offer(E)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>offer</h4>
-<pre>public&nbsp;boolean&nbsp;offer(<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;e)</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;offer&#8203;(<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;e)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>offer</code>&nbsp;in interface&nbsp;<code>java.util.Queue&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dd><code>offer</code>&nbsp;in interface&nbsp;<code>java.util.Queue&lt;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="remove--">
+<a id="remove()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>remove</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;remove()</pre>
+<pre class="methodSignature">public&nbsp;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;remove()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>remove</code>&nbsp;in interface&nbsp;<code>java.util.Queue&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dd><code>remove</code>&nbsp;in interface&nbsp;<code>java.util.Queue&lt;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="poll--">
+<a id="poll()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>poll</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;poll()</pre>
+<pre class="methodSignature">public&nbsp;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;poll()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>poll</code>&nbsp;in interface&nbsp;<code>java.util.Queue&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dd><code>poll</code>&nbsp;in interface&nbsp;<code>java.util.Queue&lt;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="element--">
+<a id="element()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>element</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;element()</pre>
+<pre class="methodSignature">public&nbsp;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;element()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>element</code>&nbsp;in interface&nbsp;<code>java.util.Queue&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dd><code>element</code>&nbsp;in interface&nbsp;<code>java.util.Queue&lt;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="peek--">
+<a id="peek()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>peek</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;peek()</pre>
+<pre class="methodSignature">public&nbsp;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;peek()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>peek</code>&nbsp;in interface&nbsp;<code>java.util.Queue&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dd><code>peek</code>&nbsp;in interface&nbsp;<code>java.util.Queue&lt;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="push-java.lang.Object-">
+<a id="push(java.lang.Object)">
 <!--   -->
-</a><a name="push-E-">
+</a><a id="push(E)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>push</h4>
-<pre>public&nbsp;void&nbsp;push(<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;e)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;push&#8203;(<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;e)</pre>
 </li>
 </ul>
-<a name="pop--">
+<a id="pop()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>pop</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;pop()</pre>
+<pre class="methodSignature">public&nbsp;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;pop()</pre>
 </li>
 </ul>
-<a name="descendingIterator--">
+<a id="descendingIterator()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>descendingIterator</h4>
-<pre>public&nbsp;java.util.Iterator&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;&nbsp;descendingIterator()</pre>
+<pre class="methodSignature">public&nbsp;java.util.Iterator&lt;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;&nbsp;descendingIterator()</pre>
 </li>
 </ul>
-<a name="createPage--">
+<a id="createPage()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createPage</h4>
-<pre>protected&nbsp;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>[]&nbsp;createPage()</pre>
+<pre class="methodSignature">protected&nbsp;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>[]&nbsp;createPage()</pre>
 </li>
 </ul>
-<a name="getPage-int-">
+<a id="getPage(int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getPage</h4>
-<pre>protected&nbsp;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>[]&nbsp;getPage(int&nbsp;index)</pre>
+<pre class="methodSignature">protected&nbsp;<a href="GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>[]&nbsp;getPage&#8203;(int&nbsp;index)</pre>
 </li>
 </ul>
-<a name="getPageIndex-int-">
+<a id="getPageIndex(int)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getPageIndex</h4>
-<pre>protected&nbsp;int&nbsp;getPageIndex(int&nbsp;index)</pre>
+<pre class="methodSignature">protected&nbsp;int&nbsp;getPageIndex&#8203;(int&nbsp;index)</pre>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/GrowingRandomAccessList.html">Use</a></li>
@@ -875,16 +951,8 @@ implements java.util.Queue&lt;E&gt;, java.util.RandomAccess</pre>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/net4j/util/collection/FastList.html" title="class in org.eclipse.net4j.util.collection"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/net4j/util/collection/HashBag.html" title="class in org.eclipse.net4j.util.collection"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" target="_top">Frames</a></li>
-<li><a href="GrowingRandomAccessList.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -897,12 +965,15 @@ implements java.util.Queue&lt;E&gt;, java.util.RandomAccess</pre>
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li><a href="#fields.inherited.from.class.java.util.AbstractList">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
@@ -913,10 +984,12 @@ implements java.util.Queue&lt;E&gt;, java.util.RandomAccess</pre>
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>HexUtil (Net4j Utilities Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../script.js"></script>
+<script type="text/javascript" src="../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":41,"i1":9,"i2":9,"i3":9,"i4":9,"i5":41,"i6":41,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9};
+var data = {"i0":41,"i1":9,"i2":9,"i3":9,"i4":9,"i5":41,"i6":41,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9,"i12":9,"i13":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/HexUtil.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../org/eclipse/net4j/util/Handler.html" title="interface in org.eclipse.net4j.util"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../org/eclipse/net4j/util/IErrorHandler.html" title="interface in org.eclipse.net4j.util"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../index.html?org/eclipse/net4j/util/HexUtil.html" target="_top">Frames</a></li>
-<li><a href="HexUtil.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,6 +82,9 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -85,13 +101,22 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.net4j.util</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.net4j.util</a></div>
 <h2 title="Class HexUtil" class="title">Class HexUtil</h2>
 </div>
 <div class="contentContainer">
@@ -107,7 +132,6 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<br>
 <pre>public final class <span class="typeNameLabel">HexUtil</span>
 extends java.lang.Object</pre>
 <div class="block">Provides static methods that convert to and from hexadecimal string formats.</div>
@@ -122,108 +146,136 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <!-- =========== FIELD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.summary">
+<li class="blockList"><a id="field.summary">
 <!--   -->
 </a>
 <h3>Field Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Field Summary table, listing fields, and an explanation">
+<table class="memberSummary">
 <caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Field and Description</th>
+<th class="colSecond" scope="col">Field</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static char[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/util/HexUtil.html#DIGITS">DIGITS</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#DIGITS">DIGITS</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t6" class="tableTab"><span><a href="javascript:show(32);">Deprecated Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/util/HexUtil.html#appendHex-java.lang.StringBuilder-int-">appendHex</a></span>(java.lang.StringBuilder&nbsp;builder,
-         int&nbsp;b)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#appendHex(java.lang.StringBuilder,int)">appendHex</a></span>&#8203;(java.lang.StringBuilder&nbsp;builder,
+         int&nbsp;b)</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/util/HexUtil.html#bytesToHex-byte:A-">bytesToHex</a></span>(byte[]&nbsp;bs)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#bytesToHex(byte%5B%5D)">bytesToHex</a></span>&#8203;(byte[]&nbsp;bs)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/util/HexUtil.html#bytesToHex-byte:A-int-int-">bytesToHex</a></span>(byte[]&nbsp;bs,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#bytesToHex(byte%5B%5D,int,int)">bytesToHex</a></span>&#8203;(byte[]&nbsp;bs,
           int&nbsp;off,
-          int&nbsp;length)</code>
+          int&nbsp;length)</code></th>
+<td class="colLast">
 <div class="block">Converts a byte array into a string of lower case hex chars.</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/util/HexUtil.html#bytesToHex-java.io.InputStream-java.io.Writer-">bytesToHex</a></span>(java.io.InputStream&nbsp;bs,
-          java.io.Writer&nbsp;writer)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#bytesToHex(java.io.InputStream,java.io.Writer)">bytesToHex</a></span>&#8203;(java.io.InputStream&nbsp;bs,
+          java.io.Writer&nbsp;writer)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/util/HexUtil.html#bytesToHexAppend-byte:A-int-int-java.lang.Appendable-">bytesToHexAppend</a></span>(byte[]&nbsp;bs,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#bytesToHexAppend(byte%5B%5D,int,int,java.lang.Appendable)">bytesToHexAppend</a></span>&#8203;(byte[]&nbsp;bs,
                 int&nbsp;off,
                 int&nbsp;length,
-                java.lang.Appendable&nbsp;appendable)</code>&nbsp;</td>
+                java.lang.Appendable&nbsp;appendable)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/util/HexUtil.html#formatByte-int-">formatByte</a></span>(int&nbsp;b)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#formatByte(int)">formatByte</a></span>&#8203;(int&nbsp;b)</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 </td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/util/HexUtil.html#formatBytes-byte:A-">formatBytes</a></span>(byte[]&nbsp;bytes)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#formatBytes(byte%5B%5D)">formatBytes</a></span>&#8203;(byte[]&nbsp;bytes)</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 </td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/util/HexUtil.html#hexToBytes-java.io.Reader-java.io.OutputStream-">hexToBytes</a></span>(java.io.Reader&nbsp;s,
-          java.io.OutputStream&nbsp;outputStream)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hexToBytes(java.io.Reader,java.io.OutputStream)">hexToBytes</a></span>&#8203;(java.io.Reader&nbsp;s,
+          java.io.OutputStream&nbsp;outputStream)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>static byte[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/util/HexUtil.html#hexToBytes-java.lang.String-">hexToBytes</a></span>(java.lang.String&nbsp;s)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hexToBytes(java.lang.String)">hexToBytes</a></span>&#8203;(java.lang.String&nbsp;s)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/util/HexUtil.html#hexToBytes-java.lang.String-byte:A-int-">hexToBytes</a></span>(java.lang.String&nbsp;s,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hexToBytes(java.lang.String,byte%5B%5D,int)">hexToBytes</a></span>&#8203;(java.lang.String&nbsp;s,
           byte[]&nbsp;out,
-          int&nbsp;off)</code>
+          int&nbsp;off)</code></th>
+<td class="colLast">
 <div class="block">Converts a String of hex characters into an array of bytes.</div>
 </td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>static byte[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/util/HexUtil.html#hexToBytes-java.lang.String-int-">hexToBytes</a></span>(java.lang.String&nbsp;s,
-          int&nbsp;off)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hexToBytes(java.lang.String,int)">hexToBytes</a></span>&#8203;(java.lang.String&nbsp;s,
+          int&nbsp;off)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/util/HexUtil.html#longToHex-long-">longToHex</a></span>(long&nbsp;v)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#identityHashCode(java.lang.Object)">identityHashCode</a></span>&#8203;(java.lang.Object&nbsp;object)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i12" class="altColor">
+<td class="colFirst"><code>static java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#intToHex(int)">intToHex</a></span>&#8203;(int&nbsp;v)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i13" class="rowColor">
+<td class="colFirst"><code>static java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#longToHex(long)">longToHex</a></span>&#8203;(long&nbsp;v)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
+<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
@@ -231,6 +283,7 @@ extends java.lang.Object</pre>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -238,12 +291,13 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <!-- ============ FIELD DETAIL =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.detail">
+<li class="blockList"><a id="field.detail">
 <!--   -->
 </a>
 <h3>Field Detail</h3>
-<a name="DIGITS">
+<a id="DIGITS">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -254,19 +308,21 @@ extends java.lang.Object</pre>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="bytesToHex-byte:A-int-int-">
+<a id="bytesToHex(byte[],int,int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>bytesToHex</h4>
-<pre>public static&nbsp;java.lang.String&nbsp;bytesToHex(byte[]&nbsp;bs,
+<pre class="methodSignature">public static&nbsp;java.lang.String&nbsp;bytesToHex&#8203;(byte[]&nbsp;bs,
                                           int&nbsp;off,
                                           int&nbsp;length)</pre>
 <div class="block">Converts a byte array into a string of lower case hex chars.</div>
@@ -280,25 +336,25 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a name="bytesToHexAppend-byte:A-int-int-java.lang.Appendable-">
+<a id="bytesToHexAppend(byte[],int,int,java.lang.Appendable)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>bytesToHexAppend</h4>
-<pre>public static&nbsp;void&nbsp;bytesToHexAppend(byte[]&nbsp;bs,
+<pre class="methodSignature">public static&nbsp;void&nbsp;bytesToHexAppend&#8203;(byte[]&nbsp;bs,
                                     int&nbsp;off,
                                     int&nbsp;length,
                                     java.lang.Appendable&nbsp;appendable)</pre>
 </li>
 </ul>
-<a name="bytesToHex-java.io.InputStream-java.io.Writer-">
+<a id="bytesToHex(java.io.InputStream,java.io.Writer)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>bytesToHex</h4>
-<pre>public static&nbsp;void&nbsp;bytesToHex(java.io.InputStream&nbsp;bs,
+<pre class="methodSignature">public static&nbsp;void&nbsp;bytesToHex&#8203;(java.io.InputStream&nbsp;bs,
                               java.io.Writer&nbsp;writer)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -306,41 +362,41 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a name="bytesToHex-byte:A-">
+<a id="bytesToHex(byte[])">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>bytesToHex</h4>
-<pre>public static&nbsp;java.lang.String&nbsp;bytesToHex(byte[]&nbsp;bs)</pre>
+<pre class="methodSignature">public static&nbsp;java.lang.String&nbsp;bytesToHex&#8203;(byte[]&nbsp;bs)</pre>
 </li>
 </ul>
-<a name="hexToBytes-java.lang.String-">
+<a id="hexToBytes(java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>hexToBytes</h4>
-<pre>public static&nbsp;byte[]&nbsp;hexToBytes(java.lang.String&nbsp;s)</pre>
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;hexToBytes&#8203;(java.lang.String&nbsp;s)</pre>
 </li>
 </ul>
-<a name="hexToBytes-java.lang.String-int-">
+<a id="hexToBytes(java.lang.String,int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>hexToBytes</h4>
-<pre>public static&nbsp;byte[]&nbsp;hexToBytes(java.lang.String&nbsp;s,
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;hexToBytes&#8203;(java.lang.String&nbsp;s,
                                 int&nbsp;off)</pre>
 </li>
 </ul>
-<a name="hexToBytes-java.lang.String-byte:A-int-">
+<a id="hexToBytes(java.lang.String,byte[],int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>hexToBytes</h4>
-<pre>public static&nbsp;void&nbsp;hexToBytes(java.lang.String&nbsp;s,
+<pre class="methodSignature">public static&nbsp;void&nbsp;hexToBytes&#8203;(java.lang.String&nbsp;s,
                               byte[]&nbsp;out,
                               int&nbsp;off)
                        throws java.lang.NumberFormatException,
@@ -357,13 +413,13 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a name="hexToBytes-java.io.Reader-java.io.OutputStream-">
+<a id="hexToBytes(java.io.Reader,java.io.OutputStream)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>hexToBytes</h4>
-<pre>public static&nbsp;void&nbsp;hexToBytes(java.io.Reader&nbsp;s,
+<pre class="methodSignature">public static&nbsp;void&nbsp;hexToBytes&#8203;(java.io.Reader&nbsp;s,
                               java.io.OutputStream&nbsp;outputStream)
                        throws java.lang.NumberFormatException</pre>
 <dl>
@@ -374,66 +430,96 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a name="longToHex-long-">
+<a id="longToHex(long)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>longToHex</h4>
-<pre>public static&nbsp;java.lang.String&nbsp;longToHex(long&nbsp;v)</pre>
+<pre class="methodSignature">public static&nbsp;java.lang.String&nbsp;longToHex&#8203;(long&nbsp;v)</pre>
 </li>
 </ul>
-<a name="formatByte-int-">
+<a id="intToHex(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>intToHex</h4>
+<pre class="methodSignature">public static&nbsp;java.lang.String&nbsp;intToHex&#8203;(int&nbsp;v)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.13</dd>
+</dl>
+</li>
+</ul>
+<a id="identityHashCode(java.lang.Object)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>identityHashCode</h4>
+<pre class="methodSignature">public static&nbsp;java.lang.String&nbsp;identityHashCode&#8203;(java.lang.Object&nbsp;object)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.13</dd>
+</dl>
+</li>
+</ul>
+<a id="formatByte(int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>formatByte</h4>
-<pre>@Deprecated
-public static&nbsp;java.lang.String&nbsp;formatByte(int&nbsp;b)</pre>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<pre class="methodSignature">@Deprecated
+public static&nbsp;java.lang.String&nbsp;formatByte&#8203;(int&nbsp;b)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 </li>
 </ul>
-<a name="formatBytes-byte:A-">
+<a id="formatBytes(byte[])">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>formatBytes</h4>
-<pre>@Deprecated
-public static&nbsp;java.lang.String&nbsp;formatBytes(byte[]&nbsp;bytes)</pre>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<pre class="methodSignature">@Deprecated
+public static&nbsp;java.lang.String&nbsp;formatBytes&#8203;(byte[]&nbsp;bytes)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 </li>
 </ul>
-<a name="appendHex-java.lang.StringBuilder-int-">
+<a id="appendHex(java.lang.StringBuilder,int)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>appendHex</h4>
-<pre>@Deprecated
-public static&nbsp;void&nbsp;appendHex(java.lang.StringBuilder&nbsp;builder,
-                                          int&nbsp;b)</pre>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<pre class="methodSignature">@Deprecated
+public static&nbsp;void&nbsp;appendHex&#8203;(java.lang.StringBuilder&nbsp;builder,
+                             int&nbsp;b)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/HexUtil.html">Use</a></li>
@@ -443,16 +529,8 @@ public static&nbsp;void&nbsp;appendHex(java.lang.StringBuilder&nbsp;builder,
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../org/eclipse/net4j/util/Handler.html" title="interface in org.eclipse.net4j.util"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../org/eclipse/net4j/util/IErrorHandler.html" title="interface in org.eclipse.net4j.util"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../index.html?org/eclipse/net4j/util/HexUtil.html" target="_top">Frames</a></li>
-<li><a href="HexUtil.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -465,6 +543,9 @@ public static&nbsp;void&nbsp;appendHex(java.lang.StringBuilder&nbsp;builder,
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -481,10 +562,12 @@ public static&nbsp;void&nbsp;appendHex(java.lang.StringBuilder&nbsp;builder,
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

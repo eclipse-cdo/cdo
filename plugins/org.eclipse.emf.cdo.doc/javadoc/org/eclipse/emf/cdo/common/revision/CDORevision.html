@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>CDORevision (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":6,"i11":6,"i12":6,"i13":6,"i14":6};
+var data = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":6,"i11":6,"i12":6,"i13":6,"i14":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/CDORevision.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisable.html" title="interface in org.eclipse.emf.cdo.common.revision"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionCache.html" title="interface in org.eclipse.emf.cdo.common.revision"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/emf/cdo/common/revision/CDORevision.html" target="_top">Frames</a></li>
-<li><a href="CDORevision.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,6 +82,9 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -85,13 +101,22 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.emf.cdo.common.revision</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.cdo.common.revision</a></div>
 <h2 title="Interface CDORevision" class="title">Interface CDORevision</h2>
 </div>
 <div class="contentContainer">
@@ -100,23 +125,22 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>, <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchProvider.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchProvider</a>, <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchVersion.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchVersion</a>, <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDOIDAndVersion.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndVersion</a>, <a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOIdentifiable.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIdentifiable</a>, <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisable.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisable</a>, <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionKey.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionKey</a>, <a href="../../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a>, <a href="../../../../../../org/eclipse/emf/cdo/common/util/CDOVersionProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOVersionProvider</a></dd>
+<dd><code><a href="../branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a></code>, <code><a href="../branch/CDOBranchProvider.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchProvider</a></code>, <code><a href="../branch/CDOBranchVersion.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchVersion</a></code>, <code><a href="CDOIDAndVersion.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndVersion</a></code>, <code><a href="../id/CDOIdentifiable.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIdentifiable</a></code>, <code><a href="CDORevisable.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisable</a></code>, <code><a href="CDORevisionKey.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionKey</a></code>, <code><a href="../util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a></code>, <code><a href="../util/CDOVersionProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOVersionProvider</a></code></dd>
 </dl>
 <dl>
 <dt>All Known Subinterfaces:</dt>
-<dd><a href="../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></dd>
+<dd><code><a href="../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></code></dd>
 </dl>
 <dl>
 <dt>All Known Implementing Classes:</dt>
-<dd><a href="../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">AbstractCDORevision</a>, <a href="../../../../../../org/eclipse/emf/cdo/spi/common/revision/BaseCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">BaseCDORevision</a>, <a href="../../../../../../org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">DelegatingCDORevision</a>, <a href="../../../../../../org/eclipse/emf/cdo/spi/common/revision/DetachedCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">DetachedCDORevision</a>, <a href="../../../../../../org/eclipse/emf/cdo/spi/common/revision/PointerCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">PointerCDORevision</a>, <a href="../../../../../../org/eclipse/emf/cdo/spi/common/revision/StubCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">StubCDORevision</a>, <a href="../../../../../../org/eclipse/emf/cdo/spi/common/revision/SyntheticCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">SyntheticCDORevision</a></dd>
+<dd><code><a href="../../spi/common/revision/AbstractCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">AbstractCDORevision</a></code>, <code><a href="../../spi/common/revision/BaseCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">BaseCDORevision</a></code>, <code><a href="../../spi/common/revision/DelegatingCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">DelegatingCDORevision</a></code>, <code><a href="../../spi/common/revision/DetachedCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">DetachedCDORevision</a></code>, <code><a href="../../spi/common/revision/PointerCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">PointerCDORevision</a></code>, <code><a href="../../spi/common/revision/StubCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">StubCDORevision</a></code>, <code><a href="../../spi/common/revision/SyntheticCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">SyntheticCDORevision</a></code></dd>
 </dl>
 <hr>
-<br>
 <pre>public interface <span class="typeNameLabel">CDORevision</span>
-extends <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionKey.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionKey</a>, <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisable.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisable</a></pre>
-<div class="block">Encapsulates the immutable system information of a <b>single</b> CDO <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>object</code></a> between two
- <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>commits</code></a> in a <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch</code></a> and provides access to its modeled
- <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionData.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>data</code></a>.</div>
+extends <a href="CDORevisionKey.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionKey</a>, <a href="CDORevisable.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisable</a></pre>
+<div class="block">Encapsulates the immutable system information of a <b>single</b> CDO <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>object</code></a> between two
+ <a href="../commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>commits</code></a> in a <a href="../branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch</code></a> and provides access to its modeled
+ <a href="CDORevisionData.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>data</code></a>.</div>
 <dl>
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>Eike Stepper</dd>
@@ -132,171 +156,198 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisi
 <ul class="blockList">
 <li class="blockList">
 <!-- =========== FIELD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.summary">
+<li class="blockList"><a id="field.summary">
 <!--   -->
 </a>
 <h3>Field Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Field Summary table, listing fields, and an explanation">
+<table class="memberSummary">
 <caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Field and Description</th>
+<th class="colSecond" scope="col">Field</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html#DEPTH_INFINITE">DEPTH_INFINITE</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#DEPTH_INFINITE">DEPTH_INFINITE</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html#DEPTH_NONE">DEPTH_NONE</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#DEPTH_NONE">DEPTH_NONE</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html#FIRST_VERSION">FIRST_VERSION</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#FIRST_VERSION">FIRST_VERSION</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html#MAIN_BRANCH_ID">MAIN_BRANCH_ID</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#MAIN_BRANCH_ID">MAIN_BRANCH_ID</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/common/security/CDOPermissionProvider.html" title="interface in org.eclipse.emf.cdo.common.security">CDOPermissionProvider</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html#PERMISSION_PROVIDER">PERMISSION_PROVIDER</a></span></code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="../security/CDOPermissionProvider.html" title="interface in org.eclipse.emf.cdo.common.security">CDOPermissionProvider</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#PERMISSION_PROVIDER">PERMISSION_PROVIDER</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html#UNCHUNKED">UNCHUNKED</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#UNCHUNKED">UNCHUNKED</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="fields.inherited.from.class.org.eclipse.emf.cdo.common.branch.CDOBranchPoint">
+<li class="blockList"><a id="fields.inherited.from.class.org.eclipse.emf.cdo.common.branch.CDOBranchPoint">
 <!--   -->
 </a>
-<h3>Fields inherited from interface&nbsp;org.eclipse.emf.cdo.common.branch.<a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a></h3>
-<code><a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#INVALID_DATE">INVALID_DATE</a>, <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#UNSPECIFIED_DATE">UNSPECIFIED_DATE</a></code></li>
+<h3>Fields inherited from interface&nbsp;org.eclipse.emf.cdo.common.branch.<a href="../branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a></h3>
+<code><a href="../branch/CDOBranchPoint.html#INVALID_DATE">INVALID_DATE</a>, <a href="../branch/CDOBranchPoint.html#UNSPECIFIED_DATE">UNSPECIFIED_DATE</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="fields.inherited.from.class.org.eclipse.emf.cdo.common.branch.CDOBranchVersion">
+<li class="blockList"><a id="fields.inherited.from.class.org.eclipse.emf.cdo.common.branch.CDOBranchVersion">
 <!--   -->
 </a>
-<h3>Fields inherited from interface&nbsp;org.eclipse.emf.cdo.common.branch.<a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchVersion.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchVersion</a></h3>
-<code><a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchVersion.html#UNSPECIFIED_VERSION">UNSPECIFIED_VERSION</a></code></li>
+<h3>Fields inherited from interface&nbsp;org.eclipse.emf.cdo.common.branch.<a href="../branch/CDOBranchVersion.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchVersion</a></h3>
+<code><a href="../branch/CDOBranchVersion.html#UNSPECIFIED_VERSION">UNSPECIFIED_VERSION</a></code></li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html#compare-org.eclipse.emf.cdo.common.revision.CDORevision-">compare</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;origin)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#compare(org.eclipse.emf.cdo.common.revision.CDORevision)">compare</a></span>&#8203;(<a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;origin)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html#copy--">copy</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#copy()">copy</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionData.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionData</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html#data--">data</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="CDORevisionData.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionData</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#data()">data</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOClassInfo.html" title="interface in org.eclipse.emf.cdo.common.model">CDOClassInfo</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html#getClassInfo--">getClassInfo</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../model/CDOClassInfo.html" title="interface in org.eclipse.emf.cdo.common.model">CDOClassInfo</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getClassInfo()">getClassInfo</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html#getEClass--">getEClass</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getEClass()">getEClass</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/common/security/CDOPermission.html" title="enum in org.eclipse.emf.cdo.common.security">CDOPermission</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html#getPermission--">getPermission</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../security/CDOPermission.html" title="enum in org.eclipse.emf.cdo.common.security">CDOPermission</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPermission()">getPermission</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html#isHistorical--">isHistorical</a></span>()</code>
-<div class="block">Returns <code>true</code> exactly if <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp--"><code>CDOBranchPoint.getTimeStamp()</code></a> does not return <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#UNSPECIFIED_DATE"><code>CDOBranchPoint.UNSPECIFIED_DATE</code></a>,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isHistorical()">isHistorical</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Returns <code>true</code> exactly if <a href="../branch/CDOBranchPoint.html#getTimeStamp()"><code>CDOBranchPoint.getTimeStamp()</code></a> does not return <a href="../branch/CDOBranchPoint.html#UNSPECIFIED_DATE"><code>CDOBranchPoint.UNSPECIFIED_DATE</code></a>,
  <code>false</code> otherwise.</div>
 </td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html#isReadable--">isReadable</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isReadable()">isReadable</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html#isResource--">isResource</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isResource()">isResource</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html#isResourceFolder--">isResourceFolder</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isResourceFolder()">isResourceFolder</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html#isResourceNode--">isResourceNode</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isResourceNode()">isResourceNode</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html#isValid-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-">isValid</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isValid(long)">isValid</a></span>&#8203;(long&nbsp;timeStamp)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html#isValid-long-">isValid</a></span>(long&nbsp;timeStamp)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isValid(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">isValid</a></span>&#8203;(<a href="../branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html#isWritable--">isWritable</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isWritable()">isWritable</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html#merge-org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta-">merge</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;delta)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#merge(org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta)">merge</a></span>&#8203;(<a href="delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;delta)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.emf.cdo.common.revision.CDOIDAndVersion">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.cdo.common.branch.CDOBranchPoint">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.revision.<a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDOIDAndVersion.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndVersion</a></h3>
-<code><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDOIDAndVersion.html#getVersion--">getVersion</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.branch.<a href="../branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a></h3>
+<code><a href="../branch/CDOBranchPoint.html#getBranch()">getBranch</a>, <a href="../branch/CDOBranchPoint.html#getTimeStamp()">getTimeStamp</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.emf.cdo.common.id.CDOIdentifiable">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.cdo.common.branch.CDOBranchVersion">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.id.<a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOIdentifiable.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIdentifiable</a></h3>
-<code><a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOIdentifiable.html#getID--">getID</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.branch.<a href="../branch/CDOBranchVersion.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchVersion</a></h3>
+<code><a href="../branch/CDOBranchVersion.html#getBranch()">getBranch</a>, <a href="../branch/CDOBranchVersion.html#getVersion()">getVersion</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.emf.cdo.common.revision.CDORevisable">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.cdo.common.revision.CDOIDAndVersion">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.revision.<a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisable.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisable</a></h3>
-<code><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisable.html#getRevised--">getRevised</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.revision.<a href="CDOIDAndVersion.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndVersion</a></h3>
+<code><a href="CDOIDAndVersion.html#getVersion()">getVersion</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.emf.cdo.common.branch.CDOBranchPoint">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.cdo.common.id.CDOIdentifiable">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.branch.<a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a></h3>
-<code><a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch--">getBranch</a>, <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp--">getTimeStamp</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.id.<a href="../id/CDOIdentifiable.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIdentifiable</a></h3>
+<code><a href="../id/CDOIdentifiable.html#getID()">getID</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.emf.cdo.common.branch.CDOBranchVersion">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.cdo.common.revision.CDORevisable">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.branch.<a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchVersion.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchVersion</a></h3>
-<code><a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchVersion.html#getBranch--">getBranch</a>, <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchVersion.html#getVersion--">getVersion</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.revision.<a href="CDORevisable.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisable</a></h3>
+<code><a href="CDORevisable.html#getRevised()">getRevised</a></code></li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -304,12 +355,13 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisi
 <ul class="blockList">
 <li class="blockList">
 <!-- ============ FIELD DETAIL =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.detail">
+<li class="blockList"><a id="field.detail">
 <!--   -->
 </a>
 <h3>Field Detail</h3>
-<a name="MAIN_BRANCH_ID">
+<a id="MAIN_BRANCH_ID">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -324,7 +376,7 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisi
 </dl>
 </li>
 </ul>
-<a name="FIRST_VERSION">
+<a id="FIRST_VERSION">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -339,7 +391,7 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisi
 </dl>
 </li>
 </ul>
-<a name="UNCHUNKED">
+<a id="UNCHUNKED">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -352,7 +404,7 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisi
 </dl>
 </li>
 </ul>
-<a name="DEPTH_NONE">
+<a id="DEPTH_NONE">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -367,7 +419,7 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisi
 </dl>
 </li>
 </ul>
-<a name="DEPTH_INFINITE">
+<a id="DEPTH_INFINITE">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -382,13 +434,13 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisi
 </dl>
 </li>
 </ul>
-<a name="PERMISSION_PROVIDER">
+<a id="PERMISSION_PROVIDER">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>PERMISSION_PROVIDER</h4>
-<pre>static final&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/common/security/CDOPermissionProvider.html" title="interface in org.eclipse.emf.cdo.common.security">CDOPermissionProvider</a> PERMISSION_PROVIDER</pre>
+<pre>static final&nbsp;<a href="../security/CDOPermissionProvider.html" title="interface in org.eclipse.emf.cdo.common.security">CDOPermissionProvider</a> PERMISSION_PROVIDER</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.1</dd>
@@ -397,46 +449,48 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisi
 </ul>
 </li>
 </ul>
+</section>
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="getClassInfo--">
+<a id="getClassInfo()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getClassInfo</h4>
-<pre><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOClassInfo.html" title="interface in org.eclipse.emf.cdo.common.model">CDOClassInfo</a>&nbsp;getClassInfo()</pre>
+<pre class="methodSignature"><a href="../model/CDOClassInfo.html" title="interface in org.eclipse.emf.cdo.common.model">CDOClassInfo</a>&nbsp;getClassInfo()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
 </li>
 </ul>
-<a name="getEClass--">
+<a id="getEClass()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getEClass</h4>
-<pre><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;getEClass()</pre>
+<pre class="methodSignature"><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;getEClass()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
 </dl>
 </li>
 </ul>
-<a name="isHistorical--">
+<a id="isHistorical()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>isHistorical</h4>
-<pre>boolean&nbsp;isHistorical()</pre>
-<div class="block">Returns <code>true</code> exactly if <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp--"><code>CDOBranchPoint.getTimeStamp()</code></a> does not return <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#UNSPECIFIED_DATE"><code>CDOBranchPoint.UNSPECIFIED_DATE</code></a>,
+<pre class="methodSignature">boolean&nbsp;isHistorical()</pre>
+<div class="block">Returns <code>true</code> exactly if <a href="../branch/CDOBranchPoint.html#getTimeStamp()"><code>CDOBranchPoint.getTimeStamp()</code></a> does not return <a href="../branch/CDOBranchPoint.html#UNSPECIFIED_DATE"><code>CDOBranchPoint.UNSPECIFIED_DATE</code></a>,
  <code>false</code> otherwise.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -444,140 +498,140 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisi
 </dl>
 </li>
 </ul>
-<a name="isValid-long-">
+<a id="isValid(long)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>isValid</h4>
-<pre>boolean&nbsp;isValid(long&nbsp;timeStamp)</pre>
+<pre class="methodSignature">boolean&nbsp;isValid&#8203;(long&nbsp;timeStamp)</pre>
 </li>
 </ul>
-<a name="isValid-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-">
+<a id="isValid(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>isValid</h4>
-<pre>boolean&nbsp;isValid(<a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</pre>
+<pre class="methodSignature">boolean&nbsp;isValid&#8203;(<a href="../branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.0</dd>
 </dl>
 </li>
 </ul>
-<a name="isResourceNode--">
+<a id="isResourceNode()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>isResourceNode</h4>
-<pre>boolean&nbsp;isResourceNode()</pre>
+<pre class="methodSignature">boolean&nbsp;isResourceNode()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
 </dl>
 </li>
 </ul>
-<a name="isResourceFolder--">
+<a id="isResourceFolder()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>isResourceFolder</h4>
-<pre>boolean&nbsp;isResourceFolder()</pre>
+<pre class="methodSignature">boolean&nbsp;isResourceFolder()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
 </dl>
 </li>
 </ul>
-<a name="isResource--">
+<a id="isResource()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>isResource</h4>
-<pre>boolean&nbsp;isResource()</pre>
+<pre class="methodSignature">boolean&nbsp;isResource()</pre>
 </li>
 </ul>
-<a name="data--">
+<a id="data()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>data</h4>
-<pre><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionData.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionData</a>&nbsp;data()</pre>
+<pre class="methodSignature"><a href="CDORevisionData.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionData</a>&nbsp;data()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
 </dl>
 </li>
 </ul>
-<a name="compare-org.eclipse.emf.cdo.common.revision.CDORevision-">
+<a id="compare(org.eclipse.emf.cdo.common.revision.CDORevision)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>compare</h4>
-<pre><a href="../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;compare(<a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;origin)</pre>
+<pre class="methodSignature"><a href="delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;compare&#8203;(<a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;origin)</pre>
 </li>
 </ul>
-<a name="merge-org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta-">
+<a id="merge(org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>merge</h4>
-<pre>void&nbsp;merge(<a href="../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;delta)</pre>
+<pre class="methodSignature">void&nbsp;merge&#8203;(<a href="delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;delta)</pre>
 </li>
 </ul>
-<a name="copy--">
+<a id="copy()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>copy</h4>
-<pre><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;copy()</pre>
+<pre class="methodSignature"><a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;copy()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
 </dl>
 </li>
 </ul>
-<a name="getPermission--">
+<a id="getPermission()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getPermission</h4>
-<pre><a href="../../../../../../org/eclipse/emf/cdo/common/security/CDOPermission.html" title="enum in org.eclipse.emf.cdo.common.security">CDOPermission</a>&nbsp;getPermission()</pre>
+<pre class="methodSignature"><a href="../security/CDOPermission.html" title="enum in org.eclipse.emf.cdo.common.security">CDOPermission</a>&nbsp;getPermission()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.1</dd>
 </dl>
 </li>
 </ul>
-<a name="isReadable--">
+<a id="isReadable()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>isReadable</h4>
-<pre>boolean&nbsp;isReadable()</pre>
+<pre class="methodSignature">boolean&nbsp;isReadable()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.1</dd>
 </dl>
 </li>
 </ul>
-<a name="isWritable--">
+<a id="isWritable()">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>isWritable</h4>
-<pre>boolean&nbsp;isWritable()</pre>
+<pre class="methodSignature">boolean&nbsp;isWritable()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.1</dd>
@@ -586,21 +640,25 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisi
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/CDORevision.html">Use</a></li>
@@ -610,16 +668,8 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisi
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisable.html" title="interface in org.eclipse.emf.cdo.common.revision"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionCache.html" title="interface in org.eclipse.emf.cdo.common.revision"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/emf/cdo/common/revision/CDORevision.html" target="_top">Frames</a></li>
-<li><a href="CDORevision.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -632,6 +682,9 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisi
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -648,10 +701,12 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisi
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

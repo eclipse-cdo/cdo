@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>CDOView.Options (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":38,"i8":6,"i9":6,"i10":6,"i11":6,"i12":6,"i13":6,"i14":6,"i15":6,"i16":6,"i17":6,"i18":6,"i19":6,"i20":6,"i21":38,"i22":6,"i23":6};
+var data = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":38,"i9":6,"i10":6,"i11":6,"i12":6,"i13":6,"i14":6,"i15":6,"i16":6,"i17":6,"i18":6,"i19":6,"i20":6,"i21":6,"i22":6,"i23":38,"i24":6,"i25":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/CDOView.Options.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.CacheReferenceTypeEvent.html" title="interface in org.eclipse.emf.cdo.view"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/emf/cdo/view/CDOView.Options.html" target="_top">Frames</a></li>
-<li><a href="CDOView.Options.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,6 +82,9 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -85,13 +101,22 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.emf.cdo.view</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.cdo.view</a></div>
 <h2 title="Interface CDOView.Options" class="title">Interface CDOView.Options</h2>
 </div>
 <div class="contentContainer">
@@ -100,21 +125,20 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.Options.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView.Options</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptions.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options">IOptions</a></dd>
+<dd><code><a href="../common/CDOCommonView.Options.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView.Options</a></code>, <code>org.eclipse.net4j.util.event.INotifier</code>, <code>org.eclipse.net4j.util.options.IOptions</code></dd>
 </dl>
 <dl>
 <dt>All Known Subinterfaces:</dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction.Options</a></dd>
+<dd><code><a href="../transaction/CDOTransaction.Options.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction.Options</a></code></dd>
 </dl>
 <dl>
 <dt>Enclosing interface:</dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></dd>
+<dd><a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></dd>
 </dl>
 <hr>
-<br>
 <pre>public static interface <span class="typeNameLabel">CDOView.Options</span>
-extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.Options.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView.Options</a></pre>
-<div class="block">Encapsulates a set of notifying <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> configuration options.</div>
+extends <a href="../common/CDOCommonView.Options.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView.Options</a></pre>
+<div class="block">Encapsulates a set of notifying <a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> configuration options.</div>
 <dl>
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>Simon McDuff</dd>
@@ -130,312 +154,384 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.Options
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="nested.class.summary">
+<li class="blockList"><a id="nested.class.summary">
 <!--   -->
 </a>
 <h3>Nested Class Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Nested Class Summary table, listing nested classes, and an explanation">
+<table class="memberSummary">
 <caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Interface and Description</th>
+<th class="colSecond" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.CacheReferenceTypeEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.CacheReferenceTypeEvent</a></span></code>
-<div class="block">An <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options"><code>options event</code></a> fired from view <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#options--"><code>options</code></a> when the
- <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setCacheReferenceType-org.eclipse.net4j.util.ref.ReferenceType-"><code>cache reference type</code></a> option has changed.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CDOView.Options.CacheReferenceTypeEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.CacheReferenceTypeEvent</a></span></code></th>
+<td class="colLast">
+<div class="block">An <code>options event</code> fired from view <a href="CDOView.html#options()"><code>options</code></a> when the
+ <a href="#setCacheReferenceType(org.eclipse.net4j.util.ref.ReferenceType)"><code>cache reference type</code></a> option has changed.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.ChangeSubscriptionPoliciesEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.ChangeSubscriptionPoliciesEvent</a></span></code>
-<div class="block">An <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options"><code>options event</code></a> fired from view <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#options--"><code>options</code></a> when the
- <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#addChangeSubscriptionPolicy-org.eclipse.emf.cdo.view.CDOAdapterPolicy-"><code>change subscription policies</code></a> option has changed.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CDOView.Options.ChangeSubscriptionPoliciesEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.ChangeSubscriptionPoliciesEvent</a></span></code></th>
+<td class="colLast">
+<div class="block">An <code>options event</code> fired from view <a href="CDOView.html#options()"><code>options</code></a> when the
+ <a href="#addChangeSubscriptionPolicy(org.eclipse.emf.cdo.view.CDOAdapterPolicy)"><code>change subscription policies</code></a> option has changed.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.DetachmentNotificationEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.DetachmentNotificationEvent</a></span></code>
-<div class="block">An <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options"><code>options event</code></a> fired from view <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#options--"><code>options</code></a> when the
- <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setDetachmentNotificationEnabled-boolean-"><code>detachment notification enabled</code></a> option has changed.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.FeatureAnalyzerEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.FeatureAnalyzerEvent</a></span></code>
-<div class="block">An <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options"><code>options event</code></a> fired from view <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#options--"><code>options</code></a> when the
- <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setFeatureAnalyzer-org.eclipse.emf.cdo.view.CDOFeatureAnalyzer-"><code>feature analyzer</code></a> option has
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CDOView.Options.ClearAdapterPolicyEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.ClearAdapterPolicyEvent</a></span></code></th>
+<td class="colLast">
+<div class="block">An <code>options event</code> fired from view <a href="CDOView.html#options()"><code>options</code></a> when the
+ <a href="#setClearAdapterPolicy(org.eclipse.emf.cdo.view.CDOAdapterPolicy)"><code>clear adapter policy</code></a> option has
  changed.</div>
 </td>
 </tr>
-<tr class="altColor">
-<td class="colFirst"><code>static interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.InvalidationNotificationEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.InvalidationNotificationEvent</a></span></code>
-<div class="block">An <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options"><code>options event</code></a> fired from view <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#options--"><code>options</code></a> when the
- <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setInvalidationNotificationEnabled-boolean-"><code>invalidation notification enabled</code></a> option has changed.</div>
-</td>
-</tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.InvalidationPolicyEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.InvalidationPolicyEvent</a></span></code>
-<div class="block">An <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options"><code>options event</code></a> fired from view <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#options--"><code>options</code></a> when the
- <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setInvalidationPolicy-org.eclipse.emf.cdo.view.CDOInvalidationPolicy-"><code>invalidation policy</code></a> option has changed.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CDOView.Options.DetachmentNotificationEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.DetachmentNotificationEvent</a></span></code></th>
+<td class="colLast">
+<div class="block">An <code>options event</code> fired from view <a href="CDOView.html#options()"><code>options</code></a> when the
+ <a href="#setDetachmentNotificationEnabled(boolean)"><code>detachment notification enabled</code></a> option has changed.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.LoadNotificationEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.LoadNotificationEvent</a></span></code>
-<div class="block">An <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options"><code>options event</code></a> fired from view <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#options--"><code>options</code></a> when the
- <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setLoadNotificationEnabled-boolean-"><code>load notification enabled</code></a> option has changed.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CDOView.Options.FeatureAnalyzerEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.FeatureAnalyzerEvent</a></span></code></th>
+<td class="colLast">
+<div class="block">An <code>options event</code> fired from view <a href="CDOView.html#options()"><code>options</code></a> when the
+ <a href="#setFeatureAnalyzer(org.eclipse.emf.cdo.view.CDOFeatureAnalyzer)"><code>feature analyzer</code></a> option has
+ changed.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.ReferencePolicyEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.ReferencePolicyEvent</a></span></code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">Use <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.StrongReferencePolicyEvent.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOView.Options.StrongReferencePolicyEvent</code></a> instead.</span></div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CDOView.Options.InvalidationNotificationEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.InvalidationNotificationEvent</a></span></code></th>
+<td class="colLast">
+<div class="block">An <code>options event</code> fired from view <a href="CDOView.html#options()"><code>options</code></a> when the
+ <a href="#setInvalidationNotificationEnabled(boolean)"><code>invalidation notification enabled</code></a> option has changed.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static interface&nbsp;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CDOView.Options.InvalidationPolicyEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.InvalidationPolicyEvent</a></span></code></th>
+<td class="colLast">
+<div class="block">An <code>options event</code> fired from view <a href="CDOView.html#options()"><code>options</code></a> when the
+ <a href="#setInvalidationPolicy(org.eclipse.emf.cdo.view.CDOInvalidationPolicy)"><code>invalidation policy</code></a> option has changed.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static interface&nbsp;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CDOView.Options.LoadNotificationEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.LoadNotificationEvent</a></span></code></th>
+<td class="colLast">
+<div class="block">An <code>options event</code> fired from view <a href="CDOView.html#options()"><code>options</code></a> when the
+ <a href="#setLoadNotificationEnabled(boolean)"><code>load notification enabled</code></a> option has changed.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static interface&nbsp;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CDOView.Options.ReferencePolicyEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.ReferencePolicyEvent</a></span></code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">Use <a href="CDOView.Options.StrongReferencePolicyEvent.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOView.Options.StrongReferencePolicyEvent</code></a> instead.</div>
 </div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>static interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.RevisionPrefetchingPolicyEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.RevisionPrefetchingPolicyEvent</a></span></code>
-<div class="block">An <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options"><code>options event</code></a> fired from view <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#options--"><code>options</code></a> when the
- <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setRevisionPrefetchingPolicy-org.eclipse.emf.cdo.view.CDORevisionPrefetchingPolicy-"><code>revision prefetching policy</code></a> option has
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CDOView.Options.RevisionPrefetchingPolicyEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.RevisionPrefetchingPolicyEvent</a></span></code></th>
+<td class="colLast">
+<div class="block">An <code>options event</code> fired from view <a href="CDOView.html#options()"><code>options</code></a> when the
+ <a href="#setRevisionPrefetchingPolicy(org.eclipse.emf.cdo.view.CDORevisionPrefetchingPolicy)"><code>revision prefetching policy</code></a> option has
  changed.</div>
 </td>
 </tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.StaleReferencePolicyEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.StaleReferencePolicyEvent</a></span></code>
-<div class="block">An <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options"><code>options event</code></a> fired from view <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#options--"><code>options</code></a> when the
- <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setStaleReferenceBehaviour-org.eclipse.emf.cdo.view.CDOStaleReferencePolicy-"><code>stale reference type</code></a> option has changed.</div>
-</td>
-</tr>
 <tr class="altColor">
 <td class="colFirst"><code>static interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.StrongReferencePolicyEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.StrongReferencePolicyEvent</a></span></code>
-<div class="block">An <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options"><code>options event</code></a> fired from view <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#options--"><code>options</code></a> when the
- <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setStrongReferencePolicy-org.eclipse.emf.cdo.view.CDOAdapterPolicy-"><code>strong reference policy</code></a> option has changed.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CDOView.Options.StaleReferencePolicyEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.StaleReferencePolicyEvent</a></span></code></th>
+<td class="colLast">
+<div class="block">An <code>options event</code> fired from view <a href="CDOView.html#options()"><code>options</code></a> when the
+ <a href="#setStaleReferenceBehaviour(org.eclipse.emf.cdo.view.CDOStaleReferencePolicy)"><code>stale reference type</code></a> option has changed.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static interface&nbsp;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CDOView.Options.StrongReferencePolicyEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.StrongReferencePolicyEvent</a></span></code></th>
+<td class="colLast">
+<div class="block">An <code>options event</code> fired from view <a href="CDOView.html#options()"><code>options</code></a> when the
+ <a href="#setStrongReferencePolicy(org.eclipse.emf.cdo.view.CDOAdapterPolicy)"><code>strong reference policy</code></a> option has changed.</div>
 </td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="nested.classes.inherited.from.class.org.eclipse.emf.cdo.common.CDOCommonView.Options">
+<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.emf.cdo.common.CDOCommonView.Options">
 <!--   -->
 </a>
-<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.emf.cdo.common.<a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.Options.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView.Options</a></h3>
-<code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.Options.LockNotificationEvent.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView.Options.LockNotificationEvent</a></code></li>
+<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.emf.cdo.common.<a href="../common/CDOCommonView.Options.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView.Options</a></h3>
+<code><a href="../common/CDOCommonView.Options.LockNotificationEvent.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView.Options.LockNotificationEvent</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.net4j.util.event.INotifier">
+<!--   -->
+</a>
+<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.event.INotifier</h3>
+<code>org.eclipse.net4j.util.event.INotifier.INotifier2</code></li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- =========== FIELD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.summary">
+<li class="blockList"><a id="field.summary">
 <!--   -->
 </a>
 <h3>Field Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Field Summary table, listing fields, and an explanation">
+<table class="memberSummary">
 <caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Field and Description</th>
+<th class="colSecond" scope="col">Field</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#DEFAULT_REVISION_PREFETCHING">DEFAULT_REVISION_PREFETCHING</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#DEFAULT_REVISION_PREFETCHING">DEFAULT_REVISION_PREFETCHING</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#NO_REVISION_PREFETCHING">NO_REVISION_PREFETCHING</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#NO_REVISION_PREFETCHING">NO_REVISION_PREFETCHING</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t6" class="tableTab"><span><a href="javascript:show(32);">Deprecated Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#addChangeSubscriptionPolicy-org.eclipse.emf.cdo.view.CDOAdapterPolicy-">addChangeSubscriptionPolicy</a></span>(<a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOAdapterPolicy</a>&nbsp;policy)</code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addChangeSubscriptionPolicy(org.eclipse.emf.cdo.view.CDOAdapterPolicy)">addChangeSubscriptionPolicy</a></span>&#8203;(<a href="CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOAdapterPolicy</a>&nbsp;policy)</code></th>
+<td class="colLast">
 <div class="block">Adds a change subscription policy to this view.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ref/ReferenceType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ref">ReferenceType</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#getCacheReferenceType--">getCacheReferenceType</a></span>()</code>
+<td class="colFirst"><code>org.eclipse.net4j.util.ref.ReferenceType</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCacheReferenceType()">getCacheReferenceType</a></span>()</code></th>
+<td class="colLast">
 <div class="block">Returns the reference type to be used in the internal object cache.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOAdapterPolicy</a>[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#getChangeSubscriptionPolicies--">getChangeSubscriptionPolicies</a></span>()</code>
-<div class="block">Returns the current set of <a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view"><code>change subscription policies</code></a>.</div>
+<td class="colFirst"><code><a href="CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOAdapterPolicy</a>[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getChangeSubscriptionPolicies()">getChangeSubscriptionPolicies</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Returns the current set of <a href="CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view"><code>change subscription policies</code></a>.</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#getContainer--">getContainer</a></span>()</code>
-<div class="block">Returns the <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> of this options object.</div>
-</td>
+<td class="colFirst"><code><a href="CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOAdapterPolicy</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getClearAdapterPolicy()">getClearAdapterPolicy</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/view/CDOFeatureAnalyzer.html" title="interface in org.eclipse.emf.cdo.view">CDOFeatureAnalyzer</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#getFeatureAnalyzer--">getFeatureAnalyzer</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getContainer()">getContainer</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Returns the <a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> of this options object.</div>
+</td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/view/CDOInvalidationPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOInvalidationPolicy</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#getInvalidationPolicy--">getInvalidationPolicy</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="CDOFeatureAnalyzer.html" title="interface in org.eclipse.emf.cdo.view">CDOFeatureAnalyzer</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getFeatureAnalyzer()">getFeatureAnalyzer</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/view/CDORevisionPrefetchingPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDORevisionPrefetchingPolicy</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#getRevisionPrefetchingPolicy--">getRevisionPrefetchingPolicy</a></span>()</code>
+<td class="colFirst"><code><a href="CDOInvalidationPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOInvalidationPolicy</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInvalidationPolicy()">getInvalidationPolicy</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code><a href="CDORevisionPrefetchingPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDORevisionPrefetchingPolicy</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRevisionPrefetchingPolicy()">getRevisionPrefetchingPolicy</a></span>()</code></th>
+<td class="colLast">
 <div class="block">Returns the CDORevisionPrefetchingPolicy in use.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/view/CDOStaleReferencePolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOStaleReferencePolicy</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#getStaleReferenceBehaviour--">getStaleReferenceBehaviour</a></span>()</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">Use <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#getStaleReferencePolicy--"><code>getStaleReferencePolicy()</code></a></span></div>
+<tr id="i8" class="altColor">
+<td class="colFirst"><code><a href="CDOStaleReferencePolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOStaleReferencePolicy</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getStaleReferenceBehaviour()">getStaleReferenceBehaviour</a></span>()</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">Use <a href="#getStaleReferencePolicy()"><code>getStaleReferencePolicy()</code></a></div>
 </div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/view/CDOStaleReferencePolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOStaleReferencePolicy</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#getStaleReferencePolicy--">getStaleReferencePolicy</a></span>()</code>
+<tr id="i9" class="rowColor">
+<td class="colFirst"><code><a href="CDOStaleReferencePolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOStaleReferencePolicy</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getStaleReferencePolicy()">getStaleReferencePolicy</a></span>()</code></th>
+<td class="colLast">
 <div class="block">Returns the CDOStaleReferencePolicy in use.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOAdapterPolicy</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#getStrongReferencePolicy--">getStrongReferencePolicy</a></span>()</code>
-<div class="block">Returns the strong reference policy in use.</div>
-</td>
-</tr>
 <tr id="i10" class="altColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#isDetachmentNotificationEnabled--">isDetachmentNotificationEnabled</a></span>()</code>
-<div class="block">Returns <code>true</code> if the <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a> in this view will notify their
- <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><code>adapters</code></a> about the fact that they are <em>detached</em> (due to
- remote changes), <code>false</code> otherwise.</div>
+<td class="colFirst"><code><a href="CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOAdapterPolicy</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getStrongReferencePolicy()">getStrongReferencePolicy</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Returns the strong reference policy in use.</div>
 </td>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#isInvalidationNotificationEnabled--">isInvalidationNotificationEnabled</a></span>()</code>
-<div class="block">Returns <code>true</code> if the <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a> in this view will notify their
- <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><code>adapters</code></a> about the fact that they are <em>invalidated</em> (due to
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isDetachmentNotificationEnabled()">isDetachmentNotificationEnabled</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Returns <code>true</code> if the <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a> in this view will notify their
+ <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink"><code>adapters</code></a> about the fact that they are <em>detached</em> (due to
  remote changes), <code>false</code> otherwise.</div>
 </td>
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#isLoadNotificationEnabled--">isLoadNotificationEnabled</a></span>()</code>
-<div class="block">Returns <code>true</code> if the <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a> in this view will notify their
- <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><code>adapters</code></a> about the fact that they are <em>loaded</em>,
- <code>false</code> otherwise.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isInvalidationNotificationEnabled()">isInvalidationNotificationEnabled</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Returns <code>true</code> if the <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a> in this view will notify their
+ <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink"><code>adapters</code></a> about the fact that they are <em>invalidated</em> (due to
+ remote changes), <code>false</code> otherwise.</div>
 </td>
 </tr>
 <tr id="i13" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#removeChangeSubscriptionPolicy-org.eclipse.emf.cdo.view.CDOAdapterPolicy-">removeChangeSubscriptionPolicy</a></span>(<a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOAdapterPolicy</a>&nbsp;policy)</code>
-<div class="block">Removes a change subscription policy from this view.</div>
+<td class="colFirst"><code>boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isLoadNotificationEnabled()">isLoadNotificationEnabled</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Returns <code>true</code> if the <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a> in this view will notify their
+ <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink"><code>adapters</code></a> about the fact that they are <em>loaded</em>,
+ <code>false</code> otherwise.</div>
 </td>
 </tr>
 <tr id="i14" class="altColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setCacheReferenceType-org.eclipse.net4j.util.ref.ReferenceType-">setCacheReferenceType</a></span>(<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ref/ReferenceType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ref">ReferenceType</a>&nbsp;referenceType)</code>
-<div class="block">Sets the reference type to be used in the internal object cache to either <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ref/ReferenceType.html?is-external=true#STRONG" title="class or interface in org.eclipse.net4j.util.ref"><code>STRONG</code></a>,
- <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ref/ReferenceType.html?is-external=true#SOFT" title="class or interface in org.eclipse.net4j.util.ref"><code>SOFT</code></a> or <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ref/ReferenceType.html?is-external=true#WEAK" title="class or interface in org.eclipse.net4j.util.ref"><code>WEAK</code></a>.</div>
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeChangeSubscriptionPolicy(org.eclipse.emf.cdo.view.CDOAdapterPolicy)">removeChangeSubscriptionPolicy</a></span>&#8203;(<a href="CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOAdapterPolicy</a>&nbsp;policy)</code></th>
+<td class="colLast">
+<div class="block">Removes a change subscription policy from this view.</div>
 </td>
 </tr>
 <tr id="i15" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setDetachmentNotificationEnabled-boolean-">setDetachmentNotificationEnabled</a></span>(boolean&nbsp;enabled)</code>
-<div class="block">Specifies whether the <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a> in this view will notify their
- <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><code>adapters</code></a> about the fact that they are <em>detached</em> (due to
- remote changes) or not.</div>
+<td class="colFirst"><code>boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setCacheReferenceType(org.eclipse.net4j.util.ref.ReferenceType)">setCacheReferenceType</a></span>&#8203;(org.eclipse.net4j.util.ref.ReferenceType&nbsp;referenceType)</code></th>
+<td class="colLast">
+<div class="block">Sets the reference type to be used in the internal object cache to either <code>STRONG</code>,
+ <code>SOFT</code> or <code>WEAK</code>.</div>
 </td>
 </tr>
 <tr id="i16" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setFeatureAnalyzer-org.eclipse.emf.cdo.view.CDOFeatureAnalyzer-">setFeatureAnalyzer</a></span>(<a href="../../../../../org/eclipse/emf/cdo/view/CDOFeatureAnalyzer.html" title="interface in org.eclipse.emf.cdo.view">CDOFeatureAnalyzer</a>&nbsp;featureAnalyzer)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setClearAdapterPolicy(org.eclipse.emf.cdo.view.CDOAdapterPolicy)">setClearAdapterPolicy</a></span>&#8203;(<a href="CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOAdapterPolicy</a>&nbsp;policy)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i17" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setInvalidationNotificationEnabled-boolean-">setInvalidationNotificationEnabled</a></span>(boolean&nbsp;enabled)</code>
-<div class="block">Specifies whether the <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a> in this view will notify their
- <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><code>adapters</code></a> about the fact that they are <em>invalidated</em> (due to
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDetachmentNotificationEnabled(boolean)">setDetachmentNotificationEnabled</a></span>&#8203;(boolean&nbsp;enabled)</code></th>
+<td class="colLast">
+<div class="block">Specifies whether the <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a> in this view will notify their
+ <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink"><code>adapters</code></a> about the fact that they are <em>detached</em> (due to
  remote changes) or not.</div>
 </td>
 </tr>
 <tr id="i18" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setInvalidationPolicy-org.eclipse.emf.cdo.view.CDOInvalidationPolicy-">setInvalidationPolicy</a></span>(<a href="../../../../../org/eclipse/emf/cdo/view/CDOInvalidationPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOInvalidationPolicy</a>&nbsp;policy)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setFeatureAnalyzer(org.eclipse.emf.cdo.view.CDOFeatureAnalyzer)">setFeatureAnalyzer</a></span>&#8203;(<a href="CDOFeatureAnalyzer.html" title="interface in org.eclipse.emf.cdo.view">CDOFeatureAnalyzer</a>&nbsp;featureAnalyzer)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i19" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setLoadNotificationEnabled-boolean-">setLoadNotificationEnabled</a></span>(boolean&nbsp;enabled)</code>
-<div class="block">Specifies whether the <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a> in this view will notify their
- <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><code>adapters</code></a> about the fact that they are <em>loaded</em> or not.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setInvalidationNotificationEnabled(boolean)">setInvalidationNotificationEnabled</a></span>&#8203;(boolean&nbsp;enabled)</code></th>
+<td class="colLast">
+<div class="block">Specifies whether the <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a> in this view will notify their
+ <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink"><code>adapters</code></a> about the fact that they are <em>invalidated</em> (due to
+ remote changes) or not.</div>
 </td>
 </tr>
 <tr id="i20" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setRevisionPrefetchingPolicy-org.eclipse.emf.cdo.view.CDORevisionPrefetchingPolicy-">setRevisionPrefetchingPolicy</a></span>(<a href="../../../../../org/eclipse/emf/cdo/view/CDORevisionPrefetchingPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDORevisionPrefetchingPolicy</a>&nbsp;prefetchingPolicy)</code>
-<div class="block">The CDORevisionPrefetchingPolicy feature of the CDOView allows CDO users to fetch many objects at a time.</div>
-</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setInvalidationPolicy(org.eclipse.emf.cdo.view.CDOInvalidationPolicy)">setInvalidationPolicy</a></span>&#8203;(<a href="CDOInvalidationPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOInvalidationPolicy</a>&nbsp;policy)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i21" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setStaleReferenceBehaviour-org.eclipse.emf.cdo.view.CDOStaleReferencePolicy-">setStaleReferenceBehaviour</a></span>(<a href="../../../../../org/eclipse/emf/cdo/view/CDOStaleReferencePolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOStaleReferencePolicy</a>&nbsp;policy)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">Use <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setStaleReferencePolicy-org.eclipse.emf.cdo.view.CDOStaleReferencePolicy-"><code>setStaleReferencePolicy(CDOStaleReferencePolicy)</code></a></span></div>
-</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setLoadNotificationEnabled(boolean)">setLoadNotificationEnabled</a></span>&#8203;(boolean&nbsp;enabled)</code></th>
+<td class="colLast">
+<div class="block">Specifies whether the <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a> in this view will notify their
+ <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink"><code>adapters</code></a> about the fact that they are <em>loaded</em> or not.</div>
 </td>
 </tr>
 <tr id="i22" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setStaleReferencePolicy-org.eclipse.emf.cdo.view.CDOStaleReferencePolicy-">setStaleReferencePolicy</a></span>(<a href="../../../../../org/eclipse/emf/cdo/view/CDOStaleReferencePolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOStaleReferencePolicy</a>&nbsp;policy)</code>
-<div class="block">Sets a policy on how to deal with stale references.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRevisionPrefetchingPolicy(org.eclipse.emf.cdo.view.CDORevisionPrefetchingPolicy)">setRevisionPrefetchingPolicy</a></span>&#8203;(<a href="CDORevisionPrefetchingPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDORevisionPrefetchingPolicy</a>&nbsp;prefetchingPolicy)</code></th>
+<td class="colLast">
+<div class="block">The CDORevisionPrefetchingPolicy feature of the CDOView allows CDO users to fetch many objects at a time.</div>
 </td>
 </tr>
 <tr id="i23" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setStrongReferencePolicy-org.eclipse.emf.cdo.view.CDOAdapterPolicy-">setStrongReferencePolicy</a></span>(<a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOAdapterPolicy</a>&nbsp;policy)</code>
-<div class="block">Sets the policy that determines what object/adapter pairs of this <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setStaleReferenceBehaviour(org.eclipse.emf.cdo.view.CDOStaleReferencePolicy)">setStaleReferenceBehaviour</a></span>&#8203;(<a href="CDOStaleReferencePolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOStaleReferencePolicy</a>&nbsp;policy)</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">Use <a href="#setStaleReferencePolicy(org.eclipse.emf.cdo.view.CDOStaleReferencePolicy)"><code>setStaleReferencePolicy(CDOStaleReferencePolicy)</code></a></div>
+</div>
+</td>
+</tr>
+<tr id="i24" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setStaleReferencePolicy(org.eclipse.emf.cdo.view.CDOStaleReferencePolicy)">setStaleReferencePolicy</a></span>&#8203;(<a href="CDOStaleReferencePolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOStaleReferencePolicy</a>&nbsp;policy)</code></th>
+<td class="colLast">
+<div class="block">Sets a policy on how to deal with stale references.</div>
+</td>
+</tr>
+<tr id="i25" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setStrongReferencePolicy(org.eclipse.emf.cdo.view.CDOAdapterPolicy)">setStrongReferencePolicy</a></span>&#8203;(<a href="CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOAdapterPolicy</a>&nbsp;policy)</code></th>
+<td class="colLast">
+<div class="block">Sets the policy that determines what object/adapter pairs of this <a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a>
  are supposed to be protected against garbage collection.</div>
 </td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.emf.cdo.common.CDOCommonView.Options">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.cdo.common.CDOCommonView.Options">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.<a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.Options.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView.Options</a></h3>
-<code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.Options.html#isLockNotificationEnabled--">isLockNotificationEnabled</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.Options.html#setLockNotificationEnabled-boolean-">setLockNotificationEnabled</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.<a href="../common/CDOCommonView.Options.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView.Options</a></h3>
+<code><a href="../common/CDOCommonView.Options.html#isLockNotificationEnabled()">isLockNotificationEnabled</a>, <a href="../common/CDOCommonView.Options.html#setLockNotificationEnabled(boolean)">setLockNotificationEnabled</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.event.INotifier">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.event.INotifier">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.event.<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</a></h3>
-<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#addListener-org.eclipse.net4j.util.event.IListener-" title="class or interface in org.eclipse.net4j.util.event">addListener</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#getListeners--" title="class or interface in org.eclipse.net4j.util.event">getListeners</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#hasListeners--" title="class or interface in org.eclipse.net4j.util.event">hasListeners</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#removeListener-org.eclipse.net4j.util.event.IListener-" title="class or interface in org.eclipse.net4j.util.event">removeListener</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.event.INotifier</h3>
+<code>addListener, getListeners, hasListeners, removeListener</code></li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -443,12 +539,13 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.Options
 <ul class="blockList">
 <li class="blockList">
 <!-- ============ FIELD DETAIL =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.detail">
+<li class="blockList"><a id="field.detail">
 <!--   -->
 </a>
 <h3>Field Detail</h3>
-<a name="DEFAULT_REVISION_PREFETCHING">
+<a id="DEFAULT_REVISION_PREFETCHING">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -463,7 +560,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.Options
 </dl>
 </li>
 </ul>
-<a name="NO_REVISION_PREFETCHING">
+<a id="NO_REVISION_PREFETCHING">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -478,37 +575,39 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.Options
 </ul>
 </li>
 </ul>
+</section>
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="getContainer--">
+<a id="getContainer()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getContainer</h4>
-<pre><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;getContainer()</pre>
-<div class="block">Returns the <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> of this options object.</div>
+<pre class="methodSignature"><a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;getContainer()</pre>
+<div class="block">Returns the <a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> of this options object.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptions.html?is-external=true#getContainer--" title="class or interface in org.eclipse.net4j.util.options">getContainer</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptions.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options">IOptions</a></code></dd>
+<dd><code>getContainer</code>&nbsp;in interface&nbsp;<code>org.eclipse.net4j.util.options.IOptions</code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.0</dd>
 </dl>
 </li>
 </ul>
-<a name="isLoadNotificationEnabled--">
+<a id="isLoadNotificationEnabled()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>isLoadNotificationEnabled</h4>
-<pre>boolean&nbsp;isLoadNotificationEnabled()</pre>
-<div class="block">Returns <code>true</code> if the <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a> in this view will notify their
- <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><code>adapters</code></a> about the fact that they are <em>loaded</em>,
+<pre class="methodSignature">boolean&nbsp;isLoadNotificationEnabled()</pre>
+<div class="block">Returns <code>true</code> if the <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a> in this view will notify their
+ <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink"><code>adapters</code></a> about the fact that they are <em>loaded</em>,
  <code>false</code> otherwise.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -516,138 +615,138 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.Options
 </dl>
 </li>
 </ul>
-<a name="setLoadNotificationEnabled-boolean-">
+<a id="setLoadNotificationEnabled(boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setLoadNotificationEnabled</h4>
-<pre>void&nbsp;setLoadNotificationEnabled(boolean&nbsp;enabled)</pre>
-<div class="block">Specifies whether the <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a> in this view will notify their
- <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><code>adapters</code></a> about the fact that they are <em>loaded</em> or not.</div>
+<pre class="methodSignature">void&nbsp;setLoadNotificationEnabled&#8203;(boolean&nbsp;enabled)</pre>
+<div class="block">Specifies whether the <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a> in this view will notify their
+ <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink"><code>adapters</code></a> about the fact that they are <em>loaded</em> or not.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.1</dd>
 </dl>
 </li>
 </ul>
-<a name="isDetachmentNotificationEnabled--">
+<a id="isDetachmentNotificationEnabled()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>isDetachmentNotificationEnabled</h4>
-<pre>boolean&nbsp;isDetachmentNotificationEnabled()</pre>
-<div class="block">Returns <code>true</code> if the <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a> in this view will notify their
- <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><code>adapters</code></a> about the fact that they are <em>detached</em> (due to
+<pre class="methodSignature">boolean&nbsp;isDetachmentNotificationEnabled()</pre>
+<div class="block">Returns <code>true</code> if the <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a> in this view will notify their
+ <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink"><code>adapters</code></a> about the fact that they are <em>detached</em> (due to
  remote changes), <code>false</code> otherwise.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.1</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/CDONotification.html#DETACH_OBJECT"><code>CDONotification.DETACH_OBJECT</code></a></dd>
+<dd><a href="../CDONotification.html#DETACH_OBJECT"><code>CDONotification.DETACH_OBJECT</code></a></dd>
 </dl>
 </li>
 </ul>
-<a name="setDetachmentNotificationEnabled-boolean-">
+<a id="setDetachmentNotificationEnabled(boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setDetachmentNotificationEnabled</h4>
-<pre>void&nbsp;setDetachmentNotificationEnabled(boolean&nbsp;enabled)</pre>
-<div class="block">Specifies whether the <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a> in this view will notify their
- <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><code>adapters</code></a> about the fact that they are <em>detached</em> (due to
+<pre class="methodSignature">void&nbsp;setDetachmentNotificationEnabled&#8203;(boolean&nbsp;enabled)</pre>
+<div class="block">Specifies whether the <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a> in this view will notify their
+ <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink"><code>adapters</code></a> about the fact that they are <em>detached</em> (due to
  remote changes) or not.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.1</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/CDONotification.html#DETACH_OBJECT"><code>CDONotification.DETACH_OBJECT</code></a></dd>
+<dd><a href="../CDONotification.html#DETACH_OBJECT"><code>CDONotification.DETACH_OBJECT</code></a></dd>
 </dl>
 </li>
 </ul>
-<a name="isInvalidationNotificationEnabled--">
+<a id="isInvalidationNotificationEnabled()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>isInvalidationNotificationEnabled</h4>
-<pre>boolean&nbsp;isInvalidationNotificationEnabled()</pre>
-<div class="block">Returns <code>true</code> if the <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a> in this view will notify their
- <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><code>adapters</code></a> about the fact that they are <em>invalidated</em> (due to
+<pre class="methodSignature">boolean&nbsp;isInvalidationNotificationEnabled()</pre>
+<div class="block">Returns <code>true</code> if the <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a> in this view will notify their
+ <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink"><code>adapters</code></a> about the fact that they are <em>invalidated</em> (due to
  remote changes), <code>false</code> otherwise.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/CDOInvalidationNotification.html" title="interface in org.eclipse.emf.cdo"><code>CDOInvalidationNotification</code></a></dd>
+<dd><a href="../CDOInvalidationNotification.html" title="interface in org.eclipse.emf.cdo"><code>CDOInvalidationNotification</code></a></dd>
 </dl>
 </li>
 </ul>
-<a name="setInvalidationNotificationEnabled-boolean-">
+<a id="setInvalidationNotificationEnabled(boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setInvalidationNotificationEnabled</h4>
-<pre>void&nbsp;setInvalidationNotificationEnabled(boolean&nbsp;enabled)</pre>
-<div class="block">Specifies whether the <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a> in this view will notify their
- <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><code>adapters</code></a> about the fact that they are <em>invalidated</em> (due to
+<pre class="methodSignature">void&nbsp;setInvalidationNotificationEnabled&#8203;(boolean&nbsp;enabled)</pre>
+<div class="block">Specifies whether the <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a> in this view will notify their
+ <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink"><code>adapters</code></a> about the fact that they are <em>invalidated</em> (due to
  remote changes) or not.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/CDOInvalidationNotification.html" title="interface in org.eclipse.emf.cdo"><code>CDOInvalidationNotification</code></a></dd>
+<dd><a href="../CDOInvalidationNotification.html" title="interface in org.eclipse.emf.cdo"><code>CDOInvalidationNotification</code></a></dd>
 </dl>
 </li>
 </ul>
-<a name="getInvalidationPolicy--">
+<a id="getInvalidationPolicy()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getInvalidationPolicy</h4>
-<pre><a href="../../../../../org/eclipse/emf/cdo/view/CDOInvalidationPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOInvalidationPolicy</a>&nbsp;getInvalidationPolicy()</pre>
+<pre class="methodSignature"><a href="CDOInvalidationPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOInvalidationPolicy</a>&nbsp;getInvalidationPolicy()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
 </dl>
 </li>
 </ul>
-<a name="setInvalidationPolicy-org.eclipse.emf.cdo.view.CDOInvalidationPolicy-">
+<a id="setInvalidationPolicy(org.eclipse.emf.cdo.view.CDOInvalidationPolicy)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setInvalidationPolicy</h4>
-<pre>void&nbsp;setInvalidationPolicy(<a href="../../../../../org/eclipse/emf/cdo/view/CDOInvalidationPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOInvalidationPolicy</a>&nbsp;policy)</pre>
+<pre class="methodSignature">void&nbsp;setInvalidationPolicy&#8203;(<a href="CDOInvalidationPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOInvalidationPolicy</a>&nbsp;policy)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
 </dl>
 </li>
 </ul>
-<a name="getChangeSubscriptionPolicies--">
+<a id="getChangeSubscriptionPolicies()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getChangeSubscriptionPolicies</h4>
-<pre><a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOAdapterPolicy</a>[]&nbsp;getChangeSubscriptionPolicies()</pre>
-<div class="block">Returns the current set of <a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view"><code>change subscription policies</code></a>.</div>
+<pre class="methodSignature"><a href="CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOAdapterPolicy</a>[]&nbsp;getChangeSubscriptionPolicies()</pre>
+<div class="block">Returns the current set of <a href="CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view"><code>change subscription policies</code></a>.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The current set of change subscription policies, never <code>null</code>.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#addChangeSubscriptionPolicy-org.eclipse.emf.cdo.view.CDOAdapterPolicy-"><code>addChangeSubscriptionPolicy(CDOAdapterPolicy)</code></a></dd>
+<dd><a href="#addChangeSubscriptionPolicy(org.eclipse.emf.cdo.view.CDOAdapterPolicy)"><code>addChangeSubscriptionPolicy(CDOAdapterPolicy)</code></a></dd>
 </dl>
 </li>
 </ul>
-<a name="addChangeSubscriptionPolicy-org.eclipse.emf.cdo.view.CDOAdapterPolicy-">
+<a id="addChangeSubscriptionPolicy(org.eclipse.emf.cdo.view.CDOAdapterPolicy)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>addChangeSubscriptionPolicy</h4>
-<pre>void&nbsp;addChangeSubscriptionPolicy(<a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOAdapterPolicy</a>&nbsp;policy)</pre>
+<pre class="methodSignature">void&nbsp;addChangeSubscriptionPolicy&#8203;(<a href="CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOAdapterPolicy</a>&nbsp;policy)</pre>
 <div class="block">Adds a change subscription policy to this view.
  <p>
  To activate a policy, you must do the following: <br>
@@ -660,10 +759,10 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.Options
  registered with the server and will be notified for each change occurring in the scope of any other transaction.
  <p>
  <ul>
- <li><a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html#NONE"><code>CDOAdapterPolicy.NONE</code></a> - Ignored.
- <li><a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html#ALL"><code>CDOAdapterPolicy.ALL</code></a> - Enabled for all adapters used.
- <li><a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html#CDO"><code>CDOAdapterPolicy.CDO</code></a> - Enabled only for adapters that implement <a href="../../../../../org/eclipse/emf/cdo/CDOAdapter.html" title="interface in org.eclipse.emf.cdo"><code>CDOAdapter</code></a>.
- <li>Any other class that implements <a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOAdapterPolicy</code></a> will enable for whatever rules defined in that class.
+ <li><a href="CDOAdapterPolicy.html#NONE"><code>CDOAdapterPolicy.NONE</code></a> - Ignored.
+ <li><a href="CDOAdapterPolicy.html#ALL"><code>CDOAdapterPolicy.ALL</code></a> - Enabled for all adapters used.
+ <li><a href="CDOAdapterPolicy.html#CDO"><code>CDOAdapterPolicy.CDO</code></a> - Enabled only for adapters that implement <a href="../CDOAdapter.html" title="interface in org.eclipse.emf.cdo"><code>CDOAdapter</code></a>.
+ <li>Any other class that implements <a href="CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOAdapterPolicy</code></a> will enable for whatever rules defined in that class.
  </ul>
  <p>
  If <code>myAdapter</code> in the above example matches the current policy, <code>eObject</code> will be
@@ -672,116 +771,118 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.Options
  When the policy is changed all objects in the cache will automatically be recalculated.
  <p>
  You can subscribe to temporary objects. Even if you cannot receive notifications from other
- <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>CDOTransaction</code></a> for these because they are only local to you, at commit time these objects will be
+ <a href="../transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>CDOTransaction</code></a> for these because they are only local to you, at commit time these objects will be
  registered automatically.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#removeChangeSubscriptionPolicy-org.eclipse.emf.cdo.view.CDOAdapterPolicy-"><code>removeChangeSubscriptionPolicy(CDOAdapterPolicy)</code></a>, 
-<a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#getChangeSubscriptionPolicies--"><code>getChangeSubscriptionPolicies()</code></a></dd>
+<dd><a href="#removeChangeSubscriptionPolicy(org.eclipse.emf.cdo.view.CDOAdapterPolicy)"><code>removeChangeSubscriptionPolicy(CDOAdapterPolicy)</code></a>, 
+<a href="#getChangeSubscriptionPolicies()"><code>getChangeSubscriptionPolicies()</code></a></dd>
 </dl>
 </li>
 </ul>
-<a name="removeChangeSubscriptionPolicy-org.eclipse.emf.cdo.view.CDOAdapterPolicy-">
+<a id="removeChangeSubscriptionPolicy(org.eclipse.emf.cdo.view.CDOAdapterPolicy)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>removeChangeSubscriptionPolicy</h4>
-<pre>void&nbsp;removeChangeSubscriptionPolicy(<a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOAdapterPolicy</a>&nbsp;policy)</pre>
+<pre class="methodSignature">void&nbsp;removeChangeSubscriptionPolicy&#8203;(<a href="CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOAdapterPolicy</a>&nbsp;policy)</pre>
 <div class="block">Removes a change subscription policy from this view.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#addChangeSubscriptionPolicy-org.eclipse.emf.cdo.view.CDOAdapterPolicy-"><code>addChangeSubscriptionPolicy(CDOAdapterPolicy)</code></a>, 
-<a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#getChangeSubscriptionPolicies--"><code>getChangeSubscriptionPolicies()</code></a></dd>
+<dd><a href="#addChangeSubscriptionPolicy(org.eclipse.emf.cdo.view.CDOAdapterPolicy)"><code>addChangeSubscriptionPolicy(CDOAdapterPolicy)</code></a>, 
+<a href="#getChangeSubscriptionPolicies()"><code>getChangeSubscriptionPolicies()</code></a></dd>
 </dl>
 </li>
 </ul>
-<a name="getCacheReferenceType--">
+<a id="getCacheReferenceType()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getCacheReferenceType</h4>
-<pre><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ref/ReferenceType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ref">ReferenceType</a>&nbsp;getCacheReferenceType()</pre>
+<pre class="methodSignature">org.eclipse.net4j.util.ref.ReferenceType&nbsp;getCacheReferenceType()</pre>
 <div class="block">Returns the reference type to be used in the internal object cache.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Either <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ref/ReferenceType.html?is-external=true#STRONG" title="class or interface in org.eclipse.net4j.util.ref"><code>STRONG</code></a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ref/ReferenceType.html?is-external=true#SOFT" title="class or interface in org.eclipse.net4j.util.ref"><code>SOFT</code></a> or <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ref/ReferenceType.html?is-external=true#WEAK" title="class or interface in org.eclipse.net4j.util.ref"><code>WEAK</code></a>.</dd>
+<dd>Either <code>STRONG</code>, <code>SOFT</code> or <code>WEAK</code>.</dd>
 </dl>
 </li>
 </ul>
-<a name="setCacheReferenceType-org.eclipse.net4j.util.ref.ReferenceType-">
+<a id="setCacheReferenceType(org.eclipse.net4j.util.ref.ReferenceType)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setCacheReferenceType</h4>
-<pre>boolean&nbsp;setCacheReferenceType(<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ref/ReferenceType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ref">ReferenceType</a>&nbsp;referenceType)</pre>
-<div class="block">Sets the reference type to be used in the internal object cache to either <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ref/ReferenceType.html?is-external=true#STRONG" title="class or interface in org.eclipse.net4j.util.ref"><code>STRONG</code></a>,
- <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ref/ReferenceType.html?is-external=true#SOFT" title="class or interface in org.eclipse.net4j.util.ref"><code>SOFT</code></a> or <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ref/ReferenceType.html?is-external=true#WEAK" title="class or interface in org.eclipse.net4j.util.ref"><code>WEAK</code></a>. If <code>null</code> is passed the default
- reference type <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ref/ReferenceType.html?is-external=true#SOFT" title="class or interface in org.eclipse.net4j.util.ref"><code>SOFT</code></a> is set. If the given reference type does not differ from the one
+<pre class="methodSignature">boolean&nbsp;setCacheReferenceType&#8203;(org.eclipse.net4j.util.ref.ReferenceType&nbsp;referenceType)</pre>
+<div class="block">Sets the reference type to be used in the internal object cache to either <code>STRONG</code>,
+ <code>SOFT</code> or <code>WEAK</code>. If <code>null</code> is passed the default
+ reference type <code>SOFT</code> is set. If the given reference type does not differ from the one
  being currently set the new value is ignored and <code>false</code> is returned. Otherwise existing object
  references are converted to the new type and <code>true</code> is returned.</div>
 </li>
 </ul>
-<a name="getStrongReferencePolicy--">
+<a id="getStrongReferencePolicy()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getStrongReferencePolicy</h4>
-<pre><a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOAdapterPolicy</a>&nbsp;getStrongReferencePolicy()</pre>
+<pre class="methodSignature"><a href="CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOAdapterPolicy</a>&nbsp;getStrongReferencePolicy()</pre>
 <div class="block">Returns the strong reference policy in use.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setStrongReferencePolicy-org.eclipse.emf.cdo.view.CDOAdapterPolicy-"><code>setStrongReferencePolicy(CDOAdapterPolicy)</code></a></dd>
+<dd><a href="#setStrongReferencePolicy(org.eclipse.emf.cdo.view.CDOAdapterPolicy)"><code>setStrongReferencePolicy(CDOAdapterPolicy)</code></a></dd>
 </dl>
 </li>
 </ul>
-<a name="setStrongReferencePolicy-org.eclipse.emf.cdo.view.CDOAdapterPolicy-">
+<a id="setStrongReferencePolicy(org.eclipse.emf.cdo.view.CDOAdapterPolicy)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setStrongReferencePolicy</h4>
-<pre>void&nbsp;setStrongReferencePolicy(<a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOAdapterPolicy</a>&nbsp;policy)</pre>
-<div class="block">Sets the policy that determines what object/adapter pairs of this <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a>
+<pre class="methodSignature">void&nbsp;setStrongReferencePolicy&#8203;(<a href="CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOAdapterPolicy</a>&nbsp;policy)</pre>
+<div class="block">Sets the policy that determines what object/adapter pairs of this <a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a>
  are supposed to be protected against garbage collection.
  <p>
- A view uses references of the type determined by <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#getCacheReferenceType--"><code>getCacheReferenceType()</code></a> to hold on to loaded objects.
- If this type is <b>not</b> <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ref/ReferenceType.html?is-external=true#STRONG" title="class or interface in org.eclipse.net4j.util.ref"><code>STRONG</code></a> and the application does <b>not</b> hold other strong
+ A view uses references of the type determined by <a href="#getCacheReferenceType()"><code>getCacheReferenceType()</code></a> to hold on to loaded objects.
+ If this type is <b>not</b> <code>STRONG</code> and the application does <b>not</b> hold other strong
  references to an object then this object and possibly any adapters attached to this object are subject to garbage collection.
  <p>
  To avoid automatic garbage collection while specific adapters are attached to an object this view calls the
- <a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html#isValid-org.eclipse.emf.ecore.EObject-org.eclipse.emf.common.notify.Adapter-"><code>CDOAdapterPolicy.isValid()</code></a>
+ <a href="CDOAdapterPolicy.html#isValid(org.eclipse.emf.ecore.EObject,org.eclipse.emf.common.notify.Adapter)"><code>CDOAdapterPolicy.isValid()</code></a>
  method for all adapters that are attached to this object.
  An extra strong reference to this object is maintained if any of these calls return <code>true</code>.
  <p>
  The following adapter policies can be used as strong reference policies:
  <ul>
- <li><a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html#NONE"><code>CDOAdapterPolicy.NONE</code></a> - No adapter will prevent GC.
- <li><a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html#ALL"><code>CDOAdapterPolicy.ALL</code></a> - Any adapter prevent GC.
- <li><a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html#CDO"><code>CDOAdapterPolicy.CDO</code></a> - Only adapters that implement <a href="../../../../../org/eclipse/emf/cdo/CDOAdapter.html" title="interface in org.eclipse.emf.cdo"><code>CDOAdapter</code></a> will prevent GC.
- <li>Any other class that implements <a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOAdapterPolicy</code></a> will prevent GC according to whatever rules defined
+ <li><a href="CDOAdapterPolicy.html#NONE"><code>CDOAdapterPolicy.NONE</code></a> - No adapter will prevent GC.
+ <li><a href="CDOAdapterPolicy.html#ALL"><code>CDOAdapterPolicy.ALL</code></a> - Any adapter prevent GC.
+ <li><a href="CDOAdapterPolicy.html#CDO"><code>CDOAdapterPolicy.CDO</code></a> - Only adapters that implement <a href="../CDOAdapter.html" title="interface in org.eclipse.emf.cdo"><code>CDOAdapter</code></a> will prevent GC.
+ <li>Any other class that implements <a href="CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOAdapterPolicy</code></a> will prevent GC according to whatever rules defined
      in that class.
  </ul>
  <p>
- The default strong reference policy is <a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html#ALL"><code>CDOAdapterPolicy.ALL</code></a>, preventing garbage collection for all adapted objects.</div>
+ The default strong reference policy is <a href="CDOAdapterPolicy.html#ALL"><code>CDOAdapterPolicy.ALL</code></a>, preventing garbage collection for all adapted objects.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#getStrongReferencePolicy--"><code>getStrongReferencePolicy()</code></a></dd>
+<dd><a href="#getStrongReferencePolicy()"><code>getStrongReferencePolicy()</code></a></dd>
 </dl>
 </li>
 </ul>
-<a name="getStaleReferenceBehaviour--">
+<a id="getStaleReferenceBehaviour()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getStaleReferenceBehaviour</h4>
-<pre>@Deprecated
-<a href="../../../../../org/eclipse/emf/cdo/view/CDOStaleReferencePolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOStaleReferencePolicy</a>&nbsp;getStaleReferenceBehaviour()</pre>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">Use <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#getStaleReferencePolicy--"><code>getStaleReferencePolicy()</code></a></span></div>
+<pre class="methodSignature">@Deprecated
+<a href="CDOStaleReferencePolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOStaleReferencePolicy</a>&nbsp;getStaleReferenceBehaviour()</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">Use <a href="#getStaleReferencePolicy()"><code>getStaleReferencePolicy()</code></a></div>
+</div>
 <div class="block">Returns the CDOStaleReferencePolicy in use.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -789,15 +890,17 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.Options
 </dl>
 </li>
 </ul>
-<a name="setStaleReferenceBehaviour-org.eclipse.emf.cdo.view.CDOStaleReferencePolicy-">
+<a id="setStaleReferenceBehaviour(org.eclipse.emf.cdo.view.CDOStaleReferencePolicy)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setStaleReferenceBehaviour</h4>
-<pre>@Deprecated
-void&nbsp;setStaleReferenceBehaviour(<a href="../../../../../org/eclipse/emf/cdo/view/CDOStaleReferencePolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOStaleReferencePolicy</a>&nbsp;policy)</pre>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">Use <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setStaleReferencePolicy-org.eclipse.emf.cdo.view.CDOStaleReferencePolicy-"><code>setStaleReferencePolicy(CDOStaleReferencePolicy)</code></a></span></div>
+<pre class="methodSignature">@Deprecated
+void&nbsp;setStaleReferenceBehaviour&#8203;(<a href="CDOStaleReferencePolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOStaleReferencePolicy</a>&nbsp;policy)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">Use <a href="#setStaleReferencePolicy(org.eclipse.emf.cdo.view.CDOStaleReferencePolicy)"><code>setStaleReferencePolicy(CDOStaleReferencePolicy)</code></a></div>
+</div>
 <div class="block">Sets a policy on how to deal with stale references.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -805,13 +908,13 @@ void&nbsp;setStaleReferenceBehaviour(<a href="../../../../../org/eclipse/emf/cdo
 </dl>
 </li>
 </ul>
-<a name="getStaleReferencePolicy--">
+<a id="getStaleReferencePolicy()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getStaleReferencePolicy</h4>
-<pre><a href="../../../../../org/eclipse/emf/cdo/view/CDOStaleReferencePolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOStaleReferencePolicy</a>&nbsp;getStaleReferencePolicy()</pre>
+<pre class="methodSignature"><a href="CDOStaleReferencePolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOStaleReferencePolicy</a>&nbsp;getStaleReferencePolicy()</pre>
 <div class="block">Returns the CDOStaleReferencePolicy in use.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -819,13 +922,13 @@ void&nbsp;setStaleReferenceBehaviour(<a href="../../../../../org/eclipse/emf/cdo
 </dl>
 </li>
 </ul>
-<a name="setStaleReferencePolicy-org.eclipse.emf.cdo.view.CDOStaleReferencePolicy-">
+<a id="setStaleReferencePolicy(org.eclipse.emf.cdo.view.CDOStaleReferencePolicy)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setStaleReferencePolicy</h4>
-<pre>void&nbsp;setStaleReferencePolicy(<a href="../../../../../org/eclipse/emf/cdo/view/CDOStaleReferencePolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOStaleReferencePolicy</a>&nbsp;policy)</pre>
+<pre class="methodSignature">void&nbsp;setStaleReferencePolicy&#8203;(<a href="CDOStaleReferencePolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOStaleReferencePolicy</a>&nbsp;policy)</pre>
 <div class="block">Sets a policy on how to deal with stale references.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -833,23 +936,23 @@ void&nbsp;setStaleReferenceBehaviour(<a href="../../../../../org/eclipse/emf/cdo
 </dl>
 </li>
 </ul>
-<a name="getRevisionPrefetchingPolicy--">
+<a id="getRevisionPrefetchingPolicy()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getRevisionPrefetchingPolicy</h4>
-<pre><a href="../../../../../org/eclipse/emf/cdo/view/CDORevisionPrefetchingPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDORevisionPrefetchingPolicy</a>&nbsp;getRevisionPrefetchingPolicy()</pre>
+<pre class="methodSignature"><a href="CDORevisionPrefetchingPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDORevisionPrefetchingPolicy</a>&nbsp;getRevisionPrefetchingPolicy()</pre>
 <div class="block">Returns the CDORevisionPrefetchingPolicy in use.</div>
 </li>
 </ul>
-<a name="setRevisionPrefetchingPolicy-org.eclipse.emf.cdo.view.CDORevisionPrefetchingPolicy-">
+<a id="setRevisionPrefetchingPolicy(org.eclipse.emf.cdo.view.CDORevisionPrefetchingPolicy)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setRevisionPrefetchingPolicy</h4>
-<pre>void&nbsp;setRevisionPrefetchingPolicy(<a href="../../../../../org/eclipse/emf/cdo/view/CDORevisionPrefetchingPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDORevisionPrefetchingPolicy</a>&nbsp;prefetchingPolicy)</pre>
+<pre class="methodSignature">void&nbsp;setRevisionPrefetchingPolicy&#8203;(<a href="CDORevisionPrefetchingPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDORevisionPrefetchingPolicy</a>&nbsp;prefetchingPolicy)</pre>
 <div class="block">The CDORevisionPrefetchingPolicy feature of the CDOView allows CDO users to fetch many objects at a time.
  <p>
  The difference between the CDOCollectionLoadingPolicy feature and the CDORevisionPrefetchingPolicy feature is
@@ -861,49 +964,79 @@ void&nbsp;setStaleReferenceBehaviour(<a href="../../../../../org/eclipse/emf/cdo
  The end-user could provide its own implementation of the CDORevisionPrefetchingPolicy interface.</div>
 </li>
 </ul>
-<a name="getFeatureAnalyzer--">
+<a id="getFeatureAnalyzer()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getFeatureAnalyzer</h4>
-<pre><a href="../../../../../org/eclipse/emf/cdo/view/CDOFeatureAnalyzer.html" title="interface in org.eclipse.emf.cdo.view">CDOFeatureAnalyzer</a>&nbsp;getFeatureAnalyzer()</pre>
+<pre class="methodSignature"><a href="CDOFeatureAnalyzer.html" title="interface in org.eclipse.emf.cdo.view">CDOFeatureAnalyzer</a>&nbsp;getFeatureAnalyzer()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.1</dd>
 </dl>
 </li>
 </ul>
-<a name="setFeatureAnalyzer-org.eclipse.emf.cdo.view.CDOFeatureAnalyzer-">
+<a id="setFeatureAnalyzer(org.eclipse.emf.cdo.view.CDOFeatureAnalyzer)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setFeatureAnalyzer</h4>
+<pre class="methodSignature">void&nbsp;setFeatureAnalyzer&#8203;(<a href="CDOFeatureAnalyzer.html" title="interface in org.eclipse.emf.cdo.view">CDOFeatureAnalyzer</a>&nbsp;featureAnalyzer)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.1</dd>
+</dl>
+</li>
+</ul>
+<a id="getClearAdapterPolicy()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getClearAdapterPolicy</h4>
+<pre class="methodSignature"><a href="CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOAdapterPolicy</a>&nbsp;getClearAdapterPolicy()</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.12</dd>
+</dl>
+</li>
+</ul>
+<a id="setClearAdapterPolicy(org.eclipse.emf.cdo.view.CDOAdapterPolicy)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>setFeatureAnalyzer</h4>
-<pre>void&nbsp;setFeatureAnalyzer(<a href="../../../../../org/eclipse/emf/cdo/view/CDOFeatureAnalyzer.html" title="interface in org.eclipse.emf.cdo.view">CDOFeatureAnalyzer</a>&nbsp;featureAnalyzer)</pre>
+<h4>setClearAdapterPolicy</h4>
+<pre class="methodSignature">void&nbsp;setClearAdapterPolicy&#8203;(<a href="CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOAdapterPolicy</a>&nbsp;policy)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
-<dd>4.1</dd>
+<dd>4.12</dd>
 </dl>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/CDOView.Options.html">Use</a></li>
@@ -913,16 +1046,8 @@ void&nbsp;setStaleReferenceBehaviour(<a href="../../../../../org/eclipse/emf/cdo
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.CacheReferenceTypeEvent.html" title="interface in org.eclipse.emf.cdo.view"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/emf/cdo/view/CDOView.Options.html" target="_top">Frames</a></li>
-<li><a href="CDOView.Options.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -935,6 +1060,9 @@ void&nbsp;setStaleReferenceBehaviour(<a href="../../../../../org/eclipse/emf/cdo
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -951,10 +1079,12 @@ void&nbsp;setStaleReferenceBehaviour(<a href="../../../../../org/eclipse/emf/cdo
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

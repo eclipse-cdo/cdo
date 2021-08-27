@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>LongRunningHandler (Net4j Utilities Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":42,"i6":10,"i7":10,"i8":10,"i9":42};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":42,"i6":10,"i7":10,"i8":10,"i9":42};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/LongRunningHandler.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/net4j/util/ui/handlers/AbstractBaseHandler.html" title="class in org.eclipse.net4j.util.ui.handlers"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../../org/eclipse/net4j/util/ui/handlers/SafeHandler.html" title="class in org.eclipse.net4j.util.ui.handlers"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/net4j/util/ui/handlers/LongRunningHandler.html" target="_top">Frames</a></li>
-<li><a href="LongRunningHandler.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,6 +82,9 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -85,13 +101,22 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.net4j.util.ui.handlers</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.net4j.util.ui.handlers</a></div>
 <h2 title="Class LongRunningHandler" class="title">Class LongRunningHandler</h2>
 </div>
 <div class="contentContainer">
@@ -99,13 +124,13 @@ var activeTableTab = "activeTableTab";
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/common/EventManager.html?is-external=true" title="class or interface in org.eclipse.core.commands.common">org.eclipse.core.commands.common.EventManager</a></li>
+<li><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/common/EventManager.html?is-external=true" title="class or interface in org.eclipse.core.commands.common" class="externalLink">org.eclipse.core.commands.common.EventManager</a></li>
 <li>
 <ul class="inheritance">
-<li><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/AbstractHandler.html?is-external=true" title="class or interface in org.eclipse.core.commands">org.eclipse.core.commands.AbstractHandler</a></li>
+<li><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/AbstractHandler.html?is-external=true" title="class or interface in org.eclipse.core.commands" class="externalLink">org.eclipse.core.commands.AbstractHandler</a></li>
 <li>
 <ul class="inheritance">
-<li><a href="../../../../../../org/eclipse/net4j/util/ui/handlers/SafeHandler.html" title="class in org.eclipse.net4j.util.ui.handlers">org.eclipse.net4j.util.ui.handlers.SafeHandler</a></li>
+<li><a href="SafeHandler.html" title="class in org.eclipse.net4j.util.ui.handlers">org.eclipse.net4j.util.ui.handlers.SafeHandler</a></li>
 <li>
 <ul class="inheritance">
 <li>org.eclipse.net4j.util.ui.handlers.LongRunningHandler</li>
@@ -123,16 +148,15 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/IHandler.html?is-external=true" title="class or interface in org.eclipse.core.commands">IHandler</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/IHandler2.html?is-external=true" title="class or interface in org.eclipse.core.commands">IHandler2</a></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/IHandler.html?is-external=true" title="class or interface in org.eclipse.core.commands" class="externalLink">IHandler</a></code>, <code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/IHandler2.html?is-external=true" title="class or interface in org.eclipse.core.commands" class="externalLink">IHandler2</a></code></dd>
 </dl>
 <dl>
 <dt>Direct Known Subclasses:</dt>
-<dd><a href="../../../../../../org/eclipse/net4j/util/ui/handlers/AbstractBaseHandler.html" title="class in org.eclipse.net4j.util.ui.handlers">AbstractBaseHandler</a></dd>
+<dd><code><a href="AbstractBaseHandler.html" title="class in org.eclipse.net4j.util.ui.handlers">AbstractBaseHandler</a></code></dd>
 </dl>
 <hr>
-<br>
 <pre>public abstract class <span class="typeNameLabel">LongRunningHandler</span>
-extends <a href="../../../../../../org/eclipse/net4j/util/ui/handlers/SafeHandler.html" title="class in org.eclipse.net4j.util.ui.handlers">SafeHandler</a></pre>
+extends <a href="SafeHandler.html" title="class in org.eclipse.net4j.util.ui.handlers">SafeHandler</a></pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.4</dd>
@@ -146,109 +170,125 @@ extends <a href="../../../../../../org/eclipse/net4j/util/ui/handlers/SafeHandle
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.summary">
+<li class="blockList"><a id="constructor.summary">
 <!--   -->
 </a>
 <h3>Constructor Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
+<table class="memberSummary">
 <caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Constructor and Description</th>
+<th class="colFirst" scope="col">Constructor</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/handlers/LongRunningHandler.html#LongRunningHandler--">LongRunningHandler</a></span>()</code>&nbsp;</td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">LongRunningHandler</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t6" class="tableTab"><span><a href="javascript:show(32);">Deprecated Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/handlers/LongRunningHandler.html#cancel--">cancel</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#cancel()">cancel</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/handlers/LongRunningHandler.html#checkCancelation-org.eclipse.core.runtime.IProgressMonitor-">checkCancelation</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</a>&nbsp;monitor)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#checkCancelation(org.eclipse.core.runtime.IProgressMonitor)">checkCancelation</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IProgressMonitor</a>&nbsp;monitor)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/handlers/LongRunningHandler.html#doExecute-org.eclipse.core.commands.ExecutionEvent-org.eclipse.core.runtime.IProgressMonitor-">doExecute</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/ExecutionEvent.html?is-external=true" title="class or interface in org.eclipse.core.commands">ExecutionEvent</a>&nbsp;event,
-         <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</a>&nbsp;progressMonitor)</code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#doExecute(org.eclipse.core.commands.ExecutionEvent,org.eclipse.core.runtime.IProgressMonitor)">doExecute</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/ExecutionEvent.html?is-external=true" title="class or interface in org.eclipse.core.commands" class="externalLink">ExecutionEvent</a>&nbsp;event,
+         <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IProgressMonitor</a>&nbsp;progressMonitor)</code></th>
+<td class="colLast">
 <div class="block">Executes the long-running handler in a background job.</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/handlers/LongRunningHandler.html#doExecute-org.eclipse.core.runtime.IProgressMonitor-">doExecute</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</a>&nbsp;progressMonitor)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#doExecute(org.eclipse.core.runtime.IProgressMonitor)">doExecute</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IProgressMonitor</a>&nbsp;progressMonitor)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>protected java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/handlers/LongRunningHandler.html#getBundleID--">getBundleID</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getBundleID()">getBundleID</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>protected int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/handlers/LongRunningHandler.html#getTotalWork--">getTotalWork</a></span>()</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">Not supported anymore.</span></div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTotalWork()">getTotalWork</a></span>()</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">Not supported anymore.</div>
 </div>
 </td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/handlers/LongRunningHandler.html#preRun--">preRun</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#preRun()">preRun</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/handlers/LongRunningHandler.html#preRun-org.eclipse.core.commands.ExecutionEvent-">preRun</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/ExecutionEvent.html?is-external=true" title="class or interface in org.eclipse.core.commands">ExecutionEvent</a>&nbsp;event)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#preRun(org.eclipse.core.commands.ExecutionEvent)">preRun</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/ExecutionEvent.html?is-external=true" title="class or interface in org.eclipse.core.commands" class="externalLink">ExecutionEvent</a>&nbsp;event)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>protected java.lang.Object</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/handlers/LongRunningHandler.html#safeExecute-org.eclipse.core.commands.ExecutionEvent-">safeExecute</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/ExecutionEvent.html?is-external=true" title="class or interface in org.eclipse.core.commands">ExecutionEvent</a>&nbsp;event)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#safeExecute(org.eclipse.core.commands.ExecutionEvent)">safeExecute</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/ExecutionEvent.html?is-external=true" title="class or interface in org.eclipse.core.commands" class="externalLink">ExecutionEvent</a>&nbsp;event)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/handlers/LongRunningHandler.html#setTotalWork-int-">setTotalWork</a></span>(int&nbsp;totalWork)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">Not supported anymore.</span></div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTotalWork(int)">setTotalWork</a></span>&#8203;(int&nbsp;totalWork)</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">Not supported anymore.</div>
 </div>
 </td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.ui.handlers.SafeHandler">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.ui.handlers.SafeHandler">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.ui.handlers.<a href="../../../../../../org/eclipse/net4j/util/ui/handlers/SafeHandler.html" title="class in org.eclipse.net4j.util.ui.handlers">SafeHandler</a></h3>
-<code><a href="../../../../../../org/eclipse/net4j/util/ui/handlers/SafeHandler.html#execute-org.eclipse.core.commands.ExecutionEvent-">execute</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/handlers/SafeHandler.html#extractEventDetails-org.eclipse.core.commands.ExecutionEvent-">extractEventDetails</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/handlers/SafeHandler.html#getCommand--">getCommand</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/handlers/SafeHandler.html#getSelection--">getSelection</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/handlers/SafeHandler.html#getText--">getText</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/handlers/SafeHandler.html#setEnabled-java.lang.Object-">setEnabled</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/handlers/SafeHandler.html#updateSelection-org.eclipse.jface.viewers.ISelection-">updateSelection</a></code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.ui.handlers.<a href="SafeHandler.html" title="class in org.eclipse.net4j.util.ui.handlers">SafeHandler</a></h3>
+<code><a href="SafeHandler.html#execute(org.eclipse.core.commands.ExecutionEvent)">execute</a>, <a href="SafeHandler.html#extractEventDetails(org.eclipse.core.commands.ExecutionEvent)">extractEventDetails</a>, <a href="SafeHandler.html#getCommand()">getCommand</a>, <a href="SafeHandler.html#getSelection()">getSelection</a>, <a href="SafeHandler.html#getText()">getText</a>, <a href="SafeHandler.html#setEnabled(java.lang.Object)">setEnabled</a>, <a href="SafeHandler.html#updateSelection(org.eclipse.jface.viewers.ISelection)">updateSelection</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.core.commands.AbstractHandler">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.core.commands.AbstractHandler">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.core.commands.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/AbstractHandler.html?is-external=true" title="class or interface in org.eclipse.core.commands">AbstractHandler</a></h3>
-<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/AbstractHandler.html?is-external=true#addHandlerListener-org.eclipse.core.commands.IHandlerListener-" title="class or interface in org.eclipse.core.commands">addHandlerListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/AbstractHandler.html?is-external=true#dispose--" title="class or interface in org.eclipse.core.commands">dispose</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/AbstractHandler.html?is-external=true#fireHandlerChanged-org.eclipse.core.commands.HandlerEvent-" title="class or interface in org.eclipse.core.commands">fireHandlerChanged</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/AbstractHandler.html?is-external=true#hasListeners--" title="class or interface in org.eclipse.core.commands">hasListeners</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/AbstractHandler.html?is-external=true#isEnabled--" title="class or interface in org.eclipse.core.commands">isEnabled</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/AbstractHandler.html?is-external=true#isHandled--" title="class or interface in org.eclipse.core.commands">isHandled</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/AbstractHandler.html?is-external=true#removeHandlerListener-org.eclipse.core.commands.IHandlerListener-" title="class or interface in org.eclipse.core.commands">removeHandlerListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/AbstractHandler.html?is-external=true#setBaseEnabled-boolean-" title="class or interface in org.eclipse.core.commands">setBaseEnabled</a></code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.core.commands.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/AbstractHandler.html?is-external=true" title="class or interface in org.eclipse.core.commands" class="externalLink">AbstractHandler</a></h3>
+<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/AbstractHandler.html?is-external=true#addHandlerListener(org.eclipse.core.commands.IHandlerListener)" title="class or interface in org.eclipse.core.commands" class="externalLink">addHandlerListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/AbstractHandler.html?is-external=true#dispose()" title="class or interface in org.eclipse.core.commands" class="externalLink">dispose</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/AbstractHandler.html?is-external=true#fireHandlerChanged(org.eclipse.core.commands.HandlerEvent)" title="class or interface in org.eclipse.core.commands" class="externalLink">fireHandlerChanged</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/AbstractHandler.html?is-external=true#hasListeners()" title="class or interface in org.eclipse.core.commands" class="externalLink">hasListeners</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/AbstractHandler.html?is-external=true#isEnabled()" title="class or interface in org.eclipse.core.commands" class="externalLink">isEnabled</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/AbstractHandler.html?is-external=true#isHandled()" title="class or interface in org.eclipse.core.commands" class="externalLink">isHandled</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/AbstractHandler.html?is-external=true#removeHandlerListener(org.eclipse.core.commands.IHandlerListener)" title="class or interface in org.eclipse.core.commands" class="externalLink">removeHandlerListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/AbstractHandler.html?is-external=true#setBaseEnabled(boolean)" title="class or interface in org.eclipse.core.commands" class="externalLink">setBaseEnabled</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.core.commands.common.EventManager">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.core.commands.common.EventManager">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.core.commands.common.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/common/EventManager.html?is-external=true" title="class or interface in org.eclipse.core.commands.common">EventManager</a></h3>
-<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/common/EventManager.html?is-external=true#addListenerObject-java.lang.Object-" title="class or interface in org.eclipse.core.commands.common">addListenerObject</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/common/EventManager.html?is-external=true#clearListeners--" title="class or interface in org.eclipse.core.commands.common">clearListeners</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/common/EventManager.html?is-external=true#getListeners--" title="class or interface in org.eclipse.core.commands.common">getListeners</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/common/EventManager.html?is-external=true#isListenerAttached--" title="class or interface in org.eclipse.core.commands.common">isListenerAttached</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/common/EventManager.html?is-external=true#removeListenerObject-java.lang.Object-" title="class or interface in org.eclipse.core.commands.common">removeListenerObject</a></code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.core.commands.common.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/common/EventManager.html?is-external=true" title="class or interface in org.eclipse.core.commands.common" class="externalLink">EventManager</a></h3>
+<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/common/EventManager.html?is-external=true#addListenerObject(java.lang.Object)" title="class or interface in org.eclipse.core.commands.common" class="externalLink">addListenerObject</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/common/EventManager.html?is-external=true#clearListeners()" title="class or interface in org.eclipse.core.commands.common" class="externalLink">clearListeners</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/common/EventManager.html?is-external=true#getListeners()" title="class or interface in org.eclipse.core.commands.common" class="externalLink">getListeners</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/common/EventManager.html?is-external=true#isListenerAttached()" title="class or interface in org.eclipse.core.commands.common" class="externalLink">isListenerAttached</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/common/EventManager.html?is-external=true#removeListenerObject(java.lang.Object)" title="class or interface in org.eclipse.core.commands.common" class="externalLink">removeListenerObject</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
+<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
@@ -256,6 +296,7 @@ extends <a href="../../../../../../org/eclipse/net4j/util/ui/handlers/SafeHandle
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -263,12 +304,13 @@ extends <a href="../../../../../../org/eclipse/net4j/util/ui/handlers/SafeHandle
 <ul class="blockList">
 <li class="blockList">
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.detail">
+<li class="blockList"><a id="constructor.detail">
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="LongRunningHandler--">
+<a id="&lt;init&gt;()">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -279,66 +321,72 @@ extends <a href="../../../../../../org/eclipse/net4j/util/ui/handlers/SafeHandle
 </ul>
 </li>
 </ul>
+</section>
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="getTotalWork--">
+<a id="getTotalWork()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getTotalWork</h4>
-<pre>@Deprecated
+<pre class="methodSignature">@Deprecated
 protected final&nbsp;int&nbsp;getTotalWork()</pre>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">Not supported anymore.</span></div>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">Not supported anymore.</div>
+</div>
 </li>
 </ul>
-<a name="setTotalWork-int-">
+<a id="setTotalWork(int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setTotalWork</h4>
-<pre>@Deprecated
-protected final&nbsp;void&nbsp;setTotalWork(int&nbsp;totalWork)</pre>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">Not supported anymore.</span></div>
+<pre class="methodSignature">@Deprecated
+protected final&nbsp;void&nbsp;setTotalWork&#8203;(int&nbsp;totalWork)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">Not supported anymore.</div>
+</div>
 </li>
 </ul>
-<a name="cancel--">
+<a id="cancel()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>cancel</h4>
-<pre>protected final&nbsp;void&nbsp;cancel()</pre>
+<pre class="methodSignature">protected final&nbsp;void&nbsp;cancel()</pre>
 </li>
 </ul>
-<a name="safeExecute-org.eclipse.core.commands.ExecutionEvent-">
+<a id="safeExecute(org.eclipse.core.commands.ExecutionEvent)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>safeExecute</h4>
-<pre>protected final&nbsp;java.lang.Object&nbsp;safeExecute(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/ExecutionEvent.html?is-external=true" title="class or interface in org.eclipse.core.commands">ExecutionEvent</a>&nbsp;event)
+<pre class="methodSignature">protected final&nbsp;java.lang.Object&nbsp;safeExecute&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/ExecutionEvent.html?is-external=true" title="class or interface in org.eclipse.core.commands" class="externalLink">ExecutionEvent</a>&nbsp;event)
                                       throws java.lang.Exception</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../../org/eclipse/net4j/util/ui/handlers/SafeHandler.html#safeExecute-org.eclipse.core.commands.ExecutionEvent-">safeExecute</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../org/eclipse/net4j/util/ui/handlers/SafeHandler.html" title="class in org.eclipse.net4j.util.ui.handlers">SafeHandler</a></code></dd>
+<dd><code><a href="SafeHandler.html#safeExecute(org.eclipse.core.commands.ExecutionEvent)">safeExecute</a></code>&nbsp;in class&nbsp;<code><a href="SafeHandler.html" title="class in org.eclipse.net4j.util.ui.handlers">SafeHandler</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.lang.Exception</code></dd>
 </dl>
 </li>
 </ul>
-<a name="preRun-org.eclipse.core.commands.ExecutionEvent-">
+<a id="preRun(org.eclipse.core.commands.ExecutionEvent)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>preRun</h4>
-<pre>protected&nbsp;void&nbsp;preRun(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/ExecutionEvent.html?is-external=true" title="class or interface in org.eclipse.core.commands">ExecutionEvent</a>&nbsp;event)
+<pre class="methodSignature">protected&nbsp;void&nbsp;preRun&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/ExecutionEvent.html?is-external=true" title="class or interface in org.eclipse.core.commands" class="externalLink">ExecutionEvent</a>&nbsp;event)
                throws java.lang.Exception</pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -348,13 +396,13 @@ protected final&nbsp;void&nbsp;setTotalWork(int&nbsp;totalWork)</pre>
 </dl>
 </li>
 </ul>
-<a name="preRun--">
+<a id="preRun()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>preRun</h4>
-<pre>protected&nbsp;void&nbsp;preRun()
+<pre class="methodSignature">protected&nbsp;void&nbsp;preRun()
                throws java.lang.Exception</pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -362,28 +410,28 @@ protected final&nbsp;void&nbsp;setTotalWork(int&nbsp;totalWork)</pre>
 </dl>
 </li>
 </ul>
-<a name="getBundleID--">
+<a id="getBundleID()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getBundleID</h4>
-<pre>protected&nbsp;java.lang.String&nbsp;getBundleID()</pre>
+<pre class="methodSignature">protected&nbsp;java.lang.String&nbsp;getBundleID()</pre>
 </li>
 </ul>
-<a name="doExecute-org.eclipse.core.commands.ExecutionEvent-org.eclipse.core.runtime.IProgressMonitor-">
+<a id="doExecute(org.eclipse.core.commands.ExecutionEvent,org.eclipse.core.runtime.IProgressMonitor)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>doExecute</h4>
-<pre>protected&nbsp;void&nbsp;doExecute(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/ExecutionEvent.html?is-external=true" title="class or interface in org.eclipse.core.commands">ExecutionEvent</a>&nbsp;event,
-                         <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</a>&nbsp;progressMonitor)
+<pre class="methodSignature">protected&nbsp;void&nbsp;doExecute&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/ExecutionEvent.html?is-external=true" title="class or interface in org.eclipse.core.commands" class="externalLink">ExecutionEvent</a>&nbsp;event,
+                         <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IProgressMonitor</a>&nbsp;progressMonitor)
                   throws java.lang.Exception</pre>
 <div class="block">Executes the long-running handler in a background job.  Note that the original
- <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/ExecutionEvent.html?is-external=true" title="class or interface in org.eclipse.core.commands"><code>ExecutionEvent</code></a> is not available because it is only valid during the
+ <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/ExecutionEvent.html?is-external=true" title="class or interface in org.eclipse.core.commands" class="externalLink"><code>ExecutionEvent</code></a> is not available because it is only valid during the
  execution of the handler call-back on the UI thread.  Any details required from
- it must be <a href="../../../../../../org/eclipse/net4j/util/ui/handlers/SafeHandler.html#extractEventDetails-org.eclipse.core.commands.ExecutionEvent-">extracted</a>
+ it must be <a href="SafeHandler.html#extractEventDetails(org.eclipse.core.commands.ExecutionEvent)">extracted</a>
  before the job is scheduled.</div>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -393,13 +441,13 @@ protected final&nbsp;void&nbsp;setTotalWork(int&nbsp;totalWork)</pre>
 </dl>
 </li>
 </ul>
-<a name="doExecute-org.eclipse.core.runtime.IProgressMonitor-">
+<a id="doExecute(org.eclipse.core.runtime.IProgressMonitor)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>doExecute</h4>
-<pre>protected&nbsp;void&nbsp;doExecute(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</a>&nbsp;progressMonitor)
+<pre class="methodSignature">protected&nbsp;void&nbsp;doExecute&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IProgressMonitor</a>&nbsp;progressMonitor)
                   throws java.lang.Exception</pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -407,32 +455,36 @@ protected final&nbsp;void&nbsp;setTotalWork(int&nbsp;totalWork)</pre>
 </dl>
 </li>
 </ul>
-<a name="checkCancelation-org.eclipse.core.runtime.IProgressMonitor-">
+<a id="checkCancelation(org.eclipse.core.runtime.IProgressMonitor)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>checkCancelation</h4>
-<pre>protected final&nbsp;void&nbsp;checkCancelation(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</a>&nbsp;monitor)</pre>
+<pre class="methodSignature">protected final&nbsp;void&nbsp;checkCancelation&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IProgressMonitor</a>&nbsp;monitor)</pre>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/LongRunningHandler.html">Use</a></li>
@@ -442,16 +494,8 @@ protected final&nbsp;void&nbsp;setTotalWork(int&nbsp;totalWork)</pre>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/net4j/util/ui/handlers/AbstractBaseHandler.html" title="class in org.eclipse.net4j.util.ui.handlers"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../../org/eclipse/net4j/util/ui/handlers/SafeHandler.html" title="class in org.eclipse.net4j.util.ui.handlers"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/net4j/util/ui/handlers/LongRunningHandler.html" target="_top">Frames</a></li>
-<li><a href="LongRunningHandler.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -464,6 +508,9 @@ protected final&nbsp;void&nbsp;setTotalWork(int&nbsp;totalWork)</pre>
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -480,10 +527,12 @@ protected final&nbsp;void&nbsp;setTotalWork(int&nbsp;totalWork)</pre>
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

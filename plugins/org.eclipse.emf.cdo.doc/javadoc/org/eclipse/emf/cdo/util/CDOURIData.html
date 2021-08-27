@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>CDOURIData (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/CDOURIData.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html" title="interface in org.eclipse.emf.cdo.util"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIUtil.html" title="class in org.eclipse.emf.cdo.util"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/emf/cdo/util/CDOURIData.html" target="_top">Frames</a></li>
-<li><a href="CDOURIData.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,6 +82,9 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -85,13 +101,22 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.emf.cdo.util</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.cdo.util</a></div>
 <h2 title="Class CDOURIData" class="title">Class CDOURIData</h2>
 </div>
 <div class="contentContainer">
@@ -107,10 +132,9 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<br>
 <pre>public final class <span class="typeNameLabel">CDOURIData</span>
 extends java.lang.Object</pre>
-<div class="block">Represents a CDO-specific <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util"><code>URI</code></a> in connection-aware format.
+<div class="block">Represents a CDO-specific <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink"><code>URI</code></a> in connection-aware format.
  <p>
  CDO URIs are in one of two different formats, either canonical or connection-aware. The connection-aware format is:
 
@@ -123,18 +147,18 @@ extends java.lang.Object</pre>
  <ul>
  <li><i>ConnectorType</i>: one of <b>tcp</b> | <b>ssl</b> | <b>jvm</b> | <b>http</b>
  <li><i>User/Password</i>: to be provided if the repository is configured with an
- <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IUserManager.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security"><code>IUserManager</code></a> and, hence, triggers authentication on the client. Note: the
+ <code>IUserManager</code> and, hence, triggers authentication on the client. Note: the
  password may be stored in resources in clear text!
  <li><i>ConnectorSpecificAuthority</i>: examples are
  <ul>
  <li><i>Host</i> [<b>:</b> <i>Port</i>] (if <i>ConnectorType</i> is <b>tcp</b>)
  <li><i>AcceptorName</i> (if <i>ConnectorType</i> is <b>jvm</b>)
  </ul>
- <li><i>RepositoryName</i>: the <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getName--"><code>name</code></a> of the repository (not the <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getUUID--"><code>UUID</code></a>!).
- <li><i>ResourcePath</i>: the full path of the <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resource</code></a> within the repository, segments separated by slashes, no leading slash.
+ <li><i>RepositoryName</i>: the <a href="../common/CDOCommonRepository.html#getName()"><code>name</code></a> of the repository (not the <a href="../common/CDOCommonRepository.html#getUUID()"><code>UUID</code></a>!).
+ <li><i>ResourcePath</i>: the full path of the <a href="../eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resource</code></a> within the repository, segments separated by slashes, no leading slash.
  <li><i>Param</i>: one of the following
  <ul>
- <li><b>branch</b>: the value must be a <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#getPathName--"><code>branch path</code></a>, the full path of the branch in the branch tree, segments separated by slashes, no leading slash, defaults to <b>MAIN</b>.
+ <li><b>branch</b>: the value must be a <a href="../common/branch/CDOBranch.html#getPathName()"><code>branch path</code></a>, the full path of the branch in the branch tree, segments separated by slashes, no leading slash, defaults to <b>MAIN</b>.
  <li><b>time</b>: the value must be the time at which the resource is supposed to be valid, parseable by SimpleDateFormat. The special value <b>HEAD</b> indicates a floating view/transaction that always shows the latest state in the chosen branch, the default if no <i>Time</i> parameter is specified.
  <li><b>transactional</b>: a boolean value. The value <b>true</b> forces a the resource to be opened in a transaction rather than in a read-only view. This can not be combined with a <i>Time</i> other than <b>HEAD</b>.
  <li><b>prefetch</b>: a boolean value. The value <b>true</b> attempts to load all objects contained by the resource in a single server-round trip and cache the results.
@@ -145,7 +169,7 @@ extends java.lang.Object</pre>
  (mainly CDONet4jViewProvider) it is still unclear when and how the allocated
  "resources" (aka IConnector, CDOSession, CDOView, etc) are supposed to be freed!
  <p>
- For a description of the canonical URI format refer to <a href="../../../../../org/eclipse/emf/cdo/util/CDOURIUtil.html" title="class in org.eclipse.emf.cdo.util"><code>CDOURIUtil</code></a>.</div>
+ For a description of the canonical URI format refer to <a href="CDOURIUtil.html" title="class in org.eclipse.emf.cdo.util"><code>CDOURIUtil</code></a>.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.0</dd>
@@ -159,170 +183,209 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <!-- =========== FIELD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.summary">
+<li class="blockList"><a id="field.summary">
 <!--   -->
 </a>
 <h3>Field Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Field Summary table, listing fields, and an explanation">
+<table class="memberSummary">
 <caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Field and Description</th>
+<th class="colSecond" scope="col">Field</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIData.html#BRANCH_PARAMETER">BRANCH_PARAMETER</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#BRANCH_PARAMETER">BRANCH_PARAMETER</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIData.html#TIME_PARAMETER">TIME_PARAMETER</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#TIME_PARAMETER">TIME_PARAMETER</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIData.html#TRANSACTIONAL_PARAMETER">TRANSACTIONAL_PARAMETER</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#TRANSACTIONAL_PARAMETER">TRANSACTIONAL_PARAMETER</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIData.html#VIEW_ID_PARAMETER">VIEW_ID_PARAMETER</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#VIEW_ID_PARAMETER">VIEW_ID_PARAMETER</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.summary">
+<li class="blockList"><a id="constructor.summary">
 <!--   -->
 </a>
 <h3>Constructor Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
+<table class="memberSummary">
 <caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Constructor and Description</th>
+<th class="colFirst" scope="col">Constructor</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIData.html#CDOURIData--">CDOURIData</a></span>()</code>&nbsp;</td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">CDOURIData</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIData.html#CDOURIData-java.lang.String-">CDOURIData</a></span>(java.lang.String&nbsp;uri)</code>&nbsp;</td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String)">CDOURIData</a></span>&#8203;(java.lang.String&nbsp;uri)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIData.html#CDOURIData-org.eclipse.emf.common.util.URI-">CDOURIData</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;uri)</code>&nbsp;</td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(org.eclipse.emf.common.util.URI)">CDOURIData</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">URI</a>&nbsp;uri)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIData.html#getAuthority--">getAuthority</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAuthority()">getAuthority</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IPath.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IPath</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIData.html#getBranchPath--">getBranchPath</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IPath.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IPath</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getBranchPath()">getBranchPath</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>java.util.Map&lt;java.lang.String,java.lang.String&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIData.html#getExtraParameters--">getExtraParameters</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getExtraParameters()">getExtraParameters</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIData.html#getPassWord--">getPassWord</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPassWord()">getPassWord</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIData.html#getRepositoryName--">getRepositoryName</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRepositoryName()">getRepositoryName</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IPath.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IPath</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIData.html#getResourcePath--">getResourcePath</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IPath.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IPath</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getResourcePath()">getResourcePath</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIData.html#getScheme--">getScheme</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getScheme()">getScheme</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>long</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIData.html#getTimeStamp--">getTimeStamp</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTimeStamp()">getTimeStamp</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIData.html#getUserName--">getUserName</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getUserName()">getUserName</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIData.html#getViewID--">getViewID</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getViewID()">getViewID</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIData.html#isTransactional--">isTransactional</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isTransactional()">isTransactional</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIData.html#setAuthority-java.lang.String-">setAuthority</a></span>(java.lang.String&nbsp;authority)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAuthority(java.lang.String)">setAuthority</a></span>&#8203;(java.lang.String&nbsp;authority)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIData.html#setBranchPath-org.eclipse.core.runtime.IPath-">setBranchPath</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IPath.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IPath</a>&nbsp;branchPath)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setBranchPath(org.eclipse.core.runtime.IPath)">setBranchPath</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IPath.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IPath</a>&nbsp;branchPath)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIData.html#setExtraParameters-java.util.Map-">setExtraParameters</a></span>(java.util.Map&lt;java.lang.String,java.lang.String&gt;&nbsp;extraParameters)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setExtraParameters(java.util.Map)">setExtraParameters</a></span>&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;extraParameters)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIData.html#setPassWord-java.lang.String-">setPassWord</a></span>(java.lang.String&nbsp;passWord)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPassWord(java.lang.String)">setPassWord</a></span>&#8203;(java.lang.String&nbsp;passWord)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i15" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIData.html#setRepositoryName-java.lang.String-">setRepositoryName</a></span>(java.lang.String&nbsp;repositoryName)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRepositoryName(java.lang.String)">setRepositoryName</a></span>&#8203;(java.lang.String&nbsp;repositoryName)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i16" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIData.html#setResourcePath-org.eclipse.core.runtime.IPath-">setResourcePath</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IPath.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IPath</a>&nbsp;resourcePath)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setResourcePath(org.eclipse.core.runtime.IPath)">setResourcePath</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IPath.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IPath</a>&nbsp;resourcePath)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i17" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIData.html#setScheme-java.lang.String-">setScheme</a></span>(java.lang.String&nbsp;scheme)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setScheme(java.lang.String)">setScheme</a></span>&#8203;(java.lang.String&nbsp;scheme)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i18" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIData.html#setTimeStamp-long-">setTimeStamp</a></span>(long&nbsp;timeStamp)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTimeStamp(long)">setTimeStamp</a></span>&#8203;(long&nbsp;timeStamp)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i19" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIData.html#setTransactional-boolean-">setTransactional</a></span>(boolean&nbsp;transactional)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTransactional(boolean)">setTransactional</a></span>&#8203;(boolean&nbsp;transactional)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i20" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIData.html#setUserName-java.lang.String-">setUserName</a></span>(java.lang.String&nbsp;userName)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setUserName(java.lang.String)">setUserName</a></span>&#8203;(java.lang.String&nbsp;userName)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i21" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIData.html#setViewID-java.lang.String-">setViewID</a></span>(java.lang.String&nbsp;viewID)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setViewID(java.lang.String)">setViewID</a></span>&#8203;(java.lang.String&nbsp;viewID)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i22" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIData.html#toString--">toString</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i23" class="rowColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIData.html#toURI--">toURI</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">URI</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toURI()">toURI</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
+<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
@@ -330,6 +393,7 @@ extends java.lang.Object</pre>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -337,12 +401,13 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <!-- ============ FIELD DETAIL =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.detail">
+<li class="blockList"><a id="field.detail">
 <!--   -->
 </a>
 <h3>Field Detail</h3>
-<a name="BRANCH_PARAMETER">
+<a id="BRANCH_PARAMETER">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -355,7 +420,7 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a name="TIME_PARAMETER">
+<a id="TIME_PARAMETER">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -368,7 +433,7 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a name="VIEW_ID_PARAMETER">
+<a id="VIEW_ID_PARAMETER">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -383,7 +448,7 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a name="TRANSACTIONAL_PARAMETER">
+<a id="TRANSACTIONAL_PARAMETER">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -398,13 +463,15 @@ extends java.lang.Object</pre>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.detail">
+<li class="blockList"><a id="constructor.detail">
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="CDOURIData--">
+<a id="&lt;init&gt;()">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -413,272 +480,274 @@ extends java.lang.Object</pre>
 <pre>public&nbsp;CDOURIData()</pre>
 </li>
 </ul>
-<a name="CDOURIData-java.lang.String-">
+<a id="&lt;init&gt;(java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>CDOURIData</h4>
-<pre>public&nbsp;CDOURIData(java.lang.String&nbsp;uri)
-           throws <a href="../../../../../org/eclipse/emf/cdo/util/InvalidURIException.html" title="class in org.eclipse.emf.cdo.util">InvalidURIException</a></pre>
+<pre>public&nbsp;CDOURIData&#8203;(java.lang.String&nbsp;uri)
+           throws <a href="InvalidURIException.html" title="class in org.eclipse.emf.cdo.util">InvalidURIException</a></pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/emf/cdo/util/InvalidURIException.html" title="class in org.eclipse.emf.cdo.util">InvalidURIException</a></code></dd>
+<dd><code><a href="InvalidURIException.html" title="class in org.eclipse.emf.cdo.util">InvalidURIException</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="CDOURIData-org.eclipse.emf.common.util.URI-">
+<a id="&lt;init&gt;(org.eclipse.emf.common.util.URI)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>CDOURIData</h4>
-<pre>public&nbsp;CDOURIData(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;uri)
-           throws <a href="../../../../../org/eclipse/emf/cdo/util/InvalidURIException.html" title="class in org.eclipse.emf.cdo.util">InvalidURIException</a></pre>
+<pre>public&nbsp;CDOURIData&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">URI</a>&nbsp;uri)
+           throws <a href="InvalidURIException.html" title="class in org.eclipse.emf.cdo.util">InvalidURIException</a></pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/emf/cdo/util/InvalidURIException.html" title="class in org.eclipse.emf.cdo.util">InvalidURIException</a></code></dd>
+<dd><code><a href="InvalidURIException.html" title="class in org.eclipse.emf.cdo.util">InvalidURIException</a></code></dd>
 </dl>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="getScheme--">
+<a id="getScheme()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getScheme</h4>
-<pre>public&nbsp;java.lang.String&nbsp;getScheme()</pre>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getScheme()</pre>
 </li>
 </ul>
-<a name="setScheme-java.lang.String-">
+<a id="setScheme(java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setScheme</h4>
-<pre>public&nbsp;void&nbsp;setScheme(java.lang.String&nbsp;scheme)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setScheme&#8203;(java.lang.String&nbsp;scheme)</pre>
 </li>
 </ul>
-<a name="getUserName--">
+<a id="getUserName()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getUserName</h4>
-<pre>public&nbsp;java.lang.String&nbsp;getUserName()</pre>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getUserName()</pre>
 </li>
 </ul>
-<a name="setUserName-java.lang.String-">
+<a id="setUserName(java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setUserName</h4>
-<pre>public&nbsp;void&nbsp;setUserName(java.lang.String&nbsp;userName)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setUserName&#8203;(java.lang.String&nbsp;userName)</pre>
 </li>
 </ul>
-<a name="getPassWord--">
+<a id="getPassWord()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getPassWord</h4>
-<pre>public&nbsp;java.lang.String&nbsp;getPassWord()</pre>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getPassWord()</pre>
 </li>
 </ul>
-<a name="setPassWord-java.lang.String-">
+<a id="setPassWord(java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setPassWord</h4>
-<pre>public&nbsp;void&nbsp;setPassWord(java.lang.String&nbsp;passWord)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setPassWord&#8203;(java.lang.String&nbsp;passWord)</pre>
 </li>
 </ul>
-<a name="getAuthority--">
+<a id="getAuthority()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getAuthority</h4>
-<pre>public&nbsp;java.lang.String&nbsp;getAuthority()</pre>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getAuthority()</pre>
 </li>
 </ul>
-<a name="setAuthority-java.lang.String-">
+<a id="setAuthority(java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setAuthority</h4>
-<pre>public&nbsp;void&nbsp;setAuthority(java.lang.String&nbsp;authority)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setAuthority&#8203;(java.lang.String&nbsp;authority)</pre>
 </li>
 </ul>
-<a name="getRepositoryName--">
+<a id="getRepositoryName()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getRepositoryName</h4>
-<pre>public&nbsp;java.lang.String&nbsp;getRepositoryName()</pre>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getRepositoryName()</pre>
 </li>
 </ul>
-<a name="setRepositoryName-java.lang.String-">
+<a id="setRepositoryName(java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setRepositoryName</h4>
-<pre>public&nbsp;void&nbsp;setRepositoryName(java.lang.String&nbsp;repositoryName)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setRepositoryName&#8203;(java.lang.String&nbsp;repositoryName)</pre>
 </li>
 </ul>
-<a name="getResourcePath--">
+<a id="getResourcePath()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getResourcePath</h4>
-<pre>public&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IPath.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IPath</a>&nbsp;getResourcePath()</pre>
+<pre class="methodSignature">public&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IPath.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IPath</a>&nbsp;getResourcePath()</pre>
 </li>
 </ul>
-<a name="setResourcePath-org.eclipse.core.runtime.IPath-">
+<a id="setResourcePath(org.eclipse.core.runtime.IPath)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setResourcePath</h4>
-<pre>public&nbsp;void&nbsp;setResourcePath(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IPath.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IPath</a>&nbsp;resourcePath)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setResourcePath&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IPath.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IPath</a>&nbsp;resourcePath)</pre>
 </li>
 </ul>
-<a name="getBranchPath--">
+<a id="getBranchPath()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getBranchPath</h4>
-<pre>public&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IPath.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IPath</a>&nbsp;getBranchPath()</pre>
+<pre class="methodSignature">public&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IPath.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IPath</a>&nbsp;getBranchPath()</pre>
 </li>
 </ul>
-<a name="setBranchPath-org.eclipse.core.runtime.IPath-">
+<a id="setBranchPath(org.eclipse.core.runtime.IPath)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setBranchPath</h4>
-<pre>public&nbsp;void&nbsp;setBranchPath(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IPath.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IPath</a>&nbsp;branchPath)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setBranchPath&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IPath.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IPath</a>&nbsp;branchPath)</pre>
 </li>
 </ul>
-<a name="getTimeStamp--">
+<a id="getTimeStamp()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getTimeStamp</h4>
-<pre>public&nbsp;long&nbsp;getTimeStamp()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;getTimeStamp()</pre>
 </li>
 </ul>
-<a name="setTimeStamp-long-">
+<a id="setTimeStamp(long)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setTimeStamp</h4>
-<pre>public&nbsp;void&nbsp;setTimeStamp(long&nbsp;timeStamp)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setTimeStamp&#8203;(long&nbsp;timeStamp)</pre>
 </li>
 </ul>
-<a name="getViewID--">
+<a id="getViewID()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getViewID</h4>
-<pre>public&nbsp;java.lang.String&nbsp;getViewID()</pre>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getViewID()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.1</dd>
 </dl>
 </li>
 </ul>
-<a name="setViewID-java.lang.String-">
+<a id="setViewID(java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setViewID</h4>
-<pre>public&nbsp;void&nbsp;setViewID(java.lang.String&nbsp;viewID)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setViewID&#8203;(java.lang.String&nbsp;viewID)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.1</dd>
 </dl>
 </li>
 </ul>
-<a name="isTransactional--">
+<a id="isTransactional()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>isTransactional</h4>
-<pre>public&nbsp;boolean&nbsp;isTransactional()</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;isTransactional()</pre>
 </li>
 </ul>
-<a name="setTransactional-boolean-">
+<a id="setTransactional(boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setTransactional</h4>
-<pre>public&nbsp;void&nbsp;setTransactional(boolean&nbsp;transactional)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setTransactional&#8203;(boolean&nbsp;transactional)</pre>
 </li>
 </ul>
-<a name="getExtraParameters--">
+<a id="getExtraParameters()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getExtraParameters</h4>
-<pre>public&nbsp;java.util.Map&lt;java.lang.String,java.lang.String&gt;&nbsp;getExtraParameters()</pre>
+<pre class="methodSignature">public&nbsp;java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;getExtraParameters()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.1</dd>
 </dl>
 </li>
 </ul>
-<a name="setExtraParameters-java.util.Map-">
+<a id="setExtraParameters(java.util.Map)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setExtraParameters</h4>
-<pre>public&nbsp;void&nbsp;setExtraParameters(java.util.Map&lt;java.lang.String,java.lang.String&gt;&nbsp;extraParameters)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setExtraParameters&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;extraParameters)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.4</dd>
 </dl>
 </li>
 </ul>
-<a name="toURI--">
+<a id="toURI()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>toURI</h4>
-<pre>public&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;toURI()</pre>
+<pre class="methodSignature">public&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">URI</a>&nbsp;toURI()</pre>
 </li>
 </ul>
-<a name="toString--">
+<a id="toString()">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>toString</h4>
-<pre>public&nbsp;java.lang.String&nbsp;toString()</pre>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;toString()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>toString</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
@@ -687,21 +756,25 @@ extends java.lang.Object</pre>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/CDOURIData.html">Use</a></li>
@@ -711,16 +784,8 @@ extends java.lang.Object</pre>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html" title="interface in org.eclipse.emf.cdo.util"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIUtil.html" title="class in org.eclipse.emf.cdo.util"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/emf/cdo/util/CDOURIData.html" target="_top">Frames</a></li>
-<li><a href="CDOURIData.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -733,6 +798,9 @@ extends java.lang.Object</pre>
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -749,10 +817,12 @@ extends java.lang.Object</pre>
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

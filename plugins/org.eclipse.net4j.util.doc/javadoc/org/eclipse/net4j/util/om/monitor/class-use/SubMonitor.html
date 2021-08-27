@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>Uses of Class org.eclipse.net4j.util.om.monitor.SubMonitor (Net4j Utilities Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,39 +28,43 @@
     catch(err) {
     }
 //-->
-</script>
+var pathtoroot = "../../../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../../index.html">Overview</a></li>
 <li><a href="../package-summary.html">Package</a></li>
-<li><a href="../../../../../../../org/eclipse/net4j/util/om/monitor/SubMonitor.html" title="class in org.eclipse.net4j.util.om.monitor">Class</a></li>
+<li><a href="../SubMonitor.html" title="class in org.eclipse.net4j.util.om.monitor">Class</a></li>
 <li class="navBarCell1Rev">Use</li>
+<li><a href="../package-tree.html">Tree</a></li>
 <li><a href="../../../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../../../help-doc.html">Help</a></li>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev</li>
-<li>Next</li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../../index.html?org/eclipse/net4j/util/om/monitor/class-use/SubMonitor.html" target="_top">Frames</a></li>
-<li><a href="SubMonitor.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -63,26 +77,38 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
+<main role="main">
 <div class="header">
 <h2 title="Uses of Class org.eclipse.net4j.util.om.monitor.SubMonitor" class="title">Uses of Class<br>org.eclipse.net4j.util.om.monitor.SubMonitor</h2>
 </div>
 <div class="classUseContainer">
 <ul class="blockList">
 <li class="blockList">
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing packages, and an explanation">
-<caption><span>Packages that use <a href="../../../../../../../org/eclipse/net4j/util/om/monitor/SubMonitor.html" title="class in org.eclipse.net4j.util.om.monitor">SubMonitor</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Packages that use <a href="../SubMonitor.html" title="class in org.eclipse.net4j.util.om.monitor">SubMonitor</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Package</th>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.util.om.monitor">org.eclipse.net4j.util.om.monitor</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.util.om.monitor">org.eclipse.net4j.util.om.monitor</a></th>
 <td class="colLast">
 <div class="block">Interfaces and classes for platform-independent progress monitoring.</div>
 </td>
@@ -92,152 +118,165 @@
 </li>
 <li class="blockList">
 <ul class="blockList">
-<li class="blockList"><a name="org.eclipse.net4j.util.om.monitor">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.net4j.util.om.monitor">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../../org/eclipse/net4j/util/om/monitor/SubMonitor.html" title="class in org.eclipse.net4j.util.om.monitor">SubMonitor</a> in <a href="../../../../../../../org/eclipse/net4j/util/om/monitor/package-summary.html">org.eclipse.net4j.util.om.monitor</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing subclasses, and an explanation">
-<caption><span>Subclasses of <a href="../../../../../../../org/eclipse/net4j/util/om/monitor/SubMonitor.html" title="class in org.eclipse.net4j.util.om.monitor">SubMonitor</a> in <a href="../../../../../../../org/eclipse/net4j/util/om/monitor/package-summary.html">org.eclipse.net4j.util.om.monitor</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../SubMonitor.html" title="class in org.eclipse.net4j.util.om.monitor">SubMonitor</a> in <a href="../package-summary.html">org.eclipse.net4j.util.om.monitor</a></h3>
+<table class="useSummary">
+<caption><span>Subclasses of <a href="../SubMonitor.html" title="class in org.eclipse.net4j.util.om.monitor">SubMonitor</a> in <a href="../package-summary.html">org.eclipse.net4j.util.om.monitor</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Class and Description</th>
+<th class="colSecond" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/util/om/monitor/ProbingSubMonitor.html" title="class in org.eclipse.net4j.util.om.monitor">ProbingSubMonitor</a></span></code>
-<div class="block">An instrumented <a href="../../../../../../../org/eclipse/net4j/util/om/monitor/SubMonitor.html" title="class in org.eclipse.net4j.util.om.monitor"><code>sub monitor</code></a> that automatically collects and reports usage statistics.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../ProbingSubMonitor.html" title="class in org.eclipse.net4j.util.om.monitor">ProbingSubMonitor</a></span></code></th>
+<td class="colLast">
+<div class="block">An instrumented <a href="../SubMonitor.html" title="class in org.eclipse.net4j.util.om.monitor"><code>sub monitor</code></a> that automatically collects and reports usage statistics.</div>
 </td>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../../org/eclipse/net4j/util/om/monitor/package-summary.html">org.eclipse.net4j.util.om.monitor</a> that return <a href="../../../../../../../org/eclipse/net4j/util/om/monitor/SubMonitor.html" title="class in org.eclipse.net4j.util.om.monitor">SubMonitor</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Methods in <a href="../package-summary.html">org.eclipse.net4j.util.om.monitor</a> that return <a href="../SubMonitor.html" title="class in org.eclipse.net4j.util.om.monitor">SubMonitor</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code>static <a href="../../../../../../../org/eclipse/net4j/util/om/monitor/SubMonitor.html" title="class in org.eclipse.net4j.util.om.monitor">SubMonitor</a></code></td>
-<td class="colLast"><span class="typeNameLabel">SubMonitor.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/util/om/monitor/SubMonitor.html#convert-org.eclipse.core.runtime.IProgressMonitor-">convert</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</a>&nbsp;monitor)</code>
+<td class="colFirst"><code>static <a href="../SubMonitor.html" title="class in org.eclipse.net4j.util.om.monitor">SubMonitor</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">SubMonitor.</span><code><span class="memberNameLink"><a href="../SubMonitor.html#convert(org.eclipse.core.runtime.IProgressMonitor)">convert</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IProgressMonitor</a>&nbsp;monitor)</code></th>
+<td class="colLast">
 <div class="block">Converts an unknown (possibly null) IProgressMonitor into a SubMonitor.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>static <a href="../../../../../../../org/eclipse/net4j/util/om/monitor/SubMonitor.html" title="class in org.eclipse.net4j.util.om.monitor">SubMonitor</a></code></td>
-<td class="colLast"><span class="typeNameLabel">SubMonitor.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/util/om/monitor/SubMonitor.html#convert-org.eclipse.core.runtime.IProgressMonitor-int-">convert</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</a>&nbsp;monitor,
-       int&nbsp;work)</code>
+<td class="colFirst"><code>static <a href="../SubMonitor.html" title="class in org.eclipse.net4j.util.om.monitor">SubMonitor</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">SubMonitor.</span><code><span class="memberNameLink"><a href="../SubMonitor.html#convert(org.eclipse.core.runtime.IProgressMonitor,int)">convert</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IProgressMonitor</a>&nbsp;monitor,
+       int&nbsp;work)</code></th>
+<td class="colLast">
 <div class="block">Converts an unknown (possibly null) IProgressMonitor into a SubMonitor allocated
  with the given number of ticks.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>static <a href="../../../../../../../org/eclipse/net4j/util/om/monitor/SubMonitor.html" title="class in org.eclipse.net4j.util.om.monitor">SubMonitor</a></code></td>
-<td class="colLast"><span class="typeNameLabel">SubMonitor.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/util/om/monitor/SubMonitor.html#convert-org.eclipse.core.runtime.IProgressMonitor-int-org.eclipse.net4j.util.om.monitor.SubMonitor.ProbingMode-">convert</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</a>&nbsp;monitor,
+<td class="colFirst"><code>static <a href="../SubMonitor.html" title="class in org.eclipse.net4j.util.om.monitor">SubMonitor</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">SubMonitor.</span><code><span class="memberNameLink"><a href="../SubMonitor.html#convert(org.eclipse.core.runtime.IProgressMonitor,int,org.eclipse.net4j.util.om.monitor.SubMonitor.ProbingMode)">convert</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IProgressMonitor</a>&nbsp;monitor,
        int&nbsp;work,
-       <a href="../../../../../../../org/eclipse/net4j/util/om/monitor/SubMonitor.ProbingMode.html" title="enum in org.eclipse.net4j.util.om.monitor">SubMonitor.ProbingMode</a>&nbsp;probingMode)</code>
+       <a href="../SubMonitor.ProbingMode.html" title="enum in org.eclipse.net4j.util.om.monitor">SubMonitor.ProbingMode</a>&nbsp;probingMode)</code></th>
+<td class="colLast">
 <div class="block">Converts an unknown (possibly null) IProgressMonitor into a SubMonitor allocated
  with the given number of ticks.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>static <a href="../../../../../../../org/eclipse/net4j/util/om/monitor/SubMonitor.html" title="class in org.eclipse.net4j.util.om.monitor">SubMonitor</a></code></td>
-<td class="colLast"><span class="typeNameLabel">SubMonitor.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/util/om/monitor/SubMonitor.html#convert-org.eclipse.core.runtime.IProgressMonitor-java.lang.String-int-">convert</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</a>&nbsp;monitor,
+<td class="colFirst"><code>static <a href="../SubMonitor.html" title="class in org.eclipse.net4j.util.om.monitor">SubMonitor</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">SubMonitor.</span><code><span class="memberNameLink"><a href="../SubMonitor.html#convert(org.eclipse.core.runtime.IProgressMonitor,java.lang.String,int)">convert</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IProgressMonitor</a>&nbsp;monitor,
        java.lang.String&nbsp;taskName,
-       int&nbsp;work)</code>
+       int&nbsp;work)</code></th>
+<td class="colLast">
 <div class="block">Converts an unknown (possibly null) IProgressMonitor into a SubMonitor allocated
  with the given number of ticks.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>static <a href="../../../../../../../org/eclipse/net4j/util/om/monitor/SubMonitor.html" title="class in org.eclipse.net4j.util.om.monitor">SubMonitor</a></code></td>
-<td class="colLast"><span class="typeNameLabel">SubMonitor.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/util/om/monitor/SubMonitor.html#convert-org.eclipse.core.runtime.IProgressMonitor-java.lang.String-int-org.eclipse.net4j.util.om.monitor.SubMonitor.ProbingMode-">convert</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</a>&nbsp;monitor,
+<td class="colFirst"><code>static <a href="../SubMonitor.html" title="class in org.eclipse.net4j.util.om.monitor">SubMonitor</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">SubMonitor.</span><code><span class="memberNameLink"><a href="../SubMonitor.html#convert(org.eclipse.core.runtime.IProgressMonitor,java.lang.String,int,org.eclipse.net4j.util.om.monitor.SubMonitor.ProbingMode)">convert</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IProgressMonitor</a>&nbsp;monitor,
        java.lang.String&nbsp;taskName,
        int&nbsp;work,
-       <a href="../../../../../../../org/eclipse/net4j/util/om/monitor/SubMonitor.ProbingMode.html" title="enum in org.eclipse.net4j.util.om.monitor">SubMonitor.ProbingMode</a>&nbsp;probingMode)</code>
+       <a href="../SubMonitor.ProbingMode.html" title="enum in org.eclipse.net4j.util.om.monitor">SubMonitor.ProbingMode</a>&nbsp;probingMode)</code></th>
+<td class="colLast">
 <div class="block">Converts an unknown (possibly null) IProgressMonitor into a SubMonitor allocated
  with the given number of ticks.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>static <a href="../../../../../../../org/eclipse/net4j/util/om/monitor/SubMonitor.html" title="class in org.eclipse.net4j.util.om.monitor">SubMonitor</a></code></td>
-<td class="colLast"><span class="typeNameLabel">SubMonitor.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/util/om/monitor/SubMonitor.html#convert-org.eclipse.core.runtime.IProgressMonitor-org.eclipse.net4j.util.om.monitor.SubMonitor.ProbingMode-">convert</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</a>&nbsp;monitor,
-       <a href="../../../../../../../org/eclipse/net4j/util/om/monitor/SubMonitor.ProbingMode.html" title="enum in org.eclipse.net4j.util.om.monitor">SubMonitor.ProbingMode</a>&nbsp;probingMode)</code>
+<td class="colFirst"><code>static <a href="../SubMonitor.html" title="class in org.eclipse.net4j.util.om.monitor">SubMonitor</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">SubMonitor.</span><code><span class="memberNameLink"><a href="../SubMonitor.html#convert(org.eclipse.core.runtime.IProgressMonitor,org.eclipse.net4j.util.om.monitor.SubMonitor.ProbingMode)">convert</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IProgressMonitor</a>&nbsp;monitor,
+       <a href="../SubMonitor.ProbingMode.html" title="enum in org.eclipse.net4j.util.om.monitor">SubMonitor.ProbingMode</a>&nbsp;probingMode)</code></th>
+<td class="colLast">
 <div class="block">Converts an unknown (possibly null) IProgressMonitor into a SubMonitor.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/net4j/util/om/monitor/SubMonitor.html" title="class in org.eclipse.net4j.util.om.monitor">SubMonitor</a></code></td>
-<td class="colLast"><span class="typeNameLabel">SubMonitor.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/util/om/monitor/SubMonitor.html#detectCancelation--">detectCancelation</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../SubMonitor.html" title="class in org.eclipse.net4j.util.om.monitor">SubMonitor</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">SubMonitor.</span><code><span class="memberNameLink"><a href="../SubMonitor.html#detectCancelation()">detectCancelation</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/net4j/util/om/monitor/SubMonitor.html" title="class in org.eclipse.net4j.util.om.monitor">SubMonitor</a></code></td>
-<td class="colLast"><span class="typeNameLabel">SubMonitor.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/util/om/monitor/SubMonitor.html#detectCancelation-boolean-">detectCancelation</a></span>(boolean&nbsp;on)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../SubMonitor.html" title="class in org.eclipse.net4j.util.om.monitor">SubMonitor</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">SubMonitor.</span><code><span class="memberNameLink"><a href="../SubMonitor.html#detectCancelation(boolean)">detectCancelation</a></span>&#8203;(boolean&nbsp;on)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/net4j/util/om/monitor/SubMonitor.html" title="class in org.eclipse.net4j.util.om.monitor">SubMonitor</a></code></td>
-<td class="colLast"><span class="typeNameLabel">SubMonitor.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/util/om/monitor/SubMonitor.html#newChild--">newChild</a></span>()</code>
-<div class="block">Same as <a href="../../../../../../../org/eclipse/net4j/util/om/monitor/SubMonitor.html#newChild-int-"><code>newChild(1)</code></a>.</div>
+<td class="colFirst"><code><a href="../SubMonitor.html" title="class in org.eclipse.net4j.util.om.monitor">SubMonitor</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">SubMonitor.</span><code><span class="memberNameLink"><a href="../SubMonitor.html#newChild()">newChild</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Same as <a href="../SubMonitor.html#newChild(int)"><code>newChild(1)</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/net4j/util/om/monitor/SubMonitor.html" title="class in org.eclipse.net4j.util.om.monitor">SubMonitor</a></code></td>
-<td class="colLast"><span class="typeNameLabel">SubMonitor.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/util/om/monitor/SubMonitor.html#newChild-int-">newChild</a></span>(int&nbsp;totalWork)</code>
+<td class="colFirst"><code><a href="../SubMonitor.html" title="class in org.eclipse.net4j.util.om.monitor">SubMonitor</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">SubMonitor.</span><code><span class="memberNameLink"><a href="../SubMonitor.html#newChild(int)">newChild</a></span>&#8203;(int&nbsp;totalWork)</code></th>
+<td class="colLast">
 <div class="block">Creates a sub progress monitor that will consume the given number of ticks from the
  receiver.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/net4j/util/om/monitor/SubMonitor.html" title="class in org.eclipse.net4j.util.om.monitor">SubMonitor</a></code></td>
-<td class="colLast"><span class="typeNameLabel">SubMonitor.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/util/om/monitor/SubMonitor.html#newChild-int-int-">newChild</a></span>(int&nbsp;totalWork,
-        int&nbsp;suppressFlags)</code>
+<td class="colFirst"><code><a href="../SubMonitor.html" title="class in org.eclipse.net4j.util.om.monitor">SubMonitor</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">SubMonitor.</span><code><span class="memberNameLink"><a href="../SubMonitor.html#newChild(int,int)">newChild</a></span>&#8203;(int&nbsp;totalWork,
+        int&nbsp;suppressFlags)</code></th>
+<td class="colLast">
 <div class="block">Creates a sub progress monitor that will consume the given number of ticks from the
  receiver.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/net4j/util/om/monitor/SubMonitor.html" title="class in org.eclipse.net4j.util.om.monitor">SubMonitor</a></code></td>
-<td class="colLast"><span class="typeNameLabel">SubMonitor.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/util/om/monitor/SubMonitor.html#setWorkRemaining-int-">setWorkRemaining</a></span>(int&nbsp;workRemaining)</code>
+<td class="colFirst"><code><a href="../SubMonitor.html" title="class in org.eclipse.net4j.util.om.monitor">SubMonitor</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">SubMonitor.</span><code><span class="memberNameLink"><a href="../SubMonitor.html#setWorkRemaining(int)">setWorkRemaining</a></span>&#8203;(int&nbsp;workRemaining)</code></th>
+<td class="colLast">
 <div class="block">Sets the work remaining for this SubMonitor instance.</div>
 </td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
 </ul>
 </li>
 </ul>
 </div>
+</main>
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../../index.html">Overview</a></li>
 <li><a href="../package-summary.html">Package</a></li>
-<li><a href="../../../../../../../org/eclipse/net4j/util/om/monitor/SubMonitor.html" title="class in org.eclipse.net4j.util.om.monitor">Class</a></li>
+<li><a href="../SubMonitor.html" title="class in org.eclipse.net4j.util.om.monitor">Class</a></li>
 <li class="navBarCell1Rev">Use</li>
+<li><a href="../package-tree.html">Tree</a></li>
 <li><a href="../../../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../../../help-doc.html">Help</a></li>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev</li>
-<li>Next</li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../../index.html?org/eclipse/net4j/util/om/monitor/class-use/SubMonitor.html" target="_top">Frames</a></li>
-<li><a href="SubMonitor.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -250,11 +289,16 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>org.eclipse.emf.cdo.compare (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,20 +28,25 @@
     catch(err) {
     }
 //-->
-</script>
+var pathtoroot = "../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li class="navBarCell1Rev">Package</li>
 <li>Class</li>
 <li><a href="package-use.html">Use</a></li>
@@ -41,16 +56,14 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/emf/cdo/common/util/package-summary.html">Prev&nbsp;Package</a></li>
-<li><a href="../../../../../org/eclipse/emf/cdo/edit/package-summary.html">Next&nbsp;Package</a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/emf/cdo/compare/package-summary.html" target="_top">Frames</a></li>
-<li><a href="package-summary.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -63,22 +76,35 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
+<main role="main">
 <div class="header">
 <h1 title="Package" class="title">Package&nbsp;org.eclipse.emf.cdo.compare</h1>
-<div class="docSummary">
-<div class="block">Client concepts for integrating EMF Compare with CDO.</div>
-</div>
-<p>See:&nbsp;<a href="#package.description">Description</a></p>
 </div>
 <div class="contentContainer">
+<section role="region"><a id="package.description">
+<!--   -->
+</a>
+<div class="block">Client concepts for integrating EMF Compare with CDO.</div>
+</section>
 <ul class="blockList">
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<table class="typeSummary">
 <caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Class</th>
@@ -86,81 +112,87 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/compare/CDOCompare.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare</a></td>
+<th class="colFirst" scope="row"><a href="CDOCompare.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare</a></th>
 <td class="colLast">
 <div class="block">A class with many overridable factory methods that help to create EMF <code>comparisons</code>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/compare/CDOCompare.CDOIDFunction.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare.CDOIDFunction</a></td>
+<th class="colFirst" scope="row"><a href="CDOCompare.CDODiffEngine.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare.CDODiffEngine</a></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="CDOCompare.CDOFeatureFilter.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare.CDOFeatureFilter</a></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><a href="CDOCompare.CDOIDFunction.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare.CDOIDFunction</a></th>
 <td class="colLast">
-<div class="block">An <a href="../../../../../org/eclipse/emf/cdo/compare/CDOCompare.CDOIDFunction.html" title="class in org.eclipse.emf.cdo.compare"><code>ID function</code></a> that considers the <a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>CDOID</code></a>s of <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a>.</div>
+<div class="block">An <a href="CDOCompare.CDOIDFunction.html" title="class in org.eclipse.emf.cdo.compare"><code>ID function</code></a> that considers the <a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>CDOID</code></a>s of <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/compare/CDOCompare.CDOMatchEngine.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare.CDOMatchEngine</a></td>
+<th class="colFirst" scope="row"><a href="CDOCompare.CDOMatchEngine.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare.CDOMatchEngine</a></th>
 <td class="colLast">
-<div class="block">A <code>match engine</code> that treats <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>resources</code></a> as <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>EObjects</code></a>.</div>
+<div class="block">A <code>match engine</code> that treats <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource" class="externalLink"><code>resources</code></a> as <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>EObjects</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/compare/CDOCompare.CDOMatchEngine.Factory.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare.CDOMatchEngine.Factory</a></td>
+<th class="colFirst" scope="row"><a href="CDOCompare.CDOMatchEngine.Factory.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare.CDOMatchEngine.Factory</a></th>
 <td class="colLast">
-<div class="block">Creates <a href="../../../../../org/eclipse/emf/cdo/compare/CDOCompare.CDOMatchEngine.html" title="class in org.eclipse.emf.cdo.compare"><code>match engine</code></a> instances.</div>
+<div class="block">Creates <a href="CDOCompare.CDOMatchEngine.html" title="class in org.eclipse.emf.cdo.compare"><code>match engine</code></a> instances.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/compare/CDOCompare.CDOMatcher.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare.CDOMatcher</a></td>
+<th class="colFirst" scope="row"><a href="CDOCompare.CDOMatcher.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare.CDOMatcher</a></th>
 <td class="colLast">
-<div class="block">A <code>matcher</code> that treats <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>resources</code></a> as <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>EObjects</code></a>.</div>
+<div class="block">A <code>matcher</code> that treats <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource" class="externalLink"><code>resources</code></a> as <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>EObjects</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/compare/CDOCompareUtil.html" title="class in org.eclipse.emf.cdo.compare">CDOCompareUtil</a></td>
+<th class="colFirst" scope="row"><a href="CDOCompareUtil.html" title="class in org.eclipse.emf.cdo.compare">CDOCompareUtil</a></th>
 <td class="colLast">
 <div class="block">Provides static factory methods that return CDO-scoped <code>comparisons</code>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/compare/CDOComparisonScope.html" title="class in org.eclipse.emf.cdo.compare">CDOComparisonScope</a></td>
+<th class="colFirst" scope="row"><a href="CDOComparisonScope.html" title="class in org.eclipse.emf.cdo.compare">CDOComparisonScope</a></th>
 <td class="colLast">
 <div class="block">A CDO-specific base implementation of a <code>comparison scope</code>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/compare/CDOComparisonScope.AllContents.html" title="class in org.eclipse.emf.cdo.compare">CDOComparisonScope.AllContents</a></td>
+<th class="colFirst" scope="row"><a href="CDOComparisonScope.AllContents.html" title="class in org.eclipse.emf.cdo.compare">CDOComparisonScope.AllContents</a></th>
 <td class="colLast">
-<div class="block">Takes an arbitrary <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>object</code></a> (including <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resource nodes</code></a>)
- and returns <code>matches</code> for <b>all</b> elements of its <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eAllContents--" title="class or interface in org.eclipse.emf.ecore"><code>content tree</code></a>.</div>
+<div class="block">Takes an arbitrary <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>object</code></a> (including <a href="../eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resource nodes</code></a>)
+ and returns <code>matches</code> for <b>all</b> elements of its <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eAllContents()" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>content tree</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/compare/CDOComparisonScope.Minimal.html" title="class in org.eclipse.emf.cdo.compare">CDOComparisonScope.Minimal</a></td>
+<th class="colFirst" scope="row"><a href="CDOComparisonScope.Minimal.html" title="class in org.eclipse.emf.cdo.compare">CDOComparisonScope.Minimal</a></th>
 <td class="colLast">
-<div class="block">Takes a <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a>/<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a>
- and returns <code>matches</code> only for the <b>changed</b> elements of the entire content tree of its <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getRootResource--"><code>root resource</code></a>.</div>
+<div class="block">Takes a <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a>/<a href="../transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a>
+ and returns <code>matches</code> only for the <b>changed</b> elements of the entire content tree of its <a href="../view/CDOView.html#getRootResource()"><code>root resource</code></a>.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
 </ul>
-<a name="package.description">
-<!--   -->
-</a>
-<h2 title="Package org.eclipse.emf.cdo.compare Description">Package org.eclipse.emf.cdo.compare Description</h2>
-<div class="block">Client concepts for integrating EMF Compare with CDO.</div>
 </div>
+</main>
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li class="navBarCell1Rev">Package</li>
 <li>Class</li>
 <li><a href="package-use.html">Use</a></li>
@@ -170,16 +202,8 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/emf/cdo/common/util/package-summary.html">Prev&nbsp;Package</a></li>
-<li><a href="../../../../../org/eclipse/emf/cdo/edit/package-summary.html">Next&nbsp;Package</a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/emf/cdo/compare/package-summary.html" target="_top">Frames</a></li>
-<li><a href="package-summary.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -192,11 +216,16 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>DBAdapter (Net4j DB Framework Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":42,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":9,"i34":10,"i35":10,"i36":42,"i37":10,"i38":10,"i39":10,"i40":10,"i41":10,"i42":10,"i43":10,"i44":10,"i45":10,"i46":10,"i47":10,"i48":10,"i49":10,"i50":10,"i51":10,"i52":10,"i53":10,"i54":10,"i55":10,"i56":10,"i57":10,"i58":10,"i59":10,"i60":10,"i61":10,"i62":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":42,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":9,"i35":9,"i36":10,"i37":10,"i38":42,"i39":10,"i40":10,"i41":10,"i42":10,"i43":10,"i44":10,"i45":10,"i46":10,"i47":10,"i48":10,"i49":10,"i50":10,"i51":10,"i52":10,"i53":10,"i54":10,"i55":10,"i56":10,"i57":10,"i58":10,"i59":10,"i60":10,"i61":10,"i62":10,"i63":10,"i64":10,"i65":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/DBAdapter.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev&nbsp;Class</li>
-<li><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.FieldInfo.html" title="class in org.eclipse.net4j.spi.db"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/net4j/spi/db/DBAdapter.html" target="_top">Frames</a></li>
-<li><a href="DBAdapter.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,12 +82,15 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
@@ -85,13 +101,22 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.net4j.spi.db</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.net4j.spi.db</a></div>
 <h2 title="Class DBAdapter" class="title">Class DBAdapter</h2>
 </div>
 <div class="contentContainer">
@@ -108,18 +133,17 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></dd>
+<dd><code><a href="../../db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
 </dl>
 <dl>
 <dt>Direct Known Subclasses:</dt>
-<dd><a href="../../../../../org/eclipse/net4j/db/derby/DerbyAdapter.html" title="class in org.eclipse.net4j.db.derby">DerbyAdapter</a>, <a href="../../../../../org/eclipse/net4j/db/h2/H2Adapter.html" title="class in org.eclipse.net4j.db.h2">H2Adapter</a>, <a href="../../../../../org/eclipse/net4j/db/hsqldb/HSQLDBAdapter.html" title="class in org.eclipse.net4j.db.hsqldb">HSQLDBAdapter</a>, <a href="../../../../../org/eclipse/net4j/db/mysql/MYSQLAdapter.html" title="class in org.eclipse.net4j.db.mysql">MYSQLAdapter</a>, <a href="../../../../../org/eclipse/net4j/db/postgresql/PostgreSQLAdapter.html" title="class in org.eclipse.net4j.db.postgresql">PostgreSQLAdapter</a></dd>
+<dd><code><a href="../../db/derby/DerbyAdapter.html" title="class in org.eclipse.net4j.db.derby">DerbyAdapter</a></code>, <code><a href="../../db/h2/H2Adapter.html" title="class in org.eclipse.net4j.db.h2">H2Adapter</a></code>, <code><a href="../../db/hsqldb/HSQLDBAdapter.html" title="class in org.eclipse.net4j.db.hsqldb">HSQLDBAdapter</a></code>, <code><a href="../../db/mysql/MYSQLAdapter.html" title="class in org.eclipse.net4j.db.mysql">MYSQLAdapter</a></code>, <code><a href="../../db/postgresql/PostgreSQLAdapter.html" title="class in org.eclipse.net4j.db.postgresql">PostgreSQLAdapter</a></code></dd>
 </dl>
 <hr>
-<br>
 <pre>public abstract class <span class="typeNameLabel">DBAdapter</span>
 extends java.lang.Object
-implements <a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></pre>
-<div class="block">A useful base class for implementing custom <a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db"><code>DB adapters</code></a>.</div>
+implements <a href="../../db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></pre>
+<div class="block">A useful base class for implementing custom <a href="../../db/IDBAdapter.html" title="interface in org.eclipse.net4j.db"><code>DB adapters</code></a>.</div>
 <dl>
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>Eike Stepper</dd>
@@ -131,418 +155,511 @@ implements <a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="nested.class.summary">
+<li class="blockList"><a id="nested.class.summary">
 <!--   -->
 </a>
 <h3>Nested Class Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Nested Class Summary table, listing nested classes, and an explanation">
+<table class="memberSummary">
 <caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Class and Description</th>
+<th class="colSecond" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected static class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.FieldInfo.html" title="class in org.eclipse.net4j.spi.db">DBAdapter.FieldInfo</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="DBAdapter.FieldInfo.html" title="class in org.eclipse.net4j.spi.db">DBAdapter.FieldInfo</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- =========== FIELD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.summary">
+<li class="blockList"><a id="field.summary">
 <!--   -->
 </a>
 <h3>Field Summary</h3>
 <ul class="blockList">
-<li class="blockList"><a name="fields.inherited.from.class.org.eclipse.net4j.db.IDBAdapter">
+<li class="blockList"><a id="fields.inherited.from.class.org.eclipse.net4j.db.IDBAdapter">
 <!--   -->
 </a>
-<h3>Fields inherited from interface&nbsp;org.eclipse.net4j.db.<a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></h3>
-<code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#REGISTRY">REGISTRY</a></code></li>
+<h3>Fields inherited from interface&nbsp;org.eclipse.net4j.db.<a href="../../db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></h3>
+<code><a href="../../db/IDBAdapter.html#REGISTRY">REGISTRY</a></code></li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.summary">
+<li class="blockList"><a id="constructor.summary">
 <!--   -->
 </a>
 <h3>Constructor Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
+<table class="memberSummary">
 <caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Constructor and Description</th>
+<th class="colFirst" scope="col">Constructor</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#DBAdapter-java.lang.String-java.lang.String-">DBAdapter</a></span>(java.lang.String&nbsp;name,
-         java.lang.String&nbsp;version)</code>&nbsp;</td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String,java.lang.String)">DBAdapter</a></span>&#8203;(java.lang.String&nbsp;name,
+         java.lang.String&nbsp;version)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t6" class="tableTab"><span><a href="javascript:show(32);">Deprecated Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/db/DBType.html" title="enum in org.eclipse.net4j.db">DBType</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#adaptType-org.eclipse.net4j.db.DBType-">adaptType</a></span>(<a href="../../../../../org/eclipse/net4j/db/DBType.html" title="enum in org.eclipse.net4j.db">DBType</a>&nbsp;type)</code>
+<td class="colFirst"><code><a href="../../db/DBType.html" title="enum in org.eclipse.net4j.db">DBType</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#adaptType(org.eclipse.net4j.db.DBType)">adaptType</a></span>&#8203;(<a href="../../db/DBType.html" title="enum in org.eclipse.net4j.db">DBType</a>&nbsp;type)</code></th>
+<td class="colLast">
 <div class="block">Provide a way for the DBAdapter to override unsupported DB types with replacements.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#addIndex-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBTable-java.lang.String-org.eclipse.net4j.db.ddl.IDBIndex.Type-java.util.List-">addIndex</a></span>(java.sql.Connection&nbsp;connection,
-        <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addIndex(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable,java.lang.String,org.eclipse.net4j.db.ddl.IDBIndex.Type,java.util.List)">addIndex</a></span>&#8203;(java.sql.Connection&nbsp;connection,
+        <a href="../../db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
         java.lang.String&nbsp;name,
-        <a href="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.Type.html" title="enum in org.eclipse.net4j.db.ddl">IDBIndex.Type</a>&nbsp;type,
-        java.util.List&lt;<a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.FieldInfo.html" title="class in org.eclipse.net4j.spi.db">DBAdapter.FieldInfo</a>&gt;&nbsp;fieldInfos)</code>&nbsp;</td>
+        <a href="../../db/ddl/IDBIndex.Type.html" title="enum in org.eclipse.net4j.db.ddl">IDBIndex.Type</a>&nbsp;type,
+        java.util.List&lt;<a href="DBAdapter.FieldInfo.html" title="class in org.eclipse.net4j.spi.db">DBAdapter.FieldInfo</a>&gt;&nbsp;fieldInfos)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#addIndexField-java.lang.StringBuilder-org.eclipse.net4j.db.ddl.IDBField-">addIndexField</a></span>(java.lang.StringBuilder&nbsp;builder,
-             <a href="../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addIndexField(java.lang.StringBuilder,org.eclipse.net4j.db.ddl.IDBField)">addIndexField</a></span>&#8203;(java.lang.StringBuilder&nbsp;builder,
+             <a href="../../db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#alterTable-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBTable-org.eclipse.net4j.db.ddl.delta.IDBTableDelta-">alterTable</a></span>(java.sql.Connection&nbsp;connection,
-          <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
-          <a href="../../../../../org/eclipse/net4j/db/ddl/delta/IDBTableDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBTableDelta</a>&nbsp;delta)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#alterTable(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable,org.eclipse.net4j.db.ddl.delta.IDBTableDelta)">alterTable</a></span>&#8203;(java.sql.Connection&nbsp;connection,
+          <a href="../../db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
+          <a href="../../db/ddl/delta/IDBTableDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBTableDelta</a>&nbsp;delta)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#appendFieldDefs-java.lang.Appendable-org.eclipse.net4j.db.ddl.IDBTable-java.lang.String:A-">appendFieldDefs</a></span>(java.lang.Appendable&nbsp;appendable,
-               <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
-               java.lang.String[]&nbsp;defs)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#appendFieldDefs(java.lang.Appendable,org.eclipse.net4j.db.ddl.IDBTable,java.lang.String%5B%5D)">appendFieldDefs</a></span>&#8203;(java.lang.Appendable&nbsp;appendable,
+               <a href="../../db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
+               java.lang.String[]&nbsp;defs)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#appendFieldNames-java.lang.Appendable-org.eclipse.net4j.db.ddl.IDBTable-">appendFieldNames</a></span>(java.lang.Appendable&nbsp;appendable,
-                <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#appendFieldNames(java.lang.Appendable,org.eclipse.net4j.db.ddl.IDBTable)">appendFieldNames</a></span>&#8203;(java.lang.Appendable&nbsp;appendable,
+                <a href="../../db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#convertString-java.sql.PreparedStatement-int-java.lang.String-">convertString</a></span>(java.sql.PreparedStatement&nbsp;preparedStatement,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#convertString(java.sql.PreparedStatement,int,java.lang.String)">convertString</a></span>&#8203;(java.sql.PreparedStatement&nbsp;preparedStatement,
              int&nbsp;parameterIndex,
-             java.lang.String&nbsp;value)</code>&nbsp;</td>
+             java.lang.String&nbsp;value)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#convertString-java.sql.ResultSet-int-java.lang.String-">convertString</a></span>(java.sql.ResultSet&nbsp;resultSet,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#convertString(java.sql.ResultSet,int,java.lang.String)">convertString</a></span>&#8203;(java.sql.ResultSet&nbsp;resultSet,
              int&nbsp;columnIndex,
-             java.lang.String&nbsp;value)</code>&nbsp;</td>
+             java.lang.String&nbsp;value)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#convertString-java.sql.ResultSet-java.lang.String-java.lang.String-">convertString</a></span>(java.sql.ResultSet&nbsp;resultSet,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#convertString(java.sql.ResultSet,java.lang.String,java.lang.String)">convertString</a></span>&#8203;(java.sql.ResultSet&nbsp;resultSet,
              java.lang.String&nbsp;columnLabel,
-             java.lang.String&nbsp;value)</code>&nbsp;</td>
+             java.lang.String&nbsp;value)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/db/IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createConnectionProvider-javax.sql.DataSource-">createConnectionProvider</a></span>(javax.sql.DataSource&nbsp;dataSource)</code>&nbsp;</td>
+<td class="colFirst"><code>java.lang.Object</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#convertToSQL(java.lang.Object)">convertToSQL</a></span>&#8203;(java.lang.Object&nbsp;value)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
-<td class="colFirst"><code>protected java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createConstraints-org.eclipse.net4j.db.ddl.IDBTable-">createConstraints</a></span>(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../../db/IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createConnectionProvider(javax.sql.DataSource)">createConnectionProvider</a></span>&#8203;(javax.sql.DataSource&nbsp;dataSource)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i11" class="rowColor">
-<td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createField-java.sql.Connection-java.lang.String-org.eclipse.net4j.db.ddl.IDBField-">createField</a></span>(java.sql.Connection&nbsp;connection,
-           java.lang.String&nbsp;tableName,
-           <a href="../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</code>&nbsp;</td>
+<td class="colFirst"><code>protected java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createConstraints(org.eclipse.net4j.db.ddl.IDBTable)">createConstraints</a></span>&#8203;(<a href="../../db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i12" class="altColor">
-<td class="colFirst"><code>protected java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createFieldDefinition-org.eclipse.net4j.db.ddl.IDBField-">createFieldDefinition</a></span>(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</code>&nbsp;</td>
+<td class="colFirst"><code>protected void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createField(java.sql.Connection,java.lang.String,org.eclipse.net4j.db.ddl.IDBField)">createField</a></span>&#8203;(java.sql.Connection&nbsp;connection,
+           java.lang.String&nbsp;tableName,
+           <a href="../../db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i13" class="rowColor">
-<td class="colFirst"><code>protected java.lang.String[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createFieldDefinitions-org.eclipse.net4j.db.ddl.IDBTable-">createFieldDefinitions</a></span>(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</code>&nbsp;</td>
+<td class="colFirst"><code>protected java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createFieldDefinition(org.eclipse.net4j.db.ddl.IDBField)">createFieldDefinition</a></span>&#8203;(<a href="../../db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i14" class="altColor">
-<td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createIndex-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBIndex-org.eclipse.net4j.db.ddl.delta.IDBIndexDelta-">createIndex</a></span>(java.sql.Connection&nbsp;connection,
-           <a href="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
-           <a href="../../../../../org/eclipse/net4j/db/ddl/delta/IDBIndexDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBIndexDelta</a>&nbsp;delta)</code>&nbsp;</td>
+<td class="colFirst"><code>protected java.lang.String[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createFieldDefinitions(org.eclipse.net4j.db.ddl.IDBTable)">createFieldDefinitions</a></span>&#8203;(<a href="../../db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i15" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createIndex-org.eclipse.net4j.db.ddl.IDBIndex-java.sql.Statement-int-">createIndex</a></span>(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
-           java.sql.Statement&nbsp;statement,
-           int&nbsp;num)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createIndex(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBIndex,org.eclipse.net4j.db.ddl.delta.IDBIndexDelta)">createIndex</a></span>&#8203;(java.sql.Connection&nbsp;connection,
+           <a href="../../db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
+           <a href="../../db/ddl/delta/IDBIndexDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBIndexDelta</a>&nbsp;delta)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i16" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createIndex-org.eclipse.net4j.db.ddl.IDBIndex-java.lang.StringBuilder-">createIndex</a></span>(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
-           java.lang.StringBuilder&nbsp;builder)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createIndex(org.eclipse.net4j.db.ddl.IDBIndex,java.lang.StringBuilder)">createIndex</a></span>&#8203;(<a href="../../db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
+           java.lang.StringBuilder&nbsp;builder)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i17" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createIndexFields-org.eclipse.net4j.db.ddl.IDBIndex-java.lang.StringBuilder-">createIndexFields</a></span>(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
-                 java.lang.StringBuilder&nbsp;builder)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createIndex(org.eclipse.net4j.db.ddl.IDBIndex,java.sql.Statement,int)">createIndex</a></span>&#8203;(<a href="../../db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
+           java.sql.Statement&nbsp;statement,
+           int&nbsp;num)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i18" class="altColor">
-<td class="colFirst"><code>javax.sql.DataSource</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createJDBCDataSource--">createJDBCDataSource</a></span>()</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">As of 4.2 no longer supported because of IP issues for external build dependencies (the vendor driver libs).</span></div>
-</div>
-</td>
+<td class="colFirst"><code>protected void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createIndexFields(org.eclipse.net4j.db.ddl.IDBIndex,java.lang.StringBuilder)">createIndexFields</a></span>&#8203;(<a href="../../db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
+                 java.lang.StringBuilder&nbsp;builder)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i19" class="rowColor">
-<td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createPrimaryKey-org.eclipse.net4j.db.ddl.IDBIndex-java.lang.StringBuilder-">createPrimaryKey</a></span>(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
-                java.lang.StringBuilder&nbsp;builder)</code>&nbsp;</td>
+<td class="colFirst"><code>javax.sql.DataSource</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createJDBCDataSource()">createJDBCDataSource</a></span>()</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.2 no longer supported because of IP issues for external build dependencies (the vendor driver libs).</div>
+</div>
+</td>
 </tr>
 <tr id="i20" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createTable-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBTable-org.eclipse.net4j.db.ddl.delta.IDBTableDelta-">createTable</a></span>(java.sql.Connection&nbsp;connection,
-           <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
-           <a href="../../../../../org/eclipse/net4j/db/ddl/delta/IDBTableDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBTableDelta</a>&nbsp;delta)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createPrimaryKey(org.eclipse.net4j.db.ddl.IDBIndex,java.lang.StringBuilder)">createPrimaryKey</a></span>&#8203;(<a href="../../db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
+                java.lang.StringBuilder&nbsp;builder)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i21" class="rowColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createTable-org.eclipse.net4j.db.ddl.IDBTable-java.sql.Statement-">createTable</a></span>(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
-           java.sql.Statement&nbsp;statement)</code>&nbsp;</td>
+<td class="colFirst"><code>protected void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createTable(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable,org.eclipse.net4j.db.ddl.delta.IDBTableDelta)">createTable</a></span>&#8203;(java.sql.Connection&nbsp;connection,
+           <a href="../../db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
+           <a href="../../db/ddl/delta/IDBTableDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBTableDelta</a>&nbsp;delta)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i22" class="altColor">
-<td class="colFirst"><code>java.util.Set&lt;<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createTables-java.lang.Iterable-java.sql.Connection-">createTables</a></span>(java.lang.Iterable&lt;? extends <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;&nbsp;tables,
-            java.sql.Connection&nbsp;connection)</code>&nbsp;</td>
+<td class="colFirst"><code>boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createTable(org.eclipse.net4j.db.ddl.IDBTable,java.sql.Statement)">createTable</a></span>&#8203;(<a href="../../db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
+           java.sql.Statement&nbsp;statement)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i23" class="rowColor">
-<td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#doCreateTable-org.eclipse.net4j.db.ddl.IDBTable-java.sql.Statement-">doCreateTable</a></span>(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
-             java.sql.Statement&nbsp;statement)</code>&nbsp;</td>
+<td class="colFirst"><code>java.util.Set&lt;<a href="../../db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createTables(java.lang.Iterable,java.sql.Connection)">createTables</a></span>&#8203;(java.lang.Iterable&lt;? extends <a href="../../db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;&nbsp;tables,
+            java.sql.Connection&nbsp;connection)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i24" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#dropField-java.sql.Connection-java.lang.String-java.lang.String-">dropField</a></span>(java.sql.Connection&nbsp;connection,
-         java.lang.String&nbsp;tableName,
-         java.lang.String&nbsp;fieldName)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#doCreateTable(org.eclipse.net4j.db.ddl.IDBTable,java.sql.Statement)">doCreateTable</a></span>&#8203;(<a href="../../db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
+             java.sql.Statement&nbsp;statement)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i25" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#dropIndex-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBIndex-org.eclipse.net4j.db.ddl.delta.IDBIndexDelta-">dropIndex</a></span>(java.sql.Connection&nbsp;connection,
-         <a href="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
-         <a href="../../../../../org/eclipse/net4j/db/ddl/delta/IDBIndexDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBIndexDelta</a>&nbsp;delta)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dropField(java.sql.Connection,java.lang.String,java.lang.String)">dropField</a></span>&#8203;(java.sql.Connection&nbsp;connection,
+         java.lang.String&nbsp;tableName,
+         java.lang.String&nbsp;fieldName)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i26" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#dropIndex-org.eclipse.net4j.db.ddl.IDBIndex-java.lang.StringBuilder-">dropIndex</a></span>(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
-         java.lang.StringBuilder&nbsp;builder)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dropIndex(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBIndex,org.eclipse.net4j.db.ddl.delta.IDBIndexDelta)">dropIndex</a></span>&#8203;(java.sql.Connection&nbsp;connection,
+         <a href="../../db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
+         <a href="../../db/ddl/delta/IDBIndexDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBIndexDelta</a>&nbsp;delta)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i27" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#dropPrimaryKey-org.eclipse.net4j.db.ddl.IDBIndex-java.lang.StringBuilder-">dropPrimaryKey</a></span>(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
-              java.lang.StringBuilder&nbsp;builder)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dropIndex(org.eclipse.net4j.db.ddl.IDBIndex,java.lang.StringBuilder)">dropIndex</a></span>&#8203;(<a href="../../db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
+         java.lang.StringBuilder&nbsp;builder)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i28" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#dropTable-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBTable-org.eclipse.net4j.db.ddl.delta.IDBTableDelta-">dropTable</a></span>(java.sql.Connection&nbsp;connection,
-         <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
-         <a href="../../../../../org/eclipse/net4j/db/ddl/delta/IDBTableDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBTableDelta</a>&nbsp;delta)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dropPrimaryKey(org.eclipse.net4j.db.ddl.IDBIndex,java.lang.StringBuilder)">dropPrimaryKey</a></span>&#8203;(<a href="../../db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
+              java.lang.StringBuilder&nbsp;builder)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i29" class="rowColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#dropTable-org.eclipse.net4j.db.ddl.IDBTable-java.sql.Statement-">dropTable</a></span>(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
-         java.sql.Statement&nbsp;statement)</code>&nbsp;</td>
+<td class="colFirst"><code>protected void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dropTable(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable,org.eclipse.net4j.db.ddl.delta.IDBTableDelta)">dropTable</a></span>&#8203;(java.sql.Connection&nbsp;connection,
+         <a href="../../db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
+         <a href="../../db/ddl/delta/IDBTableDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBTableDelta</a>&nbsp;delta)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i30" class="altColor">
-<td class="colFirst"><code>java.util.Collection&lt;<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#dropTables-java.lang.Iterable-java.sql.Connection-">dropTables</a></span>(java.lang.Iterable&lt;? extends <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;&nbsp;tables,
-          java.sql.Connection&nbsp;connection)</code>&nbsp;</td>
+<td class="colFirst"><code>boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dropTable(org.eclipse.net4j.db.ddl.IDBTable,java.sql.Statement)">dropTable</a></span>&#8203;(<a href="../../db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
+         java.sql.Statement&nbsp;statement)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i31" class="rowColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#format-java.sql.PreparedStatement-">format</a></span>(java.sql.PreparedStatement&nbsp;stmt)</code>&nbsp;</td>
+<td class="colFirst"><code>java.util.Collection&lt;<a href="../../db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dropTables(java.lang.Iterable,java.sql.Connection)">dropTables</a></span>&#8203;(java.lang.Iterable&lt;? extends <a href="../../db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;&nbsp;tables,
+          java.sql.Connection&nbsp;connection)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i32" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#format-java.sql.ResultSet-">format</a></span>(java.sql.ResultSet&nbsp;resultSet)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#format(java.sql.PreparedStatement)">format</a></span>&#8203;(java.sql.PreparedStatement&nbsp;stmt)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i33" class="rowColor">
-<td class="colFirst"><code>static int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#getDefaultDBLength-org.eclipse.net4j.db.DBType-">getDefaultDBLength</a></span>(<a href="../../../../../org/eclipse/net4j/db/DBType.html" title="enum in org.eclipse.net4j.db">DBType</a>&nbsp;type)</code>&nbsp;</td>
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#format(java.sql.ResultSet)">format</a></span>&#8203;(java.sql.ResultSet&nbsp;resultSet)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i34" class="altColor">
-<td class="colFirst"><code>protected java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#getDropTableSQL-org.eclipse.net4j.db.ddl.IDBTable-">getDropTableSQL</a></span>(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</code>&nbsp;</td>
+<td class="colFirst"><code>protected static void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#generateReservedWords(java.sql.Connection,java.lang.String%5B%5D)">generateReservedWords</a></span>&#8203;(java.sql.Connection&nbsp;connection,
+                     java.lang.String[]&nbsp;words)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i35" class="rowColor">
-<td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#getFieldLength-org.eclipse.net4j.db.DBType-">getFieldLength</a></span>(<a href="../../../../../org/eclipse/net4j/db/DBType.html" title="enum in org.eclipse.net4j.db">DBType</a>&nbsp;type)</code>
-<div class="block">Returns the column length for the given database type.</div>
-</td>
+<td class="colFirst"><code>static int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDefaultDBLength(org.eclipse.net4j.db.DBType)">getDefaultDBLength</a></span>&#8203;(<a href="../../db/DBType.html" title="enum in org.eclipse.net4j.db">DBType</a>&nbsp;type)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i36" class="altColor">
-<td class="colFirst"><code>java.sql.Driver</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#getJDBCDriver--">getJDBCDriver</a></span>()</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">As of 4.2 no longer supported because of IP issues for external build dependencies (the vendor driver libs).</span></div>
-</div>
-</td>
+<td class="colFirst"><code>protected java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDropTableSQL(org.eclipse.net4j.db.ddl.IDBTable)">getDropTableSQL</a></span>&#8203;(<a href="../../db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i37" class="rowColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#getMaxFieldNameLength--">getMaxFieldNameLength</a></span>()</code>&nbsp;</td>
-</tr>
-<tr id="i38" class="altColor">
-<td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#getMaxTableNameLength--">getMaxTableNameLength</a></span>()</code>&nbsp;</td>
-</tr>
-<tr id="i39" class="rowColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#getName--">getName</a></span>()</code>&nbsp;</td>
-</tr>
-<tr id="i40" class="altColor">
-<td class="colFirst"><code>java.lang.String[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#getSQL92ReservedWords--">getSQL92ReservedWords</a></span>()</code>&nbsp;</td>
-</tr>
-<tr id="i41" class="rowColor">
-<td class="colFirst"><code>protected java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#getTypeName-org.eclipse.net4j.db.ddl.IDBField-">getTypeName</a></span>(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</code>&nbsp;</td>
-</tr>
-<tr id="i42" class="altColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#getVersion--">getVersion</a></span>()</code>&nbsp;</td>
-</tr>
-<tr id="i43" class="rowColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#isColumnNotFoundException-java.sql.SQLException-">isColumnNotFoundException</a></span>(java.sql.SQLException&nbsp;ex)</code>&nbsp;</td>
-</tr>
-<tr id="i44" class="altColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#isDuplicateKeyException-java.sql.SQLException-">isDuplicateKeyException</a></span>(java.sql.SQLException&nbsp;ex)</code>
-<div class="block">Check if an exception indicates a constraint violation (duplicate key)</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getFieldLength(org.eclipse.net4j.db.DBType)">getFieldLength</a></span>&#8203;(<a href="../../db/DBType.html" title="enum in org.eclipse.net4j.db">DBType</a>&nbsp;type)</code></th>
+<td class="colLast">
+<div class="block">Returns the column length for the given database type.</div>
 </td>
 </tr>
+<tr id="i38" class="altColor">
+<td class="colFirst"><code>java.sql.Driver</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getJDBCDriver()">getJDBCDriver</a></span>()</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.2 no longer supported because of IP issues for external build dependencies (the vendor driver libs).</div>
+</div>
+</td>
+</tr>
+<tr id="i39" class="rowColor">
+<td class="colFirst"><code>int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMaxFieldNameLength()">getMaxFieldNameLength</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i40" class="altColor">
+<td class="colFirst"><code>int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMaxTableNameLength()">getMaxTableNameLength</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i41" class="rowColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getName()">getName</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i42" class="altColor">
+<td class="colFirst"><code>java.lang.String[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSQL92ReservedWords()">getSQL92ReservedWords</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i43" class="rowColor">
+<td class="colFirst"><code>protected java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTypeName(org.eclipse.net4j.db.ddl.IDBField)">getTypeName</a></span>&#8203;(<a href="../../db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i44" class="altColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getVersion()">getVersion</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
 <tr id="i45" class="rowColor">
-<td class="colFirst"><code>protected boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#isPrimaryKeyShadow-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBTable-java.lang.String-org.eclipse.net4j.db.ddl.IDBIndex.Type-org.eclipse.net4j.db.ddl.IDBField:A-">isPrimaryKeyShadow</a></span>(java.sql.Connection&nbsp;connection,
-                  <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
-                  java.lang.String&nbsp;name,
-                  <a href="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.Type.html" title="enum in org.eclipse.net4j.db.ddl">IDBIndex.Type</a>&nbsp;type,
-                  <a href="../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>[]&nbsp;fields)</code>&nbsp;</td>
+<td class="colFirst"><code>boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isColumnNotFoundException(java.sql.SQLException)">isColumnNotFoundException</a></span>&#8203;(java.sql.SQLException&nbsp;ex)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i46" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#isReservedWord-java.lang.String-">isReservedWord</a></span>(java.lang.String&nbsp;word)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isDuplicateKeyException(java.sql.SQLException)">isDuplicateKeyException</a></span>&#8203;(java.sql.SQLException&nbsp;ex)</code></th>
+<td class="colLast">
+<div class="block">Check if an exception indicates a constraint violation (duplicate key)</div>
+</td>
 </tr>
 <tr id="i47" class="rowColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#isTableNotFoundException-java.sql.SQLException-">isTableNotFoundException</a></span>(java.sql.SQLException&nbsp;ex)</code>&nbsp;</td>
+<td class="colFirst"><code>protected boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isPrimaryKeyShadow(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable,java.lang.String,org.eclipse.net4j.db.ddl.IDBIndex.Type,org.eclipse.net4j.db.ddl.IDBField%5B%5D)">isPrimaryKeyShadow</a></span>&#8203;(java.sql.Connection&nbsp;connection,
+                  <a href="../../db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
+                  java.lang.String&nbsp;name,
+                  <a href="../../db/ddl/IDBIndex.Type.html" title="enum in org.eclipse.net4j.db.ddl">IDBIndex.Type</a>&nbsp;type,
+                  <a href="../../db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>[]&nbsp;fields)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i48" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#isTypeIndexable-org.eclipse.net4j.db.DBType-">isTypeIndexable</a></span>(<a href="../../../../../org/eclipse/net4j/db/DBType.html" title="enum in org.eclipse.net4j.db">DBType</a>&nbsp;type)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isReservedWord(java.lang.String)">isReservedWord</a></span>&#8203;(java.lang.String&nbsp;word)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i49" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#isValidFirstChar-char-">isValidFirstChar</a></span>(char&nbsp;ch)</code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isTableNotFoundException(java.sql.SQLException)">isTableNotFoundException</a></span>&#8203;(java.sql.SQLException&nbsp;ex)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i50" class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isTypeIndexable(org.eclipse.net4j.db.DBType)">isTypeIndexable</a></span>&#8203;(<a href="../../db/DBType.html" title="enum in org.eclipse.net4j.db">DBType</a>&nbsp;type)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i51" class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isValidFirstChar(char)">isValidFirstChar</a></span>&#8203;(char&nbsp;ch)</code></th>
+<td class="colLast">
 <div class="block">Check if a character is valid as first character.</div>
 </td>
 </tr>
-<tr id="i50" class="altColor">
-<td class="colFirst"><code>java.sql.Connection</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#modifyConnection-java.sql.Connection-">modifyConnection</a></span>(java.sql.Connection&nbsp;connection)</code>&nbsp;</td>
-</tr>
-<tr id="i51" class="rowColor">
-<td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#readFields-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBTable-">readFields</a></span>(java.sql.Connection&nbsp;connection,
-          <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</code>&nbsp;</td>
-</tr>
 <tr id="i52" class="altColor">
-<td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#readIndices-java.sql.Connection-java.sql.DatabaseMetaData-org.eclipse.net4j.db.ddl.IDBTable-java.lang.String-">readIndices</a></span>(java.sql.Connection&nbsp;connection,
-           java.sql.DatabaseMetaData&nbsp;metaData,
-           <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
-           java.lang.String&nbsp;schemaName)</code>&nbsp;</td>
+<td class="colFirst"><code>java.sql.Connection</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#modifyConnection(java.sql.Connection)">modifyConnection</a></span>&#8203;(java.sql.Connection&nbsp;connection)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i53" class="rowColor">
+<td class="colFirst"><code><a href="../../db/IDBSchemaTransaction.html" title="interface in org.eclipse.net4j.db">IDBSchemaTransaction</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#openSchemaTransaction(org.eclipse.net4j.db.IDBDatabase,org.eclipse.net4j.db.IDBConnection)">openSchemaTransaction</a></span>&#8203;(<a href="../../db/IDBDatabase.html" title="interface in org.eclipse.net4j.db">IDBDatabase</a>&nbsp;database,
+                     <a href="../../db/IDBConnection.html" title="interface in org.eclipse.net4j.db">IDBConnection</a>&nbsp;currentConnection)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i54" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#readIndices-java.sql.Connection-java.sql.ResultSet-org.eclipse.net4j.db.ddl.IDBTable-int-int-int-int-">readIndices</a></span>(java.sql.Connection&nbsp;connection,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readFields(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable)">readFields</a></span>&#8203;(java.sql.Connection&nbsp;connection,
+          <a href="../../db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i55" class="rowColor">
+<td class="colFirst"><code>protected void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readIndices(java.sql.Connection,java.sql.DatabaseMetaData,org.eclipse.net4j.db.ddl.IDBTable,java.lang.String)">readIndices</a></span>&#8203;(java.sql.Connection&nbsp;connection,
+           java.sql.DatabaseMetaData&nbsp;metaData,
+           <a href="../../db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
+           java.lang.String&nbsp;schemaName)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i56" class="altColor">
+<td class="colFirst"><code>protected void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readIndices(java.sql.Connection,java.sql.ResultSet,org.eclipse.net4j.db.ddl.IDBTable,int,int,int,int)">readIndices</a></span>&#8203;(java.sql.Connection&nbsp;connection,
            java.sql.ResultSet&nbsp;resultSet,
-           <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
+           <a href="../../db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
            int&nbsp;indexNameColumn,
            int&nbsp;indexTypeColumn,
            int&nbsp;fieldNameColumn,
-           int&nbsp;fieldPositionColumn)</code>&nbsp;</td>
-</tr>
-<tr id="i54" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#readSchema-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBSchema-">readSchema</a></span>(java.sql.Connection&nbsp;connection,
-          <a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a>&nbsp;schema)</code>&nbsp;</td>
-</tr>
-<tr id="i55" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#readSchema-java.sql.Connection-java.lang.String-">readSchema</a></span>(java.sql.Connection&nbsp;connection,
-          java.lang.String&nbsp;name)</code>&nbsp;</td>
-</tr>
-<tr id="i56" class="altColor">
-<td class="colFirst"><code>protected java.sql.ResultSet</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#readTables-java.sql.Connection-java.sql.DatabaseMetaData-java.lang.String-">readTables</a></span>(java.sql.Connection&nbsp;connection,
-          java.sql.DatabaseMetaData&nbsp;metaData,
-          java.lang.String&nbsp;schemaName)</code>&nbsp;</td>
+           int&nbsp;fieldPositionColumn)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i57" class="rowColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#sqlModifyField-org.eclipse.net4j.db.ddl.IDBField-">sqlModifyField</a></span>(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../../db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readSchema(java.sql.Connection,java.lang.String)">readSchema</a></span>&#8203;(java.sql.Connection&nbsp;connection,
+          java.lang.String&nbsp;name)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i58" class="altColor">
-<td class="colFirst"><code>protected java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#sqlModifyField-java.lang.String-java.lang.String-java.lang.String-">sqlModifyField</a></span>(java.lang.String&nbsp;tableName,
-              java.lang.String&nbsp;fieldName,
-              java.lang.String&nbsp;definition)</code>&nbsp;</td>
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readSchema(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBSchema)">readSchema</a></span>&#8203;(java.sql.Connection&nbsp;connection,
+          <a href="../../db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a>&nbsp;schema)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i59" class="rowColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#sqlRenameField-org.eclipse.net4j.db.ddl.IDBField-java.lang.String-">sqlRenameField</a></span>(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field,
-              java.lang.String&nbsp;oldName)</code>&nbsp;</td>
+<td class="colFirst"><code>protected java.sql.ResultSet</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readTables(java.sql.Connection,java.sql.DatabaseMetaData,java.lang.String)">readTables</a></span>&#8203;(java.sql.Connection&nbsp;connection,
+          java.sql.DatabaseMetaData&nbsp;metaData,
+          java.lang.String&nbsp;schemaName)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i60" class="altColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#toString--">toString</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>protected java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sqlModifyField(java.lang.String,java.lang.String,java.lang.String)">sqlModifyField</a></span>&#8203;(java.lang.String&nbsp;tableName,
+              java.lang.String&nbsp;fieldName,
+              java.lang.String&nbsp;definition)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i61" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#updateSchema-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBSchema-org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta-">updateSchema</a></span>(java.sql.Connection&nbsp;connection,
-            <a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a>&nbsp;schema,
-            <a href="../../../../../org/eclipse/net4j/db/ddl/delta/IDBSchemaDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBSchemaDelta</a>&nbsp;delta)</code>&nbsp;</td>
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sqlModifyField(org.eclipse.net4j.db.ddl.IDBField)">sqlModifyField</a></span>&#8203;(<a href="../../db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i62" class="altColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sqlRenameField(org.eclipse.net4j.db.ddl.IDBField,java.lang.String)">sqlRenameField</a></span>&#8203;(<a href="../../db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field,
+              java.lang.String&nbsp;oldName)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i63" class="rowColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i64" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateSchema(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBSchema,org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta)">updateSchema</a></span>&#8203;(java.sql.Connection&nbsp;connection,
+            <a href="../../db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a>&nbsp;schema,
+            <a href="../../db/ddl/delta/IDBSchemaDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBSchemaDelta</a>&nbsp;delta)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i65" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#validateTable-org.eclipse.net4j.db.ddl.IDBTable-java.sql.Statement-">validateTable</a></span>(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
-             java.sql.Statement&nbsp;statement)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#validateTable(org.eclipse.net4j.db.ddl.IDBTable,java.sql.Statement)">validateTable</a></span>&#8203;(<a href="../../db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
+             java.sql.Statement&nbsp;statement)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
+<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
 <code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, wait, wait, wait</code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.db.IDBAdapter">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.db.IDBAdapter">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.db.<a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></h3>
-<code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#getReservedWords--">getReservedWords</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.db.<a href="../../db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></h3>
+<code><a href="../../db/IDBAdapter.html#getReservedWords()">getReservedWords</a></code></li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -550,158 +667,179 @@ implements <a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="
 <ul class="blockList">
 <li class="blockList">
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.detail">
+<li class="blockList"><a id="constructor.detail">
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="DBAdapter-java.lang.String-java.lang.String-">
+<a id="&lt;init&gt;(java.lang.String,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>DBAdapter</h4>
-<pre>public&nbsp;DBAdapter(java.lang.String&nbsp;name,
+<pre>public&nbsp;DBAdapter&#8203;(java.lang.String&nbsp;name,
                  java.lang.String&nbsp;version)</pre>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="getName--">
+<a id="getName()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getName</h4>
-<pre>public&nbsp;java.lang.String&nbsp;getName()</pre>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getName()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#getName--">getName</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
+<dd><code><a href="../../db/IDBAdapter.html#getName()">getName</a></code>&nbsp;in interface&nbsp;<code><a href="../../db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="getVersion--">
+<a id="getVersion()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getVersion</h4>
-<pre>public&nbsp;java.lang.String&nbsp;getVersion()</pre>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getVersion()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#getVersion--">getVersion</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
+<dd><code><a href="../../db/IDBAdapter.html#getVersion()">getVersion</a></code>&nbsp;in interface&nbsp;<code><a href="../../db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="getJDBCDriver--">
+<a id="getJDBCDriver()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getJDBCDriver</h4>
-<pre>@Deprecated
+<pre class="methodSignature">@Deprecated
 public&nbsp;java.sql.Driver&nbsp;getJDBCDriver()</pre>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">As of 4.2 no longer supported because of IP issues for external build dependencies (the vendor driver libs).</span></div>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.2 no longer supported because of IP issues for external build dependencies (the vendor driver libs).</div>
+</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#getJDBCDriver--">getJDBCDriver</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
+<dd><code><a href="../../db/IDBAdapter.html#getJDBCDriver()">getJDBCDriver</a></code>&nbsp;in interface&nbsp;<code><a href="../../db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
 </li>
 </ul>
-<a name="createJDBCDataSource--">
+<a id="createJDBCDataSource()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createJDBCDataSource</h4>
-<pre>@Deprecated
+<pre class="methodSignature">@Deprecated
 public&nbsp;javax.sql.DataSource&nbsp;createJDBCDataSource()</pre>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">As of 4.2 no longer supported because of IP issues for external build dependencies (the vendor driver libs).</span></div>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.2 no longer supported because of IP issues for external build dependencies (the vendor driver libs).</div>
+</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#createJDBCDataSource--">createJDBCDataSource</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
+<dd><code><a href="../../db/IDBAdapter.html#createJDBCDataSource()">createJDBCDataSource</a></code>&nbsp;in interface&nbsp;<code><a href="../../db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
 </li>
 </ul>
-<a name="createConnectionProvider-javax.sql.DataSource-">
+<a id="createConnectionProvider(javax.sql.DataSource)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createConnectionProvider</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/db/IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</a>&nbsp;createConnectionProvider(javax.sql.DataSource&nbsp;dataSource)</pre>
+<pre class="methodSignature">public&nbsp;<a href="../../db/IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</a>&nbsp;createConnectionProvider&#8203;(javax.sql.DataSource&nbsp;dataSource)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#createConnectionProvider-javax.sql.DataSource-">createConnectionProvider</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
+<dd><code><a href="../../db/IDBAdapter.html#createConnectionProvider(javax.sql.DataSource)">createConnectionProvider</a></code>&nbsp;in interface&nbsp;<code><a href="../../db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.3</dd>
 </dl>
 </li>
 </ul>
-<a name="modifyConnection-java.sql.Connection-">
+<a id="modifyConnection(java.sql.Connection)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>modifyConnection</h4>
-<pre>public&nbsp;java.sql.Connection&nbsp;modifyConnection(java.sql.Connection&nbsp;connection)</pre>
+<pre class="methodSignature">public&nbsp;java.sql.Connection&nbsp;modifyConnection&#8203;(java.sql.Connection&nbsp;connection)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#modifyConnection-java.sql.Connection-">modifyConnection</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
+<dd><code><a href="../../db/IDBAdapter.html#modifyConnection(java.sql.Connection)">modifyConnection</a></code>&nbsp;in interface&nbsp;<code><a href="../../db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.5</dd>
 </dl>
 </li>
 </ul>
-<a name="readSchema-java.sql.Connection-java.lang.String-">
+<a id="openSchemaTransaction(org.eclipse.net4j.db.IDBDatabase,org.eclipse.net4j.db.IDBConnection)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>openSchemaTransaction</h4>
+<pre class="methodSignature">public&nbsp;<a href="../../db/IDBSchemaTransaction.html" title="interface in org.eclipse.net4j.db">IDBSchemaTransaction</a>&nbsp;openSchemaTransaction&#8203;(<a href="../../db/IDBDatabase.html" title="interface in org.eclipse.net4j.db">IDBDatabase</a>&nbsp;database,
+                                                  <a href="../../db/IDBConnection.html" title="interface in org.eclipse.net4j.db">IDBConnection</a>&nbsp;currentConnection)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.9</dd>
+</dl>
+</li>
+</ul>
+<a id="readSchema(java.sql.Connection,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>readSchema</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a>&nbsp;readSchema(java.sql.Connection&nbsp;connection,
+<pre class="methodSignature">public&nbsp;<a href="../../db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a>&nbsp;readSchema&#8203;(java.sql.Connection&nbsp;connection,
                             java.lang.String&nbsp;name)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#readSchema-java.sql.Connection-java.lang.String-">readSchema</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
+<dd><code><a href="../../db/IDBAdapter.html#readSchema(java.sql.Connection,java.lang.String)">readSchema</a></code>&nbsp;in interface&nbsp;<code><a href="../../db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
 </li>
 </ul>
-<a name="readSchema-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBSchema-">
+<a id="readSchema(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBSchema)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>readSchema</h4>
-<pre>public&nbsp;void&nbsp;readSchema(java.sql.Connection&nbsp;connection,
-                       <a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a>&nbsp;schema)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;readSchema&#8203;(java.sql.Connection&nbsp;connection,
+                       <a href="../../db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a>&nbsp;schema)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#readSchema-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBSchema-">readSchema</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
+<dd><code><a href="../../db/IDBAdapter.html#readSchema(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBSchema)">readSchema</a></code>&nbsp;in interface&nbsp;<code><a href="../../db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
 </li>
 </ul>
-<a name="readTables-java.sql.Connection-java.sql.DatabaseMetaData-java.lang.String-">
+<a id="readTables(java.sql.Connection,java.sql.DatabaseMetaData,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>readTables</h4>
-<pre>protected&nbsp;java.sql.ResultSet&nbsp;readTables(java.sql.Connection&nbsp;connection,
+<pre class="methodSignature">protected&nbsp;java.sql.ResultSet&nbsp;readTables&#8203;(java.sql.Connection&nbsp;connection,
                                         java.sql.DatabaseMetaData&nbsp;metaData,
                                         java.lang.String&nbsp;schemaName)
                                  throws java.sql.SQLException</pre>
@@ -713,14 +851,14 @@ public&nbsp;javax.sql.DataSource&nbsp;createJDBCDataSource()</pre>
 </dl>
 </li>
 </ul>
-<a name="readFields-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBTable-">
+<a id="readFields(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>readFields</h4>
-<pre>protected&nbsp;void&nbsp;readFields(java.sql.Connection&nbsp;connection,
-                          <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)
+<pre class="methodSignature">protected&nbsp;void&nbsp;readFields&#8203;(java.sql.Connection&nbsp;connection,
+                          <a href="../../db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)
                    throws java.sql.SQLException</pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -730,15 +868,15 @@ public&nbsp;javax.sql.DataSource&nbsp;createJDBCDataSource()</pre>
 </dl>
 </li>
 </ul>
-<a name="readIndices-java.sql.Connection-java.sql.DatabaseMetaData-org.eclipse.net4j.db.ddl.IDBTable-java.lang.String-">
+<a id="readIndices(java.sql.Connection,java.sql.DatabaseMetaData,org.eclipse.net4j.db.ddl.IDBTable,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>readIndices</h4>
-<pre>protected&nbsp;void&nbsp;readIndices(java.sql.Connection&nbsp;connection,
+<pre class="methodSignature">protected&nbsp;void&nbsp;readIndices&#8203;(java.sql.Connection&nbsp;connection,
                            java.sql.DatabaseMetaData&nbsp;metaData,
-                           <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
+                           <a href="../../db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
                            java.lang.String&nbsp;schemaName)
                     throws java.sql.SQLException</pre>
 <dl>
@@ -749,15 +887,15 @@ public&nbsp;javax.sql.DataSource&nbsp;createJDBCDataSource()</pre>
 </dl>
 </li>
 </ul>
-<a name="readIndices-java.sql.Connection-java.sql.ResultSet-org.eclipse.net4j.db.ddl.IDBTable-int-int-int-int-">
+<a id="readIndices(java.sql.Connection,java.sql.ResultSet,org.eclipse.net4j.db.ddl.IDBTable,int,int,int,int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>readIndices</h4>
-<pre>protected&nbsp;void&nbsp;readIndices(java.sql.Connection&nbsp;connection,
+<pre class="methodSignature">protected&nbsp;void&nbsp;readIndices&#8203;(java.sql.Connection&nbsp;connection,
                            java.sql.ResultSet&nbsp;resultSet,
-                           <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
+                           <a href="../../db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
                            int&nbsp;indexNameColumn,
                            int&nbsp;indexTypeColumn,
                            int&nbsp;fieldNameColumn,
@@ -771,127 +909,127 @@ public&nbsp;javax.sql.DataSource&nbsp;createJDBCDataSource()</pre>
 </dl>
 </li>
 </ul>
-<a name="addIndex-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBTable-java.lang.String-org.eclipse.net4j.db.ddl.IDBIndex.Type-java.util.List-">
+<a id="addIndex(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable,java.lang.String,org.eclipse.net4j.db.ddl.IDBIndex.Type,java.util.List)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>addIndex</h4>
-<pre>protected&nbsp;void&nbsp;addIndex(java.sql.Connection&nbsp;connection,
-                        <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
+<pre class="methodSignature">protected&nbsp;void&nbsp;addIndex&#8203;(java.sql.Connection&nbsp;connection,
+                        <a href="../../db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
                         java.lang.String&nbsp;name,
-                        <a href="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.Type.html" title="enum in org.eclipse.net4j.db.ddl">IDBIndex.Type</a>&nbsp;type,
-                        java.util.List&lt;<a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.FieldInfo.html" title="class in org.eclipse.net4j.spi.db">DBAdapter.FieldInfo</a>&gt;&nbsp;fieldInfos)</pre>
+                        <a href="../../db/ddl/IDBIndex.Type.html" title="enum in org.eclipse.net4j.db.ddl">IDBIndex.Type</a>&nbsp;type,
+                        java.util.List&lt;<a href="DBAdapter.FieldInfo.html" title="class in org.eclipse.net4j.spi.db">DBAdapter.FieldInfo</a>&gt;&nbsp;fieldInfos)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
 </li>
 </ul>
-<a name="isPrimaryKeyShadow-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBTable-java.lang.String-org.eclipse.net4j.db.ddl.IDBIndex.Type-org.eclipse.net4j.db.ddl.IDBField:A-">
+<a id="isPrimaryKeyShadow(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable,java.lang.String,org.eclipse.net4j.db.ddl.IDBIndex.Type,org.eclipse.net4j.db.ddl.IDBField[])">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>isPrimaryKeyShadow</h4>
-<pre>protected&nbsp;boolean&nbsp;isPrimaryKeyShadow(java.sql.Connection&nbsp;connection,
-                                     <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
+<pre class="methodSignature">protected&nbsp;boolean&nbsp;isPrimaryKeyShadow&#8203;(java.sql.Connection&nbsp;connection,
+                                     <a href="../../db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
                                      java.lang.String&nbsp;name,
-                                     <a href="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.Type.html" title="enum in org.eclipse.net4j.db.ddl">IDBIndex.Type</a>&nbsp;type,
-                                     <a href="../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>[]&nbsp;fields)</pre>
+                                     <a href="../../db/ddl/IDBIndex.Type.html" title="enum in org.eclipse.net4j.db.ddl">IDBIndex.Type</a>&nbsp;type,
+                                     <a href="../../db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>[]&nbsp;fields)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
 </li>
 </ul>
-<a name="updateSchema-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBSchema-org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta-">
+<a id="updateSchema(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBSchema,org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>updateSchema</h4>
-<pre>public&nbsp;void&nbsp;updateSchema(java.sql.Connection&nbsp;connection,
-                         <a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a>&nbsp;schema,
-                         <a href="../../../../../org/eclipse/net4j/db/ddl/delta/IDBSchemaDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBSchemaDelta</a>&nbsp;delta)
-                  throws <a href="../../../../../org/eclipse/net4j/db/DBException.html" title="class in org.eclipse.net4j.db">DBException</a></pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;updateSchema&#8203;(java.sql.Connection&nbsp;connection,
+                         <a href="../../db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a>&nbsp;schema,
+                         <a href="../../db/ddl/delta/IDBSchemaDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBSchemaDelta</a>&nbsp;delta)
+                  throws <a href="../../db/DBException.html" title="class in org.eclipse.net4j.db">DBException</a></pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#updateSchema-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBSchema-org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta-">updateSchema</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
+<dd><code><a href="../../db/IDBAdapter.html#updateSchema(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBSchema,org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta)">updateSchema</a></code>&nbsp;in interface&nbsp;<code><a href="../../db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/db/DBException.html" title="class in org.eclipse.net4j.db">DBException</a></code></dd>
+<dd><code><a href="../../db/DBException.html" title="class in org.eclipse.net4j.db">DBException</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
 </li>
 </ul>
-<a name="createTable-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBTable-org.eclipse.net4j.db.ddl.delta.IDBTableDelta-">
+<a id="createTable(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable,org.eclipse.net4j.db.ddl.delta.IDBTableDelta)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createTable</h4>
-<pre>protected&nbsp;void&nbsp;createTable(java.sql.Connection&nbsp;connection,
-                           <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
-                           <a href="../../../../../org/eclipse/net4j/db/ddl/delta/IDBTableDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBTableDelta</a>&nbsp;delta)</pre>
+<pre class="methodSignature">protected&nbsp;void&nbsp;createTable&#8203;(java.sql.Connection&nbsp;connection,
+                           <a href="../../db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
+                           <a href="../../db/ddl/delta/IDBTableDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBTableDelta</a>&nbsp;delta)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
 </li>
 </ul>
-<a name="dropTable-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBTable-org.eclipse.net4j.db.ddl.delta.IDBTableDelta-">
+<a id="dropTable(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable,org.eclipse.net4j.db.ddl.delta.IDBTableDelta)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>dropTable</h4>
-<pre>protected&nbsp;void&nbsp;dropTable(java.sql.Connection&nbsp;connection,
-                         <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
-                         <a href="../../../../../org/eclipse/net4j/db/ddl/delta/IDBTableDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBTableDelta</a>&nbsp;delta)</pre>
+<pre class="methodSignature">protected&nbsp;void&nbsp;dropTable&#8203;(java.sql.Connection&nbsp;connection,
+                         <a href="../../db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
+                         <a href="../../db/ddl/delta/IDBTableDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBTableDelta</a>&nbsp;delta)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
 </li>
 </ul>
-<a name="alterTable-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBTable-org.eclipse.net4j.db.ddl.delta.IDBTableDelta-">
+<a id="alterTable(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable,org.eclipse.net4j.db.ddl.delta.IDBTableDelta)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>alterTable</h4>
-<pre>protected&nbsp;void&nbsp;alterTable(java.sql.Connection&nbsp;connection,
-                          <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
-                          <a href="../../../../../org/eclipse/net4j/db/ddl/delta/IDBTableDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBTableDelta</a>&nbsp;delta)</pre>
+<pre class="methodSignature">protected&nbsp;void&nbsp;alterTable&#8203;(java.sql.Connection&nbsp;connection,
+                          <a href="../../db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
+                          <a href="../../db/ddl/delta/IDBTableDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBTableDelta</a>&nbsp;delta)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
 </li>
 </ul>
-<a name="createField-java.sql.Connection-java.lang.String-org.eclipse.net4j.db.ddl.IDBField-">
+<a id="createField(java.sql.Connection,java.lang.String,org.eclipse.net4j.db.ddl.IDBField)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createField</h4>
-<pre>protected&nbsp;void&nbsp;createField(java.sql.Connection&nbsp;connection,
+<pre class="methodSignature">protected&nbsp;void&nbsp;createField&#8203;(java.sql.Connection&nbsp;connection,
                            java.lang.String&nbsp;tableName,
-                           <a href="../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</pre>
+                           <a href="../../db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.6</dd>
 </dl>
 </li>
 </ul>
-<a name="dropField-java.sql.Connection-java.lang.String-java.lang.String-">
+<a id="dropField(java.sql.Connection,java.lang.String,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>dropField</h4>
-<pre>protected&nbsp;void&nbsp;dropField(java.sql.Connection&nbsp;connection,
+<pre class="methodSignature">protected&nbsp;void&nbsp;dropField&#8203;(java.sql.Connection&nbsp;connection,
                          java.lang.String&nbsp;tableName,
                          java.lang.String&nbsp;fieldName)</pre>
 <dl>
@@ -900,28 +1038,28 @@ public&nbsp;javax.sql.DataSource&nbsp;createJDBCDataSource()</pre>
 </dl>
 </li>
 </ul>
-<a name="createIndex-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBIndex-org.eclipse.net4j.db.ddl.delta.IDBIndexDelta-">
+<a id="createIndex(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBIndex,org.eclipse.net4j.db.ddl.delta.IDBIndexDelta)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createIndex</h4>
-<pre>protected&nbsp;void&nbsp;createIndex(java.sql.Connection&nbsp;connection,
-                           <a href="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
-                           <a href="../../../../../org/eclipse/net4j/db/ddl/delta/IDBIndexDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBIndexDelta</a>&nbsp;delta)</pre>
+<pre class="methodSignature">protected&nbsp;void&nbsp;createIndex&#8203;(java.sql.Connection&nbsp;connection,
+                           <a href="../../db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
+                           <a href="../../db/ddl/delta/IDBIndexDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBIndexDelta</a>&nbsp;delta)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
 </li>
 </ul>
-<a name="createPrimaryKey-org.eclipse.net4j.db.ddl.IDBIndex-java.lang.StringBuilder-">
+<a id="createPrimaryKey(org.eclipse.net4j.db.ddl.IDBIndex,java.lang.StringBuilder)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createPrimaryKey</h4>
-<pre>protected&nbsp;void&nbsp;createPrimaryKey(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
+<pre class="methodSignature">protected&nbsp;void&nbsp;createPrimaryKey&#8203;(<a href="../../db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
                                 java.lang.StringBuilder&nbsp;builder)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -929,13 +1067,13 @@ public&nbsp;javax.sql.DataSource&nbsp;createJDBCDataSource()</pre>
 </dl>
 </li>
 </ul>
-<a name="createIndex-org.eclipse.net4j.db.ddl.IDBIndex-java.lang.StringBuilder-">
+<a id="createIndex(org.eclipse.net4j.db.ddl.IDBIndex,java.lang.StringBuilder)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createIndex</h4>
-<pre>protected&nbsp;void&nbsp;createIndex(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
+<pre class="methodSignature">protected&nbsp;void&nbsp;createIndex&#8203;(<a href="../../db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
                            java.lang.StringBuilder&nbsp;builder)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -943,13 +1081,13 @@ public&nbsp;javax.sql.DataSource&nbsp;createJDBCDataSource()</pre>
 </dl>
 </li>
 </ul>
-<a name="createIndexFields-org.eclipse.net4j.db.ddl.IDBIndex-java.lang.StringBuilder-">
+<a id="createIndexFields(org.eclipse.net4j.db.ddl.IDBIndex,java.lang.StringBuilder)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createIndexFields</h4>
-<pre>protected&nbsp;void&nbsp;createIndexFields(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
+<pre class="methodSignature">protected&nbsp;void&nbsp;createIndexFields&#8203;(<a href="../../db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
                                  java.lang.StringBuilder&nbsp;builder)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -957,28 +1095,28 @@ public&nbsp;javax.sql.DataSource&nbsp;createJDBCDataSource()</pre>
 </dl>
 </li>
 </ul>
-<a name="dropIndex-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBIndex-org.eclipse.net4j.db.ddl.delta.IDBIndexDelta-">
+<a id="dropIndex(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBIndex,org.eclipse.net4j.db.ddl.delta.IDBIndexDelta)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>dropIndex</h4>
-<pre>protected&nbsp;void&nbsp;dropIndex(java.sql.Connection&nbsp;connection,
-                         <a href="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
-                         <a href="../../../../../org/eclipse/net4j/db/ddl/delta/IDBIndexDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBIndexDelta</a>&nbsp;delta)</pre>
+<pre class="methodSignature">protected&nbsp;void&nbsp;dropIndex&#8203;(java.sql.Connection&nbsp;connection,
+                         <a href="../../db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
+                         <a href="../../db/ddl/delta/IDBIndexDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBIndexDelta</a>&nbsp;delta)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
 </li>
 </ul>
-<a name="dropPrimaryKey-org.eclipse.net4j.db.ddl.IDBIndex-java.lang.StringBuilder-">
+<a id="dropPrimaryKey(org.eclipse.net4j.db.ddl.IDBIndex,java.lang.StringBuilder)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>dropPrimaryKey</h4>
-<pre>protected&nbsp;void&nbsp;dropPrimaryKey(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
+<pre class="methodSignature">protected&nbsp;void&nbsp;dropPrimaryKey&#8203;(<a href="../../db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
                               java.lang.StringBuilder&nbsp;builder)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -986,13 +1124,13 @@ public&nbsp;javax.sql.DataSource&nbsp;createJDBCDataSource()</pre>
 </dl>
 </li>
 </ul>
-<a name="dropIndex-org.eclipse.net4j.db.ddl.IDBIndex-java.lang.StringBuilder-">
+<a id="dropIndex(org.eclipse.net4j.db.ddl.IDBIndex,java.lang.StringBuilder)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>dropIndex</h4>
-<pre>protected&nbsp;void&nbsp;dropIndex(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
+<pre class="methodSignature">protected&nbsp;void&nbsp;dropIndex&#8203;(<a href="../../db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
                          java.lang.StringBuilder&nbsp;builder)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -1000,124 +1138,124 @@ public&nbsp;javax.sql.DataSource&nbsp;createJDBCDataSource()</pre>
 </dl>
 </li>
 </ul>
-<a name="createTables-java.lang.Iterable-java.sql.Connection-">
+<a id="createTables(java.lang.Iterable,java.sql.Connection)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createTables</h4>
-<pre>public&nbsp;java.util.Set&lt;<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;&nbsp;createTables(java.lang.Iterable&lt;? extends <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;&nbsp;tables,
+<pre class="methodSignature">public&nbsp;java.util.Set&lt;<a href="../../db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;&nbsp;createTables&#8203;(java.lang.Iterable&lt;? extends <a href="../../db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;&nbsp;tables,
                                             java.sql.Connection&nbsp;connection)
-                                     throws <a href="../../../../../org/eclipse/net4j/db/DBException.html" title="class in org.eclipse.net4j.db">DBException</a></pre>
+                                     throws <a href="../../db/DBException.html" title="class in org.eclipse.net4j.db">DBException</a></pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#createTables-java.lang.Iterable-java.sql.Connection-">createTables</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
+<dd><code><a href="../../db/IDBAdapter.html#createTables(java.lang.Iterable,java.sql.Connection)">createTables</a></code>&nbsp;in interface&nbsp;<code><a href="../../db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/db/DBException.html" title="class in org.eclipse.net4j.db">DBException</a></code></dd>
+<dd><code><a href="../../db/DBException.html" title="class in org.eclipse.net4j.db">DBException</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="createTable-org.eclipse.net4j.db.ddl.IDBTable-java.sql.Statement-">
+<a id="createTable(org.eclipse.net4j.db.ddl.IDBTable,java.sql.Statement)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createTable</h4>
-<pre>public&nbsp;boolean&nbsp;createTable(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
+<pre class="methodSignature">public&nbsp;boolean&nbsp;createTable&#8203;(<a href="../../db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
                            java.sql.Statement&nbsp;statement)
-                    throws <a href="../../../../../org/eclipse/net4j/db/DBException.html" title="class in org.eclipse.net4j.db">DBException</a></pre>
+                    throws <a href="../../db/DBException.html" title="class in org.eclipse.net4j.db">DBException</a></pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#createTable-org.eclipse.net4j.db.ddl.IDBTable-java.sql.Statement-">createTable</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
+<dd><code><a href="../../db/IDBAdapter.html#createTable(org.eclipse.net4j.db.ddl.IDBTable,java.sql.Statement)">createTable</a></code>&nbsp;in interface&nbsp;<code><a href="../../db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/db/DBException.html" title="class in org.eclipse.net4j.db">DBException</a></code></dd>
+<dd><code><a href="../../db/DBException.html" title="class in org.eclipse.net4j.db">DBException</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="dropTables-java.lang.Iterable-java.sql.Connection-">
+<a id="dropTables(java.lang.Iterable,java.sql.Connection)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>dropTables</h4>
-<pre>public&nbsp;java.util.Collection&lt;<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;&nbsp;dropTables(java.lang.Iterable&lt;? extends <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;&nbsp;tables,
+<pre class="methodSignature">public&nbsp;java.util.Collection&lt;<a href="../../db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;&nbsp;dropTables&#8203;(java.lang.Iterable&lt;? extends <a href="../../db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;&nbsp;tables,
                                                  java.sql.Connection&nbsp;connection)
-                                          throws <a href="../../../../../org/eclipse/net4j/db/DBException.html" title="class in org.eclipse.net4j.db">DBException</a></pre>
+                                          throws <a href="../../db/DBException.html" title="class in org.eclipse.net4j.db">DBException</a></pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#dropTables-java.lang.Iterable-java.sql.Connection-">dropTables</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
+<dd><code><a href="../../db/IDBAdapter.html#dropTables(java.lang.Iterable,java.sql.Connection)">dropTables</a></code>&nbsp;in interface&nbsp;<code><a href="../../db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/db/DBException.html" title="class in org.eclipse.net4j.db">DBException</a></code></dd>
+<dd><code><a href="../../db/DBException.html" title="class in org.eclipse.net4j.db">DBException</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="dropTable-org.eclipse.net4j.db.ddl.IDBTable-java.sql.Statement-">
+<a id="dropTable(org.eclipse.net4j.db.ddl.IDBTable,java.sql.Statement)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>dropTable</h4>
-<pre>public&nbsp;boolean&nbsp;dropTable(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
+<pre class="methodSignature">public&nbsp;boolean&nbsp;dropTable&#8203;(<a href="../../db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
                          java.sql.Statement&nbsp;statement)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#dropTable-org.eclipse.net4j.db.ddl.IDBTable-java.sql.Statement-">dropTable</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
+<dd><code><a href="../../db/IDBAdapter.html#dropTable(org.eclipse.net4j.db.ddl.IDBTable,java.sql.Statement)">dropTable</a></code>&nbsp;in interface&nbsp;<code><a href="../../db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="getDropTableSQL-org.eclipse.net4j.db.ddl.IDBTable-">
+<a id="getDropTableSQL(org.eclipse.net4j.db.ddl.IDBTable)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getDropTableSQL</h4>
-<pre>protected&nbsp;java.lang.String&nbsp;getDropTableSQL(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</pre>
+<pre class="methodSignature">protected&nbsp;java.lang.String&nbsp;getDropTableSQL&#8203;(<a href="../../db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</pre>
 </li>
 </ul>
-<a name="getMaxTableNameLength--">
+<a id="getMaxTableNameLength()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getMaxTableNameLength</h4>
-<pre>public&nbsp;int&nbsp;getMaxTableNameLength()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;getMaxTableNameLength()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#getMaxTableNameLength--">getMaxTableNameLength</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
+<dd><code><a href="../../db/IDBAdapter.html#getMaxTableNameLength()">getMaxTableNameLength</a></code>&nbsp;in interface&nbsp;<code><a href="../../db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
 </dl>
 </li>
 </ul>
-<a name="getMaxFieldNameLength--">
+<a id="getMaxFieldNameLength()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getMaxFieldNameLength</h4>
-<pre>public&nbsp;int&nbsp;getMaxFieldNameLength()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;getMaxFieldNameLength()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#getMaxFieldNameLength--">getMaxFieldNameLength</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
+<dd><code><a href="../../db/IDBAdapter.html#getMaxFieldNameLength()">getMaxFieldNameLength</a></code>&nbsp;in interface&nbsp;<code><a href="../../db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
 </dl>
 </li>
 </ul>
-<a name="getFieldLength-org.eclipse.net4j.db.DBType-">
+<a id="getFieldLength(org.eclipse.net4j.db.DBType)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getFieldLength</h4>
-<pre>public&nbsp;int&nbsp;getFieldLength(<a href="../../../../../org/eclipse/net4j/db/DBType.html" title="enum in org.eclipse.net4j.db">DBType</a>&nbsp;type)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#getFieldLength-org.eclipse.net4j.db.DBType-">IDBAdapter</a></code></span></div>
+<pre class="methodSignature">public&nbsp;int&nbsp;getFieldLength&#8203;(<a href="../../db/DBType.html" title="enum in org.eclipse.net4j.db">DBType</a>&nbsp;type)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../db/IDBAdapter.html#getFieldLength(org.eclipse.net4j.db.DBType)">IDBAdapter</a></code></span></div>
 <div class="block">Returns the column length for the given database type.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#getFieldLength-org.eclipse.net4j.db.DBType-">getFieldLength</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
+<dd><code><a href="../../db/IDBAdapter.html#getFieldLength(org.eclipse.net4j.db.DBType)">getFieldLength</a></code>&nbsp;in interface&nbsp;<code><a href="../../db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>type</code> - the <a href="../../../../../org/eclipse/net4j/db/DBType.html" title="enum in org.eclipse.net4j.db"><code>DBType</code></a> to check.</dd>
+<dd><code>type</code> - the <a href="../../db/DBType.html" title="enum in org.eclipse.net4j.db"><code>DBType</code></a> to check.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the supported column length for the type.</dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -1125,39 +1263,39 @@ public&nbsp;javax.sql.DataSource&nbsp;createJDBCDataSource()</pre>
 </dl>
 </li>
 </ul>
-<a name="isTypeIndexable-org.eclipse.net4j.db.DBType-">
+<a id="isTypeIndexable(org.eclipse.net4j.db.DBType)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>isTypeIndexable</h4>
-<pre>public&nbsp;boolean&nbsp;isTypeIndexable(<a href="../../../../../org/eclipse/net4j/db/DBType.html" title="enum in org.eclipse.net4j.db">DBType</a>&nbsp;type)</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;isTypeIndexable&#8203;(<a href="../../db/DBType.html" title="enum in org.eclipse.net4j.db">DBType</a>&nbsp;type)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#isTypeIndexable-org.eclipse.net4j.db.DBType-">isTypeIndexable</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
+<dd><code><a href="../../db/IDBAdapter.html#isTypeIndexable(org.eclipse.net4j.db.DBType)">isTypeIndexable</a></code>&nbsp;in interface&nbsp;<code><a href="../../db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="toString--">
+<a id="toString()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>toString</h4>
-<pre>public&nbsp;java.lang.String&nbsp;toString()</pre>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;toString()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>toString</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
 </dl>
 </li>
 </ul>
-<a name="convertString-java.sql.PreparedStatement-int-java.lang.String-">
+<a id="convertString(java.sql.PreparedStatement,int,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>convertString</h4>
-<pre>public&nbsp;java.lang.String&nbsp;convertString(java.sql.PreparedStatement&nbsp;preparedStatement,
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;convertString&#8203;(java.sql.PreparedStatement&nbsp;preparedStatement,
                                       int&nbsp;parameterIndex,
                                       java.lang.String&nbsp;value)</pre>
 <dl>
@@ -1166,13 +1304,13 @@ public&nbsp;javax.sql.DataSource&nbsp;createJDBCDataSource()</pre>
 </dl>
 </li>
 </ul>
-<a name="convertString-java.sql.ResultSet-int-java.lang.String-">
+<a id="convertString(java.sql.ResultSet,int,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>convertString</h4>
-<pre>public&nbsp;java.lang.String&nbsp;convertString(java.sql.ResultSet&nbsp;resultSet,
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;convertString&#8203;(java.sql.ResultSet&nbsp;resultSet,
                                       int&nbsp;columnIndex,
                                       java.lang.String&nbsp;value)</pre>
 <dl>
@@ -1181,13 +1319,13 @@ public&nbsp;javax.sql.DataSource&nbsp;createJDBCDataSource()</pre>
 </dl>
 </li>
 </ul>
-<a name="convertString-java.sql.ResultSet-java.lang.String-java.lang.String-">
+<a id="convertString(java.sql.ResultSet,java.lang.String,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>convertString</h4>
-<pre>public&nbsp;java.lang.String&nbsp;convertString(java.sql.ResultSet&nbsp;resultSet,
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;convertString&#8203;(java.sql.ResultSet&nbsp;resultSet,
                                       java.lang.String&nbsp;columnLabel,
                                       java.lang.String&nbsp;value)</pre>
 <dl>
@@ -1196,13 +1334,13 @@ public&nbsp;javax.sql.DataSource&nbsp;createJDBCDataSource()</pre>
 </dl>
 </li>
 </ul>
-<a name="doCreateTable-org.eclipse.net4j.db.ddl.IDBTable-java.sql.Statement-">
+<a id="doCreateTable(org.eclipse.net4j.db.ddl.IDBTable,java.sql.Statement)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>doCreateTable</h4>
-<pre>protected&nbsp;void&nbsp;doCreateTable(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
+<pre class="methodSignature">protected&nbsp;void&nbsp;doCreateTable&#8203;(<a href="../../db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
                              java.sql.Statement&nbsp;statement)
                       throws java.sql.SQLException</pre>
 <dl>
@@ -1213,13 +1351,13 @@ public&nbsp;javax.sql.DataSource&nbsp;createJDBCDataSource()</pre>
 </dl>
 </li>
 </ul>
-<a name="createIndex-org.eclipse.net4j.db.ddl.IDBIndex-java.sql.Statement-int-">
+<a id="createIndex(org.eclipse.net4j.db.ddl.IDBIndex,java.sql.Statement,int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createIndex</h4>
-<pre>protected&nbsp;void&nbsp;createIndex(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
+<pre class="methodSignature">protected&nbsp;void&nbsp;createIndex&#8203;(<a href="../../db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
                            java.sql.Statement&nbsp;statement,
                            int&nbsp;num)
                     throws java.sql.SQLException</pre>
@@ -1231,121 +1369,121 @@ public&nbsp;javax.sql.DataSource&nbsp;createJDBCDataSource()</pre>
 </dl>
 </li>
 </ul>
-<a name="addIndexField-java.lang.StringBuilder-org.eclipse.net4j.db.ddl.IDBField-">
+<a id="addIndexField(java.lang.StringBuilder,org.eclipse.net4j.db.ddl.IDBField)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>addIndexField</h4>
-<pre>protected&nbsp;void&nbsp;addIndexField(java.lang.StringBuilder&nbsp;builder,
-                             <a href="../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</pre>
+<pre class="methodSignature">protected&nbsp;void&nbsp;addIndexField&#8203;(java.lang.StringBuilder&nbsp;builder,
+                             <a href="../../db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</pre>
 </li>
 </ul>
-<a name="createConstraints-org.eclipse.net4j.db.ddl.IDBTable-">
+<a id="createConstraints(org.eclipse.net4j.db.ddl.IDBTable)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createConstraints</h4>
-<pre>protected&nbsp;java.lang.String&nbsp;createConstraints(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</pre>
+<pre class="methodSignature">protected&nbsp;java.lang.String&nbsp;createConstraints&#8203;(<a href="../../db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
 </dl>
 </li>
 </ul>
-<a name="createFieldDefinition-org.eclipse.net4j.db.ddl.IDBField-">
+<a id="createFieldDefinition(org.eclipse.net4j.db.ddl.IDBField)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createFieldDefinition</h4>
-<pre>protected&nbsp;java.lang.String&nbsp;createFieldDefinition(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</pre>
+<pre class="methodSignature">protected&nbsp;java.lang.String&nbsp;createFieldDefinition&#8203;(<a href="../../db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
 </dl>
 </li>
 </ul>
-<a name="getTypeName-org.eclipse.net4j.db.ddl.IDBField-">
+<a id="getTypeName(org.eclipse.net4j.db.ddl.IDBField)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getTypeName</h4>
-<pre>protected&nbsp;java.lang.String&nbsp;getTypeName(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</pre>
+<pre class="methodSignature">protected&nbsp;java.lang.String&nbsp;getTypeName&#8203;(<a href="../../db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</pre>
 </li>
 </ul>
-<a name="getSQL92ReservedWords--">
+<a id="getSQL92ReservedWords()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getSQL92ReservedWords</h4>
-<pre>public&nbsp;java.lang.String[]&nbsp;getSQL92ReservedWords()</pre>
+<pre class="methodSignature">public&nbsp;java.lang.String[]&nbsp;getSQL92ReservedWords()</pre>
 </li>
 </ul>
-<a name="isReservedWord-java.lang.String-">
+<a id="isReservedWord(java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>isReservedWord</h4>
-<pre>public&nbsp;boolean&nbsp;isReservedWord(java.lang.String&nbsp;word)</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;isReservedWord&#8203;(java.lang.String&nbsp;word)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#isReservedWord-java.lang.String-">isReservedWord</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
+<dd><code><a href="../../db/IDBAdapter.html#isReservedWord(java.lang.String)">isReservedWord</a></code>&nbsp;in interface&nbsp;<code><a href="../../db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="validateTable-org.eclipse.net4j.db.ddl.IDBTable-java.sql.Statement-">
+<a id="validateTable(org.eclipse.net4j.db.ddl.IDBTable,java.sql.Statement)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>validateTable</h4>
-<pre>protected&nbsp;void&nbsp;validateTable(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
+<pre class="methodSignature">protected&nbsp;void&nbsp;validateTable&#8203;(<a href="../../db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
                              java.sql.Statement&nbsp;statement)
-                      throws <a href="../../../../../org/eclipse/net4j/db/DBException.html" title="class in org.eclipse.net4j.db">DBException</a></pre>
+                      throws <a href="../../db/DBException.html" title="class in org.eclipse.net4j.db">DBException</a></pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/db/DBException.html" title="class in org.eclipse.net4j.db">DBException</a></code></dd>
+<dd><code><a href="../../db/DBException.html" title="class in org.eclipse.net4j.db">DBException</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
 </dl>
 </li>
 </ul>
-<a name="createFieldDefinitions-org.eclipse.net4j.db.ddl.IDBTable-">
+<a id="createFieldDefinitions(org.eclipse.net4j.db.ddl.IDBTable)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createFieldDefinitions</h4>
-<pre>protected&nbsp;java.lang.String[]&nbsp;createFieldDefinitions(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</pre>
+<pre class="methodSignature">protected&nbsp;java.lang.String[]&nbsp;createFieldDefinitions&#8203;(<a href="../../db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
 </li>
 </ul>
-<a name="appendFieldNames-java.lang.Appendable-org.eclipse.net4j.db.ddl.IDBTable-">
+<a id="appendFieldNames(java.lang.Appendable,org.eclipse.net4j.db.ddl.IDBTable)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>appendFieldNames</h4>
-<pre>public&nbsp;void&nbsp;appendFieldNames(java.lang.Appendable&nbsp;appendable,
-                             <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;appendFieldNames&#8203;(java.lang.Appendable&nbsp;appendable,
+                             <a href="../../db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</pre>
 </li>
 </ul>
-<a name="appendFieldDefs-java.lang.Appendable-org.eclipse.net4j.db.ddl.IDBTable-java.lang.String:A-">
+<a id="appendFieldDefs(java.lang.Appendable,org.eclipse.net4j.db.ddl.IDBTable,java.lang.String[])">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>appendFieldDefs</h4>
-<pre>protected&nbsp;void&nbsp;appendFieldDefs(java.lang.Appendable&nbsp;appendable,
-                               <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
+<pre class="methodSignature">protected&nbsp;void&nbsp;appendFieldDefs&#8203;(java.lang.Appendable&nbsp;appendable,
+                               <a href="../../db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
                                java.lang.String[]&nbsp;defs)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -1353,127 +1491,127 @@ public&nbsp;javax.sql.DataSource&nbsp;createJDBCDataSource()</pre>
 </dl>
 </li>
 </ul>
-<a name="adaptType-org.eclipse.net4j.db.DBType-">
+<a id="adaptType(org.eclipse.net4j.db.DBType)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>adaptType</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/db/DBType.html" title="enum in org.eclipse.net4j.db">DBType</a>&nbsp;adaptType(<a href="../../../../../org/eclipse/net4j/db/DBType.html" title="enum in org.eclipse.net4j.db">DBType</a>&nbsp;type)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#adaptType-org.eclipse.net4j.db.DBType-">IDBAdapter</a></code></span></div>
+<pre class="methodSignature">public&nbsp;<a href="../../db/DBType.html" title="enum in org.eclipse.net4j.db">DBType</a>&nbsp;adaptType&#8203;(<a href="../../db/DBType.html" title="enum in org.eclipse.net4j.db">DBType</a>&nbsp;type)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../db/IDBAdapter.html#adaptType(org.eclipse.net4j.db.DBType)">IDBAdapter</a></code></span></div>
 <div class="block">Provide a way for the DBAdapter to override unsupported DB types with replacements. The default implementation just
  returns the given type. Subclasses may override single types with replacements.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#adaptType-org.eclipse.net4j.db.DBType-">adaptType</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
+<dd><code><a href="../../db/IDBAdapter.html#adaptType(org.eclipse.net4j.db.DBType)">adaptType</a></code>&nbsp;in interface&nbsp;<code><a href="../../db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
 </dl>
 </li>
 </ul>
-<a name="isValidFirstChar-char-">
+<a id="isValidFirstChar(char)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>isValidFirstChar</h4>
-<pre>public&nbsp;boolean&nbsp;isValidFirstChar(char&nbsp;ch)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#isValidFirstChar-char-">IDBAdapter</a></code></span></div>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;isValidFirstChar&#8203;(char&nbsp;ch)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../db/IDBAdapter.html#isValidFirstChar(char)">IDBAdapter</a></code></span></div>
 <div class="block">Check if a character is valid as first character. (e.g., underscores are forbidden as first character in Derby
  elements.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#isValidFirstChar-char-">isValidFirstChar</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
+<dd><code><a href="../../db/IDBAdapter.html#isValidFirstChar(char)">isValidFirstChar</a></code>&nbsp;in interface&nbsp;<code><a href="../../db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.0</dd>
 </dl>
 </li>
 </ul>
-<a name="isDuplicateKeyException-java.sql.SQLException-">
+<a id="isDuplicateKeyException(java.sql.SQLException)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>isDuplicateKeyException</h4>
-<pre>public&nbsp;boolean&nbsp;isDuplicateKeyException(java.sql.SQLException&nbsp;ex)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#isDuplicateKeyException-java.sql.SQLException-">IDBAdapter</a></code></span></div>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;isDuplicateKeyException&#8203;(java.sql.SQLException&nbsp;ex)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../db/IDBAdapter.html#isDuplicateKeyException(java.sql.SQLException)">IDBAdapter</a></code></span></div>
 <div class="block">Check if an exception indicates a constraint violation (duplicate key)</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#isDuplicateKeyException-java.sql.SQLException-">isDuplicateKeyException</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
+<dd><code><a href="../../db/IDBAdapter.html#isDuplicateKeyException(java.sql.SQLException)">isDuplicateKeyException</a></code>&nbsp;in interface&nbsp;<code><a href="../../db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.0</dd>
 </dl>
 </li>
 </ul>
-<a name="isTableNotFoundException-java.sql.SQLException-">
+<a id="isTableNotFoundException(java.sql.SQLException)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>isTableNotFoundException</h4>
-<pre>public&nbsp;boolean&nbsp;isTableNotFoundException(java.sql.SQLException&nbsp;ex)</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;isTableNotFoundException&#8203;(java.sql.SQLException&nbsp;ex)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#isTableNotFoundException-java.sql.SQLException-">isTableNotFoundException</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
+<dd><code><a href="../../db/IDBAdapter.html#isTableNotFoundException(java.sql.SQLException)">isTableNotFoundException</a></code>&nbsp;in interface&nbsp;<code><a href="../../db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
 </li>
 </ul>
-<a name="isColumnNotFoundException-java.sql.SQLException-">
+<a id="isColumnNotFoundException(java.sql.SQLException)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>isColumnNotFoundException</h4>
-<pre>public&nbsp;boolean&nbsp;isColumnNotFoundException(java.sql.SQLException&nbsp;ex)</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;isColumnNotFoundException&#8203;(java.sql.SQLException&nbsp;ex)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#isColumnNotFoundException-java.sql.SQLException-">isColumnNotFoundException</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
+<dd><code><a href="../../db/IDBAdapter.html#isColumnNotFoundException(java.sql.SQLException)">isColumnNotFoundException</a></code>&nbsp;in interface&nbsp;<code><a href="../../db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
 </li>
 </ul>
-<a name="sqlRenameField-org.eclipse.net4j.db.ddl.IDBField-java.lang.String-">
+<a id="sqlRenameField(org.eclipse.net4j.db.ddl.IDBField,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>sqlRenameField</h4>
-<pre>public&nbsp;java.lang.String&nbsp;sqlRenameField(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field,
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;sqlRenameField&#8203;(<a href="../../db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field,
                                        java.lang.String&nbsp;oldName)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#sqlRenameField-org.eclipse.net4j.db.ddl.IDBField-java.lang.String-">sqlRenameField</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
+<dd><code><a href="../../db/IDBAdapter.html#sqlRenameField(org.eclipse.net4j.db.ddl.IDBField,java.lang.String)">sqlRenameField</a></code>&nbsp;in interface&nbsp;<code><a href="../../db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
 </li>
 </ul>
-<a name="sqlModifyField-org.eclipse.net4j.db.ddl.IDBField-">
+<a id="sqlModifyField(org.eclipse.net4j.db.ddl.IDBField)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>sqlModifyField</h4>
-<pre>public&nbsp;java.lang.String&nbsp;sqlModifyField(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</pre>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;sqlModifyField&#8203;(<a href="../../db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#sqlModifyField-org.eclipse.net4j.db.ddl.IDBField-">sqlModifyField</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
+<dd><code><a href="../../db/IDBAdapter.html#sqlModifyField(org.eclipse.net4j.db.ddl.IDBField)">sqlModifyField</a></code>&nbsp;in interface&nbsp;<code><a href="../../db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
 </li>
 </ul>
-<a name="sqlModifyField-java.lang.String-java.lang.String-java.lang.String-">
+<a id="sqlModifyField(java.lang.String,java.lang.String,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>sqlModifyField</h4>
-<pre>protected&nbsp;java.lang.String&nbsp;sqlModifyField(java.lang.String&nbsp;tableName,
+<pre class="methodSignature">protected&nbsp;java.lang.String&nbsp;sqlModifyField&#8203;(java.lang.String&nbsp;tableName,
                                           java.lang.String&nbsp;fieldName,
                                           java.lang.String&nbsp;definition)</pre>
 <dl>
@@ -1482,62 +1620,96 @@ public&nbsp;javax.sql.DataSource&nbsp;createJDBCDataSource()</pre>
 </dl>
 </li>
 </ul>
-<a name="format-java.sql.PreparedStatement-">
+<a id="format(java.sql.PreparedStatement)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>format</h4>
-<pre>public&nbsp;java.lang.String&nbsp;format(java.sql.PreparedStatement&nbsp;stmt)</pre>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;format&#8203;(java.sql.PreparedStatement&nbsp;stmt)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
 </li>
 </ul>
-<a name="format-java.sql.ResultSet-">
+<a id="format(java.sql.ResultSet)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>format</h4>
-<pre>public&nbsp;java.lang.String&nbsp;format(java.sql.ResultSet&nbsp;resultSet)</pre>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;format&#8203;(java.sql.ResultSet&nbsp;resultSet)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
 </li>
 </ul>
-<a name="getDefaultDBLength-org.eclipse.net4j.db.DBType-">
+<a id="convertToSQL(java.lang.Object)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>convertToSQL</h4>
+<pre class="methodSignature">public&nbsp;java.lang.Object&nbsp;convertToSQL&#8203;(java.lang.Object&nbsp;value)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.9</dd>
+</dl>
+</li>
+</ul>
+<a id="getDefaultDBLength(org.eclipse.net4j.db.DBType)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getDefaultDBLength</h4>
+<pre class="methodSignature">public static&nbsp;int&nbsp;getDefaultDBLength&#8203;(<a href="../../db/DBType.html" title="enum in org.eclipse.net4j.db">DBType</a>&nbsp;type)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.2</dd>
+</dl>
+</li>
+</ul>
+<a id="generateReservedWords(java.sql.Connection,java.lang.String[])">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>getDefaultDBLength</h4>
-<pre>public static&nbsp;int&nbsp;getDefaultDBLength(<a href="../../../../../org/eclipse/net4j/db/DBType.html" title="enum in org.eclipse.net4j.db">DBType</a>&nbsp;type)</pre>
+<h4>generateReservedWords</h4>
+<pre class="methodSignature">protected static&nbsp;void&nbsp;generateReservedWords&#8203;(java.sql.Connection&nbsp;connection,
+                                            java.lang.String[]&nbsp;words)
+                                     throws java.sql.SQLException</pre>
 <dl>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code>java.sql.SQLException</code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
-<dd>4.2</dd>
+<dd>4.9</dd>
 </dl>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/DBAdapter.html">Use</a></li>
@@ -1547,16 +1719,8 @@ public&nbsp;javax.sql.DataSource&nbsp;createJDBCDataSource()</pre>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev&nbsp;Class</li>
-<li><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.FieldInfo.html" title="class in org.eclipse.net4j.spi.db"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/net4j/spi/db/DBAdapter.html" target="_top">Frames</a></li>
-<li><a href="DBAdapter.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -1569,12 +1733,15 @@ public&nbsp;javax.sql.DataSource&nbsp;createJDBCDataSource()</pre>
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
@@ -1585,10 +1752,12 @@ public&nbsp;javax.sql.DataSource&nbsp;createJDBCDataSource()</pre>
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

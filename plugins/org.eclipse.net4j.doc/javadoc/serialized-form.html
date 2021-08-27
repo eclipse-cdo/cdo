@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>Serialized Form (Net4j Signalling Platform Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="script.js"></script>
+<script type="text/javascript" src="jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,20 +28,25 @@
     catch(err) {
     }
 //-->
-</script>
+var pathtoroot = "./";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="overview-summary.html">Overview</a></li>
+<li><a href="index.html">Overview</a></li>
 <li>Package</li>
 <li>Class</li>
 <li>Use</li>
@@ -41,16 +56,14 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev</li>
-<li>Next</li>
-</ul>
-<ul class="navList">
-<li><a href="index.html?serialized-form.html" target="_top">Frames</a></li>
-<li><a href="serialized-form.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -63,20 +76,33 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
+<main role="main">
 <div class="header">
 <h1 title="Serialized Form" class="title">Serialized Form</h1>
 </div>
 <div class="serializedFormContainer">
 <ul class="blockList">
 <li class="blockList">
+<section role="region">
 <h2 title="Package">Package&nbsp;org.eclipse.net4j.channel</h2>
 <ul class="blockList">
-<li class="blockList"><a name="org.eclipse.net4j.channel.ChannelException">
+<li class="blockList"><a id="org.eclipse.net4j.channel.ChannelException">
 <!--   -->
 </a>
 <h3>Class <a href="org/eclipse/net4j/channel/ChannelException.html" title="class in org.eclipse.net4j.channel">org.eclipse.net4j.channel.ChannelException</a> extends java.lang.RuntimeException implements Serializable</h3>
@@ -86,11 +112,13 @@
 </dl>
 </li>
 </ul>
+</section>
 </li>
 <li class="blockList">
+<section role="region">
 <h2 title="Package">Package&nbsp;org.eclipse.net4j.connector</h2>
 <ul class="blockList">
-<li class="blockList"><a name="org.eclipse.net4j.connector.ConnectorException">
+<li class="blockList"><a id="org.eclipse.net4j.connector.ConnectorException">
 <!--   -->
 </a>
 <h3>Class <a href="org/eclipse/net4j/connector/ConnectorException.html" title="class in org.eclipse.net4j.connector">org.eclipse.net4j.connector.ConnectorException</a> extends java.lang.RuntimeException implements Serializable</h3>
@@ -100,11 +128,13 @@
 </dl>
 </li>
 </ul>
+</section>
 </li>
 <li class="blockList">
+<section role="region">
 <h2 title="Package">Package&nbsp;org.eclipse.net4j.protocol</h2>
 <ul class="blockList">
-<li class="blockList"><a name="org.eclipse.net4j.protocol.ProtocolVersionException">
+<li class="blockList"><a id="org.eclipse.net4j.protocol.ProtocolVersionException">
 <!--   -->
 </a>
 <h3>Class <a href="org/eclipse/net4j/protocol/ProtocolVersionException.html" title="class in org.eclipse.net4j.protocol">org.eclipse.net4j.protocol.ProtocolVersionException</a> extends java.lang.IllegalStateException implements Serializable</h3>
@@ -114,11 +144,13 @@
 </dl>
 </li>
 </ul>
+</section>
 </li>
 <li class="blockList">
+<section role="region">
 <h2 title="Package">Package&nbsp;org.eclipse.net4j.signal</h2>
 <ul class="blockList">
-<li class="blockList"><a name="org.eclipse.net4j.signal.RemoteException">
+<li class="blockList"><a id="org.eclipse.net4j.signal.RemoteException">
 <!--   -->
 </a>
 <h3>Class <a href="org/eclipse/net4j/signal/RemoteException.html" title="class in org.eclipse.net4j.signal">org.eclipse.net4j.signal.RemoteException</a> extends java.lang.RuntimeException implements Serializable</h3>
@@ -131,21 +163,21 @@
 <h3>Serialized Fields</h3>
 <ul class="blockList">
 <li class="blockList">
-<h4>whileResponding</h4>
-<pre>boolean whileResponding</pre>
-</li>
-<li class="blockListLast">
 <h4>localStackTrace</h4>
 <pre>java.lang.StackTraceElement[] localStackTrace</pre>
 </li>
-</ul>
+<li class="blockListLast">
+<h4>whileResponding</h4>
+<pre>boolean whileResponding</pre>
 </li>
 </ul>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.signal.SignalFinishedEvent">
+</ul>
+</li>
+<li class="blockList"><a id="org.eclipse.net4j.signal.SignalFinishedEvent">
 <!--   -->
 </a>
-<h3>Class <a href="org/eclipse/net4j/signal/SignalFinishedEvent.html" title="class in org.eclipse.net4j.signal">org.eclipse.net4j.signal.SignalFinishedEvent</a> extends <a href="../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Event.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">Event</a> implements Serializable</h3>
+<h3>Class <a href="org/eclipse/net4j/signal/SignalFinishedEvent.html" title="class in org.eclipse.net4j.signal">org.eclipse.net4j.signal.SignalFinishedEvent</a> extends org.eclipse.net4j.util.event.Event implements Serializable</h3>
 <dl class="nameValue">
 <dt>serialVersionUID:</dt>
 <dd>1L</dd>
@@ -155,18 +187,18 @@
 <h3>Serialized Fields</h3>
 <ul class="blockList">
 <li class="blockList">
-<h4>signal</h4>
-<pre><a href="org/eclipse/net4j/signal/Signal.html" title="class in org.eclipse.net4j.signal">Signal</a> signal</pre>
-</li>
-<li class="blockListLast">
 <h4>exception</h4>
 <pre>java.lang.Exception exception</pre>
 </li>
-</ul>
+<li class="blockListLast">
+<h4>signal</h4>
+<pre><a href="org/eclipse/net4j/signal/Signal.html" title="class in org.eclipse.net4j.signal">Signal</a> signal</pre>
 </li>
 </ul>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.signal.SignalProtocol.InvalidSignalIDException">
+</ul>
+</li>
+<li class="blockList"><a id="org.eclipse.net4j.signal.SignalProtocol.InvalidSignalIDException">
 <!--   -->
 </a>
 <h3>Class <a href="org/eclipse/net4j/signal/SignalProtocol.InvalidSignalIDException.html" title="class in org.eclipse.net4j.signal">org.eclipse.net4j.signal.SignalProtocol.InvalidSignalIDException</a> extends java.lang.IllegalArgumentException implements Serializable</h3>
@@ -186,10 +218,10 @@
 </li>
 </ul>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.signal.SignalProtocol.TimeoutChangedEvent">
+<li class="blockList"><a id="org.eclipse.net4j.signal.SignalProtocol.TimeoutChangedEvent">
 <!--   -->
 </a>
-<h3>Class <a href="org/eclipse/net4j/signal/SignalProtocol.TimeoutChangedEvent.html" title="class in org.eclipse.net4j.signal">org.eclipse.net4j.signal.SignalProtocol.TimeoutChangedEvent</a> extends <a href="../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Event.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">Event</a> implements Serializable</h3>
+<h3>Class <a href="org/eclipse/net4j/signal/SignalProtocol.TimeoutChangedEvent.html" title="class in org.eclipse.net4j.signal">org.eclipse.net4j.signal.SignalProtocol.TimeoutChangedEvent</a> extends org.eclipse.net4j.util.event.Event implements Serializable</h3>
 <dl class="nameValue">
 <dt>serialVersionUID:</dt>
 <dd>1L</dd>
@@ -199,21 +231,21 @@
 <h3>Serialized Fields</h3>
 <ul class="blockList">
 <li class="blockList">
-<h4>oldTimeout</h4>
-<pre>long oldTimeout</pre>
-</li>
-<li class="blockListLast">
 <h4>newTimeout</h4>
 <pre>long newTimeout</pre>
 </li>
-</ul>
+<li class="blockListLast">
+<h4>oldTimeout</h4>
+<pre>long oldTimeout</pre>
 </li>
 </ul>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.signal.SignalScheduledEvent">
+</ul>
+</li>
+<li class="blockList"><a id="org.eclipse.net4j.signal.SignalScheduledEvent">
 <!--   -->
 </a>
-<h3>Class <a href="org/eclipse/net4j/signal/SignalScheduledEvent.html" title="class in org.eclipse.net4j.signal">org.eclipse.net4j.signal.SignalScheduledEvent</a> extends <a href="../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Event.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">Event</a> implements Serializable</h3>
+<h3>Class <a href="org/eclipse/net4j/signal/SignalScheduledEvent.html" title="class in org.eclipse.net4j.signal">org.eclipse.net4j.signal.SignalScheduledEvent</a> extends org.eclipse.net4j.util.event.Event implements Serializable</h3>
 <dl class="nameValue">
 <dt>serialVersionUID:</dt>
 <dd>1L</dd>
@@ -231,11 +263,13 @@
 </ul>
 </li>
 </ul>
+</section>
 </li>
 <li class="blockList">
+<section role="region">
 <h2 title="Package">Package&nbsp;org.eclipse.net4j.ws.jetty</h2>
 <ul class="blockList">
-<li class="blockList"><a name="org.eclipse.net4j.ws.jetty.Net4jWebSocketServlet">
+<li class="blockList"><a id="org.eclipse.net4j.ws.jetty.Net4jWebSocketServlet">
 <!--   -->
 </a>
 <h3>Class <a href="org/eclipse/net4j/ws/jetty/Net4jWebSocketServlet.html" title="class in org.eclipse.net4j.ws.jetty">org.eclipse.net4j.ws.jetty.Net4jWebSocketServlet</a> extends org.eclipse.jetty.websocket.servlet.WebSocketServlet implements Serializable</h3>
@@ -245,11 +279,13 @@
 </dl>
 </li>
 </ul>
+</section>
 </li>
 <li class="blockList">
+<section role="region">
 <h2 title="Package">Package&nbsp;org.eclipse.spi.net4j</h2>
 <ul class="blockList">
-<li class="blockList"><a name="org.eclipse.spi.net4j.Channel.SendQueue">
+<li class="blockList"><a id="org.eclipse.spi.net4j.Channel.SendQueue">
 <!--   -->
 </a>
 <h3>Class <a href="org/eclipse/spi/net4j/Channel.SendQueue.html" title="class in org.eclipse.spi.net4j">org.eclipse.spi.net4j.Channel.SendQueue</a> extends java.util.concurrent.ConcurrentLinkedQueue&lt;<a href="org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&gt; implements Serializable</h3>
@@ -270,19 +306,23 @@
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
+</main>
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="overview-summary.html">Overview</a></li>
+<li><a href="index.html">Overview</a></li>
 <li>Package</li>
 <li>Class</li>
 <li>Use</li>
@@ -292,16 +332,8 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev</li>
-<li>Next</li>
-</ul>
-<ul class="navList">
-<li><a href="index.html?serialized-form.html" target="_top">Frames</a></li>
-<li><a href="serialized-form.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -314,11 +346,16 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>Uses of Interface org.eclipse.emf.cdo.common.id.CDOWithID (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,39 +28,43 @@
     catch(err) {
     }
 //-->
-</script>
+var pathtoroot = "../../../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../../index.html">Overview</a></li>
 <li><a href="../package-summary.html">Package</a></li>
-<li><a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">Class</a></li>
+<li><a href="../CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">Class</a></li>
 <li class="navBarCell1Rev">Use</li>
+<li><a href="../package-tree.html">Tree</a></li>
 <li><a href="../../../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../../../help-doc.html">Help</a></li>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev</li>
-<li>Next</li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../../index.html?org/eclipse/emf/cdo/common/id/class-use/CDOWithID.html" target="_top">Frames</a></li>
-<li><a href="CDOWithID.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -63,92 +77,104 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
+<main role="main">
 <div class="header">
 <h2 title="Uses of Interface org.eclipse.emf.cdo.common.id.CDOWithID" class="title">Uses of Interface<br>org.eclipse.emf.cdo.common.id.CDOWithID</h2>
 </div>
 <div class="classUseContainer">
 <ul class="blockList">
 <li class="blockList">
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing packages, and an explanation">
-<caption><span>Packages that use <a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Packages that use <a href="../CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Package</th>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo">org.eclipse.emf.cdo</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo">org.eclipse.emf.cdo</a></th>
 <td class="colLast">
-<div class="block">Client concepts like <a href="../../../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>CDOObject</code></a> and <a href="../../../../../../../org/eclipse/emf/cdo/CDOState.html" title="enum in org.eclipse.emf.cdo"><code>CDOState</code></a>.</div>
+<div class="block">Client concepts like <a href="../../../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>CDOObject</code></a> and <a href="../../../CDOState.html" title="enum in org.eclipse.emf.cdo"><code>CDOState</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.eresource">org.eclipse.emf.cdo.eresource</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.eresource">org.eclipse.emf.cdo.eresource</a></th>
 <td class="colLast">
 <div class="block">The generated EMF API of the CDO repository file system.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.eresource.impl">org.eclipse.emf.cdo.eresource.impl</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.eresource.impl">org.eclipse.emf.cdo.eresource.impl</a></th>
 <td class="colLast">
 <div class="block">The generated EMF implementation of the CDO repository file system.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.etypes">org.eclipse.emf.cdo.etypes</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.etypes">org.eclipse.emf.cdo.etypes</a></th>
 <td class="colLast">
 <div class="block">The generated EMF API of the CDO system data types and native annotations.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.etypes.impl">org.eclipse.emf.cdo.etypes.impl</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.etypes.impl">org.eclipse.emf.cdo.etypes.impl</a></th>
 <td class="colLast">
 <div class="block">The generated EMF implementation of the CDO system data types and native annotations.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.expressions">org.eclipse.emf.cdo.expressions</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.expressions">org.eclipse.emf.cdo.expressions</a></th>
 <td class="colLast">
 <div class="block">The generated EMF API of the CDO expressions model.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.expressions.impl">org.eclipse.emf.cdo.expressions.impl</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.expressions.impl">org.eclipse.emf.cdo.expressions.impl</a></th>
 <td class="colLast">
 <div class="block">The generated EMF implementation of the CDO expressions model.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.security">org.eclipse.emf.cdo.security</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.security">org.eclipse.emf.cdo.security</a></th>
 <td class="colLast">
 <div class="block">The generated EMF API of the CDO security model.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.security.impl">org.eclipse.emf.cdo.security.impl</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.security.impl">org.eclipse.emf.cdo.security.impl</a></th>
 <td class="colLast">
 <div class="block">The generated EMF implementation of the CDO security model.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.view">org.eclipse.emf.cdo.view</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.view">org.eclipse.emf.cdo.view</a></th>
 <td class="colLast">
 <div class="block">Client concepts for dealing with views, view sets, queries, CDO objects and EMF resource sets.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.emf.internal.cdo">org.eclipse.emf.internal.cdo</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.internal.cdo">org.eclipse.emf.internal.cdo</a></th>
 <td class="colLast">
-<div class="block">Exposes <a href="../../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html" title="class in org.eclipse.emf.internal.cdo"><code>CDOObjectImpl</code></a> for extension in generated EMF models.</div>
+<div class="block">Exposes <a href="../../../../internal/cdo/CDOObjectImpl.html" title="class in org.eclipse.emf.internal.cdo"><code>CDOObjectImpl</code></a> for extension in generated EMF models.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.emf.spi.cdo">org.eclipse.emf.spi.cdo</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.spi.cdo">org.eclipse.emf.spi.cdo</a></th>
 <td class="colLast">
 <div class="block">Client service provider interfaces and useful base implementations.</div>
 </td>
@@ -158,949 +184,1074 @@
 </li>
 <li class="blockList">
 <ul class="blockList">
-<li class="blockList"><a name="org.eclipse.emf.cdo">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.emf.cdo">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a> in <a href="../../../../../../../org/eclipse/emf/cdo/package-summary.html">org.eclipse.emf.cdo</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing subinterfaces, and an explanation">
-<caption><span>Subinterfaces of <a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a> in <a href="../../../../../../../org/eclipse/emf/cdo/package-summary.html">org.eclipse.emf.cdo</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a> in <a href="../../../package-summary.html">org.eclipse.emf.cdo</a></h3>
+<table class="useSummary">
+<caption><span>Subinterfaces of <a href="../CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a> in <a href="../../../package-summary.html">org.eclipse.emf.cdo</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Interface and Description</th>
+<th class="colSecond" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a></span></code>
-<div class="block">A specialized subinterface of <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>EObject</code></a> that is exposed by all CDO objects and allows access to special CDO
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a></span></code></th>
+<td class="colLast">
+<div class="block">A specialized subinterface of <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>EObject</code></a> that is exposed by all CDO objects and allows access to special CDO
  properties and features of those objects.</div>
 </td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.eresource">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.emf.cdo.eresource">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a> in <a href="../../../../../../../org/eclipse/emf/cdo/eresource/package-summary.html">org.eclipse.emf.cdo.eresource</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing subinterfaces, and an explanation">
-<caption><span>Subinterfaces of <a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a> in <a href="../../../../../../../org/eclipse/emf/cdo/eresource/package-summary.html">org.eclipse.emf.cdo.eresource</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a> in <a href="../../../eresource/package-summary.html">org.eclipse.emf.cdo.eresource</a></h3>
+<table class="useSummary">
+<caption><span>Subinterfaces of <a href="../CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a> in <a href="../../../eresource/package-summary.html">org.eclipse.emf.cdo.eresource</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Interface and Description</th>
+<th class="colSecond" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/eresource/CDOBinaryResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOBinaryResource</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../eresource/CDOBinaryResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOBinaryResource</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>CDO Binary Resource</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/eresource/CDOFileResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOFileResource</a>&lt;IO&gt;</span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../eresource/CDOFileResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOFileResource</a>&lt;IO&gt;</span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>CDO File Resource</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResource</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResource</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>CDO Resource</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/eresource/CDOResourceFolder.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceFolder</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../eresource/CDOResourceFolder.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceFolder</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>CDO Resource Folder</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/eresource/CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceLeaf</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../eresource/CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceLeaf</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>CDO Resource Leaf</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceNode</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceNode</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>CDO Resource Node</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/eresource/CDOTextResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOTextResource</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../eresource/CDOTextResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOTextResource</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>CDO Text Resource</b></em>'.</div>
 </td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.eresource.impl">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.emf.cdo.eresource.impl">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a> in <a href="../../../../../../../org/eclipse/emf/cdo/eresource/impl/package-summary.html">org.eclipse.emf.cdo.eresource.impl</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../../../org/eclipse/emf/cdo/eresource/impl/package-summary.html">org.eclipse.emf.cdo.eresource.impl</a> that implement <a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a> in <a href="../../../eresource/impl/package-summary.html">org.eclipse.emf.cdo.eresource.impl</a></h3>
+<table class="useSummary">
+<caption><span>Classes in <a href="../../../eresource/impl/package-summary.html">org.eclipse.emf.cdo.eresource.impl</a> that implement <a href="../CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Class and Description</th>
+<th class="colSecond" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/eresource/impl/CDOBinaryResourceImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl">CDOBinaryResourceImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../eresource/impl/CDOBinaryResourceImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl">CDOBinaryResourceImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>CDO Binary Resource</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/eresource/impl/CDOFileResourceImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl">CDOFileResourceImpl</a>&lt;IO&gt;</span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../eresource/impl/CDOFileResourceImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl">CDOFileResourceImpl</a>&lt;IO&gt;</span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>CDO File Resource</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/eresource/impl/CDOResourceFolderImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl">CDOResourceFolderImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../eresource/impl/CDOResourceFolderImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl">CDOResourceFolderImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>CDO Resource Folder</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/eresource/impl/CDOResourceImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl">CDOResourceImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../eresource/impl/CDOResourceImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl">CDOResourceImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>CDO Resource</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/eresource/impl/CDOResourceLeafImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl">CDOResourceLeafImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../eresource/impl/CDOResourceLeafImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl">CDOResourceLeafImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>CDO Resource Leaf</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/eresource/impl/CDOResourceNodeImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl">CDOResourceNodeImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../eresource/impl/CDOResourceNodeImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl">CDOResourceNodeImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>CDO Resource Node</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/eresource/impl/CDOTextResourceImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl">CDOTextResourceImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../eresource/impl/CDOTextResourceImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl">CDOTextResourceImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>CDO Text Resource</b></em>'.</div>
 </td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.etypes">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.emf.cdo.etypes">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a> in <a href="../../../../../../../org/eclipse/emf/cdo/etypes/package-summary.html">org.eclipse.emf.cdo.etypes</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing subinterfaces, and an explanation">
-<caption><span>Subinterfaces of <a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a> in <a href="../../../../../../../org/eclipse/emf/cdo/etypes/package-summary.html">org.eclipse.emf.cdo.etypes</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a> in <a href="../../../etypes/package-summary.html">org.eclipse.emf.cdo.etypes</a></h3>
+<table class="useSummary">
+<caption><span>Subinterfaces of <a href="../CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a> in <a href="../../../etypes/package-summary.html">org.eclipse.emf.cdo.etypes</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Interface and Description</th>
+<th class="colSecond" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/etypes/Annotation.html" title="interface in org.eclipse.emf.cdo.etypes">Annotation</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../etypes/Annotation.html" title="interface in org.eclipse.emf.cdo.etypes">Annotation</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Annotation</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/etypes/ModelElement.html" title="interface in org.eclipse.emf.cdo.etypes">ModelElement</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../etypes/ModelElement.html" title="interface in org.eclipse.emf.cdo.etypes">ModelElement</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Model Element</b></em>'.</div>
 </td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.etypes.impl">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.emf.cdo.etypes.impl">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a> in <a href="../../../../../../../org/eclipse/emf/cdo/etypes/impl/package-summary.html">org.eclipse.emf.cdo.etypes.impl</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../../../org/eclipse/emf/cdo/etypes/impl/package-summary.html">org.eclipse.emf.cdo.etypes.impl</a> that implement <a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a> in <a href="../../../etypes/impl/package-summary.html">org.eclipse.emf.cdo.etypes.impl</a></h3>
+<table class="useSummary">
+<caption><span>Classes in <a href="../../../etypes/impl/package-summary.html">org.eclipse.emf.cdo.etypes.impl</a> that implement <a href="../CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Class and Description</th>
+<th class="colSecond" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/etypes/impl/AnnotationImpl.html" title="class in org.eclipse.emf.cdo.etypes.impl">AnnotationImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../etypes/impl/AnnotationImpl.html" title="class in org.eclipse.emf.cdo.etypes.impl">AnnotationImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Annotation</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/etypes/impl/ModelElementImpl.html" title="class in org.eclipse.emf.cdo.etypes.impl">ModelElementImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../etypes/impl/ModelElementImpl.html" title="class in org.eclipse.emf.cdo.etypes.impl">ModelElementImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Model Element</b></em>'.</div>
 </td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.expressions">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.emf.cdo.expressions">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a> in <a href="../../../../../../../org/eclipse/emf/cdo/expressions/package-summary.html">org.eclipse.emf.cdo.expressions</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing subinterfaces, and an explanation">
-<caption><span>Subinterfaces of <a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a> in <a href="../../../../../../../org/eclipse/emf/cdo/expressions/package-summary.html">org.eclipse.emf.cdo.expressions</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a> in <a href="../../../expressions/package-summary.html">org.eclipse.emf.cdo.expressions</a></h3>
+<table class="useSummary">
+<caption><span>Subinterfaces of <a href="../CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a> in <a href="../../../expressions/package-summary.html">org.eclipse.emf.cdo.expressions</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Interface and Description</th>
+<th class="colSecond" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/expressions/Access.html" title="interface in org.eclipse.emf.cdo.expressions">Access</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../expressions/Access.html" title="interface in org.eclipse.emf.cdo.expressions">Access</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Access</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/expressions/BooleanValue.html" title="interface in org.eclipse.emf.cdo.expressions">BooleanValue</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../expressions/BooleanValue.html" title="interface in org.eclipse.emf.cdo.expressions">BooleanValue</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Boolean Value</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/expressions/ByteValue.html" title="interface in org.eclipse.emf.cdo.expressions">ByteValue</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../expressions/ByteValue.html" title="interface in org.eclipse.emf.cdo.expressions">ByteValue</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Byte Value</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/expressions/CharValue.html" title="interface in org.eclipse.emf.cdo.expressions">CharValue</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../expressions/CharValue.html" title="interface in org.eclipse.emf.cdo.expressions">CharValue</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Char Value</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/expressions/ContainedObject.html" title="interface in org.eclipse.emf.cdo.expressions">ContainedObject</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../expressions/ContainedObject.html" title="interface in org.eclipse.emf.cdo.expressions">ContainedObject</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Contained Object</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/expressions/ContextAccess.html" title="interface in org.eclipse.emf.cdo.expressions">ContextAccess</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../expressions/ContextAccess.html" title="interface in org.eclipse.emf.cdo.expressions">ContextAccess</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Context Value</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/expressions/DoubleValue.html" title="interface in org.eclipse.emf.cdo.expressions">DoubleValue</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../expressions/DoubleValue.html" title="interface in org.eclipse.emf.cdo.expressions">DoubleValue</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Double Value</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/expressions/Expression.html" title="interface in org.eclipse.emf.cdo.expressions">Expression</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../expressions/Expression.html" title="interface in org.eclipse.emf.cdo.expressions">Expression</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Expression</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/expressions/FloatValue.html" title="interface in org.eclipse.emf.cdo.expressions">FloatValue</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../expressions/FloatValue.html" title="interface in org.eclipse.emf.cdo.expressions">FloatValue</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Float Value</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/expressions/FunctionInvocation.html" title="interface in org.eclipse.emf.cdo.expressions">FunctionInvocation</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../expressions/FunctionInvocation.html" title="interface in org.eclipse.emf.cdo.expressions">FunctionInvocation</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Function Invocation</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/expressions/IntValue.html" title="interface in org.eclipse.emf.cdo.expressions">IntValue</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../expressions/IntValue.html" title="interface in org.eclipse.emf.cdo.expressions">IntValue</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Int Value</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/expressions/Invocation.html" title="interface in org.eclipse.emf.cdo.expressions">Invocation</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../expressions/Invocation.html" title="interface in org.eclipse.emf.cdo.expressions">Invocation</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Invocation</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/expressions/LinkedExpression.html" title="interface in org.eclipse.emf.cdo.expressions">LinkedExpression</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../expressions/LinkedExpression.html" title="interface in org.eclipse.emf.cdo.expressions">LinkedExpression</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Linked Expression</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/expressions/LinkedObject.html" title="interface in org.eclipse.emf.cdo.expressions">LinkedObject</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../expressions/LinkedObject.html" title="interface in org.eclipse.emf.cdo.expressions">LinkedObject</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Object Value</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/expressions/ListConstruction.html" title="interface in org.eclipse.emf.cdo.expressions">ListConstruction</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../expressions/ListConstruction.html" title="interface in org.eclipse.emf.cdo.expressions">ListConstruction</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>List Value</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/expressions/LongValue.html" title="interface in org.eclipse.emf.cdo.expressions">LongValue</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../expressions/LongValue.html" title="interface in org.eclipse.emf.cdo.expressions">LongValue</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Long Value</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/expressions/MemberAccess.html" title="interface in org.eclipse.emf.cdo.expressions">MemberAccess</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../expressions/MemberAccess.html" title="interface in org.eclipse.emf.cdo.expressions">MemberAccess</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Member Access</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/expressions/MemberInvocation.html" title="interface in org.eclipse.emf.cdo.expressions">MemberInvocation</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../expressions/MemberInvocation.html" title="interface in org.eclipse.emf.cdo.expressions">MemberInvocation</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Member Invocation</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/expressions/ShortValue.html" title="interface in org.eclipse.emf.cdo.expressions">ShortValue</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../expressions/ShortValue.html" title="interface in org.eclipse.emf.cdo.expressions">ShortValue</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Short Value</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/expressions/StaticAccess.html" title="interface in org.eclipse.emf.cdo.expressions">StaticAccess</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../expressions/StaticAccess.html" title="interface in org.eclipse.emf.cdo.expressions">StaticAccess</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Static Access</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/expressions/StringValue.html" title="interface in org.eclipse.emf.cdo.expressions">StringValue</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../expressions/StringValue.html" title="interface in org.eclipse.emf.cdo.expressions">StringValue</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>String Value</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/expressions/Value.html" title="interface in org.eclipse.emf.cdo.expressions">Value</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../expressions/Value.html" title="interface in org.eclipse.emf.cdo.expressions">Value</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Primitive Value</b></em>'.</div>
 </td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.expressions.impl">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.emf.cdo.expressions.impl">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a> in <a href="../../../../../../../org/eclipse/emf/cdo/expressions/impl/package-summary.html">org.eclipse.emf.cdo.expressions.impl</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../../../org/eclipse/emf/cdo/expressions/impl/package-summary.html">org.eclipse.emf.cdo.expressions.impl</a> that implement <a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a> in <a href="../../../expressions/impl/package-summary.html">org.eclipse.emf.cdo.expressions.impl</a></h3>
+<table class="useSummary">
+<caption><span>Classes in <a href="../../../expressions/impl/package-summary.html">org.eclipse.emf.cdo.expressions.impl</a> that implement <a href="../CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Class and Description</th>
+<th class="colSecond" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/expressions/impl/AccessImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">AccessImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../expressions/impl/AccessImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">AccessImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Access</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/expressions/impl/BooleanValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">BooleanValueImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../expressions/impl/BooleanValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">BooleanValueImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Boolean Value</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/expressions/impl/ByteValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">ByteValueImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../expressions/impl/ByteValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">ByteValueImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Byte Value</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/expressions/impl/CharValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">CharValueImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../expressions/impl/CharValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">CharValueImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Char Value</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/expressions/impl/ContainedObjectImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">ContainedObjectImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../expressions/impl/ContainedObjectImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">ContainedObjectImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Contained Object</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/expressions/impl/ContextAccessImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">ContextAccessImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../expressions/impl/ContextAccessImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">ContextAccessImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Context Value</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/expressions/impl/DoubleValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">DoubleValueImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../expressions/impl/DoubleValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">DoubleValueImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Double Value</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/expressions/impl/FloatValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">FloatValueImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../expressions/impl/FloatValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">FloatValueImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Float Value</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/expressions/impl/FunctionInvocationImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">FunctionInvocationImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../expressions/impl/FunctionInvocationImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">FunctionInvocationImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Function Invocation</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/expressions/impl/IntValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">IntValueImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../expressions/impl/IntValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">IntValueImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Int Value</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/expressions/impl/InvocationImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">InvocationImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../expressions/impl/InvocationImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">InvocationImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Invocation</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/expressions/impl/LinkedExpressionImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">LinkedExpressionImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../expressions/impl/LinkedExpressionImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">LinkedExpressionImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Linked Expression</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/expressions/impl/LinkedObjectImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">LinkedObjectImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../expressions/impl/LinkedObjectImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">LinkedObjectImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Object Value</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/expressions/impl/ListConstructionImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">ListConstructionImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../expressions/impl/ListConstructionImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">ListConstructionImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>List Value</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/expressions/impl/LongValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">LongValueImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../expressions/impl/LongValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">LongValueImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Long Value</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/expressions/impl/MemberAccessImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">MemberAccessImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../expressions/impl/MemberAccessImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">MemberAccessImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Member Access</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/expressions/impl/MemberInvocationImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">MemberInvocationImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../expressions/impl/MemberInvocationImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">MemberInvocationImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Member Invocation</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/expressions/impl/ShortValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">ShortValueImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../expressions/impl/ShortValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">ShortValueImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Short Value</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/expressions/impl/StaticAccessImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">StaticAccessImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../expressions/impl/StaticAccessImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">StaticAccessImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Static Access</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/expressions/impl/StringValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">StringValueImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../expressions/impl/StringValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">StringValueImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>String Value</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/expressions/impl/ValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">ValueImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../expressions/impl/ValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">ValueImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Primitive Value</b></em>'.</div>
 </td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.security">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.emf.cdo.security">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a> in <a href="../../../../../../../org/eclipse/emf/cdo/security/package-summary.html">org.eclipse.emf.cdo.security</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing subinterfaces, and an explanation">
-<caption><span>Subinterfaces of <a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a> in <a href="../../../../../../../org/eclipse/emf/cdo/security/package-summary.html">org.eclipse.emf.cdo.security</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a> in <a href="../../../security/package-summary.html">org.eclipse.emf.cdo.security</a></h3>
+<table class="useSummary">
+<caption><span>Subinterfaces of <a href="../CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a> in <a href="../../../security/package-summary.html">org.eclipse.emf.cdo.security</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Interface and Description</th>
+<th class="colSecond" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/AndFilter.html" title="interface in org.eclipse.emf.cdo.security">AndFilter</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/AndFilter.html" title="interface in org.eclipse.emf.cdo.security">AndFilter</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>And Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/Assignee.html" title="interface in org.eclipse.emf.cdo.security">Assignee</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/Assignee.html" title="interface in org.eclipse.emf.cdo.security">Assignee</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Assignee</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/ClassFilter.html" title="interface in org.eclipse.emf.cdo.security">ClassFilter</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/ClassFilter.html" title="interface in org.eclipse.emf.cdo.security">ClassFilter</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Class Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/ClassPermission.html" title="interface in org.eclipse.emf.cdo.security">ClassPermission</a></span></code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">As of 4.3 use <a href="../../../../../../../org/eclipse/emf/cdo/security/FilterPermission.html" title="interface in org.eclipse.emf.cdo.security"><code>FilterPermission</code></a> and <a href="../../../../../../../org/eclipse/emf/cdo/security/ClassFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>ClassFilter</code></a>.
- <!-- end-user-doc -->
-
- <p>
- The following features are supported:
- </p>
- <ul>
-   <li><a href="../../../../../../../org/eclipse/emf/cdo/security/ClassPermission.html#getApplicableClass--"><code><em>Applicable Class</em></code></a></li>
- </ul></span></div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/ClassPermission.html" title="interface in org.eclipse.emf.cdo.security">ClassPermission</a></span></code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.3 use <a href="../../../security/FilterPermission.html" title="interface in org.eclipse.emf.cdo.security"><code>FilterPermission</code></a> and <a href="../../../security/ClassFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>ClassFilter</code></a>.</div>
 </div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/CombinedFilter.html" title="interface in org.eclipse.emf.cdo.security">CombinedFilter</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/CombinedFilter.html" title="interface in org.eclipse.emf.cdo.security">CombinedFilter</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Combined Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/Directory.html" title="interface in org.eclipse.emf.cdo.security">Directory</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/Directory.html" title="interface in org.eclipse.emf.cdo.security">Directory</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Container</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/ExpressionFilter.html" title="interface in org.eclipse.emf.cdo.security">ExpressionFilter</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/ExpressionFilter.html" title="interface in org.eclipse.emf.cdo.security">ExpressionFilter</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Expression Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/FilterPermission.html" title="interface in org.eclipse.emf.cdo.security">FilterPermission</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/FilterPermission.html" title="interface in org.eclipse.emf.cdo.security">FilterPermission</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Filter Permission</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/Group.html" title="interface in org.eclipse.emf.cdo.security">Group</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/Group.html" title="interface in org.eclipse.emf.cdo.security">Group</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Group</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/LinkedFilter.html" title="interface in org.eclipse.emf.cdo.security">LinkedFilter</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/LinkedFilter.html" title="interface in org.eclipse.emf.cdo.security">LinkedFilter</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Reference Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/NotFilter.html" title="interface in org.eclipse.emf.cdo.security">NotFilter</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/NotFilter.html" title="interface in org.eclipse.emf.cdo.security">NotFilter</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Not Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/ObjectFilter.html" title="interface in org.eclipse.emf.cdo.security">ObjectFilter</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/ObjectFilter.html" title="interface in org.eclipse.emf.cdo.security">ObjectFilter</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Object Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/ObjectPermission.html" title="interface in org.eclipse.emf.cdo.security">ObjectPermission</a></span></code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">As of 4.3 use <a href="../../../../../../../org/eclipse/emf/cdo/security/FilterPermission.html" title="interface in org.eclipse.emf.cdo.security"><code>FilterPermission</code></a> and <a href="../../../../../../../org/eclipse/emf/cdo/security/ObjectFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>ObjectFilter</code></a>.
- <!-- end-user-doc --></span></div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/ObjectPermission.html" title="interface in org.eclipse.emf.cdo.security">ObjectPermission</a></span></code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.3 use <a href="../../../security/FilterPermission.html" title="interface in org.eclipse.emf.cdo.security"><code>FilterPermission</code></a> and <a href="../../../security/ObjectFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>ObjectFilter</code></a>.</div>
 </div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/OrFilter.html" title="interface in org.eclipse.emf.cdo.security">OrFilter</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/OrFilter.html" title="interface in org.eclipse.emf.cdo.security">OrFilter</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Or Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/PackageFilter.html" title="interface in org.eclipse.emf.cdo.security">PackageFilter</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/PackageFilter.html" title="interface in org.eclipse.emf.cdo.security">PackageFilter</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Package Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/PackagePermission.html" title="interface in org.eclipse.emf.cdo.security">PackagePermission</a></span></code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">As of 4.3 use <a href="../../../../../../../org/eclipse/emf/cdo/security/FilterPermission.html" title="interface in org.eclipse.emf.cdo.security"><code>FilterPermission</code></a> and <a href="../../../../../../../org/eclipse/emf/cdo/security/PackageFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>PackageFilter</code></a>.
- <!-- end-user-doc -->
-
- <p>
- The following features are supported:
- </p>
- <ul>
-   <li><a href="../../../../../../../org/eclipse/emf/cdo/security/PackagePermission.html#getApplicablePackage--"><code><em>Applicable Package</em></code></a></li>
- </ul></span></div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/PackagePermission.html" title="interface in org.eclipse.emf.cdo.security">PackagePermission</a></span></code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.3 use <a href="../../../security/FilterPermission.html" title="interface in org.eclipse.emf.cdo.security"><code>FilterPermission</code></a> and <a href="../../../security/PackageFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>PackageFilter</code></a>.</div>
 </div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/Permission.html" title="interface in org.eclipse.emf.cdo.security">Permission</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/Permission.html" title="interface in org.eclipse.emf.cdo.security">Permission</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Permission</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Permission Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/Realm.html" title="interface in org.eclipse.emf.cdo.security">Realm</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/Realm.html" title="interface in org.eclipse.emf.cdo.security">Realm</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Realm</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/ResourceFilter.html" title="interface in org.eclipse.emf.cdo.security">ResourceFilter</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/ResourceFilter.html" title="interface in org.eclipse.emf.cdo.security">ResourceFilter</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Resource Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/ResourcePermission.html" title="interface in org.eclipse.emf.cdo.security">ResourcePermission</a></span></code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">As of 4.3 use <a href="../../../../../../../org/eclipse/emf/cdo/security/FilterPermission.html" title="interface in org.eclipse.emf.cdo.security"><code>FilterPermission</code></a> and <a href="../../../../../../../org/eclipse/emf/cdo/security/ResourceFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>ResourceFilter</code></a>.
- <!-- end-user-doc -->
-
- <p>
- The following features are supported:
- </p>
- <ul>
-   <li><a href="../../../../../../../org/eclipse/emf/cdo/security/ResourcePermission.html#getPattern--"><code><em>Pattern</em></code></a></li>
- </ul></span></div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/ResourcePermission.html" title="interface in org.eclipse.emf.cdo.security">ResourcePermission</a></span></code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.3 use <a href="../../../security/FilterPermission.html" title="interface in org.eclipse.emf.cdo.security"><code>FilterPermission</code></a> and <a href="../../../security/ResourceFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>ResourceFilter</code></a>.</div>
 </div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/Role.html" title="interface in org.eclipse.emf.cdo.security">Role</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/Role.html" title="interface in org.eclipse.emf.cdo.security">Role</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Role</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/SecurityElement.html" title="interface in org.eclipse.emf.cdo.security">SecurityElement</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/SecurityElement.html" title="interface in org.eclipse.emf.cdo.security">SecurityElement</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Element</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/SecurityItem.html" title="interface in org.eclipse.emf.cdo.security">SecurityItem</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/SecurityItem.html" title="interface in org.eclipse.emf.cdo.security">SecurityItem</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Item</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/User.html" title="interface in org.eclipse.emf.cdo.security">User</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/User.html" title="interface in org.eclipse.emf.cdo.security">User</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>User</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/UserPassword.html" title="interface in org.eclipse.emf.cdo.security">UserPassword</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/UserPassword.html" title="interface in org.eclipse.emf.cdo.security">UserPassword</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>User Password</b></em>'.</div>
 </td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.security.impl">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.emf.cdo.security.impl">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a> in <a href="../../../../../../../org/eclipse/emf/cdo/security/impl/package-summary.html">org.eclipse.emf.cdo.security.impl</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../../../org/eclipse/emf/cdo/security/impl/package-summary.html">org.eclipse.emf.cdo.security.impl</a> that implement <a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a> in <a href="../../../security/impl/package-summary.html">org.eclipse.emf.cdo.security.impl</a></h3>
+<table class="useSummary">
+<caption><span>Classes in <a href="../../../security/impl/package-summary.html">org.eclipse.emf.cdo.security.impl</a> that implement <a href="../CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Class and Description</th>
+<th class="colSecond" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/impl/AndFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">AndFilterImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/impl/AndFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">AndFilterImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>And Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/impl/AssigneeImpl.html" title="class in org.eclipse.emf.cdo.security.impl">AssigneeImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/impl/AssigneeImpl.html" title="class in org.eclipse.emf.cdo.security.impl">AssigneeImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Assignee</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/impl/ClassFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ClassFilterImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/impl/ClassFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ClassFilterImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Class Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/impl/ClassPermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ClassPermissionImpl</a></span></code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/impl/ClassPermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ClassPermissionImpl</a></span></code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/impl/CombinedFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">CombinedFilterImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/impl/CombinedFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">CombinedFilterImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Combined Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/impl/DirectoryImpl.html" title="class in org.eclipse.emf.cdo.security.impl">DirectoryImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/impl/DirectoryImpl.html" title="class in org.eclipse.emf.cdo.security.impl">DirectoryImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Container</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/impl/ExpressionFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ExpressionFilterImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/impl/ExpressionFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ExpressionFilterImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Expression Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/impl/FilterPermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">FilterPermissionImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/impl/FilterPermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">FilterPermissionImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Filter Permission</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/impl/GroupImpl.html" title="class in org.eclipse.emf.cdo.security.impl">GroupImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/impl/GroupImpl.html" title="class in org.eclipse.emf.cdo.security.impl">GroupImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Group</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/impl/LinkedFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">LinkedFilterImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/impl/LinkedFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">LinkedFilterImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Reference Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/impl/NotFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">NotFilterImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/impl/NotFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">NotFilterImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Not Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/impl/ObjectFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ObjectFilterImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/impl/ObjectFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ObjectFilterImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Object Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/impl/ObjectPermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ObjectPermissionImpl</a></span></code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/impl/ObjectPermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ObjectPermissionImpl</a></span></code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/impl/OrFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">OrFilterImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/impl/OrFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">OrFilterImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Or Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/impl/PackageFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">PackageFilterImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/impl/PackageFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">PackageFilterImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Package Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/impl/PackagePermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">PackagePermissionImpl</a></span></code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/impl/PackagePermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">PackagePermissionImpl</a></span></code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/impl/PermissionFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">PermissionFilterImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/impl/PermissionFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">PermissionFilterImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Permission Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/impl/PermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">PermissionImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/impl/PermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">PermissionImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Permission</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/impl/RealmImpl.html" title="class in org.eclipse.emf.cdo.security.impl">RealmImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/impl/RealmImpl.html" title="class in org.eclipse.emf.cdo.security.impl">RealmImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Realm</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/impl/ResourceFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ResourceFilterImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/impl/ResourceFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ResourceFilterImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Resource Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/impl/ResourcePermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ResourcePermissionImpl</a></span></code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/impl/ResourcePermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ResourcePermissionImpl</a></span></code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/impl/RoleImpl.html" title="class in org.eclipse.emf.cdo.security.impl">RoleImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/impl/RoleImpl.html" title="class in org.eclipse.emf.cdo.security.impl">RoleImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Role</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/impl/SecurityElementImpl.html" title="class in org.eclipse.emf.cdo.security.impl">SecurityElementImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/impl/SecurityElementImpl.html" title="class in org.eclipse.emf.cdo.security.impl">SecurityElementImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Element</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/impl/SecurityItemImpl.html" title="class in org.eclipse.emf.cdo.security.impl">SecurityItemImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/impl/SecurityItemImpl.html" title="class in org.eclipse.emf.cdo.security.impl">SecurityItemImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Item</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/impl/UserImpl.html" title="class in org.eclipse.emf.cdo.security.impl">UserImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/impl/UserImpl.html" title="class in org.eclipse.emf.cdo.security.impl">UserImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>User</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/security/impl/UserPasswordImpl.html" title="class in org.eclipse.emf.cdo.security.impl">UserPasswordImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../security/impl/UserPasswordImpl.html" title="class in org.eclipse.emf.cdo.security.impl">UserPasswordImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>User Password</b></em>'.</div>
 </td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.view">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.emf.cdo.view">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a> in <a href="../../../../../../../org/eclipse/emf/cdo/view/package-summary.html">org.eclipse.emf.cdo.view</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing subinterfaces, and an explanation">
-<caption><span>Subinterfaces of <a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a> in <a href="../../../../../../../org/eclipse/emf/cdo/view/package-summary.html">org.eclipse.emf.cdo.view</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a> in <a href="../../../view/package-summary.html">org.eclipse.emf.cdo.view</a></h3>
+<table class="useSummary">
+<caption><span>Subinterfaces of <a href="../CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a> in <a href="../../../view/package-summary.html">org.eclipse.emf.cdo.view</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Interface and Description</th>
+<th class="colSecond" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/view/CDOStaleObject.html" title="interface in org.eclipse.emf.cdo.view">CDOStaleObject</a></span></code>
-<div class="block">A marker interface for stale objects as produced by <a href="../../../../../../../org/eclipse/emf/cdo/view/CDOStaleReferencePolicy.html#PROXY"><code>CDOStaleReferencePolicy.PROXY</code></a>.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../view/CDOStaleObject.html" title="interface in org.eclipse.emf.cdo.view">CDOStaleObject</a></span></code></th>
+<td class="colLast">
+<div class="block">A marker interface for stale objects as produced by <a href="../../../view/CDOStaleReferencePolicy.html#PROXY"><code>CDOStaleReferencePolicy.PROXY</code></a>.</div>
 </td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.internal.cdo">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.emf.internal.cdo">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a> in <a href="../../../../../../../org/eclipse/emf/internal/cdo/package-summary.html">org.eclipse.emf.internal.cdo</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../../../org/eclipse/emf/internal/cdo/package-summary.html">org.eclipse.emf.internal.cdo</a> that implement <a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a> in <a href="../../../../internal/cdo/package-summary.html">org.eclipse.emf.internal.cdo</a></h3>
+<table class="useSummary">
+<caption><span>Classes in <a href="../../../../internal/cdo/package-summary.html">org.eclipse.emf.internal.cdo</a> that implement <a href="../CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Class and Description</th>
+<th class="colSecond" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html" title="class in org.eclipse.emf.internal.cdo">CDOObjectImpl</a></span></code>
-<div class="block">The base class of all <em>native</em> <a href="../../../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a>.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../../internal/cdo/CDOObjectImpl.html" title="class in org.eclipse.emf.internal.cdo">CDOObjectImpl</a></span></code></th>
+<td class="colLast">
+<div class="block">The base class of all <em>native</em> <a href="../../../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a>.</div>
 </td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.spi.cdo">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.emf.spi.cdo">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a> in <a href="../../../../../../../org/eclipse/emf/spi/cdo/package-summary.html">org.eclipse.emf.spi.cdo</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing subinterfaces, and an explanation">
-<caption><span>Subinterfaces of <a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a> in <a href="../../../../../../../org/eclipse/emf/spi/cdo/package-summary.html">org.eclipse.emf.spi.cdo</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a> in <a href="../../../../spi/cdo/package-summary.html">org.eclipse.emf.spi.cdo</a></h3>
+<table class="useSummary">
+<caption><span>Subinterfaces of <a href="../CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a> in <a href="../../../../spi/cdo/package-summary.html">org.eclipse.emf.spi.cdo</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Interface and Description</th>
+<th class="colSecond" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/spi/cdo/InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../../spi/cdo/InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a></span></code></th>
+<td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/spi/cdo/InternalCDOResource.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOResource</a></span></code>
-<div class="block">Internal protocol for the <a href="../../../../../../../org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOResource</code></a>.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../../spi/cdo/InternalCDOResource.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOResource</a></span></code></th>
+<td class="colLast">
+<div class="block">Internal protocol for the <a href="../../../eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOResource</code></a>.</div>
 </td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
 </ul>
 </li>
 </ul>
 </div>
+</main>
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../../index.html">Overview</a></li>
 <li><a href="../package-summary.html">Package</a></li>
-<li><a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">Class</a></li>
+<li><a href="../CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">Class</a></li>
 <li class="navBarCell1Rev">Use</li>
+<li><a href="../package-tree.html">Tree</a></li>
 <li><a href="../../../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../../../help-doc.html">Help</a></li>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev</li>
-<li>Next</li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../../index.html?org/eclipse/emf/cdo/common/id/class-use/CDOWithID.html" target="_top">Frames</a></li>
-<li><a href="CDOWithID.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -1113,11 +1264,16 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>ExtendedDataInputStream (Net4j Utilities Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":9,"i10":9};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":9,"i10":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/ExtendedDataInputStream.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.Stream.html" title="class in org.eclipse.net4j.util.io"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/net4j/util/io/ExtendedDataInputStream.html" target="_top">Frames</a></li>
-<li><a href="ExtendedDataInputStream.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,12 +82,15 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
-<li><a href="#fields.inherited.from.class.java.io.FilterInputStream">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
@@ -85,13 +101,22 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.net4j.util.io</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.net4j.util.io</a></div>
 <h2 title="Class ExtendedDataInputStream" class="title">Class ExtendedDataInputStream</h2>
 </div>
 <div class="contentContainer">
@@ -123,13 +148,12 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd>java.io.Closeable, java.io.DataInput, java.lang.AutoCloseable, <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a></dd>
+<dd><code>java.io.Closeable</code>, <code>java.io.DataInput</code>, <code>java.lang.AutoCloseable</code>, <code><a href="ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a></code></dd>
 </dl>
 <hr>
-<br>
 <pre>public class <span class="typeNameLabel">ExtendedDataInputStream</span>
 extends java.io.DataInputStream
-implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a></pre>
+implements <a href="ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a></pre>
 <dl>
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>Eike Stepper</dd>
@@ -141,28 +165,31 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.h
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="nested.class.summary">
+<li class="blockList"><a id="nested.class.summary">
 <!--   -->
 </a>
 <h3>Nested Class Summary</h3>
 <ul class="blockList">
-<li class="blockList"><a name="nested.classes.inherited.from.class.org.eclipse.net4j.util.io.ExtendedDataInput">
+<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.net4j.util.io.ExtendedDataInput">
 <!--   -->
 </a>
-<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.io.<a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a></h3>
-<code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.Delegating.html" title="class in org.eclipse.net4j.util.io">ExtendedDataInput.Delegating</a>, <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.Stream.html" title="class in org.eclipse.net4j.util.io">ExtendedDataInput.Stream</a></code></li>
+<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.io.<a href="ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a></h3>
+<code><a href="ExtendedDataInput.Delegating.html" title="class in org.eclipse.net4j.util.io">ExtendedDataInput.Delegating</a>, <a href="ExtendedDataInput.Stream.html" title="class in org.eclipse.net4j.util.io">ExtendedDataInput.Stream</a></code></li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- =========== FIELD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.summary">
+<li class="blockList"><a id="field.summary">
 <!--   -->
 </a>
 <h3>Field Summary</h3>
 <ul class="blockList">
-<li class="blockList"><a name="fields.inherited.from.class.java.io.FilterInputStream">
+<li class="blockList"><a id="fields.inherited.from.class.java.io.FilterInputStream">
 <!--   -->
 </a>
 <h3>Fields inherited from class&nbsp;java.io.FilterInputStream</h3>
@@ -170,103 +197,128 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.h
 </ul>
 </li>
 </ul>
+</section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.summary">
+<li class="blockList"><a id="constructor.summary">
 <!--   -->
 </a>
 <h3>Constructor Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
+<table class="memberSummary">
 <caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Constructor and Description</th>
+<th class="colFirst" scope="col">Constructor</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInputStream.html#ExtendedDataInputStream-java.io.InputStream-">ExtendedDataInputStream</a></span>(java.io.InputStream&nbsp;in)</code>&nbsp;</td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.io.InputStream)">ExtendedDataInputStream</a></span>&#8203;(java.io.InputStream&nbsp;in)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>byte[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInputStream.html#readByteArray--">readByteArray</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readByteArray()">readByteArray</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>&lt;T extends java.lang.Enum&lt;?&gt;&gt;<br>T</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInputStream.html#readEnum-java.lang.Class-">readEnum</a></span>(java.lang.Class&lt;T&gt;&nbsp;type)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readEnum(java.lang.Class)">readEnum</a></span>&#8203;(java.lang.Class&lt;T&gt;&nbsp;type)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>java.lang.Throwable</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInputStream.html#readException--">readException</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readException()">readException</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>java.lang.Object</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInputStream.html#readObject--">readObject</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readObject()">readObject</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>java.lang.Object</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInputStream.html#readObject-java.lang.ClassLoader-">readObject</a></span>(java.lang.ClassLoader&nbsp;classLoader)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readObject(java.lang.ClassLoader)">readObject</a></span>&#8203;(java.lang.ClassLoader&nbsp;classLoader)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>java.lang.Object</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInputStream.html#readObject-org.eclipse.net4j.util.io.ExtendedIOUtil.ClassResolver-">readObject</a></span>(<a href="../../../../../org/eclipse/net4j/util/io/ExtendedIOUtil.ClassResolver.html" title="interface in org.eclipse.net4j.util.io">ExtendedIOUtil.ClassResolver</a>&nbsp;classResolver)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readObject(org.eclipse.net4j.util.io.ExtendedIOUtil.ClassResolver)">readObject</a></span>&#8203;(<a href="ExtendedIOUtil.ClassResolver.html" title="interface in org.eclipse.net4j.util.io">ExtendedIOUtil.ClassResolver</a>&nbsp;classResolver)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInputStream.html#readString--">readString</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readString()">readString</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInputStream.html#readVarInt--">readVarInt</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readVarInt()">readVarInt</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>long</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInputStream.html#readVarLong--">readVarLong</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readVarLong()">readVarLong</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>static java.io.InputStream</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInputStream.html#unwrap-java.io.InputStream-">unwrap</a></span>(java.io.InputStream&nbsp;stream)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#unwrap(java.io.InputStream)">unwrap</a></span>&#8203;(java.io.InputStream&nbsp;stream)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
-<td class="colFirst"><code>static <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInputStream.html" title="class in org.eclipse.net4j.util.io">ExtendedDataInputStream</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInputStream.html#wrap-java.io.InputStream-">wrap</a></span>(java.io.InputStream&nbsp;stream)</code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="ExtendedDataInputStream.html" title="class in org.eclipse.net4j.util.io">ExtendedDataInputStream</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#wrap(java.io.InputStream)">wrap</a></span>&#8203;(java.io.InputStream&nbsp;stream)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.io.DataInputStream">
+<li class="blockList"><a id="methods.inherited.from.class.java.io.DataInputStream">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.io.DataInputStream</h3>
 <code>read, read, readBoolean, readByte, readChar, readDouble, readFloat, readFully, readFully, readInt, readLine, readLong, readShort, readUnsignedByte, readUnsignedShort, readUTF, readUTF, skipBytes</code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.io.FilterInputStream">
+<li class="blockList"><a id="methods.inherited.from.class.java.io.FilterInputStream">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.io.FilterInputStream</h3>
 <code>available, close, mark, markSupported, read, reset, skip</code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
+<li class="blockList"><a id="methods.inherited.from.class.java.io.InputStream">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;java.io.InputStream</h3>
+<code>nullInputStream, readAllBytes, readNBytes, readNBytes, transferTo</code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
 <code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.io.DataInput">
+<li class="blockList"><a id="methods.inherited.from.class.java.io.DataInput">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;java.io.DataInput</h3>
@@ -274,6 +326,7 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.h
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -281,39 +334,42 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.h
 <ul class="blockList">
 <li class="blockList">
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.detail">
+<li class="blockList"><a id="constructor.detail">
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="ExtendedDataInputStream-java.io.InputStream-">
+<a id="&lt;init&gt;(java.io.InputStream)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>ExtendedDataInputStream</h4>
-<pre>public&nbsp;ExtendedDataInputStream(java.io.InputStream&nbsp;in)</pre>
+<pre>public&nbsp;ExtendedDataInputStream&#8203;(java.io.InputStream&nbsp;in)</pre>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="readVarInt--">
+<a id="readVarInt()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>readVarInt</h4>
-<pre>public&nbsp;int&nbsp;readVarInt()
+<pre class="methodSignature">public&nbsp;int&nbsp;readVarInt()
                throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html#readVarInt--">readVarInt</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a></code></dd>
+<dd><code><a href="ExtendedDataInput.html#readVarInt()">readVarInt</a></code>&nbsp;in interface&nbsp;<code><a href="ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.io.IOException</code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -321,17 +377,17 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.h
 </dl>
 </li>
 </ul>
-<a name="readVarLong--">
+<a id="readVarLong()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>readVarLong</h4>
-<pre>public&nbsp;long&nbsp;readVarLong()
+<pre class="methodSignature">public&nbsp;long&nbsp;readVarLong()
                  throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html#readVarLong--">readVarLong</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a></code></dd>
+<dd><code><a href="ExtendedDataInput.html#readVarLong()">readVarLong</a></code>&nbsp;in interface&nbsp;<code><a href="ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.io.IOException</code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -339,65 +395,65 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.h
 </dl>
 </li>
 </ul>
-<a name="readByteArray--">
+<a id="readByteArray()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>readByteArray</h4>
-<pre>public&nbsp;byte[]&nbsp;readByteArray()
+<pre class="methodSignature">public&nbsp;byte[]&nbsp;readByteArray()
                      throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html#readByteArray--">readByteArray</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a></code></dd>
+<dd><code><a href="ExtendedDataInput.html#readByteArray()">readByteArray</a></code>&nbsp;in interface&nbsp;<code><a href="ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.io.IOException</code></dd>
 </dl>
 </li>
 </ul>
-<a name="readString--">
+<a id="readString()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>readString</h4>
-<pre>public&nbsp;java.lang.String&nbsp;readString()
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;readString()
                             throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html#readString--">readString</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a></code></dd>
+<dd><code><a href="ExtendedDataInput.html#readString()">readString</a></code>&nbsp;in interface&nbsp;<code><a href="ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.io.IOException</code></dd>
 </dl>
 </li>
 </ul>
-<a name="readObject--">
+<a id="readObject()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>readObject</h4>
-<pre>public&nbsp;java.lang.Object&nbsp;readObject()
+<pre class="methodSignature">public&nbsp;java.lang.Object&nbsp;readObject()
                             throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html#readObject--">readObject</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a></code></dd>
+<dd><code><a href="ExtendedDataInput.html#readObject()">readObject</a></code>&nbsp;in interface&nbsp;<code><a href="ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.io.IOException</code></dd>
 </dl>
 </li>
 </ul>
-<a name="readEnum-java.lang.Class-">
+<a id="readEnum(java.lang.Class)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>readEnum</h4>
-<pre>public&nbsp;&lt;T extends java.lang.Enum&lt;?&gt;&gt;&nbsp;T&nbsp;readEnum(java.lang.Class&lt;T&gt;&nbsp;type)
+<pre class="methodSignature">public&nbsp;&lt;T extends java.lang.Enum&lt;?&gt;&gt;&nbsp;T&nbsp;readEnum&#8203;(java.lang.Class&lt;T&gt;&nbsp;type)
                                          throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html#readEnum-java.lang.Class-">readEnum</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a></code></dd>
+<dd><code><a href="ExtendedDataInput.html#readEnum(java.lang.Class)">readEnum</a></code>&nbsp;in interface&nbsp;<code><a href="ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.io.IOException</code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -405,17 +461,17 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.h
 </dl>
 </li>
 </ul>
-<a name="readException--">
+<a id="readException()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>readException</h4>
-<pre>public&nbsp;java.lang.Throwable&nbsp;readException()
+<pre class="methodSignature">public&nbsp;java.lang.Throwable&nbsp;readException()
                                   throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html#readException--">readException</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a></code></dd>
+<dd><code><a href="ExtendedDataInput.html#readException()">readException</a></code>&nbsp;in interface&nbsp;<code><a href="ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.io.IOException</code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -423,73 +479,77 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.h
 </dl>
 </li>
 </ul>
-<a name="readObject-java.lang.ClassLoader-">
+<a id="readObject(java.lang.ClassLoader)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>readObject</h4>
-<pre>public&nbsp;java.lang.Object&nbsp;readObject(java.lang.ClassLoader&nbsp;classLoader)
+<pre class="methodSignature">public&nbsp;java.lang.Object&nbsp;readObject&#8203;(java.lang.ClassLoader&nbsp;classLoader)
                             throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html#readObject-java.lang.ClassLoader-">readObject</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a></code></dd>
+<dd><code><a href="ExtendedDataInput.html#readObject(java.lang.ClassLoader)">readObject</a></code>&nbsp;in interface&nbsp;<code><a href="ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.io.IOException</code></dd>
 </dl>
 </li>
 </ul>
-<a name="readObject-org.eclipse.net4j.util.io.ExtendedIOUtil.ClassResolver-">
+<a id="readObject(org.eclipse.net4j.util.io.ExtendedIOUtil.ClassResolver)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>readObject</h4>
-<pre>public&nbsp;java.lang.Object&nbsp;readObject(<a href="../../../../../org/eclipse/net4j/util/io/ExtendedIOUtil.ClassResolver.html" title="interface in org.eclipse.net4j.util.io">ExtendedIOUtil.ClassResolver</a>&nbsp;classResolver)
+<pre class="methodSignature">public&nbsp;java.lang.Object&nbsp;readObject&#8203;(<a href="ExtendedIOUtil.ClassResolver.html" title="interface in org.eclipse.net4j.util.io">ExtendedIOUtil.ClassResolver</a>&nbsp;classResolver)
                             throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html#readObject-org.eclipse.net4j.util.io.ExtendedIOUtil.ClassResolver-">readObject</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a></code></dd>
+<dd><code><a href="ExtendedDataInput.html#readObject(org.eclipse.net4j.util.io.ExtendedIOUtil.ClassResolver)">readObject</a></code>&nbsp;in interface&nbsp;<code><a href="ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.io.IOException</code></dd>
 </dl>
 </li>
 </ul>
-<a name="wrap-java.io.InputStream-">
+<a id="wrap(java.io.InputStream)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>wrap</h4>
-<pre>public static&nbsp;<a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInputStream.html" title="class in org.eclipse.net4j.util.io">ExtendedDataInputStream</a>&nbsp;wrap(java.io.InputStream&nbsp;stream)</pre>
+<pre class="methodSignature">public static&nbsp;<a href="ExtendedDataInputStream.html" title="class in org.eclipse.net4j.util.io">ExtendedDataInputStream</a>&nbsp;wrap&#8203;(java.io.InputStream&nbsp;stream)</pre>
 </li>
 </ul>
-<a name="unwrap-java.io.InputStream-">
+<a id="unwrap(java.io.InputStream)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>unwrap</h4>
-<pre>public static&nbsp;java.io.InputStream&nbsp;unwrap(java.io.InputStream&nbsp;stream)</pre>
+<pre class="methodSignature">public static&nbsp;java.io.InputStream&nbsp;unwrap&#8203;(java.io.InputStream&nbsp;stream)</pre>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/ExtendedDataInputStream.html">Use</a></li>
@@ -499,16 +559,8 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.h
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.Stream.html" title="class in org.eclipse.net4j.util.io"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/net4j/util/io/ExtendedDataInputStream.html" target="_top">Frames</a></li>
-<li><a href="ExtendedDataInputStream.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -521,12 +573,15 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.h
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
-<li><a href="#fields.inherited.from.class.java.io.FilterInputStream">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
@@ -537,10 +592,12 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.h
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

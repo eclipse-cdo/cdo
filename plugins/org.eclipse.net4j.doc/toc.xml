@@ -3,45 +3,34 @@
 
 <toc label="Net4j Signalling Platform Documentation" topic="html/Overview.html">
   <topic label="Overview" href="html/Overview.html" />
-  <topic label="Reference" href="html/reference/index.html">
-    <topic label="API Reference" href="javadoc/overview-summary.html">
-      <topic label="Net4j Signalling Platform" href="javadoc/org/eclipse/net4j/package-summary.html" icon="plugin">
-        <topic label="org.eclipse.net4j" href="javadoc/org/eclipse/net4j/package-summary.html" icon="package" />
-        <topic label="org.eclipse.net4j.acceptor" href="javadoc/org/eclipse/net4j/acceptor/package-summary.html" icon="package" />
-        <topic label="org.eclipse.net4j.buffer" href="javadoc/org/eclipse/net4j/buffer/package-summary.html" icon="package" />
-        <topic label="org.eclipse.net4j.channel" href="javadoc/org/eclipse/net4j/channel/package-summary.html" icon="package" />
-        <topic label="org.eclipse.net4j.connector" href="javadoc/org/eclipse/net4j/connector/package-summary.html" icon="package" />
-        <topic label="org.eclipse.net4j.protocol" href="javadoc/org/eclipse/net4j/protocol/package-summary.html" icon="package" />
-        <topic label="org.eclipse.net4j.signal" href="javadoc/org/eclipse/net4j/signal/package-summary.html" icon="package" />
-        <topic label="org.eclipse.net4j.signal.confirmation" href="javadoc/org/eclipse/net4j/signal/confirmation/package-summary.html" icon="package" />
-        <topic label="org.eclipse.net4j.signal.heartbeat" href="javadoc/org/eclipse/net4j/signal/heartbeat/package-summary.html" icon="package" />
-        <topic label="org.eclipse.net4j.signal.security" href="javadoc/org/eclipse/net4j/signal/security/package-summary.html" icon="package" />
-        <topic label="org.eclipse.net4j.signal.wrapping" href="javadoc/org/eclipse/net4j/signal/wrapping/package-summary.html" icon="package" />
-        <topic label="org.eclipse.spi.net4j" href="javadoc/org/eclipse/spi/net4j/package-summary.html" icon="package" />
-      </topic>
-      <topic label="Net4j Signalling Platform HTTP" href="javadoc/org/eclipse/net4j/http/package-summary.html" icon="plugin">
-        <topic label="org.eclipse.net4j.http" href="javadoc/org/eclipse/net4j/http/package-summary.html" icon="package" />
-      </topic>
-      <topic label="Net4j Signalling Platform HTTP Common" href="javadoc/org/eclipse/net4j/http/common/package-summary.html" icon="plugin">
-        <topic label="org.eclipse.net4j.http.common" href="javadoc/org/eclipse/net4j/http/common/package-summary.html" icon="package" />
-      </topic>
-      <topic label="Net4j Signalling Platform HTTP Server" href="javadoc/org/eclipse/net4j/http/server/package-summary.html" icon="plugin">
-        <topic label="org.eclipse.net4j.http.server" href="javadoc/org/eclipse/net4j/http/server/package-summary.html" icon="package" />
-      </topic>
-      <topic label="Net4j Signalling Platform JVM" href="javadoc/org/eclipse/net4j/jvm/package-summary.html" icon="plugin">
-        <topic label="org.eclipse.net4j.jvm" href="javadoc/org/eclipse/net4j/jvm/package-summary.html" icon="package" />
-      </topic>
-      <topic label="Net4j Signalling Platform TCP" href="javadoc/org/eclipse/net4j/ws/package-summary.html" icon="plugin">
-        <topic label="org.eclipse.net4j.ws" href="javadoc/org/eclipse/net4j/ws/package-summary.html" icon="package" />
-        <topic label="org.eclipse.net4j.ws.jetty" href="javadoc/org/eclipse/net4j/ws/jetty/package-summary.html" icon="package" />
-      </topic>
-      <topic label="Net4j Signalling Platform TCP" href="javadoc/org/eclipse/net4j/tcp/package-summary.html" icon="plugin">
-        <topic label="org.eclipse.net4j.tcp" href="javadoc/org/eclipse/net4j/tcp/package-summary.html" icon="package" />
-        <topic label="org.eclipse.net4j.tcp.ssl" href="javadoc/org/eclipse/net4j/tcp/ssl/package-summary.html" icon="package" />
-      </topic>
-      <topic label="Net4j Signalling Platform UI" href="javadoc/org/eclipse/net4j/ui/package-summary.html" icon="plugin">
-        <topic label="org.eclipse.net4j.ui" href="javadoc/org/eclipse/net4j/ui/package-summary.html" icon="package" />
-      </topic>
+  <topic label="API Reference" href="javadoc/overview-summary.html">
+    <topic label="Net4j Signalling Platform" href="javadoc/org/eclipse/net4j/package-summary.html" icon="plugin">
+      <topic label="org.eclipse.net4j" href="javadoc/org/eclipse/net4j/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.acceptor" href="javadoc/org/eclipse/net4j/acceptor/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.buffer" href="javadoc/org/eclipse/net4j/buffer/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.channel" href="javadoc/org/eclipse/net4j/channel/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.connector" href="javadoc/org/eclipse/net4j/connector/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.protocol" href="javadoc/org/eclipse/net4j/protocol/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.signal" href="javadoc/org/eclipse/net4j/signal/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.signal.confirmation" href="javadoc/org/eclipse/net4j/signal/confirmation/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.signal.heartbeat" href="javadoc/org/eclipse/net4j/signal/heartbeat/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.signal.security" href="javadoc/org/eclipse/net4j/signal/security/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.signal.wrapping" href="javadoc/org/eclipse/net4j/signal/wrapping/package-summary.html" icon="package" />
+      <topic label="org.eclipse.spi.net4j" href="javadoc/org/eclipse/spi/net4j/package-summary.html" icon="package" />
+    </topic>
+    <topic label="Net4j Signalling Platform (JVM Transport)" href="javadoc/org/eclipse/net4j/jvm/package-summary.html" icon="plugin">
+      <topic label="org.eclipse.net4j.jvm" href="javadoc/org/eclipse/net4j/jvm/package-summary.html" icon="package" />
+    </topic>
+    <topic label="Net4j Signalling Platform (TCP Transport)" href="javadoc/org/eclipse/net4j/tcp/package-summary.html" icon="plugin">
+      <topic label="org.eclipse.net4j.tcp" href="javadoc/org/eclipse/net4j/tcp/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.tcp.ssl" href="javadoc/org/eclipse/net4j/tcp/ssl/package-summary.html" icon="package" />
+    </topic>
+    <topic label="Net4j Signalling Platform (Websocket Transport)" href="javadoc/org/eclipse/net4j/ws/package-summary.html" icon="plugin">
+      <topic label="org.eclipse.net4j.ws" href="javadoc/org/eclipse/net4j/ws/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.ws.jetty" href="javadoc/org/eclipse/net4j/ws/jetty/package-summary.html" icon="package" />
+    </topic>
+    <topic label="Net4j Signalling Platform UI" href="javadoc/org/eclipse/net4j/ui/package-summary.html" icon="plugin">
+      <topic label="org.eclipse.net4j.ui" href="javadoc/org/eclipse/net4j/ui/package-summary.html" icon="package" />
     </topic>
   </topic>
   <topic label="Online Docs" href="html/online/index.html">

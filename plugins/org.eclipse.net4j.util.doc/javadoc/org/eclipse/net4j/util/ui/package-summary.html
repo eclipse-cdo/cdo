@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>org.eclipse.net4j.util.ui (Net4j Utilities Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,20 +28,25 @@
     catch(err) {
     }
 //-->
-</script>
+var pathtoroot = "../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li class="navBarCell1Rev">Package</li>
 <li>Class</li>
 <li><a href="package-use.html">Use</a></li>
@@ -41,16 +56,14 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/net4j/util/transaction/package-summary.html">Prev&nbsp;Package</a></li>
-<li><a href="../../../../../org/eclipse/net4j/util/ui/actions/package-summary.html">Next&nbsp;Package</a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/net4j/util/ui/package-summary.html" target="_top">Frames</a></li>
-<li><a href="package-summary.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -63,22 +76,35 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
+<main role="main">
 <div class="header">
 <h1 title="Package" class="title">Package&nbsp;org.eclipse.net4j.util.ui</h1>
-<div class="docSummary">
-<div class="block">Reusable UI components.</div>
-</div>
-<p>See:&nbsp;<a href="#package.description">Description</a></p>
 </div>
 <div class="contentContainer">
+<section role="region"><a id="package.description">
+<!--   -->
+</a>
+<div class="block">Reusable UI components.</div>
+</section>
 <ul class="blockList">
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<table class="typeSummary">
 <caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Interface</th>
@@ -86,18 +112,22 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/ui/ValidationContext.html" title="interface in org.eclipse.net4j.util.ui">ValidationContext</a></td>
+<th class="colFirst" scope="row"><a href="MenuFiller.html" title="interface in org.eclipse.net4j.util.ui">MenuFiller</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/ui/ValidationParticipant.html" title="interface in org.eclipse.net4j.util.ui">ValidationParticipant</a></td>
+<th class="colFirst" scope="row"><a href="ValidationContext.html" title="interface in org.eclipse.net4j.util.ui">ValidationContext</a></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="ValidationParticipant.html" title="interface in org.eclipse.net4j.util.ui">ValidationParticipant</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
 </li>
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<table class="typeSummary">
 <caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Class</th>
@@ -105,100 +135,106 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/ui/AbstractPropertyAdapterFactory.html" title="class in org.eclipse.net4j.util.ui">AbstractPropertyAdapterFactory</a></td>
+<th class="colFirst" scope="row"><a href="AbstractPropertyAdapterFactory.html" title="class in org.eclipse.net4j.util.ui">AbstractPropertyAdapterFactory</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/ui/ComboAutoCompleter.html" title="class in org.eclipse.net4j.util.ui">ComboAutoCompleter</a></td>
+<th class="colFirst" scope="row"><a href="ComboAutoCompleter.html" title="class in org.eclipse.net4j.util.ui">ComboAutoCompleter</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/ui/DefaultActionFilter.html" title="class in org.eclipse.net4j.util.ui">DefaultActionFilter</a>&lt;RECEIVER&gt;</td>
+<th class="colFirst" scope="row"><a href="DefaultActionFilter.html" title="class in org.eclipse.net4j.util.ui">DefaultActionFilter</a>&lt;RECEIVER&gt;</th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/ui/DefaultPropertySource.html" title="class in org.eclipse.net4j.util.ui">DefaultPropertySource</a>&lt;RECEIVER&gt;</td>
+<th class="colFirst" scope="row"><a href="DefaultPropertySource.html" title="class in org.eclipse.net4j.util.ui">DefaultPropertySource</a>&lt;RECEIVER&gt;</th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/ui/DefaultPropertySource.Augmented.html" title="class in org.eclipse.net4j.util.ui">DefaultPropertySource.Augmented</a>&lt;RECEIVER,AUGMENTING_RECEIVER&gt;</td>
+<th class="colFirst" scope="row"><a href="DefaultPropertySource.Augmented.html" title="class in org.eclipse.net4j.util.ui">DefaultPropertySource.Augmented</a>&lt;RECEIVER,&#8203;AUGMENTING_RECEIVER&gt;</th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/ui/DefaultPropertySource.DelegatingPropertyDescriptor.html" title="class in org.eclipse.net4j.util.ui">DefaultPropertySource.DelegatingPropertyDescriptor</a>&lt;RECEIVER&gt;</td>
+<th class="colFirst" scope="row"><a href="DefaultPropertySource.DelegatingPropertyDescriptor.html" title="class in org.eclipse.net4j.util.ui">DefaultPropertySource.DelegatingPropertyDescriptor</a>&lt;RECEIVER&gt;</th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/ui/DelegatingContentProvider.html" title="class in org.eclipse.net4j.util.ui">DelegatingContentProvider</a></td>
+<th class="colFirst" scope="row"><a href="DelegatingContentProvider.html" title="class in org.eclipse.net4j.util.ui">DelegatingContentProvider</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/ui/FactoryTypeContentProvider.html" title="class in org.eclipse.net4j.util.ui">FactoryTypeContentProvider</a></td>
+<th class="colFirst" scope="row"><a href="FactoryTypeContentProvider.html" title="class in org.eclipse.net4j.util.ui">FactoryTypeContentProvider</a></th>
 <td class="colLast">
-<div class="block">A <a href="../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html" title="class in org.eclipse.net4j.util.ui"><code>structured content provider</code></a> that shows the <a href="../../../../../org/eclipse/net4j/util/factory/IFactoryKey.html#getType--"><code>factory
- types</code></a> of the <a href="../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html#getInput--"><code>input</code></a>.</div>
+<div class="block">A <a href="StructuredContentProvider.html" title="class in org.eclipse.net4j.util.ui"><code>structured content provider</code></a> that shows the <a href="../factory/IFactoryKey.html#getType()"><code>factory
+ types</code></a> of the <a href="StructuredContentProvider.html#getInput()"><code>input</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/ui/ManagedLabelProvider.html" title="class in org.eclipse.net4j.util.ui">ManagedLabelProvider</a></td>
+<th class="colFirst" scope="row"><a href="GlobalPartAdapter.html" title="class in org.eclipse.net4j.util.ui">GlobalPartAdapter</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/ui/StaticContentProvider.html" title="class in org.eclipse.net4j.util.ui">StaticContentProvider</a></td>
+<th class="colFirst" scope="row"><a href="ManagedLabelProvider.html" title="class in org.eclipse.net4j.util.ui">ManagedLabelProvider</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html" title="class in org.eclipse.net4j.util.ui">StructuredContentProvider</a>&lt;INPUT&gt;</td>
+<th class="colFirst" scope="row"><a href="MenuFiller.Factory.html" title="class in org.eclipse.net4j.util.ui">MenuFiller.Factory</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/ui/TableLabelProvider.html" title="class in org.eclipse.net4j.util.ui">TableLabelProvider</a>&lt;T&gt;</td>
+<th class="colFirst" scope="row"><a href="StaticContentProvider.html" title="class in org.eclipse.net4j.util.ui">StaticContentProvider</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/ui/TableLabelProvider.Column.html" title="class in org.eclipse.net4j.util.ui">TableLabelProvider.Column</a>&lt;T&gt;</td>
+<th class="colFirst" scope="row"><a href="StructuredContentProvider.html" title="class in org.eclipse.net4j.util.ui">StructuredContentProvider</a>&lt;INPUT&gt;</th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/ui/UIActivator.html" title="class in org.eclipse.net4j.util.ui">UIActivator</a></td>
+<th class="colFirst" scope="row"><a href="TableLabelProvider.html" title="class in org.eclipse.net4j.util.ui">TableLabelProvider</a>&lt;T&gt;</th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/ui/UIActivator.WithState.html" title="class in org.eclipse.net4j.util.ui">UIActivator.WithState</a></td>
+<th class="colFirst" scope="row"><a href="TableLabelProvider.Column.html" title="class in org.eclipse.net4j.util.ui">TableLabelProvider.Column</a>&lt;T&gt;</th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/ui/UIQueueRunner.html" title="class in org.eclipse.net4j.util.ui">UIQueueRunner</a></td>
+<th class="colFirst" scope="row"><a href="UIActivator.html" title="class in org.eclipse.net4j.util.ui">UIActivator</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/ui/UIUtil.html" title="class in org.eclipse.net4j.util.ui">UIUtil</a></td>
+<th class="colFirst" scope="row"><a href="UIActivator.WithState.html" title="class in org.eclipse.net4j.util.ui">UIActivator.WithState</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/ui/ValidationContext.Aggregator.html" title="class in org.eclipse.net4j.util.ui">ValidationContext.Aggregator</a></td>
+<th class="colFirst" scope="row"><a href="UIQueueRunner.html" title="class in org.eclipse.net4j.util.ui">UIQueueRunner</a></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="UIUtil.html" title="class in org.eclipse.net4j.util.ui">UIUtil</a></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><a href="ValidationContext.Aggregator.html" title="class in org.eclipse.net4j.util.ui">ValidationContext.Aggregator</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
 </li>
 </ul>
-<a name="package.description">
-<!--   -->
-</a>
-<h2 title="Package org.eclipse.net4j.util.ui Description">Package org.eclipse.net4j.util.ui Description</h2>
-<div class="block">Reusable UI components.</div>
 </div>
+</main>
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li class="navBarCell1Rev">Package</li>
 <li>Class</li>
 <li><a href="package-use.html">Use</a></li>
@@ -208,16 +244,8 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/net4j/util/transaction/package-summary.html">Prev&nbsp;Package</a></li>
-<li><a href="../../../../../org/eclipse/net4j/util/ui/actions/package-summary.html">Next&nbsp;Package</a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/net4j/util/ui/package-summary.html" target="_top">Frames</a></li>
-<li><a href="package-summary.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -230,11 +258,16 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>ExpressionsUtil (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9,"i12":9};
+var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9,"i12":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/ExpressionsUtil.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/emf/cdo/expressions/util/ExpressionsSwitch.html" title="class in org.eclipse.emf.cdo.expressions.util"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li>Next&nbsp;Class</li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/emf/cdo/expressions/util/ExpressionsUtil.html" target="_top">Frames</a></li>
-<li><a href="ExpressionsUtil.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,6 +82,9 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -85,13 +101,22 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.emf.cdo.expressions.util</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.cdo.expressions.util</a></div>
 <h2 title="Class ExpressionsUtil" class="title">Class ExpressionsUtil</h2>
 </div>
 <div class="contentContainer">
@@ -107,10 +132,9 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<br>
 <pre>public class <span class="typeNameLabel">ExpressionsUtil</span>
 extends java.lang.Object</pre>
-<div class="block">Provides static factory methods for common <a href="../../../../../../org/eclipse/emf/cdo/expressions/Expression.html" title="interface in org.eclipse.emf.cdo.expressions"><code>expressions</code></a>.</div>
+<div class="block">Provides static factory methods for common <a href="../Expression.html" title="interface in org.eclipse.emf.cdo.expressions"><code>expressions</code></a>.</div>
 <dl>
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>Eike Stepper</dd>
@@ -122,93 +146,112 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.summary">
+<li class="blockList"><a id="constructor.summary">
 <!--   -->
 </a>
 <h3>Constructor Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
+<table class="memberSummary">
 <caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Constructor and Description</th>
+<th class="colFirst" scope="col">Constructor</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/expressions/util/ExpressionsUtil.html#ExpressionsUtil--">ExpressionsUtil</a></span>()</code>&nbsp;</td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">ExpressionsUtil</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/expressions/FunctionInvocation.html" title="interface in org.eclipse.emf.cdo.expressions">FunctionInvocation</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/expressions/util/ExpressionsUtil.html#construct-org.eclipse.emf.cdo.expressions.Expression-org.eclipse.emf.cdo.expressions.Expression...-">construct</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/expressions/Expression.html" title="interface in org.eclipse.emf.cdo.expressions">Expression</a>&nbsp;className,
-         <a href="../../../../../../org/eclipse/emf/cdo/expressions/Expression.html" title="interface in org.eclipse.emf.cdo.expressions">Expression</a>...&nbsp;arguments)</code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="../FunctionInvocation.html" title="interface in org.eclipse.emf.cdo.expressions">FunctionInvocation</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#construct(org.eclipse.emf.cdo.expressions.Expression,org.eclipse.emf.cdo.expressions.Expression...)">construct</a></span>&#8203;(<a href="../Expression.html" title="interface in org.eclipse.emf.cdo.expressions">Expression</a>&nbsp;className,
+         <a href="../Expression.html" title="interface in org.eclipse.emf.cdo.expressions">Expression</a>...&nbsp;arguments)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/expressions/FunctionInvocation.html" title="interface in org.eclipse.emf.cdo.expressions">FunctionInvocation</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/expressions/util/ExpressionsUtil.html#invoke-org.eclipse.emf.cdo.expressions.Expression-org.eclipse.emf.cdo.expressions.Expression...-">invoke</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/expressions/Expression.html" title="interface in org.eclipse.emf.cdo.expressions">Expression</a>&nbsp;name,
-      <a href="../../../../../../org/eclipse/emf/cdo/expressions/Expression.html" title="interface in org.eclipse.emf.cdo.expressions">Expression</a>...&nbsp;arguments)</code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="../FunctionInvocation.html" title="interface in org.eclipse.emf.cdo.expressions">FunctionInvocation</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#invoke(org.eclipse.emf.cdo.expressions.Expression,org.eclipse.emf.cdo.expressions.Expression...)">invoke</a></span>&#8203;(<a href="../Expression.html" title="interface in org.eclipse.emf.cdo.expressions">Expression</a>&nbsp;name,
+      <a href="../Expression.html" title="interface in org.eclipse.emf.cdo.expressions">Expression</a>...&nbsp;arguments)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/expressions/MemberInvocation.html" title="interface in org.eclipse.emf.cdo.expressions">MemberInvocation</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/expressions/util/ExpressionsUtil.html#invokeMember-org.eclipse.emf.cdo.expressions.Expression-org.eclipse.emf.cdo.expressions.Expression-org.eclipse.emf.cdo.expressions.Expression...-">invokeMember</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/expressions/Expression.html" title="interface in org.eclipse.emf.cdo.expressions">Expression</a>&nbsp;object,
-            <a href="../../../../../../org/eclipse/emf/cdo/expressions/Expression.html" title="interface in org.eclipse.emf.cdo.expressions">Expression</a>&nbsp;name,
-            <a href="../../../../../../org/eclipse/emf/cdo/expressions/Expression.html" title="interface in org.eclipse.emf.cdo.expressions">Expression</a>...&nbsp;arguments)</code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="../MemberInvocation.html" title="interface in org.eclipse.emf.cdo.expressions">MemberInvocation</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#invokeMember(org.eclipse.emf.cdo.expressions.Expression,org.eclipse.emf.cdo.expressions.Expression,org.eclipse.emf.cdo.expressions.Expression...)">invokeMember</a></span>&#8203;(<a href="../Expression.html" title="interface in org.eclipse.emf.cdo.expressions">Expression</a>&nbsp;object,
+            <a href="../Expression.html" title="interface in org.eclipse.emf.cdo.expressions">Expression</a>&nbsp;name,
+            <a href="../Expression.html" title="interface in org.eclipse.emf.cdo.expressions">Expression</a>...&nbsp;arguments)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/expressions/ListConstruction.html" title="interface in org.eclipse.emf.cdo.expressions">ListConstruction</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/expressions/util/ExpressionsUtil.html#list-org.eclipse.emf.cdo.expressions.Expression...-">list</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/expressions/Expression.html" title="interface in org.eclipse.emf.cdo.expressions">Expression</a>...&nbsp;elements)</code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="../ListConstruction.html" title="interface in org.eclipse.emf.cdo.expressions">ListConstruction</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#list(org.eclipse.emf.cdo.expressions.Expression...)">list</a></span>&#8203;(<a href="../Expression.html" title="interface in org.eclipse.emf.cdo.expressions">Expression</a>...&nbsp;elements)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/expressions/BooleanValue.html" title="interface in org.eclipse.emf.cdo.expressions">BooleanValue</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/expressions/util/ExpressionsUtil.html#value-boolean-">value</a></span>(boolean&nbsp;literal)</code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="../BooleanValue.html" title="interface in org.eclipse.emf.cdo.expressions">BooleanValue</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#value(boolean)">value</a></span>&#8203;(boolean&nbsp;literal)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/expressions/ByteValue.html" title="interface in org.eclipse.emf.cdo.expressions">ByteValue</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/expressions/util/ExpressionsUtil.html#value-byte-">value</a></span>(byte&nbsp;literal)</code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="../ByteValue.html" title="interface in org.eclipse.emf.cdo.expressions">ByteValue</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#value(byte)">value</a></span>&#8203;(byte&nbsp;literal)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/expressions/CharValue.html" title="interface in org.eclipse.emf.cdo.expressions">CharValue</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/expressions/util/ExpressionsUtil.html#value-char-">value</a></span>(char&nbsp;literal)</code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="../CharValue.html" title="interface in org.eclipse.emf.cdo.expressions">CharValue</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#value(char)">value</a></span>&#8203;(char&nbsp;literal)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/expressions/DoubleValue.html" title="interface in org.eclipse.emf.cdo.expressions">DoubleValue</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/expressions/util/ExpressionsUtil.html#value-double-">value</a></span>(double&nbsp;literal)</code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="../DoubleValue.html" title="interface in org.eclipse.emf.cdo.expressions">DoubleValue</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#value(double)">value</a></span>&#8203;(double&nbsp;literal)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/expressions/FloatValue.html" title="interface in org.eclipse.emf.cdo.expressions">FloatValue</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/expressions/util/ExpressionsUtil.html#value-float-">value</a></span>(float&nbsp;literal)</code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="../FloatValue.html" title="interface in org.eclipse.emf.cdo.expressions">FloatValue</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#value(float)">value</a></span>&#8203;(float&nbsp;literal)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/expressions/IntValue.html" title="interface in org.eclipse.emf.cdo.expressions">IntValue</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/expressions/util/ExpressionsUtil.html#value-int-">value</a></span>(int&nbsp;literal)</code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="../IntValue.html" title="interface in org.eclipse.emf.cdo.expressions">IntValue</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#value(int)">value</a></span>&#8203;(int&nbsp;literal)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/expressions/LongValue.html" title="interface in org.eclipse.emf.cdo.expressions">LongValue</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/expressions/util/ExpressionsUtil.html#value-long-">value</a></span>(long&nbsp;literal)</code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="../LongValue.html" title="interface in org.eclipse.emf.cdo.expressions">LongValue</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#value(long)">value</a></span>&#8203;(long&nbsp;literal)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i11" class="rowColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/expressions/ShortValue.html" title="interface in org.eclipse.emf.cdo.expressions">ShortValue</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/expressions/util/ExpressionsUtil.html#value-short-">value</a></span>(short&nbsp;literal)</code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="../ShortValue.html" title="interface in org.eclipse.emf.cdo.expressions">ShortValue</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#value(short)">value</a></span>&#8203;(short&nbsp;literal)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i12" class="altColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/expressions/StringValue.html" title="interface in org.eclipse.emf.cdo.expressions">StringValue</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/expressions/util/ExpressionsUtil.html#value-java.lang.String-">value</a></span>(java.lang.String&nbsp;literal)</code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="../StringValue.html" title="interface in org.eclipse.emf.cdo.expressions">StringValue</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#value(java.lang.String)">value</a></span>&#8203;(java.lang.String&nbsp;literal)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
+<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
@@ -216,6 +259,7 @@ extends java.lang.Object</pre>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -223,12 +267,13 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.detail">
+<li class="blockList"><a id="constructor.detail">
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="ExpressionsUtil--">
+<a id="&lt;init&gt;()">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -239,150 +284,156 @@ extends java.lang.Object</pre>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="value-boolean-">
+<a id="value(boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>value</h4>
-<pre>public static&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/expressions/BooleanValue.html" title="interface in org.eclipse.emf.cdo.expressions">BooleanValue</a>&nbsp;value(boolean&nbsp;literal)</pre>
+<pre class="methodSignature">public static&nbsp;<a href="../BooleanValue.html" title="interface in org.eclipse.emf.cdo.expressions">BooleanValue</a>&nbsp;value&#8203;(boolean&nbsp;literal)</pre>
 </li>
 </ul>
-<a name="value-byte-">
+<a id="value(byte)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>value</h4>
-<pre>public static&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/expressions/ByteValue.html" title="interface in org.eclipse.emf.cdo.expressions">ByteValue</a>&nbsp;value(byte&nbsp;literal)</pre>
+<pre class="methodSignature">public static&nbsp;<a href="../ByteValue.html" title="interface in org.eclipse.emf.cdo.expressions">ByteValue</a>&nbsp;value&#8203;(byte&nbsp;literal)</pre>
 </li>
 </ul>
-<a name="value-char-">
+<a id="value(char)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>value</h4>
-<pre>public static&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/expressions/CharValue.html" title="interface in org.eclipse.emf.cdo.expressions">CharValue</a>&nbsp;value(char&nbsp;literal)</pre>
+<pre class="methodSignature">public static&nbsp;<a href="../CharValue.html" title="interface in org.eclipse.emf.cdo.expressions">CharValue</a>&nbsp;value&#8203;(char&nbsp;literal)</pre>
 </li>
 </ul>
-<a name="value-double-">
+<a id="value(double)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>value</h4>
-<pre>public static&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/expressions/DoubleValue.html" title="interface in org.eclipse.emf.cdo.expressions">DoubleValue</a>&nbsp;value(double&nbsp;literal)</pre>
+<pre class="methodSignature">public static&nbsp;<a href="../DoubleValue.html" title="interface in org.eclipse.emf.cdo.expressions">DoubleValue</a>&nbsp;value&#8203;(double&nbsp;literal)</pre>
 </li>
 </ul>
-<a name="value-float-">
+<a id="value(float)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>value</h4>
-<pre>public static&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/expressions/FloatValue.html" title="interface in org.eclipse.emf.cdo.expressions">FloatValue</a>&nbsp;value(float&nbsp;literal)</pre>
+<pre class="methodSignature">public static&nbsp;<a href="../FloatValue.html" title="interface in org.eclipse.emf.cdo.expressions">FloatValue</a>&nbsp;value&#8203;(float&nbsp;literal)</pre>
 </li>
 </ul>
-<a name="value-int-">
+<a id="value(int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>value</h4>
-<pre>public static&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/expressions/IntValue.html" title="interface in org.eclipse.emf.cdo.expressions">IntValue</a>&nbsp;value(int&nbsp;literal)</pre>
+<pre class="methodSignature">public static&nbsp;<a href="../IntValue.html" title="interface in org.eclipse.emf.cdo.expressions">IntValue</a>&nbsp;value&#8203;(int&nbsp;literal)</pre>
 </li>
 </ul>
-<a name="value-long-">
+<a id="value(long)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>value</h4>
-<pre>public static&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/expressions/LongValue.html" title="interface in org.eclipse.emf.cdo.expressions">LongValue</a>&nbsp;value(long&nbsp;literal)</pre>
+<pre class="methodSignature">public static&nbsp;<a href="../LongValue.html" title="interface in org.eclipse.emf.cdo.expressions">LongValue</a>&nbsp;value&#8203;(long&nbsp;literal)</pre>
 </li>
 </ul>
-<a name="value-short-">
+<a id="value(short)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>value</h4>
-<pre>public static&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/expressions/ShortValue.html" title="interface in org.eclipse.emf.cdo.expressions">ShortValue</a>&nbsp;value(short&nbsp;literal)</pre>
+<pre class="methodSignature">public static&nbsp;<a href="../ShortValue.html" title="interface in org.eclipse.emf.cdo.expressions">ShortValue</a>&nbsp;value&#8203;(short&nbsp;literal)</pre>
 </li>
 </ul>
-<a name="value-java.lang.String-">
+<a id="value(java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>value</h4>
-<pre>public static&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/expressions/StringValue.html" title="interface in org.eclipse.emf.cdo.expressions">StringValue</a>&nbsp;value(java.lang.String&nbsp;literal)</pre>
+<pre class="methodSignature">public static&nbsp;<a href="../StringValue.html" title="interface in org.eclipse.emf.cdo.expressions">StringValue</a>&nbsp;value&#8203;(java.lang.String&nbsp;literal)</pre>
 </li>
 </ul>
-<a name="list-org.eclipse.emf.cdo.expressions.Expression...-">
+<a id="list(org.eclipse.emf.cdo.expressions.Expression...)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>list</h4>
-<pre>public static&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/expressions/ListConstruction.html" title="interface in org.eclipse.emf.cdo.expressions">ListConstruction</a>&nbsp;list(<a href="../../../../../../org/eclipse/emf/cdo/expressions/Expression.html" title="interface in org.eclipse.emf.cdo.expressions">Expression</a>...&nbsp;elements)</pre>
+<pre class="methodSignature">public static&nbsp;<a href="../ListConstruction.html" title="interface in org.eclipse.emf.cdo.expressions">ListConstruction</a>&nbsp;list&#8203;(<a href="../Expression.html" title="interface in org.eclipse.emf.cdo.expressions">Expression</a>...&nbsp;elements)</pre>
 </li>
 </ul>
-<a name="invokeMember-org.eclipse.emf.cdo.expressions.Expression-org.eclipse.emf.cdo.expressions.Expression-org.eclipse.emf.cdo.expressions.Expression...-">
+<a id="invokeMember(org.eclipse.emf.cdo.expressions.Expression,org.eclipse.emf.cdo.expressions.Expression,org.eclipse.emf.cdo.expressions.Expression...)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>invokeMember</h4>
-<pre>public static&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/expressions/MemberInvocation.html" title="interface in org.eclipse.emf.cdo.expressions">MemberInvocation</a>&nbsp;invokeMember(<a href="../../../../../../org/eclipse/emf/cdo/expressions/Expression.html" title="interface in org.eclipse.emf.cdo.expressions">Expression</a>&nbsp;object,
-                                            <a href="../../../../../../org/eclipse/emf/cdo/expressions/Expression.html" title="interface in org.eclipse.emf.cdo.expressions">Expression</a>&nbsp;name,
-                                            <a href="../../../../../../org/eclipse/emf/cdo/expressions/Expression.html" title="interface in org.eclipse.emf.cdo.expressions">Expression</a>...&nbsp;arguments)</pre>
+<pre class="methodSignature">public static&nbsp;<a href="../MemberInvocation.html" title="interface in org.eclipse.emf.cdo.expressions">MemberInvocation</a>&nbsp;invokeMember&#8203;(<a href="../Expression.html" title="interface in org.eclipse.emf.cdo.expressions">Expression</a>&nbsp;object,
+                                            <a href="../Expression.html" title="interface in org.eclipse.emf.cdo.expressions">Expression</a>&nbsp;name,
+                                            <a href="../Expression.html" title="interface in org.eclipse.emf.cdo.expressions">Expression</a>...&nbsp;arguments)</pre>
 </li>
 </ul>
-<a name="invoke-org.eclipse.emf.cdo.expressions.Expression-org.eclipse.emf.cdo.expressions.Expression...-">
+<a id="invoke(org.eclipse.emf.cdo.expressions.Expression,org.eclipse.emf.cdo.expressions.Expression...)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>invoke</h4>
-<pre>public static&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/expressions/FunctionInvocation.html" title="interface in org.eclipse.emf.cdo.expressions">FunctionInvocation</a>&nbsp;invoke(<a href="../../../../../../org/eclipse/emf/cdo/expressions/Expression.html" title="interface in org.eclipse.emf.cdo.expressions">Expression</a>&nbsp;name,
-                                        <a href="../../../../../../org/eclipse/emf/cdo/expressions/Expression.html" title="interface in org.eclipse.emf.cdo.expressions">Expression</a>...&nbsp;arguments)</pre>
+<pre class="methodSignature">public static&nbsp;<a href="../FunctionInvocation.html" title="interface in org.eclipse.emf.cdo.expressions">FunctionInvocation</a>&nbsp;invoke&#8203;(<a href="../Expression.html" title="interface in org.eclipse.emf.cdo.expressions">Expression</a>&nbsp;name,
+                                        <a href="../Expression.html" title="interface in org.eclipse.emf.cdo.expressions">Expression</a>...&nbsp;arguments)</pre>
 </li>
 </ul>
-<a name="construct-org.eclipse.emf.cdo.expressions.Expression-org.eclipse.emf.cdo.expressions.Expression...-">
+<a id="construct(org.eclipse.emf.cdo.expressions.Expression,org.eclipse.emf.cdo.expressions.Expression...)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>construct</h4>
-<pre>public static&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/expressions/FunctionInvocation.html" title="interface in org.eclipse.emf.cdo.expressions">FunctionInvocation</a>&nbsp;construct(<a href="../../../../../../org/eclipse/emf/cdo/expressions/Expression.html" title="interface in org.eclipse.emf.cdo.expressions">Expression</a>&nbsp;className,
-                                           <a href="../../../../../../org/eclipse/emf/cdo/expressions/Expression.html" title="interface in org.eclipse.emf.cdo.expressions">Expression</a>...&nbsp;arguments)</pre>
+<pre class="methodSignature">public static&nbsp;<a href="../FunctionInvocation.html" title="interface in org.eclipse.emf.cdo.expressions">FunctionInvocation</a>&nbsp;construct&#8203;(<a href="../Expression.html" title="interface in org.eclipse.emf.cdo.expressions">Expression</a>&nbsp;className,
+                                           <a href="../Expression.html" title="interface in org.eclipse.emf.cdo.expressions">Expression</a>...&nbsp;arguments)</pre>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/ExpressionsUtil.html">Use</a></li>
@@ -392,16 +443,8 @@ extends java.lang.Object</pre>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/emf/cdo/expressions/util/ExpressionsSwitch.html" title="class in org.eclipse.emf.cdo.expressions.util"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li>Next&nbsp;Class</li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/emf/cdo/expressions/util/ExpressionsUtil.html" target="_top">Frames</a></li>
-<li><a href="ExpressionsUtil.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -414,6 +457,9 @@ extends java.lang.Object</pre>
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -430,10 +476,12 @@ extends java.lang.Object</pre>
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

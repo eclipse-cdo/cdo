@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>Uses of Interface org.eclipse.emf.cdo.security.PermissionFilter (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,39 +28,43 @@
     catch(err) {
     }
 //-->
-</script>
+var pathtoroot = "../../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="../package-summary.html">Package</a></li>
-<li><a href="../../../../../../org/eclipse/emf/cdo/security/PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">Class</a></li>
+<li><a href="../PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">Class</a></li>
 <li class="navBarCell1Rev">Use</li>
+<li><a href="../package-tree.html">Tree</a></li>
 <li><a href="../../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../../help-doc.html">Help</a></li>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev</li>
-<li>Next</li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/emf/cdo/security/class-use/PermissionFilter.html" target="_top">Frames</a></li>
-<li><a href="PermissionFilter.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -63,38 +77,50 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
+<main role="main">
 <div class="header">
 <h2 title="Uses of Interface org.eclipse.emf.cdo.security.PermissionFilter" class="title">Uses of Interface<br>org.eclipse.emf.cdo.security.PermissionFilter</h2>
 </div>
 <div class="classUseContainer">
 <ul class="blockList">
 <li class="blockList">
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing packages, and an explanation">
-<caption><span>Packages that use <a href="../../../../../../org/eclipse/emf/cdo/security/PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Packages that use <a href="../PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Package</th>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.security">org.eclipse.emf.cdo.security</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.security">org.eclipse.emf.cdo.security</a></th>
 <td class="colLast">
 <div class="block">The generated EMF API of the CDO security model.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.security.impl">org.eclipse.emf.cdo.security.impl</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.security.impl">org.eclipse.emf.cdo.security.impl</a></th>
 <td class="colLast">
 <div class="block">The generated EMF implementation of the CDO security model.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.security.util">org.eclipse.emf.cdo.security.util</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.security.util">org.eclipse.emf.cdo.security.util</a></th>
 <td class="colLast">
 <div class="block">The generated EMF utilities of the CDO security model.</div>
 </td>
@@ -104,351 +130,396 @@
 </li>
 <li class="blockList">
 <ul class="blockList">
-<li class="blockList"><a name="org.eclipse.emf.cdo.security">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.emf.cdo.security">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../org/eclipse/emf/cdo/security/PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a> in <a href="../../../../../../org/eclipse/emf/cdo/security/package-summary.html">org.eclipse.emf.cdo.security</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing subinterfaces, and an explanation">
-<caption><span>Subinterfaces of <a href="../../../../../../org/eclipse/emf/cdo/security/PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a> in <a href="../../../../../../org/eclipse/emf/cdo/security/package-summary.html">org.eclipse.emf.cdo.security</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a> in <a href="../package-summary.html">org.eclipse.emf.cdo.security</a></h3>
+<table class="useSummary">
+<caption><span>Subinterfaces of <a href="../PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a> in <a href="../package-summary.html">org.eclipse.emf.cdo.security</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Interface and Description</th>
+<th class="colSecond" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/security/AndFilter.html" title="interface in org.eclipse.emf.cdo.security">AndFilter</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../AndFilter.html" title="interface in org.eclipse.emf.cdo.security">AndFilter</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>And Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/security/ClassFilter.html" title="interface in org.eclipse.emf.cdo.security">ClassFilter</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../ClassFilter.html" title="interface in org.eclipse.emf.cdo.security">ClassFilter</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Class Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/security/CombinedFilter.html" title="interface in org.eclipse.emf.cdo.security">CombinedFilter</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../CombinedFilter.html" title="interface in org.eclipse.emf.cdo.security">CombinedFilter</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Combined Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/security/ExpressionFilter.html" title="interface in org.eclipse.emf.cdo.security">ExpressionFilter</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../ExpressionFilter.html" title="interface in org.eclipse.emf.cdo.security">ExpressionFilter</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Expression Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/security/LinkedFilter.html" title="interface in org.eclipse.emf.cdo.security">LinkedFilter</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../LinkedFilter.html" title="interface in org.eclipse.emf.cdo.security">LinkedFilter</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Reference Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/security/NotFilter.html" title="interface in org.eclipse.emf.cdo.security">NotFilter</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../NotFilter.html" title="interface in org.eclipse.emf.cdo.security">NotFilter</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Not Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/security/ObjectFilter.html" title="interface in org.eclipse.emf.cdo.security">ObjectFilter</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../ObjectFilter.html" title="interface in org.eclipse.emf.cdo.security">ObjectFilter</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Object Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/security/OrFilter.html" title="interface in org.eclipse.emf.cdo.security">OrFilter</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../OrFilter.html" title="interface in org.eclipse.emf.cdo.security">OrFilter</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Or Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/security/PackageFilter.html" title="interface in org.eclipse.emf.cdo.security">PackageFilter</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../PackageFilter.html" title="interface in org.eclipse.emf.cdo.security">PackageFilter</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Package Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/security/ResourceFilter.html" title="interface in org.eclipse.emf.cdo.security">ResourceFilter</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../ResourceFilter.html" title="interface in org.eclipse.emf.cdo.security">ResourceFilter</a></span></code></th>
+<td class="colLast">
 <div class="block">A representation of the model object '<em><b>Resource Filter</b></em>'.</div>
 </td>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../org/eclipse/emf/cdo/security/package-summary.html">org.eclipse.emf.cdo.security</a> that return <a href="../../../../../../org/eclipse/emf/cdo/security/PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Methods in <a href="../package-summary.html">org.eclipse.emf.cdo.security</a> that return <a href="../PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/security/PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a></code></td>
-<td class="colLast"><span class="typeNameLabel">LinkedFilter.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/security/LinkedFilter.html#getFilter--">getFilter</a></span>()</code>
+<td class="colFirst"><code><a href="../PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">LinkedFilter.</span><code><span class="memberNameLink"><a href="../LinkedFilter.html#getFilter()">getFilter</a></span>()</code></th>
+<td class="colLast">
 <div class="block">Returns the value of the '<em><b>Filter</b></em>' reference.</div>
 </td>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../org/eclipse/emf/cdo/security/package-summary.html">org.eclipse.emf.cdo.security</a> that return types with arguments of type <a href="../../../../../../org/eclipse/emf/cdo/security/PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Methods in <a href="../package-summary.html">org.eclipse.emf.cdo.security</a> that return types with arguments of type <a href="../PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</a>&lt;<a href="../../../../../../org/eclipse/emf/cdo/security/PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a>&gt;</code></td>
-<td class="colLast"><span class="typeNameLabel">FilterPermission.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/security/FilterPermission.html#getFilters--">getFilters</a></span>()</code>
+<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">EList</a>&lt;<a href="../PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a>&gt;</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">FilterPermission.</span><code><span class="memberNameLink"><a href="../FilterPermission.html#getFilters()">getFilters</a></span>()</code></th>
+<td class="colLast">
 <div class="block">Returns the value of the '<em><b>Filters</b></em>' containment reference list.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</a>&lt;<a href="../../../../../../org/eclipse/emf/cdo/security/PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a>&gt;</code></td>
-<td class="colLast"><span class="typeNameLabel">CombinedFilter.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/security/CombinedFilter.html#getOperands--">getOperands</a></span>()</code>
+<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">EList</a>&lt;<a href="../PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a>&gt;</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CombinedFilter.</span><code><span class="memberNameLink"><a href="../CombinedFilter.html#getOperands()">getOperands</a></span>()</code></th>
+<td class="colLast">
 <div class="block">Returns the value of the '<em><b>Operands</b></em>' containment reference list.</div>
 </td>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../org/eclipse/emf/cdo/security/package-summary.html">org.eclipse.emf.cdo.security</a> with parameters of type <a href="../../../../../../org/eclipse/emf/cdo/security/PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Methods in <a href="../package-summary.html">org.eclipse.emf.cdo.security</a> with parameters of type <a href="../PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/security/AndFilter.html" title="interface in org.eclipse.emf.cdo.security">AndFilter</a></code></td>
-<td class="colLast"><span class="typeNameLabel">SecurityFactory.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/security/SecurityFactory.html#createAndFilter-org.eclipse.emf.cdo.security.PermissionFilter...-">createAndFilter</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/security/PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a>...&nbsp;operands)</code>
+<td class="colFirst"><code><a href="../AndFilter.html" title="interface in org.eclipse.emf.cdo.security">AndFilter</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">SecurityFactory.</span><code><span class="memberNameLink"><a href="../SecurityFactory.html#createAndFilter(org.eclipse.emf.cdo.security.PermissionFilter...)">createAndFilter</a></span>&#8203;(<a href="../PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a>...&nbsp;operands)</code></th>
+<td class="colLast">
 <div class="block">Returns a new object of class '<em>And Filter</em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/security/FilterPermission.html" title="interface in org.eclipse.emf.cdo.security">FilterPermission</a></code></td>
-<td class="colLast"><span class="typeNameLabel">SecurityFactory.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/security/SecurityFactory.html#createFilterPermission-org.eclipse.emf.cdo.security.Access-org.eclipse.emf.cdo.security.PermissionFilter...-">createFilterPermission</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/security/Access.html" title="enum in org.eclipse.emf.cdo.security">Access</a>&nbsp;access,
-                      <a href="../../../../../../org/eclipse/emf/cdo/security/PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a>...&nbsp;filters)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../FilterPermission.html" title="interface in org.eclipse.emf.cdo.security">FilterPermission</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">SecurityFactory.</span><code><span class="memberNameLink"><a href="../SecurityFactory.html#createFilterPermission(org.eclipse.emf.cdo.security.Access,org.eclipse.emf.cdo.security.PermissionFilter...)">createFilterPermission</a></span>&#8203;(<a href="../Access.html" title="enum in org.eclipse.emf.cdo.security">Access</a>&nbsp;access,
+                      <a href="../PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a>...&nbsp;filters)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/security/NotFilter.html" title="interface in org.eclipse.emf.cdo.security">NotFilter</a></code></td>
-<td class="colLast"><span class="typeNameLabel">SecurityFactory.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/security/SecurityFactory.html#createNotFilter-org.eclipse.emf.cdo.security.PermissionFilter-">createNotFilter</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/security/PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a>&nbsp;operand)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../NotFilter.html" title="interface in org.eclipse.emf.cdo.security">NotFilter</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">SecurityFactory.</span><code><span class="memberNameLink"><a href="../SecurityFactory.html#createNotFilter(org.eclipse.emf.cdo.security.PermissionFilter)">createNotFilter</a></span>&#8203;(<a href="../PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a>&nbsp;operand)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/security/OrFilter.html" title="interface in org.eclipse.emf.cdo.security">OrFilter</a></code></td>
-<td class="colLast"><span class="typeNameLabel">SecurityFactory.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/security/SecurityFactory.html#createOrFilter-org.eclipse.emf.cdo.security.PermissionFilter...-">createOrFilter</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/security/PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a>...&nbsp;operands)</code>
+<td class="colFirst"><code><a href="../OrFilter.html" title="interface in org.eclipse.emf.cdo.security">OrFilter</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">SecurityFactory.</span><code><span class="memberNameLink"><a href="../SecurityFactory.html#createOrFilter(org.eclipse.emf.cdo.security.PermissionFilter...)">createOrFilter</a></span>&#8203;(<a href="../PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a>...&nbsp;operands)</code></th>
+<td class="colLast">
 <div class="block">Returns a new object of class '<em>Or Filter</em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">LinkedFilter.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/security/LinkedFilter.html#setFilter-org.eclipse.emf.cdo.security.PermissionFilter-">setFilter</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/security/PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a>&nbsp;value)</code>
-<div class="block">Sets the value of the '<a href="../../../../../../org/eclipse/emf/cdo/security/LinkedFilter.html#getFilter--"><code><em>Filter</em></code></a>' reference.</div>
+<th class="colSecond" scope="row"><span class="typeNameLabel">LinkedFilter.</span><code><span class="memberNameLink"><a href="../LinkedFilter.html#setFilter(org.eclipse.emf.cdo.security.PermissionFilter)">setFilter</a></span>&#8203;(<a href="../PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a>&nbsp;value)</code></th>
+<td class="colLast">
+<div class="block">Sets the value of the '<a href="../LinkedFilter.html#getFilter()"><code><em>Filter</em></code></a>' reference.</div>
 </td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.security.impl">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.emf.cdo.security.impl">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../org/eclipse/emf/cdo/security/PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a> in <a href="../../../../../../org/eclipse/emf/cdo/security/impl/package-summary.html">org.eclipse.emf.cdo.security.impl</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../../org/eclipse/emf/cdo/security/impl/package-summary.html">org.eclipse.emf.cdo.security.impl</a> that implement <a href="../../../../../../org/eclipse/emf/cdo/security/PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a> in <a href="../impl/package-summary.html">org.eclipse.emf.cdo.security.impl</a></h3>
+<table class="useSummary">
+<caption><span>Classes in <a href="../impl/package-summary.html">org.eclipse.emf.cdo.security.impl</a> that implement <a href="../PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Class and Description</th>
+<th class="colSecond" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/AndFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">AndFilterImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../impl/AndFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">AndFilterImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>And Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/ClassFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ClassFilterImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../impl/ClassFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ClassFilterImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Class Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/CombinedFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">CombinedFilterImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../impl/CombinedFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">CombinedFilterImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Combined Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/ExpressionFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ExpressionFilterImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../impl/ExpressionFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ExpressionFilterImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Expression Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/LinkedFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">LinkedFilterImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../impl/LinkedFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">LinkedFilterImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Reference Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/NotFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">NotFilterImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../impl/NotFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">NotFilterImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Not Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/ObjectFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ObjectFilterImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../impl/ObjectFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ObjectFilterImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Object Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/OrFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">OrFilterImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../impl/OrFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">OrFilterImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Or Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/PackageFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">PackageFilterImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../impl/PackageFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">PackageFilterImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Package Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/PermissionFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">PermissionFilterImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../impl/PermissionFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">PermissionFilterImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Permission Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/ResourceFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ResourceFilterImpl</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../impl/ResourceFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ResourceFilterImpl</a></span></code></th>
+<td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Resource Filter</b></em>'.</div>
 </td>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../org/eclipse/emf/cdo/security/impl/package-summary.html">org.eclipse.emf.cdo.security.impl</a> that return <a href="../../../../../../org/eclipse/emf/cdo/security/PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Methods in <a href="../impl/package-summary.html">org.eclipse.emf.cdo.security.impl</a> that return <a href="../PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/security/PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a></code></td>
-<td class="colLast"><span class="typeNameLabel">LinkedFilterImpl.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/LinkedFilterImpl.html#getFilter--">getFilter</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">LinkedFilterImpl.</span><code><span class="memberNameLink"><a href="../impl/LinkedFilterImpl.html#getFilter()">getFilter</a></span>()</code></th>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../org/eclipse/emf/cdo/security/impl/package-summary.html">org.eclipse.emf.cdo.security.impl</a> that return types with arguments of type <a href="../../../../../../org/eclipse/emf/cdo/security/PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Methods in <a href="../impl/package-summary.html">org.eclipse.emf.cdo.security.impl</a> that return types with arguments of type <a href="../PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</a>&lt;<a href="../../../../../../org/eclipse/emf/cdo/security/PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a>&gt;</code></td>
-<td class="colLast"><span class="typeNameLabel">FilterPermissionImpl.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/FilterPermissionImpl.html#getFilters--">getFilters</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">EList</a>&lt;<a href="../PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a>&gt;</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">FilterPermissionImpl.</span><code><span class="memberNameLink"><a href="../impl/FilterPermissionImpl.html#getFilters()">getFilters</a></span>()</code></th>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</a>&lt;<a href="../../../../../../org/eclipse/emf/cdo/security/PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a>&gt;</code></td>
-<td class="colLast"><span class="typeNameLabel">CombinedFilterImpl.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/CombinedFilterImpl.html#getOperands--">getOperands</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">EList</a>&lt;<a href="../PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a>&gt;</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CombinedFilterImpl.</span><code><span class="memberNameLink"><a href="../impl/CombinedFilterImpl.html#getOperands()">getOperands</a></span>()</code></th>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../org/eclipse/emf/cdo/security/impl/package-summary.html">org.eclipse.emf.cdo.security.impl</a> with parameters of type <a href="../../../../../../org/eclipse/emf/cdo/security/PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Methods in <a href="../impl/package-summary.html">org.eclipse.emf.cdo.security.impl</a> with parameters of type <a href="../PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/security/AndFilter.html" title="interface in org.eclipse.emf.cdo.security">AndFilter</a></code></td>
-<td class="colLast"><span class="typeNameLabel">SecurityFactoryImpl.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/SecurityFactoryImpl.html#createAndFilter-org.eclipse.emf.cdo.security.PermissionFilter...-">createAndFilter</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/security/PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a>...&nbsp;operands)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../AndFilter.html" title="interface in org.eclipse.emf.cdo.security">AndFilter</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">SecurityFactoryImpl.</span><code><span class="memberNameLink"><a href="../impl/SecurityFactoryImpl.html#createAndFilter(org.eclipse.emf.cdo.security.PermissionFilter...)">createAndFilter</a></span>&#8203;(<a href="../PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a>...&nbsp;operands)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/security/FilterPermission.html" title="interface in org.eclipse.emf.cdo.security">FilterPermission</a></code></td>
-<td class="colLast"><span class="typeNameLabel">SecurityFactoryImpl.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/SecurityFactoryImpl.html#createFilterPermission-org.eclipse.emf.cdo.security.Access-org.eclipse.emf.cdo.security.PermissionFilter...-">createFilterPermission</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/security/Access.html" title="enum in org.eclipse.emf.cdo.security">Access</a>&nbsp;access,
-                      <a href="../../../../../../org/eclipse/emf/cdo/security/PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a>...&nbsp;filters)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../FilterPermission.html" title="interface in org.eclipse.emf.cdo.security">FilterPermission</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">SecurityFactoryImpl.</span><code><span class="memberNameLink"><a href="../impl/SecurityFactoryImpl.html#createFilterPermission(org.eclipse.emf.cdo.security.Access,org.eclipse.emf.cdo.security.PermissionFilter...)">createFilterPermission</a></span>&#8203;(<a href="../Access.html" title="enum in org.eclipse.emf.cdo.security">Access</a>&nbsp;access,
+                      <a href="../PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a>...&nbsp;filters)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/security/NotFilter.html" title="interface in org.eclipse.emf.cdo.security">NotFilter</a></code></td>
-<td class="colLast"><span class="typeNameLabel">SecurityFactoryImpl.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/SecurityFactoryImpl.html#createNotFilter-org.eclipse.emf.cdo.security.PermissionFilter-">createNotFilter</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/security/PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a>&nbsp;operand)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../NotFilter.html" title="interface in org.eclipse.emf.cdo.security">NotFilter</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">SecurityFactoryImpl.</span><code><span class="memberNameLink"><a href="../impl/SecurityFactoryImpl.html#createNotFilter(org.eclipse.emf.cdo.security.PermissionFilter)">createNotFilter</a></span>&#8203;(<a href="../PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a>&nbsp;operand)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/security/OrFilter.html" title="interface in org.eclipse.emf.cdo.security">OrFilter</a></code></td>
-<td class="colLast"><span class="typeNameLabel">SecurityFactoryImpl.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/SecurityFactoryImpl.html#createOrFilter-org.eclipse.emf.cdo.security.PermissionFilter...-">createOrFilter</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/security/PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a>...&nbsp;operands)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../OrFilter.html" title="interface in org.eclipse.emf.cdo.security">OrFilter</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">SecurityFactoryImpl.</span><code><span class="memberNameLink"><a href="../impl/SecurityFactoryImpl.html#createOrFilter(org.eclipse.emf.cdo.security.PermissionFilter...)">createOrFilter</a></span>&#8203;(<a href="../PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a>...&nbsp;operands)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">LinkedFilterImpl.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/LinkedFilterImpl.html#setFilter-org.eclipse.emf.cdo.security.PermissionFilter-">setFilter</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/security/PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a>&nbsp;newFilter)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">LinkedFilterImpl.</span><code><span class="memberNameLink"><a href="../impl/LinkedFilterImpl.html#setFilter(org.eclipse.emf.cdo.security.PermissionFilter)">setFilter</a></span>&#8203;(<a href="../PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a>&nbsp;newFilter)</code></th>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.security.util">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.emf.cdo.security.util">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../org/eclipse/emf/cdo/security/PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a> in <a href="../../../../../../org/eclipse/emf/cdo/security/util/package-summary.html">org.eclipse.emf.cdo.security.util</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../org/eclipse/emf/cdo/security/util/package-summary.html">org.eclipse.emf.cdo.security.util</a> with parameters of type <a href="../../../../../../org/eclipse/emf/cdo/security/PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a> in <a href="../util/package-summary.html">org.eclipse.emf.cdo.security.util</a></h3>
+<table class="useSummary">
+<caption><span>Methods in <a href="../util/package-summary.html">org.eclipse.emf.cdo.security.util</a> with parameters of type <a href="../PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/security/util/SecuritySwitch.html" title="type parameter in SecuritySwitch">T</a></code></td>
-<td class="colLast"><span class="typeNameLabel">SecuritySwitch.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/security/util/SecuritySwitch.html#casePermissionFilter-org.eclipse.emf.cdo.security.PermissionFilter-">casePermissionFilter</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/security/PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a>&nbsp;object)</code>
+<td class="colFirst"><code><a href="../util/SecuritySwitch.html" title="type parameter in SecuritySwitch">T</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">SecuritySwitch.</span><code><span class="memberNameLink"><a href="../util/SecuritySwitch.html#casePermissionFilter(org.eclipse.emf.cdo.security.PermissionFilter)">casePermissionFilter</a></span>&#8203;(<a href="../PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a>&nbsp;object)</code></th>
+<td class="colLast">
 <div class="block">Returns the result of interpreting the object as an instance of '<em>Permission Filter</em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><span class="typeNameLabel">SecurityValidator.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/security/util/SecurityValidator.html#validatePermissionFilter-org.eclipse.emf.cdo.security.PermissionFilter-org.eclipse.emf.common.util.DiagnosticChain-java.util.Map-">validatePermissionFilter</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/security/PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a>&nbsp;permissionFilter,
-                        <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/DiagnosticChain.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">DiagnosticChain</a>&nbsp;diagnostics,
-                        java.util.Map&lt;java.lang.Object,java.lang.Object&gt;&nbsp;context)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">SecurityValidator.</span><code><span class="memberNameLink"><a href="../util/SecurityValidator.html#validatePermissionFilter(org.eclipse.emf.cdo.security.PermissionFilter,org.eclipse.emf.common.util.DiagnosticChain,java.util.Map)">validatePermissionFilter</a></span>&#8203;(<a href="../PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a>&nbsp;permissionFilter,
+                        <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/DiagnosticChain.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">DiagnosticChain</a>&nbsp;diagnostics,
+                        java.util.Map&lt;java.lang.Object,&#8203;java.lang.Object&gt;&nbsp;context)</code></th>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
 </ul>
 </li>
 </ul>
 </div>
+</main>
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="../package-summary.html">Package</a></li>
-<li><a href="../../../../../../org/eclipse/emf/cdo/security/PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">Class</a></li>
+<li><a href="../PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">Class</a></li>
 <li class="navBarCell1Rev">Use</li>
+<li><a href="../package-tree.html">Tree</a></li>
 <li><a href="../../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../../help-doc.html">Help</a></li>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev</li>
-<li>Next</li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/emf/cdo/security/class-use/PermissionFilter.html" target="_top">Frames</a></li>
-<li><a href="PermissionFilter.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -461,11 +532,16 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

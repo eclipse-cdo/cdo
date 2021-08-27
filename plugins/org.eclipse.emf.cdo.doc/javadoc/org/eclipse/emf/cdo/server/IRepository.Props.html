@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>IRepository.Props (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,20 +28,25 @@
     catch(err) {
     }
 //-->
-</script>
+var pathtoroot = "../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/IRepository.Props.html">Use</a></li>
@@ -41,16 +56,14 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/emf/cdo/server/IRepository.Handler.html" title="interface in org.eclipse.emf.cdo.server"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/emf/cdo/server/IRepository.ReadAccessHandler.html" title="interface in org.eclipse.emf.cdo.server"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/emf/cdo/server/IRepository.Props.html" target="_top">Frames</a></li>
-<li><a href="IRepository.Props.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -63,6 +76,9 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -79,13 +95,22 @@
 <li>Method</li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.emf.cdo.server</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.cdo.server</a></div>
 <h2 title="Interface IRepository.Props" class="title">Interface IRepository.Props</h2>
 </div>
 <div class="contentContainer">
@@ -94,12 +119,11 @@
 <li class="blockList">
 <dl>
 <dt>Enclosing interface:</dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></dd>
+<dd><a href="IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></dd>
 </dl>
 <hr>
-<br>
 <pre>public static interface <span class="typeNameLabel">IRepository.Props</span></pre>
-<div class="block">Contains symbolic constants that specifiy valid keys of <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html#getProperties--"><code>repository properties</code></a>.</div>
+<div class="block">Contains symbolic constants that specifiy valid keys of <a href="IRepository.html#getProperties()"><code>repository properties</code></a>.</div>
 <dl>
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>Eike Stepper</dd>
@@ -115,76 +139,91 @@
 <ul class="blockList">
 <li class="blockList">
 <!-- =========== FIELD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.summary">
+<li class="blockList"><a id="field.summary">
 <!--   -->
 </a>
 <h3>Field Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Field Summary table, listing fields, and an explanation">
+<table class="memberSummary">
 <caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Field and Description</th>
+<th class="colSecond" scope="col">Field</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IRepository.Props.html#ALLOW_INTERRUPT_RUNNING_QUERIES">ALLOW_INTERRUPT_RUNNING_QUERIES</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ALLOW_INTERRUPT_RUNNING_QUERIES">ALLOW_INTERRUPT_RUNNING_QUERIES</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IRepository.Props.html#CHECK_UNIT_MOVES">CHECK_UNIT_MOVES</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#CHECK_UNIT_MOVES">CHECK_UNIT_MOVES</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IRepository.Props.html#COMMIT_INFO_STORAGE">COMMIT_INFO_STORAGE</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#COMMIT_INFO_STORAGE">COMMIT_INFO_STORAGE</a></span></code></th>
+<td class="colLast">
 <div class="block">Possible values: NO | YES | WITH_MERGE_SOURCE.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IRepository.Props.html#ENSURE_REFERENTIAL_INTEGRITY">ENSURE_REFERENTIAL_INTEGRITY</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ENSURE_REFERENTIAL_INTEGRITY">ENSURE_REFERENTIAL_INTEGRITY</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IRepository.Props.html#ID_GENERATION_LOCATION">ID_GENERATION_LOCATION</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ID_GENERATION_LOCATION">ID_GENERATION_LOCATION</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IRepository.Props.html#OPTIMISTIC_LOCKING_TIMEOUT">OPTIMISTIC_LOCKING_TIMEOUT</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#OPTIMISTIC_LOCKING_TIMEOUT">OPTIMISTIC_LOCKING_TIMEOUT</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IRepository.Props.html#OVERRIDE_UUID">OVERRIDE_UUID</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#OVERRIDE_UUID">OVERRIDE_UUID</a></span></code></th>
+<td class="colLast">
 <div class="block">Used to override the automatic UUID generation during first startup of a repository.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IRepository.Props.html#SERIALIZE_COMMITS">SERIALIZE_COMMITS</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SERIALIZE_COMMITS">SERIALIZE_COMMITS</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IRepository.Props.html#SUPPORTING_AUDITS">SUPPORTING_AUDITS</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SUPPORTING_AUDITS">SUPPORTING_AUDITS</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IRepository.Props.html#SUPPORTING_BRANCHES">SUPPORTING_BRANCHES</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SUPPORTING_BRANCHES">SUPPORTING_BRANCHES</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IRepository.Props.html#SUPPORTING_ECORE">SUPPORTING_ECORE</a></span></code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">As of 4.2 instances of Ecore are always supported (on demand).</span></div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SUPPORTING_ECORE">SUPPORTING_ECORE</a></span></code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.2 instances of Ecore are always supported (on demand).</div>
 </div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IRepository.Props.html#SUPPORTING_UNITS">SUPPORTING_UNITS</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SUPPORTING_UNITS">SUPPORTING_UNITS</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -192,12 +231,13 @@
 <ul class="blockList">
 <li class="blockList">
 <!-- ============ FIELD DETAIL =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.detail">
+<li class="blockList"><a id="field.detail">
 <!--   -->
 </a>
 <h3>Field Detail</h3>
-<a name="OVERRIDE_UUID">
+<a id="OVERRIDE_UUID">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -205,7 +245,7 @@
 <h4>OVERRIDE_UUID</h4>
 <pre>static final&nbsp;java.lang.String OVERRIDE_UUID</pre>
 <div class="block">Used to override the automatic UUID generation during first startup of a repository. Passing the empty string
- causes the UUID of the repository to be set to its <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getName--"><code>name</code></a>.</div>
+ causes the UUID of the repository to be set to its <a href="../common/CDOCommonRepository.html#getName()"><code>name</code></a>.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
@@ -214,7 +254,7 @@
 </dl>
 </li>
 </ul>
-<a name="SUPPORTING_AUDITS">
+<a id="SUPPORTING_AUDITS">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -229,7 +269,7 @@
 </dl>
 </li>
 </ul>
-<a name="SUPPORTING_BRANCHES">
+<a id="SUPPORTING_BRANCHES">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -244,7 +284,7 @@
 </dl>
 </li>
 </ul>
-<a name="SUPPORTING_UNITS">
+<a id="SUPPORTING_UNITS">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -259,7 +299,7 @@
 </dl>
 </li>
 </ul>
-<a name="CHECK_UNIT_MOVES">
+<a id="CHECK_UNIT_MOVES">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -274,7 +314,7 @@
 </dl>
 </li>
 </ul>
-<a name="SERIALIZE_COMMITS">
+<a id="SERIALIZE_COMMITS">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -289,7 +329,7 @@
 </dl>
 </li>
 </ul>
-<a name="ENSURE_REFERENTIAL_INTEGRITY">
+<a id="ENSURE_REFERENTIAL_INTEGRITY">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -304,7 +344,7 @@
 </dl>
 </li>
 </ul>
-<a name="ALLOW_INTERRUPT_RUNNING_QUERIES">
+<a id="ALLOW_INTERRUPT_RUNNING_QUERIES">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -319,7 +359,7 @@
 </dl>
 </li>
 </ul>
-<a name="ID_GENERATION_LOCATION">
+<a id="ID_GENERATION_LOCATION">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -334,7 +374,7 @@
 </dl>
 </li>
 </ul>
-<a name="COMMIT_INFO_STORAGE">
+<a id="COMMIT_INFO_STORAGE">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -350,7 +390,7 @@
 </dl>
 </li>
 </ul>
-<a name="OPTIMISTIC_LOCKING_TIMEOUT">
+<a id="OPTIMISTIC_LOCKING_TIMEOUT">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -365,7 +405,7 @@
 </dl>
 </li>
 </ul>
-<a name="SUPPORTING_ECORE">
+<a id="SUPPORTING_ECORE">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -373,7 +413,9 @@
 <h4>SUPPORTING_ECORE</h4>
 <pre>@Deprecated
 static final&nbsp;java.lang.String SUPPORTING_ECORE</pre>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">As of 4.2 instances of Ecore are always supported (on demand).</span></div>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.2 instances of Ecore are always supported (on demand).</div>
+</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.0</dd>
@@ -384,21 +426,25 @@ static final&nbsp;java.lang.String SUPPORTING_ECORE</pre>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/IRepository.Props.html">Use</a></li>
@@ -408,16 +454,8 @@ static final&nbsp;java.lang.String SUPPORTING_ECORE</pre>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/emf/cdo/server/IRepository.Handler.html" title="interface in org.eclipse.emf.cdo.server"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/emf/cdo/server/IRepository.ReadAccessHandler.html" title="interface in org.eclipse.emf.cdo.server"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/emf/cdo/server/IRepository.Props.html" target="_top">Frames</a></li>
-<li><a href="IRepository.Props.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -430,6 +468,9 @@ static final&nbsp;java.lang.String SUPPORTING_ECORE</pre>
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -446,10 +487,12 @@ static final&nbsp;java.lang.String SUPPORTING_ECORE</pre>
 <li>Method</li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

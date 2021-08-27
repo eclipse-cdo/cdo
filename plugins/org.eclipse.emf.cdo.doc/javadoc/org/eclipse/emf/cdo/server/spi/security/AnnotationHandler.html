@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>AnnotationHandler (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/AnnotationHandler.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev&nbsp;Class</li>
-<li><a href="../../../../../../../org/eclipse/emf/cdo/server/spi/security/AnnotationHandler.Factory.html" title="class in org.eclipse.emf.cdo.server.spi.security"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../../index.html?org/eclipse/emf/cdo/server/spi/security/AnnotationHandler.html" target="_top">Frames</a></li>
-<li><a href="AnnotationHandler.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,6 +82,9 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -85,13 +101,22 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.emf.cdo.server.spi.security</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.cdo.server.spi.security</a></div>
 <h2 title="Class AnnotationHandler" class="title">Class AnnotationHandler</h2>
 </div>
 <div class="contentContainer">
@@ -108,13 +133,12 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="../../../../../../../org/eclipse/emf/cdo/server/spi/security/InternalSecurityManager.CommitHandler.html" title="interface in org.eclipse.emf.cdo.server.spi.security">InternalSecurityManager.CommitHandler</a></dd>
+<dd><code><a href="InternalSecurityManager.CommitHandler.html" title="interface in org.eclipse.emf.cdo.server.spi.security">InternalSecurityManager.CommitHandler</a></code></dd>
 </dl>
 <hr>
-<br>
 <pre>public class <span class="typeNameLabel">AnnotationHandler</span>
 extends java.lang.Object
-implements <a href="../../../../../../../org/eclipse/emf/cdo/server/spi/security/InternalSecurityManager.CommitHandler.html" title="interface in org.eclipse.emf.cdo.server.spi.security">InternalSecurityManager.CommitHandler</a></pre>
+implements <a href="InternalSecurityManager.CommitHandler.html" title="interface in org.eclipse.emf.cdo.server.spi.security">InternalSecurityManager.CommitHandler</a></pre>
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 <dl>
 <dt><span class="simpleTagLabel">Author:</span></dt>
@@ -127,139 +151,164 @@ implements <a href="../../../../../../../org/eclipse/emf/cdo/server/spi/security
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="nested.class.summary">
+<li class="blockList"><a id="nested.class.summary">
 <!--   -->
 </a>
 <h3>Nested Class Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Nested Class Summary table, listing nested classes, and an explanation">
+<table class="memberSummary">
 <caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Class and Description</th>
+<th class="colSecond" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/spi/security/AnnotationHandler.Factory.html" title="class in org.eclipse.emf.cdo.server.spi.security">AnnotationHandler.Factory</a></span></code>
-<div class="block">Creates <a href="../../../../../../../org/eclipse/emf/cdo/server/spi/security/AnnotationHandler.html" title="class in org.eclipse.emf.cdo.server.spi.security"><code>AnnotationHandler</code></a> instances.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="AnnotationHandler.Factory.html" title="class in org.eclipse.emf.cdo.server.spi.security">AnnotationHandler.Factory</a></span></code></th>
+<td class="colLast">
+<div class="block">Creates <a href="AnnotationHandler.html" title="class in org.eclipse.emf.cdo.server.spi.security"><code>AnnotationHandler</code></a> instances.</div>
 </td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- =========== FIELD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.summary">
+<li class="blockList"><a id="field.summary">
 <!--   -->
 </a>
 <h3>Field Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Field Summary table, listing fields, and an explanation">
+<table class="memberSummary">
 <caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Field and Description</th>
+<th class="colSecond" scope="col">Field</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/spi/security/AnnotationHandler.html#DELIMITERS">DELIMITERS</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#DELIMITERS">DELIMITERS</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/spi/security/AnnotationHandler.html#READ_KEY">READ_KEY</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#READ_KEY">READ_KEY</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/spi/security/AnnotationHandler.html#SOURCE_URI">SOURCE_URI</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SOURCE_URI">SOURCE_URI</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/spi/security/AnnotationHandler.html#WRITE_KEY">WRITE_KEY</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#WRITE_KEY">WRITE_KEY</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.summary">
+<li class="blockList"><a id="constructor.summary">
 <!--   -->
 </a>
 <h3>Constructor Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
+<table class="memberSummary">
 <caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Constructor and Description</th>
+<th class="colFirst" scope="col">Constructor</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/spi/security/AnnotationHandler.html#AnnotationHandler--">AnnotationHandler</a></span>()</code>&nbsp;</td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">AnnotationHandler</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/spi/security/AnnotationHandler.html#handleClassPermission-org.eclipse.emf.cdo.security.Realm-org.eclipse.emf.ecore.EClass-java.lang.String-org.eclipse.emf.cdo.security.Access-">handleClassPermission</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/security/Realm.html" title="interface in org.eclipse.emf.cdo.security">Realm</a>&nbsp;realm,
-                     <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;eClass,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#handleClassPermission(org.eclipse.emf.cdo.security.Realm,org.eclipse.emf.ecore.EClass,java.lang.String,org.eclipse.emf.cdo.security.Access)">handleClassPermission</a></span>&#8203;(<a href="../../../security/Realm.html" title="interface in org.eclipse.emf.cdo.security">Realm</a>&nbsp;realm,
+                     <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;eClass,
                      java.lang.String&nbsp;key,
-                     <a href="../../../../../../../org/eclipse/emf/cdo/security/Access.html" title="enum in org.eclipse.emf.cdo.security">Access</a>&nbsp;access)</code>&nbsp;</td>
+                     <a href="../../../security/Access.html" title="enum in org.eclipse.emf.cdo.security">Access</a>&nbsp;access)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/spi/security/AnnotationHandler.html#handleCommit-org.eclipse.emf.cdo.server.spi.security.InternalSecurityManager-org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext-org.eclipse.emf.cdo.security.User-">handleCommit</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/server/spi/security/InternalSecurityManager.html" title="interface in org.eclipse.emf.cdo.server.spi.security">InternalSecurityManager</a>&nbsp;securityManager,
-            <a href="../../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.CommitContext</a>&nbsp;commitContext,
-            <a href="../../../../../../../org/eclipse/emf/cdo/security/User.html" title="interface in org.eclipse.emf.cdo.security">User</a>&nbsp;user)</code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#handleCommit(org.eclipse.emf.cdo.server.spi.security.InternalSecurityManager,org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext,org.eclipse.emf.cdo.security.User)">handleCommit</a></span>&#8203;(<a href="InternalSecurityManager.html" title="interface in org.eclipse.emf.cdo.server.spi.security">InternalSecurityManager</a>&nbsp;securityManager,
+            <a href="../../IStoreAccessor.CommitContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.CommitContext</a>&nbsp;commitContext,
+            <a href="../../../security/User.html" title="interface in org.eclipse.emf.cdo.security">User</a>&nbsp;user)</code></th>
+<td class="colLast">
 <div class="block">Called <b>before</b> the commit is security checked and passed to the repository.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/spi/security/AnnotationHandler.html#handlePackage-org.eclipse.emf.cdo.security.Realm-org.eclipse.emf.ecore.EPackage-">handlePackage</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/security/Realm.html" title="interface in org.eclipse.emf.cdo.security">Realm</a>&nbsp;realm,
-             <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</a>&nbsp;ePackage)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#handlePackage(org.eclipse.emf.cdo.security.Realm,org.eclipse.emf.ecore.EPackage)">handlePackage</a></span>&#8203;(<a href="../../../security/Realm.html" title="interface in org.eclipse.emf.cdo.security">Realm</a>&nbsp;realm,
+             <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage</a>&nbsp;ePackage)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/spi/security/AnnotationHandler.html#handlePackagePermission-org.eclipse.emf.cdo.security.Realm-org.eclipse.emf.ecore.EPackage-java.lang.String-org.eclipse.emf.cdo.security.Access-">handlePackagePermission</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/security/Realm.html" title="interface in org.eclipse.emf.cdo.security">Realm</a>&nbsp;realm,
-                       <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</a>&nbsp;ePackage,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#handlePackagePermission(org.eclipse.emf.cdo.security.Realm,org.eclipse.emf.ecore.EPackage,java.lang.String,org.eclipse.emf.cdo.security.Access)">handlePackagePermission</a></span>&#8203;(<a href="../../../security/Realm.html" title="interface in org.eclipse.emf.cdo.security">Realm</a>&nbsp;realm,
+                       <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage</a>&nbsp;ePackage,
                        java.lang.String&nbsp;key,
-                       <a href="../../../../../../../org/eclipse/emf/cdo/security/Access.html" title="enum in org.eclipse.emf.cdo.security">Access</a>&nbsp;access)</code>&nbsp;</td>
+                       <a href="../../../security/Access.html" title="enum in org.eclipse.emf.cdo.security">Access</a>&nbsp;access)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/spi/security/AnnotationHandler.html#handlePackageUnits-org.eclipse.emf.cdo.server.spi.security.InternalSecurityManager-org.eclipse.emf.cdo.common.model.CDOPackageUnit:A-">handlePackageUnits</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/server/spi/security/InternalSecurityManager.html" title="interface in org.eclipse.emf.cdo.server.spi.security">InternalSecurityManager</a>&nbsp;securityManager,
-                  <a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageUnit</a>[]&nbsp;packageUnits)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#handlePackageUnits(org.eclipse.emf.cdo.server.spi.security.InternalSecurityManager,org.eclipse.emf.cdo.common.model.CDOPackageUnit%5B%5D)">handlePackageUnits</a></span>&#8203;(<a href="InternalSecurityManager.html" title="interface in org.eclipse.emf.cdo.server.spi.security">InternalSecurityManager</a>&nbsp;securityManager,
+                  <a href="../../../common/model/CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageUnit</a>[]&nbsp;packageUnits)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/spi/security/AnnotationHandler.html#handlePermission-org.eclipse.emf.cdo.security.Realm-org.eclipse.emf.ecore.EModelElement-java.lang.String-org.eclipse.emf.cdo.security.Access-org.eclipse.emf.ecore.EClass-org.eclipse.emf.ecore.EReference-">handlePermission</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/security/Realm.html" title="interface in org.eclipse.emf.cdo.security">Realm</a>&nbsp;realm,
-                <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EModelElement.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EModelElement</a>&nbsp;modelElement,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#handlePermission(org.eclipse.emf.cdo.security.Realm,org.eclipse.emf.ecore.EModelElement,java.lang.String,org.eclipse.emf.cdo.security.Access,org.eclipse.emf.ecore.EClass,org.eclipse.emf.ecore.EReference)">handlePermission</a></span>&#8203;(<a href="../../../security/Realm.html" title="interface in org.eclipse.emf.cdo.security">Realm</a>&nbsp;realm,
+                <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EModelElement.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EModelElement</a>&nbsp;modelElement,
                 java.lang.String&nbsp;key,
-                <a href="../../../../../../../org/eclipse/emf/cdo/security/Access.html" title="enum in org.eclipse.emf.cdo.security">Access</a>&nbsp;access,
-                <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;filterClass,
-                <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</a>&nbsp;filterFeature)</code>&nbsp;</td>
+                <a href="../../../security/Access.html" title="enum in org.eclipse.emf.cdo.security">Access</a>&nbsp;access,
+                <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;filterClass,
+                <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EReference</a>&nbsp;filterFeature)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/spi/security/AnnotationHandler.html#init-org.eclipse.emf.cdo.server.spi.security.InternalSecurityManager-boolean-">init</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/server/spi/security/InternalSecurityManager.html" title="interface in org.eclipse.emf.cdo.server.spi.security">InternalSecurityManager</a>&nbsp;securityManager,
-    boolean&nbsp;firstTime)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#init(org.eclipse.emf.cdo.server.spi.security.InternalSecurityManager,boolean)">init</a></span>&#8203;(<a href="InternalSecurityManager.html" title="interface in org.eclipse.emf.cdo.server.spi.security">InternalSecurityManager</a>&nbsp;securityManager,
+    boolean&nbsp;firstTime)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/spi/security/AnnotationHandler.html#toString--">toString</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
+<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
@@ -267,6 +316,7 @@ implements <a href="../../../../../../../org/eclipse/emf/cdo/server/spi/security
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -274,12 +324,13 @@ implements <a href="../../../../../../../org/eclipse/emf/cdo/server/spi/security
 <ul class="blockList">
 <li class="blockList">
 <!-- ============ FIELD DETAIL =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.detail">
+<li class="blockList"><a id="field.detail">
 <!--   -->
 </a>
 <h3>Field Detail</h3>
-<a name="SOURCE_URI">
+<a id="SOURCE_URI">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -292,7 +343,7 @@ implements <a href="../../../../../../../org/eclipse/emf/cdo/server/spi/security
 </dl>
 </li>
 </ul>
-<a name="READ_KEY">
+<a id="READ_KEY">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -305,7 +356,7 @@ implements <a href="../../../../../../../org/eclipse/emf/cdo/server/spi/security
 </dl>
 </li>
 </ul>
-<a name="WRITE_KEY">
+<a id="WRITE_KEY">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -318,7 +369,7 @@ implements <a href="../../../../../../../org/eclipse/emf/cdo/server/spi/security
 </dl>
 </li>
 </ul>
-<a name="DELIMITERS">
+<a id="DELIMITERS">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -333,13 +384,15 @@ implements <a href="../../../../../../../org/eclipse/emf/cdo/server/spi/security
 </ul>
 </li>
 </ul>
+</section>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.detail">
+<li class="blockList"><a id="constructor.detail">
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="AnnotationHandler--">
+<a id="&lt;init&gt;()">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -350,112 +403,114 @@ implements <a href="../../../../../../../org/eclipse/emf/cdo/server/spi/security
 </ul>
 </li>
 </ul>
+</section>
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="init-org.eclipse.emf.cdo.server.spi.security.InternalSecurityManager-boolean-">
+<a id="init(org.eclipse.emf.cdo.server.spi.security.InternalSecurityManager,boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>init</h4>
-<pre>public&nbsp;void&nbsp;init(<a href="../../../../../../../org/eclipse/emf/cdo/server/spi/security/InternalSecurityManager.html" title="interface in org.eclipse.emf.cdo.server.spi.security">InternalSecurityManager</a>&nbsp;securityManager,
+<pre class="methodSignature">public&nbsp;void&nbsp;init&#8203;(<a href="InternalSecurityManager.html" title="interface in org.eclipse.emf.cdo.server.spi.security">InternalSecurityManager</a>&nbsp;securityManager,
                  boolean&nbsp;firstTime)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../../../org/eclipse/emf/cdo/server/spi/security/InternalSecurityManager.CommitHandler.html#init-org.eclipse.emf.cdo.server.spi.security.InternalSecurityManager-boolean-">init</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../../org/eclipse/emf/cdo/server/spi/security/InternalSecurityManager.CommitHandler.html" title="interface in org.eclipse.emf.cdo.server.spi.security">InternalSecurityManager.CommitHandler</a></code></dd>
+<dd><code><a href="InternalSecurityManager.CommitHandler.html#init(org.eclipse.emf.cdo.server.spi.security.InternalSecurityManager,boolean)">init</a></code>&nbsp;in interface&nbsp;<code><a href="InternalSecurityManager.CommitHandler.html" title="interface in org.eclipse.emf.cdo.server.spi.security">InternalSecurityManager.CommitHandler</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="handleCommit-org.eclipse.emf.cdo.server.spi.security.InternalSecurityManager-org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext-org.eclipse.emf.cdo.security.User-">
+<a id="handleCommit(org.eclipse.emf.cdo.server.spi.security.InternalSecurityManager,org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext,org.eclipse.emf.cdo.security.User)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>handleCommit</h4>
-<pre>public&nbsp;void&nbsp;handleCommit(<a href="../../../../../../../org/eclipse/emf/cdo/server/spi/security/InternalSecurityManager.html" title="interface in org.eclipse.emf.cdo.server.spi.security">InternalSecurityManager</a>&nbsp;securityManager,
-                         <a href="../../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.CommitContext</a>&nbsp;commitContext,
-                         <a href="../../../../../../../org/eclipse/emf/cdo/security/User.html" title="interface in org.eclipse.emf.cdo.security">User</a>&nbsp;user)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../../../org/eclipse/emf/cdo/server/spi/security/InternalSecurityManager.CommitHandler.html#handleCommit-org.eclipse.emf.cdo.server.spi.security.InternalSecurityManager-org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext-org.eclipse.emf.cdo.security.User-">InternalSecurityManager.CommitHandler</a></code></span></div>
+<pre class="methodSignature">public&nbsp;void&nbsp;handleCommit&#8203;(<a href="InternalSecurityManager.html" title="interface in org.eclipse.emf.cdo.server.spi.security">InternalSecurityManager</a>&nbsp;securityManager,
+                         <a href="../../IStoreAccessor.CommitContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.CommitContext</a>&nbsp;commitContext,
+                         <a href="../../../security/User.html" title="interface in org.eclipse.emf.cdo.security">User</a>&nbsp;user)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="InternalSecurityManager.CommitHandler.html#handleCommit(org.eclipse.emf.cdo.server.spi.security.InternalSecurityManager,org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext,org.eclipse.emf.cdo.security.User)">InternalSecurityManager.CommitHandler</a></code></span></div>
 <div class="block">Called <b>before</b> the commit is security checked and passed to the repository.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../../../org/eclipse/emf/cdo/server/spi/security/InternalSecurityManager.CommitHandler.html#handleCommit-org.eclipse.emf.cdo.server.spi.security.InternalSecurityManager-org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext-org.eclipse.emf.cdo.security.User-">handleCommit</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../../org/eclipse/emf/cdo/server/spi/security/InternalSecurityManager.CommitHandler.html" title="interface in org.eclipse.emf.cdo.server.spi.security">InternalSecurityManager.CommitHandler</a></code></dd>
+<dd><code><a href="InternalSecurityManager.CommitHandler.html#handleCommit(org.eclipse.emf.cdo.server.spi.security.InternalSecurityManager,org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext,org.eclipse.emf.cdo.security.User)">handleCommit</a></code>&nbsp;in interface&nbsp;<code><a href="InternalSecurityManager.CommitHandler.html" title="interface in org.eclipse.emf.cdo.server.spi.security">InternalSecurityManager.CommitHandler</a></code></dd>
 <dd><code>user</code> - the committing user or <code>null</code> if this commit is
- <a href="../../../../../../../org/eclipse/emf/cdo/server/security/ISecurityManager.html#modify-org.eclipse.emf.cdo.server.security.ISecurityManager.RealmOperation-boolean-"><code>triggered</code></a> by the system.</dd>
+ <a href="../../security/ISecurityManager.html#modify(org.eclipse.emf.cdo.server.security.ISecurityManager.RealmOperation,boolean)"><code>triggered</code></a> by the system.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../../../org/eclipse/emf/cdo/server/spi/security/InternalSecurityManager.CommitHandler2.html" title="interface in org.eclipse.emf.cdo.server.spi.security"><code>InternalSecurityManager.CommitHandler2</code></a></dd>
+<dd><a href="InternalSecurityManager.CommitHandler2.html" title="interface in org.eclipse.emf.cdo.server.spi.security"><code>InternalSecurityManager.CommitHandler2</code></a></dd>
 </dl>
 </li>
 </ul>
-<a name="handlePackageUnits-org.eclipse.emf.cdo.server.spi.security.InternalSecurityManager-org.eclipse.emf.cdo.common.model.CDOPackageUnit:A-">
+<a id="handlePackageUnits(org.eclipse.emf.cdo.server.spi.security.InternalSecurityManager,org.eclipse.emf.cdo.common.model.CDOPackageUnit[])">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>handlePackageUnits</h4>
-<pre>protected&nbsp;void&nbsp;handlePackageUnits(<a href="../../../../../../../org/eclipse/emf/cdo/server/spi/security/InternalSecurityManager.html" title="interface in org.eclipse.emf.cdo.server.spi.security">InternalSecurityManager</a>&nbsp;securityManager,
-                                  <a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageUnit</a>[]&nbsp;packageUnits)</pre>
+<pre class="methodSignature">protected&nbsp;void&nbsp;handlePackageUnits&#8203;(<a href="InternalSecurityManager.html" title="interface in org.eclipse.emf.cdo.server.spi.security">InternalSecurityManager</a>&nbsp;securityManager,
+                                  <a href="../../../common/model/CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageUnit</a>[]&nbsp;packageUnits)</pre>
 </li>
 </ul>
-<a name="handlePackage-org.eclipse.emf.cdo.security.Realm-org.eclipse.emf.ecore.EPackage-">
+<a id="handlePackage(org.eclipse.emf.cdo.security.Realm,org.eclipse.emf.ecore.EPackage)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>handlePackage</h4>
-<pre>protected&nbsp;void&nbsp;handlePackage(<a href="../../../../../../../org/eclipse/emf/cdo/security/Realm.html" title="interface in org.eclipse.emf.cdo.security">Realm</a>&nbsp;realm,
-                             <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</a>&nbsp;ePackage)</pre>
+<pre class="methodSignature">protected&nbsp;void&nbsp;handlePackage&#8203;(<a href="../../../security/Realm.html" title="interface in org.eclipse.emf.cdo.security">Realm</a>&nbsp;realm,
+                             <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage</a>&nbsp;ePackage)</pre>
 </li>
 </ul>
-<a name="handlePackagePermission-org.eclipse.emf.cdo.security.Realm-org.eclipse.emf.ecore.EPackage-java.lang.String-org.eclipse.emf.cdo.security.Access-">
+<a id="handlePackagePermission(org.eclipse.emf.cdo.security.Realm,org.eclipse.emf.ecore.EPackage,java.lang.String,org.eclipse.emf.cdo.security.Access)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>handlePackagePermission</h4>
-<pre>protected&nbsp;void&nbsp;handlePackagePermission(<a href="../../../../../../../org/eclipse/emf/cdo/security/Realm.html" title="interface in org.eclipse.emf.cdo.security">Realm</a>&nbsp;realm,
-                                       <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</a>&nbsp;ePackage,
+<pre class="methodSignature">protected&nbsp;void&nbsp;handlePackagePermission&#8203;(<a href="../../../security/Realm.html" title="interface in org.eclipse.emf.cdo.security">Realm</a>&nbsp;realm,
+                                       <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage</a>&nbsp;ePackage,
                                        java.lang.String&nbsp;key,
-                                       <a href="../../../../../../../org/eclipse/emf/cdo/security/Access.html" title="enum in org.eclipse.emf.cdo.security">Access</a>&nbsp;access)</pre>
+                                       <a href="../../../security/Access.html" title="enum in org.eclipse.emf.cdo.security">Access</a>&nbsp;access)</pre>
 </li>
 </ul>
-<a name="handleClassPermission-org.eclipse.emf.cdo.security.Realm-org.eclipse.emf.ecore.EClass-java.lang.String-org.eclipse.emf.cdo.security.Access-">
+<a id="handleClassPermission(org.eclipse.emf.cdo.security.Realm,org.eclipse.emf.ecore.EClass,java.lang.String,org.eclipse.emf.cdo.security.Access)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>handleClassPermission</h4>
-<pre>protected&nbsp;void&nbsp;handleClassPermission(<a href="../../../../../../../org/eclipse/emf/cdo/security/Realm.html" title="interface in org.eclipse.emf.cdo.security">Realm</a>&nbsp;realm,
-                                     <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;eClass,
+<pre class="methodSignature">protected&nbsp;void&nbsp;handleClassPermission&#8203;(<a href="../../../security/Realm.html" title="interface in org.eclipse.emf.cdo.security">Realm</a>&nbsp;realm,
+                                     <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;eClass,
                                      java.lang.String&nbsp;key,
-                                     <a href="../../../../../../../org/eclipse/emf/cdo/security/Access.html" title="enum in org.eclipse.emf.cdo.security">Access</a>&nbsp;access)</pre>
+                                     <a href="../../../security/Access.html" title="enum in org.eclipse.emf.cdo.security">Access</a>&nbsp;access)</pre>
 </li>
 </ul>
-<a name="handlePermission-org.eclipse.emf.cdo.security.Realm-org.eclipse.emf.ecore.EModelElement-java.lang.String-org.eclipse.emf.cdo.security.Access-org.eclipse.emf.ecore.EClass-org.eclipse.emf.ecore.EReference-">
+<a id="handlePermission(org.eclipse.emf.cdo.security.Realm,org.eclipse.emf.ecore.EModelElement,java.lang.String,org.eclipse.emf.cdo.security.Access,org.eclipse.emf.ecore.EClass,org.eclipse.emf.ecore.EReference)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>handlePermission</h4>
-<pre>protected&nbsp;void&nbsp;handlePermission(<a href="../../../../../../../org/eclipse/emf/cdo/security/Realm.html" title="interface in org.eclipse.emf.cdo.security">Realm</a>&nbsp;realm,
-                                <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EModelElement.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EModelElement</a>&nbsp;modelElement,
+<pre class="methodSignature">protected&nbsp;void&nbsp;handlePermission&#8203;(<a href="../../../security/Realm.html" title="interface in org.eclipse.emf.cdo.security">Realm</a>&nbsp;realm,
+                                <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EModelElement.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EModelElement</a>&nbsp;modelElement,
                                 java.lang.String&nbsp;key,
-                                <a href="../../../../../../../org/eclipse/emf/cdo/security/Access.html" title="enum in org.eclipse.emf.cdo.security">Access</a>&nbsp;access,
-                                <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;filterClass,
-                                <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</a>&nbsp;filterFeature)</pre>
+                                <a href="../../../security/Access.html" title="enum in org.eclipse.emf.cdo.security">Access</a>&nbsp;access,
+                                <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;filterClass,
+                                <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EReference</a>&nbsp;filterFeature)</pre>
 </li>
 </ul>
-<a name="toString--">
+<a id="toString()">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>toString</h4>
-<pre>public&nbsp;java.lang.String&nbsp;toString()</pre>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;toString()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>toString</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
@@ -464,21 +519,25 @@ implements <a href="../../../../../../../org/eclipse/emf/cdo/server/spi/security
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/AnnotationHandler.html">Use</a></li>
@@ -488,16 +547,8 @@ implements <a href="../../../../../../../org/eclipse/emf/cdo/server/spi/security
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev&nbsp;Class</li>
-<li><a href="../../../../../../../org/eclipse/emf/cdo/server/spi/security/AnnotationHandler.Factory.html" title="class in org.eclipse.emf.cdo.server.spi.security"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../../index.html?org/eclipse/emf/cdo/server/spi/security/AnnotationHandler.html" target="_top">Frames</a></li>
-<li><a href="AnnotationHandler.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -510,6 +561,9 @@ implements <a href="../../../../../../../org/eclipse/emf/cdo/server/spi/security
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -526,10 +580,12 @@ implements <a href="../../../../../../../org/eclipse/emf/cdo/server/spi/security
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

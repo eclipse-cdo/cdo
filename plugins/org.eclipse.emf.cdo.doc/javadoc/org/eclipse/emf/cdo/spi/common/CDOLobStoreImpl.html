@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>CDOLobStoreImpl (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/CDOLobStoreImpl.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/emf/cdo/spi/common/CDOAuthenticationResult.html" title="class in org.eclipse.emf.cdo.spi.common"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../../org/eclipse/emf/cdo/spi/common/CDORawReplicationContext.html" title="interface in org.eclipse.emf.cdo.spi.common"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/emf/cdo/spi/common/CDOLobStoreImpl.html" target="_top">Frames</a></li>
-<li><a href="CDOLobStoreImpl.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,11 +82,14 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
@@ -85,13 +101,22 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.emf.cdo.spi.common</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.cdo.spi.common</a></div>
 <h2 title="Class CDOLobStoreImpl" class="title">Class CDOLobStoreImpl</h2>
 </div>
 <div class="contentContainer">
@@ -108,13 +133,12 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="../../../../../../org/eclipse/emf/cdo/common/lob/CDOLobStore.html" title="interface in org.eclipse.emf.cdo.common.lob">CDOLobStore</a></dd>
+<dd><code><a href="../../common/lob/CDOLobStore.html" title="interface in org.eclipse.emf.cdo.common.lob">CDOLobStore</a></code></dd>
 </dl>
 <hr>
-<br>
 <pre>public class <span class="typeNameLabel">CDOLobStoreImpl</span>
 extends java.lang.Object
-implements <a href="../../../../../../org/eclipse/emf/cdo/common/lob/CDOLobStore.html" title="interface in org.eclipse.emf.cdo.common.lob">CDOLobStore</a></pre>
+implements <a href="../../common/lob/CDOLobStore.html" title="interface in org.eclipse.emf.cdo.common.lob">CDOLobStore</a></pre>
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -129,122 +153,147 @@ implements <a href="../../../../../../org/eclipse/emf/cdo/common/lob/CDOLobStore
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="nested.class.summary">
+<li class="blockList"><a id="nested.class.summary">
 <!--   -->
 </a>
 <h3>Nested Class Summary</h3>
 <ul class="blockList">
-<li class="blockList"><a name="nested.classes.inherited.from.class.org.eclipse.emf.cdo.common.lob.CDOLobStore">
+<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.emf.cdo.common.lob.CDOLobStore">
 <!--   -->
 </a>
-<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.emf.cdo.common.lob.<a href="../../../../../../org/eclipse/emf/cdo/common/lob/CDOLobStore.html" title="interface in org.eclipse.emf.cdo.common.lob">CDOLobStore</a></h3>
-<code><a href="../../../../../../org/eclipse/emf/cdo/common/lob/CDOLobStore.Delegating.html" title="class in org.eclipse.emf.cdo.common.lob">CDOLobStore.Delegating</a></code></li>
+<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.emf.cdo.common.lob.<a href="../../common/lob/CDOLobStore.html" title="interface in org.eclipse.emf.cdo.common.lob">CDOLobStore</a></h3>
+<code><a href="../../common/lob/CDOLobStore.Delegating.html" title="class in org.eclipse.emf.cdo.common.lob">CDOLobStore.Delegating</a></code></li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- =========== FIELD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.summary">
+<li class="blockList"><a id="field.summary">
 <!--   -->
 </a>
 <h3>Field Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Field Summary table, listing fields, and an explanation">
+<table class="memberSummary">
 <caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Field and Description</th>
+<th class="colSecond" scope="col">Field</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/spi/common/CDOLobStoreImpl.html" title="class in org.eclipse.emf.cdo.spi.common">CDOLobStoreImpl</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/common/CDOLobStoreImpl.html#INSTANCE">INSTANCE</a></span></code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="CDOLobStoreImpl.html" title="class in org.eclipse.emf.cdo.spi.common">CDOLobStoreImpl</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#INSTANCE">INSTANCE</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.summary">
+<li class="blockList"><a id="constructor.summary">
 <!--   -->
 </a>
 <h3>Constructor Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
+<table class="memberSummary">
 <caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Constructor and Description</th>
+<th class="colFirst" scope="col">Constructor</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/common/CDOLobStoreImpl.html#CDOLobStoreImpl--">CDOLobStoreImpl</a></span>()</code>&nbsp;</td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">CDOLobStoreImpl</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/common/CDOLobStoreImpl.html#CDOLobStoreImpl-java.io.File-">CDOLobStoreImpl</a></span>(java.io.File&nbsp;folder)</code>&nbsp;</td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.io.File)">CDOLobStoreImpl</a></span>&#8203;(java.io.File&nbsp;folder)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>protected java.security.MessageDigest</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/common/CDOLobStoreImpl.html#createDigest--">createDigest</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createDigest()">createDigest</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>java.io.InputStream</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/common/CDOLobStoreImpl.html#getBinary-org.eclipse.emf.cdo.common.lob.CDOLobInfo-">getBinary</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/common/lob/CDOLobInfo.html" title="class in org.eclipse.emf.cdo.common.lob">CDOLobInfo</a>&nbsp;info)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getBinary(org.eclipse.emf.cdo.common.lob.CDOLobInfo)">getBinary</a></span>&#8203;(<a href="../../common/lob/CDOLobInfo.html" title="class in org.eclipse.emf.cdo.common.lob">CDOLobInfo</a>&nbsp;info)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>java.io.File</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/common/CDOLobStoreImpl.html#getBinaryFile-byte:A-">getBinaryFile</a></span>(byte[]&nbsp;id)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getBinaryFile(byte%5B%5D)">getBinaryFile</a></span>&#8203;(byte[]&nbsp;id)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>java.io.Reader</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/common/CDOLobStoreImpl.html#getCharacter-org.eclipse.emf.cdo.common.lob.CDOLobInfo-">getCharacter</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/common/lob/CDOLobInfo.html" title="class in org.eclipse.emf.cdo.common.lob">CDOLobInfo</a>&nbsp;info)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCharacter(org.eclipse.emf.cdo.common.lob.CDOLobInfo)">getCharacter</a></span>&#8203;(<a href="../../common/lob/CDOLobInfo.html" title="class in org.eclipse.emf.cdo.common.lob">CDOLobInfo</a>&nbsp;info)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>java.io.File</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/common/CDOLobStoreImpl.html#getCharacterFile-byte:A-">getCharacterFile</a></span>(byte[]&nbsp;id)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCharacterFile(byte%5B%5D)">getCharacterFile</a></span>&#8203;(byte[]&nbsp;id)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>java.io.File</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/common/CDOLobStoreImpl.html#getFolder--">getFolder</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getFolder()">getFolder</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>protected java.io.File</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/common/CDOLobStoreImpl.html#getTempFile--">getTempFile</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTempFile()">getTempFile</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>long</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/common/CDOLobStoreImpl.html#getTimeout--">getTimeout</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTimeout()">getTimeout</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
-<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/common/lob/CDOLobInfo.html" title="class in org.eclipse.emf.cdo.common.lob">CDOLobInfo</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/common/CDOLobStoreImpl.html#putBinary-java.io.InputStream-">putBinary</a></span>(java.io.InputStream&nbsp;contents)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../../common/lob/CDOLobInfo.html" title="class in org.eclipse.emf.cdo.common.lob">CDOLobInfo</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#putBinary(java.io.InputStream)">putBinary</a></span>&#8203;(java.io.InputStream&nbsp;contents)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/common/lob/CDOLobInfo.html" title="class in org.eclipse.emf.cdo.common.lob">CDOLobInfo</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/common/CDOLobStoreImpl.html#putCharacter-java.io.Reader-">putCharacter</a></span>(java.io.Reader&nbsp;contents)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../../common/lob/CDOLobInfo.html" title="class in org.eclipse.emf.cdo.common.lob">CDOLobInfo</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#putCharacter(java.io.Reader)">putCharacter</a></span>&#8203;(java.io.Reader&nbsp;contents)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/common/CDOLobStoreImpl.html#setTimeout-long-">setTimeout</a></span>(long&nbsp;timeout)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTimeout(long)">setTimeout</a></span>&#8203;(long&nbsp;timeout)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/common/CDOLobStoreImpl.html#toString--">toString</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
+<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
@@ -252,6 +301,7 @@ implements <a href="../../../../../../org/eclipse/emf/cdo/common/lob/CDOLobStore
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -259,38 +309,41 @@ implements <a href="../../../../../../org/eclipse/emf/cdo/common/lob/CDOLobStore
 <ul class="blockList">
 <li class="blockList">
 <!-- ============ FIELD DETAIL =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.detail">
+<li class="blockList"><a id="field.detail">
 <!--   -->
 </a>
 <h3>Field Detail</h3>
-<a name="INSTANCE">
+<a id="INSTANCE">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>INSTANCE</h4>
-<pre>public static final&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/spi/common/CDOLobStoreImpl.html" title="class in org.eclipse.emf.cdo.spi.common">CDOLobStoreImpl</a> INSTANCE</pre>
+<pre>public static final&nbsp;<a href="CDOLobStoreImpl.html" title="class in org.eclipse.emf.cdo.spi.common">CDOLobStoreImpl</a> INSTANCE</pre>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.detail">
+<li class="blockList"><a id="constructor.detail">
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="CDOLobStoreImpl-java.io.File-">
+<a id="&lt;init&gt;(java.io.File)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>CDOLobStoreImpl</h4>
-<pre>public&nbsp;CDOLobStoreImpl(java.io.File&nbsp;folder)</pre>
+<pre>public&nbsp;CDOLobStoreImpl&#8203;(java.io.File&nbsp;folder)</pre>
 </li>
 </ul>
-<a name="CDOLobStoreImpl--">
+<a id="&lt;init&gt;()">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -301,185 +354,191 @@ implements <a href="../../../../../../org/eclipse/emf/cdo/common/lob/CDOLobStore
 </ul>
 </li>
 </ul>
+</section>
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="getTimeout--">
+<a id="getTimeout()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getTimeout</h4>
-<pre>public&nbsp;long&nbsp;getTimeout()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;getTimeout()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.8</dd>
 </dl>
 </li>
 </ul>
-<a name="setTimeout-long-">
+<a id="setTimeout(long)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setTimeout</h4>
-<pre>public&nbsp;void&nbsp;setTimeout(long&nbsp;timeout)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setTimeout&#8203;(long&nbsp;timeout)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.8</dd>
 </dl>
 </li>
 </ul>
-<a name="getFolder--">
+<a id="getFolder()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getFolder</h4>
-<pre>public&nbsp;java.io.File&nbsp;getFolder()</pre>
+<pre class="methodSignature">public&nbsp;java.io.File&nbsp;getFolder()</pre>
 </li>
 </ul>
-<a name="getBinaryFile-byte:A-">
+<a id="getBinaryFile(byte[])">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getBinaryFile</h4>
-<pre>public&nbsp;java.io.File&nbsp;getBinaryFile(byte[]&nbsp;id)</pre>
+<pre class="methodSignature">public&nbsp;java.io.File&nbsp;getBinaryFile&#8203;(byte[]&nbsp;id)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../../org/eclipse/emf/cdo/common/lob/CDOLobStore.html#getBinaryFile-byte:A-">getBinaryFile</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../org/eclipse/emf/cdo/common/lob/CDOLobStore.html" title="interface in org.eclipse.emf.cdo.common.lob">CDOLobStore</a></code></dd>
+<dd><code><a href="../../common/lob/CDOLobStore.html#getBinaryFile(byte%5B%5D)">getBinaryFile</a></code>&nbsp;in interface&nbsp;<code><a href="../../common/lob/CDOLobStore.html" title="interface in org.eclipse.emf.cdo.common.lob">CDOLobStore</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="getBinary-org.eclipse.emf.cdo.common.lob.CDOLobInfo-">
+<a id="getBinary(org.eclipse.emf.cdo.common.lob.CDOLobInfo)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getBinary</h4>
-<pre>public&nbsp;java.io.InputStream&nbsp;getBinary(<a href="../../../../../../org/eclipse/emf/cdo/common/lob/CDOLobInfo.html" title="class in org.eclipse.emf.cdo.common.lob">CDOLobInfo</a>&nbsp;info)
+<pre class="methodSignature">public&nbsp;java.io.InputStream&nbsp;getBinary&#8203;(<a href="../../common/lob/CDOLobInfo.html" title="class in org.eclipse.emf.cdo.common.lob">CDOLobInfo</a>&nbsp;info)
                               throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../../org/eclipse/emf/cdo/common/lob/CDOLobStore.html#getBinary-org.eclipse.emf.cdo.common.lob.CDOLobInfo-">getBinary</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../org/eclipse/emf/cdo/common/lob/CDOLobStore.html" title="interface in org.eclipse.emf.cdo.common.lob">CDOLobStore</a></code></dd>
+<dd><code><a href="../../common/lob/CDOLobStore.html#getBinary(org.eclipse.emf.cdo.common.lob.CDOLobInfo)">getBinary</a></code>&nbsp;in interface&nbsp;<code><a href="../../common/lob/CDOLobStore.html" title="interface in org.eclipse.emf.cdo.common.lob">CDOLobStore</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.io.IOException</code></dd>
 </dl>
 </li>
 </ul>
-<a name="putBinary-java.io.InputStream-">
+<a id="putBinary(java.io.InputStream)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>putBinary</h4>
-<pre>public&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/common/lob/CDOLobInfo.html" title="class in org.eclipse.emf.cdo.common.lob">CDOLobInfo</a>&nbsp;putBinary(java.io.InputStream&nbsp;contents)
+<pre class="methodSignature">public&nbsp;<a href="../../common/lob/CDOLobInfo.html" title="class in org.eclipse.emf.cdo.common.lob">CDOLobInfo</a>&nbsp;putBinary&#8203;(java.io.InputStream&nbsp;contents)
                      throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../../org/eclipse/emf/cdo/common/lob/CDOLobStore.html#putBinary-java.io.InputStream-">putBinary</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../org/eclipse/emf/cdo/common/lob/CDOLobStore.html" title="interface in org.eclipse.emf.cdo.common.lob">CDOLobStore</a></code></dd>
+<dd><code><a href="../../common/lob/CDOLobStore.html#putBinary(java.io.InputStream)">putBinary</a></code>&nbsp;in interface&nbsp;<code><a href="../../common/lob/CDOLobStore.html" title="interface in org.eclipse.emf.cdo.common.lob">CDOLobStore</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.io.IOException</code></dd>
 </dl>
 </li>
 </ul>
-<a name="getCharacterFile-byte:A-">
+<a id="getCharacterFile(byte[])">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getCharacterFile</h4>
-<pre>public&nbsp;java.io.File&nbsp;getCharacterFile(byte[]&nbsp;id)</pre>
+<pre class="methodSignature">public&nbsp;java.io.File&nbsp;getCharacterFile&#8203;(byte[]&nbsp;id)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../../org/eclipse/emf/cdo/common/lob/CDOLobStore.html#getCharacterFile-byte:A-">getCharacterFile</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../org/eclipse/emf/cdo/common/lob/CDOLobStore.html" title="interface in org.eclipse.emf.cdo.common.lob">CDOLobStore</a></code></dd>
+<dd><code><a href="../../common/lob/CDOLobStore.html#getCharacterFile(byte%5B%5D)">getCharacterFile</a></code>&nbsp;in interface&nbsp;<code><a href="../../common/lob/CDOLobStore.html" title="interface in org.eclipse.emf.cdo.common.lob">CDOLobStore</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="getCharacter-org.eclipse.emf.cdo.common.lob.CDOLobInfo-">
+<a id="getCharacter(org.eclipse.emf.cdo.common.lob.CDOLobInfo)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getCharacter</h4>
-<pre>public&nbsp;java.io.Reader&nbsp;getCharacter(<a href="../../../../../../org/eclipse/emf/cdo/common/lob/CDOLobInfo.html" title="class in org.eclipse.emf.cdo.common.lob">CDOLobInfo</a>&nbsp;info)
+<pre class="methodSignature">public&nbsp;java.io.Reader&nbsp;getCharacter&#8203;(<a href="../../common/lob/CDOLobInfo.html" title="class in org.eclipse.emf.cdo.common.lob">CDOLobInfo</a>&nbsp;info)
                             throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../../org/eclipse/emf/cdo/common/lob/CDOLobStore.html#getCharacter-org.eclipse.emf.cdo.common.lob.CDOLobInfo-">getCharacter</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../org/eclipse/emf/cdo/common/lob/CDOLobStore.html" title="interface in org.eclipse.emf.cdo.common.lob">CDOLobStore</a></code></dd>
+<dd><code><a href="../../common/lob/CDOLobStore.html#getCharacter(org.eclipse.emf.cdo.common.lob.CDOLobInfo)">getCharacter</a></code>&nbsp;in interface&nbsp;<code><a href="../../common/lob/CDOLobStore.html" title="interface in org.eclipse.emf.cdo.common.lob">CDOLobStore</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.io.IOException</code></dd>
 </dl>
 </li>
 </ul>
-<a name="putCharacter-java.io.Reader-">
+<a id="putCharacter(java.io.Reader)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>putCharacter</h4>
-<pre>public&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/common/lob/CDOLobInfo.html" title="class in org.eclipse.emf.cdo.common.lob">CDOLobInfo</a>&nbsp;putCharacter(java.io.Reader&nbsp;contents)
+<pre class="methodSignature">public&nbsp;<a href="../../common/lob/CDOLobInfo.html" title="class in org.eclipse.emf.cdo.common.lob">CDOLobInfo</a>&nbsp;putCharacter&#8203;(java.io.Reader&nbsp;contents)
                         throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../../org/eclipse/emf/cdo/common/lob/CDOLobStore.html#putCharacter-java.io.Reader-">putCharacter</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../org/eclipse/emf/cdo/common/lob/CDOLobStore.html" title="interface in org.eclipse.emf.cdo.common.lob">CDOLobStore</a></code></dd>
+<dd><code><a href="../../common/lob/CDOLobStore.html#putCharacter(java.io.Reader)">putCharacter</a></code>&nbsp;in interface&nbsp;<code><a href="../../common/lob/CDOLobStore.html" title="interface in org.eclipse.emf.cdo.common.lob">CDOLobStore</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.io.IOException</code></dd>
 </dl>
 </li>
 </ul>
-<a name="toString--">
+<a id="toString()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>toString</h4>
-<pre>public&nbsp;java.lang.String&nbsp;toString()</pre>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;toString()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>toString</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
 </dl>
 </li>
 </ul>
-<a name="createDigest--">
+<a id="createDigest()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createDigest</h4>
-<pre>protected&nbsp;java.security.MessageDigest&nbsp;createDigest()</pre>
+<pre class="methodSignature">protected&nbsp;java.security.MessageDigest&nbsp;createDigest()</pre>
 </li>
 </ul>
-<a name="getTempFile--">
+<a id="getTempFile()">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getTempFile</h4>
-<pre>protected&nbsp;java.io.File&nbsp;getTempFile()</pre>
+<pre class="methodSignature">protected&nbsp;java.io.File&nbsp;getTempFile()</pre>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/CDOLobStoreImpl.html">Use</a></li>
@@ -489,16 +548,8 @@ implements <a href="../../../../../../org/eclipse/emf/cdo/common/lob/CDOLobStore
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/emf/cdo/spi/common/CDOAuthenticationResult.html" title="class in org.eclipse.emf.cdo.spi.common"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../../org/eclipse/emf/cdo/spi/common/CDORawReplicationContext.html" title="interface in org.eclipse.emf.cdo.spi.common"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/emf/cdo/spi/common/CDOLobStoreImpl.html" target="_top">Frames</a></li>
-<li><a href="CDOLobStoreImpl.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -511,11 +562,14 @@ implements <a href="../../../../../../org/eclipse/emf/cdo/common/lob/CDOLobStore
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
@@ -527,10 +581,12 @@ implements <a href="../../../../../../org/eclipse/emf/cdo/common/lob/CDOLobStore
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

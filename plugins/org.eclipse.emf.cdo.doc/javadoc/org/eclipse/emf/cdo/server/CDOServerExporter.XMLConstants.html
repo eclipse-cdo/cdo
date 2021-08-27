@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>CDOServerExporter.XMLConstants (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,20 +28,25 @@
     catch(err) {
     }
 //-->
-</script>
+var pathtoroot = "../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/CDOServerExporter.XMLConstants.html">Use</a></li>
@@ -41,16 +56,14 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XML.html" title="class in org.eclipse.emf.cdo.server"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerImporter.html" title="class in org.eclipse.emf.cdo.server"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html" target="_top">Frames</a></li>
-<li><a href="CDOServerExporter.XMLConstants.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -63,6 +76,9 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -79,13 +95,22 @@
 <li>Method</li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.emf.cdo.server</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.cdo.server</a></div>
 <h2 title="Interface CDOServerExporter.XMLConstants" class="title">Interface CDOServerExporter.XMLConstants</h2>
 </div>
 <div class="contentContainer">
@@ -94,16 +119,15 @@
 <li class="blockList">
 <dl>
 <dt>All Known Implementing Classes:</dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XML.html" title="class in org.eclipse.emf.cdo.server">CDOServerExporter.XML</a>, <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerImporter.XML.html" title="class in org.eclipse.emf.cdo.server">CDOServerImporter.XML</a></dd>
+<dd><code><a href="CDOServerExporter.XML.html" title="class in org.eclipse.emf.cdo.server">CDOServerExporter.XML</a></code>, <code><a href="CDOServerImporter.XML.html" title="class in org.eclipse.emf.cdo.server">CDOServerImporter.XML</a></code></dd>
 </dl>
 <dl>
 <dt>Enclosing class:</dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.html" title="class in org.eclipse.emf.cdo.server">CDOServerExporter</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.html" title="type parameter in CDOServerExporter">OUT</a>&gt;</dd>
+<dd><a href="CDOServerExporter.html" title="class in org.eclipse.emf.cdo.server">CDOServerExporter</a>&lt;<a href="CDOServerExporter.html" title="type parameter in CDOServerExporter">OUT</a>&gt;</dd>
 </dl>
 <hr>
-<br>
 <pre>public static interface <span class="typeNameLabel">CDOServerExporter.XMLConstants</span></pre>
-<div class="block">XML constants being used by both <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.html" title="class in org.eclipse.emf.cdo.server"><code>exporters</code></a> and <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerImporter.html" title="class in org.eclipse.emf.cdo.server"><code>importers</code></a>.</div>
+<div class="block">XML constants being used by both <a href="CDOServerExporter.html" title="class in org.eclipse.emf.cdo.server"><code>exporters</code></a> and <a href="CDOServerImporter.html" title="class in org.eclipse.emf.cdo.server"><code>importers</code></a>.</div>
 <dl>
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>Eike Stepper</dd>
@@ -119,260 +143,327 @@
 <ul class="blockList">
 <li class="blockList">
 <!-- =========== FIELD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.summary">
+<li class="blockList"><a id="field.summary">
 <!--   -->
 </a>
 <h3>Field Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Field Summary table, listing fields, and an explanation">
+<table class="memberSummary">
 <caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Field and Description</th>
+<th class="colSecond" scope="col">Field</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#BLOB">BLOB</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#BLOB">BLOB</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#BRANCH">BRANCH</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#BRANCH">BRANCH</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#BRANCH_ID">BRANCH_ID</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#BRANCH_ID">BRANCH_ID</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#BRANCH_NAME">BRANCH_NAME</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#BRANCH_NAME">BRANCH_NAME</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#BRANCH_PARENT">BRANCH_PARENT</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#BRANCH_PARENT">BRANCH_PARENT</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#BRANCH_TIME">BRANCH_TIME</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#BRANCH_TIME">BRANCH_TIME</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#CLOB">CLOB</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#CLOB">CLOB</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#COMMIT">COMMIT</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#COMMIT">COMMIT</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#COMMIT_BRANCH">COMMIT_BRANCH</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#COMMIT_BRANCH">COMMIT_BRANCH</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#COMMIT_COMMENT">COMMIT_COMMENT</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#COMMIT_COMMENT">COMMIT_COMMENT</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#COMMIT_PREVIOUS">COMMIT_PREVIOUS</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#COMMIT_PREVIOUS">COMMIT_PREVIOUS</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#COMMIT_TIME">COMMIT_TIME</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#COMMIT_TIME">COMMIT_TIME</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#COMMIT_USER">COMMIT_USER</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#COMMIT_USER">COMMIT_USER</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#COMMITS">COMMITS</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#COMMITS">COMMITS</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#FEATURE">FEATURE</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#FEATURE">FEATURE</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#FEATURE_ID">FEATURE_ID</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#FEATURE_ID">FEATURE_ID</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#FEATURE_INNER_FEATURE">FEATURE_INNER_FEATURE</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#FEATURE_INNER_FEATURE">FEATURE_INNER_FEATURE</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#FEATURE_INNER_TYPE">FEATURE_INNER_TYPE</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#FEATURE_INNER_TYPE">FEATURE_INNER_TYPE</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#FEATURE_ISNULL">FEATURE_ISNULL</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#FEATURE_ISNULL">FEATURE_ISNULL</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#FEATURE_ISSET">FEATURE_ISSET</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#FEATURE_ISSET">FEATURE_ISSET</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#FEATURE_NAME">FEATURE_NAME</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#FEATURE_NAME">FEATURE_NAME</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#FEATURE_SIZE">FEATURE_SIZE</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#FEATURE_SIZE">FEATURE_SIZE</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#FEATURE_TYPE">FEATURE_TYPE</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#FEATURE_TYPE">FEATURE_TYPE</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#FEATURE_VALUE">FEATURE_VALUE</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#FEATURE_VALUE">FEATURE_VALUE</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#INSTANCES">INSTANCES</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#INSTANCES">INSTANCES</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#LOB_ID">LOB_ID</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#LOB_ID">LOB_ID</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#LOB_SIZE">LOB_SIZE</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#LOB_SIZE">LOB_SIZE</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#LOBS">LOBS</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#LOBS">LOBS</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#MERGE_SOURCE_BRANCH">MERGE_SOURCE_BRANCH</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#MERGE_SOURCE_BRANCH">MERGE_SOURCE_BRANCH</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#MERGE_SOURCE_TIME">MERGE_SOURCE_TIME</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#MERGE_SOURCE_TIME">MERGE_SOURCE_TIME</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#MODELS">MODELS</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#MODELS">MODELS</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#PACKAGE_INFO">PACKAGE_INFO</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#PACKAGE_INFO">PACKAGE_INFO</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#PACKAGE_INFO_URI">PACKAGE_INFO_URI</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#PACKAGE_INFO_URI">PACKAGE_INFO_URI</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#PACKAGE_UNIT">PACKAGE_UNIT</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#PACKAGE_UNIT">PACKAGE_UNIT</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#PACKAGE_UNIT_DATA">PACKAGE_UNIT_DATA</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#PACKAGE_UNIT_DATA">PACKAGE_UNIT_DATA</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#PACKAGE_UNIT_ID">PACKAGE_UNIT_ID</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#PACKAGE_UNIT_ID">PACKAGE_UNIT_ID</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#PACKAGE_UNIT_TIME">PACKAGE_UNIT_TIME</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#PACKAGE_UNIT_TIME">PACKAGE_UNIT_TIME</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#PACKAGE_UNIT_TYPE">PACKAGE_UNIT_TYPE</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#PACKAGE_UNIT_TYPE">PACKAGE_UNIT_TYPE</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#REPOSITORY">REPOSITORY</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#REPOSITORY">REPOSITORY</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#REPOSITORY_COMMITTED">REPOSITORY_COMMITTED</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#REPOSITORY_COMMITTED">REPOSITORY_COMMITTED</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#REPOSITORY_CREATED">REPOSITORY_CREATED</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#REPOSITORY_CREATED">REPOSITORY_CREATED</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#REPOSITORY_EXPORT_BRANCH">REPOSITORY_EXPORT_BRANCH</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#REPOSITORY_EXPORT_BRANCH">REPOSITORY_EXPORT_BRANCH</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#REPOSITORY_EXPORT_TIME">REPOSITORY_EXPORT_TIME</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#REPOSITORY_EXPORT_TIME">REPOSITORY_EXPORT_TIME</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#REPOSITORY_NAME">REPOSITORY_NAME</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#REPOSITORY_NAME">REPOSITORY_NAME</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#REPOSITORY_ROOT">REPOSITORY_ROOT</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#REPOSITORY_ROOT">REPOSITORY_ROOT</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#REPOSITORY_UUID">REPOSITORY_UUID</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#REPOSITORY_UUID">REPOSITORY_UUID</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#REVISION">REVISION</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#REVISION">REVISION</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#REVISION_CLASS">REVISION_CLASS</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#REVISION_CLASS">REVISION_CLASS</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#REVISION_CONTAINER">REVISION_CONTAINER</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#REVISION_CONTAINER">REVISION_CONTAINER</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#REVISION_DETACHED">REVISION_DETACHED</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#REVISION_DETACHED">REVISION_DETACHED</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#REVISION_FEATURE">REVISION_FEATURE</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#REVISION_FEATURE">REVISION_FEATURE</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#REVISION_ID">REVISION_ID</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#REVISION_ID">REVISION_ID</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#REVISION_RESOURCE">REVISION_RESOURCE</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#REVISION_RESOURCE">REVISION_RESOURCE</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#REVISION_REVISED">REVISION_REVISED</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#REVISION_REVISED">REVISION_REVISED</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#REVISION_TIME">REVISION_TIME</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#REVISION_TIME">REVISION_TIME</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#REVISION_VERSION">REVISION_VERSION</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#REVISION_VERSION">REVISION_VERSION</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#TYPE_BLOB">TYPE_BLOB</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#TYPE_BLOB">TYPE_BLOB</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#TYPE_BYTE_ARRAY">TYPE_BYTE_ARRAY</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#TYPE_BYTE_ARRAY">TYPE_BYTE_ARRAY</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#TYPE_CLOB">TYPE_CLOB</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#TYPE_CLOB">TYPE_CLOB</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#TYPE_FEATURE_MAP">TYPE_FEATURE_MAP</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#TYPE_FEATURE_MAP">TYPE_FEATURE_MAP</a></span></code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.5 <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/FeatureMap.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.util" class="externalLink"><code>feature maps</code></a> are no longer supported.</div>
+</div>
+</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -380,12 +471,13 @@
 <ul class="blockList">
 <li class="blockList">
 <!-- ============ FIELD DETAIL =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.detail">
+<li class="blockList"><a id="field.detail">
 <!--   -->
 </a>
 <h3>Field Detail</h3>
-<a name="REPOSITORY">
+<a id="REPOSITORY">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -398,7 +490,7 @@
 </dl>
 </li>
 </ul>
-<a name="REPOSITORY_NAME">
+<a id="REPOSITORY_NAME">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -411,7 +503,7 @@
 </dl>
 </li>
 </ul>
-<a name="REPOSITORY_UUID">
+<a id="REPOSITORY_UUID">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -424,7 +516,7 @@
 </dl>
 </li>
 </ul>
-<a name="REPOSITORY_ROOT">
+<a id="REPOSITORY_ROOT">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -437,7 +529,7 @@
 </dl>
 </li>
 </ul>
-<a name="REPOSITORY_CREATED">
+<a id="REPOSITORY_CREATED">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -450,7 +542,7 @@
 </dl>
 </li>
 </ul>
-<a name="REPOSITORY_COMMITTED">
+<a id="REPOSITORY_COMMITTED">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -463,7 +555,7 @@
 </dl>
 </li>
 </ul>
-<a name="REPOSITORY_EXPORT_BRANCH">
+<a id="REPOSITORY_EXPORT_BRANCH">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -478,7 +570,7 @@
 </dl>
 </li>
 </ul>
-<a name="REPOSITORY_EXPORT_TIME">
+<a id="REPOSITORY_EXPORT_TIME">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -493,7 +585,7 @@
 </dl>
 </li>
 </ul>
-<a name="MODELS">
+<a id="MODELS">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -506,7 +598,7 @@
 </dl>
 </li>
 </ul>
-<a name="PACKAGE_UNIT">
+<a id="PACKAGE_UNIT">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -519,7 +611,7 @@
 </dl>
 </li>
 </ul>
-<a name="PACKAGE_UNIT_ID">
+<a id="PACKAGE_UNIT_ID">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -532,7 +624,7 @@
 </dl>
 </li>
 </ul>
-<a name="PACKAGE_UNIT_TYPE">
+<a id="PACKAGE_UNIT_TYPE">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -545,7 +637,7 @@
 </dl>
 </li>
 </ul>
-<a name="PACKAGE_UNIT_TIME">
+<a id="PACKAGE_UNIT_TIME">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -558,7 +650,7 @@
 </dl>
 </li>
 </ul>
-<a name="PACKAGE_UNIT_DATA">
+<a id="PACKAGE_UNIT_DATA">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -571,7 +663,7 @@
 </dl>
 </li>
 </ul>
-<a name="PACKAGE_INFO">
+<a id="PACKAGE_INFO">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -584,7 +676,7 @@
 </dl>
 </li>
 </ul>
-<a name="PACKAGE_INFO_URI">
+<a id="PACKAGE_INFO_URI">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -597,7 +689,7 @@
 </dl>
 </li>
 </ul>
-<a name="INSTANCES">
+<a id="INSTANCES">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -610,7 +702,7 @@
 </dl>
 </li>
 </ul>
-<a name="BRANCH">
+<a id="BRANCH">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -623,7 +715,7 @@
 </dl>
 </li>
 </ul>
-<a name="BRANCH_ID">
+<a id="BRANCH_ID">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -636,7 +728,7 @@
 </dl>
 </li>
 </ul>
-<a name="BRANCH_NAME">
+<a id="BRANCH_NAME">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -649,7 +741,7 @@
 </dl>
 </li>
 </ul>
-<a name="BRANCH_TIME">
+<a id="BRANCH_TIME">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -662,7 +754,7 @@
 </dl>
 </li>
 </ul>
-<a name="BRANCH_PARENT">
+<a id="BRANCH_PARENT">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -675,7 +767,7 @@
 </dl>
 </li>
 </ul>
-<a name="REVISION">
+<a id="REVISION">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -688,7 +780,7 @@
 </dl>
 </li>
 </ul>
-<a name="REVISION_ID">
+<a id="REVISION_ID">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -701,7 +793,7 @@
 </dl>
 </li>
 </ul>
-<a name="REVISION_CLASS">
+<a id="REVISION_CLASS">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -714,7 +806,7 @@
 </dl>
 </li>
 </ul>
-<a name="REVISION_VERSION">
+<a id="REVISION_VERSION">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -727,7 +819,7 @@
 </dl>
 </li>
 </ul>
-<a name="REVISION_TIME">
+<a id="REVISION_TIME">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -740,7 +832,7 @@
 </dl>
 </li>
 </ul>
-<a name="REVISION_REVISED">
+<a id="REVISION_REVISED">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -753,7 +845,7 @@
 </dl>
 </li>
 </ul>
-<a name="REVISION_DETACHED">
+<a id="REVISION_DETACHED">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -768,7 +860,7 @@
 </dl>
 </li>
 </ul>
-<a name="REVISION_RESOURCE">
+<a id="REVISION_RESOURCE">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -781,7 +873,7 @@
 </dl>
 </li>
 </ul>
-<a name="REVISION_CONTAINER">
+<a id="REVISION_CONTAINER">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -794,7 +886,7 @@
 </dl>
 </li>
 </ul>
-<a name="REVISION_FEATURE">
+<a id="REVISION_FEATURE">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -807,7 +899,7 @@
 </dl>
 </li>
 </ul>
-<a name="FEATURE">
+<a id="FEATURE">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -820,7 +912,7 @@
 </dl>
 </li>
 </ul>
-<a name="FEATURE_NAME">
+<a id="FEATURE_NAME">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -833,7 +925,7 @@
 </dl>
 </li>
 </ul>
-<a name="FEATURE_TYPE">
+<a id="FEATURE_TYPE">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -846,7 +938,7 @@
 </dl>
 </li>
 </ul>
-<a name="FEATURE_INNER_FEATURE">
+<a id="FEATURE_INNER_FEATURE">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -859,7 +951,7 @@
 </dl>
 </li>
 </ul>
-<a name="FEATURE_INNER_TYPE">
+<a id="FEATURE_INNER_TYPE">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -872,7 +964,7 @@
 </dl>
 </li>
 </ul>
-<a name="FEATURE_VALUE">
+<a id="FEATURE_VALUE">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -885,7 +977,7 @@
 </dl>
 </li>
 </ul>
-<a name="FEATURE_ISSET">
+<a id="FEATURE_ISSET">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -900,7 +992,7 @@
 </dl>
 </li>
 </ul>
-<a name="FEATURE_ISNULL">
+<a id="FEATURE_ISNULL">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -915,7 +1007,7 @@
 </dl>
 </li>
 </ul>
-<a name="FEATURE_ID">
+<a id="FEATURE_ID">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -928,7 +1020,7 @@
 </dl>
 </li>
 </ul>
-<a name="FEATURE_SIZE">
+<a id="FEATURE_SIZE">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -941,7 +1033,7 @@
 </dl>
 </li>
 </ul>
-<a name="TYPE_BLOB">
+<a id="TYPE_BLOB">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -954,7 +1046,7 @@
 </dl>
 </li>
 </ul>
-<a name="TYPE_CLOB">
+<a id="TYPE_CLOB">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -967,7 +1059,7 @@
 </dl>
 </li>
 </ul>
-<a name="TYPE_BYTE_ARRAY">
+<a id="TYPE_BYTE_ARRAY">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -982,20 +1074,20 @@
 </dl>
 </li>
 </ul>
-<a name="TYPE_FEATURE_MAP">
+<a id="TYPE_FEATURE_MAP">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>TYPE_FEATURE_MAP</h4>
-<pre>static final&nbsp;java.lang.String TYPE_FEATURE_MAP</pre>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../constant-values.html#org.eclipse.emf.cdo.server.CDOServerExporter.XMLConstants.TYPE_FEATURE_MAP">Constant Field Values</a></dd>
-</dl>
+<pre>@Deprecated
+static final&nbsp;java.lang.String TYPE_FEATURE_MAP</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.5 <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/FeatureMap.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.util" class="externalLink"><code>feature maps</code></a> are no longer supported.</div>
+</div>
 </li>
 </ul>
-<a name="LOBS">
+<a id="LOBS">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1008,7 +1100,7 @@
 </dl>
 </li>
 </ul>
-<a name="LOB_ID">
+<a id="LOB_ID">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1021,7 +1113,7 @@
 </dl>
 </li>
 </ul>
-<a name="LOB_SIZE">
+<a id="LOB_SIZE">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1034,7 +1126,7 @@
 </dl>
 </li>
 </ul>
-<a name="BLOB">
+<a id="BLOB">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1047,7 +1139,7 @@
 </dl>
 </li>
 </ul>
-<a name="CLOB">
+<a id="CLOB">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1060,7 +1152,7 @@
 </dl>
 </li>
 </ul>
-<a name="COMMITS">
+<a id="COMMITS">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1073,7 +1165,7 @@
 </dl>
 </li>
 </ul>
-<a name="COMMIT">
+<a id="COMMIT">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1086,7 +1178,7 @@
 </dl>
 </li>
 </ul>
-<a name="COMMIT_TIME">
+<a id="COMMIT_TIME">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1099,7 +1191,7 @@
 </dl>
 </li>
 </ul>
-<a name="COMMIT_PREVIOUS">
+<a id="COMMIT_PREVIOUS">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1112,7 +1204,7 @@
 </dl>
 </li>
 </ul>
-<a name="COMMIT_BRANCH">
+<a id="COMMIT_BRANCH">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1125,7 +1217,7 @@
 </dl>
 </li>
 </ul>
-<a name="COMMIT_USER">
+<a id="COMMIT_USER">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1138,7 +1230,7 @@
 </dl>
 </li>
 </ul>
-<a name="COMMIT_COMMENT">
+<a id="COMMIT_COMMENT">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1151,7 +1243,7 @@
 </dl>
 </li>
 </ul>
-<a name="MERGE_SOURCE_BRANCH">
+<a id="MERGE_SOURCE_BRANCH">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1166,7 +1258,7 @@
 </dl>
 </li>
 </ul>
-<a name="MERGE_SOURCE_TIME">
+<a id="MERGE_SOURCE_TIME">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -1183,21 +1275,25 @@
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/CDOServerExporter.XMLConstants.html">Use</a></li>
@@ -1207,16 +1303,8 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XML.html" title="class in org.eclipse.emf.cdo.server"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerImporter.html" title="class in org.eclipse.emf.cdo.server"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html" target="_top">Frames</a></li>
-<li><a href="CDOServerExporter.XMLConstants.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -1229,6 +1317,9 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -1245,10 +1336,12 @@
 <li>Method</li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

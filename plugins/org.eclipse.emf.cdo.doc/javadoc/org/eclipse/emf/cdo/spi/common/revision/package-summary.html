@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>org.eclipse.emf.cdo.spi.common.revision (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,20 +28,25 @@
     catch(err) {
     }
 //-->
-</script>
+var pathtoroot = "../../../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../../index.html">Overview</a></li>
 <li class="navBarCell1Rev">Package</li>
 <li>Class</li>
 <li><a href="package-use.html">Use</a></li>
@@ -41,16 +56,14 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/protocol/package-summary.html">Prev&nbsp;Package</a></li>
-<li><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/package-summary.html">Next&nbsp;Package</a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../../index.html?org/eclipse/emf/cdo/spi/common/revision/package-summary.html" target="_top">Frames</a></li>
-<li><a href="package-summary.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -63,22 +76,35 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
+<main role="main">
 <div class="header">
 <h1 title="Package" class="title">Package&nbsp;org.eclipse.emf.cdo.spi.common.revision</h1>
-<div class="docSummary">
-<div class="block">Common service provider interfaces and useful base implementations for dealing with revisions and deltas.</div>
-</div>
-<p>See:&nbsp;<a href="#package.description">Description</a></p>
 </div>
 <div class="contentContainer">
+<section role="region"><a id="package.description">
+<!--   -->
+</a>
+<div class="block">Common service provider interfaces and useful base implementations for dealing with revisions and deltas.</div>
+</section>
 <ul class="blockList">
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<table class="typeSummary">
 <caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Interface</th>
@@ -86,103 +112,103 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/CDOFeatureMapEntry.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">CDOFeatureMapEntry</a></td>
-<td class="colLast">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<th class="colFirst" scope="row"><a href="CDOFeatureMapEntry.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">CDOFeatureMapEntry</a></th>
+<td class="colLast">Deprecated.
+<div class="deprecationComment">As of 4.5 <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/FeatureMap.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.util" class="externalLink"><code>feature maps</code></a> are no longer supported.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/CDOReferenceAdjustable.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">CDOReferenceAdjustable</a></td>
+<th class="colFirst" scope="row"><a href="CDOReferenceAdjustable.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">CDOReferenceAdjustable</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/CDOReferenceAdjuster.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">CDOReferenceAdjuster</a></td>
+<th class="colFirst" scope="row"><a href="CDOReferenceAdjuster.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">CDOReferenceAdjuster</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/CDORevisionUnchunker.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">CDORevisionUnchunker</a></td>
+<th class="colFirst" scope="row"><a href="CDORevisionUnchunker.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">CDORevisionUnchunker</a></th>
 <td class="colLast">
 <div class="block">A mix-in interface implemented by repositories and sessions to support resolving of list element proxies.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDOFeatureDelta</a></td>
+<th class="colFirst" scope="row"><a href="InternalCDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDOFeatureDelta</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDOFeatureDelta.ListIndexAffecting.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDOFeatureDelta.ListIndexAffecting</a></td>
+<th class="colFirst" scope="row"><a href="InternalCDOFeatureDelta.ListIndexAffecting.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDOFeatureDelta.ListIndexAffecting</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDOFeatureDelta.ListTargetAdding.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDOFeatureDelta.ListTargetAdding</a></td>
+<th class="colFirst" scope="row"><a href="InternalCDOFeatureDelta.ListTargetAdding.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDOFeatureDelta.ListTargetAdding</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDOFeatureDelta.WithIndex.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDOFeatureDelta.WithIndex</a></td>
+<th class="colFirst" scope="row"><a href="InternalCDOFeatureDelta.WithIndex.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDOFeatureDelta.WithIndex</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDOList.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDOList</a></td>
+<th class="colFirst" scope="row"><a href="InternalCDOList.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDOList</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDOList.ConfigurableEquality.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDOList.ConfigurableEquality</a></td>
+<th class="colFirst" scope="row"><a href="InternalCDOList.ConfigurableEquality.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDOList.ConfigurableEquality</a></th>
 <td class="colLast">
-<div class="block">A mix-in interface for <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDOList.html" title="interface in org.eclipse.emf.cdo.spi.common.revision"><code>InternalCDOList</code></a> that allows to optimize the speed of equality checks.</div>
+<div class="block">A mix-in interface for <a href="InternalCDOList.html" title="interface in org.eclipse.emf.cdo.spi.common.revision"><code>InternalCDOList</code></a> that allows to optimize the speed of equality checks.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></td>
+<th class="colFirst" scope="row"><a href="InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionCache.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionCache</a></td>
+<th class="colFirst" scope="row"><a href="InternalCDORevisionCache.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionCache</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a></td>
+<th class="colFirst" scope="row"><a href="InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a></td>
+<th class="colFirst" scope="row"><a href="InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.RevisionLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLoader</a></td>
+<th class="colFirst" scope="row"><a href="InternalCDORevisionManager.RevisionLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLoader</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.RevisionLoader2.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLoader2</a></td>
+<th class="colFirst" scope="row"><a href="InternalCDORevisionManager.RevisionLoader2.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLoader2</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.RevisionLocker.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLocker</a></td>
+<th class="colFirst" scope="row"><a href="InternalCDORevisionManager.RevisionLocker.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLocker</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
@@ -191,7 +217,7 @@
 </table>
 </li>
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<table class="typeSummary">
 <caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Class</th>
@@ -199,112 +225,112 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">AbstractCDORevision</a></td>
+<th class="colFirst" scope="row"><a href="AbstractCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">AbstractCDORevision</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/BaseCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">BaseCDORevision</a></td>
+<th class="colFirst" scope="row"><a href="BaseCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">BaseCDORevision</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/CDOFeatureDeltaVisitorImpl.html" title="class in org.eclipse.emf.cdo.spi.common.revision">CDOFeatureDeltaVisitorImpl</a></td>
+<th class="colFirst" scope="row"><a href="CDOFeatureDeltaVisitorImpl.html" title="class in org.eclipse.emf.cdo.spi.common.revision">CDOFeatureDeltaVisitorImpl</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/CDOIDMapper.html" title="class in org.eclipse.emf.cdo.spi.common.revision">CDOIDMapper</a></td>
+<th class="colFirst" scope="row"><a href="CDOIDMapper.html" title="class in org.eclipse.emf.cdo.spi.common.revision">CDOIDMapper</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/CDORevisionMerger.html" title="class in org.eclipse.emf.cdo.spi.common.revision">CDORevisionMerger</a></td>
+<th class="colFirst" scope="row"><a href="CDORevisionMerger.html" title="class in org.eclipse.emf.cdo.spi.common.revision">CDORevisionMerger</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">DelegatingCDORevision</a></td>
+<th class="colFirst" scope="row"><a href="DelegatingCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">DelegatingCDORevision</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevisionManager.html" title="class in org.eclipse.emf.cdo.spi.common.revision">DelegatingCDORevisionManager</a></td>
+<th class="colFirst" scope="row"><a href="DelegatingCDORevisionManager.html" title="class in org.eclipse.emf.cdo.spi.common.revision">DelegatingCDORevisionManager</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/DetachedCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">DetachedCDORevision</a></td>
+<th class="colFirst" scope="row"><a href="DetachedCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">DetachedCDORevision</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/ManagedRevisionProvider.html" title="class in org.eclipse.emf.cdo.spi.common.revision">ManagedRevisionProvider</a></td>
+<th class="colFirst" scope="row"><a href="ManagedRevisionProvider.html" title="class in org.eclipse.emf.cdo.spi.common.revision">ManagedRevisionProvider</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/PointerCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">PointerCDORevision</a></td>
+<th class="colFirst" scope="row"><a href="PointerCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">PointerCDORevision</a></th>
 <td class="colLast">
-<div class="block">A <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/SyntheticCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision"><code>synthetic</code></a> revision that represents the initial period of an object in a
- <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch</code></a> when the object is still associated with a revision from one of the baseline branches.</div>
+<div class="block">A <a href="SyntheticCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision"><code>synthetic</code></a> revision that represents the initial period of an object in a
+ <a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch</code></a> when the object is still associated with a revision from one of the baseline branches.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/RevisionInfo.html" title="class in org.eclipse.emf.cdo.spi.common.revision">RevisionInfo</a></td>
+<th class="colFirst" scope="row"><a href="RevisionInfo.html" title="class in org.eclipse.emf.cdo.spi.common.revision">RevisionInfo</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/RevisionInfo.Available.html" title="class in org.eclipse.emf.cdo.spi.common.revision">RevisionInfo.Available</a></td>
-<td class="colLast">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/RevisionInfo.Available.Detached.html" title="class in org.eclipse.emf.cdo.spi.common.revision">RevisionInfo.Available.Detached</a></td>
-<td class="colLast">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/RevisionInfo.Available.Normal.html" title="class in org.eclipse.emf.cdo.spi.common.revision">RevisionInfo.Available.Normal</a></td>
+<th class="colFirst" scope="row"><a href="RevisionInfo.Available.html" title="class in org.eclipse.emf.cdo.spi.common.revision">RevisionInfo.Available</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/RevisionInfo.Available.Pointer.html" title="class in org.eclipse.emf.cdo.spi.common.revision">RevisionInfo.Available.Pointer</a></td>
+<th class="colFirst" scope="row"><a href="RevisionInfo.Available.Detached.html" title="class in org.eclipse.emf.cdo.spi.common.revision">RevisionInfo.Available.Detached</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/RevisionInfo.Missing.html" title="class in org.eclipse.emf.cdo.spi.common.revision">RevisionInfo.Missing</a></td>
+<th class="colFirst" scope="row"><a href="RevisionInfo.Available.Normal.html" title="class in org.eclipse.emf.cdo.spi.common.revision">RevisionInfo.Available.Normal</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/StubCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">StubCDORevision</a></td>
+<th class="colFirst" scope="row"><a href="RevisionInfo.Available.Pointer.html" title="class in org.eclipse.emf.cdo.spi.common.revision">RevisionInfo.Available.Pointer</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/SyntheticCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">SyntheticCDORevision</a></td>
+<th class="colFirst" scope="row"><a href="RevisionInfo.Missing.html" title="class in org.eclipse.emf.cdo.spi.common.revision">RevisionInfo.Missing</a></th>
 <td class="colLast">
-<div class="block">A synthetic revision that represents the initial period of an object in a <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch</code></a> when the object is
+<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="StubCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">StubCDORevision</a></th>
+<td class="colLast">
+<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+</td>
+</tr>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><a href="SyntheticCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">SyntheticCDORevision</a></th>
+<td class="colLast">
+<div class="block">A synthetic revision that represents the initial period of an object in a <a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch</code></a> when the object is
  still associated with a revision from one of the baseline branches.</div>
 </td>
 </tr>
@@ -312,7 +338,7 @@
 </table>
 </li>
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Enum Summary table, listing enums, and an explanation">
+<table class="typeSummary">
 <caption><span>Enum Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Enum</th>
@@ -320,7 +346,7 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/RevisionInfo.Type.html" title="enum in org.eclipse.emf.cdo.spi.common.revision">RevisionInfo.Type</a></td>
+<th class="colFirst" scope="row"><a href="RevisionInfo.Type.html" title="enum in org.eclipse.emf.cdo.spi.common.revision">RevisionInfo.Type</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
@@ -329,22 +355,20 @@
 </table>
 </li>
 </ul>
-<a name="package.description">
-<!--   -->
-</a>
-<h2 title="Package org.eclipse.emf.cdo.spi.common.revision Description">Package org.eclipse.emf.cdo.spi.common.revision Description</h2>
-<div class="block">Common service provider interfaces and useful base implementations for dealing with revisions and deltas.</div>
 </div>
+</main>
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../../index.html">Overview</a></li>
 <li class="navBarCell1Rev">Package</li>
 <li>Class</li>
 <li><a href="package-use.html">Use</a></li>
@@ -354,16 +378,8 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/protocol/package-summary.html">Prev&nbsp;Package</a></li>
-<li><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/package-summary.html">Next&nbsp;Package</a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../../index.html?org/eclipse/emf/cdo/spi/common/revision/package-summary.html" target="_top">Frames</a></li>
-<li><a href="package-summary.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -376,11 +392,16 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

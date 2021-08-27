@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>Uses of Interface org.eclipse.net4j.util.ref.KeyedReference (Net4j Utilities Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,39 +28,43 @@
     catch(err) {
     }
 //-->
-</script>
+var pathtoroot = "../../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="../package-summary.html">Package</a></li>
-<li><a href="../../../../../../org/eclipse/net4j/util/ref/KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">Class</a></li>
+<li><a href="../KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">Class</a></li>
 <li class="navBarCell1Rev">Use</li>
+<li><a href="../package-tree.html">Tree</a></li>
 <li><a href="../../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../../help-doc.html">Help</a></li>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev</li>
-<li>Next</li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/net4j/util/ref/class-use/KeyedReference.html" target="_top">Frames</a></li>
-<li><a href="KeyedReference.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -63,26 +77,38 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
+<main role="main">
 <div class="header">
 <h2 title="Uses of Interface org.eclipse.net4j.util.ref.KeyedReference" class="title">Uses of Interface<br>org.eclipse.net4j.util.ref.KeyedReference</h2>
 </div>
 <div class="classUseContainer">
 <ul class="blockList">
 <li class="blockList">
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing packages, and an explanation">
-<caption><span>Packages that use <a href="../../../../../../org/eclipse/net4j/util/ref/KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Packages that use <a href="../KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Package</th>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.util.ref">org.eclipse.net4j.util.ref</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.util.ref">org.eclipse.net4j.util.ref</a></th>
 <td class="colLast">
 <div class="block">A framework for memory-sensitive keyed references and value maps.</div>
 </td>
@@ -92,165 +118,187 @@
 </li>
 <li class="blockList">
 <ul class="blockList">
-<li class="blockList"><a name="org.eclipse.net4j.util.ref">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.net4j.util.ref">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../org/eclipse/net4j/util/ref/KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a> in <a href="../../../../../../org/eclipse/net4j/util/ref/package-summary.html">org.eclipse.net4j.util.ref</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../../org/eclipse/net4j/util/ref/package-summary.html">org.eclipse.net4j.util.ref</a> that implement <a href="../../../../../../org/eclipse/net4j/util/ref/KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a> in <a href="../package-summary.html">org.eclipse.net4j.util.ref</a></h3>
+<table class="useSummary">
+<caption><span>Classes in <a href="../package-summary.html">org.eclipse.net4j.util.ref</a> that implement <a href="../KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Class and Description</th>
+<th class="colSecond" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ref/KeyedPhantomReference.html" title="class in org.eclipse.net4j.util.ref">KeyedPhantomReference</a>&lt;K,T&gt;</span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../KeyedPhantomReference.html" title="class in org.eclipse.net4j.util.ref">KeyedPhantomReference</a>&lt;K,&#8203;T&gt;</span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ref/KeyedSoftReference.html" title="class in org.eclipse.net4j.util.ref">KeyedSoftReference</a>&lt;K,T&gt;</span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../KeyedSoftReference.html" title="class in org.eclipse.net4j.util.ref">KeyedSoftReference</a>&lt;K,&#8203;T&gt;</span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ref/KeyedStrongReference.html" title="class in org.eclipse.net4j.util.ref">KeyedStrongReference</a>&lt;K,T&gt;</span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../KeyedStrongReference.html" title="class in org.eclipse.net4j.util.ref">KeyedStrongReference</a>&lt;K,&#8203;T&gt;</span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ref/KeyedWeakReference.html" title="class in org.eclipse.net4j.util.ref">KeyedWeakReference</a>&lt;K,T&gt;</span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../KeyedWeakReference.html" title="class in org.eclipse.net4j.util.ref">KeyedWeakReference</a>&lt;K,&#8203;T&gt;</span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../org/eclipse/net4j/util/ref/package-summary.html">org.eclipse.net4j.util.ref</a> that return <a href="../../../../../../org/eclipse/net4j/util/ref/KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Methods in <a href="../package-summary.html">org.eclipse.net4j.util.ref</a> that return <a href="../KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code>protected <a href="../../../../../../org/eclipse/net4j/util/ref/KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a>&lt;<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap.Strong.html" title="type parameter in ReferenceValueMap.Strong">K</a>,<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap.Strong.html" title="type parameter in ReferenceValueMap.Strong">V</a>&gt;</code></td>
-<td class="colLast"><span class="typeNameLabel">ReferenceValueMap.Strong.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap.Strong.html#createReference-K-V-java.lang.ref.ReferenceQueue-">createReference</a></span>(<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap.Strong.html" title="type parameter in ReferenceValueMap.Strong">K</a>&nbsp;key,
-               <a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap.Strong.html" title="type parameter in ReferenceValueMap.Strong">V</a>&nbsp;value,
-               java.lang.ref.ReferenceQueue&lt;<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap.Strong.html" title="type parameter in ReferenceValueMap.Strong">V</a>&gt;&nbsp;queue)</code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="../KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a>&lt;<a href="../ReferenceValueMap.Soft.html" title="type parameter in ReferenceValueMap.Soft">K</a>,&#8203;<a href="../ReferenceValueMap.Soft.html" title="type parameter in ReferenceValueMap.Soft">V</a>&gt;</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">ReferenceValueMap.Soft.</span><code><span class="memberNameLink"><a href="../ReferenceValueMap.Soft.html#createReference(K,V,java.lang.ref.ReferenceQueue)">createReference</a></span>&#8203;(<a href="../ReferenceValueMap.Soft.html" title="type parameter in ReferenceValueMap.Soft">K</a>&nbsp;key,
+               <a href="../ReferenceValueMap.Soft.html" title="type parameter in ReferenceValueMap.Soft">V</a>&nbsp;value,
+               java.lang.ref.ReferenceQueue&lt;<a href="../ReferenceValueMap.Soft.html" title="type parameter in ReferenceValueMap.Soft">V</a>&gt;&nbsp;queue)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>protected <a href="../../../../../../org/eclipse/net4j/util/ref/KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a>&lt;<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap.Soft.html" title="type parameter in ReferenceValueMap.Soft">K</a>,<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap.Soft.html" title="type parameter in ReferenceValueMap.Soft">V</a>&gt;</code></td>
-<td class="colLast"><span class="typeNameLabel">ReferenceValueMap.Soft.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap.Soft.html#createReference-K-V-java.lang.ref.ReferenceQueue-">createReference</a></span>(<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap.Soft.html" title="type parameter in ReferenceValueMap.Soft">K</a>&nbsp;key,
-               <a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap.Soft.html" title="type parameter in ReferenceValueMap.Soft">V</a>&nbsp;value,
-               java.lang.ref.ReferenceQueue&lt;<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap.Soft.html" title="type parameter in ReferenceValueMap.Soft">V</a>&gt;&nbsp;queue)</code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="../KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a>&lt;<a href="../ReferenceValueMap.Strong.html" title="type parameter in ReferenceValueMap.Strong">K</a>,&#8203;<a href="../ReferenceValueMap.Strong.html" title="type parameter in ReferenceValueMap.Strong">V</a>&gt;</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">ReferenceValueMap.Strong.</span><code><span class="memberNameLink"><a href="../ReferenceValueMap.Strong.html#createReference(K,V,java.lang.ref.ReferenceQueue)">createReference</a></span>&#8203;(<a href="../ReferenceValueMap.Strong.html" title="type parameter in ReferenceValueMap.Strong">K</a>&nbsp;key,
+               <a href="../ReferenceValueMap.Strong.html" title="type parameter in ReferenceValueMap.Strong">V</a>&nbsp;value,
+               java.lang.ref.ReferenceQueue&lt;<a href="../ReferenceValueMap.Strong.html" title="type parameter in ReferenceValueMap.Strong">V</a>&gt;&nbsp;queue)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>protected <a href="../../../../../../org/eclipse/net4j/util/ref/KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a>&lt;<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap.Weak.html" title="type parameter in ReferenceValueMap.Weak">K</a>,<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap.Weak.html" title="type parameter in ReferenceValueMap.Weak">V</a>&gt;</code></td>
-<td class="colLast"><span class="typeNameLabel">ReferenceValueMap.Weak.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap.Weak.html#createReference-K-V-java.lang.ref.ReferenceQueue-">createReference</a></span>(<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap.Weak.html" title="type parameter in ReferenceValueMap.Weak">K</a>&nbsp;key,
-               <a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap.Weak.html" title="type parameter in ReferenceValueMap.Weak">V</a>&nbsp;value,
-               java.lang.ref.ReferenceQueue&lt;<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap.Weak.html" title="type parameter in ReferenceValueMap.Weak">V</a>&gt;&nbsp;queue)</code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="../KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a>&lt;<a href="../ReferenceValueMap.Weak.html" title="type parameter in ReferenceValueMap.Weak">K</a>,&#8203;<a href="../ReferenceValueMap.Weak.html" title="type parameter in ReferenceValueMap.Weak">V</a>&gt;</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">ReferenceValueMap.Weak.</span><code><span class="memberNameLink"><a href="../ReferenceValueMap.Weak.html#createReference(K,V,java.lang.ref.ReferenceQueue)">createReference</a></span>&#8203;(<a href="../ReferenceValueMap.Weak.html" title="type parameter in ReferenceValueMap.Weak">K</a>&nbsp;key,
+               <a href="../ReferenceValueMap.Weak.html" title="type parameter in ReferenceValueMap.Weak">V</a>&nbsp;value,
+               java.lang.ref.ReferenceQueue&lt;<a href="../ReferenceValueMap.Weak.html" title="type parameter in ReferenceValueMap.Weak">V</a>&gt;&nbsp;queue)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>protected abstract <a href="../../../../../../org/eclipse/net4j/util/ref/KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a>&lt;<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;</code></td>
-<td class="colLast"><span class="typeNameLabel">ReferenceValueMap2.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html#createReference-K-V-java.lang.ref.ReferenceQueue-">createReference</a></span>(<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>&nbsp;key,
-               <a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&nbsp;value,
-               java.lang.ref.ReferenceQueue&lt;<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;&nbsp;queue)</code>&nbsp;</td>
+<td class="colFirst"><code>protected abstract <a href="../KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a>&lt;<a href="../ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,&#8203;<a href="../ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">ReferenceValueMap2.</span><code><span class="memberNameLink"><a href="../ReferenceValueMap2.html#createReference(K,V,java.lang.ref.ReferenceQueue)">createReference</a></span>&#8203;(<a href="../ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>&nbsp;key,
+               <a href="../ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&nbsp;value,
+               java.lang.ref.ReferenceQueue&lt;<a href="../ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;&nbsp;queue)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>protected <a href="../../../../../../org/eclipse/net4j/util/ref/KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a>&lt;<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.Strong.html" title="type parameter in ReferenceValueMap2.Strong">K</a>,<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.Strong.html" title="type parameter in ReferenceValueMap2.Strong">V</a>&gt;</code></td>
-<td class="colLast"><span class="typeNameLabel">ReferenceValueMap2.Strong.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.Strong.html#createReference-K-V-java.lang.ref.ReferenceQueue-">createReference</a></span>(<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.Strong.html" title="type parameter in ReferenceValueMap2.Strong">K</a>&nbsp;key,
-               <a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.Strong.html" title="type parameter in ReferenceValueMap2.Strong">V</a>&nbsp;value,
-               java.lang.ref.ReferenceQueue&lt;<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.Strong.html" title="type parameter in ReferenceValueMap2.Strong">V</a>&gt;&nbsp;queue)</code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="../KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a>&lt;<a href="../ReferenceValueMap2.Soft.html" title="type parameter in ReferenceValueMap2.Soft">K</a>,&#8203;<a href="../ReferenceValueMap2.Soft.html" title="type parameter in ReferenceValueMap2.Soft">V</a>&gt;</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">ReferenceValueMap2.Soft.</span><code><span class="memberNameLink"><a href="../ReferenceValueMap2.Soft.html#createReference(K,V,java.lang.ref.ReferenceQueue)">createReference</a></span>&#8203;(<a href="../ReferenceValueMap2.Soft.html" title="type parameter in ReferenceValueMap2.Soft">K</a>&nbsp;key,
+               <a href="../ReferenceValueMap2.Soft.html" title="type parameter in ReferenceValueMap2.Soft">V</a>&nbsp;value,
+               java.lang.ref.ReferenceQueue&lt;<a href="../ReferenceValueMap2.Soft.html" title="type parameter in ReferenceValueMap2.Soft">V</a>&gt;&nbsp;queue)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>protected <a href="../../../../../../org/eclipse/net4j/util/ref/KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a>&lt;<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.Soft.html" title="type parameter in ReferenceValueMap2.Soft">K</a>,<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.Soft.html" title="type parameter in ReferenceValueMap2.Soft">V</a>&gt;</code></td>
-<td class="colLast"><span class="typeNameLabel">ReferenceValueMap2.Soft.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.Soft.html#createReference-K-V-java.lang.ref.ReferenceQueue-">createReference</a></span>(<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.Soft.html" title="type parameter in ReferenceValueMap2.Soft">K</a>&nbsp;key,
-               <a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.Soft.html" title="type parameter in ReferenceValueMap2.Soft">V</a>&nbsp;value,
-               java.lang.ref.ReferenceQueue&lt;<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.Soft.html" title="type parameter in ReferenceValueMap2.Soft">V</a>&gt;&nbsp;queue)</code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="../KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a>&lt;<a href="../ReferenceValueMap2.Strong.html" title="type parameter in ReferenceValueMap2.Strong">K</a>,&#8203;<a href="../ReferenceValueMap2.Strong.html" title="type parameter in ReferenceValueMap2.Strong">V</a>&gt;</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">ReferenceValueMap2.Strong.</span><code><span class="memberNameLink"><a href="../ReferenceValueMap2.Strong.html#createReference(K,V,java.lang.ref.ReferenceQueue)">createReference</a></span>&#8203;(<a href="../ReferenceValueMap2.Strong.html" title="type parameter in ReferenceValueMap2.Strong">K</a>&nbsp;key,
+               <a href="../ReferenceValueMap2.Strong.html" title="type parameter in ReferenceValueMap2.Strong">V</a>&nbsp;value,
+               java.lang.ref.ReferenceQueue&lt;<a href="../ReferenceValueMap2.Strong.html" title="type parameter in ReferenceValueMap2.Strong">V</a>&gt;&nbsp;queue)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>protected <a href="../../../../../../org/eclipse/net4j/util/ref/KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a>&lt;<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.Weak.html" title="type parameter in ReferenceValueMap2.Weak">K</a>,<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.Weak.html" title="type parameter in ReferenceValueMap2.Weak">V</a>&gt;</code></td>
-<td class="colLast"><span class="typeNameLabel">ReferenceValueMap2.Weak.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.Weak.html#createReference-K-V-java.lang.ref.ReferenceQueue-">createReference</a></span>(<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.Weak.html" title="type parameter in ReferenceValueMap2.Weak">K</a>&nbsp;key,
-               <a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.Weak.html" title="type parameter in ReferenceValueMap2.Weak">V</a>&nbsp;value,
-               java.lang.ref.ReferenceQueue&lt;<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.Weak.html" title="type parameter in ReferenceValueMap2.Weak">V</a>&gt;&nbsp;queue)</code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="../KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a>&lt;<a href="../ReferenceValueMap2.Weak.html" title="type parameter in ReferenceValueMap2.Weak">K</a>,&#8203;<a href="../ReferenceValueMap2.Weak.html" title="type parameter in ReferenceValueMap2.Weak">V</a>&gt;</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">ReferenceValueMap2.Weak.</span><code><span class="memberNameLink"><a href="../ReferenceValueMap2.Weak.html#createReference(K,V,java.lang.ref.ReferenceQueue)">createReference</a></span>&#8203;(<a href="../ReferenceValueMap2.Weak.html" title="type parameter in ReferenceValueMap2.Weak">K</a>&nbsp;key,
+               <a href="../ReferenceValueMap2.Weak.html" title="type parameter in ReferenceValueMap2.Weak">V</a>&nbsp;value,
+               java.lang.ref.ReferenceQueue&lt;<a href="../ReferenceValueMap2.Weak.html" title="type parameter in ReferenceValueMap2.Weak">V</a>&gt;&nbsp;queue)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../org/eclipse/net4j/util/ref/package-summary.html">org.eclipse.net4j.util.ref</a> with parameters of type <a href="../../../../../../org/eclipse/net4j/util/ref/KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Methods in <a href="../package-summary.html">org.eclipse.net4j.util.ref</a> with parameters of type <a href="../KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code>protected <a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a></code></td>
-<td class="colLast"><span class="typeNameLabel">ReferenceValueMap2.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html#dereference-org.eclipse.net4j.util.ref.KeyedReference-">dereference</a></span>(<a href="../../../../../../org/eclipse/net4j/util/ref/KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a>&lt;<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;&nbsp;ref)</code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="../ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">ReferenceValueMap2.</span><code><span class="memberNameLink"><a href="../ReferenceValueMap2.html#dereference(org.eclipse.net4j.util.ref.KeyedReference)">dereference</a></span>&#8203;(<a href="../KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a>&lt;<a href="../ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,&#8203;<a href="../ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;&nbsp;ref)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing constructors, and an explanation">
-<caption><span>Constructor parameters in <a href="../../../../../../org/eclipse/net4j/util/ref/package-summary.html">org.eclipse.net4j.util.ref</a> with type arguments of type <a href="../../../../../../org/eclipse/net4j/util/ref/KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Constructor parameters in <a href="../package-summary.html">org.eclipse.net4j.util.ref</a> with type arguments of type <a href="../KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Constructor and Description</th>
+<th class="colFirst" scope="col">Constructor</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap.html#ReferenceValueMap-java.util.concurrent.ConcurrentMap-">ReferenceValueMap</a></span>(java.util.concurrent.ConcurrentMap&lt;<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap.html" title="type parameter in ReferenceValueMap">K</a>,<a href="../../../../../../org/eclipse/net4j/util/ref/KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a>&lt;<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap.html" title="type parameter in ReferenceValueMap">K</a>,<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap.html" title="type parameter in ReferenceValueMap">V</a>&gt;&gt;&nbsp;map)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../ReferenceValueMap.html#%3Cinit%3E(java.util.concurrent.ConcurrentMap)">ReferenceValueMap</a></span>&#8203;(java.util.concurrent.ConcurrentMap&lt;<a href="../ReferenceValueMap.html" title="type parameter in ReferenceValueMap">K</a>,&#8203;<a href="../KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a>&lt;<a href="../ReferenceValueMap.html" title="type parameter in ReferenceValueMap">K</a>,&#8203;<a href="../ReferenceValueMap.html" title="type parameter in ReferenceValueMap">V</a>&gt;&gt;&nbsp;map)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html#ReferenceValueMap2-java.util.Map-">ReferenceValueMap2</a></span>(java.util.Map&lt;<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../../org/eclipse/net4j/util/ref/KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a>&lt;<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;&gt;&nbsp;map)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../ReferenceValueMap2.html#%3Cinit%3E(java.util.Map)">ReferenceValueMap2</a></span>&#8203;(java.util.Map&lt;<a href="../ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,&#8203;<a href="../KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a>&lt;<a href="../ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,&#8203;<a href="../ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;&gt;&nbsp;map)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap.Soft.html#Soft-java.util.concurrent.ConcurrentMap-">Soft</a></span>(java.util.concurrent.ConcurrentMap&lt;<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap.Soft.html" title="type parameter in ReferenceValueMap.Soft">K</a>,<a href="../../../../../../org/eclipse/net4j/util/ref/KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a>&lt;<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap.Soft.html" title="type parameter in ReferenceValueMap.Soft">K</a>,<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap.Soft.html" title="type parameter in ReferenceValueMap.Soft">V</a>&gt;&gt;&nbsp;map)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../ReferenceValueMap.Soft.html#%3Cinit%3E(java.util.concurrent.ConcurrentMap)">Soft</a></span>&#8203;(java.util.concurrent.ConcurrentMap&lt;<a href="../ReferenceValueMap.Soft.html" title="type parameter in ReferenceValueMap.Soft">K</a>,&#8203;<a href="../KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a>&lt;<a href="../ReferenceValueMap.Soft.html" title="type parameter in ReferenceValueMap.Soft">K</a>,&#8203;<a href="../ReferenceValueMap.Soft.html" title="type parameter in ReferenceValueMap.Soft">V</a>&gt;&gt;&nbsp;map)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.Soft.html#Soft-java.util.Map-">Soft</a></span>(java.util.Map&lt;<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.Soft.html" title="type parameter in ReferenceValueMap2.Soft">K</a>,<a href="../../../../../../org/eclipse/net4j/util/ref/KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a>&lt;<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.Soft.html" title="type parameter in ReferenceValueMap2.Soft">K</a>,<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.Soft.html" title="type parameter in ReferenceValueMap2.Soft">V</a>&gt;&gt;&nbsp;map)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../ReferenceValueMap2.Soft.html#%3Cinit%3E(java.util.Map)">Soft</a></span>&#8203;(java.util.Map&lt;<a href="../ReferenceValueMap2.Soft.html" title="type parameter in ReferenceValueMap2.Soft">K</a>,&#8203;<a href="../KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a>&lt;<a href="../ReferenceValueMap2.Soft.html" title="type parameter in ReferenceValueMap2.Soft">K</a>,&#8203;<a href="../ReferenceValueMap2.Soft.html" title="type parameter in ReferenceValueMap2.Soft">V</a>&gt;&gt;&nbsp;map)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap.Strong.html#Strong-java.util.concurrent.ConcurrentMap-">Strong</a></span>(java.util.concurrent.ConcurrentMap&lt;<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap.Strong.html" title="type parameter in ReferenceValueMap.Strong">K</a>,<a href="../../../../../../org/eclipse/net4j/util/ref/KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a>&lt;<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap.Strong.html" title="type parameter in ReferenceValueMap.Strong">K</a>,<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap.Strong.html" title="type parameter in ReferenceValueMap.Strong">V</a>&gt;&gt;&nbsp;map)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../ReferenceValueMap.Strong.html#%3Cinit%3E(java.util.concurrent.ConcurrentMap)">Strong</a></span>&#8203;(java.util.concurrent.ConcurrentMap&lt;<a href="../ReferenceValueMap.Strong.html" title="type parameter in ReferenceValueMap.Strong">K</a>,&#8203;<a href="../KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a>&lt;<a href="../ReferenceValueMap.Strong.html" title="type parameter in ReferenceValueMap.Strong">K</a>,&#8203;<a href="../ReferenceValueMap.Strong.html" title="type parameter in ReferenceValueMap.Strong">V</a>&gt;&gt;&nbsp;map)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.Strong.html#Strong-java.util.Map-">Strong</a></span>(java.util.Map&lt;<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.Strong.html" title="type parameter in ReferenceValueMap2.Strong">K</a>,<a href="../../../../../../org/eclipse/net4j/util/ref/KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a>&lt;<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.Strong.html" title="type parameter in ReferenceValueMap2.Strong">K</a>,<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.Strong.html" title="type parameter in ReferenceValueMap2.Strong">V</a>&gt;&gt;&nbsp;map)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../ReferenceValueMap2.Strong.html#%3Cinit%3E(java.util.Map)">Strong</a></span>&#8203;(java.util.Map&lt;<a href="../ReferenceValueMap2.Strong.html" title="type parameter in ReferenceValueMap2.Strong">K</a>,&#8203;<a href="../KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a>&lt;<a href="../ReferenceValueMap2.Strong.html" title="type parameter in ReferenceValueMap2.Strong">K</a>,&#8203;<a href="../ReferenceValueMap2.Strong.html" title="type parameter in ReferenceValueMap2.Strong">V</a>&gt;&gt;&nbsp;map)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap.Weak.html#Weak-java.util.concurrent.ConcurrentMap-">Weak</a></span>(java.util.concurrent.ConcurrentMap&lt;<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap.Weak.html" title="type parameter in ReferenceValueMap.Weak">K</a>,<a href="../../../../../../org/eclipse/net4j/util/ref/KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a>&lt;<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap.Weak.html" title="type parameter in ReferenceValueMap.Weak">K</a>,<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap.Weak.html" title="type parameter in ReferenceValueMap.Weak">V</a>&gt;&gt;&nbsp;map)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../ReferenceValueMap.Weak.html#%3Cinit%3E(java.util.concurrent.ConcurrentMap)">Weak</a></span>&#8203;(java.util.concurrent.ConcurrentMap&lt;<a href="../ReferenceValueMap.Weak.html" title="type parameter in ReferenceValueMap.Weak">K</a>,&#8203;<a href="../KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a>&lt;<a href="../ReferenceValueMap.Weak.html" title="type parameter in ReferenceValueMap.Weak">K</a>,&#8203;<a href="../ReferenceValueMap.Weak.html" title="type parameter in ReferenceValueMap.Weak">V</a>&gt;&gt;&nbsp;map)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.Weak.html#Weak-java.util.Map-">Weak</a></span>(java.util.Map&lt;<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.Weak.html" title="type parameter in ReferenceValueMap2.Weak">K</a>,<a href="../../../../../../org/eclipse/net4j/util/ref/KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a>&lt;<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.Weak.html" title="type parameter in ReferenceValueMap2.Weak">K</a>,<a href="../../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.Weak.html" title="type parameter in ReferenceValueMap2.Weak">V</a>&gt;&gt;&nbsp;map)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../ReferenceValueMap2.Weak.html#%3Cinit%3E(java.util.Map)">Weak</a></span>&#8203;(java.util.Map&lt;<a href="../ReferenceValueMap2.Weak.html" title="type parameter in ReferenceValueMap2.Weak">K</a>,&#8203;<a href="../KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a>&lt;<a href="../ReferenceValueMap2.Weak.html" title="type parameter in ReferenceValueMap2.Weak">K</a>,&#8203;<a href="../ReferenceValueMap2.Weak.html" title="type parameter in ReferenceValueMap2.Weak">V</a>&gt;&gt;&nbsp;map)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
 </ul>
 </li>
 </ul>
 </div>
+</main>
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="../package-summary.html">Package</a></li>
-<li><a href="../../../../../../org/eclipse/net4j/util/ref/KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">Class</a></li>
+<li><a href="../KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">Class</a></li>
 <li class="navBarCell1Rev">Use</li>
+<li><a href="../package-tree.html">Tree</a></li>
 <li><a href="../../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../../help-doc.html">Help</a></li>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev</li>
-<li>Next</li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/net4j/util/ref/class-use/KeyedReference.html" target="_top">Frames</a></li>
-<li><a href="KeyedReference.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -263,11 +311,16 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

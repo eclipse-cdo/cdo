@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>org.eclipse.net4j (Net4j Signalling Platform Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../script.js"></script>
+<script type="text/javascript" src="../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,20 +28,25 @@
     catch(err) {
     }
 //-->
-</script>
+var pathtoroot = "../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../index.html">Overview</a></li>
 <li class="navBarCell1Rev">Package</li>
 <li>Class</li>
 <li><a href="package-use.html">Use</a></li>
@@ -41,16 +56,14 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev&nbsp;Package</li>
-<li><a href="../../../org/eclipse/net4j/acceptor/package-summary.html">Next&nbsp;Package</a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../index.html?org/eclipse/net4j/package-summary.html" target="_top">Frames</a></li>
-<li><a href="package-summary.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -63,22 +76,44 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
+<main role="main">
 <div class="header">
 <h1 title="Package" class="title">Package&nbsp;org.eclipse.net4j</h1>
-<div class="docSummary">
-<div class="block">The Net4j transport layer.</div>
-</div>
-<p>See:&nbsp;<a href="#package.description">Description</a></p>
 </div>
 <div class="contentContainer">
+<section role="region"><a id="package.description">
+<!--   -->
+</a>
+<div class="block">The Net4j transport layer.
+ <p>
+ The five main interfaces of the transport layer are:
+        <ul>
+                <li><a href="buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer"><code>IBuffer</code></a></li>
+                <li><a href="channel/IChannel.html" title="interface in org.eclipse.net4j.channel"><code>IChannel</code></a></li>
+                <li><a href="acceptor/IAcceptor.html" title="interface in org.eclipse.net4j.acceptor"><code>IAcceptor</code></a></li>
+                <li><a href="connector/IConnector.html" title="interface in org.eclipse.net4j.connector"><code>IConnector</code></a></li>
+                <li><a href="protocol/IProtocol.html" title="interface in org.eclipse.net4j.protocol"><code>IProtocol</code></a></li>
+        </ul></div>
+</section>
 <ul class="blockList">
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<table class="typeSummary">
 <caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Interface</th>
@@ -86,35 +121,35 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../org/eclipse/net4j/ILocationAware.html" title="interface in org.eclipse.net4j">ILocationAware</a></td>
+<th class="colFirst" scope="row"><a href="ILocationAware.html" title="interface in org.eclipse.net4j">ILocationAware</a></th>
 <td class="colLast">
-<div class="block">A concept that has a <a href="../../../org/eclipse/net4j/ILocationAware.Location.html" title="enum in org.eclipse.net4j"><code>location</code></a> in a <a href="../../../org/eclipse/net4j/ILocationAware.Location.html#CLIENT"><code>client</code></a>/<a href="../../../org/eclipse/net4j/ILocationAware.Location.html#SERVER"><code>server</code></a>
+<div class="block">A concept that has a <a href="ILocationAware.Location.html" title="enum in org.eclipse.net4j"><code>location</code></a> in a <a href="ILocationAware.Location.html#CLIENT"><code>client</code></a>/<a href="ILocationAware.Location.html#SERVER"><code>server</code></a>
  scenario.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../org/eclipse/net4j/ITransportConfig.html" title="interface in org.eclipse.net4j">ITransportConfig</a></td>
+<th class="colFirst" scope="row"><a href="ITransportConfig.html" title="interface in org.eclipse.net4j">ITransportConfig</a></th>
 <td class="colLast">
-<div class="block">A common transport configuration that specifies basic dependencies for <a href="../../../org/eclipse/net4j/channel/IChannelMultiplexer.html" title="interface in org.eclipse.net4j.channel"><code>channel
- multiplexers</code></a>, <a href="../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector"><code>connectors</code></a> and <a href="../../../org/eclipse/net4j/acceptor/IAcceptor.html" title="interface in org.eclipse.net4j.acceptor"><code>acceptors</code></a>.</div>
+<div class="block">A common transport configuration that specifies basic dependencies for <a href="channel/IChannelMultiplexer.html" title="interface in org.eclipse.net4j.channel"><code>channel
+ multiplexers</code></a>, <a href="connector/IConnector.html" title="interface in org.eclipse.net4j.connector"><code>connectors</code></a> and <a href="acceptor/IAcceptor.html" title="interface in org.eclipse.net4j.acceptor"><code>acceptors</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../org/eclipse/net4j/ITransportConfigAware.html" title="interface in org.eclipse.net4j">ITransportConfigAware</a></td>
+<th class="colFirst" scope="row"><a href="ITransportConfigAware.html" title="interface in org.eclipse.net4j">ITransportConfigAware</a></th>
 <td class="colLast">
-<div class="block">A concept that has a <a href="../../../org/eclipse/net4j/ITransportConfig.html" title="interface in org.eclipse.net4j"><code>transport configuration</code></a>, typically a <a href="../../../org/eclipse/net4j/channel/IChannelMultiplexer.html" title="interface in org.eclipse.net4j.channel"><code>channel
- multiplexer</code></a>, <a href="../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector"><code>connector</code></a> or <a href="../../../org/eclipse/net4j/acceptor/IAcceptor.html" title="interface in org.eclipse.net4j.acceptor"><code>acceptor</code></a>.</div>
+<div class="block">A concept that has a <a href="ITransportConfig.html" title="interface in org.eclipse.net4j"><code>transport configuration</code></a>, typically a <a href="channel/IChannelMultiplexer.html" title="interface in org.eclipse.net4j.channel"><code>channel
+ multiplexer</code></a>, <a href="connector/IConnector.html" title="interface in org.eclipse.net4j.connector"><code>connector</code></a> or <a href="acceptor/IAcceptor.html" title="interface in org.eclipse.net4j.acceptor"><code>acceptor</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../org/eclipse/net4j/TransportConfigurator.AcceptorDescriptionParser.html" title="interface in org.eclipse.net4j">TransportConfigurator.AcceptorDescriptionParser</a></td>
+<th class="colFirst" scope="row"><a href="TransportConfigurator.AcceptorDescriptionParser.html" title="interface in org.eclipse.net4j">TransportConfigurator.AcceptorDescriptionParser</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
 </li>
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<table class="typeSummary">
 <caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Class</th>
@@ -122,58 +157,58 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../org/eclipse/net4j/ContainerProtocolProvider.html" title="class in org.eclipse.net4j">ContainerProtocolProvider</a></td>
+<th class="colFirst" scope="row"><a href="ContainerProtocolProvider.html" title="class in org.eclipse.net4j">ContainerProtocolProvider</a></th>
 <td class="colLast">
-<div class="block">Base class for container-based <a href="../../../org/eclipse/net4j/protocol/IProtocolProvider.html" title="interface in org.eclipse.net4j.protocol"><code>protocol providers</code></a> like <a href="../../../org/eclipse/net4j/ContainerProtocolProvider.Client.html" title="class in org.eclipse.net4j"><code>ContainerProtocolProvider.Client</code></a> or <a href="../../../org/eclipse/net4j/ContainerProtocolProvider.Server.html" title="class in org.eclipse.net4j"><code>ContainerProtocolProvider.Server</code></a>.</div>
+<div class="block">Base class for container-based <a href="protocol/IProtocolProvider.html" title="interface in org.eclipse.net4j.protocol"><code>protocol providers</code></a> like <a href="ContainerProtocolProvider.Client.html" title="class in org.eclipse.net4j"><code>ContainerProtocolProvider.Client</code></a> or <a href="ContainerProtocolProvider.Server.html" title="class in org.eclipse.net4j"><code>ContainerProtocolProvider.Server</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../org/eclipse/net4j/ContainerProtocolProvider.Client.html" title="class in org.eclipse.net4j">ContainerProtocolProvider.Client</a></td>
+<th class="colFirst" scope="row"><a href="ContainerProtocolProvider.Client.html" title="class in org.eclipse.net4j">ContainerProtocolProvider.Client</a></th>
 <td class="colLast">
-<div class="block">Container-based <a href="../../../org/eclipse/net4j/protocol/IProtocolProvider.html" title="interface in org.eclipse.net4j.protocol"><code>protocol provider</code></a> for <a href="../../../org/eclipse/net4j/ILocationAware.Location.html#CLIENT"><code>client</code></a>
+<div class="block">Container-based <a href="protocol/IProtocolProvider.html" title="interface in org.eclipse.net4j.protocol"><code>protocol provider</code></a> for <a href="ILocationAware.Location.html#CLIENT"><code>client</code></a>
  protocols.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../org/eclipse/net4j/ContainerProtocolProvider.Server.html" title="class in org.eclipse.net4j">ContainerProtocolProvider.Server</a></td>
+<th class="colFirst" scope="row"><a href="ContainerProtocolProvider.Server.html" title="class in org.eclipse.net4j">ContainerProtocolProvider.Server</a></th>
 <td class="colLast">
-<div class="block">Container-based <a href="../../../org/eclipse/net4j/protocol/IProtocolProvider.html" title="interface in org.eclipse.net4j.protocol"><code>protocol provider</code></a> for <a href="../../../org/eclipse/net4j/ILocationAware.Location.html#SERVER"><code>server</code></a>
+<div class="block">Container-based <a href="protocol/IProtocolProvider.html" title="interface in org.eclipse.net4j.protocol"><code>protocol provider</code></a> for <a href="ILocationAware.Location.html#SERVER"><code>server</code></a>
  protocols.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../org/eclipse/net4j/FactoriesProtocolProvider.html" title="class in org.eclipse.net4j">FactoriesProtocolProvider</a></td>
+<th class="colFirst" scope="row"><a href="FactoriesProtocolProvider.html" title="class in org.eclipse.net4j">FactoriesProtocolProvider</a></th>
 <td class="colLast">
-<div class="block">Factory-based <a href="../../../org/eclipse/net4j/protocol/IProtocolProvider.html" title="interface in org.eclipse.net4j.protocol"><code>protocol provider</code></a>.</div>
+<div class="block">Factory-based <a href="protocol/IProtocolProvider.html" title="interface in org.eclipse.net4j.protocol"><code>protocol provider</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../org/eclipse/net4j/Net4jUtil.html" title="class in org.eclipse.net4j">Net4jUtil</a></td>
+<th class="colFirst" scope="row"><a href="Net4jUtil.html" title="class in org.eclipse.net4j">Net4jUtil</a></th>
 <td class="colLast">
 <div class="block">A utility class with various static factory and convenience methods.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../org/eclipse/net4j/TransportConfigurator.html" title="class in org.eclipse.net4j">TransportConfigurator</a></td>
+<th class="colFirst" scope="row"><a href="TransportConfigurator.html" title="class in org.eclipse.net4j">TransportConfigurator</a></th>
 <td class="colLast">
-<div class="block">Reads an XML config file and creates, wires and starts the configured <a href="../../../org/eclipse/net4j/acceptor/IAcceptor.html" title="interface in org.eclipse.net4j.acceptor"><code>acceptors</code></a>.</div>
+<div class="block">Reads an XML config file and creates, wires and starts the configured <a href="acceptor/IAcceptor.html" title="interface in org.eclipse.net4j.acceptor"><code>acceptors</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../org/eclipse/net4j/TransportConfigurator.AcceptorDescriptionParser.Factory.html" title="class in org.eclipse.net4j">TransportConfigurator.AcceptorDescriptionParser.Factory</a></td>
+<th class="colFirst" scope="row"><a href="TransportConfigurator.AcceptorDescriptionParser.Factory.html" title="class in org.eclipse.net4j">TransportConfigurator.AcceptorDescriptionParser.Factory</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../org/eclipse/net4j/TransportInjector.html" title="class in org.eclipse.net4j">TransportInjector</a></td>
+<th class="colFirst" scope="row"><a href="TransportInjector.html" title="class in org.eclipse.net4j">TransportInjector</a></th>
 <td class="colLast">
-<div class="block">An element post processor that injects a <a href="../../../org/eclipse/net4j/ITransportConfig.html" title="interface in org.eclipse.net4j"><code>transport configuration</code></a> into the <a href="../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector"><code>connectors</code></a> and <a href="../../../org/eclipse/net4j/acceptor/IAcceptor.html" title="interface in org.eclipse.net4j.acceptor"><code>acceptors</code></a> of a <a href="../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container"><code>managed container</code></a>.</div>
+<div class="block">An element post processor that injects a <a href="ITransportConfig.html" title="interface in org.eclipse.net4j"><code>transport configuration</code></a> into the <a href="connector/IConnector.html" title="interface in org.eclipse.net4j.connector"><code>connectors</code></a> and <a href="acceptor/IAcceptor.html" title="interface in org.eclipse.net4j.acceptor"><code>acceptors</code></a> of a <code>managed container</code>.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Enum Summary table, listing enums, and an explanation">
+<table class="typeSummary">
 <caption><span>Enum Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Enum</th>
@@ -181,40 +216,29 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../org/eclipse/net4j/ILocationAware.Location.html" title="enum in org.eclipse.net4j">ILocationAware.Location</a></td>
+<th class="colFirst" scope="row"><a href="ILocationAware.Location.html" title="enum in org.eclipse.net4j">ILocationAware.Location</a></th>
 <td class="colLast">
-<div class="block">A <a href="../../../org/eclipse/net4j/ILocationAware.Location.html" title="enum in org.eclipse.net4j"><code>location</code></a> in a <a href="../../../org/eclipse/net4j/ILocationAware.Location.html#CLIENT"><code>client</code></a>/<a href="../../../org/eclipse/net4j/ILocationAware.Location.html#SERVER"><code>server</code></a> scenario.</div>
+<div class="block">A <a href="ILocationAware.Location.html" title="enum in org.eclipse.net4j"><code>location</code></a> in a <a href="ILocationAware.Location.html#CLIENT"><code>client</code></a>/<a href="ILocationAware.Location.html#SERVER"><code>server</code></a> scenario.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
 </ul>
-<a name="package.description">
-<!--   -->
-</a>
-<h2 title="Package org.eclipse.net4j Description">Package org.eclipse.net4j Description</h2>
-<div class="block">The Net4j transport layer.
- <p>
- The five main interfaces of the transport layer are:
-        <ul>
-                <li><a href="../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer"><code>IBuffer</code></a></li>
-                <li><a href="../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel"><code>IChannel</code></a></li>
-                <li><a href="../../../org/eclipse/net4j/acceptor/IAcceptor.html" title="interface in org.eclipse.net4j.acceptor"><code>IAcceptor</code></a></li>
-                <li><a href="../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector"><code>IConnector</code></a></li>
-                <li><a href="../../../org/eclipse/net4j/protocol/IProtocol.html" title="interface in org.eclipse.net4j.protocol"><code>IProtocol</code></a></li>
-        </ul></div>
 </div>
+</main>
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../index.html">Overview</a></li>
 <li class="navBarCell1Rev">Package</li>
 <li>Class</li>
 <li><a href="package-use.html">Use</a></li>
@@ -224,16 +248,8 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev&nbsp;Package</li>
-<li><a href="../../../org/eclipse/net4j/acceptor/package-summary.html">Next&nbsp;Package</a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../index.html?org/eclipse/net4j/package-summary.html" target="_top">Frames</a></li>
-<li><a href="package-summary.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -246,11 +262,16 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

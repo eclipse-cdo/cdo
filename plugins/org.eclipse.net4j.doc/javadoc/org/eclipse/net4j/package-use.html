@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>Uses of Package org.eclipse.net4j (Net4j Signalling Platform Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../script.js"></script>
+<script type="text/javascript" src="../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,39 +28,43 @@
     catch(err) {
     }
 //-->
-</script>
+var pathtoroot = "../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li>Class</li>
 <li class="navBarCell1Rev">Use</li>
+<li><a href="package-tree.html">Tree</a></li>
 <li><a href="../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../index-all.html">Index</a></li>
 <li><a href="../../../help-doc.html">Help</a></li>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev</li>
-<li>Next</li>
-</ul>
-<ul class="navList">
-<li><a href="../../../index.html?org/eclipse/net4j/package-use.html" target="_top">Frames</a></li>
-<li><a href="package-use.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -63,92 +77,98 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
+<main role="main">
 <div class="header">
 <h1 title="Uses of Package org.eclipse.net4j" class="title">Uses of Package<br>org.eclipse.net4j</h1>
 </div>
 <div class="contentContainer">
 <ul class="blockList">
 <li class="blockList">
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing packages, and an explanation">
-<caption><span>Packages that use <a href="../../../org/eclipse/net4j/package-summary.html">org.eclipse.net4j</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Packages that use <a href="package-summary.html">org.eclipse.net4j</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Package</th>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.net4j">org.eclipse.net4j</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j">org.eclipse.net4j</a></th>
 <td class="colLast">
 <div class="block">The Net4j transport layer.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.channel">org.eclipse.net4j.channel</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.channel">org.eclipse.net4j.channel</a></th>
 <td class="colLast">
 <div class="block">The Net4j transport layer concepts for dealing with channels.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.connector">org.eclipse.net4j.connector</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.connector">org.eclipse.net4j.connector</a></th>
 <td class="colLast">
 <div class="block">The Net4j transport layer concepts for dealing with connectors.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.http.common">org.eclipse.net4j.http.common</a></td>
-<td class="colLast">
-<div class="block">Transport layer extension with support for HTTP connections.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.jvm">org.eclipse.net4j.jvm</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.jvm">org.eclipse.net4j.jvm</a></th>
 <td class="colLast">
 <div class="block">Transport layer extension with support for JVM embedded connections.</div>
 </td>
 </tr>
-<tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.protocol">org.eclipse.net4j.protocol</a></td>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.protocol">org.eclipse.net4j.protocol</a></th>
 <td class="colLast">
 <div class="block">The Net4j transport layer concepts for dealing with protocols.</div>
 </td>
 </tr>
-<tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.signal">org.eclipse.net4j.signal</a></td>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.signal">org.eclipse.net4j.signal</a></th>
 <td class="colLast">
 <div class="block">A framework for request/response based communication on top of the Net4j transport layer.</div>
 </td>
 </tr>
-<tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.signal.heartbeat">org.eclipse.net4j.signal.heartbeat</a></td>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.signal.heartbeat">org.eclipse.net4j.signal.heartbeat</a></th>
 <td class="colLast">
 <div class="block">A signal protocol implementation that realizes a configurable heart beat protocol.</div>
 </td>
 </tr>
-<tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.signal.security">org.eclipse.net4j.signal.security</a></td>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.signal.security">org.eclipse.net4j.signal.security</a></th>
 <td class="colLast">
 <div class="block">Reusable implementation of a server-to-client authentication signal and related API.</div>
 </td>
 </tr>
-<tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.tcp">org.eclipse.net4j.tcp</a></td>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.tcp">org.eclipse.net4j.tcp</a></th>
 <td class="colLast">
 <div class="block">Transport layer extension with support for TCP socket connections.</div>
 </td>
 </tr>
-<tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.ws">org.eclipse.net4j.ws</a></td>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.ws">org.eclipse.net4j.ws</a></th>
 <td class="colLast">
 <div class="block">Transport layer extension with support for Websocket connections.</div>
 </td>
 </tr>
-<tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.spi.net4j">org.eclipse.spi.net4j</a></td>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="#org.eclipse.spi.net4j">org.eclipse.spi.net4j</a></th>
 <td class="colLast">
 <div class="block">Server service provider interfaces and useful base implementations for the Net4j transport layer.</div>
 </td>
@@ -156,247 +176,257 @@
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j">
+<li class="blockList"><a id="org.eclipse.net4j">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../org/eclipse/net4j/package-summary.html">org.eclipse.net4j</a> used by <a href="../../../org/eclipse/net4j/package-summary.html">org.eclipse.net4j</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.net4j</a> used by <a href="package-summary.html">org.eclipse.net4j</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../org/eclipse/net4j/class-use/ContainerProtocolProvider.html#org.eclipse.net4j">ContainerProtocolProvider</a>
-<div class="block">Base class for container-based <a href="../../../org/eclipse/net4j/protocol/IProtocolProvider.html" title="interface in org.eclipse.net4j.protocol"><code>protocol providers</code></a> like <a href="../../../org/eclipse/net4j/ContainerProtocolProvider.Client.html" title="class in org.eclipse.net4j"><code>ContainerProtocolProvider.Client</code></a> or <a href="../../../org/eclipse/net4j/ContainerProtocolProvider.Server.html" title="class in org.eclipse.net4j"><code>ContainerProtocolProvider.Server</code></a>.</div>
+<th class="colFirst" scope="row"><a href="class-use/ContainerProtocolProvider.html#org.eclipse.net4j">ContainerProtocolProvider</a></th>
+<td class="colLast">
+<div class="block">Base class for container-based <a href="protocol/IProtocolProvider.html" title="interface in org.eclipse.net4j.protocol"><code>protocol providers</code></a> like <a href="ContainerProtocolProvider.Client.html" title="class in org.eclipse.net4j"><code>ContainerProtocolProvider.Client</code></a> or <a href="ContainerProtocolProvider.Server.html" title="class in org.eclipse.net4j"><code>ContainerProtocolProvider.Server</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../org/eclipse/net4j/class-use/ILocationAware.Location.html#org.eclipse.net4j">ILocationAware.Location</a>
-<div class="block">A <a href="../../../org/eclipse/net4j/ILocationAware.Location.html" title="enum in org.eclipse.net4j"><code>location</code></a> in a <a href="../../../org/eclipse/net4j/ILocationAware.Location.html#CLIENT"><code>client</code></a>/<a href="../../../org/eclipse/net4j/ILocationAware.Location.html#SERVER"><code>server</code></a> scenario.</div>
+<th class="colFirst" scope="row"><a href="class-use/ILocationAware.Location.html#org.eclipse.net4j">ILocationAware.Location</a></th>
+<td class="colLast">
+<div class="block">A <a href="ILocationAware.Location.html" title="enum in org.eclipse.net4j"><code>location</code></a> in a <a href="ILocationAware.Location.html#CLIENT"><code>client</code></a>/<a href="ILocationAware.Location.html#SERVER"><code>server</code></a> scenario.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../org/eclipse/net4j/class-use/ITransportConfig.html#org.eclipse.net4j">ITransportConfig</a>
-<div class="block">A common transport configuration that specifies basic dependencies for <a href="../../../org/eclipse/net4j/channel/IChannelMultiplexer.html" title="interface in org.eclipse.net4j.channel"><code>channel
- multiplexers</code></a>, <a href="../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector"><code>connectors</code></a> and <a href="../../../org/eclipse/net4j/acceptor/IAcceptor.html" title="interface in org.eclipse.net4j.acceptor"><code>acceptors</code></a>.</div>
+<th class="colFirst" scope="row"><a href="class-use/ITransportConfig.html#org.eclipse.net4j">ITransportConfig</a></th>
+<td class="colLast">
+<div class="block">A common transport configuration that specifies basic dependencies for <a href="channel/IChannelMultiplexer.html" title="interface in org.eclipse.net4j.channel"><code>channel
+ multiplexers</code></a>, <a href="connector/IConnector.html" title="interface in org.eclipse.net4j.connector"><code>connectors</code></a> and <a href="acceptor/IAcceptor.html" title="interface in org.eclipse.net4j.acceptor"><code>acceptors</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../org/eclipse/net4j/class-use/TransportConfigurator.AcceptorDescriptionParser.html#org.eclipse.net4j">TransportConfigurator.AcceptorDescriptionParser</a>&nbsp;</td>
+<th class="colFirst" scope="row"><a href="class-use/TransportConfigurator.AcceptorDescriptionParser.html#org.eclipse.net4j">TransportConfigurator.AcceptorDescriptionParser</a></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.channel">
+<li class="blockList"><a id="org.eclipse.net4j.channel">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../org/eclipse/net4j/package-summary.html">org.eclipse.net4j</a> used by <a href="../../../org/eclipse/net4j/channel/package-summary.html">org.eclipse.net4j.channel</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.net4j</a> used by <a href="channel/package-summary.html">org.eclipse.net4j.channel</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../org/eclipse/net4j/class-use/ILocationAware.html#org.eclipse.net4j.channel">ILocationAware</a>
-<div class="block">A concept that has a <a href="../../../org/eclipse/net4j/ILocationAware.Location.html" title="enum in org.eclipse.net4j"><code>location</code></a> in a <a href="../../../org/eclipse/net4j/ILocationAware.Location.html#CLIENT"><code>client</code></a>/<a href="../../../org/eclipse/net4j/ILocationAware.Location.html#SERVER"><code>server</code></a>
+<th class="colFirst" scope="row"><a href="class-use/ILocationAware.html#org.eclipse.net4j.channel">ILocationAware</a></th>
+<td class="colLast">
+<div class="block">A concept that has a <a href="ILocationAware.Location.html" title="enum in org.eclipse.net4j"><code>location</code></a> in a <a href="ILocationAware.Location.html#CLIENT"><code>client</code></a>/<a href="ILocationAware.Location.html#SERVER"><code>server</code></a>
  scenario.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.connector">
+<li class="blockList"><a id="org.eclipse.net4j.connector">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../org/eclipse/net4j/package-summary.html">org.eclipse.net4j</a> used by <a href="../../../org/eclipse/net4j/connector/package-summary.html">org.eclipse.net4j.connector</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.net4j</a> used by <a href="connector/package-summary.html">org.eclipse.net4j.connector</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../org/eclipse/net4j/class-use/ILocationAware.html#org.eclipse.net4j.connector">ILocationAware</a>
-<div class="block">A concept that has a <a href="../../../org/eclipse/net4j/ILocationAware.Location.html" title="enum in org.eclipse.net4j"><code>location</code></a> in a <a href="../../../org/eclipse/net4j/ILocationAware.Location.html#CLIENT"><code>client</code></a>/<a href="../../../org/eclipse/net4j/ILocationAware.Location.html#SERVER"><code>server</code></a>
+<th class="colFirst" scope="row"><a href="class-use/ILocationAware.html#org.eclipse.net4j.connector">ILocationAware</a></th>
+<td class="colLast">
+<div class="block">A concept that has a <a href="ILocationAware.Location.html" title="enum in org.eclipse.net4j"><code>location</code></a> in a <a href="ILocationAware.Location.html#CLIENT"><code>client</code></a>/<a href="ILocationAware.Location.html#SERVER"><code>server</code></a>
  scenario.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.http.common">
+<li class="blockList"><a id="org.eclipse.net4j.jvm">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../org/eclipse/net4j/package-summary.html">org.eclipse.net4j</a> used by <a href="../../../org/eclipse/net4j/http/common/package-summary.html">org.eclipse.net4j.http.common</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.net4j</a> used by <a href="jvm/package-summary.html">org.eclipse.net4j.jvm</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../org/eclipse/net4j/class-use/ILocationAware.html#org.eclipse.net4j.http.common">ILocationAware</a>
-<div class="block">A concept that has a <a href="../../../org/eclipse/net4j/ILocationAware.Location.html" title="enum in org.eclipse.net4j"><code>location</code></a> in a <a href="../../../org/eclipse/net4j/ILocationAware.Location.html#CLIENT"><code>client</code></a>/<a href="../../../org/eclipse/net4j/ILocationAware.Location.html#SERVER"><code>server</code></a>
+<th class="colFirst" scope="row"><a href="class-use/ILocationAware.html#org.eclipse.net4j.jvm">ILocationAware</a></th>
+<td class="colLast">
+<div class="block">A concept that has a <a href="ILocationAware.Location.html" title="enum in org.eclipse.net4j"><code>location</code></a> in a <a href="ILocationAware.Location.html#CLIENT"><code>client</code></a>/<a href="ILocationAware.Location.html#SERVER"><code>server</code></a>
  scenario.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.jvm">
+<li class="blockList"><a id="org.eclipse.net4j.protocol">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../org/eclipse/net4j/package-summary.html">org.eclipse.net4j</a> used by <a href="../../../org/eclipse/net4j/jvm/package-summary.html">org.eclipse.net4j.jvm</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.net4j</a> used by <a href="protocol/package-summary.html">org.eclipse.net4j.protocol</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../org/eclipse/net4j/class-use/ILocationAware.html#org.eclipse.net4j.jvm">ILocationAware</a>
-<div class="block">A concept that has a <a href="../../../org/eclipse/net4j/ILocationAware.Location.html" title="enum in org.eclipse.net4j"><code>location</code></a> in a <a href="../../../org/eclipse/net4j/ILocationAware.Location.html#CLIENT"><code>client</code></a>/<a href="../../../org/eclipse/net4j/ILocationAware.Location.html#SERVER"><code>server</code></a>
+<th class="colFirst" scope="row"><a href="class-use/ILocationAware.html#org.eclipse.net4j.protocol">ILocationAware</a></th>
+<td class="colLast">
+<div class="block">A concept that has a <a href="ILocationAware.Location.html" title="enum in org.eclipse.net4j"><code>location</code></a> in a <a href="ILocationAware.Location.html#CLIENT"><code>client</code></a>/<a href="ILocationAware.Location.html#SERVER"><code>server</code></a>
  scenario.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.protocol">
+<li class="blockList"><a id="org.eclipse.net4j.signal">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../org/eclipse/net4j/package-summary.html">org.eclipse.net4j</a> used by <a href="../../../org/eclipse/net4j/protocol/package-summary.html">org.eclipse.net4j.protocol</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.net4j</a> used by <a href="signal/package-summary.html">org.eclipse.net4j.signal</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../org/eclipse/net4j/class-use/ILocationAware.html#org.eclipse.net4j.protocol">ILocationAware</a>
-<div class="block">A concept that has a <a href="../../../org/eclipse/net4j/ILocationAware.Location.html" title="enum in org.eclipse.net4j"><code>location</code></a> in a <a href="../../../org/eclipse/net4j/ILocationAware.Location.html#CLIENT"><code>client</code></a>/<a href="../../../org/eclipse/net4j/ILocationAware.Location.html#SERVER"><code>server</code></a>
+<th class="colFirst" scope="row"><a href="class-use/ILocationAware.html#org.eclipse.net4j.signal">ILocationAware</a></th>
+<td class="colLast">
+<div class="block">A concept that has a <a href="ILocationAware.Location.html" title="enum in org.eclipse.net4j"><code>location</code></a> in a <a href="ILocationAware.Location.html#CLIENT"><code>client</code></a>/<a href="ILocationAware.Location.html#SERVER"><code>server</code></a>
  scenario.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.signal">
+<li class="blockList"><a id="org.eclipse.net4j.signal.heartbeat">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../org/eclipse/net4j/package-summary.html">org.eclipse.net4j</a> used by <a href="../../../org/eclipse/net4j/signal/package-summary.html">org.eclipse.net4j.signal</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.net4j</a> used by <a href="signal/heartbeat/package-summary.html">org.eclipse.net4j.signal.heartbeat</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../org/eclipse/net4j/class-use/ILocationAware.html#org.eclipse.net4j.signal">ILocationAware</a>
-<div class="block">A concept that has a <a href="../../../org/eclipse/net4j/ILocationAware.Location.html" title="enum in org.eclipse.net4j"><code>location</code></a> in a <a href="../../../org/eclipse/net4j/ILocationAware.Location.html#CLIENT"><code>client</code></a>/<a href="../../../org/eclipse/net4j/ILocationAware.Location.html#SERVER"><code>server</code></a>
+<th class="colFirst" scope="row"><a href="class-use/ILocationAware.html#org.eclipse.net4j.signal.heartbeat">ILocationAware</a></th>
+<td class="colLast">
+<div class="block">A concept that has a <a href="ILocationAware.Location.html" title="enum in org.eclipse.net4j"><code>location</code></a> in a <a href="ILocationAware.Location.html#CLIENT"><code>client</code></a>/<a href="ILocationAware.Location.html#SERVER"><code>server</code></a>
  scenario.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.signal.heartbeat">
+<li class="blockList"><a id="org.eclipse.net4j.signal.security">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../org/eclipse/net4j/package-summary.html">org.eclipse.net4j</a> used by <a href="../../../org/eclipse/net4j/signal/heartbeat/package-summary.html">org.eclipse.net4j.signal.heartbeat</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.net4j</a> used by <a href="signal/security/package-summary.html">org.eclipse.net4j.signal.security</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../org/eclipse/net4j/class-use/ILocationAware.html#org.eclipse.net4j.signal.heartbeat">ILocationAware</a>
-<div class="block">A concept that has a <a href="../../../org/eclipse/net4j/ILocationAware.Location.html" title="enum in org.eclipse.net4j"><code>location</code></a> in a <a href="../../../org/eclipse/net4j/ILocationAware.Location.html#CLIENT"><code>client</code></a>/<a href="../../../org/eclipse/net4j/ILocationAware.Location.html#SERVER"><code>server</code></a>
+<th class="colFirst" scope="row"><a href="class-use/ILocationAware.html#org.eclipse.net4j.signal.security">ILocationAware</a></th>
+<td class="colLast">
+<div class="block">A concept that has a <a href="ILocationAware.Location.html" title="enum in org.eclipse.net4j"><code>location</code></a> in a <a href="ILocationAware.Location.html#CLIENT"><code>client</code></a>/<a href="ILocationAware.Location.html#SERVER"><code>server</code></a>
  scenario.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.signal.security">
+<li class="blockList"><a id="org.eclipse.net4j.tcp">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../org/eclipse/net4j/package-summary.html">org.eclipse.net4j</a> used by <a href="../../../org/eclipse/net4j/signal/security/package-summary.html">org.eclipse.net4j.signal.security</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.net4j</a> used by <a href="tcp/package-summary.html">org.eclipse.net4j.tcp</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../org/eclipse/net4j/class-use/ILocationAware.html#org.eclipse.net4j.signal.security">ILocationAware</a>
-<div class="block">A concept that has a <a href="../../../org/eclipse/net4j/ILocationAware.Location.html" title="enum in org.eclipse.net4j"><code>location</code></a> in a <a href="../../../org/eclipse/net4j/ILocationAware.Location.html#CLIENT"><code>client</code></a>/<a href="../../../org/eclipse/net4j/ILocationAware.Location.html#SERVER"><code>server</code></a>
+<th class="colFirst" scope="row"><a href="class-use/ILocationAware.html#org.eclipse.net4j.tcp">ILocationAware</a></th>
+<td class="colLast">
+<div class="block">A concept that has a <a href="ILocationAware.Location.html" title="enum in org.eclipse.net4j"><code>location</code></a> in a <a href="ILocationAware.Location.html#CLIENT"><code>client</code></a>/<a href="ILocationAware.Location.html#SERVER"><code>server</code></a>
  scenario.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.tcp">
+<li class="blockList"><a id="org.eclipse.net4j.ws">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../org/eclipse/net4j/package-summary.html">org.eclipse.net4j</a> used by <a href="../../../org/eclipse/net4j/tcp/package-summary.html">org.eclipse.net4j.tcp</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.net4j</a> used by <a href="ws/package-summary.html">org.eclipse.net4j.ws</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../org/eclipse/net4j/class-use/ILocationAware.html#org.eclipse.net4j.tcp">ILocationAware</a>
-<div class="block">A concept that has a <a href="../../../org/eclipse/net4j/ILocationAware.Location.html" title="enum in org.eclipse.net4j"><code>location</code></a> in a <a href="../../../org/eclipse/net4j/ILocationAware.Location.html#CLIENT"><code>client</code></a>/<a href="../../../org/eclipse/net4j/ILocationAware.Location.html#SERVER"><code>server</code></a>
+<th class="colFirst" scope="row"><a href="class-use/ILocationAware.html#org.eclipse.net4j.ws">ILocationAware</a></th>
+<td class="colLast">
+<div class="block">A concept that has a <a href="ILocationAware.Location.html" title="enum in org.eclipse.net4j"><code>location</code></a> in a <a href="ILocationAware.Location.html#CLIENT"><code>client</code></a>/<a href="ILocationAware.Location.html#SERVER"><code>server</code></a>
  scenario.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.ws">
+<li class="blockList"><a id="org.eclipse.spi.net4j">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../org/eclipse/net4j/package-summary.html">org.eclipse.net4j</a> used by <a href="../../../org/eclipse/net4j/ws/package-summary.html">org.eclipse.net4j.ws</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.net4j</a> used by <a href="../spi/net4j/package-summary.html">org.eclipse.spi.net4j</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../org/eclipse/net4j/class-use/ILocationAware.html#org.eclipse.net4j.ws">ILocationAware</a>
-<div class="block">A concept that has a <a href="../../../org/eclipse/net4j/ILocationAware.Location.html" title="enum in org.eclipse.net4j"><code>location</code></a> in a <a href="../../../org/eclipse/net4j/ILocationAware.Location.html#CLIENT"><code>client</code></a>/<a href="../../../org/eclipse/net4j/ILocationAware.Location.html#SERVER"><code>server</code></a>
- scenario.</div>
-</td>
-</tr>
-</tbody>
-</table>
-</li>
-<li class="blockList"><a name="org.eclipse.spi.net4j">
-<!--   -->
-</a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../org/eclipse/net4j/package-summary.html">org.eclipse.net4j</a> used by <a href="../../../org/eclipse/spi/net4j/package-summary.html">org.eclipse.spi.net4j</a></span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colOne" scope="col">Class and Description</th>
-</tr>
-<tbody>
-<tr class="altColor">
-<td class="colOne"><a href="../../../org/eclipse/net4j/class-use/ILocationAware.html#org.eclipse.spi.net4j">ILocationAware</a>
-<div class="block">A concept that has a <a href="../../../org/eclipse/net4j/ILocationAware.Location.html" title="enum in org.eclipse.net4j"><code>location</code></a> in a <a href="../../../org/eclipse/net4j/ILocationAware.Location.html#CLIENT"><code>client</code></a>/<a href="../../../org/eclipse/net4j/ILocationAware.Location.html#SERVER"><code>server</code></a>
+<th class="colFirst" scope="row"><a href="class-use/ILocationAware.html#org.eclipse.spi.net4j">ILocationAware</a></th>
+<td class="colLast">
+<div class="block">A concept that has a <a href="ILocationAware.Location.html" title="enum in org.eclipse.net4j"><code>location</code></a> in a <a href="ILocationAware.Location.html#CLIENT"><code>client</code></a>/<a href="ILocationAware.Location.html#SERVER"><code>server</code></a>
  scenario.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../org/eclipse/net4j/class-use/ILocationAware.Location.html#org.eclipse.spi.net4j">ILocationAware.Location</a>
-<div class="block">A <a href="../../../org/eclipse/net4j/ILocationAware.Location.html" title="enum in org.eclipse.net4j"><code>location</code></a> in a <a href="../../../org/eclipse/net4j/ILocationAware.Location.html#CLIENT"><code>client</code></a>/<a href="../../../org/eclipse/net4j/ILocationAware.Location.html#SERVER"><code>server</code></a> scenario.</div>
+<th class="colFirst" scope="row"><a href="class-use/ILocationAware.Location.html#org.eclipse.spi.net4j">ILocationAware.Location</a></th>
+<td class="colLast">
+<div class="block">A <a href="ILocationAware.Location.html" title="enum in org.eclipse.net4j"><code>location</code></a> in a <a href="ILocationAware.Location.html#CLIENT"><code>client</code></a>/<a href="ILocationAware.Location.html#SERVER"><code>server</code></a> scenario.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../org/eclipse/net4j/class-use/ITransportConfig.html#org.eclipse.spi.net4j">ITransportConfig</a>
-<div class="block">A common transport configuration that specifies basic dependencies for <a href="../../../org/eclipse/net4j/channel/IChannelMultiplexer.html" title="interface in org.eclipse.net4j.channel"><code>channel
- multiplexers</code></a>, <a href="../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector"><code>connectors</code></a> and <a href="../../../org/eclipse/net4j/acceptor/IAcceptor.html" title="interface in org.eclipse.net4j.acceptor"><code>acceptors</code></a>.</div>
+<th class="colFirst" scope="row"><a href="class-use/ITransportConfig.html#org.eclipse.spi.net4j">ITransportConfig</a></th>
+<td class="colLast">
+<div class="block">A common transport configuration that specifies basic dependencies for <a href="channel/IChannelMultiplexer.html" title="interface in org.eclipse.net4j.channel"><code>channel
+ multiplexers</code></a>, <a href="connector/IConnector.html" title="interface in org.eclipse.net4j.connector"><code>connectors</code></a> and <a href="acceptor/IAcceptor.html" title="interface in org.eclipse.net4j.acceptor"><code>acceptors</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../org/eclipse/net4j/class-use/ITransportConfigAware.html#org.eclipse.spi.net4j">ITransportConfigAware</a>
-<div class="block">A concept that has a <a href="../../../org/eclipse/net4j/ITransportConfig.html" title="interface in org.eclipse.net4j"><code>transport configuration</code></a>, typically a <a href="../../../org/eclipse/net4j/channel/IChannelMultiplexer.html" title="interface in org.eclipse.net4j.channel"><code>channel
- multiplexer</code></a>, <a href="../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector"><code>connector</code></a> or <a href="../../../org/eclipse/net4j/acceptor/IAcceptor.html" title="interface in org.eclipse.net4j.acceptor"><code>acceptor</code></a>.</div>
+<th class="colFirst" scope="row"><a href="class-use/ITransportConfigAware.html#org.eclipse.spi.net4j">ITransportConfigAware</a></th>
+<td class="colLast">
+<div class="block">A concept that has a <a href="ITransportConfig.html" title="interface in org.eclipse.net4j"><code>transport configuration</code></a>, typically a <a href="channel/IChannelMultiplexer.html" title="interface in org.eclipse.net4j.channel"><code>channel
+ multiplexer</code></a>, <a href="connector/IConnector.html" title="interface in org.eclipse.net4j.connector"><code>connector</code></a> or <a href="acceptor/IAcceptor.html" title="interface in org.eclipse.net4j.acceptor"><code>acceptor</code></a>.</div>
 </td>
 </tr>
 </tbody>
@@ -404,35 +434,31 @@
 </li>
 </ul>
 </div>
+</main>
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li>Class</li>
 <li class="navBarCell1Rev">Use</li>
+<li><a href="package-tree.html">Tree</a></li>
 <li><a href="../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../index-all.html">Index</a></li>
 <li><a href="../../../help-doc.html">Help</a></li>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev</li>
-<li>Next</li>
-</ul>
-<ul class="navList">
-<li><a href="../../../index.html?org/eclipse/net4j/package-use.html" target="_top">Frames</a></li>
-<li><a href="package-use.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -445,11 +471,16 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

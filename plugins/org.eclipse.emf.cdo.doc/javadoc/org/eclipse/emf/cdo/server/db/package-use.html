@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>Uses of Package org.eclipse.emf.cdo.server.db (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,39 +28,43 @@
     catch(err) {
     }
 //-->
-</script>
+var pathtoroot = "../../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li>Class</li>
 <li class="navBarCell1Rev">Use</li>
+<li><a href="package-tree.html">Tree</a></li>
 <li><a href="../../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../../help-doc.html">Help</a></li>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev</li>
-<li>Next</li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/emf/cdo/server/db/package-use.html" target="_top">Frames</a></li>
-<li><a href="package-use.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -63,32 +77,44 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
+<main role="main">
 <div class="header">
 <h1 title="Uses of Package org.eclipse.emf.cdo.server.db" class="title">Uses of Package<br>org.eclipse.emf.cdo.server.db</h1>
 </div>
 <div class="contentContainer">
 <ul class="blockList">
 <li class="blockList">
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing packages, and an explanation">
-<caption><span>Packages that use <a href="../../../../../../org/eclipse/emf/cdo/server/db/package-summary.html">org.eclipse.emf.cdo.server.db</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Packages that use <a href="package-summary.html">org.eclipse.emf.cdo.server.db</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Package</th>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.server.db">org.eclipse.emf.cdo.server.db</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.server.db">org.eclipse.emf.cdo.server.db</a></th>
 <td class="colLast">
 <div class="block">Server concepts for dealing with DB stores and accessors.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.server.db.mapping">org.eclipse.emf.cdo.server.db.mapping</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.server.db.mapping">org.eclipse.emf.cdo.server.db.mapping</a></th>
 <td class="colLast">
 <div class="block">Server concepts for dealing with mapping strategies and mappings for classes, lists and types.</div>
 </td>
@@ -96,83 +122,96 @@
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.server.db">
+<li class="blockList"><a id="org.eclipse.emf.cdo.server.db">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../../org/eclipse/emf/cdo/server/db/package-summary.html">org.eclipse.emf.cdo.server.db</a> used by <a href="../../../../../../org/eclipse/emf/cdo/server/db/package-summary.html">org.eclipse.emf.cdo.server.db</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.emf.cdo.server.db</a> used by <a href="package-summary.html">org.eclipse.emf.cdo.server.db</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/server/db/class-use/IDBStore.html#org.eclipse.emf.cdo.server.db">IDBStore</a>
+<th class="colFirst" scope="row"><a href="class-use/IDBStore.html#org.eclipse.emf.cdo.server.db">IDBStore</a></th>
+<td class="colLast">
 <div class="block">The main entry point to the API of CDO's proprietary object/relational mapper.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/server/db/class-use/IDBStore.TableVisitor.html#org.eclipse.emf.cdo.server.db">IDBStore.TableVisitor</a>
-<div class="block">Called back from <a href="../../../../../../org/eclipse/emf/cdo/server/db/IDBStore.html#visitAllTables-java.sql.Connection-org.eclipse.emf.cdo.server.db.IDBStore.TableVisitor-"><code>IDBStore.visitAllTables(Connection, TableVisitor)</code></a> for all tables in the database.</div>
+<th class="colFirst" scope="row"><a href="class-use/IDBStore.TableVisitor.html#org.eclipse.emf.cdo.server.db">IDBStore.TableVisitor</a></th>
+<td class="colLast">
+<div class="block">Called back from <a href="IDBStore.html#visitAllTables(java.sql.Connection,org.eclipse.emf.cdo.server.db.IDBStore.TableVisitor)"><code>IDBStore.visitAllTables(Connection, TableVisitor)</code></a> for all tables in the database.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/server/db/class-use/IDBStoreAccessor.html#org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>
-<div class="block">A <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server"><code>store accessor</code></a> for CDO's proprietary object/relational mapper.</div>
+<th class="colFirst" scope="row"><a href="class-use/IDBStoreAccessor.html#org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a></th>
+<td class="colLast">
+<div class="block">A <a href="../IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server"><code>store accessor</code></a> for CDO's proprietary object/relational mapper.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/server/db/class-use/IIDHandler.html#org.eclipse.emf.cdo.server.db">IIDHandler</a>
-<div class="block">Abstracts the handling of <a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>IDs</code></a> of different <a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.ObjectType.html" title="enum in org.eclipse.emf.cdo.common.id"><code>ID types</code></a>.</div>
+<th class="colFirst" scope="row"><a href="class-use/IIDHandler.html#org.eclipse.emf.cdo.server.db">IIDHandler</a></th>
+<td class="colLast">
+<div class="block">Abstracts the handling of <a href="../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>IDs</code></a> of different <a href="../../common/id/CDOID.ObjectType.html" title="enum in org.eclipse.emf.cdo.common.id"><code>ID types</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/server/db/class-use/IMetaDataManager.html#org.eclipse.emf.cdo.server.db">IMetaDataManager</a>
-<div class="block">Manages the <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model"><code>elements</code></a> of the meta model level of a CDO <a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server"><code>repository</code></a>.</div>
+<th class="colFirst" scope="row"><a href="class-use/IMetaDataManager.html#org.eclipse.emf.cdo.server.db">IMetaDataManager</a></th>
+<td class="colLast">
+<div class="block">Manages the <a href="../../common/model/CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model"><code>elements</code></a> of the meta model level of a CDO <a href="../IRepository.html" title="interface in org.eclipse.emf.cdo.server"><code>repository</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/server/db/class-use/IPreparedStatementCache.html#org.eclipse.emf.cdo.server.db">IPreparedStatementCache</a>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">As of 4.2 use <a href="../../../../../../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/IDBConnection.html?is-external=true" title="class or interface in org.eclipse.net4j.db"><code>IDBConnection</code></a>.</span></div>
+<th class="colFirst" scope="row"><a href="class-use/IPreparedStatementCache.html#org.eclipse.emf.cdo.server.db">IPreparedStatementCache</a></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.2 use <code>IDBConnection</code>.</div>
 </div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/server/db/class-use/IPreparedStatementCache.ReuseProbability.html#org.eclipse.emf.cdo.server.db">IPreparedStatementCache.ReuseProbability</a>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<th class="colFirst" scope="row"><a href="class-use/IPreparedStatementCache.ReuseProbability.html#org.eclipse.emf.cdo.server.db">IPreparedStatementCache.ReuseProbability</a></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">An enum for the degree of probability to which a prepared statement is reused later on.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.server.db.mapping">
+<li class="blockList"><a id="org.eclipse.emf.cdo.server.db.mapping">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../../org/eclipse/emf/cdo/server/db/package-summary.html">org.eclipse.emf.cdo.server.db</a> used by <a href="../../../../../../org/eclipse/emf/cdo/server/db/mapping/package-summary.html">org.eclipse.emf.cdo.server.db.mapping</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.emf.cdo.server.db</a> used by <a href="mapping/package-summary.html">org.eclipse.emf.cdo.server.db.mapping</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/server/db/class-use/IDBStore.html#org.eclipse.emf.cdo.server.db.mapping">IDBStore</a>
+<th class="colFirst" scope="row"><a href="class-use/IDBStore.html#org.eclipse.emf.cdo.server.db.mapping">IDBStore</a></th>
+<td class="colLast">
 <div class="block">The main entry point to the API of CDO's proprietary object/relational mapper.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/server/db/class-use/IDBStoreAccessor.html#org.eclipse.emf.cdo.server.db.mapping">IDBStoreAccessor</a>
-<div class="block">A <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server"><code>store accessor</code></a> for CDO's proprietary object/relational mapper.</div>
+<th class="colFirst" scope="row"><a href="class-use/IDBStoreAccessor.html#org.eclipse.emf.cdo.server.db.mapping">IDBStoreAccessor</a></th>
+<td class="colLast">
+<div class="block">A <a href="../IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server"><code>store accessor</code></a> for CDO's proprietary object/relational mapper.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/server/db/class-use/IDBStoreChunkReader.html#org.eclipse.emf.cdo.server.db.mapping">IDBStoreChunkReader</a>
-<div class="block">A <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreChunkReader.html" title="interface in org.eclipse.emf.cdo.server"><code>chunk reader</code></a> for CDO's proprietary object/relational mapper.</div>
+<th class="colFirst" scope="row"><a href="class-use/IDBStoreChunkReader.html#org.eclipse.emf.cdo.server.db.mapping">IDBStoreChunkReader</a></th>
+<td class="colLast">
+<div class="block">A <a href="../IStoreChunkReader.html" title="interface in org.eclipse.emf.cdo.server"><code>chunk reader</code></a> for CDO's proprietary object/relational mapper.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/server/db/class-use/IIDHandler.html#org.eclipse.emf.cdo.server.db.mapping">IIDHandler</a>
-<div class="block">Abstracts the handling of <a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>IDs</code></a> of different <a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.ObjectType.html" title="enum in org.eclipse.emf.cdo.common.id"><code>ID types</code></a>.</div>
+<th class="colFirst" scope="row"><a href="class-use/IIDHandler.html#org.eclipse.emf.cdo.server.db.mapping">IIDHandler</a></th>
+<td class="colLast">
+<div class="block">Abstracts the handling of <a href="../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>IDs</code></a> of different <a href="../../common/id/CDOID.ObjectType.html" title="enum in org.eclipse.emf.cdo.common.id"><code>ID types</code></a>.</div>
 </td>
 </tr>
 </tbody>
@@ -180,35 +219,31 @@
 </li>
 </ul>
 </div>
+</main>
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li>Class</li>
 <li class="navBarCell1Rev">Use</li>
+<li><a href="package-tree.html">Tree</a></li>
 <li><a href="../../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../../help-doc.html">Help</a></li>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev</li>
-<li>Next</li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/emf/cdo/server/db/package-use.html" target="_top">Frames</a></li>
-<li><a href="package-use.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -221,11 +256,16 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

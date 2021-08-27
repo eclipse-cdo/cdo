@@ -1,75 +1,286 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
-<title>Net4j Signalling Platform Documentation</title>
-<script type="text/javascript">
-    tmpTargetPage = "" + window.location.search;
-    if (tmpTargetPage != "" && tmpTargetPage != "undefined")
-        tmpTargetPage = tmpTargetPage.substring(1);
-    if (tmpTargetPage.indexOf(":") != -1 || (tmpTargetPage != "" && !validURL(tmpTargetPage)))
-        tmpTargetPage = "undefined";
-    targetPage = tmpTargetPage;
-    function validURL(url) {
-        try {
-            url = decodeURIComponent(url);
-        }
-        catch (error) {
-            return false;
-        }
-        var pos = url.indexOf(".html");
-        if (pos == -1 || pos != url.length - 5)
-            return false;
-        var allowNumber = false;
-        var allowSep = false;
-        var seenDot = false;
-        for (var i = 0; i < url.length - 5; i++) {
-            var ch = url.charAt(i);
-            if ('a' <= ch && ch <= 'z' ||
-                    'A' <= ch && ch <= 'Z' ||
-                    ch == '$' ||
-                    ch == '_' ||
-                    ch.charCodeAt(0) > 127) {
-                allowNumber = true;
-                allowSep = true;
-            } else if ('0' <= ch && ch <= '9'
-                    || ch == '-') {
-                if (!allowNumber)
-                     return false;
-            } else if (ch == '/' || ch == '.') {
-                if (!allowSep)
-                    return false;
-                allowNumber = false;
-                allowSep = false;
-                if (ch == '.')
-                     seenDot = true;
-                if (ch == '/' && seenDot)
-                     return false;
-            } else {
-                return false;
-            }
-        }
-        return true;
-    }
-    function loadFrames() {
-        if (targetPage != "" && targetPage != "undefined")
-             top.classFrame.location = top.targetPage;
-    }
-</script>
+<title>Overview (Net4j Signalling Platform Documentation)</title>
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
+<link rel="stylesheet" type="text/css" href="stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="jquery/jquery-ui.css" title="Style">
+<script type="text/javascript" src="script.js"></script>
+<script type="text/javascript" src="jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="jquery/jquery-ui.js"></script>
 </head>
-<frameset cols="20%,80%" title="Documentation frame" onload="top.loadFrames()">
-<frameset rows="30%,70%" title="Left frames" onload="top.loadFrames()">
-<frame src="overview-frame.html" name="packageListFrame" title="All Packages">
-<frame src="allclasses-frame.html" name="packageFrame" title="All classes and interfaces (except non-static nested types)">
-</frameset>
-<frame src="overview-summary.html" name="classFrame" title="Package, class and interface descriptions" scrolling="yes">
-<noframes>
+<body>
+<script type="text/javascript"><!--
+    try {
+        if (location.href.indexOf('is-external=true') == -1) {
+            parent.document.title="Overview (Net4j Signalling Platform Documentation)";
+        }
+    }
+    catch(err) {
+    }
+//-->
+var data = {"i0":1,"i1":1,"i2":1,"i3":1,"i4":1,"i5":2,"i6":1,"i7":1,"i8":1,"i9":1,"i10":1,"i11":1,"i12":4,"i13":4,"i14":16,"i15":8,"i16":8,"i17":1};
+var tabs = {65535:["t0","All Packages"],1:["t1","Net4j Signalling Platform"],2:["t2","Net4j Signalling Platform (JVM Transport)"],4:["t4","Net4j Signalling Platform (TCP Transport)"],8:["t8","Net4j Signalling Platform (Websocket Transport)"],16:["t16","Net4j Signalling Platform UI"]};
+var altColor = "altColor";
+var rowColor = "rowColor";
+var tableTab = "tableTab";
+var activeTableTab = "activeTableTab";
+var pathtoroot = "./";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
-<h2>Frame Alert</h2>
-<p>This document is designed to be viewed using the frames feature. If you see this message, you are using a non-frame-capable web client. Link to <a href="overview-summary.html">Non-frame version</a>.</p>
-</noframes>
-</frameset>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
+<!-- ========= START OF TOP NAVBAR ======= -->
+<div class="topNav"><a id="navbar.top">
+<!--   -->
+</a>
+<div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
+<a id="navbar.top.firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li class="navBarCell1Rev">Overview</li>
+<li>Package</li>
+<li>Class</li>
+<li>Use</li>
+<li><a href="deprecated-list.html">Deprecated</a></li>
+<li><a href="index-all.html">Index</a></li>
+<li><a href="help-doc.html">Help</a></li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList" id="allclasses_navbar_top">
+<li><a href="allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_top");
+  if(window==top) {
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
+  }
+  //-->
+</script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+</div>
+<a id="skip.navbar.top">
+<!--   -->
+</a></div>
+<!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
+<div class="header">
+<h1 class="title"><h1>Net4j Signalling Platform Documentation</h1></h1>
+</div>
+<main role="main">
+<div class="contentContainer">
+<div class="block"><p>
+The Net4j Signalling platform is an extensible client/server communications framework.
+</p>
+        
+<img src="resources/Net4j-Multiplexing.png"/>
+        
+<p>
+Net4j eases the development of fast and maintainable application protocols that are independent
+of the physical transport medium. Transport protocols are pluggable and Net4j ships with support
+for TCP, HTTP and in-memory transport. The core of Net4j is a fast, asynchronous and non-blocking
+buffer multiplexing kernel, based on OSGi but also executable stand-alone.
+</p></div>
+</div>
+<div class="contentContainer">
+<table class="overviewSummary">
+<caption><span id="t0" class="activeTableTab"><span>All Packages</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Net4j Signalling Platform</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Net4j Signalling Platform (JVM Transport)</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(4);">Net4j Signalling Platform (TCP Transport)</a></span><span class="tabEnd">&nbsp;</span></span><span id="t8" class="tableTab"><span><a href="javascript:show(8);">Net4j Signalling Platform (Websocket Transport)</a></span><span class="tabEnd">&nbsp;</span></span><span id="t16" class="tableTab"><span><a href="javascript:show(16);">Net4j Signalling Platform UI</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<tr>
+<th class="colFirst" scope="col">Package</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor" id="i0">
+<th class="colFirst" scope="row"><a href="org/eclipse/net4j/package-summary.html">org.eclipse.net4j</a></th>
+<td class="colLast">
+<div class="block">The Net4j transport layer.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i1">
+<th class="colFirst" scope="row"><a href="org/eclipse/net4j/acceptor/package-summary.html">org.eclipse.net4j.acceptor</a></th>
+<td class="colLast">
+<div class="block">The Net4j transport layer concepts for dealing with acceptors.</div>
+</td>
+</tr>
+<tr class="altColor" id="i2">
+<th class="colFirst" scope="row"><a href="org/eclipse/net4j/buffer/package-summary.html">org.eclipse.net4j.buffer</a></th>
+<td class="colLast">
+<div class="block">The Net4j transport layer concepts for dealing with buffers.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i3">
+<th class="colFirst" scope="row"><a href="org/eclipse/net4j/channel/package-summary.html">org.eclipse.net4j.channel</a></th>
+<td class="colLast">
+<div class="block">The Net4j transport layer concepts for dealing with channels.</div>
+</td>
+</tr>
+<tr class="altColor" id="i4">
+<th class="colFirst" scope="row"><a href="org/eclipse/net4j/connector/package-summary.html">org.eclipse.net4j.connector</a></th>
+<td class="colLast">
+<div class="block">The Net4j transport layer concepts for dealing with connectors.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i5">
+<th class="colFirst" scope="row"><a href="org/eclipse/net4j/jvm/package-summary.html">org.eclipse.net4j.jvm</a></th>
+<td class="colLast">
+<div class="block">Transport layer extension with support for JVM embedded connections.</div>
+</td>
+</tr>
+<tr class="altColor" id="i6">
+<th class="colFirst" scope="row"><a href="org/eclipse/net4j/protocol/package-summary.html">org.eclipse.net4j.protocol</a></th>
+<td class="colLast">
+<div class="block">The Net4j transport layer concepts for dealing with protocols.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i7">
+<th class="colFirst" scope="row"><a href="org/eclipse/net4j/signal/package-summary.html">org.eclipse.net4j.signal</a></th>
+<td class="colLast">
+<div class="block">A framework for request/response based communication on top of the Net4j transport layer.</div>
+</td>
+</tr>
+<tr class="altColor" id="i8">
+<th class="colFirst" scope="row"><a href="org/eclipse/net4j/signal/confirmation/package-summary.html">org.eclipse.net4j.signal.confirmation</a></th>
+<td class="colLast">
+<div class="block">Reusable implementation of a server-to-client confirmation signal and related API.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i9">
+<th class="colFirst" scope="row"><a href="org/eclipse/net4j/signal/heartbeat/package-summary.html">org.eclipse.net4j.signal.heartbeat</a></th>
+<td class="colLast">
+<div class="block">A signal protocol implementation that realizes a configurable heart beat protocol.</div>
+</td>
+</tr>
+<tr class="altColor" id="i10">
+<th class="colFirst" scope="row"><a href="org/eclipse/net4j/signal/security/package-summary.html">org.eclipse.net4j.signal.security</a></th>
+<td class="colLast">
+<div class="block">Reusable implementation of a server-to-client authentication signal and related API.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i11">
+<th class="colFirst" scope="row"><a href="org/eclipse/net4j/signal/wrapping/package-summary.html">org.eclipse.net4j.signal.wrapping</a></th>
+<td class="colLast">
+<div class="block">Some container injectors for use with signal protocols.</div>
+</td>
+</tr>
+<tr class="altColor" id="i12">
+<th class="colFirst" scope="row"><a href="org/eclipse/net4j/tcp/package-summary.html">org.eclipse.net4j.tcp</a></th>
+<td class="colLast">
+<div class="block">Transport layer extension with support for TCP socket connections.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i13">
+<th class="colFirst" scope="row"><a href="org/eclipse/net4j/tcp/ssl/package-summary.html">org.eclipse.net4j.tcp.ssl</a></th>
+<td class="colLast">
+<div class="block">Transport layer extension with support for TCP/SSL socket connections.</div>
+</td>
+</tr>
+<tr class="altColor" id="i14">
+<th class="colFirst" scope="row"><a href="org/eclipse/net4j/ui/package-summary.html">org.eclipse.net4j.ui</a></th>
+<td class="colLast">
+<div class="block">Reusable UI components specific to the Net4j Signalling Platform.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i15">
+<th class="colFirst" scope="row"><a href="org/eclipse/net4j/ws/package-summary.html">org.eclipse.net4j.ws</a></th>
+<td class="colLast">
+<div class="block">Transport layer extension with support for Websocket connections.</div>
+</td>
+</tr>
+<tr class="altColor" id="i16">
+<th class="colFirst" scope="row"><a href="org/eclipse/net4j/ws/jetty/package-summary.html">org.eclipse.net4j.ws.jetty</a></th>
+<td class="colLast">
+<div class="block">Jetty-specific classes with support for Websocket connections.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i17">
+<th class="colFirst" scope="row"><a href="org/eclipse/spi/net4j/package-summary.html">org.eclipse.spi.net4j</a></th>
+<td class="colLast">
+<div class="block">Server service provider interfaces and useful base implementations for the Net4j transport layer.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</main>
+<footer role="contentinfo">
+<nav role="navigation">
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<div class="bottomNav"><a id="navbar.bottom">
+<!--   -->
+</a>
+<div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
+<a id="navbar.bottom.firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li class="navBarCell1Rev">Overview</li>
+<li>Package</li>
+<li>Class</li>
+<li>Use</li>
+<li><a href="deprecated-list.html">Deprecated</a></li>
+<li><a href="index-all.html">Index</a></li>
+<li><a href="help-doc.html">Help</a></li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList" id="allclasses_navbar_bottom">
+<li><a href="allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_bottom");
+  if(window==top) {
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
+  }
+  //-->
+</script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+</div>
+<a id="skip.navbar.bottom">
+<!--   -->
+</a></div>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
+</body>
 </html>

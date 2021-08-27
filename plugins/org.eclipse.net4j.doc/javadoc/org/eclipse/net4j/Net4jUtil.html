@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>Net4jUtil (Net4j Signalling Platform Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../script.js"></script>
+<script type="text/javascript" src="../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9,"i12":9,"i13":9,"i14":9,"i15":9,"i16":9,"i17":9};
+var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9,"i12":9,"i13":9,"i14":9,"i15":9,"i16":9,"i17":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/Net4jUtil.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../org/eclipse/net4j/ITransportConfigAware.html" title="interface in org.eclipse.net4j"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../org/eclipse/net4j/TransportConfigurator.html" title="class in org.eclipse.net4j"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../index.html?org/eclipse/net4j/Net4jUtil.html" target="_top">Frames</a></li>
-<li><a href="Net4jUtil.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,6 +82,9 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -85,13 +101,22 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.net4j</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.net4j</a></div>
 <h2 title="Class Net4jUtil" class="title">Class Net4jUtil</h2>
 </div>
 <div class="contentContainer">
@@ -107,7 +132,6 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<br>
 <pre>public final class <span class="typeNameLabel">Net4jUtil</span>
 extends java.lang.Object</pre>
 <div class="block">A utility class with various static factory and convenience methods.</div>
@@ -122,124 +146,149 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <!-- =========== FIELD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.summary">
+<li class="blockList"><a id="field.summary">
 <!--   -->
 </a>
 <h3>Field Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Field Summary table, listing fields, and an explanation">
+<table class="memberSummary">
 <caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Field and Description</th>
+<th class="colSecond" scope="col">Field</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../org/eclipse/net4j/Net4jUtil.html#DEFAULT_BUFFER_CAPACITY">DEFAULT_BUFFER_CAPACITY</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#DEFAULT_BUFFER_CAPACITY">DEFAULT_BUFFER_CAPACITY</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../org/eclipse/net4j/Net4jUtil.html#SCHEME_SEPARATOR">SCHEME_SEPARATOR</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SCHEME_SEPARATOR">SCHEME_SEPARATOR</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>static <a href="../../../org/eclipse/net4j/ITransportConfig.html" title="interface in org.eclipse.net4j">ITransportConfig</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../org/eclipse/net4j/Net4jUtil.html#copyTransportConfig-org.eclipse.net4j.util.lifecycle.ILifecycle-org.eclipse.net4j.ITransportConfig-">copyTransportConfig</a></span>(<a href="../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a>&nbsp;lifecycle,
-                   <a href="../../../org/eclipse/net4j/ITransportConfig.html" title="interface in org.eclipse.net4j">ITransportConfig</a>&nbsp;source)</code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="ITransportConfig.html" title="interface in org.eclipse.net4j">ITransportConfig</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#copyTransportConfig(org.eclipse.net4j.util.lifecycle.ILifecycle,org.eclipse.net4j.ITransportConfig)">copyTransportConfig</a></span>&#8203;(org.eclipse.net4j.util.lifecycle.ILifecycle&nbsp;lifecycle,
+                   <a href="ITransportConfig.html" title="interface in org.eclipse.net4j">ITransportConfig</a>&nbsp;source)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>static <a href="../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../org/eclipse/net4j/Net4jUtil.html#createBufferFactory--">createBufferFactory</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createBufferFactory()">createBufferFactory</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>static <a href="../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../org/eclipse/net4j/Net4jUtil.html#createBufferFactory-short-">createBufferFactory</a></span>(short&nbsp;bufferCapacity)</code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createBufferFactory(short)">createBufferFactory</a></span>&#8203;(short&nbsp;bufferCapacity)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>static <a href="../../../org/eclipse/net4j/buffer/IBufferPool.html" title="interface in org.eclipse.net4j.buffer">IBufferPool</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../org/eclipse/net4j/Net4jUtil.html#createBufferPool--">createBufferPool</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="buffer/IBufferPool.html" title="interface in org.eclipse.net4j.buffer">IBufferPool</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createBufferPool()">createBufferPool</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>static <a href="../../../org/eclipse/net4j/buffer/IBufferPool.html" title="interface in org.eclipse.net4j.buffer">IBufferPool</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../org/eclipse/net4j/Net4jUtil.html#createBufferPool-org.eclipse.net4j.buffer.IBufferProvider-">createBufferPool</a></span>(<a href="../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a>&nbsp;factory)</code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="buffer/IBufferPool.html" title="interface in org.eclipse.net4j.buffer">IBufferPool</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createBufferPool(short)">createBufferPool</a></span>&#8203;(short&nbsp;bufferCapacity)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code>static <a href="../../../org/eclipse/net4j/buffer/IBufferPool.html" title="interface in org.eclipse.net4j.buffer">IBufferPool</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../org/eclipse/net4j/Net4jUtil.html#createBufferPool-short-">createBufferPool</a></span>(short&nbsp;bufferCapacity)</code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="buffer/IBufferPool.html" title="interface in org.eclipse.net4j.buffer">IBufferPool</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createBufferPool(org.eclipse.net4j.buffer.IBufferProvider)">createBufferPool</a></span>&#8203;(<a href="buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a>&nbsp;factory)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code>static <a href="../../../org/eclipse/net4j/acceptor/IAcceptor.html" title="interface in org.eclipse.net4j.acceptor">IAcceptor</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../org/eclipse/net4j/Net4jUtil.html#getAcceptor-org.eclipse.net4j.util.container.IManagedContainer-java.lang.String-java.lang.String-">getAcceptor</a></span>(<a href="../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container,
+<td class="colFirst"><code>static <a href="acceptor/IAcceptor.html" title="interface in org.eclipse.net4j.acceptor">IAcceptor</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAcceptor(org.eclipse.net4j.util.container.IManagedContainer,java.lang.String,java.lang.String)">getAcceptor</a></span>&#8203;(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container,
            java.lang.String&nbsp;type,
-           java.lang.String&nbsp;description)</code>&nbsp;</td>
+           java.lang.String&nbsp;description)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code>static <a href="../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../org/eclipse/net4j/Net4jUtil.html#getBufferProvider-org.eclipse.net4j.util.container.IManagedContainer-">getBufferProvider</a></span>(<a href="../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container)</code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getBufferProvider(org.eclipse.net4j.util.container.IManagedContainer)">getBufferProvider</a></span>&#8203;(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
-<td class="colFirst"><code>static <a href="../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector">IConnector</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../org/eclipse/net4j/Net4jUtil.html#getConnector-org.eclipse.net4j.util.container.IManagedContainer-java.lang.String-">getConnector</a></span>(<a href="../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container,
-            java.lang.String&nbsp;description)</code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="connector/IConnector.html" title="interface in org.eclipse.net4j.connector">IConnector</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getConnector(org.eclipse.net4j.util.container.IManagedContainer,java.lang.String)">getConnector</a></span>&#8203;(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container,
+            java.lang.String&nbsp;description)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
-<td class="colFirst"><code>static <a href="../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector">IConnector</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../org/eclipse/net4j/Net4jUtil.html#getConnector-org.eclipse.net4j.util.container.IManagedContainer-java.lang.String-java.lang.String-">getConnector</a></span>(<a href="../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container,
+<td class="colFirst"><code>static <a href="connector/IConnector.html" title="interface in org.eclipse.net4j.connector">IConnector</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getConnector(org.eclipse.net4j.util.container.IManagedContainer,java.lang.String,java.lang.String)">getConnector</a></span>&#8203;(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container,
             java.lang.String&nbsp;type,
-            java.lang.String&nbsp;description)</code>&nbsp;</td>
+            java.lang.String&nbsp;description)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
-<td class="colFirst"><code>static <a href="../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector">IConnector</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../org/eclipse/net4j/Net4jUtil.html#getConnector-org.eclipse.net4j.util.container.IManagedContainer-java.lang.String-java.lang.String-long-">getConnector</a></span>(<a href="../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container,
+<td class="colFirst"><code>static <a href="connector/IConnector.html" title="interface in org.eclipse.net4j.connector">IConnector</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getConnector(org.eclipse.net4j.util.container.IManagedContainer,java.lang.String,java.lang.String,long)">getConnector</a></span>&#8203;(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container,
             java.lang.String&nbsp;type,
             java.lang.String&nbsp;description,
-            long&nbsp;timeout)</code>&nbsp;</td>
+            long&nbsp;timeout)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>static java.util.concurrent.ExecutorService</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../org/eclipse/net4j/Net4jUtil.html#getExecutorService-org.eclipse.net4j.util.container.IManagedContainer-">getExecutorService</a></span>(<a href="../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getExecutorService(org.eclipse.net4j.util.container.IManagedContainer)">getExecutorService</a></span>&#8203;(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code>static int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../org/eclipse/net4j/Net4jUtil.html#getPooledBuffers-org.eclipse.net4j.buffer.IBufferPool-">getPooledBuffers</a></span>(<a href="../../../org/eclipse/net4j/buffer/IBufferPool.html" title="interface in org.eclipse.net4j.buffer">IBufferPool</a>&nbsp;bufferPool)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPooledBuffers(org.eclipse.net4j.buffer.IBufferPool)">getPooledBuffers</a></span>&#8203;(<a href="buffer/IBufferPool.html" title="interface in org.eclipse.net4j.buffer">IBufferPool</a>&nbsp;bufferPool)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../org/eclipse/net4j/Net4jUtil.html#getProtocolID-org.eclipse.net4j.protocol.IProtocol-">getProtocolID</a></span>(<a href="../../../org/eclipse/net4j/protocol/IProtocol.html" title="interface in org.eclipse.net4j.protocol">IProtocol</a>&lt;?&gt;&nbsp;protocol)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getProtocolID(org.eclipse.net4j.protocol.IProtocol)">getProtocolID</a></span>&#8203;(<a href="protocol/IProtocol.html" title="interface in org.eclipse.net4j.protocol">IProtocol</a>&lt;?&gt;&nbsp;protocol)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code>static int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../org/eclipse/net4j/Net4jUtil.html#getProtocolVersion-org.eclipse.net4j.protocol.IProtocol-">getProtocolVersion</a></span>(<a href="../../../org/eclipse/net4j/protocol/IProtocol.html" title="interface in org.eclipse.net4j.protocol">IProtocol</a>&lt;?&gt;&nbsp;protocol)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getProtocolVersion(org.eclipse.net4j.protocol.IProtocol)">getProtocolVersion</a></span>&#8203;(<a href="protocol/IProtocol.html" title="interface in org.eclipse.net4j.protocol">IProtocol</a>&lt;?&gt;&nbsp;protocol)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i15" class="rowColor">
 <td class="colFirst"><code>static long</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../org/eclipse/net4j/Net4jUtil.html#getProvidedBuffers-org.eclipse.net4j.buffer.IBufferProvider-">getProvidedBuffers</a></span>(<a href="../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a>&nbsp;bufferProvider)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getProvidedBuffers(org.eclipse.net4j.buffer.IBufferProvider)">getProvidedBuffers</a></span>&#8203;(<a href="buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a>&nbsp;bufferProvider)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i16" class="altColor">
 <td class="colFirst"><code>static long</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../org/eclipse/net4j/Net4jUtil.html#getRetainedBuffers-org.eclipse.net4j.buffer.IBufferProvider-">getRetainedBuffers</a></span>(<a href="../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a>&nbsp;bufferProvider)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRetainedBuffers(org.eclipse.net4j.buffer.IBufferProvider)">getRetainedBuffers</a></span>&#8203;(<a href="buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a>&nbsp;bufferProvider)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i17" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../org/eclipse/net4j/Net4jUtil.html#prepareContainer-org.eclipse.net4j.util.container.IManagedContainer-">prepareContainer</a></span>(<a href="../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#prepareContainer(org.eclipse.net4j.util.container.IManagedContainer)">prepareContainer</a></span>&#8203;(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
+<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
@@ -247,6 +296,7 @@ extends java.lang.Object</pre>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -254,12 +304,13 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <!-- ============ FIELD DETAIL =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.detail">
+<li class="blockList"><a id="field.detail">
 <!--   -->
 </a>
 <h3>Field Detail</h3>
-<a name="SCHEME_SEPARATOR">
+<a id="SCHEME_SEPARATOR">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -272,7 +323,7 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a name="DEFAULT_BUFFER_CAPACITY">
+<a id="DEFAULT_BUFFER_CAPACITY">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -287,57 +338,59 @@ extends java.lang.Object</pre>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="prepareContainer-org.eclipse.net4j.util.container.IManagedContainer-">
+<a id="prepareContainer(org.eclipse.net4j.util.container.IManagedContainer)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>prepareContainer</h4>
-<pre>public static&nbsp;void&nbsp;prepareContainer(<a href="../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container)</pre>
+<pre class="methodSignature">public static&nbsp;void&nbsp;prepareContainer&#8203;(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container)</pre>
 </li>
 </ul>
-<a name="getExecutorService-org.eclipse.net4j.util.container.IManagedContainer-">
+<a id="getExecutorService(org.eclipse.net4j.util.container.IManagedContainer)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getExecutorService</h4>
-<pre>public static&nbsp;java.util.concurrent.ExecutorService&nbsp;getExecutorService(<a href="../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container)</pre>
+<pre class="methodSignature">public static&nbsp;java.util.concurrent.ExecutorService&nbsp;getExecutorService&#8203;(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container)</pre>
 </li>
 </ul>
-<a name="getBufferProvider-org.eclipse.net4j.util.container.IManagedContainer-">
+<a id="getBufferProvider(org.eclipse.net4j.util.container.IManagedContainer)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getBufferProvider</h4>
-<pre>public static&nbsp;<a href="../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a>&nbsp;getBufferProvider(<a href="../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container)</pre>
+<pre class="methodSignature">public static&nbsp;<a href="buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a>&nbsp;getBufferProvider&#8203;(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container)</pre>
 </li>
 </ul>
-<a name="getAcceptor-org.eclipse.net4j.util.container.IManagedContainer-java.lang.String-java.lang.String-">
+<a id="getAcceptor(org.eclipse.net4j.util.container.IManagedContainer,java.lang.String,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getAcceptor</h4>
-<pre>public static&nbsp;<a href="../../../org/eclipse/net4j/acceptor/IAcceptor.html" title="interface in org.eclipse.net4j.acceptor">IAcceptor</a>&nbsp;getAcceptor(<a href="../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container,
+<pre class="methodSignature">public static&nbsp;<a href="acceptor/IAcceptor.html" title="interface in org.eclipse.net4j.acceptor">IAcceptor</a>&nbsp;getAcceptor&#8203;(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container,
                                     java.lang.String&nbsp;type,
                                     java.lang.String&nbsp;description)</pre>
 </li>
 </ul>
-<a name="getConnector-org.eclipse.net4j.util.container.IManagedContainer-java.lang.String-java.lang.String-long-">
+<a id="getConnector(org.eclipse.net4j.util.container.IManagedContainer,java.lang.String,java.lang.String,long)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getConnector</h4>
-<pre>public static&nbsp;<a href="../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector">IConnector</a>&nbsp;getConnector(<a href="../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container,
+<pre class="methodSignature">public static&nbsp;<a href="connector/IConnector.html" title="interface in org.eclipse.net4j.connector">IConnector</a>&nbsp;getConnector&#8203;(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container,
                                       java.lang.String&nbsp;type,
                                       java.lang.String&nbsp;description,
                                       long&nbsp;timeout)</pre>
@@ -347,133 +400,133 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a name="getConnector-org.eclipse.net4j.util.container.IManagedContainer-java.lang.String-java.lang.String-">
+<a id="getConnector(org.eclipse.net4j.util.container.IManagedContainer,java.lang.String,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getConnector</h4>
-<pre>public static&nbsp;<a href="../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector">IConnector</a>&nbsp;getConnector(<a href="../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container,
+<pre class="methodSignature">public static&nbsp;<a href="connector/IConnector.html" title="interface in org.eclipse.net4j.connector">IConnector</a>&nbsp;getConnector&#8203;(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container,
                                       java.lang.String&nbsp;type,
                                       java.lang.String&nbsp;description)</pre>
 </li>
 </ul>
-<a name="getConnector-org.eclipse.net4j.util.container.IManagedContainer-java.lang.String-">
+<a id="getConnector(org.eclipse.net4j.util.container.IManagedContainer,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getConnector</h4>
-<pre>public static&nbsp;<a href="../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector">IConnector</a>&nbsp;getConnector(<a href="../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container,
+<pre class="methodSignature">public static&nbsp;<a href="connector/IConnector.html" title="interface in org.eclipse.net4j.connector">IConnector</a>&nbsp;getConnector&#8203;(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container,
                                       java.lang.String&nbsp;description)</pre>
 </li>
 </ul>
-<a name="createBufferFactory-short-">
+<a id="createBufferFactory(short)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createBufferFactory</h4>
-<pre>public static&nbsp;<a href="../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a>&nbsp;createBufferFactory(short&nbsp;bufferCapacity)</pre>
+<pre class="methodSignature">public static&nbsp;<a href="buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a>&nbsp;createBufferFactory&#8203;(short&nbsp;bufferCapacity)</pre>
 </li>
 </ul>
-<a name="createBufferFactory--">
+<a id="createBufferFactory()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createBufferFactory</h4>
-<pre>public static&nbsp;<a href="../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a>&nbsp;createBufferFactory()</pre>
+<pre class="methodSignature">public static&nbsp;<a href="buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a>&nbsp;createBufferFactory()</pre>
 </li>
 </ul>
-<a name="createBufferPool-org.eclipse.net4j.buffer.IBufferProvider-">
+<a id="createBufferPool(org.eclipse.net4j.buffer.IBufferProvider)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createBufferPool</h4>
-<pre>public static&nbsp;<a href="../../../org/eclipse/net4j/buffer/IBufferPool.html" title="interface in org.eclipse.net4j.buffer">IBufferPool</a>&nbsp;createBufferPool(<a href="../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a>&nbsp;factory)</pre>
+<pre class="methodSignature">public static&nbsp;<a href="buffer/IBufferPool.html" title="interface in org.eclipse.net4j.buffer">IBufferPool</a>&nbsp;createBufferPool&#8203;(<a href="buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a>&nbsp;factory)</pre>
 </li>
 </ul>
-<a name="createBufferPool-short-">
+<a id="createBufferPool(short)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createBufferPool</h4>
-<pre>public static&nbsp;<a href="../../../org/eclipse/net4j/buffer/IBufferPool.html" title="interface in org.eclipse.net4j.buffer">IBufferPool</a>&nbsp;createBufferPool(short&nbsp;bufferCapacity)</pre>
+<pre class="methodSignature">public static&nbsp;<a href="buffer/IBufferPool.html" title="interface in org.eclipse.net4j.buffer">IBufferPool</a>&nbsp;createBufferPool&#8203;(short&nbsp;bufferCapacity)</pre>
 </li>
 </ul>
-<a name="createBufferPool--">
+<a id="createBufferPool()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createBufferPool</h4>
-<pre>public static&nbsp;<a href="../../../org/eclipse/net4j/buffer/IBufferPool.html" title="interface in org.eclipse.net4j.buffer">IBufferPool</a>&nbsp;createBufferPool()</pre>
+<pre class="methodSignature">public static&nbsp;<a href="buffer/IBufferPool.html" title="interface in org.eclipse.net4j.buffer">IBufferPool</a>&nbsp;createBufferPool()</pre>
 </li>
 </ul>
-<a name="getProvidedBuffers-org.eclipse.net4j.buffer.IBufferProvider-">
+<a id="getProvidedBuffers(org.eclipse.net4j.buffer.IBufferProvider)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getProvidedBuffers</h4>
-<pre>public static&nbsp;long&nbsp;getProvidedBuffers(<a href="../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a>&nbsp;bufferProvider)</pre>
+<pre class="methodSignature">public static&nbsp;long&nbsp;getProvidedBuffers&#8203;(<a href="buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a>&nbsp;bufferProvider)</pre>
 </li>
 </ul>
-<a name="getRetainedBuffers-org.eclipse.net4j.buffer.IBufferProvider-">
+<a id="getRetainedBuffers(org.eclipse.net4j.buffer.IBufferProvider)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getRetainedBuffers</h4>
-<pre>public static&nbsp;long&nbsp;getRetainedBuffers(<a href="../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a>&nbsp;bufferProvider)</pre>
+<pre class="methodSignature">public static&nbsp;long&nbsp;getRetainedBuffers&#8203;(<a href="buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a>&nbsp;bufferProvider)</pre>
 </li>
 </ul>
-<a name="getPooledBuffers-org.eclipse.net4j.buffer.IBufferPool-">
+<a id="getPooledBuffers(org.eclipse.net4j.buffer.IBufferPool)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getPooledBuffers</h4>
-<pre>public static&nbsp;int&nbsp;getPooledBuffers(<a href="../../../org/eclipse/net4j/buffer/IBufferPool.html" title="interface in org.eclipse.net4j.buffer">IBufferPool</a>&nbsp;bufferPool)</pre>
+<pre class="methodSignature">public static&nbsp;int&nbsp;getPooledBuffers&#8203;(<a href="buffer/IBufferPool.html" title="interface in org.eclipse.net4j.buffer">IBufferPool</a>&nbsp;bufferPool)</pre>
 </li>
 </ul>
-<a name="copyTransportConfig-org.eclipse.net4j.util.lifecycle.ILifecycle-org.eclipse.net4j.ITransportConfig-">
+<a id="copyTransportConfig(org.eclipse.net4j.util.lifecycle.ILifecycle,org.eclipse.net4j.ITransportConfig)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>copyTransportConfig</h4>
-<pre>public static&nbsp;<a href="../../../org/eclipse/net4j/ITransportConfig.html" title="interface in org.eclipse.net4j">ITransportConfig</a>&nbsp;copyTransportConfig(<a href="../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a>&nbsp;lifecycle,
-                                                   <a href="../../../org/eclipse/net4j/ITransportConfig.html" title="interface in org.eclipse.net4j">ITransportConfig</a>&nbsp;source)</pre>
+<pre class="methodSignature">public static&nbsp;<a href="ITransportConfig.html" title="interface in org.eclipse.net4j">ITransportConfig</a>&nbsp;copyTransportConfig&#8203;(org.eclipse.net4j.util.lifecycle.ILifecycle&nbsp;lifecycle,
+                                                   <a href="ITransportConfig.html" title="interface in org.eclipse.net4j">ITransportConfig</a>&nbsp;source)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
 </dl>
 </li>
 </ul>
-<a name="getProtocolID-org.eclipse.net4j.protocol.IProtocol-">
+<a id="getProtocolID(org.eclipse.net4j.protocol.IProtocol)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getProtocolID</h4>
-<pre>public static&nbsp;java.lang.String&nbsp;getProtocolID(<a href="../../../org/eclipse/net4j/protocol/IProtocol.html" title="interface in org.eclipse.net4j.protocol">IProtocol</a>&lt;?&gt;&nbsp;protocol)</pre>
+<pre class="methodSignature">public static&nbsp;java.lang.String&nbsp;getProtocolID&#8203;(<a href="protocol/IProtocol.html" title="interface in org.eclipse.net4j.protocol">IProtocol</a>&lt;?&gt;&nbsp;protocol)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
 </li>
 </ul>
-<a name="getProtocolVersion-org.eclipse.net4j.protocol.IProtocol-">
+<a id="getProtocolVersion(org.eclipse.net4j.protocol.IProtocol)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getProtocolVersion</h4>
-<pre>public static&nbsp;int&nbsp;getProtocolVersion(<a href="../../../org/eclipse/net4j/protocol/IProtocol.html" title="interface in org.eclipse.net4j.protocol">IProtocol</a>&lt;?&gt;&nbsp;protocol)</pre>
+<pre class="methodSignature">public static&nbsp;int&nbsp;getProtocolVersion&#8203;(<a href="protocol/IProtocol.html" title="interface in org.eclipse.net4j.protocol">IProtocol</a>&lt;?&gt;&nbsp;protocol)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
@@ -482,21 +535,25 @@ extends java.lang.Object</pre>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/Net4jUtil.html">Use</a></li>
@@ -506,16 +563,8 @@ extends java.lang.Object</pre>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../org/eclipse/net4j/ITransportConfigAware.html" title="interface in org.eclipse.net4j"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../org/eclipse/net4j/TransportConfigurator.html" title="class in org.eclipse.net4j"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../index.html?org/eclipse/net4j/Net4jUtil.html" target="_top">Frames</a></li>
-<li><a href="Net4jUtil.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -528,6 +577,9 @@ extends java.lang.Object</pre>
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -544,10 +596,12 @@ extends java.lang.Object</pre>
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>org.eclipse.net4j.util.collection (Net4j Utilities Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,20 +28,25 @@
     catch(err) {
     }
 //-->
-</script>
+var pathtoroot = "../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li class="navBarCell1Rev">Package</li>
 <li>Class</li>
 <li><a href="package-use.html">Use</a></li>
@@ -41,16 +56,14 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/net4j/util/cache/package-summary.html">Prev&nbsp;Package</a></li>
-<li><a href="../../../../../org/eclipse/net4j/util/concurrent/package-summary.html">Next&nbsp;Package</a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/net4j/util/collection/package-summary.html" target="_top">Frames</a></li>
-<li><a href="package-summary.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -63,22 +76,35 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
+<main role="main">
 <div class="header">
 <h1 title="Package" class="title">Package&nbsp;org.eclipse.net4j.util.collection</h1>
-<div class="docSummary">
-<div class="block">Additional collection-like interfaces and classes.</div>
-</div>
-<p>See:&nbsp;<a href="#package.description">Description</a></p>
 </div>
 <div class="contentContainer">
+<section role="region"><a id="package.description">
+<!--   -->
+</a>
+<div class="block">Additional collection-like interfaces and classes.</div>
+</section>
 <ul class="blockList">
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<table class="typeSummary">
 <caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Interface</th>
@@ -86,46 +112,46 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/collection/Closeable.html" title="interface in org.eclipse.net4j.util.collection">Closeable</a></td>
+<th class="colFirst" scope="row"><a href="Closeable.html" title="interface in org.eclipse.net4j.util.collection">Closeable</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/collection/CloseableIterator.html" title="interface in org.eclipse.net4j.util.collection">CloseableIterator</a>&lt;E&gt;</td>
+<th class="colFirst" scope="row"><a href="CloseableIterator.html" title="interface in org.eclipse.net4j.util.collection">CloseableIterator</a>&lt;E&gt;</th>
 <td class="colLast">
 <div class="block">A closeable iterator.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/collection/IHistory.html" title="interface in org.eclipse.net4j.util.collection">IHistory</a>&lt;T&gt;</td>
+<th class="colFirst" scope="row"><a href="IHistory.html" title="interface in org.eclipse.net4j.util.collection">IHistory</a>&lt;T&gt;</th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/collection/IHistoryChangeEvent.html" title="interface in org.eclipse.net4j.util.collection">IHistoryChangeEvent</a></td>
+<th class="colFirst" scope="row"><a href="IHistoryChangeEvent.html" title="interface in org.eclipse.net4j.util.collection">IHistoryChangeEvent</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/collection/IHistoryElement.html" title="interface in org.eclipse.net4j.util.collection">IHistoryElement</a>&lt;T&gt;</td>
+<th class="colFirst" scope="row"><a href="IHistoryElement.html" title="interface in org.eclipse.net4j.util.collection">IHistoryElement</a>&lt;T&gt;</th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/collection/MoveableList.html" title="interface in org.eclipse.net4j.util.collection">MoveableList</a>&lt;E&gt;</td>
+<th class="colFirst" scope="row"><a href="MoveableList.html" title="interface in org.eclipse.net4j.util.collection">MoveableList</a>&lt;E&gt;</th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/collection/PositionProvider.html" title="interface in org.eclipse.net4j.util.collection">PositionProvider</a></td>
+<th class="colFirst" scope="row"><a href="PositionProvider.html" title="interface in org.eclipse.net4j.util.collection">PositionProvider</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/collection/Predicate.html" title="interface in org.eclipse.net4j.util.collection">Predicate</a>&lt;T&gt;</td>
-<td class="colLast">Deprecated
-<div class="block"><span class="deprecationComment">as of 3.5 use <a href="../../../../../org/eclipse/net4j/util/Predicate.html" title="interface in org.eclipse.net4j.util"><code>Predicate</code></a>.</span></div>
+<th class="colFirst" scope="row"><a href="Predicate.html" title="interface in org.eclipse.net4j.util.collection">Predicate</a>&lt;T&gt;</th>
+<td class="colLast">Deprecated.
+<div class="deprecationComment">as of 3.5 use <a href="../Predicate.html" title="interface in org.eclipse.net4j.util"><code>Predicate</code></a>.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<table class="typeSummary">
 <caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Class</th>
@@ -133,193 +159,195 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/collection/AbstractCloseableIterator.html" title="class in org.eclipse.net4j.util.collection">AbstractCloseableIterator</a>&lt;E&gt;</td>
+<th class="colFirst" scope="row"><a href="AbstractCloseableIterator.html" title="class in org.eclipse.net4j.util.collection">AbstractCloseableIterator</a>&lt;E&gt;</th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/collection/AbstractFilteredIterator.html" title="class in org.eclipse.net4j.util.collection">AbstractFilteredIterator</a>&lt;T&gt;</td>
+<th class="colFirst" scope="row"><a href="AbstractFilteredIterator.html" title="class in org.eclipse.net4j.util.collection">AbstractFilteredIterator</a>&lt;T&gt;</th>
 <td class="colLast">
-<div class="block">An abstract base class for custom iterators that <a href="../../../../../org/eclipse/net4j/util/collection/AbstractFilteredIterator.html#isValid-T-"><code>filter</code></a> the elements of a delegate iterator.</div>
+<div class="block">An abstract base class for custom iterators that <a href="AbstractFilteredIterator.html#isValid(T)"><code>filter</code></a> the elements of a delegate iterator.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/collection/AbstractFilteredIterator.Predicated.html" title="class in org.eclipse.net4j.util.collection">AbstractFilteredIterator.Predicated</a>&lt;T&gt;</td>
+<th class="colFirst" scope="row"><a href="AbstractFilteredIterator.Predicated.html" title="class in org.eclipse.net4j.util.collection">AbstractFilteredIterator.Predicated</a>&lt;T&gt;</th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/collection/AbstractIterator.html" title="class in org.eclipse.net4j.util.collection">AbstractIterator</a>&lt;T&gt;</td>
+<th class="colFirst" scope="row"><a href="AbstractIterator.html" title="class in org.eclipse.net4j.util.collection">AbstractIterator</a>&lt;T&gt;</th>
 <td class="colLast">
-<div class="block">An abstract base class for custom iterators that only requires to implement a single <a href="../../../../../org/eclipse/net4j/util/collection/AbstractIterator.html#computeNextElement--"><code>AbstractIterator.computeNextElement()</code></a> method.</div>
+<div class="block">An abstract base class for custom iterators that only requires to implement a single <a href="AbstractIterator.html#computeNextElement()"><code>AbstractIterator.computeNextElement()</code></a> method.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/collection/AbstractListIterator.html" title="class in org.eclipse.net4j.util.collection">AbstractListIterator</a>&lt;T&gt;</td>
+<th class="colFirst" scope="row"><a href="AbstractListIterator.html" title="class in org.eclipse.net4j.util.collection">AbstractListIterator</a>&lt;T&gt;</th>
 <td class="colLast">
-<div class="block">An abstract base class for custom list iterators that only requires to implement the <a href="../../../../../org/eclipse/net4j/util/collection/AbstractIterator.html#computeNextElement--"><code>AbstractIterator.computeNextElement()</code></a> and <a href="../../../../../org/eclipse/net4j/util/collection/AbstractListIterator.html#computePreviousElement--"><code>AbstractListIterator.computePreviousElement()</code></a> methods.</div>
+<div class="block">An abstract base class for custom list iterators that only requires to implement the <a href="AbstractIterator.html#computeNextElement()"><code>AbstractIterator.computeNextElement()</code></a> and <a href="AbstractListIterator.html#computePreviousElement()"><code>AbstractListIterator.computePreviousElement()</code></a> methods.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/collection/ArrayIterator.html" title="class in org.eclipse.net4j.util.collection">ArrayIterator</a>&lt;T&gt;</td>
+<th class="colFirst" scope="row"><a href="ArrayIterator.html" title="class in org.eclipse.net4j.util.collection">ArrayIterator</a>&lt;T&gt;</th>
 <td class="colLast">
 <div class="block">An object that iterates over the elements of an array</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="class in org.eclipse.net4j.util.collection">BidiMap</a>&lt;K,V&gt;</td>
+<th class="colFirst" scope="row"><a href="BidiMap.html" title="class in org.eclipse.net4j.util.collection">BidiMap</a>&lt;K,&#8203;V&gt;</th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/collection/BidiMapper.html" title="class in org.eclipse.net4j.util.collection">BidiMapper</a>&lt;T1,T2&gt;</td>
-<td class="colLast">Deprecated
-<div class="block"><span class="deprecationComment">As of 3.6 use <a href="../../../../../org/eclipse/net4j/util/collection/BidiMap.html" title="class in org.eclipse.net4j.util.collection"><code>BidiMap</code></a>.</span></div>
+<th class="colFirst" scope="row"><a href="BidiMapper.html" title="class in org.eclipse.net4j.util.collection">BidiMapper</a>&lt;T1,&#8203;T2&gt;</th>
+<td class="colLast">Deprecated.
+<div class="deprecationComment">As of 3.6 use <a href="BidiMap.html" title="class in org.eclipse.net4j.util.collection"><code>BidiMap</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/collection/BidirectionalIterator.html" title="class in org.eclipse.net4j.util.collection">BidirectionalIterator</a>&lt;T&gt;</td>
+<th class="colFirst" scope="row"><a href="BidirectionalIterator.html" title="class in org.eclipse.net4j.util.collection">BidirectionalIterator</a>&lt;T&gt;</th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/collection/ByteArrayWrapper.html" title="class in org.eclipse.net4j.util.collection">ByteArrayWrapper</a></td>
+<th class="colFirst" scope="row"><a href="ByteArrayWrapper.html" title="class in org.eclipse.net4j.util.collection">ByteArrayWrapper</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/collection/CaseInsensitiveStringSet.html" title="class in org.eclipse.net4j.util.collection">CaseInsensitiveStringSet</a></td>
+<th class="colFirst" scope="row"><a href="CaseInsensitiveStringSet.html" title="class in org.eclipse.net4j.util.collection">CaseInsensitiveStringSet</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/collection/CollectionUtil.html" title="class in org.eclipse.net4j.util.collection">CollectionUtil</a></td>
+<th class="colFirst" scope="row"><a href="CollectionUtil.html" title="class in org.eclipse.net4j.util.collection">CollectionUtil</a></th>
 <td class="colLast">
 <div class="block">Various static helper methods.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/collection/ComposedIterator.html" title="class in org.eclipse.net4j.util.collection">ComposedIterator</a>&lt;T&gt;</td>
+<th class="colFirst" scope="row"><a href="ComposedIterator.html" title="class in org.eclipse.net4j.util.collection">ComposedIterator</a>&lt;T&gt;</th>
 <td class="colLast">
 <div class="block">An iterator that is composed of multiple delegate iterators.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/collection/ConcurrentArray.html" title="class in org.eclipse.net4j.util.collection">ConcurrentArray</a>&lt;E&gt;</td>
+<th class="colFirst" scope="row"><a href="ConcurrentArray.html" title="class in org.eclipse.net4j.util.collection">ConcurrentArray</a>&lt;E&gt;</th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/collection/ConcurrentArray.DuplicateCounter.html" title="class in org.eclipse.net4j.util.collection">ConcurrentArray.DuplicateCounter</a>&lt;E&gt;</td>
+<th class="colFirst" scope="row"><a href="ConcurrentArray.DuplicateCounter.html" title="class in org.eclipse.net4j.util.collection">ConcurrentArray.DuplicateCounter</a>&lt;E&gt;</th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/collection/ConcurrentArray.Unique.html" title="class in org.eclipse.net4j.util.collection">ConcurrentArray.Unique</a>&lt;E&gt;</td>
+<th class="colFirst" scope="row"><a href="ConcurrentArray.Unique.html" title="class in org.eclipse.net4j.util.collection">ConcurrentArray.Unique</a>&lt;E&gt;</th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/collection/DelegatingCloseableIterator.html" title="class in org.eclipse.net4j.util.collection">DelegatingCloseableIterator</a>&lt;E&gt;</td>
+<th class="colFirst" scope="row"><a href="DelegatingCloseableIterator.html" title="class in org.eclipse.net4j.util.collection">DelegatingCloseableIterator</a>&lt;E&gt;</th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/collection/DynamicArray.html" title="class in org.eclipse.net4j.util.collection">DynamicArray</a>&lt;E&gt;</td>
+<th class="colFirst" scope="row"><a href="DynamicArray.html" title="class in org.eclipse.net4j.util.collection">DynamicArray</a>&lt;E&gt;</th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/collection/FastList.html" title="class in org.eclipse.net4j.util.collection">FastList</a>&lt;E&gt;</td>
-<td class="colLast">Deprecated
-<div class="block"><span class="deprecationComment">As of 3.2 use <a href="../../../../../org/eclipse/net4j/util/collection/ConcurrentArray.html" title="class in org.eclipse.net4j.util.collection"><code>ConcurrentArray</code></a>.</span></div>
+<th class="colFirst" scope="row"><a href="FastList.html" title="class in org.eclipse.net4j.util.collection">FastList</a>&lt;E&gt;</th>
+<td class="colLast">Deprecated.
+<div class="deprecationComment">As of 3.2 use <a href="ConcurrentArray.html" title="class in org.eclipse.net4j.util.collection"><code>ConcurrentArray</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="class in org.eclipse.net4j.util.collection">GrowingRandomAccessList</a>&lt;E&gt;</td>
+<th class="colFirst" scope="row"><a href="GrowingRandomAccessList.html" title="class in org.eclipse.net4j.util.collection">GrowingRandomAccessList</a>&lt;E&gt;</th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/collection/HashBag.html" title="class in org.eclipse.net4j.util.collection">HashBag</a>&lt;T&gt;</td>
+<th class="colFirst" scope="row"><a href="HashBag.html" title="class in org.eclipse.net4j.util.collection">HashBag</a>&lt;T&gt;</th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/collection/History.html" title="class in org.eclipse.net4j.util.collection">History</a>&lt;T&gt;</td>
+<th class="colFirst" scope="row"><a href="History.html" title="class in org.eclipse.net4j.util.collection">History</a>&lt;T&gt;</th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/collection/HistoryElement.html" title="class in org.eclipse.net4j.util.collection">HistoryElement</a>&lt;T&gt;</td>
+<th class="colFirst" scope="row"><a href="HistoryElement.html" title="class in org.eclipse.net4j.util.collection">HistoryElement</a>&lt;T&gt;</th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/collection/HistoryUtil.html" title="class in org.eclipse.net4j.util.collection">HistoryUtil</a></td>
+<th class="colFirst" scope="row"><a href="HistoryUtil.html" title="class in org.eclipse.net4j.util.collection">HistoryUtil</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/collection/IndexedList.html" title="class in org.eclipse.net4j.util.collection">IndexedList</a>&lt;E&gt;</td>
+<th class="colFirst" scope="row"><a href="IndexedList.html" title="class in org.eclipse.net4j.util.collection">IndexedList</a>&lt;E&gt;</th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/collection/IndexedList.ArrayBacked.html" title="class in org.eclipse.net4j.util.collection">IndexedList.ArrayBacked</a>&lt;E&gt;</td>
+<th class="colFirst" scope="row"><a href="IndexedList.ArrayBacked.html" title="class in org.eclipse.net4j.util.collection">IndexedList.ArrayBacked</a>&lt;E&gt;</th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/collection/LimitedIterator.html" title="class in org.eclipse.net4j.util.collection">LimitedIterator</a>&lt;T&gt;</td>
+<th class="colFirst" scope="row"><a href="LimitedIterator.html" title="class in org.eclipse.net4j.util.collection">LimitedIterator</a>&lt;T&gt;</th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/collection/MapEntry.html" title="class in org.eclipse.net4j.util.collection">MapEntry</a>&lt;K,V&gt;</td>
+<th class="colFirst" scope="row"><a href="MapEntry.html" title="class in org.eclipse.net4j.util.collection">MapEntry</a>&lt;K,&#8203;V&gt;</th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/collection/MoveableArrayList.html" title="class in org.eclipse.net4j.util.collection">MoveableArrayList</a>&lt;E&gt;</td>
+<th class="colFirst" scope="row"><a href="MoveableArrayList.html" title="class in org.eclipse.net4j.util.collection">MoveableArrayList</a>&lt;E&gt;</th>
 <td class="colLast">
 <div class="block">A list with O(1) effort for random access.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/collection/MultiMap.html" title="class in org.eclipse.net4j.util.collection">MultiMap</a>&lt;K,V&gt;</td>
+<th class="colFirst" scope="row"><a href="MultiMap.html" title="class in org.eclipse.net4j.util.collection">MultiMap</a>&lt;K,&#8203;V&gt;</th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/collection/MultiMap.ListBased.html" title="class in org.eclipse.net4j.util.collection">MultiMap.ListBased</a>&lt;K,V&gt;</td>
+<th class="colFirst" scope="row"><a href="MultiMap.ListBased.html" title="class in org.eclipse.net4j.util.collection">MultiMap.ListBased</a>&lt;K,&#8203;V&gt;</th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/collection/Pair.html" title="class in org.eclipse.net4j.util.collection">Pair</a>&lt;T1,T2&gt;</td>
+<th class="colFirst" scope="row"><a href="Pair.html" title="class in org.eclipse.net4j.util.collection">Pair</a>&lt;T1,&#8203;T2&gt;</th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/collection/PredicateIterator.html" title="class in org.eclipse.net4j.util.collection">PredicateIterator</a>&lt;T&gt;</td>
-<td class="colLast">Deprecated
-<div class="block"><span class="deprecationComment">As of 3.10 use <a href="../../../../../org/eclipse/net4j/util/collection/AbstractFilteredIterator.Predicated.html" title="class in org.eclipse.net4j.util.collection"><code>AbstractFilteredIterator.Predicated</code></a>.</span></div>
+<th class="colFirst" scope="row"><a href="PredicateIterator.html" title="class in org.eclipse.net4j.util.collection">PredicateIterator</a>&lt;T&gt;</th>
+<td class="colLast">Deprecated.
+<div class="deprecationComment">As of 3.10 use <a href="AbstractFilteredIterator.Predicated.html" title="class in org.eclipse.net4j.util.collection"><code>AbstractFilteredIterator.Predicated</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/collection/PreferenceHistory.html" title="class in org.eclipse.net4j.util.collection">PreferenceHistory</a></td>
+<th class="colFirst" scope="row"><a href="PreferenceHistory.html" title="class in org.eclipse.net4j.util.collection">PreferenceHistory</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/collection/RoundRobinBlockingQueue.html" title="class in org.eclipse.net4j.util.collection">RoundRobinBlockingQueue</a>&lt;E&gt;</td>
+<th class="colFirst" scope="row"><a href="RoundRobinBlockingQueue.html" title="class in org.eclipse.net4j.util.collection">RoundRobinBlockingQueue</a>&lt;E&gt;</th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/collection/RoundRobinIterator.html" title="class in org.eclipse.net4j.util.collection">RoundRobinIterator</a>&lt;T&gt;</td>
+<th class="colFirst" scope="row"><a href="RoundRobinIterator.html" title="class in org.eclipse.net4j.util.collection">RoundRobinIterator</a>&lt;T&gt;</th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/collection/Triplet.html" title="class in org.eclipse.net4j.util.collection">Triplet</a>&lt;T1,T2,T3&gt;</td>
+<th class="colFirst" scope="row"><a href="Triplet.html" title="class in org.eclipse.net4j.util.collection">Triplet</a>&lt;T1,&#8203;T2,&#8203;T3&gt;</th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><a href="UnionSet.html" title="class in org.eclipse.net4j.util.collection">UnionSet</a>&lt;E&gt;</th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
 </li>
 </ul>
-<a name="package.description">
-<!--   -->
-</a>
-<h2 title="Package org.eclipse.net4j.util.collection Description">Package org.eclipse.net4j.util.collection Description</h2>
-<div class="block">Additional collection-like interfaces and classes.</div>
 </div>
+</main>
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li class="navBarCell1Rev">Package</li>
 <li>Class</li>
 <li><a href="package-use.html">Use</a></li>
@@ -329,16 +357,8 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/net4j/util/cache/package-summary.html">Prev&nbsp;Package</a></li>
-<li><a href="../../../../../org/eclipse/net4j/util/concurrent/package-summary.html">Next&nbsp;Package</a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/net4j/util/collection/package-summary.html" target="_top">Frames</a></li>
-<li><a href="package-summary.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -351,11 +371,16 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

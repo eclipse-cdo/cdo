@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>org.eclipse.emf.cdo.security.impl (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,20 +28,25 @@
     catch(err) {
     }
 //-->
-</script>
+var pathtoroot = "../../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li class="navBarCell1Rev">Package</li>
 <li>Class</li>
 <li><a href="package-use.html">Use</a></li>
@@ -41,16 +56,14 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/emf/cdo/security/package-summary.html">Prev&nbsp;Package</a></li>
-<li><a href="../../../../../../org/eclipse/emf/cdo/security/provider/package-summary.html">Next&nbsp;Package</a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/emf/cdo/security/impl/package-summary.html" target="_top">Frames</a></li>
-<li><a href="package-summary.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -63,22 +76,35 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
+<main role="main">
 <div class="header">
 <h1 title="Package" class="title">Package&nbsp;org.eclipse.emf.cdo.security.impl</h1>
-<div class="docSummary">
-<div class="block">The generated EMF implementation of the CDO security model.</div>
-</div>
-<p>See:&nbsp;<a href="#package.description">Description</a></p>
 </div>
 <div class="contentContainer">
+<section role="region"><a id="package.description">
+<!--   -->
+</a>
+<div class="block">The generated EMF implementation of the CDO security model.</div>
+</section>
 <ul class="blockList">
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<table class="typeSummary">
 <caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Interface</th>
@@ -86,23 +112,23 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/PermissionImpl.CommitImpactContext.html" title="interface in org.eclipse.emf.cdo.security.impl">PermissionImpl.CommitImpactContext</a></td>
+<th class="colFirst" scope="row"><a href="PermissionImpl.CommitImpactContext.html" title="interface in org.eclipse.emf.cdo.security.impl">PermissionImpl.CommitImpactContext</a></th>
 <td class="colLast">
-<div class="block">A description of the current commit that is used to <a href="../../../../../../org/eclipse/emf/cdo/security/impl/PermissionImpl.html#isImpacted-org.eclipse.emf.cdo.security.impl.PermissionImpl.CommitImpactContext-"><code>determine</code></a>
- the impact of this commit on the configured <a href="../../../../../../org/eclipse/emf/cdo/security/Permission.html" title="interface in org.eclipse.emf.cdo.security"><code>permissions</code></a>.</div>
+<div class="block">A description of the current commit that is used to <a href="PermissionImpl.html#isImpacted(org.eclipse.emf.cdo.security.impl.PermissionImpl.CommitImpactContext)"><code>determine</code></a>
+ the impact of this commit on the configured <a href="../Permission.html" title="interface in org.eclipse.emf.cdo.security"><code>permissions</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/ResourceFilterImpl.Matcher.html" title="interface in org.eclipse.emf.cdo.security.impl">ResourceFilterImpl.Matcher</a></td>
+<th class="colFirst" scope="row"><a href="ResourceFilterImpl.Matcher.html" title="interface in org.eclipse.emf.cdo.security.impl">ResourceFilterImpl.Matcher</a></th>
 <td class="colLast">
-<div class="block">Matches the path of a <a href="../../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resource node</code></a>.</div>
+<div class="block">Matches the path of a <a href="../../eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resource node</code></a>.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<table class="typeSummary">
 <caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Class</th>
@@ -110,183 +136,183 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/AndFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">AndFilterImpl</a></td>
+<th class="colFirst" scope="row"><a href="AndFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">AndFilterImpl</a></th>
 <td class="colLast">
 <div class="block">An implementation of the model object '<em><b>And Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/AssigneeImpl.html" title="class in org.eclipse.emf.cdo.security.impl">AssigneeImpl</a></td>
+<th class="colFirst" scope="row"><a href="AssigneeImpl.html" title="class in org.eclipse.emf.cdo.security.impl">AssigneeImpl</a></th>
 <td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Assignee</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/ClassFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ClassFilterImpl</a></td>
+<th class="colFirst" scope="row"><a href="ClassFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ClassFilterImpl</a></th>
 <td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Class Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/ClassPermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ClassPermissionImpl</a></td>
-<td class="colLast">Deprecated</td>
+<th class="colFirst" scope="row"><a href="ClassPermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ClassPermissionImpl</a></th>
+<td class="colLast">Deprecated.</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/CombinedFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">CombinedFilterImpl</a></td>
+<th class="colFirst" scope="row"><a href="CombinedFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">CombinedFilterImpl</a></th>
 <td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Combined Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/DirectoryImpl.html" title="class in org.eclipse.emf.cdo.security.impl">DirectoryImpl</a></td>
+<th class="colFirst" scope="row"><a href="DirectoryImpl.html" title="class in org.eclipse.emf.cdo.security.impl">DirectoryImpl</a></th>
 <td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Container</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/ExpressionFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ExpressionFilterImpl</a></td>
+<th class="colFirst" scope="row"><a href="ExpressionFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ExpressionFilterImpl</a></th>
 <td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Expression Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/FilterPermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">FilterPermissionImpl</a></td>
+<th class="colFirst" scope="row"><a href="FilterPermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">FilterPermissionImpl</a></th>
 <td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Filter Permission</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/GroupImpl.html" title="class in org.eclipse.emf.cdo.security.impl">GroupImpl</a></td>
+<th class="colFirst" scope="row"><a href="GroupImpl.html" title="class in org.eclipse.emf.cdo.security.impl">GroupImpl</a></th>
 <td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Group</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/LinkedFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">LinkedFilterImpl</a></td>
+<th class="colFirst" scope="row"><a href="LinkedFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">LinkedFilterImpl</a></th>
 <td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Reference Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/NotFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">NotFilterImpl</a></td>
+<th class="colFirst" scope="row"><a href="NotFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">NotFilterImpl</a></th>
 <td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Not Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/ObjectFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ObjectFilterImpl</a></td>
+<th class="colFirst" scope="row"><a href="ObjectFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ObjectFilterImpl</a></th>
 <td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Object Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/ObjectPermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ObjectPermissionImpl</a></td>
-<td class="colLast">Deprecated</td>
+<th class="colFirst" scope="row"><a href="ObjectPermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ObjectPermissionImpl</a></th>
+<td class="colLast">Deprecated.</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/OrFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">OrFilterImpl</a></td>
+<th class="colFirst" scope="row"><a href="OrFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">OrFilterImpl</a></th>
 <td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Or Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/PackageFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">PackageFilterImpl</a></td>
+<th class="colFirst" scope="row"><a href="PackageFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">PackageFilterImpl</a></th>
 <td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Package Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/PackagePermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">PackagePermissionImpl</a></td>
-<td class="colLast">Deprecated</td>
+<th class="colFirst" scope="row"><a href="PackagePermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">PackagePermissionImpl</a></th>
+<td class="colLast">Deprecated.</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/PermissionFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">PermissionFilterImpl</a></td>
+<th class="colFirst" scope="row"><a href="PermissionFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">PermissionFilterImpl</a></th>
 <td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Permission Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/PermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">PermissionImpl</a></td>
+<th class="colFirst" scope="row"><a href="PermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">PermissionImpl</a></th>
 <td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Permission</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/RealmImpl.html" title="class in org.eclipse.emf.cdo.security.impl">RealmImpl</a></td>
+<th class="colFirst" scope="row"><a href="RealmImpl.html" title="class in org.eclipse.emf.cdo.security.impl">RealmImpl</a></th>
 <td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Realm</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/ResourceFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ResourceFilterImpl</a></td>
+<th class="colFirst" scope="row"><a href="ResourceFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ResourceFilterImpl</a></th>
 <td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Resource Filter</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/ResourceFilterImpl.AntMatcher.html" title="class in org.eclipse.emf.cdo.security.impl">ResourceFilterImpl.AntMatcher</a></td>
+<th class="colFirst" scope="row"><a href="ResourceFilterImpl.AntMatcher.html" title="class in org.eclipse.emf.cdo.security.impl">ResourceFilterImpl.AntMatcher</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/ResourceFilterImpl.ExactMatcher.html" title="class in org.eclipse.emf.cdo.security.impl">ResourceFilterImpl.ExactMatcher</a></td>
+<th class="colFirst" scope="row"><a href="ResourceFilterImpl.ExactMatcher.html" title="class in org.eclipse.emf.cdo.security.impl">ResourceFilterImpl.ExactMatcher</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/ResourceFilterImpl.PathMatcher.html" title="class in org.eclipse.emf.cdo.security.impl">ResourceFilterImpl.PathMatcher</a></td>
+<th class="colFirst" scope="row"><a href="ResourceFilterImpl.PathMatcher.html" title="class in org.eclipse.emf.cdo.security.impl">ResourceFilterImpl.PathMatcher</a></th>
 <td class="colLast">
-<div class="block">Matches the path of a <a href="../../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resource node</code></a> against a <a href="../../../../../../org/eclipse/emf/cdo/security/impl/ResourceFilterImpl.PathMatcher.html#path"><code>ResourceFilterImpl.PathMatcher.path</code></a> string.</div>
+<div class="block">Matches the path of a <a href="../../eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resource node</code></a> against a <a href="ResourceFilterImpl.PathMatcher.html#path"><code>ResourceFilterImpl.PathMatcher.path</code></a> string.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/ResourceFilterImpl.RegexMatcher.html" title="class in org.eclipse.emf.cdo.security.impl">ResourceFilterImpl.RegexMatcher</a></td>
+<th class="colFirst" scope="row"><a href="ResourceFilterImpl.RegexMatcher.html" title="class in org.eclipse.emf.cdo.security.impl">ResourceFilterImpl.RegexMatcher</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/ResourceFilterImpl.TreeMatcher.html" title="class in org.eclipse.emf.cdo.security.impl">ResourceFilterImpl.TreeMatcher</a></td>
+<th class="colFirst" scope="row"><a href="ResourceFilterImpl.TreeMatcher.html" title="class in org.eclipse.emf.cdo.security.impl">ResourceFilterImpl.TreeMatcher</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/ResourcePermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ResourcePermissionImpl</a></td>
-<td class="colLast">Deprecated</td>
+<th class="colFirst" scope="row"><a href="ResourcePermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ResourcePermissionImpl</a></th>
+<td class="colLast">Deprecated.</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/RoleImpl.html" title="class in org.eclipse.emf.cdo.security.impl">RoleImpl</a></td>
+<th class="colFirst" scope="row"><a href="RoleImpl.html" title="class in org.eclipse.emf.cdo.security.impl">RoleImpl</a></th>
 <td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Role</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/SecurityElementImpl.html" title="class in org.eclipse.emf.cdo.security.impl">SecurityElementImpl</a></td>
+<th class="colFirst" scope="row"><a href="SecurityElementImpl.html" title="class in org.eclipse.emf.cdo.security.impl">SecurityElementImpl</a></th>
 <td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Element</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/SecurityFactoryImpl.html" title="class in org.eclipse.emf.cdo.security.impl">SecurityFactoryImpl</a></td>
+<th class="colFirst" scope="row"><a href="SecurityFactoryImpl.html" title="class in org.eclipse.emf.cdo.security.impl">SecurityFactoryImpl</a></th>
 <td class="colLast">
 <div class="block">An implementation of the model <b>Factory</b>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/SecurityItemImpl.html" title="class in org.eclipse.emf.cdo.security.impl">SecurityItemImpl</a></td>
+<th class="colFirst" scope="row"><a href="SecurityItemImpl.html" title="class in org.eclipse.emf.cdo.security.impl">SecurityItemImpl</a></th>
 <td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Item</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/SecurityPackageImpl.html" title="class in org.eclipse.emf.cdo.security.impl">SecurityPackageImpl</a></td>
+<th class="colFirst" scope="row"><a href="SecurityPackageImpl.html" title="class in org.eclipse.emf.cdo.security.impl">SecurityPackageImpl</a></th>
 <td class="colLast">
 <div class="block">An implementation of the model <b>Package</b>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/UserImpl.html" title="class in org.eclipse.emf.cdo.security.impl">UserImpl</a></td>
+<th class="colFirst" scope="row"><a href="UserImpl.html" title="class in org.eclipse.emf.cdo.security.impl">UserImpl</a></th>
 <td class="colLast">
 <div class="block">An implementation of the model object '<em><b>User</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/UserPasswordImpl.html" title="class in org.eclipse.emf.cdo.security.impl">UserPasswordImpl</a></td>
+<th class="colFirst" scope="row"><a href="UserPasswordImpl.html" title="class in org.eclipse.emf.cdo.security.impl">UserPasswordImpl</a></th>
 <td class="colLast">
 <div class="block">An implementation of the model object '<em><b>User Password</b></em>'.</div>
 </td>
@@ -295,22 +321,20 @@
 </table>
 </li>
 </ul>
-<a name="package.description">
-<!--   -->
-</a>
-<h2 title="Package org.eclipse.emf.cdo.security.impl Description">Package org.eclipse.emf.cdo.security.impl Description</h2>
-<div class="block">The generated EMF implementation of the CDO security model.</div>
 </div>
+</main>
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li class="navBarCell1Rev">Package</li>
 <li>Class</li>
 <li><a href="package-use.html">Use</a></li>
@@ -320,16 +344,8 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/emf/cdo/security/package-summary.html">Prev&nbsp;Package</a></li>
-<li><a href="../../../../../../org/eclipse/emf/cdo/security/provider/package-summary.html">Next&nbsp;Package</a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/emf/cdo/security/impl/package-summary.html" target="_top">Frames</a></li>
-<li><a href="package-summary.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -342,11 +358,16 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

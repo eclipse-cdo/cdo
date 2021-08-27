@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>ILifecycle (Net4j Utilities Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":6,"i3":6};
+var data = {"i0":6,"i1":6,"i2":6,"i3":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/ILifecycle.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/net4j/util/lifecycle/IDeactivateable.html" title="interface in org.eclipse.net4j.util.lifecycle"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.DeferrableActivation.html" title="interface in org.eclipse.net4j.util.lifecycle"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/net4j/util/lifecycle/ILifecycle.html" target="_top">Frames</a></li>
-<li><a href="ILifecycle.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,6 +82,9 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -85,13 +101,22 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.net4j.util.lifecycle</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.net4j.util.lifecycle</a></div>
 <h2 title="Interface ILifecycle" class="title">Interface ILifecycle</h2>
 </div>
 <div class="contentContainer">
@@ -100,26 +125,25 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="../../../../../org/eclipse/net4j/util/lifecycle/IDeactivateable.html" title="interface in org.eclipse.net4j.util.lifecycle">IDeactivateable</a>, <a href="../../../../../org/eclipse/net4j/util/event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a></dd>
+<dd><code><a href="IDeactivateable.html" title="interface in org.eclipse.net4j.util.lifecycle">IDeactivateable</a></code>, <code><a href="../event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a></code></dd>
 </dl>
 <dl>
 <dt>All Known Subinterfaces:</dt>
-<dd><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a>, <a href="../../../../../org/eclipse/net4j/util/container/IPluginContainer.html" title="interface in org.eclipse.net4j.util.container">IPluginContainer</a></dd>
+<dd><code><a href="../container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code>, <code><a href="../container/IPluginContainer.html" title="interface in org.eclipse.net4j.util.container">IPluginContainer</a></code></dd>
 </dl>
 <dl>
 <dt>All Known Implementing Classes:</dt>
-<dd><a href="../../../../../org/eclipse/net4j/util/cache/Cache.html" title="class in org.eclipse.net4j.util.cache">Cache</a>, <a href="../../../../../org/eclipse/net4j/util/cache/CacheMonitor.html" title="class in org.eclipse.net4j.util.cache">CacheMonitor</a>, <a href="../../../../../org/eclipse/net4j/util/security/ChallengeNegotiator.html" title="class in org.eclipse.net4j.util.security">ChallengeNegotiator</a>, <a href="../../../../../org/eclipse/net4j/util/security/ChallengeResponseNegotiator.html" title="class in org.eclipse.net4j.util.security">ChallengeResponseNegotiator</a>, <a href="../../../../../org/eclipse/net4j/util/container/Container.html" title="class in org.eclipse.net4j.util.container">Container</a>, <a href="../../../../../org/eclipse/net4j/util/concurrent/DelegableReentrantLock.html" title="class in org.eclipse.net4j.util.concurrent">DelegableReentrantLock</a>, <a href="../../../../../org/eclipse/net4j/util/registry/DelegatingRegistry.html" title="class in org.eclipse.net4j.util.registry">DelegatingRegistry</a>, <a href="../../../../../org/eclipse/net4j/util/concurrent/ExecutorWorkSerializer.html" title="class in org.eclipse.net4j.util.concurrent">ExecutorWorkSerializer</a>, <a href="../../../../../org/eclipse/net4j/util/security/FileUserManager.html" title="class in org.eclipse.net4j.util.security">FileUserManager</a>, <a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="class in org.eclipse.net4j.util.fsm">FiniteStateMachine</a>, <a href="../../../../../org/eclipse/net4j/util/registry/HashMapDelegatingRegistry.html" title="class in org.eclipse.net4j.util.registry">HashMapDelegatingRegistry</a>, <a href="../../../../../org/eclipse/net4j/util/registry/HashMapRegistry.html" title="class in org.eclipse.net4j.util.registry">HashMapRegistry</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/LifecycleHook.html" title="class in org.eclipse.net4j.util.lifecycle">LifecycleHook</a>, <a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html" title="class in org.eclipse.net4j.util.container">ManagedContainer</a>, <a href="../../../../../org/eclipse/net4j/util/security/Negotiator.html" title="class in org.eclipse.net4j.util.security">Negotiator</a>, <a href="../../../../../org/eclipse/net4j/util/concurrent/PriorityQueueRunner.html" title="class in org.eclipse.net4j.util.concurrent">PriorityQueueRunner</a>, <a href="../../../../../org/eclipse/net4j/util/concurrent/QueueRunner.html" title="class in org.eclipse.net4j.util.concurrent">QueueRunner</a>, <a href="../../../../../org/eclipse/net4j/util/concurrent/QueueRunner2.html" title="class in org.eclipse.net4j.util.concurrent">QueueRunner2</a>, <a href="../../../../../org/eclipse/net4j/util/concurrent/QueueWorker.html" title="class in org.eclipse.net4j.util.concurrent">QueueWorker</a>, <a href="../../../../../org/eclipse/net4j/util/concurrent/QueueWorkerWorkSerializer.html" title="class in org.eclipse.net4j.util.concurrent">QueueWorkerWorkSerializer</a>, <a href="../../../../../org/eclipse/net4j/util/security/Randomizer.html" title="class in org.eclipse.net4j.util.security">Randomizer</a>, <a href="../../../../../org/eclipse/net4j/util/ref/ReferenceMonitor.html" title="class in org.eclipse.net4j.util.ref">ReferenceMonitor</a>, <a href="../../../../../org/eclipse/net4j/util/ref/ReferenceQueueWorker.html" title="class in org.eclipse.net4j.util.ref">ReferenceQueueWorker</a>, <a href="../../../../../org/eclipse/net4j/util/registry/Registry.html" title="class in org.eclipse.net4j.util.registry">Registry</a>, <a href="../../../../../org/eclipse/net4j/util/security/ResponseNegotiator.html" title="class in org.eclipse.net4j.util.security">ResponseNegotiator</a>, <a href="../../../../../org/eclipse/net4j/util/om/log/RollingLog.html" title="class in org.eclipse.net4j.util.om.log">RollingLog</a>, <a href="../../../../../org/eclipse/net4j/util/concurrent/RWLockManager.html" title="class in org.eclipse.net4j.util.concurrent">RWLockManager</a>, <a href="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager</a>, <a href="../../../../../org/eclipse/net4j/util/concurrent/SerializingExecutor.html" title="class in org.eclipse.net4j.util.concurrent">SerializingExecutor</a>, <a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html" title="class in org.eclipse.net4j.util.container">SetContainer</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/ShareableLifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">ShareableLifecycle</a>, <a href="../../../../../org/eclipse/net4j/util/concurrent/TimerLifecycle.html" title="class in org.eclipse.net4j.util.concurrent">TimerLifecycle</a>, <a href="../../../../../org/eclipse/net4j/util/ui/UIQueueRunner.html" title="class in org.eclipse.net4j.util.ui">UIQueueRunner</a>, <a href="../../../../../org/eclipse/net4j/util/security/UserManager.html" title="class in org.eclipse.net4j.util.security">UserManager</a>, <a href="../../../../../org/eclipse/net4j/util/security/UserManagerAuthenticator.html" title="class in org.eclipse.net4j.util.security">UserManagerAuthenticator</a>, <a href="../../../../../org/eclipse/net4j/util/concurrent/Worker.html" title="class in org.eclipse.net4j.util.concurrent">Worker</a></dd>
+<dd><code><a href="../cache/Cache.html" title="class in org.eclipse.net4j.util.cache">Cache</a></code>, <code><a href="../cache/CacheMonitor.html" title="class in org.eclipse.net4j.util.cache">CacheMonitor</a></code>, <code><a href="../security/ChallengeNegotiator.html" title="class in org.eclipse.net4j.util.security">ChallengeNegotiator</a></code>, <code><a href="../security/ChallengeResponseNegotiator.html" title="class in org.eclipse.net4j.util.security">ChallengeResponseNegotiator</a></code>, <code><a href="../container/Container.html" title="class in org.eclipse.net4j.util.container">Container</a></code>, <code><a href="../concurrent/DelegableReentrantLock.html" title="class in org.eclipse.net4j.util.concurrent">DelegableReentrantLock</a></code>, <code><a href="../registry/DelegatingRegistry.html" title="class in org.eclipse.net4j.util.registry">DelegatingRegistry</a></code>, <code><a href="../concurrent/ExecutorWorkSerializer.html" title="class in org.eclipse.net4j.util.concurrent">ExecutorWorkSerializer</a></code>, <code><a href="../security/FileUserManager.html" title="class in org.eclipse.net4j.util.security">FileUserManager</a></code>, <code><a href="../fsm/FiniteStateMachine.html" title="class in org.eclipse.net4j.util.fsm">FiniteStateMachine</a></code>, <code><a href="../registry/HashMapDelegatingRegistry.html" title="class in org.eclipse.net4j.util.registry">HashMapDelegatingRegistry</a></code>, <code><a href="../registry/HashMapRegistry.html" title="class in org.eclipse.net4j.util.registry">HashMapRegistry</a></code>, <code><a href="../registry/HashMapRegistry.AutoCommit.html" title="class in org.eclipse.net4j.util.registry">HashMapRegistry.AutoCommit</a></code>, <code><a href="Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a></code>, <code><a href="LifecycleHook.html" title="class in org.eclipse.net4j.util.lifecycle">LifecycleHook</a></code>, <code><a href="../container/ManagedContainer.html" title="class in org.eclipse.net4j.util.container">ManagedContainer</a></code>, <code><a href="../security/Negotiator.html" title="class in org.eclipse.net4j.util.security">Negotiator</a></code>, <code><a href="../concurrent/PriorityQueueRunner.html" title="class in org.eclipse.net4j.util.concurrent">PriorityQueueRunner</a></code>, <code><a href="../concurrent/QueueRunner.html" title="class in org.eclipse.net4j.util.concurrent">QueueRunner</a></code>, <code><a href="../concurrent/QueueRunner2.html" title="class in org.eclipse.net4j.util.concurrent">QueueRunner2</a></code>, <code><a href="../concurrent/QueueWorker.html" title="class in org.eclipse.net4j.util.concurrent">QueueWorker</a></code>, <code><a href="../concurrent/QueueWorkerWorkSerializer.html" title="class in org.eclipse.net4j.util.concurrent">QueueWorkerWorkSerializer</a></code>, <code><a href="../security/Randomizer.html" title="class in org.eclipse.net4j.util.security">Randomizer</a></code>, <code><a href="../ref/ReferenceMonitor.html" title="class in org.eclipse.net4j.util.ref">ReferenceMonitor</a></code>, <code><a href="../ref/ReferenceQueueWorker.html" title="class in org.eclipse.net4j.util.ref">ReferenceQueueWorker</a></code>, <code><a href="../registry/Registry.html" title="class in org.eclipse.net4j.util.registry">Registry</a></code>, <code><a href="../security/ResponseNegotiator.html" title="class in org.eclipse.net4j.util.security">ResponseNegotiator</a></code>, <code><a href="../om/log/RollingLog.html" title="class in org.eclipse.net4j.util.om.log">RollingLog</a></code>, <code><a href="../concurrent/RWLockManager.html" title="class in org.eclipse.net4j.util.concurrent">RWLockManager</a></code>, <code><a href="../concurrent/RWOLockManager.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager</a></code>, <code><a href="../concurrent/SerializingExecutor.html" title="class in org.eclipse.net4j.util.concurrent">SerializingExecutor</a></code>, <code><a href="../container/SetContainer.html" title="class in org.eclipse.net4j.util.container">SetContainer</a></code>, <code><a href="ShareableLifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">ShareableLifecycle</a></code>, <code><a href="../concurrent/TimerLifecycle.html" title="class in org.eclipse.net4j.util.concurrent">TimerLifecycle</a></code>, <code><a href="../ui/UIQueueRunner.html" title="class in org.eclipse.net4j.util.ui">UIQueueRunner</a></code>, <code><a href="../security/UserManager.html" title="class in org.eclipse.net4j.util.security">UserManager</a></code>, <code><a href="../security/UserManagerAuthenticator.html" title="class in org.eclipse.net4j.util.security">UserManagerAuthenticator</a></code>, <code><a href="../concurrent/Worker.html" title="class in org.eclipse.net4j.util.concurrent">Worker</a></code></dd>
 </dl>
 <hr>
-<br>
 <pre>public interface <span class="typeNameLabel">ILifecycle</span>
-extends <a href="../../../../../org/eclipse/net4j/util/lifecycle/IDeactivateable.html" title="interface in org.eclipse.net4j.util.lifecycle">IDeactivateable</a>, <a href="../../../../../org/eclipse/net4j/util/event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a></pre>
-<div class="block">An entity that has a well-defined <a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html#getLifecycleState--"><code>lifecycle</code></a> and can be <a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html#activate--"><code>activated</code></a> or
- <a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html#deactivate--"><code>deactivated</code></a>.
+extends <a href="IDeactivateable.html" title="interface in org.eclipse.net4j.util.lifecycle">IDeactivateable</a>, <a href="../event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a></pre>
+<div class="block">An entity that has a well-defined <a href="#getLifecycleState()"><code>lifecycle</code></a> and can be <a href="#activate()"><code>activated</code></a> or
+ <a href="#deactivate()"><code>deactivated</code></a>.
  <p>
  A lifecycle can fire the following events:
  <ul>
- <li> <a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycleEvent.html" title="interface in org.eclipse.net4j.util.lifecycle"><code>ILifecycleEvent</code></a> before and after the <a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html#getLifecycleState--"><code>state</code></a> of this lifecycle changes.
+ <li> <a href="ILifecycleEvent.html" title="interface in org.eclipse.net4j.util.lifecycle"><code>ILifecycleEvent</code></a> before and after the <a href="#getLifecycleState()"><code>state</code></a> of this lifecycle changes.
  </ul></div>
 <dl>
 <dt><span class="simpleTagLabel">Author:</span></dt>
@@ -132,64 +156,82 @@ extends <a href="../../../../../org/eclipse/net4j/util/lifecycle/IDeactivateable
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="nested.class.summary">
+<li class="blockList"><a id="nested.class.summary">
 <!--   -->
 </a>
 <h3>Nested Class Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Nested Class Summary table, listing nested classes, and an explanation">
+<table class="memberSummary">
 <caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Interface and Description</th>
+<th class="colSecond" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.DeferrableActivation.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle.DeferrableActivation</a></span></code>
-<div class="block">A mix-in interface for <a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle"><code>lifecycles</code></a> with deferrable activation.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="ILifecycle.DeferrableActivation.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle.DeferrableActivation</a></span></code></th>
+<td class="colLast">
+<div class="block">A mix-in interface for <a href="ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle"><code>lifecycles</code></a> with deferrable activation.</div>
 </td>
 </tr>
 </table>
+<ul class="blockList">
+<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.net4j.util.event.INotifier">
+<!--   -->
+</a>
+<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.event.<a href="../event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a></h3>
+<code><a href="../event/INotifier.INotifier2.html" title="interface in org.eclipse.net4j.util.event">INotifier.INotifier2</a></code></li>
+</ul>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html#activate--">activate</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#activate()">activate</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>java.lang.Exception</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html#deactivate--">deactivate</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#deactivate()">deactivate</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/lifecycle/LifecycleState.html" title="enum in org.eclipse.net4j.util.lifecycle">LifecycleState</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html#getLifecycleState--">getLifecycleState</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="LifecycleState.html" title="enum in org.eclipse.net4j.util.lifecycle">LifecycleState</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLifecycleState()">getLifecycleState</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html#isActive--">isActive</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isActive()">isActive</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.event.INotifier">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.event.INotifier">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.event.<a href="../../../../../org/eclipse/net4j/util/event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a></h3>
-<code><a href="../../../../../org/eclipse/net4j/util/event/INotifier.html#addListener-org.eclipse.net4j.util.event.IListener-">addListener</a>, <a href="../../../../../org/eclipse/net4j/util/event/INotifier.html#getListeners--">getListeners</a>, <a href="../../../../../org/eclipse/net4j/util/event/INotifier.html#hasListeners--">hasListeners</a>, <a href="../../../../../org/eclipse/net4j/util/event/INotifier.html#removeListener-org.eclipse.net4j.util.event.IListener-">removeListener</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.event.<a href="../event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a></h3>
+<code><a href="../event/INotifier.html#addListener(org.eclipse.net4j.util.event.IListener)">addListener</a>, <a href="../event/INotifier.html#getListeners()">getListeners</a>, <a href="../event/INotifier.html#hasListeners()">hasListeners</a>, <a href="../event/INotifier.html#removeListener(org.eclipse.net4j.util.event.IListener)">removeListener</a></code></li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -197,58 +239,59 @@ extends <a href="../../../../../org/eclipse/net4j/util/lifecycle/IDeactivateable
 <ul class="blockList">
 <li class="blockList">
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="activate--">
+<a id="activate()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>activate</h4>
-<pre>void&nbsp;activate()
-       throws <a href="../../../../../org/eclipse/net4j/util/lifecycle/LifecycleException.html" title="class in org.eclipse.net4j.util.lifecycle">LifecycleException</a></pre>
+<pre class="methodSignature">void&nbsp;activate()
+       throws <a href="LifecycleException.html" title="class in org.eclipse.net4j.util.lifecycle">LifecycleException</a></pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/lifecycle/LifecycleException.html" title="class in org.eclipse.net4j.util.lifecycle">LifecycleException</a></code></dd>
+<dd><code><a href="LifecycleException.html" title="class in org.eclipse.net4j.util.lifecycle">LifecycleException</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="deactivate--">
+<a id="deactivate()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>deactivate</h4>
-<pre>java.lang.Exception&nbsp;deactivate()</pre>
+<pre class="methodSignature">java.lang.Exception&nbsp;deactivate()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/lifecycle/IDeactivateable.html#deactivate--">deactivate</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/lifecycle/IDeactivateable.html" title="interface in org.eclipse.net4j.util.lifecycle">IDeactivateable</a></code></dd>
+<dd><code><a href="IDeactivateable.html#deactivate()">deactivate</a></code>&nbsp;in interface&nbsp;<code><a href="IDeactivateable.html" title="interface in org.eclipse.net4j.util.lifecycle">IDeactivateable</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="getLifecycleState--">
+<a id="getLifecycleState()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getLifecycleState</h4>
-<pre><a href="../../../../../org/eclipse/net4j/util/lifecycle/LifecycleState.html" title="enum in org.eclipse.net4j.util.lifecycle">LifecycleState</a>&nbsp;getLifecycleState()</pre>
+<pre class="methodSignature"><a href="LifecycleState.html" title="enum in org.eclipse.net4j.util.lifecycle">LifecycleState</a>&nbsp;getLifecycleState()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
 </dl>
 </li>
 </ul>
-<a name="isActive--">
+<a id="isActive()">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>isActive</h4>
-<pre>boolean&nbsp;isActive()</pre>
+<pre class="methodSignature">boolean&nbsp;isActive()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
@@ -257,21 +300,25 @@ extends <a href="../../../../../org/eclipse/net4j/util/lifecycle/IDeactivateable
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/ILifecycle.html">Use</a></li>
@@ -281,16 +328,8 @@ extends <a href="../../../../../org/eclipse/net4j/util/lifecycle/IDeactivateable
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/net4j/util/lifecycle/IDeactivateable.html" title="interface in org.eclipse.net4j.util.lifecycle"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.DeferrableActivation.html" title="interface in org.eclipse.net4j.util.lifecycle"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/net4j/util/lifecycle/ILifecycle.html" target="_top">Frames</a></li>
-<li><a href="ILifecycle.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -303,6 +342,9 @@ extends <a href="../../../../../org/eclipse/net4j/util/lifecycle/IDeactivateable
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -319,10 +361,12 @@ extends <a href="../../../../../org/eclipse/net4j/util/lifecycle/IDeactivateable
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

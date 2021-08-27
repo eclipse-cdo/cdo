@@ -1,0 +1,11 @@
+org.eclipse.net4j.db
+org.eclipse.net4j.db.ddl
+org.eclipse.net4j.db.ddl.delta
+org.eclipse.net4j.db.derby
+org.eclipse.net4j.db.h2
+org.eclipse.net4j.db.hsqldb
+org.eclipse.net4j.db.jdbc
+org.eclipse.net4j.db.mysql
+org.eclipse.net4j.db.postgresql
+org.eclipse.net4j.spi.db
+org.eclipse.net4j.spi.db.ddl

@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>IContainerEventVisitor (Net4j Utilities Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6};
+var data = {"i0":6,"i1":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/IContainerEventVisitor.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/net4j/util/container/IContainerEvent.html" title="interface in org.eclipse.net4j.util.container"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/net4j/util/container/IContainerEventVisitor.Filtered.html" title="interface in org.eclipse.net4j.util.container"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/net4j/util/container/IContainerEventVisitor.html" target="_top">Frames</a></li>
-<li><a href="IContainerEventVisitor.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,6 +82,9 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -85,13 +101,22 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.net4j.util.container</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.net4j.util.container</a></div>
 <h2 title="Interface IContainerEventVisitor" class="title">Interface IContainerEventVisitor&lt;E&gt;</h2>
 </div>
 <div class="contentContainer">
@@ -100,17 +125,16 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Known Subinterfaces:</dt>
-<dd><a href="../../../../../org/eclipse/net4j/util/container/IContainerEventVisitor.Filtered.html" title="interface in org.eclipse.net4j.util.container">IContainerEventVisitor.Filtered</a>&lt;E&gt;</dd>
+<dd><code><a href="IContainerEventVisitor.Filtered.html" title="interface in org.eclipse.net4j.util.container">IContainerEventVisitor.Filtered</a>&lt;E&gt;</code></dd>
 </dl>
 <hr>
-<br>
 <pre>public interface <span class="typeNameLabel">IContainerEventVisitor&lt;E&gt;</span></pre>
-<div class="block">A callback interface for visiting <a href="../../../../../org/eclipse/net4j/util/container/IContainerDelta.html" title="interface in org.eclipse.net4j.util.container"><code>container deltas</code></a>.</div>
+<div class="block">A callback interface for visiting <a href="IContainerDelta.html" title="interface in org.eclipse.net4j.util.container"><code>container deltas</code></a>.</div>
 <dl>
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>Eike Stepper</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../org/eclipse/net4j/util/container/IContainerEvent.html#accept-org.eclipse.net4j.util.container.IContainerEventVisitor-"><code>IContainerEvent.accept(IContainerEventVisitor)</code></a></dd>
+<dd><a href="IContainerEvent.html#accept(org.eclipse.net4j.util.container.IContainerEventVisitor)"><code>IContainerEvent.accept(IContainerEventVisitor)</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -119,49 +143,58 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="nested.class.summary">
+<li class="blockList"><a id="nested.class.summary">
 <!--   -->
 </a>
 <h3>Nested Class Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Nested Class Summary table, listing nested classes, and an explanation">
+<table class="memberSummary">
 <caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Interface and Description</th>
+<th class="colSecond" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/IContainerEventVisitor.Filtered.html" title="interface in org.eclipse.net4j.util.container">IContainerEventVisitor.Filtered</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/IContainerEventVisitor.Filtered.html" title="type parameter in IContainerEventVisitor.Filtered">E</a>&gt;</span></code>
-<div class="block">An extension interface for <a href="../../../../../org/eclipse/net4j/util/container/IContainerEventVisitor.html" title="interface in org.eclipse.net4j.util.container"><code>container event visitors</code></a> that can <a href="../../../../../org/eclipse/net4j/util/container/IContainerEventVisitor.Filtered.html#filter-E-"><code>filter</code></a> deltas from being visited.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="IContainerEventVisitor.Filtered.html" title="interface in org.eclipse.net4j.util.container">IContainerEventVisitor.Filtered</a>&lt;<a href="IContainerEventVisitor.Filtered.html" title="type parameter in IContainerEventVisitor.Filtered">E</a>&gt;</span></code></th>
+<td class="colLast">
+<div class="block">An extension interface for <a href="IContainerEventVisitor.html" title="interface in org.eclipse.net4j.util.container"><code>container event visitors</code></a> that can <a href="IContainerEventVisitor.Filtered.html#filter(E)"><code>filter</code></a> deltas from being visited.</div>
 </td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/IContainerEventVisitor.html#added-E-">added</a></span>(<a href="../../../../../org/eclipse/net4j/util/container/IContainerEventVisitor.html" title="type parameter in IContainerEventVisitor">E</a>&nbsp;element)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#added(E)">added</a></span>&#8203;(<a href="IContainerEventVisitor.html" title="type parameter in IContainerEventVisitor">E</a>&nbsp;element)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/IContainerEventVisitor.html#removed-E-">removed</a></span>(<a href="../../../../../org/eclipse/net4j/util/container/IContainerEventVisitor.html" title="type parameter in IContainerEventVisitor">E</a>&nbsp;element)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removed(E)">removed</a></span>&#8203;(<a href="IContainerEventVisitor.html" title="type parameter in IContainerEventVisitor">E</a>&nbsp;element)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -169,50 +202,55 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="added-java.lang.Object-">
+<a id="added(java.lang.Object)">
 <!--   -->
-</a><a name="added-E-">
+</a><a id="added(E)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>added</h4>
-<pre>void&nbsp;added(<a href="../../../../../org/eclipse/net4j/util/container/IContainerEventVisitor.html" title="type parameter in IContainerEventVisitor">E</a>&nbsp;element)</pre>
+<pre class="methodSignature">void&nbsp;added&#8203;(<a href="IContainerEventVisitor.html" title="type parameter in IContainerEventVisitor">E</a>&nbsp;element)</pre>
 </li>
 </ul>
-<a name="removed-java.lang.Object-">
+<a id="removed(java.lang.Object)">
 <!--   -->
-</a><a name="removed-E-">
+</a><a id="removed(E)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>removed</h4>
-<pre>void&nbsp;removed(<a href="../../../../../org/eclipse/net4j/util/container/IContainerEventVisitor.html" title="type parameter in IContainerEventVisitor">E</a>&nbsp;element)</pre>
+<pre class="methodSignature">void&nbsp;removed&#8203;(<a href="IContainerEventVisitor.html" title="type parameter in IContainerEventVisitor">E</a>&nbsp;element)</pre>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/IContainerEventVisitor.html">Use</a></li>
@@ -222,16 +260,8 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/net4j/util/container/IContainerEvent.html" title="interface in org.eclipse.net4j.util.container"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/net4j/util/container/IContainerEventVisitor.Filtered.html" title="interface in org.eclipse.net4j.util.container"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/net4j/util/container/IContainerEventVisitor.html" target="_top">Frames</a></li>
-<li><a href="IContainerEventVisitor.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -244,6 +274,9 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -260,10 +293,12 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

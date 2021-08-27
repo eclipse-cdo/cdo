@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>org.eclipse.emf.cdo.common.commit (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,20 +28,25 @@
     catch(err) {
     }
 //-->
-</script>
+var pathtoroot = "../../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li class="navBarCell1Rev">Package</li>
 <li>Class</li>
 <li><a href="package-use.html">Use</a></li>
@@ -41,16 +56,14 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/emf/cdo/common/branch/package-summary.html">Prev&nbsp;Package</a></li>
-<li><a href="../../../../../../org/eclipse/emf/cdo/common/commit/handler/package-summary.html">Next&nbsp;Package</a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/emf/cdo/common/commit/package-summary.html" target="_top">Frames</a></li>
-<li><a href="package-summary.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -63,22 +76,35 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
+<main role="main">
 <div class="header">
 <h1 title="Package" class="title">Package&nbsp;org.eclipse.emf.cdo.common.commit</h1>
-<div class="docSummary">
-<div class="block">Common concepts for dealing with commits and change sets.</div>
-</div>
-<p>See:&nbsp;<a href="#package.description">Description</a></p>
 </div>
 <div class="contentContainer">
+<section role="region"><a id="package.description">
+<!--   -->
+</a>
+<div class="block">Common concepts for dealing with commits and change sets.</div>
+</section>
 <ul class="blockList">
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<table class="typeSummary">
 <caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Interface</th>
@@ -86,89 +112,89 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeKindProvider.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeKindProvider</a></td>
+<th class="colFirst" scope="row"><a href="CDOChangeKindProvider.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeKindProvider</a></th>
 <td class="colLast">
 <div class="block">Generic provider for the kinds of changes that have been applied to objects.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</a></td>
+<th class="colFirst" scope="row"><a href="CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</a></th>
 <td class="colLast">
-<div class="block">The <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>change set data</code></a> between two <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPointRange.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch points</code></a> with a common
+<div class="block">The <a href="CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>change set data</code></a> between two <a href="../branch/CDOBranchPointRange.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch points</code></a> with a common
  ancestor.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></td>
+<th class="colFirst" scope="row"><a href="CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></th>
 <td class="colLast">
-<div class="block">A <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeKindProvider.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>change kind provider</code></a> with detailed information about <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#getNewObjects--"><code>new</code></a>,
- <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#getChangedObjects--"><code>changed</code></a> and <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#getDetachedObjects--"><code>detached</code></a> objects.</div>
+<div class="block">A <a href="CDOChangeKindProvider.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>change kind provider</code></a> with detailed information about <a href="CDOChangeSetData.html#getNewObjects()"><code>new</code></a>,
+ <a href="CDOChangeSetData.html#getChangedObjects()"><code>changed</code></a> and <a href="CDOChangeSetData.html#getDetachedObjects()"><code>detached</code></a> objects.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetDataProvider.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetDataProvider</a></td>
+<th class="colFirst" scope="row"><a href="CDOChangeSetDataProvider.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetDataProvider</a></th>
 <td class="colLast">
-<div class="block">Provides consumers with <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>change set data</code></a> structures.</div>
+<div class="block">Provides consumers with <a href="CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>change set data</code></a> structures.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitData</a></td>
+<th class="colFirst" scope="row"><a href="CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitData</a></th>
 <td class="colLast">
-<div class="block"><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>Change set data</code></a> with detailed information about new <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitData.html#getNewPackageUnits--"><code>package
+<div class="block"><a href="CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>Change set data</code></a> with detailed information about new <a href="CDOCommitData.html#getNewPackageUnits()"><code>package
  units</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitHistory</a></td>
+<th class="colFirst" scope="row"><a href="CDOCommitHistory.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitHistory</a></th>
 <td class="colLast">
-<div class="block">A cache for the <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>commit infos</code></a> of a branch or of an entire repository.</div>
+<div class="block">A cache for the <a href="CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>commit infos</code></a> of a branch or of an entire repository.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.Provider.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitHistory.Provider</a>&lt;KEY,HISTORY extends <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitHistory</a>&gt;</td>
+<th class="colFirst" scope="row"><a href="CDOCommitHistory.Provider.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitHistory.Provider</a>&lt;KEY,&#8203;HISTORY extends <a href="CDOCommitHistory.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitHistory</a>&gt;</th>
 <td class="colLast">
-<div class="block">Provides consumers with <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>histories</code></a>.</div>
+<div class="block">Provides consumers with <a href="CDOCommitHistory.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>histories</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.TriggerLoadElement.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitHistory.TriggerLoadElement</a></td>
+<th class="colFirst" scope="row"><a href="CDOCommitHistory.TriggerLoadElement.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitHistory.TriggerLoadElement</a></th>
 <td class="colLast">
-<div class="block">A virtual <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>history</code></a> element that can be returned from <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true#getElements--" title="class or interface in org.eclipse.net4j.util.container"><code>IContainer.getElements()</code></a>
- if <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.html#isAppendingTriggerLoadElement--"><code>CDOCommitHistory.isAppendingTriggerLoadElement()</code></a> is <code>true</code> to indicate that
- the history is not <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.html#isFull--"><code>fully</code></a> loaded, yet.</div>
+<div class="block">A virtual <a href="CDOCommitHistory.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>history</code></a> element that can be returned from <code>IContainer.getElements()</code>
+ if <a href="CDOCommitHistory.html#isAppendingTriggerLoadElement()"><code>CDOCommitHistory.isAppendingTriggerLoadElement()</code></a> is <code>true</code> to indicate that
+ the history is not <a href="CDOCommitHistory.html#isFull()"><code>fully</code></a> loaded, yet.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></td>
+<th class="colFirst" scope="row"><a href="CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></th>
 <td class="colLast">
-<div class="block"><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>Commit data</code></a> in the context of a <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>commit info manager</code></a> with
+<div class="block"><a href="CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>Commit data</code></a> in the context of a <a href="CDOCommitInfoManager.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>commit info manager</code></a> with
  additional commit informations.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoHandler.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoHandler</a></td>
+<th class="colFirst" scope="row"><a href="CDOCommitInfoHandler.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoHandler</a></th>
 <td class="colLast">
-<div class="block">A call-back interface that indicates the ability to <i>handle</i> <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>commit infos</code></a> that are passed
+<div class="block">A call-back interface that indicates the ability to <i>handle</i> <a href="CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>commit infos</code></a> that are passed
  from other entities.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoManager</a></td>
+<th class="colFirst" scope="row"><a href="CDOCommitInfoManager.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoManager</a></th>
 <td class="colLast">
-<div class="block">Provides access to <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>commit info</code></a> objects.</div>
+<div class="block">Provides access to <a href="CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>commit info</code></a> objects.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoProvider.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoProvider</a></td>
+<th class="colFirst" scope="row"><a href="CDOCommitInfoProvider.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoProvider</a></th>
 <td class="colLast">
-<div class="block">Calls registered <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoHandler.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>commit info handlers</code></a>.</div>
+<div class="block">Calls registered <a href="CDOCommitInfoHandler.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>commit info handlers</code></a>.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Enum Summary table, listing enums, and an explanation">
+<table class="typeSummary">
 <caption><span>Enum Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Enum</th>
@@ -176,7 +202,7 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeKind.html" title="enum in org.eclipse.emf.cdo.common.commit">CDOChangeKind</a></td>
+<th class="colFirst" scope="row"><a href="CDOChangeKind.html" title="enum in org.eclipse.emf.cdo.common.commit">CDOChangeKind</a></th>
 <td class="colLast">
 <div class="block">Enumerates possible change kinds.</div>
 </td>
@@ -185,22 +211,20 @@
 </table>
 </li>
 </ul>
-<a name="package.description">
-<!--   -->
-</a>
-<h2 title="Package org.eclipse.emf.cdo.common.commit Description">Package org.eclipse.emf.cdo.common.commit Description</h2>
-<div class="block">Common concepts for dealing with commits and change sets.</div>
 </div>
+</main>
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li class="navBarCell1Rev">Package</li>
 <li>Class</li>
 <li><a href="package-use.html">Use</a></li>
@@ -210,16 +234,8 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/emf/cdo/common/branch/package-summary.html">Prev&nbsp;Package</a></li>
-<li><a href="../../../../../../org/eclipse/emf/cdo/common/commit/handler/package-summary.html">Next&nbsp;Package</a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/emf/cdo/common/commit/package-summary.html" target="_top">Frames</a></li>
-<li><a href="package-summary.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -232,11 +248,16 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

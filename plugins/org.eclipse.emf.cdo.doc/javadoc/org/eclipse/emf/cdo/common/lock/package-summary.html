@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>org.eclipse.emf.cdo.common.lock (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,20 +28,25 @@
     catch(err) {
     }
 //-->
-</script>
+var pathtoroot = "../../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li class="navBarCell1Rev">Package</li>
 <li>Class</li>
 <li><a href="package-use.html">Use</a></li>
@@ -41,16 +56,14 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/emf/cdo/common/lob/package-summary.html">Prev&nbsp;Package</a></li>
-<li><a href="../../../../../../org/eclipse/emf/cdo/common/model/package-summary.html">Next&nbsp;Package</a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/emf/cdo/common/lock/package-summary.html" target="_top">Frames</a></li>
-<li><a href="package-summary.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -63,22 +76,35 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
+<main role="main">
 <div class="header">
 <h1 title="Package" class="title">Package&nbsp;org.eclipse.emf.cdo.common.lock</h1>
-<div class="docSummary">
-<div class="block">Common concepts for dealing with durable locks and views.</div>
-</div>
-<p>See:&nbsp;<a href="#package.description">Description</a></p>
 </div>
 <div class="contentContainer">
+<section role="region"><a id="package.description">
+<!--   -->
+</a>
+<div class="block">Common concepts for dealing with durable locks and views.</div>
+</section>
 <ul class="blockList">
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<table class="typeSummary">
 <caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Interface</th>
@@ -86,54 +112,54 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a></td>
+<th class="colFirst" scope="row"><a href="CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a></th>
 <td class="colLast">
 <div class="block">Represents a change in the lock state of a set of objects.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockChangeInfoHandler.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfoHandler</a></td>
+<th class="colFirst" scope="row"><a href="CDOLockChangeInfoHandler.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfoHandler</a></th>
 <td class="colLast">
-<div class="block">A call-back interface that indicates the ability to <i>handle</i> <a href="../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock"><code>lock-change infos</code></a> that
+<div class="block">A call-back interface that indicates the ability to <i>handle</i> <a href="CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock"><code>lock-change infos</code></a> that
  are passed from other entities.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a></td>
+<th class="colFirst" scope="row"><a href="CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a></th>
 <td class="colLast">
 <div class="block">A client-side representation of a view owning locks.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a></td>
+<th class="colFirst" scope="row"><a href="CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a></th>
 <td class="colLast">
 <div class="block">A client-side representation of <i>all</i> the locks on a single CDOObject.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.html" title="interface in org.eclipse.emf.cdo.common.lock">IDurableLockingManager</a></td>
+<th class="colFirst" scope="row"><a href="IDurableLockingManager.html" title="interface in org.eclipse.emf.cdo.common.lock">IDurableLockingManager</a></th>
 <td class="colLast">
-<div class="block">Manages all persistent aspects of durable CDO views such as <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch point</code></a> and acquired locks.</div>
+<div class="block">Manages all persistent aspects of durable CDO views such as <a href="../branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch point</code></a> and acquired locks.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockArea.html" title="interface in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockArea</a></td>
+<th class="colFirst" scope="row"><a href="IDurableLockingManager.LockArea.html" title="interface in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockArea</a></th>
 <td class="colLast">
-<div class="block">Encapsulates the persistable information about a single durable CDO view like <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch point</code></a>
+<div class="block">Encapsulates the persistable information about a single durable CDO view like <a href="../branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch point</code></a>
  and acquired locks.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockArea.Handler.html" title="interface in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockArea.Handler</a></td>
+<th class="colFirst" scope="row"><a href="IDurableLockingManager.LockArea.Handler.html" title="interface in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockArea.Handler</a></th>
 <td class="colLast">
-<div class="block">A call-back interface for <em>handling</em> <a href="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockArea.html" title="interface in org.eclipse.emf.cdo.common.lock"><code>lock area</code></a> objects.</div>
+<div class="block">A call-back interface for <em>handling</em> <a href="IDurableLockingManager.LockArea.html" title="interface in org.eclipse.emf.cdo.common.lock"><code>lock area</code></a> objects.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<table class="typeSummary">
 <caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Class</th>
@@ -141,7 +167,7 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockUtil.html" title="class in org.eclipse.emf.cdo.common.lock">CDOLockUtil</a></td>
+<th class="colFirst" scope="row"><a href="CDOLockUtil.html" title="class in org.eclipse.emf.cdo.common.lock">CDOLockUtil</a></th>
 <td class="colLast">
 <div class="block">Various static methods that may help with classes related to CDO locks.</div>
 </td>
@@ -150,7 +176,7 @@
 </table>
 </li>
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Enum Summary table, listing enums, and an explanation">
+<table class="typeSummary">
 <caption><span>Enum Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Enum</th>
@@ -158,13 +184,13 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockChangeInfo.Operation.html" title="enum in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo.Operation</a></td>
+<th class="colFirst" scope="row"><a href="CDOLockChangeInfo.Operation.html" title="enum in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo.Operation</a></th>
 <td class="colLast">
 <div class="block">Enumerates the possible locking operations.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockGrade.html" title="enum in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockGrade</a></td>
+<th class="colFirst" scope="row"><a href="IDurableLockingManager.LockGrade.html" title="enum in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockGrade</a></th>
 <td class="colLast">
 <div class="block">Enumerates the possible combinations of read and write locks on a single CDO object.</div>
 </td>
@@ -173,7 +199,7 @@
 </table>
 </li>
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Exception Summary table, listing exceptions, and an explanation">
+<table class="typeSummary">
 <caption><span>Exception Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Exception</th>
@@ -181,37 +207,35 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockAreaAlreadyExistsException.html" title="class in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockAreaAlreadyExistsException</a></td>
+<th class="colFirst" scope="row"><a href="IDurableLockingManager.LockAreaAlreadyExistsException.html" title="class in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockAreaAlreadyExistsException</a></th>
 <td class="colLast">
-<div class="block">Exception occurs when attempting to create a durable <a href="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockArea.html" title="interface in org.eclipse.emf.cdo.common.lock"><code>IDurableLockingManager.LockArea</code></a> that already exists.</div>
+<div class="block">Exception occurs when attempting to create a durable <a href="IDurableLockingManager.LockArea.html" title="interface in org.eclipse.emf.cdo.common.lock"><code>IDurableLockingManager.LockArea</code></a> that already exists.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockAreaNotFoundException.html" title="class in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockAreaNotFoundException</a></td>
+<th class="colFirst" scope="row"><a href="IDurableLockingManager.LockAreaNotFoundException.html" title="class in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockAreaNotFoundException</a></th>
 <td class="colLast">
-<div class="block">Thrown if a <a href="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockArea.html" title="interface in org.eclipse.emf.cdo.common.lock"><code>lock area</code></a> is spcified that does not exist in a CDO <a href="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common"><code>repository</code></a>.</div>
+<div class="block">Thrown if a <a href="IDurableLockingManager.LockArea.html" title="interface in org.eclipse.emf.cdo.common.lock"><code>lock area</code></a> is spcified that does not exist in a CDO <a href="../CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common"><code>repository</code></a>.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
 </ul>
-<a name="package.description">
-<!--   -->
-</a>
-<h2 title="Package org.eclipse.emf.cdo.common.lock Description">Package org.eclipse.emf.cdo.common.lock Description</h2>
-<div class="block">Common concepts for dealing with durable locks and views.</div>
 </div>
+</main>
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li class="navBarCell1Rev">Package</li>
 <li>Class</li>
 <li><a href="package-use.html">Use</a></li>
@@ -221,16 +245,8 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/emf/cdo/common/lob/package-summary.html">Prev&nbsp;Package</a></li>
-<li><a href="../../../../../../org/eclipse/emf/cdo/common/model/package-summary.html">Next&nbsp;Package</a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/emf/cdo/common/lock/package-summary.html" target="_top">Frames</a></li>
-<li><a href="package-summary.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -243,11 +259,16 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

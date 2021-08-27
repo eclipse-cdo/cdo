@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>CDOTransaction.Options (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":6,"i11":6,"i12":6,"i13":6,"i14":6,"i15":6,"i16":6,"i17":6,"i18":6,"i19":6};
+var data = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":6,"i11":6,"i12":6,"i13":6,"i14":6,"i15":6,"i16":6,"i17":6,"i18":6,"i19":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/CDOTransaction.Options.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.CommitResult.html" title="class in org.eclipse.emf.cdo.transaction"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.AttachedRevisionsMap.html" title="interface in org.eclipse.emf.cdo.transaction"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html" target="_top">Frames</a></li>
-<li><a href="CDOTransaction.Options.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,6 +82,9 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -85,13 +101,22 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.emf.cdo.transaction</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.cdo.transaction</a></div>
 <h2 title="Interface CDOTransaction.Options" class="title">Interface CDOTransaction.Options</h2>
 </div>
 <div class="contentContainer">
@@ -100,17 +125,16 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.Options.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView.Options</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptions.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options">IOptions</a></dd>
+<dd><code><a href="../common/CDOCommonView.Options.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView.Options</a></code>, <code><a href="../view/CDOView.Options.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options</a></code>, <code>org.eclipse.net4j.util.event.INotifier</code>, <code>org.eclipse.net4j.util.options.IOptions</code></dd>
 </dl>
 <dl>
 <dt>Enclosing interface:</dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></dd>
+<dd><a href="CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></dd>
 </dl>
 <hr>
-<br>
 <pre>public static interface <span class="typeNameLabel">CDOTransaction.Options</span>
-extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options</a></pre>
-<div class="block">Encapsulates a set of notifying <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> configuration options.</div>
+extends <a href="../view/CDOView.Options.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options</a></pre>
+<div class="block">Encapsulates a set of notifying <a href="CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> configuration options.</div>
 <dl>
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>Simon McDuff</dd>
@@ -126,271 +150,315 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html" t
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="nested.class.summary">
+<li class="blockList"><a id="nested.class.summary">
 <!--   -->
 </a>
 <h3>Nested Class Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Nested Class Summary table, listing nested classes, and an explanation">
+<table class="memberSummary">
 <caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Interface and Description</th>
+<th class="colSecond" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.AttachedRevisionsMap.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction.Options.AttachedRevisionsMap</a></span></code>
-<div class="block">An <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options"><code>options event</code></a> fired from transaction <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html#options--"><code>options</code></a> when the
- <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#setAttachedRevisionsMap-java.util.Map-"><code>attached revisions map</code></a> option has changed.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CDOTransaction.Options.AttachedRevisionsMap.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction.Options.AttachedRevisionsMap</a></span></code></th>
+<td class="colLast">
+<div class="block">An <code>options event</code> fired from transaction <a href="CDOTransaction.html#options()"><code>options</code></a> when the
+ <a href="#setAttachedRevisionsMap(java.util.Map)"><code>attached revisions map</code></a> option has changed.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.AutoReleaseLocksEvent.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction.Options.AutoReleaseLocksEvent</a></span></code>
-<div class="block">An <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options"><code>options event</code></a> fired from transaction <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html#options--"><code>options</code></a> when the
- <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#setAutoReleaseLocksEnabled-boolean-"><code>auto release locks enabled</code></a> or
- <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#getAutoReleaseLocksExemptions--"><code>auto release locks exemptions</code></a> options have changed.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CDOTransaction.Options.AutoReleaseLocksEvent.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction.Options.AutoReleaseLocksEvent</a></span></code></th>
+<td class="colLast">
+<div class="block">An <code>options event</code> fired from transaction <a href="CDOTransaction.html#options()"><code>options</code></a> when the
+ <a href="#setAutoReleaseLocksEnabled(boolean)"><code>auto release locks enabled</code></a> or
+ <a href="#getAutoReleaseLocksExemptions()"><code>auto release locks exemptions</code></a> options have changed.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.CommitInfoTimeout.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction.Options.CommitInfoTimeout</a></span></code>
-<div class="block">An <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options"><code>options event</code></a> fired from transaction <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html#options--"><code>options</code></a> when the
- <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#setCommitInfoTimeout-long-"><code>commit info timeout</code></a> option has changed.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CDOTransaction.Options.CommitInfoTimeout.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction.Options.CommitInfoTimeout</a></span></code></th>
+<td class="colLast">
+<div class="block">An <code>options event</code> fired from transaction <a href="CDOTransaction.html#options()"><code>options</code></a> when the
+ <a href="#setCommitInfoTimeout(long)"><code>commit info timeout</code></a> option has changed.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.ConflictResolversEvent.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction.Options.ConflictResolversEvent</a></span></code>
-<div class="block">An <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options"><code>options event</code></a> fired from transaction <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html#options--"><code>options</code></a> when the
- <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#addConflictResolver-org.eclipse.emf.cdo.transaction.CDOConflictResolver-"><code>conflict resolvers</code></a> option has changed.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CDOTransaction.Options.ConflictResolversEvent.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction.Options.ConflictResolversEvent</a></span></code></th>
+<td class="colLast">
+<div class="block">An <code>options event</code> fired from transaction <a href="CDOTransaction.html#options()"><code>options</code></a> when the
+ <a href="#addConflictResolver(org.eclipse.emf.cdo.transaction.CDOConflictResolver)"><code>conflict resolvers</code></a> option has changed.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.StaleReferenceCleanerEvent.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction.Options.StaleReferenceCleanerEvent</a></span></code>
-<div class="block">An <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options"><code>options event</code></a> fired from transaction <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html#options--"><code>options</code></a> when the
- <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#setStaleReferenceCleaner-org.eclipse.emf.cdo.transaction.CDOStaleReferenceCleaner-"><code>stale reference cleaner</code></a> option has changed.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CDOTransaction.Options.StaleReferenceCleanerEvent.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction.Options.StaleReferenceCleanerEvent</a></span></code></th>
+<td class="colLast">
+<div class="block">An <code>options event</code> fired from transaction <a href="CDOTransaction.html#options()"><code>options</code></a> when the
+ <a href="#setStaleReferenceCleaner(org.eclipse.emf.cdo.transaction.CDOStaleReferenceCleaner)"><code>stale reference cleaner</code></a> option has changed.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.UndoDetectorEvent.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction.Options.UndoDetectorEvent</a></span></code>
-<div class="block">An <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options"><code>options event</code></a> fired from transaction <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html#options--"><code>options</code></a> when the
- <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#setUndoDetector-org.eclipse.emf.cdo.transaction.CDOUndoDetector-"><code>undo detector</code></a> option has changed.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CDOTransaction.Options.UndoDetectorEvent.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction.Options.UndoDetectorEvent</a></span></code></th>
+<td class="colLast">
+<div class="block">An <code>options event</code> fired from transaction <a href="CDOTransaction.html#options()"><code>options</code></a> when the
+ <a href="#setUndoDetector(org.eclipse.emf.cdo.transaction.CDOUndoDetector)"><code>undo detector</code></a> option has changed.</div>
 </td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="nested.classes.inherited.from.class.org.eclipse.emf.cdo.view.CDOView.Options">
+<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.emf.cdo.common.CDOCommonView.Options">
 <!--   -->
 </a>
-<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.emf.cdo.view.<a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options</a></h3>
-<code><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.CacheReferenceTypeEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.CacheReferenceTypeEvent</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.ChangeSubscriptionPoliciesEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.ChangeSubscriptionPoliciesEvent</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.DetachmentNotificationEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.DetachmentNotificationEvent</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.FeatureAnalyzerEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.FeatureAnalyzerEvent</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.InvalidationNotificationEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.InvalidationNotificationEvent</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.InvalidationPolicyEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.InvalidationPolicyEvent</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.LoadNotificationEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.LoadNotificationEvent</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.ReferencePolicyEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.ReferencePolicyEvent</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.RevisionPrefetchingPolicyEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.RevisionPrefetchingPolicyEvent</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.StaleReferencePolicyEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.StaleReferencePolicyEvent</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.StrongReferencePolicyEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.StrongReferencePolicyEvent</a></code></li>
+<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.emf.cdo.common.<a href="../common/CDOCommonView.Options.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView.Options</a></h3>
+<code><a href="../common/CDOCommonView.Options.LockNotificationEvent.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView.Options.LockNotificationEvent</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="nested.classes.inherited.from.class.org.eclipse.emf.cdo.common.CDOCommonView.Options">
+<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.emf.cdo.view.CDOView.Options">
 <!--   -->
 </a>
-<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.emf.cdo.common.<a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.Options.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView.Options</a></h3>
-<code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.Options.LockNotificationEvent.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView.Options.LockNotificationEvent</a></code></li>
+<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.emf.cdo.view.<a href="../view/CDOView.Options.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options</a></h3>
+<code><a href="../view/CDOView.Options.CacheReferenceTypeEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.CacheReferenceTypeEvent</a>, <a href="../view/CDOView.Options.ChangeSubscriptionPoliciesEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.ChangeSubscriptionPoliciesEvent</a>, <a href="../view/CDOView.Options.ClearAdapterPolicyEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.ClearAdapterPolicyEvent</a>, <a href="../view/CDOView.Options.DetachmentNotificationEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.DetachmentNotificationEvent</a>, <a href="../view/CDOView.Options.FeatureAnalyzerEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.FeatureAnalyzerEvent</a>, <a href="../view/CDOView.Options.InvalidationNotificationEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.InvalidationNotificationEvent</a>, <a href="../view/CDOView.Options.InvalidationPolicyEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.InvalidationPolicyEvent</a>, <a href="../view/CDOView.Options.LoadNotificationEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.LoadNotificationEvent</a>, <a href="../view/CDOView.Options.ReferencePolicyEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.ReferencePolicyEvent</a>, <a href="../view/CDOView.Options.RevisionPrefetchingPolicyEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.RevisionPrefetchingPolicyEvent</a>, <a href="../view/CDOView.Options.StaleReferencePolicyEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.StaleReferencePolicyEvent</a>, <a href="../view/CDOView.Options.StrongReferencePolicyEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.StrongReferencePolicyEvent</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.net4j.util.event.INotifier">
+<!--   -->
+</a>
+<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.event.INotifier</h3>
+<code>org.eclipse.net4j.util.event.INotifier.INotifier2</code></li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- =========== FIELD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.summary">
+<li class="blockList"><a id="field.summary">
 <!--   -->
 </a>
 <h3>Field Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Field Summary table, listing fields, and an explanation">
+<table class="memberSummary">
 <caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Field and Description</th>
+<th class="colSecond" scope="col">Field</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static long</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#DEFAULT_COMMIT_INFO_TIMEOUT">DEFAULT_COMMIT_INFO_TIMEOUT</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#DEFAULT_COMMIT_INFO_TIMEOUT">DEFAULT_COMMIT_INFO_TIMEOUT</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>static <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUndoDetector.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUndoDetector</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#DEFAULT_UNDO_DETECTOR">DEFAULT_UNDO_DETECTOR</a></span></code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="CDOUndoDetector.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUndoDetector</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#DEFAULT_UNDO_DETECTOR">DEFAULT_UNDO_DETECTOR</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="fields.inherited.from.class.org.eclipse.emf.cdo.view.CDOView.Options">
+<li class="blockList"><a id="fields.inherited.from.class.org.eclipse.emf.cdo.view.CDOView.Options">
 <!--   -->
 </a>
-<h3>Fields inherited from interface&nbsp;org.eclipse.emf.cdo.view.<a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options</a></h3>
-<code><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#DEFAULT_REVISION_PREFETCHING">DEFAULT_REVISION_PREFETCHING</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#NO_REVISION_PREFETCHING">NO_REVISION_PREFETCHING</a></code></li>
+<h3>Fields inherited from interface&nbsp;org.eclipse.emf.cdo.view.<a href="../view/CDOView.Options.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options</a></h3>
+<code><a href="../view/CDOView.Options.html#DEFAULT_REVISION_PREFETCHING">DEFAULT_REVISION_PREFETCHING</a>, <a href="../view/CDOView.Options.html#NO_REVISION_PREFETCHING">NO_REVISION_PREFETCHING</a></code></li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#addAutoReleaseLocksExemptions-boolean-org.eclipse.emf.ecore.EObject...-">addAutoReleaseLocksExemptions</a></span>(boolean&nbsp;recursive,
-                             <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>...&nbsp;objects)</code>
-<div class="block">Adds the given <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>object</code></a> to the set of objects that are to be treated as exemptions to the <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#isAutoReleaseLocksEnabled--"><code>isAutoReleaseLocksEnabled()</code></a> option.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addAutoReleaseLocksExemptions(boolean,org.eclipse.emf.ecore.EObject...)">addAutoReleaseLocksExemptions</a></span>&#8203;(boolean&nbsp;recursive,
+                             <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>...&nbsp;objects)</code></th>
+<td class="colLast">
+<div class="block">Adds the given <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>object</code></a> to the set of objects that are to be treated as exemptions to the <a href="#isAutoReleaseLocksEnabled()"><code>isAutoReleaseLocksEnabled()</code></a> option.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#addConflictResolver-org.eclipse.emf.cdo.transaction.CDOConflictResolver-">addConflictResolver</a></span>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOConflictResolver.html" title="interface in org.eclipse.emf.cdo.transaction">CDOConflictResolver</a>&nbsp;resolver)</code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addConflictResolver(org.eclipse.emf.cdo.transaction.CDOConflictResolver)">addConflictResolver</a></span>&#8203;(<a href="CDOConflictResolver.html" title="interface in org.eclipse.emf.cdo.transaction">CDOConflictResolver</a>&nbsp;resolver)</code></th>
+<td class="colLast">
 <div class="block">Adds a conflict resolver to the list of conflict resolvers of this transaction.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#clearAutoReleaseLocksExemptions--">clearAutoReleaseLocksExemptions</a></span>()</code>
-<div class="block">Clears the set of <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>objects</code></a> that are to be treated as exemptions to the <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#isAutoReleaseLocksEnabled--"><code>isAutoReleaseLocksEnabled()</code></a> option.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearAutoReleaseLocksExemptions()">clearAutoReleaseLocksExemptions</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Clears the set of <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>objects</code></a> that are to be treated as exemptions to the <a href="#isAutoReleaseLocksEnabled()"><code>isAutoReleaseLocksEnabled()</code></a> option.</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>java.util.Map&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#getAttachedRevisionsMap--">getAttachedRevisionsMap</a></span>()</code>
-<div class="block">Returns a map which, if non-<code>null</code>, stores copies of the initial <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> of newly attached objects.</div>
+<td class="colFirst"><code>java.util.Map&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,&#8203;<a href="../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAttachedRevisionsMap()">getAttachedRevisionsMap</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Returns a map which, if non-<code>null</code>, stores copies of the initial <a href="../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> of newly attached objects.</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>java.util.Set&lt;? extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#getAutoReleaseLocksExemptions--">getAutoReleaseLocksExemptions</a></span>()</code>
-<div class="block">Returns the set of <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>objects</code></a> that are to be treated as exemptions to the <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#isAutoReleaseLocksEnabled--"><code>isAutoReleaseLocksEnabled()</code></a> option.</div>
+<td class="colFirst"><code>java.util.Set&lt;? extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAutoReleaseLocksExemptions()">getAutoReleaseLocksExemptions</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Returns the set of <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>objects</code></a> that are to be treated as exemptions to the <a href="#isAutoReleaseLocksEnabled()"><code>isAutoReleaseLocksEnabled()</code></a> option.</div>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>long</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#getCommitInfoTimeout--">getCommitInfoTimeout</a></span>()</code>
-<div class="block">Returns the number of milliseconds to wait for the transaction update when <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit--"><code>CDOUserTransaction.commit()</code></a> is called.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCommitInfoTimeout()">getCommitInfoTimeout</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Returns the number of milliseconds to wait for the transaction update when <a href="CDOUserTransaction.html#commit()"><code>CDOUserTransaction.commit()</code></a> is called.</div>
 </td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOConflictResolver.html" title="interface in org.eclipse.emf.cdo.transaction">CDOConflictResolver</a>[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#getConflictResolvers--">getConflictResolvers</a></span>()</code>
+<td class="colFirst"><code><a href="CDOConflictResolver.html" title="interface in org.eclipse.emf.cdo.transaction">CDOConflictResolver</a>[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getConflictResolvers()">getConflictResolvers</a></span>()</code></th>
+<td class="colLast">
 <div class="block">Returns a copy of the conflict resolver list of this transaction.</div>
 </td>
 </tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#getContainer--">getContainer</a></span>()</code>
-<div class="block">Returns the <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> of this options object.</div>
+<td class="colFirst"><code><a href="CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getContainer()">getContainer</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Returns the <a href="CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> of this options object.</div>
 </td>
 </tr>
 <tr id="i8" class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOStaleReferenceCleaner.html" title="interface in org.eclipse.emf.cdo.transaction">CDOStaleReferenceCleaner</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#getStaleReferenceCleaner--">getStaleReferenceCleaner</a></span>()</code>
-<div class="block">Get the <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOStaleReferenceCleaner.html" title="interface in org.eclipse.emf.cdo.transaction"><code>CDOStaleReferenceCleaner</code></a> to be used to clean stale references when receiving
+<td class="colFirst"><code><a href="CDOStaleReferenceCleaner.html" title="interface in org.eclipse.emf.cdo.transaction">CDOStaleReferenceCleaner</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getStaleReferenceCleaner()">getStaleReferenceCleaner</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Get the <a href="CDOStaleReferenceCleaner.html" title="interface in org.eclipse.emf.cdo.transaction"><code>CDOStaleReferenceCleaner</code></a> to be used to clean stale references when receiving
  remote changes on invalidation.</div>
 </td>
 </tr>
 <tr id="i9" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUndoDetector.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUndoDetector</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#getUndoDetector--">getUndoDetector</a></span>()</code>
+<td class="colFirst"><code><a href="CDOUndoDetector.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUndoDetector</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getUndoDetector()">getUndoDetector</a></span>()</code></th>
+<td class="colLast">
 <div class="block">Returns the undo detector of this transaction.</div>
 </td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#isAutoReleaseLocksEnabled--">isAutoReleaseLocksEnabled</a></span>()</code>
-<div class="block">Returns <code>true</code> if locks in this transaction will be released when <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit--"><code>CDOUserTransaction.commit()</code></a> or
- <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#rollback--"><code>CDOUserTransaction.rollback()</code></a> are called, <code>false</code> otherwise.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isAutoReleaseLocksEnabled()">isAutoReleaseLocksEnabled</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Returns <code>true</code> if locks in this transaction will be released when <a href="CDOUserTransaction.html#commit()"><code>CDOUserTransaction.commit()</code></a> or
+ <a href="CDOUserTransaction.html#rollback()"><code>CDOUserTransaction.rollback()</code></a> are called, <code>false</code> otherwise.</div>
 </td>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#isAutoReleaseLocksExemption-org.eclipse.emf.ecore.EObject-">isAutoReleaseLocksExemption</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&nbsp;object)</code>
-<div class="block">Returns <code>true</code> if the given object is treated as an exemption to the <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#isAutoReleaseLocksEnabled--"><code>isAutoReleaseLocksEnabled()</code></a> option,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isAutoReleaseLocksExemption(org.eclipse.emf.ecore.EObject)">isAutoReleaseLocksExemption</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&nbsp;object)</code></th>
+<td class="colLast">
+<div class="block">Returns <code>true</code> if the given object is treated as an exemption to the <a href="#isAutoReleaseLocksEnabled()"><code>isAutoReleaseLocksEnabled()</code></a> option,
  <code>false</code> otherwise.</div>
 </td>
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#removeAutoReleaseLocksExemptions-boolean-org.eclipse.emf.ecore.EObject...-">removeAutoReleaseLocksExemptions</a></span>(boolean&nbsp;recursive,
-                                <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>...&nbsp;objects)</code>
-<div class="block">Removes the given <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>object</code></a> from the set of objects that are to be treated as exemptions to the <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#isAutoReleaseLocksEnabled--"><code>isAutoReleaseLocksEnabled()</code></a> option.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeAutoReleaseLocksExemptions(boolean,org.eclipse.emf.ecore.EObject...)">removeAutoReleaseLocksExemptions</a></span>&#8203;(boolean&nbsp;recursive,
+                                <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>...&nbsp;objects)</code></th>
+<td class="colLast">
+<div class="block">Removes the given <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>object</code></a> from the set of objects that are to be treated as exemptions to the <a href="#isAutoReleaseLocksEnabled()"><code>isAutoReleaseLocksEnabled()</code></a> option.</div>
 </td>
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#removeConflictResolver-org.eclipse.emf.cdo.transaction.CDOConflictResolver-">removeConflictResolver</a></span>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOConflictResolver.html" title="interface in org.eclipse.emf.cdo.transaction">CDOConflictResolver</a>&nbsp;resolver)</code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeConflictResolver(org.eclipse.emf.cdo.transaction.CDOConflictResolver)">removeConflictResolver</a></span>&#8203;(<a href="CDOConflictResolver.html" title="interface in org.eclipse.emf.cdo.transaction">CDOConflictResolver</a>&nbsp;resolver)</code></th>
+<td class="colLast">
 <div class="block">Removes a conflict resolver from the list of conflict resolvers of this transaction.</div>
 </td>
 </tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#setAttachedRevisionsMap-java.util.Map-">setAttachedRevisionsMap</a></span>(java.util.Map&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&nbsp;attachedRevisionsMap)</code>
-<div class="block">Sets a map which, if non-<code>null</code>, stores copies of the initial <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> of newly attached objects,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAttachedRevisionsMap(java.util.Map)">setAttachedRevisionsMap</a></span>&#8203;(java.util.Map&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,&#8203;<a href="../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&nbsp;attachedRevisionsMap)</code></th>
+<td class="colLast">
+<div class="block">Sets a map which, if non-<code>null</code>, stores copies of the initial <a href="../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> of newly attached objects,
  so that these objects can and will be rolled back to the model values they had at attachment time.</div>
 </td>
 </tr>
 <tr id="i15" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#setAutoReleaseLocksEnabled-boolean-">setAutoReleaseLocksEnabled</a></span>(boolean&nbsp;on)</code>
-<div class="block">Specifies whether locks in this transaction will be released when <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit--"><code>CDOUserTransaction.commit()</code></a> or
- <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#rollback--"><code>CDOUserTransaction.rollback()</code></a> are called.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAutoReleaseLocksEnabled(boolean)">setAutoReleaseLocksEnabled</a></span>&#8203;(boolean&nbsp;on)</code></th>
+<td class="colLast">
+<div class="block">Specifies whether locks in this transaction will be released when <a href="CDOUserTransaction.html#commit()"><code>CDOUserTransaction.commit()</code></a> or
+ <a href="CDOUserTransaction.html#rollback()"><code>CDOUserTransaction.rollback()</code></a> are called.</div>
 </td>
 </tr>
 <tr id="i16" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#setCommitInfoTimeout-long-">setCommitInfoTimeout</a></span>(long&nbsp;commitInfoTimeout)</code>
-<div class="block">Specifies the number of milliseconds to wait for the transaction update when <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit--"><code>CDOUserTransaction.commit()</code></a> is called.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setCommitInfoTimeout(long)">setCommitInfoTimeout</a></span>&#8203;(long&nbsp;commitInfoTimeout)</code></th>
+<td class="colLast">
+<div class="block">Specifies the number of milliseconds to wait for the transaction update when <a href="CDOUserTransaction.html#commit()"><code>CDOUserTransaction.commit()</code></a> is called.</div>
 </td>
 </tr>
 <tr id="i17" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#setConflictResolvers-org.eclipse.emf.cdo.transaction.CDOConflictResolver:A-">setConflictResolvers</a></span>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOConflictResolver.html" title="interface in org.eclipse.emf.cdo.transaction">CDOConflictResolver</a>[]&nbsp;resolvers)</code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setConflictResolvers(org.eclipse.emf.cdo.transaction.CDOConflictResolver%5B%5D)">setConflictResolvers</a></span>&#8203;(<a href="CDOConflictResolver.html" title="interface in org.eclipse.emf.cdo.transaction">CDOConflictResolver</a>[]&nbsp;resolvers)</code></th>
+<td class="colLast">
 <div class="block">Sets the conflict resolver list of this transaction.</div>
 </td>
 </tr>
 <tr id="i18" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#setStaleReferenceCleaner-org.eclipse.emf.cdo.transaction.CDOStaleReferenceCleaner-">setStaleReferenceCleaner</a></span>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOStaleReferenceCleaner.html" title="interface in org.eclipse.emf.cdo.transaction">CDOStaleReferenceCleaner</a>&nbsp;staleReferenceCleaner)</code>
-<div class="block">Set the <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOStaleReferenceCleaner.html" title="interface in org.eclipse.emf.cdo.transaction"><code>CDOStaleReferenceCleaner</code></a> to be used to clean stale references when receiving
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setStaleReferenceCleaner(org.eclipse.emf.cdo.transaction.CDOStaleReferenceCleaner)">setStaleReferenceCleaner</a></span>&#8203;(<a href="CDOStaleReferenceCleaner.html" title="interface in org.eclipse.emf.cdo.transaction">CDOStaleReferenceCleaner</a>&nbsp;staleReferenceCleaner)</code></th>
+<td class="colLast">
+<div class="block">Set the <a href="CDOStaleReferenceCleaner.html" title="interface in org.eclipse.emf.cdo.transaction"><code>CDOStaleReferenceCleaner</code></a> to be used to clean stale references when receiving
  remote changes on invalidation.</div>
 </td>
 </tr>
 <tr id="i19" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#setUndoDetector-org.eclipse.emf.cdo.transaction.CDOUndoDetector-">setUndoDetector</a></span>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUndoDetector.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUndoDetector</a>&nbsp;undoDetector)</code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setUndoDetector(org.eclipse.emf.cdo.transaction.CDOUndoDetector)">setUndoDetector</a></span>&#8203;(<a href="CDOUndoDetector.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUndoDetector</a>&nbsp;undoDetector)</code></th>
+<td class="colLast">
 <div class="block">Sets the undo detector of this transaction.</div>
 </td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.emf.cdo.view.CDOView.Options">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.cdo.common.CDOCommonView.Options">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.view.<a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options</a></h3>
-<code><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#addChangeSubscriptionPolicy-org.eclipse.emf.cdo.view.CDOAdapterPolicy-">addChangeSubscriptionPolicy</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#getCacheReferenceType--">getCacheReferenceType</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#getChangeSubscriptionPolicies--">getChangeSubscriptionPolicies</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#getFeatureAnalyzer--">getFeatureAnalyzer</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#getInvalidationPolicy--">getInvalidationPolicy</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#getRevisionPrefetchingPolicy--">getRevisionPrefetchingPolicy</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#getStaleReferenceBehaviour--">getStaleReferenceBehaviour</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#getStaleReferencePolicy--">getStaleReferencePolicy</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#getStrongReferencePolicy--">getStrongReferencePolicy</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#isDetachmentNotificationEnabled--">isDetachmentNotificationEnabled</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#isInvalidationNotificationEnabled--">isInvalidationNotificationEnabled</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#isLoadNotificationEnabled--">isLoadNotificationEnabled</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#removeChangeSubscriptionPolicy-org.eclipse.emf.cdo.view.CDOAdapterPolicy-">removeChangeSubscriptionPolicy</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setCacheReferenceType-org.eclipse.net4j.util.ref.ReferenceType-">setCacheReferenceType</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setDetachmentNotificationEnabled-boolean-">setDetachmentNotificationEnabled</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setFeatureAnalyzer-org.eclipse.emf.cdo.view.CDOFeatureAnalyzer-">setFeatureAnalyzer</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setInvalidationNotificationEnabled-boolean-">setInvalidationNotificationEnabled</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setInvalidationPolicy-org.eclipse.emf.cdo.view.CDOInvalidationPolicy-">setInvalidationPolicy</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setLoadNotificationEnabled-boolean-">setLoadNotificationEnabled</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setRevisionPrefetchingPolicy-org.eclipse.emf.cdo.view.CDORevisionPrefetchingPolicy-">setRevisionPrefetchingPolicy</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setStaleReferenceBehaviour-org.eclipse.emf.cdo.view.CDOStaleReferencePolicy-">setStaleReferenceBehaviour</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setStaleReferencePolicy-org.eclipse.emf.cdo.view.CDOStaleReferencePolicy-">setStaleReferencePolicy</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setStrongReferencePolicy-org.eclipse.emf.cdo.view.CDOAdapterPolicy-">setStrongReferencePolicy</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.<a href="../common/CDOCommonView.Options.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView.Options</a></h3>
+<code><a href="../common/CDOCommonView.Options.html#isLockNotificationEnabled()">isLockNotificationEnabled</a>, <a href="../common/CDOCommonView.Options.html#setLockNotificationEnabled(boolean)">setLockNotificationEnabled</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.emf.cdo.common.CDOCommonView.Options">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.cdo.view.CDOView.Options">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.<a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.Options.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView.Options</a></h3>
-<code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.Options.html#isLockNotificationEnabled--">isLockNotificationEnabled</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.Options.html#setLockNotificationEnabled-boolean-">setLockNotificationEnabled</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.view.<a href="../view/CDOView.Options.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options</a></h3>
+<code><a href="../view/CDOView.Options.html#addChangeSubscriptionPolicy(org.eclipse.emf.cdo.view.CDOAdapterPolicy)">addChangeSubscriptionPolicy</a>, <a href="../view/CDOView.Options.html#getCacheReferenceType()">getCacheReferenceType</a>, <a href="../view/CDOView.Options.html#getChangeSubscriptionPolicies()">getChangeSubscriptionPolicies</a>, <a href="../view/CDOView.Options.html#getClearAdapterPolicy()">getClearAdapterPolicy</a>, <a href="../view/CDOView.Options.html#getFeatureAnalyzer()">getFeatureAnalyzer</a>, <a href="../view/CDOView.Options.html#getInvalidationPolicy()">getInvalidationPolicy</a>, <a href="../view/CDOView.Options.html#getRevisionPrefetchingPolicy()">getRevisionPrefetchingPolicy</a>, <a href="../view/CDOView.Options.html#getStaleReferenceBehaviour()">getStaleReferenceBehaviour</a>, <a href="../view/CDOView.Options.html#getStaleReferencePolicy()">getStaleReferencePolicy</a>, <a href="../view/CDOView.Options.html#getStrongReferencePolicy()">getStrongReferencePolicy</a>, <a href="../view/CDOView.Options.html#isDetachmentNotificationEnabled()">isDetachmentNotificationEnabled</a>, <a href="../view/CDOView.Options.html#isInvalidationNotificationEnabled()">isInvalidationNotificationEnabled</a>, <a href="../view/CDOView.Options.html#isLoadNotificationEnabled()">isLoadNotificationEnabled</a>, <a href="../view/CDOView.Options.html#removeChangeSubscriptionPolicy(org.eclipse.emf.cdo.view.CDOAdapterPolicy)">removeChangeSubscriptionPolicy</a>, <a href="../view/CDOView.Options.html#setCacheReferenceType(org.eclipse.net4j.util.ref.ReferenceType)">setCacheReferenceType</a>, <a href="../view/CDOView.Options.html#setClearAdapterPolicy(org.eclipse.emf.cdo.view.CDOAdapterPolicy)">setClearAdapterPolicy</a>, <a href="../view/CDOView.Options.html#setDetachmentNotificationEnabled(boolean)">setDetachmentNotificationEnabled</a>, <a href="../view/CDOView.Options.html#setFeatureAnalyzer(org.eclipse.emf.cdo.view.CDOFeatureAnalyzer)">setFeatureAnalyzer</a>, <a href="../view/CDOView.Options.html#setInvalidationNotificationEnabled(boolean)">setInvalidationNotificationEnabled</a>, <a href="../view/CDOView.Options.html#setInvalidationPolicy(org.eclipse.emf.cdo.view.CDOInvalidationPolicy)">setInvalidationPolicy</a>, <a href="../view/CDOView.Options.html#setLoadNotificationEnabled(boolean)">setLoadNotificationEnabled</a>, <a href="../view/CDOView.Options.html#setRevisionPrefetchingPolicy(org.eclipse.emf.cdo.view.CDORevisionPrefetchingPolicy)">setRevisionPrefetchingPolicy</a>, <a href="../view/CDOView.Options.html#setStaleReferenceBehaviour(org.eclipse.emf.cdo.view.CDOStaleReferencePolicy)">setStaleReferenceBehaviour</a>, <a href="../view/CDOView.Options.html#setStaleReferencePolicy(org.eclipse.emf.cdo.view.CDOStaleReferencePolicy)">setStaleReferencePolicy</a>, <a href="../view/CDOView.Options.html#setStrongReferencePolicy(org.eclipse.emf.cdo.view.CDOAdapterPolicy)">setStrongReferencePolicy</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.event.INotifier">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.event.INotifier">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.event.<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</a></h3>
-<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#addListener-org.eclipse.net4j.util.event.IListener-" title="class or interface in org.eclipse.net4j.util.event">addListener</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#getListeners--" title="class or interface in org.eclipse.net4j.util.event">getListeners</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#hasListeners--" title="class or interface in org.eclipse.net4j.util.event">hasListeners</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#removeListener-org.eclipse.net4j.util.event.IListener-" title="class or interface in org.eclipse.net4j.util.event">removeListener</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.event.INotifier</h3>
+<code>addListener, getListeners, hasListeners, removeListener</code></li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -398,25 +466,26 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html" t
 <ul class="blockList">
 <li class="blockList">
 <!-- ============ FIELD DETAIL =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.detail">
+<li class="blockList"><a id="field.detail">
 <!--   -->
 </a>
 <h3>Field Detail</h3>
-<a name="DEFAULT_UNDO_DETECTOR">
+<a id="DEFAULT_UNDO_DETECTOR">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>DEFAULT_UNDO_DETECTOR</h4>
-<pre>static final&nbsp;<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUndoDetector.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUndoDetector</a> DEFAULT_UNDO_DETECTOR</pre>
+<pre>static final&nbsp;<a href="CDOUndoDetector.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUndoDetector</a> DEFAULT_UNDO_DETECTOR</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.3</dd>
 </dl>
 </li>
 </ul>
-<a name="DEFAULT_COMMIT_INFO_TIMEOUT">
+<a id="DEFAULT_COMMIT_INFO_TIMEOUT">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -433,37 +502,39 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html" t
 </ul>
 </li>
 </ul>
+</section>
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="getContainer--">
+<a id="getContainer()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getContainer</h4>
-<pre><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;getContainer()</pre>
-<div class="block">Returns the <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> of this options object.</div>
+<pre class="methodSignature"><a href="CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;getContainer()</pre>
+<div class="block">Returns the <a href="CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> of this options object.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#getContainer--">getContainer</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options</a></code></dd>
+<dd><code><a href="../view/CDOView.Options.html#getContainer()">getContainer</a></code>&nbsp;in interface&nbsp;<code><a href="../view/CDOView.Options.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptions.html?is-external=true#getContainer--" title="class or interface in org.eclipse.net4j.util.options">getContainer</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptions.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options">IOptions</a></code></dd>
+<dd><code>getContainer</code>&nbsp;in interface&nbsp;<code>org.eclipse.net4j.util.options.IOptions</code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.0</dd>
 </dl>
 </li>
 </ul>
-<a name="getUndoDetector--">
+<a id="getUndoDetector()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getUndoDetector</h4>
-<pre><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUndoDetector.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUndoDetector</a>&nbsp;getUndoDetector()</pre>
+<pre class="methodSignature"><a href="CDOUndoDetector.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUndoDetector</a>&nbsp;getUndoDetector()</pre>
 <div class="block">Returns the undo detector of this transaction.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -471,13 +542,13 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html" t
 </dl>
 </li>
 </ul>
-<a name="setUndoDetector-org.eclipse.emf.cdo.transaction.CDOUndoDetector-">
+<a id="setUndoDetector(org.eclipse.emf.cdo.transaction.CDOUndoDetector)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setUndoDetector</h4>
-<pre>void&nbsp;setUndoDetector(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUndoDetector.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUndoDetector</a>&nbsp;undoDetector)</pre>
+<pre class="methodSignature">void&nbsp;setUndoDetector&#8203;(<a href="CDOUndoDetector.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUndoDetector</a>&nbsp;undoDetector)</pre>
 <div class="block">Sets the undo detector of this transaction.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -485,54 +556,54 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html" t
 </dl>
 </li>
 </ul>
-<a name="getConflictResolvers--">
+<a id="getConflictResolvers()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getConflictResolvers</h4>
-<pre><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOConflictResolver.html" title="interface in org.eclipse.emf.cdo.transaction">CDOConflictResolver</a>[]&nbsp;getConflictResolvers()</pre>
+<pre class="methodSignature"><a href="CDOConflictResolver.html" title="interface in org.eclipse.emf.cdo.transaction">CDOConflictResolver</a>[]&nbsp;getConflictResolvers()</pre>
 <div class="block">Returns a copy of the conflict resolver list of this transaction.</div>
 </li>
 </ul>
-<a name="setConflictResolvers-org.eclipse.emf.cdo.transaction.CDOConflictResolver:A-">
+<a id="setConflictResolvers(org.eclipse.emf.cdo.transaction.CDOConflictResolver[])">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setConflictResolvers</h4>
-<pre>void&nbsp;setConflictResolvers(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOConflictResolver.html" title="interface in org.eclipse.emf.cdo.transaction">CDOConflictResolver</a>[]&nbsp;resolvers)</pre>
+<pre class="methodSignature">void&nbsp;setConflictResolvers&#8203;(<a href="CDOConflictResolver.html" title="interface in org.eclipse.emf.cdo.transaction">CDOConflictResolver</a>[]&nbsp;resolvers)</pre>
 <div class="block">Sets the conflict resolver list of this transaction.</div>
 </li>
 </ul>
-<a name="addConflictResolver-org.eclipse.emf.cdo.transaction.CDOConflictResolver-">
+<a id="addConflictResolver(org.eclipse.emf.cdo.transaction.CDOConflictResolver)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>addConflictResolver</h4>
-<pre>void&nbsp;addConflictResolver(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOConflictResolver.html" title="interface in org.eclipse.emf.cdo.transaction">CDOConflictResolver</a>&nbsp;resolver)</pre>
+<pre class="methodSignature">void&nbsp;addConflictResolver&#8203;(<a href="CDOConflictResolver.html" title="interface in org.eclipse.emf.cdo.transaction">CDOConflictResolver</a>&nbsp;resolver)</pre>
 <div class="block">Adds a conflict resolver to the list of conflict resolvers of this transaction.</div>
 </li>
 </ul>
-<a name="removeConflictResolver-org.eclipse.emf.cdo.transaction.CDOConflictResolver-">
+<a id="removeConflictResolver(org.eclipse.emf.cdo.transaction.CDOConflictResolver)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>removeConflictResolver</h4>
-<pre>void&nbsp;removeConflictResolver(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOConflictResolver.html" title="interface in org.eclipse.emf.cdo.transaction">CDOConflictResolver</a>&nbsp;resolver)</pre>
+<pre class="methodSignature">void&nbsp;removeConflictResolver&#8203;(<a href="CDOConflictResolver.html" title="interface in org.eclipse.emf.cdo.transaction">CDOConflictResolver</a>&nbsp;resolver)</pre>
 <div class="block">Removes a conflict resolver from the list of conflict resolvers of this transaction.</div>
 </li>
 </ul>
-<a name="getStaleReferenceCleaner--">
+<a id="getStaleReferenceCleaner()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getStaleReferenceCleaner</h4>
-<pre><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOStaleReferenceCleaner.html" title="interface in org.eclipse.emf.cdo.transaction">CDOStaleReferenceCleaner</a>&nbsp;getStaleReferenceCleaner()</pre>
-<div class="block">Get the <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOStaleReferenceCleaner.html" title="interface in org.eclipse.emf.cdo.transaction"><code>CDOStaleReferenceCleaner</code></a> to be used to clean stale references when receiving
+<pre class="methodSignature"><a href="CDOStaleReferenceCleaner.html" title="interface in org.eclipse.emf.cdo.transaction">CDOStaleReferenceCleaner</a>&nbsp;getStaleReferenceCleaner()</pre>
+<div class="block">Get the <a href="CDOStaleReferenceCleaner.html" title="interface in org.eclipse.emf.cdo.transaction"><code>CDOStaleReferenceCleaner</code></a> to be used to clean stale references when receiving
  remote changes on invalidation.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -540,14 +611,14 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html" t
 </dl>
 </li>
 </ul>
-<a name="setStaleReferenceCleaner-org.eclipse.emf.cdo.transaction.CDOStaleReferenceCleaner-">
+<a id="setStaleReferenceCleaner(org.eclipse.emf.cdo.transaction.CDOStaleReferenceCleaner)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setStaleReferenceCleaner</h4>
-<pre>void&nbsp;setStaleReferenceCleaner(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOStaleReferenceCleaner.html" title="interface in org.eclipse.emf.cdo.transaction">CDOStaleReferenceCleaner</a>&nbsp;staleReferenceCleaner)</pre>
-<div class="block">Set the <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOStaleReferenceCleaner.html" title="interface in org.eclipse.emf.cdo.transaction"><code>CDOStaleReferenceCleaner</code></a> to be used to clean stale references when receiving
+<pre class="methodSignature">void&nbsp;setStaleReferenceCleaner&#8203;(<a href="CDOStaleReferenceCleaner.html" title="interface in org.eclipse.emf.cdo.transaction">CDOStaleReferenceCleaner</a>&nbsp;staleReferenceCleaner)</pre>
+<div class="block">Set the <a href="CDOStaleReferenceCleaner.html" title="interface in org.eclipse.emf.cdo.transaction"><code>CDOStaleReferenceCleaner</code></a> to be used to clean stale references when receiving
  remote changes on invalidation.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -555,173 +626,173 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html" t
 </dl>
 </li>
 </ul>
-<a name="isAutoReleaseLocksEnabled--">
+<a id="isAutoReleaseLocksEnabled()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>isAutoReleaseLocksEnabled</h4>
-<pre>boolean&nbsp;isAutoReleaseLocksEnabled()</pre>
-<div class="block">Returns <code>true</code> if locks in this transaction will be released when <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit--"><code>CDOUserTransaction.commit()</code></a> or
- <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#rollback--"><code>CDOUserTransaction.rollback()</code></a> are called, <code>false</code> otherwise.
+<pre class="methodSignature">boolean&nbsp;isAutoReleaseLocksEnabled()</pre>
+<div class="block">Returns <code>true</code> if locks in this transaction will be released when <a href="CDOUserTransaction.html#commit()"><code>CDOUserTransaction.commit()</code></a> or
+ <a href="CDOUserTransaction.html#rollback()"><code>CDOUserTransaction.rollback()</code></a> are called, <code>false</code> otherwise.
  <p>
  The default value is <code>true</code>.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#getAutoReleaseLocksExemptions--"><code>getAutoReleaseLocksExemptions()</code></a></dd>
+<dd><a href="#getAutoReleaseLocksExemptions()"><code>getAutoReleaseLocksExemptions()</code></a></dd>
 </dl>
 </li>
 </ul>
-<a name="setAutoReleaseLocksEnabled-boolean-">
+<a id="setAutoReleaseLocksEnabled(boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setAutoReleaseLocksEnabled</h4>
-<pre>void&nbsp;setAutoReleaseLocksEnabled(boolean&nbsp;on)</pre>
-<div class="block">Specifies whether locks in this transaction will be released when <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit--"><code>CDOUserTransaction.commit()</code></a> or
- <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#rollback--"><code>CDOUserTransaction.rollback()</code></a> are called.
+<pre class="methodSignature">void&nbsp;setAutoReleaseLocksEnabled&#8203;(boolean&nbsp;on)</pre>
+<div class="block">Specifies whether locks in this transaction will be released when <a href="CDOUserTransaction.html#commit()"><code>CDOUserTransaction.commit()</code></a> or
+ <a href="CDOUserTransaction.html#rollback()"><code>CDOUserTransaction.rollback()</code></a> are called.
  <p>
- If set to <code>false</code> all locks will be kept when <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit--"><code>CDOUserTransaction.commit()</code></a> or
- <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#rollback--"><code>CDOUserTransaction.rollback()</code></a> are called.
+ If set to <code>false</code> all locks will be kept when <a href="CDOUserTransaction.html#commit()"><code>CDOUserTransaction.commit()</code></a> or
+ <a href="CDOUserTransaction.html#rollback()"><code>CDOUserTransaction.rollback()</code></a> are called.
  <p>
  The default value is <code>true</code>.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#getAutoReleaseLocksExemptions--"><code>getAutoReleaseLocksExemptions()</code></a></dd>
+<dd><a href="#getAutoReleaseLocksExemptions()"><code>getAutoReleaseLocksExemptions()</code></a></dd>
 </dl>
 </li>
 </ul>
-<a name="getAutoReleaseLocksExemptions--">
+<a id="getAutoReleaseLocksExemptions()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getAutoReleaseLocksExemptions</h4>
-<pre>java.util.Set&lt;? extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&gt;&nbsp;getAutoReleaseLocksExemptions()</pre>
-<div class="block">Returns the set of <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>objects</code></a> that are to be treated as exemptions to the <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#isAutoReleaseLocksEnabled--"><code>isAutoReleaseLocksEnabled()</code></a> option.
+<pre class="methodSignature">java.util.Set&lt;? extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&gt;&nbsp;getAutoReleaseLocksExemptions()</pre>
+<div class="block">Returns the set of <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>objects</code></a> that are to be treated as exemptions to the <a href="#isAutoReleaseLocksEnabled()"><code>isAutoReleaseLocksEnabled()</code></a> option.
  <p>
  That means:
  <p>
  <ul>
- <li> If <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#isAutoReleaseLocksEnabled--"><code>isAutoReleaseLocksEnabled()</code></a> returns <code>true</code>, the locks on the objects in this set are <b>not</b> released
-      when <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit--"><code>CDOUserTransaction.commit()</code></a> or <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#rollback--"><code>CDOUserTransaction.rollback()</code></a> are called.
- <li> If <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#isAutoReleaseLocksEnabled--"><code>isAutoReleaseLocksEnabled()</code></a> returns <code>false</code>, the locks on the objects in this set <b>are</b> released nevertheless
-      when <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit--"><code>CDOUserTransaction.commit()</code></a> or <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#rollback--"><code>CDOUserTransaction.rollback()</code></a> are called.
+ <li> If <a href="#isAutoReleaseLocksEnabled()"><code>isAutoReleaseLocksEnabled()</code></a> returns <code>true</code>, the locks on the objects in this set are <b>not</b> released
+      when <a href="CDOUserTransaction.html#commit()"><code>CDOUserTransaction.commit()</code></a> or <a href="CDOUserTransaction.html#rollback()"><code>CDOUserTransaction.rollback()</code></a> are called.
+ <li> If <a href="#isAutoReleaseLocksEnabled()"><code>isAutoReleaseLocksEnabled()</code></a> returns <code>false</code>, the locks on the objects in this set <b>are</b> released nevertheless
+      when <a href="CDOUserTransaction.html#commit()"><code>CDOUserTransaction.commit()</code></a> or <a href="CDOUserTransaction.html#rollback()"><code>CDOUserTransaction.rollback()</code></a> are called.
  </ul>
  <p>
- The returned set is unmodifiable. To modify the set use the <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#clearAutoReleaseLocksExemptions--"><code>clearAutoReleaseLocksExemptions()</code></a>,
- <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#addAutoReleaseLocksExemptions-boolean-org.eclipse.emf.ecore.EObject...-"><code>addAutoReleaseLocksExemption()</code></a>,
- and <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#removeAutoReleaseLocksExemptions-boolean-org.eclipse.emf.ecore.EObject...-"><code>removeAutoReleaseLocksExemption()</code></a> methods.
+ The returned set is unmodifiable. To modify the set use the <a href="#clearAutoReleaseLocksExemptions()"><code>clearAutoReleaseLocksExemptions()</code></a>,
+ <a href="#addAutoReleaseLocksExemptions(boolean,org.eclipse.emf.ecore.EObject...)"><code>addAutoReleaseLocksExemption()</code></a>,
+ and <a href="#removeAutoReleaseLocksExemptions(boolean,org.eclipse.emf.ecore.EObject...)"><code>removeAutoReleaseLocksExemption()</code></a> methods.
  <p>
  <b>Implementation note</b>: This set stores weak references to the contained objects.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.6</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#clearAutoReleaseLocksExemptions--"><code>clearAutoReleaseLocksExemptions()</code></a>, 
-<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#addAutoReleaseLocksExemptions-boolean-org.eclipse.emf.ecore.EObject...-"><code>addAutoReleaseLocksExemptions(boolean, EObject...)</code></a>, 
-<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#removeAutoReleaseLocksExemptions-boolean-org.eclipse.emf.ecore.EObject...-"><code>removeAutoReleaseLocksExemptions(boolean, EObject...)</code></a></dd>
+<dd><a href="#clearAutoReleaseLocksExemptions()"><code>clearAutoReleaseLocksExemptions()</code></a>, 
+<a href="#addAutoReleaseLocksExemptions(boolean,org.eclipse.emf.ecore.EObject...)"><code>addAutoReleaseLocksExemptions(boolean, EObject...)</code></a>, 
+<a href="#removeAutoReleaseLocksExemptions(boolean,org.eclipse.emf.ecore.EObject...)"><code>removeAutoReleaseLocksExemptions(boolean, EObject...)</code></a></dd>
 </dl>
 </li>
 </ul>
-<a name="isAutoReleaseLocksExemption-org.eclipse.emf.ecore.EObject-">
+<a id="isAutoReleaseLocksExemption(org.eclipse.emf.ecore.EObject)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>isAutoReleaseLocksExemption</h4>
-<pre>boolean&nbsp;isAutoReleaseLocksExemption(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&nbsp;object)</pre>
-<div class="block">Returns <code>true</code> if the given object is treated as an exemption to the <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#isAutoReleaseLocksEnabled--"><code>isAutoReleaseLocksEnabled()</code></a> option,
+<pre class="methodSignature">boolean&nbsp;isAutoReleaseLocksExemption&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&nbsp;object)</pre>
+<div class="block">Returns <code>true</code> if the given object is treated as an exemption to the <a href="#isAutoReleaseLocksEnabled()"><code>isAutoReleaseLocksEnabled()</code></a> option,
  <code>false</code> otherwise.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.6</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#getAutoReleaseLocksExemptions--"><code>getAutoReleaseLocksExemptions()</code></a></dd>
+<dd><a href="#getAutoReleaseLocksExemptions()"><code>getAutoReleaseLocksExemptions()</code></a></dd>
 </dl>
 </li>
 </ul>
-<a name="clearAutoReleaseLocksExemptions--">
+<a id="clearAutoReleaseLocksExemptions()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>clearAutoReleaseLocksExemptions</h4>
-<pre>void&nbsp;clearAutoReleaseLocksExemptions()</pre>
-<div class="block">Clears the set of <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>objects</code></a> that are to be treated as exemptions to the <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#isAutoReleaseLocksEnabled--"><code>isAutoReleaseLocksEnabled()</code></a> option.</div>
+<pre class="methodSignature">void&nbsp;clearAutoReleaseLocksExemptions()</pre>
+<div class="block">Clears the set of <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>objects</code></a> that are to be treated as exemptions to the <a href="#isAutoReleaseLocksEnabled()"><code>isAutoReleaseLocksEnabled()</code></a> option.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.6</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#getAutoReleaseLocksExemptions--"><code>getAutoReleaseLocksExemptions()</code></a>, 
-<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#addAutoReleaseLocksExemptions-boolean-org.eclipse.emf.ecore.EObject...-"><code>addAutoReleaseLocksExemptions(boolean, EObject...)</code></a>, 
-<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#removeAutoReleaseLocksExemptions-boolean-org.eclipse.emf.ecore.EObject...-"><code>removeAutoReleaseLocksExemptions(boolean, EObject...)</code></a></dd>
+<dd><a href="#getAutoReleaseLocksExemptions()"><code>getAutoReleaseLocksExemptions()</code></a>, 
+<a href="#addAutoReleaseLocksExemptions(boolean,org.eclipse.emf.ecore.EObject...)"><code>addAutoReleaseLocksExemptions(boolean, EObject...)</code></a>, 
+<a href="#removeAutoReleaseLocksExemptions(boolean,org.eclipse.emf.ecore.EObject...)"><code>removeAutoReleaseLocksExemptions(boolean, EObject...)</code></a></dd>
 </dl>
 </li>
 </ul>
-<a name="addAutoReleaseLocksExemptions-boolean-org.eclipse.emf.ecore.EObject...-">
+<a id="addAutoReleaseLocksExemptions(boolean,org.eclipse.emf.ecore.EObject...)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>addAutoReleaseLocksExemptions</h4>
-<pre>void&nbsp;addAutoReleaseLocksExemptions(boolean&nbsp;recursive,
-                                   <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>...&nbsp;objects)</pre>
-<div class="block">Adds the given <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>object</code></a> to the set of objects that are to be treated as exemptions to the <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#isAutoReleaseLocksEnabled--"><code>isAutoReleaseLocksEnabled()</code></a> option.</div>
+<pre class="methodSignature">void&nbsp;addAutoReleaseLocksExemptions&#8203;(boolean&nbsp;recursive,
+                                   <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>...&nbsp;objects)</pre>
+<div class="block">Adds the given <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>object</code></a> to the set of objects that are to be treated as exemptions to the <a href="#isAutoReleaseLocksEnabled()"><code>isAutoReleaseLocksEnabled()</code></a> option.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.6</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#getAutoReleaseLocksExemptions--"><code>getAutoReleaseLocksExemptions()</code></a>, 
-<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#clearAutoReleaseLocksExemptions--"><code>clearAutoReleaseLocksExemptions()</code></a>, 
-<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#removeAutoReleaseLocksExemptions-boolean-org.eclipse.emf.ecore.EObject...-"><code>removeAutoReleaseLocksExemptions(boolean, EObject...)</code></a></dd>
+<dd><a href="#getAutoReleaseLocksExemptions()"><code>getAutoReleaseLocksExemptions()</code></a>, 
+<a href="#clearAutoReleaseLocksExemptions()"><code>clearAutoReleaseLocksExemptions()</code></a>, 
+<a href="#removeAutoReleaseLocksExemptions(boolean,org.eclipse.emf.ecore.EObject...)"><code>removeAutoReleaseLocksExemptions(boolean, EObject...)</code></a></dd>
 </dl>
 </li>
 </ul>
-<a name="removeAutoReleaseLocksExemptions-boolean-org.eclipse.emf.ecore.EObject...-">
+<a id="removeAutoReleaseLocksExemptions(boolean,org.eclipse.emf.ecore.EObject...)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>removeAutoReleaseLocksExemptions</h4>
-<pre>void&nbsp;removeAutoReleaseLocksExemptions(boolean&nbsp;recursive,
-                                      <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>...&nbsp;objects)</pre>
-<div class="block">Removes the given <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>object</code></a> from the set of objects that are to be treated as exemptions to the <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#isAutoReleaseLocksEnabled--"><code>isAutoReleaseLocksEnabled()</code></a> option.</div>
+<pre class="methodSignature">void&nbsp;removeAutoReleaseLocksExemptions&#8203;(boolean&nbsp;recursive,
+                                      <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>...&nbsp;objects)</pre>
+<div class="block">Removes the given <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>object</code></a> from the set of objects that are to be treated as exemptions to the <a href="#isAutoReleaseLocksEnabled()"><code>isAutoReleaseLocksEnabled()</code></a> option.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.6</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#getAutoReleaseLocksExemptions--"><code>getAutoReleaseLocksExemptions()</code></a>, 
-<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#clearAutoReleaseLocksExemptions--"><code>clearAutoReleaseLocksExemptions()</code></a>, 
-<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#addAutoReleaseLocksExemptions-boolean-org.eclipse.emf.ecore.EObject...-"><code>addAutoReleaseLocksExemptions(boolean, EObject...)</code></a></dd>
+<dd><a href="#getAutoReleaseLocksExemptions()"><code>getAutoReleaseLocksExemptions()</code></a>, 
+<a href="#clearAutoReleaseLocksExemptions()"><code>clearAutoReleaseLocksExemptions()</code></a>, 
+<a href="#addAutoReleaseLocksExemptions(boolean,org.eclipse.emf.ecore.EObject...)"><code>addAutoReleaseLocksExemptions(boolean, EObject...)</code></a></dd>
 </dl>
 </li>
 </ul>
-<a name="getAttachedRevisionsMap--">
+<a id="getAttachedRevisionsMap()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getAttachedRevisionsMap</h4>
-<pre>java.util.Map&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&nbsp;getAttachedRevisionsMap()</pre>
-<div class="block">Returns a map which, if non-<code>null</code>, stores copies of the initial <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> of newly attached objects.</div>
+<pre class="methodSignature">java.util.Map&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,&#8203;<a href="../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&nbsp;getAttachedRevisionsMap()</pre>
+<div class="block">Returns a map which, if non-<code>null</code>, stores copies of the initial <a href="../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> of newly attached objects.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.8</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#setAttachedRevisionsMap-java.util.Map-"><code>setAttachedRevisionsMap(Map)</code></a></dd>
+<dd><a href="#setAttachedRevisionsMap(java.util.Map)"><code>setAttachedRevisionsMap(Map)</code></a></dd>
 </dl>
 </li>
 </ul>
-<a name="setAttachedRevisionsMap-java.util.Map-">
+<a id="setAttachedRevisionsMap(java.util.Map)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setAttachedRevisionsMap</h4>
-<pre>void&nbsp;setAttachedRevisionsMap(java.util.Map&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&nbsp;attachedRevisionsMap)</pre>
-<div class="block">Sets a map which, if non-<code>null</code>, stores copies of the initial <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> of newly attached objects,
+<pre class="methodSignature">void&nbsp;setAttachedRevisionsMap&#8203;(java.util.Map&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,&#8203;<a href="../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&nbsp;attachedRevisionsMap)</pre>
+<div class="block">Sets a map which, if non-<code>null</code>, stores copies of the initial <a href="../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> of newly attached objects,
  so that these objects can and will be rolled back to the model values they had at attachment time. If this map is <code>null</code>
  newly attached objects will keep the model values they have at rollback time. Note that remembering copies of all newly attached objects
  can impose resource problems when many objects are attached, e.g., during larger imports.</div>
@@ -731,14 +802,14 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html" t
 </dl>
 </li>
 </ul>
-<a name="getCommitInfoTimeout--">
+<a id="getCommitInfoTimeout()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getCommitInfoTimeout</h4>
-<pre>long&nbsp;getCommitInfoTimeout()</pre>
-<div class="block">Returns the number of milliseconds to wait for the transaction update when <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit--"><code>CDOUserTransaction.commit()</code></a> is called.
+<pre class="methodSignature">long&nbsp;getCommitInfoTimeout()</pre>
+<div class="block">Returns the number of milliseconds to wait for the transaction update when <a href="CDOUserTransaction.html#commit()"><code>CDOUserTransaction.commit()</code></a> is called.
  <p>
  Default value is 10000.</div>
 <dl>
@@ -747,14 +818,14 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html" t
 </dl>
 </li>
 </ul>
-<a name="setCommitInfoTimeout-long-">
+<a id="setCommitInfoTimeout(long)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>setCommitInfoTimeout</h4>
-<pre>void&nbsp;setCommitInfoTimeout(long&nbsp;commitInfoTimeout)</pre>
-<div class="block">Specifies the number of milliseconds to wait for the transaction update when <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit--"><code>CDOUserTransaction.commit()</code></a> is called.
+<pre class="methodSignature">void&nbsp;setCommitInfoTimeout&#8203;(long&nbsp;commitInfoTimeout)</pre>
+<div class="block">Specifies the number of milliseconds to wait for the transaction update when <a href="CDOUserTransaction.html#commit()"><code>CDOUserTransaction.commit()</code></a> is called.
  <p>
  Default value is 10000.</div>
 <dl>
@@ -765,21 +836,25 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html" t
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/CDOTransaction.Options.html">Use</a></li>
@@ -789,16 +864,8 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html" t
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.CommitResult.html" title="class in org.eclipse.emf.cdo.transaction"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.AttachedRevisionsMap.html" title="interface in org.eclipse.emf.cdo.transaction"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html" target="_top">Frames</a></li>
-<li><a href="CDOTransaction.Options.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -811,6 +878,9 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html" t
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -827,10 +897,12 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html" t
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

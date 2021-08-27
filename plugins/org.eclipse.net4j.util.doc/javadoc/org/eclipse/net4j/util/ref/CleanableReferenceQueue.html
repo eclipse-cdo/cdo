@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>CleanableReferenceQueue (Net4j Utilities Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":6,"i2":6,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10};
+var data = {"i0":10,"i1":6,"i2":6,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/CleanableReferenceQueue.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev&nbsp;Class</li>
-<li><a href="../../../../../org/eclipse/net4j/util/ref/Interner.html" title="class in org.eclipse.net4j.util.ref"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/net4j/util/ref/CleanableReferenceQueue.html" target="_top">Frames</a></li>
-<li><a href="CleanableReferenceQueue.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,6 +82,9 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -85,13 +101,22 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.net4j.util.ref</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.net4j.util.ref</a></div>
 <h2 title="Class CleanableReferenceQueue" class="title">Class CleanableReferenceQueue&lt;T&gt;</h2>
 </div>
 <div class="contentContainer">
@@ -112,7 +137,6 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<br>
 <pre>public abstract class <span class="typeNameLabel">CleanableReferenceQueue&lt;T&gt;</span>
 extends java.lang.ref.ReferenceQueue&lt;T&gt;</pre>
 <dl>
@@ -128,103 +152,123 @@ extends java.lang.ref.ReferenceQueue&lt;T&gt;</pre>
 <ul class="blockList">
 <li class="blockList">
 <!-- =========== FIELD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.summary">
+<li class="blockList"><a id="field.summary">
 <!--   -->
 </a>
 <h3>Field Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Field Summary table, listing fields, and an explanation">
+<table class="memberSummary">
 <caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Field and Description</th>
+<th class="colSecond" scope="col">Field</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/ref/CleanableReferenceQueue.html#ALL_WORK_PER_POLL">ALL_WORK_PER_POLL</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ALL_WORK_PER_POLL">ALL_WORK_PER_POLL</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/ref/CleanableReferenceQueue.html#DEFAULT_MAX_WORK_PER_POLL">DEFAULT_MAX_WORK_PER_POLL</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#DEFAULT_MAX_WORK_PER_POLL">DEFAULT_MAX_WORK_PER_POLL</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/ref/CleanableReferenceQueue.html#DEFAULT_POLL_MILLIS">DEFAULT_POLL_MILLIS</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#DEFAULT_POLL_MILLIS">DEFAULT_POLL_MILLIS</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.summary">
+<li class="blockList"><a id="constructor.summary">
 <!--   -->
 </a>
 <h3>Constructor Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
+<table class="memberSummary">
 <caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Constructor and Description</th>
+<th class="colFirst" scope="col">Constructor</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/ref/CleanableReferenceQueue.html#CleanableReferenceQueue--">CleanableReferenceQueue</a></span>()</code>&nbsp;</td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">CleanableReferenceQueue</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/ref/CleanableReferenceQueue.html#clean--">clean</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clean()">clean</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>protected abstract void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/ref/CleanableReferenceQueue.html#cleanReference-java.lang.ref.Reference-">cleanReference</a></span>(java.lang.ref.Reference&lt;? extends <a href="../../../../../org/eclipse/net4j/util/ref/CleanableReferenceQueue.html" title="type parameter in CleanableReferenceQueue">T</a>&gt;&nbsp;reference)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#cleanReference(java.lang.ref.Reference)">cleanReference</a></span>&#8203;(java.lang.ref.Reference&lt;? extends <a href="CleanableReferenceQueue.html" title="type parameter in CleanableReferenceQueue">T</a>&gt;&nbsp;reference)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>protected abstract java.lang.ref.Reference&lt;<a href="../../../../../org/eclipse/net4j/util/ref/CleanableReferenceQueue.html" title="type parameter in CleanableReferenceQueue">T</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/ref/CleanableReferenceQueue.html#createReference-T-">createReference</a></span>(<a href="../../../../../org/eclipse/net4j/util/ref/CleanableReferenceQueue.html" title="type parameter in CleanableReferenceQueue">T</a>&nbsp;object)</code>&nbsp;</td>
+<td class="colFirst"><code>protected abstract java.lang.ref.Reference&lt;<a href="CleanableReferenceQueue.html" title="type parameter in CleanableReferenceQueue">T</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createReference(T)">createReference</a></span>&#8203;(<a href="CleanableReferenceQueue.html" title="type parameter in CleanableReferenceQueue">T</a>&nbsp;object)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/ref/CleanableReferenceQueue.html#getMaxWorkPerPoll--">getMaxWorkPerPoll</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMaxWorkPerPoll()">getMaxWorkPerPoll</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>long</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/ref/CleanableReferenceQueue.html#getPollMillis--">getPollMillis</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPollMillis()">getPollMillis</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/ref/CleanableReferenceQueue.html#register-T-">register</a></span>(<a href="../../../../../org/eclipse/net4j/util/ref/CleanableReferenceQueue.html" title="type parameter in CleanableReferenceQueue">T</a>&nbsp;object)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#register(T)">register</a></span>&#8203;(<a href="CleanableReferenceQueue.html" title="type parameter in CleanableReferenceQueue">T</a>&nbsp;object)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/ref/CleanableReferenceQueue.html#setMaxWorkPerPoll-int-">setMaxWorkPerPoll</a></span>(int&nbsp;maxWorkPerPoll)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setMaxWorkPerPoll(int)">setMaxWorkPerPoll</a></span>&#8203;(int&nbsp;maxWorkPerPoll)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/ref/CleanableReferenceQueue.html#setPollMillis-long-">setPollMillis</a></span>(long&nbsp;pollMillis)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPollMillis(long)">setPollMillis</a></span>&#8203;(long&nbsp;pollMillis)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.ref.ReferenceQueue">
+<li class="blockList"><a id="methods.inherited.from.class.java.lang.ref.ReferenceQueue">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.ref.ReferenceQueue</h3>
 <code>poll, remove, remove</code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
+<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
@@ -232,6 +276,7 @@ extends java.lang.ref.ReferenceQueue&lt;T&gt;</pre>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -239,12 +284,13 @@ extends java.lang.ref.ReferenceQueue&lt;T&gt;</pre>
 <ul class="blockList">
 <li class="blockList">
 <!-- ============ FIELD DETAIL =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.detail">
+<li class="blockList"><a id="field.detail">
 <!--   -->
 </a>
 <h3>Field Detail</h3>
-<a name="ALL_WORK_PER_POLL">
+<a id="ALL_WORK_PER_POLL">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -257,7 +303,7 @@ extends java.lang.ref.ReferenceQueue&lt;T&gt;</pre>
 </dl>
 </li>
 </ul>
-<a name="DEFAULT_MAX_WORK_PER_POLL">
+<a id="DEFAULT_MAX_WORK_PER_POLL">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -270,7 +316,7 @@ extends java.lang.ref.ReferenceQueue&lt;T&gt;</pre>
 </dl>
 </li>
 </ul>
-<a name="DEFAULT_POLL_MILLIS">
+<a id="DEFAULT_POLL_MILLIS">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -285,13 +331,15 @@ extends java.lang.ref.ReferenceQueue&lt;T&gt;</pre>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.detail">
+<li class="blockList"><a id="constructor.detail">
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="CleanableReferenceQueue--">
+<a id="&lt;init&gt;()">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -302,105 +350,111 @@ extends java.lang.ref.ReferenceQueue&lt;T&gt;</pre>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="getPollMillis--">
+<a id="getPollMillis()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getPollMillis</h4>
-<pre>public final&nbsp;long&nbsp;getPollMillis()</pre>
+<pre class="methodSignature">public final&nbsp;long&nbsp;getPollMillis()</pre>
 </li>
 </ul>
-<a name="setPollMillis-long-">
+<a id="setPollMillis(long)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setPollMillis</h4>
-<pre>public final&nbsp;void&nbsp;setPollMillis(long&nbsp;pollMillis)</pre>
+<pre class="methodSignature">public final&nbsp;void&nbsp;setPollMillis&#8203;(long&nbsp;pollMillis)</pre>
 </li>
 </ul>
-<a name="getMaxWorkPerPoll--">
+<a id="getMaxWorkPerPoll()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getMaxWorkPerPoll</h4>
-<pre>public final&nbsp;int&nbsp;getMaxWorkPerPoll()</pre>
+<pre class="methodSignature">public final&nbsp;int&nbsp;getMaxWorkPerPoll()</pre>
 </li>
 </ul>
-<a name="setMaxWorkPerPoll-int-">
+<a id="setMaxWorkPerPoll(int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setMaxWorkPerPoll</h4>
-<pre>public final&nbsp;void&nbsp;setMaxWorkPerPoll(int&nbsp;maxWorkPerPoll)</pre>
+<pre class="methodSignature">public final&nbsp;void&nbsp;setMaxWorkPerPoll&#8203;(int&nbsp;maxWorkPerPoll)</pre>
 </li>
 </ul>
-<a name="register-java.lang.Object-">
+<a id="register(java.lang.Object)">
 <!--   -->
-</a><a name="register-T-">
+</a><a id="register(T)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>register</h4>
-<pre>public final&nbsp;void&nbsp;register(<a href="../../../../../org/eclipse/net4j/util/ref/CleanableReferenceQueue.html" title="type parameter in CleanableReferenceQueue">T</a>&nbsp;object)</pre>
+<pre class="methodSignature">public final&nbsp;void&nbsp;register&#8203;(<a href="CleanableReferenceQueue.html" title="type parameter in CleanableReferenceQueue">T</a>&nbsp;object)</pre>
 </li>
 </ul>
-<a name="clean--">
+<a id="clean()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>clean</h4>
-<pre>public final&nbsp;void&nbsp;clean()</pre>
+<pre class="methodSignature">public final&nbsp;void&nbsp;clean()</pre>
 </li>
 </ul>
-<a name="cleanReference-java.lang.ref.Reference-">
+<a id="cleanReference(java.lang.ref.Reference)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>cleanReference</h4>
-<pre>protected abstract&nbsp;void&nbsp;cleanReference(java.lang.ref.Reference&lt;? extends <a href="../../../../../org/eclipse/net4j/util/ref/CleanableReferenceQueue.html" title="type parameter in CleanableReferenceQueue">T</a>&gt;&nbsp;reference)</pre>
+<pre class="methodSignature">protected abstract&nbsp;void&nbsp;cleanReference&#8203;(java.lang.ref.Reference&lt;? extends <a href="CleanableReferenceQueue.html" title="type parameter in CleanableReferenceQueue">T</a>&gt;&nbsp;reference)</pre>
 </li>
 </ul>
-<a name="createReference-java.lang.Object-">
+<a id="createReference(java.lang.Object)">
 <!--   -->
-</a><a name="createReference-T-">
+</a><a id="createReference(T)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>createReference</h4>
-<pre>protected abstract&nbsp;java.lang.ref.Reference&lt;<a href="../../../../../org/eclipse/net4j/util/ref/CleanableReferenceQueue.html" title="type parameter in CleanableReferenceQueue">T</a>&gt;&nbsp;createReference(<a href="../../../../../org/eclipse/net4j/util/ref/CleanableReferenceQueue.html" title="type parameter in CleanableReferenceQueue">T</a>&nbsp;object)</pre>
+<pre class="methodSignature">protected abstract&nbsp;java.lang.ref.Reference&lt;<a href="CleanableReferenceQueue.html" title="type parameter in CleanableReferenceQueue">T</a>&gt;&nbsp;createReference&#8203;(<a href="CleanableReferenceQueue.html" title="type parameter in CleanableReferenceQueue">T</a>&nbsp;object)</pre>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/CleanableReferenceQueue.html">Use</a></li>
@@ -410,16 +464,8 @@ extends java.lang.ref.ReferenceQueue&lt;T&gt;</pre>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev&nbsp;Class</li>
-<li><a href="../../../../../org/eclipse/net4j/util/ref/Interner.html" title="class in org.eclipse.net4j.util.ref"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/net4j/util/ref/CleanableReferenceQueue.html" target="_top">Frames</a></li>
-<li><a href="CleanableReferenceQueue.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -432,6 +478,9 @@ extends java.lang.ref.ReferenceQueue&lt;T&gt;</pre>
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -448,10 +497,12 @@ extends java.lang.ref.ReferenceQueue&lt;T&gt;</pre>
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

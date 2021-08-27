@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>CDOSessionProtocol.CommitTransactionResult (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/CDOSessionProtocol.CommitTransactionResult.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.html" title="interface in org.eclipse.emf.spi.cdo"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.PostCommitReferenceAdjuster.html" title="class in org.eclipse.emf.spi.cdo"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html" target="_top">Frames</a></li>
-<li><a href="CDOSessionProtocol.CommitTransactionResult.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,12 +82,15 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
@@ -85,13 +101,22 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.emf.spi.cdo</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.spi.cdo</a></div>
 <h2 title="Class CDOSessionProtocol.CommitTransactionResult" class="title">Class CDOSessionProtocol.CommitTransactionResult</h2>
 </div>
 <div class="contentContainer">
@@ -108,17 +133,16 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>, <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchProvider.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchProvider</a>, <a href="../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a></dd>
+<dd><code><a href="../../cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a></code>, <code><a href="../../cdo/common/branch/CDOBranchProvider.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchProvider</a></code>, <code><a href="../../cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a></code></dd>
 </dl>
 <dl>
 <dt>Enclosing interface:</dt>
-<dd><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.html" title="interface in org.eclipse.emf.spi.cdo">CDOSessionProtocol</a></dd>
+<dd><a href="CDOSessionProtocol.html" title="interface in org.eclipse.emf.spi.cdo">CDOSessionProtocol</a></dd>
 </dl>
 <hr>
-<br>
 <pre>public static final class <span class="typeNameLabel">CDOSessionProtocol.CommitTransactionResult</span>
 extends java.lang.Object
-implements <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a></pre>
+implements <a href="../../cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a></pre>
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -133,236 +157,280 @@ implements <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPo
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="nested.class.summary">
+<li class="blockList"><a id="nested.class.summary">
 <!--   -->
 </a>
 <h3>Nested Class Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Nested Class Summary table, listing nested classes, and an explanation">
+<table class="memberSummary">
 <caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Class and Description</th>
+<th class="colSecond" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected static class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.PostCommitReferenceAdjuster.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.CommitTransactionResult.PostCommitReferenceAdjuster</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CDOSessionProtocol.CommitTransactionResult.PostCommitReferenceAdjuster.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.CommitTransactionResult.PostCommitReferenceAdjuster</a></span></code></th>
+<td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- =========== FIELD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.summary">
+<li class="blockList"><a id="field.summary">
 <!--   -->
 </a>
 <h3>Field Summary</h3>
 <ul class="blockList">
-<li class="blockList"><a name="fields.inherited.from.class.org.eclipse.emf.cdo.common.branch.CDOBranchPoint">
+<li class="blockList"><a id="fields.inherited.from.class.org.eclipse.emf.cdo.common.branch.CDOBranchPoint">
 <!--   -->
 </a>
-<h3>Fields inherited from interface&nbsp;org.eclipse.emf.cdo.common.branch.<a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a></h3>
-<code><a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#INVALID_DATE">INVALID_DATE</a>, <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#UNSPECIFIED_DATE">UNSPECIFIED_DATE</a></code></li>
+<h3>Fields inherited from interface&nbsp;org.eclipse.emf.cdo.common.branch.<a href="../../cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a></h3>
+<code><a href="../../cdo/common/branch/CDOBranchPoint.html#INVALID_DATE">INVALID_DATE</a>, <a href="../../cdo/common/branch/CDOBranchPoint.html#UNSPECIFIED_DATE">UNSPECIFIED_DATE</a></code></li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.summary">
+<li class="blockList"><a id="constructor.summary">
 <!--   -->
 </a>
 <h3>Constructor Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
+<table class="memberSummary">
 <caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Constructor and Description</th>
+<th class="colFirst" scope="col">Constructor</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html#CommitTransactionResult--">CommitTransactionResult</a></span>()</code>&nbsp;</td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">CommitTransactionResult</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html#CommitTransactionResult-org.eclipse.emf.cdo.common.id.CDOIDProvider-byte-java.lang.String-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-long-java.util.List-boolean-">CommitTransactionResult</a></span>(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOIDProvider.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDProvider</a>&nbsp;idProvider,
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(org.eclipse.emf.cdo.common.id.CDOIDProvider,byte,java.lang.String,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,long,java.util.List,boolean)">CommitTransactionResult</a></span>&#8203;(<a href="../../cdo/common/id/CDOIDProvider.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDProvider</a>&nbsp;idProvider,
                        byte&nbsp;rollbackReason,
                        java.lang.String&nbsp;rollbackMessage,
-                       <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+                       <a href="../../cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
                        long&nbsp;previousTimeStamp,
-                       java.util.List&lt;<a href="../../../../../org/eclipse/emf/cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo">CDOObjectReference</a>&gt;&nbsp;xRefs,
-                       boolean&nbsp;clearResourcePathCache)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">As of 4.3</span></div>
+                       java.util.List&lt;<a href="../../cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo">CDOObjectReference</a>&gt;&nbsp;xRefs,
+                       boolean&nbsp;clearResourcePathCache)</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.3</div>
 </div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html#CommitTransactionResult-org.eclipse.emf.cdo.common.id.CDOIDProvider-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-long-">CommitTransactionResult</a></span>(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOIDProvider.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDProvider</a>&nbsp;idProvider,
-                       <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
-                       long&nbsp;previousTimeStamp)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">As of 4.2</span></div>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(org.eclipse.emf.cdo.common.id.CDOIDProvider,java.lang.String,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,long,java.util.List)">CommitTransactionResult</a></span>&#8203;(<a href="../../cdo/common/id/CDOIDProvider.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDProvider</a>&nbsp;idProvider,
+                       java.lang.String&nbsp;rollbackMessage,
+                       <a href="../../cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+                       long&nbsp;previousTimeStamp,
+                       java.util.List&lt;<a href="../../cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo">CDOObjectReference</a>&gt;&nbsp;xRefs)</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.2</div>
 </div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html#CommitTransactionResult-org.eclipse.emf.cdo.common.id.CDOIDProvider-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-long-boolean-">CommitTransactionResult</a></span>(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOIDProvider.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDProvider</a>&nbsp;idProvider,
-                       <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
-                       long&nbsp;previousTimeStamp,
-                       boolean&nbsp;clearResourcePathCache)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">As of 4.3</span></div>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(org.eclipse.emf.cdo.common.id.CDOIDProvider,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,long)">CommitTransactionResult</a></span>&#8203;(<a href="../../cdo/common/id/CDOIDProvider.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDProvider</a>&nbsp;idProvider,
+                       <a href="../../cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+                       long&nbsp;previousTimeStamp)</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.2</div>
 </div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html#CommitTransactionResult-org.eclipse.emf.cdo.common.id.CDOIDProvider-java.lang.String-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-long-java.util.List-">CommitTransactionResult</a></span>(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOIDProvider.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDProvider</a>&nbsp;idProvider,
-                       java.lang.String&nbsp;rollbackMessage,
-                       <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(org.eclipse.emf.cdo.common.id.CDOIDProvider,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,long,boolean)">CommitTransactionResult</a></span>&#8203;(<a href="../../cdo/common/id/CDOIDProvider.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDProvider</a>&nbsp;idProvider,
+                       <a href="../../cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
                        long&nbsp;previousTimeStamp,
-                       java.util.List&lt;<a href="../../../../../org/eclipse/emf/cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo">CDOObjectReference</a>&gt;&nbsp;xRefs)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">As of 4.2</span></div>
+                       boolean&nbsp;clearResourcePathCache)</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.3</div>
 </div>
 </td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html#addIDMapping-org.eclipse.emf.cdo.common.id.CDOID-org.eclipse.emf.cdo.common.id.CDOID-">addIDMapping</a></span>(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;oldID,
-            <a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;newID)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addIDMapping(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.id.CDOID)">addIDMapping</a></span>&#8203;(<a href="../../cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;oldID,
+            <a href="../../cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;newID)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html#addNewPermission-org.eclipse.emf.cdo.common.id.CDOID-org.eclipse.emf.cdo.common.security.CDOPermission-">addNewPermission</a></span>(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
-                <a href="../../../../../org/eclipse/emf/cdo/common/security/CDOPermission.html" title="enum in org.eclipse.emf.cdo.common.security">CDOPermission</a>&nbsp;permission)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addNewPermission(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.security.CDOPermission)">addNewPermission</a></span>&#8203;(<a href="../../cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+                <a href="../../cdo/common/security/CDOPermission.html" title="enum in org.eclipse.emf.cdo.common.security">CDOPermission</a>&nbsp;permission)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>protected <a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.PostCommitReferenceAdjuster.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.CommitTransactionResult.PostCommitReferenceAdjuster</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html#createReferenceAdjuster--">createReferenceAdjuster</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="CDOSessionProtocol.CommitTransactionResult.PostCommitReferenceAdjuster.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.CommitTransactionResult.PostCommitReferenceAdjuster</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createReferenceAdjuster()">createReferenceAdjuster</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html#getBranch--">getBranch</a></span>()</code>
+<td class="colFirst"><code><a href="../../cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getBranch()">getBranch</a></span>()</code></th>
+<td class="colLast">
 <div class="block">Returns the branch of this branch point, or <code>null</code> if this branch point is the
- <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#getBase--"><code>base</code></a> of the <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchManager.html#getMainBranch--"><code>main branch</code></a>.</div>
+ <a href="../../cdo/common/branch/CDOBranch.html#getBase()"><code>base</code></a> of the <a href="../../cdo/common/branch/CDOBranchManager.html#getMainBranch()"><code>main branch</code></a>.</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>java.util.Map&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html#getIDMappings--">getIDMappings</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>java.util.Map&lt;<a href="../../cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,&#8203;<a href="../../cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIDMappings()">getIDMappings</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/common/id/CDOIDProvider.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDProvider</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html#getIDProvider--">getIDProvider</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../../cdo/common/id/CDOIDProvider.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDProvider</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIDProvider()">getIDProvider</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocol.CommitData.html" title="class in org.eclipse.emf.cdo.common.protocol">CDOProtocol.CommitData</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html#getNewCommitData--">getNewCommitData</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../../cdo/common/protocol/CDOProtocol.CommitData.html" title="class in org.eclipse.emf.cdo.common.protocol">CDOProtocol.CommitData</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNewCommitData()">getNewCommitData</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/common/lock/CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a>[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html#getNewLockStates--">getNewLockStates</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../../cdo/common/lock/CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a>[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNewLockStates()">getNewLockStates</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
-<td class="colFirst"><code>java.util.Map&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="../../../../../org/eclipse/emf/cdo/common/security/CDOPermission.html" title="enum in org.eclipse.emf.cdo.common.security">CDOPermission</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html#getNewPermissions--">getNewPermissions</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>java.util.Map&lt;<a href="../../cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,&#8203;<a href="../../cdo/common/security/CDOPermission.html" title="enum in org.eclipse.emf.cdo.common.security">CDOPermission</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNewPermissions()">getNewPermissions</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>long</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html#getPreviousTimeStamp--">getPreviousTimeStamp</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPreviousTimeStamp()">getPreviousTimeStamp</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/spi/common/revision/CDOReferenceAdjuster.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">CDOReferenceAdjuster</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html#getReferenceAdjuster--">getReferenceAdjuster</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../../cdo/spi/common/revision/CDOReferenceAdjuster.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">CDOReferenceAdjuster</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getReferenceAdjuster()">getReferenceAdjuster</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html#getRollbackMessage--">getRollbackMessage</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRollbackMessage()">getRollbackMessage</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code>byte</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html#getRollbackReason--">getRollbackReason</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRollbackReason()">getRollbackReason</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code>byte</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html#getSecurityImpact--">getSecurityImpact</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSecurityImpact()">getSecurityImpact</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code>long</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html#getTimeStamp--">getTimeStamp</a></span>()</code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTimeStamp()">getTimeStamp</a></span>()</code></th>
+<td class="colLast">
 <div class="block">Returns the time stamp of this branch point, or the fixed special time stamp <i>
- <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#UNSPECIFIED_DATE"><code>unspecified</code></a></i> if this branch point marks the <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#getHead--"><code>head</code></a> of a branch.</div>
+ <a href="../../cdo/common/branch/CDOBranchPoint.html#UNSPECIFIED_DATE"><code>unspecified</code></a></i> if this branch point marks the <a href="../../cdo/common/branch/CDOBranch.html#getHead()"><code>head</code></a> of a branch.</div>
 </td>
 </tr>
 <tr id="i15" class="rowColor">
-<td class="colFirst"><code>java.util.List&lt;<a href="../../../../../org/eclipse/emf/cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo">CDOObjectReference</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html#getXRefs--">getXRefs</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>java.util.List&lt;<a href="../../cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo">CDOObjectReference</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getXRefs()">getXRefs</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i16" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html#isClearResourcePathCache--">isClearResourcePathCache</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isClearResourcePathCache()">isClearResourcePathCache</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i17" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html#setBranchPoint-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-">setBranchPoint</a></span>(<a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setBranchPoint(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">setBranchPoint</a></span>&#8203;(<a href="../../cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i18" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html#setClearResourcePathCache-boolean-">setClearResourcePathCache</a></span>(boolean&nbsp;clearResourcePathCache)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setClearResourcePathCache(boolean)">setClearResourcePathCache</a></span>&#8203;(boolean&nbsp;clearResourcePathCache)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i19" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html#setIDProvider-org.eclipse.emf.cdo.common.id.CDOIDProvider-">setIDProvider</a></span>(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOIDProvider.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDProvider</a>&nbsp;idProvider)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setIDProvider(org.eclipse.emf.cdo.common.id.CDOIDProvider)">setIDProvider</a></span>&#8203;(<a href="../../cdo/common/id/CDOIDProvider.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDProvider</a>&nbsp;idProvider)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i20" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html#setNewCommitData-org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitData-">setNewCommitData</a></span>(<a href="../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocol.CommitData.html" title="class in org.eclipse.emf.cdo.common.protocol">CDOProtocol.CommitData</a>&nbsp;newCommitData)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setNewCommitData(org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitData)">setNewCommitData</a></span>&#8203;(<a href="../../cdo/common/protocol/CDOProtocol.CommitData.html" title="class in org.eclipse.emf.cdo.common.protocol">CDOProtocol.CommitData</a>&nbsp;newCommitData)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i21" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html#setNewLockStates-org.eclipse.emf.cdo.common.lock.CDOLockState:A-">setNewLockStates</a></span>(<a href="../../../../../org/eclipse/emf/cdo/common/lock/CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a>[]&nbsp;newLockStates)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setNewLockStates(org.eclipse.emf.cdo.common.lock.CDOLockState%5B%5D)">setNewLockStates</a></span>&#8203;(<a href="../../cdo/common/lock/CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a>[]&nbsp;newLockStates)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i22" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html#setPreviousTimeStamp-long-">setPreviousTimeStamp</a></span>(long&nbsp;previousTimeStamp)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPreviousTimeStamp(long)">setPreviousTimeStamp</a></span>&#8203;(long&nbsp;previousTimeStamp)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i23" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html#setReferenceAdjuster-org.eclipse.emf.cdo.spi.common.revision.CDOReferenceAdjuster-">setReferenceAdjuster</a></span>(<a href="../../../../../org/eclipse/emf/cdo/spi/common/revision/CDOReferenceAdjuster.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">CDOReferenceAdjuster</a>&nbsp;referenceAdjuster)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setReferenceAdjuster(org.eclipse.emf.cdo.spi.common.revision.CDOReferenceAdjuster)">setReferenceAdjuster</a></span>&#8203;(<a href="../../cdo/spi/common/revision/CDOReferenceAdjuster.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">CDOReferenceAdjuster</a>&nbsp;referenceAdjuster)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i24" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html#setRollbackMessage-java.lang.String-">setRollbackMessage</a></span>(java.lang.String&nbsp;rollbackMessage)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRollbackMessage(java.lang.String)">setRollbackMessage</a></span>&#8203;(java.lang.String&nbsp;rollbackMessage)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i25" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html#setRollbackReason-byte-">setRollbackReason</a></span>(byte&nbsp;rollbackReason)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRollbackReason(byte)">setRollbackReason</a></span>&#8203;(byte&nbsp;rollbackReason)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i26" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html#setSecurityImpact-byte-">setSecurityImpact</a></span>(byte&nbsp;securityImpact)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSecurityImpact(byte)">setSecurityImpact</a></span>&#8203;(byte&nbsp;securityImpact)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i27" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html#setXRefs-java.util.List-">setXRefs</a></span>(java.util.List&lt;<a href="../../../../../org/eclipse/emf/cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo">CDOObjectReference</a>&gt;&nbsp;xRefs)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setXRefs(java.util.List)">setXRefs</a></span>&#8203;(java.util.List&lt;<a href="../../cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo">CDOObjectReference</a>&gt;&nbsp;xRefs)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
+<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
@@ -370,6 +438,7 @@ implements <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPo
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -377,12 +446,13 @@ implements <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPo
 <ul class="blockList">
 <li class="blockList">
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.detail">
+<li class="blockList"><a id="constructor.detail">
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="CommitTransactionResult--">
+<a id="&lt;init&gt;()">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -395,75 +465,83 @@ implements <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPo
 </dl>
 </li>
 </ul>
-<a name="CommitTransactionResult-org.eclipse.emf.cdo.common.id.CDOIDProvider-java.lang.String-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-long-java.util.List-">
+<a id="&lt;init&gt;(org.eclipse.emf.cdo.common.id.CDOIDProvider,java.lang.String,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,long,java.util.List)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>CommitTransactionResult</h4>
 <pre>@Deprecated
-public&nbsp;CommitTransactionResult(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOIDProvider.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDProvider</a>&nbsp;idProvider,
-                                            java.lang.String&nbsp;rollbackMessage,
-                                            <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
-                                            long&nbsp;previousTimeStamp,
-                                            java.util.List&lt;<a href="../../../../../org/eclipse/emf/cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo">CDOObjectReference</a>&gt;&nbsp;xRefs)</pre>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">As of 4.2</span></div>
+public&nbsp;CommitTransactionResult&#8203;(<a href="../../cdo/common/id/CDOIDProvider.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDProvider</a>&nbsp;idProvider,
+                               java.lang.String&nbsp;rollbackMessage,
+                               <a href="../../cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+                               long&nbsp;previousTimeStamp,
+                               java.util.List&lt;<a href="../../cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo">CDOObjectReference</a>&gt;&nbsp;xRefs)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.2</div>
+</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.0</dd>
 </dl>
 </li>
 </ul>
-<a name="CommitTransactionResult-org.eclipse.emf.cdo.common.id.CDOIDProvider-byte-java.lang.String-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-long-java.util.List-boolean-">
+<a id="&lt;init&gt;(org.eclipse.emf.cdo.common.id.CDOIDProvider,byte,java.lang.String,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,long,java.util.List,boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>CommitTransactionResult</h4>
 <pre>@Deprecated
-public&nbsp;CommitTransactionResult(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOIDProvider.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDProvider</a>&nbsp;idProvider,
-                                            byte&nbsp;rollbackReason,
-                                            java.lang.String&nbsp;rollbackMessage,
-                                            <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
-                                            long&nbsp;previousTimeStamp,
-                                            java.util.List&lt;<a href="../../../../../org/eclipse/emf/cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo">CDOObjectReference</a>&gt;&nbsp;xRefs,
-                                            boolean&nbsp;clearResourcePathCache)</pre>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">As of 4.3</span></div>
+public&nbsp;CommitTransactionResult&#8203;(<a href="../../cdo/common/id/CDOIDProvider.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDProvider</a>&nbsp;idProvider,
+                               byte&nbsp;rollbackReason,
+                               java.lang.String&nbsp;rollbackMessage,
+                               <a href="../../cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+                               long&nbsp;previousTimeStamp,
+                               java.util.List&lt;<a href="../../cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo">CDOObjectReference</a>&gt;&nbsp;xRefs,
+                               boolean&nbsp;clearResourcePathCache)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.3</div>
+</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
 </li>
 </ul>
-<a name="CommitTransactionResult-org.eclipse.emf.cdo.common.id.CDOIDProvider-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-long-">
+<a id="&lt;init&gt;(org.eclipse.emf.cdo.common.id.CDOIDProvider,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,long)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>CommitTransactionResult</h4>
 <pre>@Deprecated
-public&nbsp;CommitTransactionResult(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOIDProvider.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDProvider</a>&nbsp;idProvider,
-                                            <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
-                                            long&nbsp;previousTimeStamp)</pre>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">As of 4.2</span></div>
+public&nbsp;CommitTransactionResult&#8203;(<a href="../../cdo/common/id/CDOIDProvider.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDProvider</a>&nbsp;idProvider,
+                               <a href="../../cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+                               long&nbsp;previousTimeStamp)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.2</div>
+</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.0</dd>
 </dl>
 </li>
 </ul>
-<a name="CommitTransactionResult-org.eclipse.emf.cdo.common.id.CDOIDProvider-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-long-boolean-">
+<a id="&lt;init&gt;(org.eclipse.emf.cdo.common.id.CDOIDProvider,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,long,boolean)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>CommitTransactionResult</h4>
 <pre>@Deprecated
-public&nbsp;CommitTransactionResult(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOIDProvider.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDProvider</a>&nbsp;idProvider,
-                                            <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
-                                            long&nbsp;previousTimeStamp,
-                                            boolean&nbsp;clearResourcePathCache)</pre>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">As of 4.3</span></div>
+public&nbsp;CommitTransactionResult&#8203;(<a href="../../cdo/common/id/CDOIDProvider.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDProvider</a>&nbsp;idProvider,
+                               <a href="../../cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+                               long&nbsp;previousTimeStamp,
+                               boolean&nbsp;clearResourcePathCache)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.3</div>
+</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
@@ -472,395 +550,401 @@ public&nbsp;CommitTransactionResult(<a href="../../../../../org/eclipse/emf/cdo/
 </ul>
 </li>
 </ul>
+</section>
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="getBranch--">
+<a id="getBranch()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getBranch</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;getBranch()</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch--">CDOBranchPoint</a></code></span></div>
+<pre class="methodSignature">public&nbsp;<a href="../../cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;getBranch()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../cdo/common/branch/CDOBranchPoint.html#getBranch()">CDOBranchPoint</a></code></span></div>
 <div class="block">Returns the branch of this branch point, or <code>null</code> if this branch point is the
- <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#getBase--"><code>base</code></a> of the <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchManager.html#getMainBranch--"><code>main branch</code></a>.</div>
+ <a href="../../cdo/common/branch/CDOBranch.html#getBase()"><code>base</code></a> of the <a href="../../cdo/common/branch/CDOBranchManager.html#getMainBranch()"><code>main branch</code></a>.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch--">getBranch</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a></code></dd>
+<dd><code><a href="../../cdo/common/branch/CDOBranchPoint.html#getBranch()">getBranch</a></code>&nbsp;in interface&nbsp;<code><a href="../../cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchProvider.html#getBranch--">getBranch</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchProvider.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchProvider</a></code></dd>
+<dd><code><a href="../../cdo/common/branch/CDOBranchProvider.html#getBranch()">getBranch</a></code>&nbsp;in interface&nbsp;<code><a href="../../cdo/common/branch/CDOBranchProvider.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchProvider</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
 </dl>
 </li>
 </ul>
-<a name="getTimeStamp--">
+<a id="getTimeStamp()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getTimeStamp</h4>
-<pre>public&nbsp;long&nbsp;getTimeStamp()</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp--">CDOBranchPoint</a></code></span></div>
+<pre class="methodSignature">public&nbsp;long&nbsp;getTimeStamp()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../cdo/common/branch/CDOBranchPoint.html#getTimeStamp()">CDOBranchPoint</a></code></span></div>
 <div class="block">Returns the time stamp of this branch point, or the fixed special time stamp <i>
- <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#UNSPECIFIED_DATE"><code>unspecified</code></a></i> if this branch point marks the <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#getHead--"><code>head</code></a> of a branch.</div>
+ <a href="../../cdo/common/branch/CDOBranchPoint.html#UNSPECIFIED_DATE"><code>unspecified</code></a></i> if this branch point marks the <a href="../../cdo/common/branch/CDOBranch.html#getHead()"><code>head</code></a> of a branch.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp--">getTimeStamp</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a></code></dd>
+<dd><code><a href="../../cdo/common/branch/CDOBranchPoint.html#getTimeStamp()">getTimeStamp</a></code>&nbsp;in interface&nbsp;<code><a href="../../cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html#getTimeStamp--">getTimeStamp</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a></code></dd>
+<dd><code><a href="../../cdo/common/util/CDOTimeProvider.html#getTimeStamp()">getTimeStamp</a></code>&nbsp;in interface&nbsp;<code><a href="../../cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="setBranchPoint-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-">
+<a id="setBranchPoint(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setBranchPoint</h4>
-<pre>public&nbsp;void&nbsp;setBranchPoint(<a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setBranchPoint&#8203;(<a href="../../cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.3</dd>
 </dl>
 </li>
 </ul>
-<a name="getPreviousTimeStamp--">
+<a id="getPreviousTimeStamp()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getPreviousTimeStamp</h4>
-<pre>public&nbsp;long&nbsp;getPreviousTimeStamp()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;getPreviousTimeStamp()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.0</dd>
 </dl>
 </li>
 </ul>
-<a name="setPreviousTimeStamp-long-">
+<a id="setPreviousTimeStamp(long)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setPreviousTimeStamp</h4>
-<pre>public&nbsp;void&nbsp;setPreviousTimeStamp(long&nbsp;previousTimeStamp)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setPreviousTimeStamp&#8203;(long&nbsp;previousTimeStamp)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.3</dd>
 </dl>
 </li>
 </ul>
-<a name="getReferenceAdjuster--">
+<a id="getReferenceAdjuster()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getReferenceAdjuster</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/emf/cdo/spi/common/revision/CDOReferenceAdjuster.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">CDOReferenceAdjuster</a>&nbsp;getReferenceAdjuster()</pre>
+<pre class="methodSignature">public&nbsp;<a href="../../cdo/spi/common/revision/CDOReferenceAdjuster.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">CDOReferenceAdjuster</a>&nbsp;getReferenceAdjuster()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.0</dd>
 </dl>
 </li>
 </ul>
-<a name="setReferenceAdjuster-org.eclipse.emf.cdo.spi.common.revision.CDOReferenceAdjuster-">
+<a id="setReferenceAdjuster(org.eclipse.emf.cdo.spi.common.revision.CDOReferenceAdjuster)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setReferenceAdjuster</h4>
-<pre>public&nbsp;void&nbsp;setReferenceAdjuster(<a href="../../../../../org/eclipse/emf/cdo/spi/common/revision/CDOReferenceAdjuster.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">CDOReferenceAdjuster</a>&nbsp;referenceAdjuster)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setReferenceAdjuster&#8203;(<a href="../../cdo/spi/common/revision/CDOReferenceAdjuster.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">CDOReferenceAdjuster</a>&nbsp;referenceAdjuster)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.0</dd>
 </dl>
 </li>
 </ul>
-<a name="getRollbackReason--">
+<a id="getRollbackReason()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getRollbackReason</h4>
-<pre>public&nbsp;byte&nbsp;getRollbackReason()</pre>
+<pre class="methodSignature">public&nbsp;byte&nbsp;getRollbackReason()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
 </li>
 </ul>
-<a name="setRollbackReason-byte-">
+<a id="setRollbackReason(byte)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setRollbackReason</h4>
-<pre>public&nbsp;void&nbsp;setRollbackReason(byte&nbsp;rollbackReason)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setRollbackReason&#8203;(byte&nbsp;rollbackReason)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.3</dd>
 </dl>
 </li>
 </ul>
-<a name="getRollbackMessage--">
+<a id="getRollbackMessage()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getRollbackMessage</h4>
-<pre>public&nbsp;java.lang.String&nbsp;getRollbackMessage()</pre>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getRollbackMessage()</pre>
 </li>
 </ul>
-<a name="setRollbackMessage-java.lang.String-">
+<a id="setRollbackMessage(java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setRollbackMessage</h4>
-<pre>public&nbsp;void&nbsp;setRollbackMessage(java.lang.String&nbsp;rollbackMessage)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setRollbackMessage&#8203;(java.lang.String&nbsp;rollbackMessage)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.3</dd>
 </dl>
 </li>
 </ul>
-<a name="getXRefs--">
+<a id="getXRefs()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getXRefs</h4>
-<pre>public&nbsp;java.util.List&lt;<a href="../../../../../org/eclipse/emf/cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo">CDOObjectReference</a>&gt;&nbsp;getXRefs()</pre>
+<pre class="methodSignature">public&nbsp;java.util.List&lt;<a href="../../cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo">CDOObjectReference</a>&gt;&nbsp;getXRefs()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.0</dd>
 </dl>
 </li>
 </ul>
-<a name="setXRefs-java.util.List-">
+<a id="setXRefs(java.util.List)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setXRefs</h4>
-<pre>public&nbsp;void&nbsp;setXRefs(java.util.List&lt;<a href="../../../../../org/eclipse/emf/cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo">CDOObjectReference</a>&gt;&nbsp;xRefs)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setXRefs&#8203;(java.util.List&lt;<a href="../../cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo">CDOObjectReference</a>&gt;&nbsp;xRefs)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.3</dd>
 </dl>
 </li>
 </ul>
-<a name="isClearResourcePathCache--">
+<a id="isClearResourcePathCache()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>isClearResourcePathCache</h4>
-<pre>public&nbsp;boolean&nbsp;isClearResourcePathCache()</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;isClearResourcePathCache()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
 </li>
 </ul>
-<a name="setClearResourcePathCache-boolean-">
+<a id="setClearResourcePathCache(boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setClearResourcePathCache</h4>
-<pre>public&nbsp;void&nbsp;setClearResourcePathCache(boolean&nbsp;clearResourcePathCache)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setClearResourcePathCache&#8203;(boolean&nbsp;clearResourcePathCache)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.3</dd>
 </dl>
 </li>
 </ul>
-<a name="getSecurityImpact--">
+<a id="getSecurityImpact()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getSecurityImpact</h4>
-<pre>public&nbsp;byte&nbsp;getSecurityImpact()</pre>
+<pre class="methodSignature">public&nbsp;byte&nbsp;getSecurityImpact()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.3</dd>
 </dl>
 </li>
 </ul>
-<a name="setSecurityImpact-byte-">
+<a id="setSecurityImpact(byte)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setSecurityImpact</h4>
-<pre>public&nbsp;void&nbsp;setSecurityImpact(byte&nbsp;securityImpact)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setSecurityImpact&#8203;(byte&nbsp;securityImpact)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.3</dd>
 </dl>
 </li>
 </ul>
-<a name="getIDProvider--">
+<a id="getIDProvider()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getIDProvider</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOIDProvider.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDProvider</a>&nbsp;getIDProvider()</pre>
+<pre class="methodSignature">public&nbsp;<a href="../../cdo/common/id/CDOIDProvider.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDProvider</a>&nbsp;getIDProvider()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.3</dd>
 </dl>
 </li>
 </ul>
-<a name="setIDProvider-org.eclipse.emf.cdo.common.id.CDOIDProvider-">
+<a id="setIDProvider(org.eclipse.emf.cdo.common.id.CDOIDProvider)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setIDProvider</h4>
-<pre>public&nbsp;void&nbsp;setIDProvider(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOIDProvider.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDProvider</a>&nbsp;idProvider)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setIDProvider&#8203;(<a href="../../cdo/common/id/CDOIDProvider.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDProvider</a>&nbsp;idProvider)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.3</dd>
 </dl>
 </li>
 </ul>
-<a name="getIDMappings--">
+<a id="getIDMappings()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getIDMappings</h4>
-<pre>public&nbsp;java.util.Map&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;getIDMappings()</pre>
+<pre class="methodSignature">public&nbsp;java.util.Map&lt;<a href="../../cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,&#8203;<a href="../../cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;getIDMappings()</pre>
 </li>
 </ul>
-<a name="addIDMapping-org.eclipse.emf.cdo.common.id.CDOID-org.eclipse.emf.cdo.common.id.CDOID-">
+<a id="addIDMapping(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.id.CDOID)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>addIDMapping</h4>
-<pre>public&nbsp;void&nbsp;addIDMapping(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;oldID,
-                         <a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;newID)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;addIDMapping&#8203;(<a href="../../cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;oldID,
+                         <a href="../../cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;newID)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
 </dl>
 </li>
 </ul>
-<a name="getNewLockStates--">
+<a id="getNewLockStates()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getNewLockStates</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/emf/cdo/common/lock/CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a>[]&nbsp;getNewLockStates()</pre>
+<pre class="methodSignature">public&nbsp;<a href="../../cdo/common/lock/CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a>[]&nbsp;getNewLockStates()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.1</dd>
 </dl>
 </li>
 </ul>
-<a name="setNewLockStates-org.eclipse.emf.cdo.common.lock.CDOLockState:A-">
+<a id="setNewLockStates(org.eclipse.emf.cdo.common.lock.CDOLockState[])">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setNewLockStates</h4>
-<pre>public&nbsp;void&nbsp;setNewLockStates(<a href="../../../../../org/eclipse/emf/cdo/common/lock/CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a>[]&nbsp;newLockStates)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setNewLockStates&#8203;(<a href="../../cdo/common/lock/CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a>[]&nbsp;newLockStates)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.1</dd>
 </dl>
 </li>
 </ul>
-<a name="getNewPermissions--">
+<a id="getNewPermissions()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getNewPermissions</h4>
-<pre>public&nbsp;java.util.Map&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="../../../../../org/eclipse/emf/cdo/common/security/CDOPermission.html" title="enum in org.eclipse.emf.cdo.common.security">CDOPermission</a>&gt;&nbsp;getNewPermissions()</pre>
+<pre class="methodSignature">public&nbsp;java.util.Map&lt;<a href="../../cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,&#8203;<a href="../../cdo/common/security/CDOPermission.html" title="enum in org.eclipse.emf.cdo.common.security">CDOPermission</a>&gt;&nbsp;getNewPermissions()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.3</dd>
 </dl>
 </li>
 </ul>
-<a name="addNewPermission-org.eclipse.emf.cdo.common.id.CDOID-org.eclipse.emf.cdo.common.security.CDOPermission-">
+<a id="addNewPermission(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.security.CDOPermission)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>addNewPermission</h4>
-<pre>public&nbsp;void&nbsp;addNewPermission(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
-                             <a href="../../../../../org/eclipse/emf/cdo/common/security/CDOPermission.html" title="enum in org.eclipse.emf.cdo.common.security">CDOPermission</a>&nbsp;permission)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;addNewPermission&#8203;(<a href="../../cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+                             <a href="../../cdo/common/security/CDOPermission.html" title="enum in org.eclipse.emf.cdo.common.security">CDOPermission</a>&nbsp;permission)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.3</dd>
 </dl>
 </li>
 </ul>
-<a name="getNewCommitData--">
+<a id="getNewCommitData()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getNewCommitData</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocol.CommitData.html" title="class in org.eclipse.emf.cdo.common.protocol">CDOProtocol.CommitData</a>&nbsp;getNewCommitData()</pre>
+<pre class="methodSignature">public&nbsp;<a href="../../cdo/common/protocol/CDOProtocol.CommitData.html" title="class in org.eclipse.emf.cdo.common.protocol">CDOProtocol.CommitData</a>&nbsp;getNewCommitData()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.8</dd>
 </dl>
 </li>
 </ul>
-<a name="setNewCommitData-org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitData-">
+<a id="setNewCommitData(org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitData)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setNewCommitData</h4>
-<pre>public&nbsp;void&nbsp;setNewCommitData(<a href="../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocol.CommitData.html" title="class in org.eclipse.emf.cdo.common.protocol">CDOProtocol.CommitData</a>&nbsp;newCommitData)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setNewCommitData&#8203;(<a href="../../cdo/common/protocol/CDOProtocol.CommitData.html" title="class in org.eclipse.emf.cdo.common.protocol">CDOProtocol.CommitData</a>&nbsp;newCommitData)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.8</dd>
 </dl>
 </li>
 </ul>
-<a name="createReferenceAdjuster--">
+<a id="createReferenceAdjuster()">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>createReferenceAdjuster</h4>
-<pre>protected&nbsp;<a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.PostCommitReferenceAdjuster.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.CommitTransactionResult.PostCommitReferenceAdjuster</a>&nbsp;createReferenceAdjuster()</pre>
+<pre class="methodSignature">protected&nbsp;<a href="CDOSessionProtocol.CommitTransactionResult.PostCommitReferenceAdjuster.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.CommitTransactionResult.PostCommitReferenceAdjuster</a>&nbsp;createReferenceAdjuster()</pre>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/CDOSessionProtocol.CommitTransactionResult.html">Use</a></li>
@@ -870,16 +954,8 @@ public&nbsp;CommitTransactionResult(<a href="../../../../../org/eclipse/emf/cdo/
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.html" title="interface in org.eclipse.emf.spi.cdo"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.PostCommitReferenceAdjuster.html" title="class in org.eclipse.emf.spi.cdo"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html" target="_top">Frames</a></li>
-<li><a href="CDOSessionProtocol.CommitTransactionResult.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -892,12 +968,15 @@ public&nbsp;CommitTransactionResult(<a href="../../../../../org/eclipse/emf/cdo/
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
@@ -908,10 +987,12 @@ public&nbsp;CommitTransactionResult(<a href="../../../../../org/eclipse/emf/cdo/
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

@@ -4,7 +4,6 @@
     <packages name="org.eclipse.net4j.db"/>
     <packages name="org.eclipse.net4j.db.ddl"/>
     <packages name="org.eclipse.net4j.db.ddl.delta"/>
-    <packages name="org.eclipse.net4j.db.dml"/>
     <packages name="org.eclipse.net4j.spi.db"/>
     <packages name="org.eclipse.net4j.spi.db.ddl"/>
     <extensionPoints name="dbAdapters"/>

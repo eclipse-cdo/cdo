@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>CDOCheckoutManager (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6};
+var data = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/CDOCheckoutManager.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/emf/cdo/explorer/checkouts/CDOCheckout.State.html" title="enum in org.eclipse.emf.cdo.explorer.checkouts"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../../org/eclipse/emf/cdo/explorer/checkouts/CDOCheckoutManager.CheckoutStateEvent.html" title="interface in org.eclipse.emf.cdo.explorer.checkouts"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/emf/cdo/explorer/checkouts/CDOCheckoutManager.html" target="_top">Frames</a></li>
-<li><a href="CDOCheckoutManager.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,6 +82,9 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -85,13 +101,22 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.emf.cdo.explorer.checkouts</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.cdo.explorer.checkouts</a></div>
 <h2 title="Interface CDOCheckoutManager" class="title">Interface CDOCheckoutManager</h2>
 </div>
 <div class="contentContainer">
@@ -100,13 +125,12 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="../../../../../../org/eclipse/emf/cdo/explorer/CDOExplorerManager.html" title="interface in org.eclipse.emf.cdo.explorer">CDOExplorerManager</a>&lt;<a href="../../../../../../org/eclipse/emf/cdo/explorer/checkouts/CDOCheckout.html" title="interface in org.eclipse.emf.cdo.explorer.checkouts">CDOCheckout</a>&gt;, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IAdaptable</a>, <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</a>&lt;<a href="../../../../../../org/eclipse/emf/cdo/explorer/checkouts/CDOCheckout.html" title="interface in org.eclipse.emf.cdo.explorer.checkouts">CDOCheckout</a>&gt;, <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</a></dd>
+<dd><code><a href="../CDOExplorerManager.html" title="interface in org.eclipse.emf.cdo.explorer">CDOExplorerManager</a>&lt;<a href="CDOCheckout.html" title="interface in org.eclipse.emf.cdo.explorer.checkouts">CDOCheckout</a>&gt;</code>, <code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IAdaptable</a></code>, <code>org.eclipse.net4j.util.container.IContainer&lt;<a href="CDOCheckout.html" title="interface in org.eclipse.emf.cdo.explorer.checkouts">CDOCheckout</a>&gt;</code>, <code>org.eclipse.net4j.util.event.INotifier</code></dd>
 </dl>
 <hr>
-<br>
 <pre>public interface <span class="typeNameLabel">CDOCheckoutManager</span>
-extends <a href="../../../../../../org/eclipse/emf/cdo/explorer/CDOExplorerManager.html" title="interface in org.eclipse.emf.cdo.explorer">CDOExplorerManager</a>&lt;<a href="../../../../../../org/eclipse/emf/cdo/explorer/checkouts/CDOCheckout.html" title="interface in org.eclipse.emf.cdo.explorer.checkouts">CDOCheckout</a>&gt;</pre>
-<div class="block">Manages a set of <a href="../../../../../../org/eclipse/emf/cdo/explorer/checkouts/CDOCheckout.html" title="interface in org.eclipse.emf.cdo.explorer.checkouts"><code>checkouts</code></a>.</div>
+extends <a href="../CDOExplorerManager.html" title="interface in org.eclipse.emf.cdo.explorer">CDOExplorerManager</a>&lt;<a href="CDOCheckout.html" title="interface in org.eclipse.emf.cdo.explorer.checkouts">CDOCheckout</a>&gt;</pre>
+<div class="block">Manages a set of <a href="CDOCheckout.html" title="interface in org.eclipse.emf.cdo.explorer.checkouts"><code>checkouts</code></a>.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.4</dd>
@@ -124,101 +148,120 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/explorer/CDOExplorerManag
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="nested.class.summary">
+<li class="blockList"><a id="nested.class.summary">
 <!--   -->
 </a>
 <h3>Nested Class Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Nested Class Summary table, listing nested classes, and an explanation">
+<table class="memberSummary">
 <caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Interface and Description</th>
+<th class="colSecond" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/explorer/checkouts/CDOCheckoutManager.CheckoutStateEvent.html" title="interface in org.eclipse.emf.cdo.explorer.checkouts">CDOCheckoutManager.CheckoutStateEvent</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CDOCheckoutManager.CheckoutStateEvent.html" title="interface in org.eclipse.emf.cdo.explorer.checkouts">CDOCheckoutManager.CheckoutStateEvent</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="nested.classes.inherited.from.class.org.eclipse.emf.cdo.explorer.CDOExplorerManager">
+<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.emf.cdo.explorer.CDOExplorerManager">
 <!--   -->
 </a>
-<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.emf.cdo.explorer.<a href="../../../../../../org/eclipse/emf/cdo/explorer/CDOExplorerManager.html" title="interface in org.eclipse.emf.cdo.explorer">CDOExplorerManager</a></h3>
-<code><a href="../../../../../../org/eclipse/emf/cdo/explorer/CDOExplorerManager.ElementsChangedEvent.html" title="interface in org.eclipse.emf.cdo.explorer">CDOExplorerManager.ElementsChangedEvent</a></code></li>
+<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.emf.cdo.explorer.<a href="../CDOExplorerManager.html" title="interface in org.eclipse.emf.cdo.explorer">CDOExplorerManager</a></h3>
+<code><a href="../CDOExplorerManager.ElementsChangedEvent.html" title="interface in org.eclipse.emf.cdo.explorer">CDOExplorerManager.ElementsChangedEvent</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="nested.classes.inherited.from.class.org.eclipse.net4j.util.container.IContainer">
+<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.net4j.util.container.IContainer">
 <!--   -->
 </a>
-<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.container.<a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</a></h3>
-<code><a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Modifiable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer.Modifiable</a>&lt;<a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Modifiable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">E</a>&gt;, <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Persistable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer.Persistable</a>&lt;<a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Persistable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">E</a>&gt;, <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Persistence.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer.Persistence</a>&lt;<a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Persistence.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">E</a>&gt;</code></li>
+<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.container.IContainer</h3>
+<code>org.eclipse.net4j.util.container.IContainer.Modifiable&lt;E extends java.lang.Object&gt;, org.eclipse.net4j.util.container.IContainer.Persistable&lt;E extends java.lang.Object&gt;, org.eclipse.net4j.util.container.IContainer.Persistence&lt;E extends java.lang.Object&gt;</code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.net4j.util.event.INotifier">
+<!--   -->
+</a>
+<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.event.INotifier</h3>
+<code>org.eclipse.net4j.util.event.INotifier.INotifier2</code></li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/explorer/checkouts/CDOCheckout.html" title="interface in org.eclipse.emf.cdo.explorer.checkouts">CDOCheckout</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/explorer/checkouts/CDOCheckoutManager.html#addCheckout-java.util.Properties-">addCheckout</a></span>(java.util.Properties&nbsp;properties)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="CDOCheckout.html" title="interface in org.eclipse.emf.cdo.explorer.checkouts">CDOCheckout</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addCheckout(java.util.Properties)">addCheckout</a></span>&#8203;(java.util.Properties&nbsp;properties)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/explorer/checkouts/CDOCheckout.html" title="interface in org.eclipse.emf.cdo.explorer.checkouts">CDOCheckout</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/explorer/checkouts/CDOCheckoutManager.html#getCheckout-org.eclipse.emf.cdo.view.CDOView-">getCheckout</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="CDOCheckout.html" title="interface in org.eclipse.emf.cdo.explorer.checkouts">CDOCheckout</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCheckout(java.lang.String)">getCheckout</a></span>&#8203;(java.lang.String&nbsp;id)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/explorer/checkouts/CDOCheckout.html" title="interface in org.eclipse.emf.cdo.explorer.checkouts">CDOCheckout</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/explorer/checkouts/CDOCheckoutManager.html#getCheckout-java.lang.String-">getCheckout</a></span>(java.lang.String&nbsp;id)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="CDOCheckout.html" title="interface in org.eclipse.emf.cdo.explorer.checkouts">CDOCheckout</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCheckout(org.eclipse.emf.cdo.view.CDOView)">getCheckout</a></span>&#8203;(<a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/explorer/checkouts/CDOCheckout.html" title="interface in org.eclipse.emf.cdo.explorer.checkouts">CDOCheckout</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/explorer/checkouts/CDOCheckoutManager.html#getCheckoutByLabel-java.lang.String-">getCheckoutByLabel</a></span>(java.lang.String&nbsp;label)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="CDOCheckout.html" title="interface in org.eclipse.emf.cdo.explorer.checkouts">CDOCheckout</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCheckoutByLabel(java.lang.String)">getCheckoutByLabel</a></span>&#8203;(java.lang.String&nbsp;label)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/explorer/checkouts/CDOCheckout.html" title="interface in org.eclipse.emf.cdo.explorer.checkouts">CDOCheckout</a>[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/explorer/checkouts/CDOCheckoutManager.html#getCheckouts--">getCheckouts</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="CDOCheckout.html" title="interface in org.eclipse.emf.cdo.explorer.checkouts">CDOCheckout</a>[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCheckouts()">getCheckouts</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.emf.cdo.explorer.CDOExplorerManager">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.cdo.explorer.CDOExplorerManager">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.explorer.<a href="../../../../../../org/eclipse/emf/cdo/explorer/CDOExplorerManager.html" title="interface in org.eclipse.emf.cdo.explorer">CDOExplorerManager</a></h3>
-<code><a href="../../../../../../org/eclipse/emf/cdo/explorer/CDOExplorerManager.html#getUniqueLabel-java.lang.String-">getUniqueLabel</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.explorer.<a href="../CDOExplorerManager.html" title="interface in org.eclipse.emf.cdo.explorer">CDOExplorerManager</a></h3>
+<code><a href="../CDOExplorerManager.html#getUniqueLabel(java.lang.String)">getUniqueLabel</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.container.IContainer">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.core.runtime.IAdaptable">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.container.<a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</a></h3>
-<code><a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true#getElements--" title="class or interface in org.eclipse.net4j.util.container">getElements</a>, <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true#isEmpty--" title="class or interface in org.eclipse.net4j.util.container">isEmpty</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.core.runtime.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IAdaptable</a></h3>
+<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html?is-external=true#getAdapter(java.lang.Class)" title="class or interface in org.eclipse.core.runtime" class="externalLink">getAdapter</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.event.INotifier">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.container.IContainer">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.event.<a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</a></h3>
-<code><a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#addListener-org.eclipse.net4j.util.event.IListener-" title="class or interface in org.eclipse.net4j.util.event">addListener</a>, <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#getListeners--" title="class or interface in org.eclipse.net4j.util.event">getListeners</a>, <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#hasListeners--" title="class or interface in org.eclipse.net4j.util.event">hasListeners</a>, <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#removeListener-org.eclipse.net4j.util.event.IListener-" title="class or interface in org.eclipse.net4j.util.event">removeListener</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.container.IContainer</h3>
+<code>getElements, isEmpty</code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.core.runtime.IAdaptable">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.event.INotifier">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.core.runtime.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IAdaptable</a></h3>
-<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html?is-external=true#getAdapter-java.lang.Class-" title="class or interface in org.eclipse.core.runtime">getAdapter</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.event.INotifier</h3>
+<code>addListener, getListeners, hasListeners, removeListener</code></li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -226,73 +269,78 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/explorer/CDOExplorerManag
 <ul class="blockList">
 <li class="blockList">
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="getCheckout-java.lang.String-">
+<a id="getCheckout(java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getCheckout</h4>
-<pre><a href="../../../../../../org/eclipse/emf/cdo/explorer/checkouts/CDOCheckout.html" title="interface in org.eclipse.emf.cdo.explorer.checkouts">CDOCheckout</a>&nbsp;getCheckout(java.lang.String&nbsp;id)</pre>
+<pre class="methodSignature"><a href="CDOCheckout.html" title="interface in org.eclipse.emf.cdo.explorer.checkouts">CDOCheckout</a>&nbsp;getCheckout&#8203;(java.lang.String&nbsp;id)</pre>
 </li>
 </ul>
-<a name="getCheckout-org.eclipse.emf.cdo.view.CDOView-">
+<a id="getCheckout(org.eclipse.emf.cdo.view.CDOView)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getCheckout</h4>
-<pre><a href="../../../../../../org/eclipse/emf/cdo/explorer/checkouts/CDOCheckout.html" title="interface in org.eclipse.emf.cdo.explorer.checkouts">CDOCheckout</a>&nbsp;getCheckout(<a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view)</pre>
+<pre class="methodSignature"><a href="CDOCheckout.html" title="interface in org.eclipse.emf.cdo.explorer.checkouts">CDOCheckout</a>&nbsp;getCheckout&#8203;(<a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view)</pre>
 </li>
 </ul>
-<a name="getCheckoutByLabel-java.lang.String-">
+<a id="getCheckoutByLabel(java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getCheckoutByLabel</h4>
-<pre><a href="../../../../../../org/eclipse/emf/cdo/explorer/checkouts/CDOCheckout.html" title="interface in org.eclipse.emf.cdo.explorer.checkouts">CDOCheckout</a>&nbsp;getCheckoutByLabel(java.lang.String&nbsp;label)</pre>
+<pre class="methodSignature"><a href="CDOCheckout.html" title="interface in org.eclipse.emf.cdo.explorer.checkouts">CDOCheckout</a>&nbsp;getCheckoutByLabel&#8203;(java.lang.String&nbsp;label)</pre>
 </li>
 </ul>
-<a name="getCheckouts--">
+<a id="getCheckouts()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getCheckouts</h4>
-<pre><a href="../../../../../../org/eclipse/emf/cdo/explorer/checkouts/CDOCheckout.html" title="interface in org.eclipse.emf.cdo.explorer.checkouts">CDOCheckout</a>[]&nbsp;getCheckouts()</pre>
+<pre class="methodSignature"><a href="CDOCheckout.html" title="interface in org.eclipse.emf.cdo.explorer.checkouts">CDOCheckout</a>[]&nbsp;getCheckouts()</pre>
 </li>
 </ul>
-<a name="addCheckout-java.util.Properties-">
+<a id="addCheckout(java.util.Properties)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>addCheckout</h4>
-<pre><a href="../../../../../../org/eclipse/emf/cdo/explorer/checkouts/CDOCheckout.html" title="interface in org.eclipse.emf.cdo.explorer.checkouts">CDOCheckout</a>&nbsp;addCheckout(java.util.Properties&nbsp;properties)</pre>
+<pre class="methodSignature"><a href="CDOCheckout.html" title="interface in org.eclipse.emf.cdo.explorer.checkouts">CDOCheckout</a>&nbsp;addCheckout&#8203;(java.util.Properties&nbsp;properties)</pre>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/CDOCheckoutManager.html">Use</a></li>
@@ -302,16 +350,8 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/explorer/CDOExplorerManag
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/emf/cdo/explorer/checkouts/CDOCheckout.State.html" title="enum in org.eclipse.emf.cdo.explorer.checkouts"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../../org/eclipse/emf/cdo/explorer/checkouts/CDOCheckoutManager.CheckoutStateEvent.html" title="interface in org.eclipse.emf.cdo.explorer.checkouts"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/emf/cdo/explorer/checkouts/CDOCheckoutManager.html" target="_top">Frames</a></li>
-<li><a href="CDOCheckoutManager.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -324,6 +364,9 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/explorer/CDOExplorerManag
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -340,10 +383,12 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/explorer/CDOExplorerManag
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

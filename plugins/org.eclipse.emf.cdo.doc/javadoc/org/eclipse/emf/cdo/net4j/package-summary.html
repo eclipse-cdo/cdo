@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>org.eclipse.emf.cdo.net4j (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,20 +28,25 @@
     catch(err) {
     }
 //-->
-</script>
+var pathtoroot = "../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li class="navBarCell1Rev">Package</li>
 <li>Class</li>
 <li><a href="package-use.html">Use</a></li>
@@ -41,16 +56,14 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/emf/cdo/expressions/util/package-summary.html">Prev&nbsp;Package</a></li>
-<li><a href="../../../../../org/eclipse/emf/cdo/security/package-summary.html">Next&nbsp;Package</a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/emf/cdo/net4j/package-summary.html" target="_top">Frames</a></li>
-<li><a href="package-summary.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -63,22 +76,35 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
+<main role="main">
 <div class="header">
 <h1 title="Package" class="title">Package&nbsp;org.eclipse.emf.cdo.net4j</h1>
-<div class="docSummary">
-<div class="block">Client concepts for dealing with Net4j-based sessions to remote repositories.</div>
-</div>
-<p>See:&nbsp;<a href="#package.description">Description</a></p>
 </div>
 <div class="contentContainer">
+<section role="region"><a id="package.description">
+<!--   -->
+</a>
+<div class="block">Client concepts for dealing with Net4j-based sessions to remote repositories.</div>
+</section>
 <ul class="blockList">
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<table class="typeSummary">
 <caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Interface</th>
@@ -86,74 +112,74 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSession.html" title="interface in org.eclipse.emf.cdo.net4j">CDONet4jSession</a></td>
+<th class="colFirst" scope="row"><a href="CDONet4jSession.html" title="interface in org.eclipse.emf.cdo.net4j">CDONet4jSession</a></th>
 <td class="colLast">
-<div class="block">A Net4j-specific CDO <a href="../../../../../org/eclipse/emf/cdo/net4j/CDOSession.html" title="interface in org.eclipse.emf.cdo.net4j"><code>session</code></a>.</div>
+<div class="block">A Net4j-specific CDO <a href="../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSession.Options.html" title="interface in org.eclipse.emf.cdo.net4j">CDONet4jSession.Options</a></td>
+<th class="colFirst" scope="row"><a href="CDONet4jSession.Options.html" title="interface in org.eclipse.emf.cdo.net4j">CDONet4jSession.Options</a></th>
 <td class="colLast">
-<div class="block">Encapsulates a set of notifying <a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSession.html" title="interface in org.eclipse.emf.cdo.net4j"><code>session</code></a> configuration options.</div>
+<div class="block">Encapsulates a set of notifying <a href="CDONet4jSession.html" title="interface in org.eclipse.emf.cdo.net4j"><code>session</code></a> configuration options.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">CDONet4jSessionConfiguration</a></td>
+<th class="colFirst" scope="row"><a href="CDONet4jSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">CDONet4jSessionConfiguration</a></th>
 <td class="colLast">
-<div class="block">Configures and opens new Net4j-specific CDO <a href="../../../../../org/eclipse/emf/cdo/net4j/CDOSession.html" title="interface in org.eclipse.emf.cdo.net4j"><code>sessions</code></a>.</div>
+<div class="block">Configures and opens new Net4j-specific CDO <a href="../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>sessions</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/net4j/CDOSession.html" title="interface in org.eclipse.emf.cdo.net4j">CDOSession</a></td>
-<td class="colLast">Deprecated
-<div class="block"><span class="deprecationComment">Use <a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSession.html" title="interface in org.eclipse.emf.cdo.net4j"><code>CDONet4jSession</code></a>.</span></div>
+<th class="colFirst" scope="row"><a href="CDOSession.html" title="interface in org.eclipse.emf.cdo.net4j">CDOSession</a></th>
+<td class="colLast">Deprecated.
+<div class="deprecationComment">Use <a href="CDONet4jSession.html" title="interface in org.eclipse.emf.cdo.net4j"><code>CDONet4jSession</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/net4j/CDOSession.Options.html" title="interface in org.eclipse.emf.cdo.net4j">CDOSession.Options</a></td>
-<td class="colLast">Deprecated
-<div class="block"><span class="deprecationComment">Use <a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSession.Options.html" title="interface in org.eclipse.emf.cdo.net4j"><code>CDONet4jSession.Options</code></a>.</span></div>
+<th class="colFirst" scope="row"><a href="CDOSession.Options.html" title="interface in org.eclipse.emf.cdo.net4j">CDOSession.Options</a></th>
+<td class="colLast">Deprecated.
+<div class="deprecationComment">Use <a href="CDONet4jSession.Options.html" title="interface in org.eclipse.emf.cdo.net4j"><code>CDONet4jSession.Options</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/net4j/CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">CDOSessionConfiguration</a></td>
-<td class="colLast">Deprecated
-<div class="block"><span class="deprecationComment">Use <a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j"><code>CDONet4jSessionConfiguration</code></a>.</span></div>
+<th class="colFirst" scope="row"><a href="CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">CDOSessionConfiguration</a></th>
+<td class="colLast">Deprecated.
+<div class="deprecationComment">Use <a href="CDONet4jSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j"><code>CDONet4jSessionConfiguration</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/net4j/CDOSessionRecoveryEvent.html" title="interface in org.eclipse.emf.cdo.net4j">CDOSessionRecoveryEvent</a></td>
+<th class="colFirst" scope="row"><a href="CDOSessionRecoveryEvent.html" title="interface in org.eclipse.emf.cdo.net4j">CDOSessionRecoveryEvent</a></th>
 <td class="colLast">
-<div class="block">A <a href="../../../../../org/eclipse/emf/cdo/session/CDOSessionEvent.html" title="interface in org.eclipse.emf.cdo.session"><code>session event</code></a> fired from <a href="../../../../../org/eclipse/emf/cdo/net4j/RecoveringCDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j"><code>recovering session</code></a> when
+<div class="block">A <a href="../session/CDOSessionEvent.html" title="interface in org.eclipse.emf.cdo.session"><code>session event</code></a> fired from <a href="RecoveringCDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j"><code>recovering session</code></a> when
  recovery has started or finished.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/net4j/FailoverCDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">FailoverCDOSessionConfiguration</a></td>
+<th class="colFirst" scope="row"><a href="FailoverCDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">FailoverCDOSessionConfiguration</a></th>
 <td class="colLast">
-<div class="block">A <a href="../../../../../org/eclipse/emf/cdo/net4j/RecoveringCDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j"><code>session configuration</code></a> that recovers from network problems by failing over
+<div class="block">A <a href="RecoveringCDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j"><code>session configuration</code></a> that recovers from network problems by failing over
  to backup repositories as directed by a fail-over monitor.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/net4j/ReconnectingCDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">ReconnectingCDOSessionConfiguration</a></td>
+<th class="colFirst" scope="row"><a href="ReconnectingCDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">ReconnectingCDOSessionConfiguration</a></th>
 <td class="colLast">
-<div class="block">A <a href="../../../../../org/eclipse/emf/cdo/net4j/RecoveringCDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j"><code>session configuration</code></a> that recovers from network problems by attempting
+<div class="block">A <a href="RecoveringCDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j"><code>session configuration</code></a> that recovers from network problems by attempting
  to reconnect to the same repository in specific intervals.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/net4j/RecoveringCDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">RecoveringCDOSessionConfiguration</a></td>
+<th class="colFirst" scope="row"><a href="RecoveringCDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">RecoveringCDOSessionConfiguration</a></th>
 <td class="colLast">
-<div class="block">A <a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j"><code>session configuration</code></a> that uses a <a href="../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/signal/heartbeat/HeartBeatProtocol.html?is-external=true" title="class or interface in org.eclipse.net4j.signal.heartbeat"><code>heart beat
- protocol</code></a> to detect network problems.</div>
+<div class="block">A <a href="CDONet4jSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j"><code>session configuration</code></a> that uses a <code>heart beat
+ protocol</code> to detect network problems.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<table class="typeSummary">
 <caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Class</th>
@@ -161,46 +187,46 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jUtil.html" title="class in org.eclipse.emf.cdo.net4j">CDONet4jUtil</a></td>
+<th class="colFirst" scope="row"><a href="CDONet4jUtil.html" title="class in org.eclipse.emf.cdo.net4j">CDONet4jUtil</a></th>
 <td class="colLast">
-<div class="block">Various static methods that may help with Net4j-specific CDO <a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSession.html" title="interface in org.eclipse.emf.cdo.net4j"><code>sessions</code></a>.</div>
+<div class="block">Various static methods that may help with Net4j-specific CDO <a href="CDONet4jSession.html" title="interface in org.eclipse.emf.cdo.net4j"><code>sessions</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.html" title="class in org.eclipse.emf.cdo.net4j">CDONet4jViewProvider</a></td>
+<th class="colFirst" scope="row"><a href="CDONet4jViewProvider.html" title="class in org.eclipse.emf.cdo.net4j">CDONet4jViewProvider</a></th>
 <td class="colLast">
-<div class="block">A <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view"><code>view provider</code></a> that uses Net4j-specific CDO <a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSession.html" title="interface in org.eclipse.emf.cdo.net4j"><code>sessions</code></a> to open views.</div>
+<div class="block">A <a href="../view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view"><code>view provider</code></a> that uses Net4j-specific CDO <a href="CDONet4jSession.html" title="interface in org.eclipse.emf.cdo.net4j"><code>sessions</code></a> to open views.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.JVM.html" title="class in org.eclipse.emf.cdo.net4j">CDONet4jViewProvider.JVM</a></td>
+<th class="colFirst" scope="row"><a href="CDONet4jViewProvider.JVM.html" title="class in org.eclipse.emf.cdo.net4j">CDONet4jViewProvider.JVM</a></th>
 <td class="colLast">
-<div class="block">A JVM-based <a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.html" title="class in org.eclipse.emf.cdo.net4j"><code>view provider</code></a>.</div>
+<div class="block">A JVM-based <a href="CDONet4jViewProvider.html" title="class in org.eclipse.emf.cdo.net4j"><code>view provider</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.SSL.html" title="class in org.eclipse.emf.cdo.net4j">CDONet4jViewProvider.SSL</a></td>
+<th class="colFirst" scope="row"><a href="CDONet4jViewProvider.SSL.html" title="class in org.eclipse.emf.cdo.net4j">CDONet4jViewProvider.SSL</a></th>
 <td class="colLast">
-<div class="block">An SSL-based <a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.html" title="class in org.eclipse.emf.cdo.net4j"><code>view provider</code></a>.</div>
+<div class="block">An SSL-based <a href="CDONet4jViewProvider.html" title="class in org.eclipse.emf.cdo.net4j"><code>view provider</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.TCP.html" title="class in org.eclipse.emf.cdo.net4j">CDONet4jViewProvider.TCP</a></td>
+<th class="colFirst" scope="row"><a href="CDONet4jViewProvider.TCP.html" title="class in org.eclipse.emf.cdo.net4j">CDONet4jViewProvider.TCP</a></th>
 <td class="colLast">
-<div class="block">A TCP-based <a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.html" title="class in org.eclipse.emf.cdo.net4j"><code>view provider</code></a>.</div>
+<div class="block">A TCP-based <a href="CDONet4jViewProvider.html" title="class in org.eclipse.emf.cdo.net4j"><code>view provider</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.WS.html" title="class in org.eclipse.emf.cdo.net4j">CDONet4jViewProvider.WS</a></td>
+<th class="colFirst" scope="row"><a href="CDONet4jViewProvider.WS.html" title="class in org.eclipse.emf.cdo.net4j">CDONet4jViewProvider.WS</a></th>
 <td class="colLast">
-<div class="block">A WS-based <a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.html" title="class in org.eclipse.emf.cdo.net4j"><code>view provider</code></a>.</div>
+<div class="block">A WS-based <a href="CDONet4jViewProvider.html" title="class in org.eclipse.emf.cdo.net4j"><code>view provider</code></a>.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Enum Summary table, listing enums, and an explanation">
+<table class="typeSummary">
 <caption><span>Enum Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Enum</th>
@@ -208,31 +234,29 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/net4j/CDOSessionRecoveryEvent.Type.html" title="enum in org.eclipse.emf.cdo.net4j">CDOSessionRecoveryEvent.Type</a></td>
+<th class="colFirst" scope="row"><a href="CDOSessionRecoveryEvent.Type.html" title="enum in org.eclipse.emf.cdo.net4j">CDOSessionRecoveryEvent.Type</a></th>
 <td class="colLast">
-<div class="block">Enumerates the possible types of <a href="../../../../../org/eclipse/emf/cdo/net4j/CDOSessionRecoveryEvent.html" title="interface in org.eclipse.emf.cdo.net4j"><code>session recovery events</code></a>.</div>
+<div class="block">Enumerates the possible types of <a href="CDOSessionRecoveryEvent.html" title="interface in org.eclipse.emf.cdo.net4j"><code>session recovery events</code></a>.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
 </ul>
-<a name="package.description">
-<!--   -->
-</a>
-<h2 title="Package org.eclipse.emf.cdo.net4j Description">Package org.eclipse.emf.cdo.net4j Description</h2>
-<div class="block">Client concepts for dealing with Net4j-based sessions to remote repositories.</div>
 </div>
+</main>
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li class="navBarCell1Rev">Package</li>
 <li>Class</li>
 <li><a href="package-use.html">Use</a></li>
@@ -242,16 +266,8 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/emf/cdo/expressions/util/package-summary.html">Prev&nbsp;Package</a></li>
-<li><a href="../../../../../org/eclipse/emf/cdo/security/package-summary.html">Next&nbsp;Package</a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/emf/cdo/net4j/package-summary.html" target="_top">Frames</a></li>
-<li><a href="package-summary.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -264,11 +280,16 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

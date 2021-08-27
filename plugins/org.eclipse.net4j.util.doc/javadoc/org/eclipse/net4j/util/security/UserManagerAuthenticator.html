@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>UserManagerAuthenticator (Net4j Utilities Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/UserManagerAuthenticator.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/net4j/util/security/UserManager.html" title="class in org.eclipse.net4j.util.security"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/net4j/util/security/UserManagerFactory.html" title="class in org.eclipse.net4j.util.security"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/net4j/util/security/UserManagerAuthenticator.html" target="_top">Frames</a></li>
-<li><a href="UserManagerAuthenticator.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,11 +82,14 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
@@ -85,13 +101,22 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.net4j.util.security</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.net4j.util.security</a></div>
 <h2 title="Class UserManagerAuthenticator" class="title">Class UserManagerAuthenticator</h2>
 </div>
 <div class="contentContainer">
@@ -99,10 +124,10 @@ var activeTableTab = "activeTableTab";
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li><a href="../../../../../org/eclipse/net4j/util/event/Notifier.html" title="class in org.eclipse.net4j.util.event">org.eclipse.net4j.util.event.Notifier</a></li>
+<li><a href="../event/Notifier.html" title="class in org.eclipse.net4j.util.event">org.eclipse.net4j.util.event.Notifier</a></li>
 <li>
 <ul class="inheritance">
-<li><a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">org.eclipse.net4j.util.lifecycle.Lifecycle</a></li>
+<li><a href="../lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">org.eclipse.net4j.util.lifecycle.Lifecycle</a></li>
 <li>
 <ul class="inheritance">
 <li>org.eclipse.net4j.util.security.UserManagerAuthenticator</li>
@@ -118,13 +143,12 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="../../../../../org/eclipse/net4j/util/event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/IDeactivateable.html" title="interface in org.eclipse.net4j.util.lifecycle">IDeactivateable</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.DeferrableActivation.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle.DeferrableActivation</a>, <a href="../../../../../org/eclipse/net4j/util/security/IAuthenticator.html" title="interface in org.eclipse.net4j.util.security">IAuthenticator</a></dd>
+<dd><code><a href="../event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a></code>, <code><a href="../event/INotifier.INotifier2.html" title="interface in org.eclipse.net4j.util.event">INotifier.INotifier2</a></code>, <code><a href="../lifecycle/IDeactivateable.html" title="interface in org.eclipse.net4j.util.lifecycle">IDeactivateable</a></code>, <code><a href="../lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a></code>, <code><a href="../lifecycle/ILifecycle.DeferrableActivation.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle.DeferrableActivation</a></code>, <code><a href="IAuthenticator.html" title="interface in org.eclipse.net4j.util.security">IAuthenticator</a></code></dd>
 </dl>
 <hr>
-<br>
 <pre>public class <span class="typeNameLabel">UserManagerAuthenticator</span>
-extends <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a>
-implements <a href="../../../../../org/eclipse/net4j/util/security/IAuthenticator.html" title="interface in org.eclipse.net4j.util.security">IAuthenticator</a></pre>
+extends <a href="../lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a>
+implements <a href="IAuthenticator.html" title="interface in org.eclipse.net4j.util.security">IAuthenticator</a></pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.3</dd>
@@ -138,174 +162,210 @@ implements <a href="../../../../../org/eclipse/net4j/util/security/IAuthenticato
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="nested.class.summary">
+<li class="blockList"><a id="nested.class.summary">
 <!--   -->
 </a>
 <h3>Nested Class Summary</h3>
 <ul class="blockList">
-<li class="blockList"><a name="nested.classes.inherited.from.class.org.eclipse.net4j.util.lifecycle.ILifecycle">
+<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.net4j.util.lifecycle.ILifecycle">
 <!--   -->
 </a>
-<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.lifecycle.<a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a></h3>
-<code><a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.DeferrableActivation.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle.DeferrableActivation</a></code></li>
+<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.lifecycle.<a href="../lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a></h3>
+<code><a href="../lifecycle/ILifecycle.DeferrableActivation.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle.DeferrableActivation</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.net4j.util.event.INotifier">
+<!--   -->
+</a>
+<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.event.<a href="../event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a></h3>
+<code><a href="../event/INotifier.INotifier2.html" title="interface in org.eclipse.net4j.util.event">INotifier.INotifier2</a></code></li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- =========== FIELD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.summary">
+<li class="blockList"><a id="field.summary">
 <!--   -->
 </a>
 <h3>Field Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Field Summary table, listing fields, and an explanation">
+<table class="memberSummary">
 <caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Field and Description</th>
+<th class="colSecond" scope="col">Field</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/UserManagerAuthenticator.html#DEFAULT_TOKEN_LENGTH">DEFAULT_TOKEN_LENGTH</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#DEFAULT_TOKEN_LENGTH">DEFAULT_TOKEN_LENGTH</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="fields.inherited.from.class.org.eclipse.net4j.util.lifecycle.Lifecycle">
+<li class="blockList"><a id="fields.inherited.from.class.org.eclipse.net4j.util.lifecycle.Lifecycle">
 <!--   -->
 </a>
-<h3>Fields inherited from class&nbsp;org.eclipse.net4j.util.lifecycle.<a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a></h3>
-<code><a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#USE_LABEL">USE_LABEL</a></code></li>
+<h3>Fields inherited from class&nbsp;org.eclipse.net4j.util.lifecycle.<a href="../lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a></h3>
+<code><a href="../lifecycle/Lifecycle.html#USE_LABEL">USE_LABEL</a></code></li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.summary">
+<li class="blockList"><a id="constructor.summary">
 <!--   -->
 </a>
 <h3>Constructor Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
+<table class="memberSummary">
 <caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Constructor and Description</th>
+<th class="colFirst" scope="col">Constructor</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/UserManagerAuthenticator.html#UserManagerAuthenticator--">UserManagerAuthenticator</a></span>()</code>&nbsp;</td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">UserManagerAuthenticator</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/UserManagerAuthenticator.html#authenticate-java.lang.String-char:A-">authenticate</a></span>(java.lang.String&nbsp;userID,
-            char[]&nbsp;password)</code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#authenticate(java.lang.String,char%5B%5D)">authenticate</a></span>&#8203;(java.lang.String&nbsp;userID,
+            char[]&nbsp;password)</code></th>
+<td class="colLast">
 <div class="block">Authenticates the user with the passed <code>userID</code> by checking whether the supplied <code>password</code>
  matches the password <i>stored</i> for this user.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>protected byte[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/UserManagerAuthenticator.html#createRandomToken--">createRandomToken</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createRandomToken()">createRandomToken</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/UserManagerAuthenticator.html#doActivate--">doActivate</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#doActivate()">doActivate</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/UserManagerAuthenticator.html#doBeforeActivate--">doBeforeActivate</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#doBeforeActivate()">doBeforeActivate</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/UserManagerAuthenticator.html#getEncryptionAlgorithmName--">getEncryptionAlgorithmName</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getEncryptionAlgorithmName()">getEncryptionAlgorithmName</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/UserManagerAuthenticator.html#getEncryptionIterationCount--">getEncryptionIterationCount</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getEncryptionIterationCount()">getEncryptionIterationCount</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>byte[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/UserManagerAuthenticator.html#getEncryptionSaltBytes--">getEncryptionSaltBytes</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getEncryptionSaltBytes()">getEncryptionSaltBytes</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/security/IRandomizer.html" title="interface in org.eclipse.net4j.util.security">IRandomizer</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/UserManagerAuthenticator.html#getRandomizer--">getRandomizer</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="IRandomizer.html" title="interface in org.eclipse.net4j.util.security">IRandomizer</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRandomizer()">getRandomizer</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/UserManagerAuthenticator.html#getTokenLength--">getTokenLength</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTokenLength()">getTokenLength</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/security/IUserManager.html" title="interface in org.eclipse.net4j.util.security">IUserManager</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/UserManagerAuthenticator.html#getUserManager--">getUserManager</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="IUserManager.html" title="interface in org.eclipse.net4j.util.security">IUserManager</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getUserManager()">getUserManager</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/UserManagerAuthenticator.html#setEncryptionAlgorithmName-java.lang.String-">setEncryptionAlgorithmName</a></span>(java.lang.String&nbsp;encryptionAlgorithmName)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setEncryptionAlgorithmName(java.lang.String)">setEncryptionAlgorithmName</a></span>&#8203;(java.lang.String&nbsp;encryptionAlgorithmName)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/UserManagerAuthenticator.html#setEncryptionIterationCount-int-">setEncryptionIterationCount</a></span>(int&nbsp;encryptionIterationCount)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setEncryptionIterationCount(int)">setEncryptionIterationCount</a></span>&#8203;(int&nbsp;encryptionIterationCount)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/UserManagerAuthenticator.html#setEncryptionSaltBytes-byte:A-">setEncryptionSaltBytes</a></span>(byte[]&nbsp;encryptionSaltBytes)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setEncryptionSaltBytes(byte%5B%5D)">setEncryptionSaltBytes</a></span>&#8203;(byte[]&nbsp;encryptionSaltBytes)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/UserManagerAuthenticator.html#setRandomizer-org.eclipse.net4j.util.security.IRandomizer-">setRandomizer</a></span>(<a href="../../../../../org/eclipse/net4j/util/security/IRandomizer.html" title="interface in org.eclipse.net4j.util.security">IRandomizer</a>&nbsp;randomizer)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRandomizer(org.eclipse.net4j.util.security.IRandomizer)">setRandomizer</a></span>&#8203;(<a href="IRandomizer.html" title="interface in org.eclipse.net4j.util.security">IRandomizer</a>&nbsp;randomizer)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/UserManagerAuthenticator.html#setTokenLength-int-">setTokenLength</a></span>(int&nbsp;tokenLength)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTokenLength(int)">setTokenLength</a></span>&#8203;(int&nbsp;tokenLength)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i15" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/UserManagerAuthenticator.html#setUserManager-org.eclipse.net4j.util.security.IUserManager-">setUserManager</a></span>(<a href="../../../../../org/eclipse/net4j/util/security/IUserManager.html" title="interface in org.eclipse.net4j.util.security">IUserManager</a>&nbsp;userManager)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setUserManager(org.eclipse.net4j.util.security.IUserManager)">setUserManager</a></span>&#8203;(<a href="IUserManager.html" title="interface in org.eclipse.net4j.util.security">IUserManager</a>&nbsp;userManager)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.lifecycle.Lifecycle">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.lifecycle.Lifecycle">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.lifecycle.<a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a></h3>
-<code><a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#activate--">activate</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkActive--">checkActive</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkArg-boolean-java.lang.String-">checkArg</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkArg-java.lang.Object-java.lang.String-">checkArg</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkInactive--">checkInactive</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkNull-java.lang.Object-java.lang.String-">checkNull</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkState-boolean-java.lang.String-">checkState</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkState-java.lang.Object-java.lang.String-">checkState</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#deactivate--">deactivate</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#deferredActivate-boolean-">deferredActivate</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#doAfterActivate--">doAfterActivate</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#doBeforeDeactivate--">doBeforeDeactivate</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#doDeactivate--">doDeactivate</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#dump--">dump</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#getLifecycleState--">getLifecycleState</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#isActive--">isActive</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#isDeferredActivation--">isDeferredActivation</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#toString--">toString</a></code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.lifecycle.<a href="../lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a></h3>
+<code><a href="../lifecycle/Lifecycle.html#activate()">activate</a>, <a href="../lifecycle/Lifecycle.html#checkActive()">checkActive</a>, <a href="../lifecycle/Lifecycle.html#checkArg(boolean,java.lang.String)">checkArg</a>, <a href="../lifecycle/Lifecycle.html#checkArg(java.lang.Object,java.lang.String)">checkArg</a>, <a href="../lifecycle/Lifecycle.html#checkInactive()">checkInactive</a>, <a href="../lifecycle/Lifecycle.html#checkNull(java.lang.Object,java.lang.String)">checkNull</a>, <a href="../lifecycle/Lifecycle.html#checkState(boolean,java.lang.String)">checkState</a>, <a href="../lifecycle/Lifecycle.html#checkState(java.lang.Object,java.lang.String)">checkState</a>, <a href="../lifecycle/Lifecycle.html#deactivate()">deactivate</a>, <a href="../lifecycle/Lifecycle.html#deferredActivate(boolean)">deferredActivate</a>, <a href="../lifecycle/Lifecycle.html#doAfterActivate()">doAfterActivate</a>, <a href="../lifecycle/Lifecycle.html#doBeforeDeactivate()">doBeforeDeactivate</a>, <a href="../lifecycle/Lifecycle.html#doDeactivate()">doDeactivate</a>, <a href="../lifecycle/Lifecycle.html#dump()">dump</a>, <a href="../lifecycle/Lifecycle.html#getLifecycleState()">getLifecycleState</a>, <a href="../lifecycle/Lifecycle.html#isActive()">isActive</a>, <a href="../lifecycle/Lifecycle.html#isDeferredActivation()">isDeferredActivation</a>, <a href="../lifecycle/Lifecycle.html#toString()">toString</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.event.Notifier">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.event.Notifier">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.event.<a href="../../../../../org/eclipse/net4j/util/event/Notifier.html" title="class in org.eclipse.net4j.util.event">Notifier</a></h3>
-<code><a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#addListener-org.eclipse.net4j.util.event.IListener-">addListener</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#fireEvent--">fireEvent</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#fireEvent-org.eclipse.net4j.util.event.IEvent-">fireEvent</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#fireEvent-org.eclipse.net4j.util.event.IEvent-org.eclipse.net4j.util.event.IListener:A-">fireEvent</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#fireThrowable-java.lang.Throwable-">fireThrowable</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#firstListenerAdded--">firstListenerAdded</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#getListeners--">getListeners</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#getNotificationService--">getNotificationService</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#hasListeners--">hasListeners</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#lastListenerRemoved--">lastListenerRemoved</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#removeListener-org.eclipse.net4j.util.event.IListener-">removeListener</a></code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.event.<a href="../event/Notifier.html" title="class in org.eclipse.net4j.util.event">Notifier</a></h3>
+<code><a href="../event/Notifier.html#addListener(org.eclipse.net4j.util.event.IListener)">addListener</a>, <a href="../event/Notifier.html#addUniqueListener(org.eclipse.net4j.util.event.IListener)">addUniqueListener</a>, <a href="../event/Notifier.html#fireEvent()">fireEvent</a>, <a href="../event/Notifier.html#fireEvent(org.eclipse.net4j.util.event.IEvent)">fireEvent</a>, <a href="../event/Notifier.html#fireEvent(org.eclipse.net4j.util.event.IEvent,org.eclipse.net4j.util.event.IListener%5B%5D)">fireEvent</a>, <a href="../event/Notifier.html#fireThrowable(java.lang.Throwable)">fireThrowable</a>, <a href="../event/Notifier.html#firstListenerAdded()">firstListenerAdded</a>, <a href="../event/Notifier.html#getListeners()">getListeners</a>, <a href="../event/Notifier.html#getNotificationService()">getNotificationService</a>, <a href="../event/Notifier.html#hasListener(org.eclipse.net4j.util.event.IListener)">hasListener</a>, <a href="../event/Notifier.html#hasListeners()">hasListeners</a>, <a href="../event/Notifier.html#lastListenerRemoved()">lastListenerRemoved</a>, <a href="../event/Notifier.html#listenerAdded(org.eclipse.net4j.util.event.IListener)">listenerAdded</a>, <a href="../event/Notifier.html#listenerRemoved(org.eclipse.net4j.util.event.IListener)">listenerRemoved</a>, <a href="../event/Notifier.html#removeListener(org.eclipse.net4j.util.event.IListener)">removeListener</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
+<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
 <code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, wait, wait, wait</code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.event.INotifier">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.event.INotifier">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.event.<a href="../../../../../org/eclipse/net4j/util/event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a></h3>
-<code><a href="../../../../../org/eclipse/net4j/util/event/INotifier.html#addListener-org.eclipse.net4j.util.event.IListener-">addListener</a>, <a href="../../../../../org/eclipse/net4j/util/event/INotifier.html#getListeners--">getListeners</a>, <a href="../../../../../org/eclipse/net4j/util/event/INotifier.html#hasListeners--">hasListeners</a>, <a href="../../../../../org/eclipse/net4j/util/event/INotifier.html#removeListener-org.eclipse.net4j.util.event.IListener-">removeListener</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.event.<a href="../event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a></h3>
+<code><a href="../event/INotifier.html#addListener(org.eclipse.net4j.util.event.IListener)">addListener</a>, <a href="../event/INotifier.html#getListeners()">getListeners</a>, <a href="../event/INotifier.html#hasListeners()">hasListeners</a>, <a href="../event/INotifier.html#removeListener(org.eclipse.net4j.util.event.IListener)">removeListener</a></code></li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -313,12 +373,13 @@ implements <a href="../../../../../org/eclipse/net4j/util/security/IAuthenticato
 <ul class="blockList">
 <li class="blockList">
 <!-- ============ FIELD DETAIL =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.detail">
+<li class="blockList"><a id="field.detail">
 <!--   -->
 </a>
 <h3>Field Detail</h3>
-<a name="DEFAULT_TOKEN_LENGTH">
+<a id="DEFAULT_TOKEN_LENGTH">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -333,13 +394,15 @@ implements <a href="../../../../../org/eclipse/net4j/util/security/IAuthenticato
 </ul>
 </li>
 </ul>
+</section>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.detail">
+<li class="blockList"><a id="constructor.detail">
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="UserManagerAuthenticator--">
+<a id="&lt;init&gt;()">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -350,200 +413,206 @@ implements <a href="../../../../../org/eclipse/net4j/util/security/IAuthenticato
 </ul>
 </li>
 </ul>
+</section>
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="getEncryptionAlgorithmName--">
+<a id="getEncryptionAlgorithmName()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getEncryptionAlgorithmName</h4>
-<pre>public&nbsp;java.lang.String&nbsp;getEncryptionAlgorithmName()</pre>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getEncryptionAlgorithmName()</pre>
 </li>
 </ul>
-<a name="setEncryptionAlgorithmName-java.lang.String-">
+<a id="setEncryptionAlgorithmName(java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setEncryptionAlgorithmName</h4>
-<pre>public&nbsp;void&nbsp;setEncryptionAlgorithmName(java.lang.String&nbsp;encryptionAlgorithmName)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setEncryptionAlgorithmName&#8203;(java.lang.String&nbsp;encryptionAlgorithmName)</pre>
 </li>
 </ul>
-<a name="getEncryptionSaltBytes--">
+<a id="getEncryptionSaltBytes()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getEncryptionSaltBytes</h4>
-<pre>public&nbsp;byte[]&nbsp;getEncryptionSaltBytes()</pre>
+<pre class="methodSignature">public&nbsp;byte[]&nbsp;getEncryptionSaltBytes()</pre>
 </li>
 </ul>
-<a name="setEncryptionSaltBytes-byte:A-">
+<a id="setEncryptionSaltBytes(byte[])">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setEncryptionSaltBytes</h4>
-<pre>public&nbsp;void&nbsp;setEncryptionSaltBytes(byte[]&nbsp;encryptionSaltBytes)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setEncryptionSaltBytes&#8203;(byte[]&nbsp;encryptionSaltBytes)</pre>
 </li>
 </ul>
-<a name="getEncryptionIterationCount--">
+<a id="getEncryptionIterationCount()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getEncryptionIterationCount</h4>
-<pre>public&nbsp;int&nbsp;getEncryptionIterationCount()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;getEncryptionIterationCount()</pre>
 </li>
 </ul>
-<a name="setEncryptionIterationCount-int-">
+<a id="setEncryptionIterationCount(int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setEncryptionIterationCount</h4>
-<pre>public&nbsp;void&nbsp;setEncryptionIterationCount(int&nbsp;encryptionIterationCount)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setEncryptionIterationCount&#8203;(int&nbsp;encryptionIterationCount)</pre>
 </li>
 </ul>
-<a name="getTokenLength--">
+<a id="getTokenLength()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getTokenLength</h4>
-<pre>public&nbsp;int&nbsp;getTokenLength()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;getTokenLength()</pre>
 </li>
 </ul>
-<a name="setTokenLength-int-">
+<a id="setTokenLength(int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setTokenLength</h4>
-<pre>public&nbsp;void&nbsp;setTokenLength(int&nbsp;tokenLength)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setTokenLength&#8203;(int&nbsp;tokenLength)</pre>
 </li>
 </ul>
-<a name="getRandomizer--">
+<a id="getRandomizer()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getRandomizer</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/security/IRandomizer.html" title="interface in org.eclipse.net4j.util.security">IRandomizer</a>&nbsp;getRandomizer()</pre>
+<pre class="methodSignature">public&nbsp;<a href="IRandomizer.html" title="interface in org.eclipse.net4j.util.security">IRandomizer</a>&nbsp;getRandomizer()</pre>
 </li>
 </ul>
-<a name="setRandomizer-org.eclipse.net4j.util.security.IRandomizer-">
+<a id="setRandomizer(org.eclipse.net4j.util.security.IRandomizer)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setRandomizer</h4>
-<pre>public&nbsp;void&nbsp;setRandomizer(<a href="../../../../../org/eclipse/net4j/util/security/IRandomizer.html" title="interface in org.eclipse.net4j.util.security">IRandomizer</a>&nbsp;randomizer)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setRandomizer&#8203;(<a href="IRandomizer.html" title="interface in org.eclipse.net4j.util.security">IRandomizer</a>&nbsp;randomizer)</pre>
 </li>
 </ul>
-<a name="getUserManager--">
+<a id="getUserManager()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getUserManager</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/security/IUserManager.html" title="interface in org.eclipse.net4j.util.security">IUserManager</a>&nbsp;getUserManager()</pre>
+<pre class="methodSignature">public&nbsp;<a href="IUserManager.html" title="interface in org.eclipse.net4j.util.security">IUserManager</a>&nbsp;getUserManager()</pre>
 </li>
 </ul>
-<a name="setUserManager-org.eclipse.net4j.util.security.IUserManager-">
+<a id="setUserManager(org.eclipse.net4j.util.security.IUserManager)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setUserManager</h4>
-<pre>public&nbsp;void&nbsp;setUserManager(<a href="../../../../../org/eclipse/net4j/util/security/IUserManager.html" title="interface in org.eclipse.net4j.util.security">IUserManager</a>&nbsp;userManager)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setUserManager&#8203;(<a href="IUserManager.html" title="interface in org.eclipse.net4j.util.security">IUserManager</a>&nbsp;userManager)</pre>
 </li>
 </ul>
-<a name="authenticate-java.lang.String-char:A-">
+<a id="authenticate(java.lang.String,char[])">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>authenticate</h4>
-<pre>public&nbsp;void&nbsp;authenticate(java.lang.String&nbsp;userID,
+<pre class="methodSignature">public&nbsp;void&nbsp;authenticate&#8203;(java.lang.String&nbsp;userID,
                          char[]&nbsp;password)
                   throws java.lang.SecurityException</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/security/IAuthenticator.html#authenticate-java.lang.String-char:A-">IAuthenticator</a></code></span></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="IAuthenticator.html#authenticate(java.lang.String,char%5B%5D)">IAuthenticator</a></code></span></div>
 <div class="block">Authenticates the user with the passed <code>userID</code> by checking whether the supplied <code>password</code>
  matches the password <i>stored</i> for this user.
  <p>
  The implementation is required to throw a <code>SecurityException</code> if the passwords do <b>not</b> match.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/security/IAuthenticator.html#authenticate-java.lang.String-char:A-">authenticate</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/security/IAuthenticator.html" title="interface in org.eclipse.net4j.util.security">IAuthenticator</a></code></dd>
+<dd><code><a href="IAuthenticator.html#authenticate(java.lang.String,char%5B%5D)">authenticate</a></code>&nbsp;in interface&nbsp;<code><a href="IAuthenticator.html" title="interface in org.eclipse.net4j.util.security">IAuthenticator</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.lang.SecurityException</code></dd>
 </dl>
 </li>
 </ul>
-<a name="doBeforeActivate--">
+<a id="doBeforeActivate()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>doBeforeActivate</h4>
-<pre>protected&nbsp;void&nbsp;doBeforeActivate()
+<pre class="methodSignature">protected&nbsp;void&nbsp;doBeforeActivate()
                          throws java.lang.Exception</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#doBeforeActivate--">doBeforeActivate</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a></code></dd>
+<dd><code><a href="../lifecycle/Lifecycle.html#doBeforeActivate()">doBeforeActivate</a></code>&nbsp;in class&nbsp;<code><a href="../lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.lang.Exception</code></dd>
 </dl>
 </li>
 </ul>
-<a name="doActivate--">
+<a id="doActivate()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>doActivate</h4>
-<pre>protected&nbsp;void&nbsp;doActivate()
+<pre class="methodSignature">protected&nbsp;void&nbsp;doActivate()
                    throws java.lang.Exception</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#doActivate--">doActivate</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a></code></dd>
+<dd><code><a href="../lifecycle/Lifecycle.html#doActivate()">doActivate</a></code>&nbsp;in class&nbsp;<code><a href="../lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.lang.Exception</code></dd>
 </dl>
 </li>
 </ul>
-<a name="createRandomToken--">
+<a id="createRandomToken()">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>createRandomToken</h4>
-<pre>protected&nbsp;byte[]&nbsp;createRandomToken()</pre>
+<pre class="methodSignature">protected&nbsp;byte[]&nbsp;createRandomToken()</pre>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/UserManagerAuthenticator.html">Use</a></li>
@@ -553,16 +622,8 @@ implements <a href="../../../../../org/eclipse/net4j/util/security/IAuthenticato
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/net4j/util/security/UserManager.html" title="class in org.eclipse.net4j.util.security"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/net4j/util/security/UserManagerFactory.html" title="class in org.eclipse.net4j.util.security"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/net4j/util/security/UserManagerAuthenticator.html" target="_top">Frames</a></li>
-<li><a href="UserManagerAuthenticator.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -575,11 +636,14 @@ implements <a href="../../../../../org/eclipse/net4j/util/security/IAuthenticato
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
@@ -591,10 +655,12 @@ implements <a href="../../../../../org/eclipse/net4j/util/security/IAuthenticato
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

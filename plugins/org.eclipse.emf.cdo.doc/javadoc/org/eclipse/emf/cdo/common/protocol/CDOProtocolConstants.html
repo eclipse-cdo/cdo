@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>CDOProtocolConstants (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,20 +28,25 @@
     catch(err) {
     }
 //-->
-</script>
+var pathtoroot = "../../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/CDOProtocolConstants.html">Use</a></li>
@@ -41,16 +56,14 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocol.CommitNotificationInfo.html" title="class in org.eclipse.emf.cdo.common.protocol"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.UnitOpcode.html" title="enum in org.eclipse.emf.cdo.common.protocol"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html" target="_top">Frames</a></li>
-<li><a href="CDOProtocolConstants.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -63,6 +76,9 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -79,13 +95,22 @@
 <li>Method</li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.emf.cdo.common.protocol</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.cdo.common.protocol</a></div>
 <h2 title="Interface CDOProtocolConstants" class="title">Interface CDOProtocolConstants</h2>
 </div>
 <div class="contentContainer">
@@ -94,10 +119,9 @@
 <li class="blockList">
 <dl>
 <dt>All Known Subinterfaces:</dt>
-<dd><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocol.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDOProtocol</a>, <a href="../../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.html" title="interface in org.eclipse.emf.spi.cdo">CDOSessionProtocol</a>, <a href="../../../../../../org/eclipse/emf/cdo/spi/server/ISessionProtocol.html" title="interface in org.eclipse.emf.cdo.spi.server">ISessionProtocol</a></dd>
+<dd><code><a href="CDOProtocol.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDOProtocol</a></code>, <code><a href="../../../spi/cdo/CDOSessionProtocol.html" title="interface in org.eclipse.emf.spi.cdo">CDOSessionProtocol</a></code>, <code><a href="../../spi/server/ISessionProtocol.html" title="interface in org.eclipse.emf.cdo.spi.server">ISessionProtocol</a></code></dd>
 </dl>
 <hr>
-<br>
 <pre>public interface <span class="typeNameLabel">CDOProtocolConstants</span></pre>
 <div class="block">Symbolic protocol constants commonly used in CDO.</div>
 <dl>
@@ -117,439 +141,560 @@
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="nested.class.summary">
+<li class="blockList"><a id="nested.class.summary">
 <!--   -->
 </a>
 <h3>Nested Class Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Nested Class Summary table, listing nested classes, and an explanation">
+<table class="memberSummary">
 <caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Interface and Description</th>
+<th class="colSecond" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.UnitOpcode.html" title="enum in org.eclipse.emf.cdo.common.protocol">CDOProtocolConstants.UnitOpcode</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CDOProtocolConstants.UnitOpcode.html" title="enum in org.eclipse.emf.cdo.common.protocol">CDOProtocolConstants.UnitOpcode</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- =========== FIELD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.summary">
+<li class="blockList"><a id="field.summary">
 <!--   -->
 </a>
 <h3>Field Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Field Summary table, listing fields, and an explanation">
+<table class="memberSummary">
 <caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Field and Description</th>
+<th class="colSecond" scope="col">Field</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#NO_MORE_REMOTE_SESSIONS">NO_MORE_REMOTE_SESSIONS</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#NO_MORE_REMOTE_SESSIONS">NO_MORE_REMOTE_SESSIONS</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#PROTOCOL_NAME">PROTOCOL_NAME</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#PROTOCOL_NAME">PROTOCOL_NAME</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#PROTOCOL_VERSION">PROTOCOL_VERSION</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#PROTOCOL_VERSION">PROTOCOL_VERSION</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#QUERY_LANGUAGE_INSTANCES">QUERY_LANGUAGE_INSTANCES</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#QUERY_LANGUAGE_INSTANCES">QUERY_LANGUAGE_INSTANCES</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#QUERY_LANGUAGE_INSTANCES_EXACT">QUERY_LANGUAGE_INSTANCES_EXACT</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#QUERY_LANGUAGE_INSTANCES_EXACT">QUERY_LANGUAGE_INSTANCES_EXACT</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#QUERY_LANGUAGE_INSTANCES_TYPE">QUERY_LANGUAGE_INSTANCES_TYPE</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#QUERY_LANGUAGE_INSTANCES_TYPE">QUERY_LANGUAGE_INSTANCES_TYPE</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#QUERY_LANGUAGE_RESOURCES">QUERY_LANGUAGE_RESOURCES</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#QUERY_LANGUAGE_RESOURCES">QUERY_LANGUAGE_RESOURCES</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#QUERY_LANGUAGE_RESOURCES_EXACT_MATCH">QUERY_LANGUAGE_RESOURCES_EXACT_MATCH</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#QUERY_LANGUAGE_RESOURCES_EXACT_MATCH">QUERY_LANGUAGE_RESOURCES_EXACT_MATCH</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#QUERY_LANGUAGE_RESOURCES_FOLDER_ID">QUERY_LANGUAGE_RESOURCES_FOLDER_ID</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#QUERY_LANGUAGE_RESOURCES_FOLDER_ID">QUERY_LANGUAGE_RESOURCES_FOLDER_ID</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#QUERY_LANGUAGE_XREFS">QUERY_LANGUAGE_XREFS</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#QUERY_LANGUAGE_XREFS">QUERY_LANGUAGE_XREFS</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#QUERY_LANGUAGE_XREFS_SOURCE_REFERENCES">QUERY_LANGUAGE_XREFS_SOURCE_REFERENCES</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#QUERY_LANGUAGE_XREFS_SOURCE_REFERENCES">QUERY_LANGUAGE_XREFS_SOURCE_REFERENCES</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static byte</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#QUERY_RESULT_EXCEPTION">QUERY_RESULT_EXCEPTION</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#QUERY_RESULT_EXCEPTION">QUERY_RESULT_EXCEPTION</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static byte</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#QUERY_RESULT_PRIMITIVE">QUERY_RESULT_PRIMITIVE</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#QUERY_RESULT_PRIMITIVE">QUERY_RESULT_PRIMITIVE</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static byte</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#QUERY_RESULT_REVISION">QUERY_RESULT_REVISION</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#QUERY_RESULT_REVISION">QUERY_RESULT_REVISION</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static byte</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#REFRESH_CHANGED_OBJECT">REFRESH_CHANGED_OBJECT</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#REFRESH_CHANGED_OBJECT">REFRESH_CHANGED_OBJECT</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static byte</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#REFRESH_DETACHED_OBJECT">REFRESH_DETACHED_OBJECT</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#REFRESH_DETACHED_OBJECT">REFRESH_DETACHED_OBJECT</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static byte</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#REFRESH_FINISHED">REFRESH_FINISHED</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#REFRESH_FINISHED">REFRESH_FINISHED</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static byte</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#REFRESH_PACKAGE_UNIT">REFRESH_PACKAGE_UNIT</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#REFRESH_PACKAGE_UNIT">REFRESH_PACKAGE_UNIT</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#RELEASE_ALL_LOCKS">RELEASE_ALL_LOCKS</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#RELEASE_ALL_LOCKS">RELEASE_ALL_LOCKS</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static byte</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#REMOTE_SESSION_CLOSED">REMOTE_SESSION_CLOSED</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#REMOTE_SESSION_CLOSED">REMOTE_SESSION_CLOSED</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static byte</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#REMOTE_SESSION_CUSTOM_DATA">REMOTE_SESSION_CUSTOM_DATA</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#REMOTE_SESSION_CUSTOM_DATA">REMOTE_SESSION_CUSTOM_DATA</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static byte</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#REMOTE_SESSION_OPENED">REMOTE_SESSION_OPENED</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#REMOTE_SESSION_OPENED">REMOTE_SESSION_OPENED</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static byte</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#REMOTE_SESSION_SUBSCRIBED">REMOTE_SESSION_SUBSCRIBED</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#REMOTE_SESSION_SUBSCRIBED">REMOTE_SESSION_SUBSCRIBED</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static byte</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#REMOTE_SESSION_UNSUBSCRIBED">REMOTE_SESSION_UNSUBSCRIBED</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#REMOTE_SESSION_UNSUBSCRIBED">REMOTE_SESSION_UNSUBSCRIBED</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static byte</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#REPLICATE_BRANCH">REPLICATE_BRANCH</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#REPLICATE_BRANCH">REPLICATE_BRANCH</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static byte</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#REPLICATE_COMMIT">REPLICATE_COMMIT</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#REPLICATE_COMMIT">REPLICATE_COMMIT</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static byte</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#REPLICATE_FINISHED">REPLICATE_FINISHED</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#REPLICATE_FINISHED">REPLICATE_FINISHED</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static byte</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#REPLICATE_LOCKAREA">REPLICATE_LOCKAREA</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#REPLICATE_LOCKAREA">REPLICATE_LOCKAREA</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static byte</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#REVISION_DOES_NOT_EXIST">REVISION_DOES_NOT_EXIST</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#REVISION_DOES_NOT_EXIST">REVISION_DOES_NOT_EXIST</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static byte</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#ROLLBACK_REASON_COMMIT_CONFLICT">ROLLBACK_REASON_COMMIT_CONFLICT</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ROLLBACK_REASON_COMMIT_CONFLICT">ROLLBACK_REASON_COMMIT_CONFLICT</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static byte</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#ROLLBACK_REASON_CONTAINMENT_CYCLE">ROLLBACK_REASON_CONTAINMENT_CYCLE</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ROLLBACK_REASON_CONTAINMENT_CYCLE">ROLLBACK_REASON_CONTAINMENT_CYCLE</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static byte</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#ROLLBACK_REASON_OPTIMISTIC_LOCKING">ROLLBACK_REASON_OPTIMISTIC_LOCKING</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ROLLBACK_REASON_OPTIMISTIC_LOCKING">ROLLBACK_REASON_OPTIMISTIC_LOCKING</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static byte</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#ROLLBACK_REASON_REFERENTIAL_INTEGRITY">ROLLBACK_REASON_REFERENTIAL_INTEGRITY</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ROLLBACK_REASON_REFERENTIAL_INTEGRITY">ROLLBACK_REASON_REFERENTIAL_INTEGRITY</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static byte</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#ROLLBACK_REASON_UNIT_INTEGRITY">ROLLBACK_REASON_UNIT_INTEGRITY</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ROLLBACK_REASON_UNIT_INTEGRITY">ROLLBACK_REASON_UNIT_INTEGRITY</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static byte</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#ROLLBACK_REASON_UNKNOWN">ROLLBACK_REASON_UNKNOWN</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ROLLBACK_REASON_UNKNOWN">ROLLBACK_REASON_UNKNOWN</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static byte</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#ROLLBACK_REASON_VALIDATION_ERROR">ROLLBACK_REASON_VALIDATION_ERROR</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ROLLBACK_REASON_VALIDATION_ERROR">ROLLBACK_REASON_VALIDATION_ERROR</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_AUTHENTICATION">SIGNAL_AUTHENTICATION</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_AUTHENTICATION">SIGNAL_AUTHENTICATION</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_BRANCH_NOTIFICATION">SIGNAL_BRANCH_NOTIFICATION</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_BRANCH_NOTIFICATION">SIGNAL_BRANCH_NOTIFICATION</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_CHANGE_CREDENTIALS">SIGNAL_CHANGE_CREDENTIALS</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_CHANGE_CREDENTIALS">SIGNAL_CHANGE_CREDENTIALS</a></span></code></th>
+<td class="colLast">
 <div class="block">Client's request to the server to initiate a change-credentials operation.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_CHANGE_SUBSCRIPTION">SIGNAL_CHANGE_SUBSCRIPTION</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_CHANGE_SUBSCRIPTION">SIGNAL_CHANGE_SUBSCRIPTION</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_CLOSE_VIEW">SIGNAL_CLOSE_VIEW</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_CHANGE_TAG">SIGNAL_CHANGE_TAG</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_COMMIT_DELEGATION">SIGNAL_COMMIT_DELEGATION</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_CLOSE_VIEW">SIGNAL_CLOSE_VIEW</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_COMMIT_NOTIFICATION">SIGNAL_COMMIT_NOTIFICATION</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_COMMIT_DELEGATION">SIGNAL_COMMIT_DELEGATION</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_COMMIT_TRANSACTION">SIGNAL_COMMIT_TRANSACTION</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_COMMIT_NOTIFICATION">SIGNAL_COMMIT_NOTIFICATION</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_CREATE_BRANCH">SIGNAL_CREATE_BRANCH</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_COMMIT_TRANSACTION">SIGNAL_COMMIT_TRANSACTION</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_CREDENTIALS_CHALLENGE">SIGNAL_CREDENTIALS_CHALLENGE</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_CREATE_BRANCH">SIGNAL_CREATE_BRANCH</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static short</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_CREDENTIALS_CHALLENGE">SIGNAL_CREDENTIALS_CHALLENGE</a></span></code></th>
+<td class="colLast">
 <div class="block">Server's request to the client for new credentials.</div>
 </td>
 </tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static short</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_DISABLE_PASSIVE_UPDATE">SIGNAL_DISABLE_PASSIVE_UPDATE</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
 <tr class="altColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_DISABLE_PASSIVE_UPDATE">SIGNAL_DISABLE_PASSIVE_UPDATE</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_ENABLE_LOCK_NOTIFICATION">SIGNAL_ENABLE_LOCK_NOTIFICATION</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_ENABLE_LOCK_NOTIFICATION">SIGNAL_ENABLE_LOCK_NOTIFICATION</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_GET_REMOTE_SESSIONS">SIGNAL_GET_REMOTE_SESSIONS</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_GET_REMOTE_SESSIONS">SIGNAL_GET_REMOTE_SESSIONS</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_HANDLE_REVISIONS">SIGNAL_HANDLE_REVISIONS</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_HANDLE_REVISIONS">SIGNAL_HANDLE_REVISIONS</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_LOAD_BRANCH">SIGNAL_LOAD_BRANCH</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_LOAD_BRANCH">SIGNAL_LOAD_BRANCH</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_LOAD_BRANCHES">SIGNAL_LOAD_BRANCHES</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_LOAD_BRANCHES">SIGNAL_LOAD_BRANCHES</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_LOAD_CHANGE_SETS">SIGNAL_LOAD_CHANGE_SETS</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_LOAD_CHANGE_SETS">SIGNAL_LOAD_CHANGE_SETS</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_LOAD_CHUNK">SIGNAL_LOAD_CHUNK</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_LOAD_CHUNK">SIGNAL_LOAD_CHUNK</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_LOAD_COMMIT_DATA">SIGNAL_LOAD_COMMIT_DATA</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_LOAD_COMMIT_DATA">SIGNAL_LOAD_COMMIT_DATA</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_LOAD_COMMIT_INFOS">SIGNAL_LOAD_COMMIT_INFOS</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_LOAD_COMMIT_INFOS">SIGNAL_LOAD_COMMIT_INFOS</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_LOAD_LOB">SIGNAL_LOAD_LOB</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_LOAD_LOB">SIGNAL_LOAD_LOB</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_LOAD_MERGE_DATA">SIGNAL_LOAD_MERGE_DATA</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_LOAD_MERGE_DATA">SIGNAL_LOAD_MERGE_DATA</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_LOAD_OBJECT_LIFETIME">SIGNAL_LOAD_OBJECT_LIFETIME</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_LOAD_OBJECT_LIFETIME">SIGNAL_LOAD_OBJECT_LIFETIME</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_LOAD_PACKAGES">SIGNAL_LOAD_PACKAGES</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_LOAD_PACKAGES">SIGNAL_LOAD_PACKAGES</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_LOAD_PERMISSIONS">SIGNAL_LOAD_PERMISSIONS</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_LOAD_PERMISSIONS">SIGNAL_LOAD_PERMISSIONS</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_LOAD_REVISION_BY_VERSION">SIGNAL_LOAD_REVISION_BY_VERSION</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_LOAD_REVISION_BY_VERSION">SIGNAL_LOAD_REVISION_BY_VERSION</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_LOAD_REVISIONS">SIGNAL_LOAD_REVISIONS</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_LOAD_REVISIONS">SIGNAL_LOAD_REVISIONS</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_LOAD_SUB_BRANCHES">SIGNAL_LOAD_SUB_BRANCHES</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_LOAD_SUB_BRANCHES">SIGNAL_LOAD_SUB_BRANCHES</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_LOAD_TAGS">SIGNAL_LOAD_TAGS</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_LOCK_AREA">SIGNAL_LOCK_AREA</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_LOCK_AREA">SIGNAL_LOCK_AREA</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_LOCK_DELEGATION">SIGNAL_LOCK_DELEGATION</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_LOCK_DELEGATION">SIGNAL_LOCK_DELEGATION</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_LOCK_NOTIFICATION">SIGNAL_LOCK_NOTIFICATION</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_LOCK_NOTIFICATION">SIGNAL_LOCK_NOTIFICATION</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_LOCK_OBJECTS">SIGNAL_LOCK_OBJECTS</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_LOCK_OBJECTS">SIGNAL_LOCK_OBJECTS</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_LOCK_STATE">SIGNAL_LOCK_STATE</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_LOCK_STATE">SIGNAL_LOCK_STATE</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_OBJECT_LOCKED">SIGNAL_OBJECT_LOCKED</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_OBJECT_LOCKED">SIGNAL_OBJECT_LOCKED</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_OPEN_SESSION">SIGNAL_OPEN_SESSION</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_OPEN_SESSION">SIGNAL_OPEN_SESSION</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_OPEN_VIEW">SIGNAL_OPEN_VIEW</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_OPEN_VIEW">SIGNAL_OPEN_VIEW</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_OPENED_SESSION">SIGNAL_OPENED_SESSION</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_OPENED_SESSION">SIGNAL_OPENED_SESSION</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_QUERY">SIGNAL_QUERY</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_QUERY">SIGNAL_QUERY</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_QUERY_CANCEL">SIGNAL_QUERY_CANCEL</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_QUERY_CANCEL">SIGNAL_QUERY_CANCEL</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_QUERY_LOBS">SIGNAL_QUERY_LOBS</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_QUERY_LOBS">SIGNAL_QUERY_LOBS</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_REFRESH_SESSION">SIGNAL_REFRESH_SESSION</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_REFRESH_SESSION">SIGNAL_REFRESH_SESSION</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_REMOTE_MESSAGE">SIGNAL_REMOTE_MESSAGE</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_REMOTE_MESSAGE">SIGNAL_REMOTE_MESSAGE</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_REMOTE_MESSAGE_NOTIFICATION">SIGNAL_REMOTE_MESSAGE_NOTIFICATION</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_REMOTE_MESSAGE_NOTIFICATION">SIGNAL_REMOTE_MESSAGE_NOTIFICATION</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_REMOTE_SESSION_NOTIFICATION">SIGNAL_REMOTE_SESSION_NOTIFICATION</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_REMOTE_SESSION_NOTIFICATION">SIGNAL_REMOTE_SESSION_NOTIFICATION</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_RENAME_BRANCH">SIGNAL_RENAME_BRANCH</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_RENAME_BRANCH">SIGNAL_RENAME_BRANCH</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_REPLICATE_REPOSITORY">SIGNAL_REPLICATE_REPOSITORY</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_REPLICATE_REPOSITORY">SIGNAL_REPLICATE_REPOSITORY</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_REPLICATE_REPOSITORY_RAW">SIGNAL_REPLICATE_REPOSITORY_RAW</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_REPLICATE_REPOSITORY_RAW">SIGNAL_REPLICATE_REPOSITORY_RAW</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_REPOSITORY_STATE_NOTIFICATION">SIGNAL_REPOSITORY_STATE_NOTIFICATION</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_REPOSITORY_STATE_NOTIFICATION">SIGNAL_REPOSITORY_STATE_NOTIFICATION</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_REPOSITORY_TIME">SIGNAL_REPOSITORY_TIME</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_REPOSITORY_TIME">SIGNAL_REPOSITORY_TIME</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_REPOSITORY_TYPE_NOTIFICATION">SIGNAL_REPOSITORY_TYPE_NOTIFICATION</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_REPOSITORY_TYPE_NOTIFICATION">SIGNAL_REPOSITORY_TYPE_NOTIFICATION</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_RESET_TRANSACTION">SIGNAL_RESET_TRANSACTION</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_RESET_TRANSACTION">SIGNAL_RESET_TRANSACTION</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_SET_LOCK_NOTIFICATION_MODE">SIGNAL_SET_LOCK_NOTIFICATION_MODE</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_SET_LOCK_NOTIFICATION_MODE">SIGNAL_SET_LOCK_NOTIFICATION_MODE</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_SET_PASSIVE_UPDATE_MODE">SIGNAL_SET_PASSIVE_UPDATE_MODE</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_SET_PASSIVE_UPDATE_MODE">SIGNAL_SET_PASSIVE_UPDATE_MODE</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_SWITCH_TARGET">SIGNAL_SWITCH_TARGET</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_SWITCH_TARGET">SIGNAL_SWITCH_TARGET</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_UNIT">SIGNAL_UNIT</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_TAG_NOTIFICATION">SIGNAL_TAG_NOTIFICATION</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_UNLOCK_DELEGATION">SIGNAL_UNLOCK_DELEGATION</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_UNIT">SIGNAL_UNIT</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_UNLOCK_OBJECTS">SIGNAL_UNLOCK_OBJECTS</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_UNLOCK_DELEGATION">SIGNAL_UNLOCK_DELEGATION</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_UNSUBSCRIBE_REMOTE_SESSIONS">SIGNAL_UNSUBSCRIBE_REMOTE_SESSIONS</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_UNLOCK_OBJECTS">SIGNAL_UNLOCK_OBJECTS</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_XA_COMMIT_TRANSACTION_CANCEL">SIGNAL_XA_COMMIT_TRANSACTION_CANCEL</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_UNSUBSCRIBE_REMOTE_SESSIONS">SIGNAL_UNSUBSCRIBE_REMOTE_SESSIONS</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_XA_COMMIT_TRANSACTION_PHASE1">SIGNAL_XA_COMMIT_TRANSACTION_PHASE1</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_XA_COMMIT_TRANSACTION_CANCEL">SIGNAL_XA_COMMIT_TRANSACTION_CANCEL</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_XA_COMMIT_TRANSACTION_PHASE2">SIGNAL_XA_COMMIT_TRANSACTION_PHASE2</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_XA_COMMIT_TRANSACTION_PHASE1">SIGNAL_XA_COMMIT_TRANSACTION_PHASE1</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_XA_COMMIT_TRANSACTION_PHASE3">SIGNAL_XA_COMMIT_TRANSACTION_PHASE3</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_XA_COMMIT_TRANSACTION_PHASE2">SIGNAL_XA_COMMIT_TRANSACTION_PHASE2</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>static short</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SIGNAL_XA_COMMIT_TRANSACTION_PHASE3">SIGNAL_XA_COMMIT_TRANSACTION_PHASE3</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>static boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#X_COMPRESSION">X_COMPRESSION</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#X_COMPRESSION">X_COMPRESSION</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -557,12 +702,13 @@
 <ul class="blockList">
 <li class="blockList">
 <!-- ============ FIELD DETAIL =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.detail">
+<li class="blockList"><a id="field.detail">
 <!--   -->
 </a>
 <h3>Field Detail</h3>
-<a name="PROTOCOL_NAME">
+<a id="PROTOCOL_NAME">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -575,7 +721,7 @@
 </dl>
 </li>
 </ul>
-<a name="PROTOCOL_VERSION">
+<a id="PROTOCOL_VERSION">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -585,14 +731,10 @@
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.PROTOCOL_VERSION">Constant Field Values</a></dd>
-<dt><span class="simpleTagLabel">No Reference</span></dt>
-<dd>This field is not intended to be referenced by clients.</dd>
 </dl>
 </li>
 </ul>
-<a name="X_COMPRESSION">
+<a id="X_COMPRESSION">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -605,7 +747,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_OPEN_SESSION">
+<a id="SIGNAL_OPEN_SESSION">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -618,7 +760,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_AUTHENTICATION">
+<a id="SIGNAL_AUTHENTICATION">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -631,7 +773,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_OPEN_VIEW">
+<a id="SIGNAL_OPEN_VIEW">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -646,7 +788,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_SWITCH_TARGET">
+<a id="SIGNAL_SWITCH_TARGET">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -661,7 +803,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_CLOSE_VIEW">
+<a id="SIGNAL_CLOSE_VIEW">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -676,7 +818,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_LOAD_PACKAGES">
+<a id="SIGNAL_LOAD_PACKAGES">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -689,7 +831,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_LOAD_REVISIONS">
+<a id="SIGNAL_LOAD_REVISIONS">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -704,7 +846,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_LOAD_REVISION_BY_VERSION">
+<a id="SIGNAL_LOAD_REVISION_BY_VERSION">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -717,7 +859,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_LOAD_CHUNK">
+<a id="SIGNAL_LOAD_CHUNK">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -730,7 +872,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_COMMIT_NOTIFICATION">
+<a id="SIGNAL_COMMIT_NOTIFICATION">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -743,7 +885,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_COMMIT_TRANSACTION">
+<a id="SIGNAL_COMMIT_TRANSACTION">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -756,7 +898,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_COMMIT_DELEGATION">
+<a id="SIGNAL_COMMIT_DELEGATION">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -771,7 +913,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_XA_COMMIT_TRANSACTION_PHASE1">
+<a id="SIGNAL_XA_COMMIT_TRANSACTION_PHASE1">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -786,7 +928,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_XA_COMMIT_TRANSACTION_PHASE2">
+<a id="SIGNAL_XA_COMMIT_TRANSACTION_PHASE2">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -801,7 +943,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_XA_COMMIT_TRANSACTION_PHASE3">
+<a id="SIGNAL_XA_COMMIT_TRANSACTION_PHASE3">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -816,7 +958,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_XA_COMMIT_TRANSACTION_CANCEL">
+<a id="SIGNAL_XA_COMMIT_TRANSACTION_CANCEL">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -831,7 +973,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_QUERY">
+<a id="SIGNAL_QUERY">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -844,7 +986,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_QUERY_CANCEL">
+<a id="SIGNAL_QUERY_CANCEL">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -857,7 +999,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_REFRESH_SESSION">
+<a id="SIGNAL_REFRESH_SESSION">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -872,7 +1014,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_DISABLE_PASSIVE_UPDATE">
+<a id="SIGNAL_DISABLE_PASSIVE_UPDATE">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -887,7 +1029,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_SET_PASSIVE_UPDATE_MODE">
+<a id="SIGNAL_SET_PASSIVE_UPDATE_MODE">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -902,7 +1044,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_CHANGE_SUBSCRIPTION">
+<a id="SIGNAL_CHANGE_SUBSCRIPTION">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -915,7 +1057,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_REPOSITORY_TIME">
+<a id="SIGNAL_REPOSITORY_TIME">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -928,7 +1070,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_LOCK_OBJECTS">
+<a id="SIGNAL_LOCK_OBJECTS">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -941,7 +1083,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_UNLOCK_OBJECTS">
+<a id="SIGNAL_UNLOCK_OBJECTS">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -954,7 +1096,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_OBJECT_LOCKED">
+<a id="SIGNAL_OBJECT_LOCKED">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -967,7 +1109,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_LOCK_AREA">
+<a id="SIGNAL_LOCK_AREA">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -982,7 +1124,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_GET_REMOTE_SESSIONS">
+<a id="SIGNAL_GET_REMOTE_SESSIONS">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -995,7 +1137,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_REMOTE_MESSAGE">
+<a id="SIGNAL_REMOTE_MESSAGE">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1010,7 +1152,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_REMOTE_MESSAGE_NOTIFICATION">
+<a id="SIGNAL_REMOTE_MESSAGE_NOTIFICATION">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1025,7 +1167,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_UNSUBSCRIBE_REMOTE_SESSIONS">
+<a id="SIGNAL_UNSUBSCRIBE_REMOTE_SESSIONS">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1038,7 +1180,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_REMOTE_SESSION_NOTIFICATION">
+<a id="SIGNAL_REMOTE_SESSION_NOTIFICATION">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1051,7 +1193,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_CREATE_BRANCH">
+<a id="SIGNAL_CREATE_BRANCH">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1066,7 +1208,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_LOAD_BRANCH">
+<a id="SIGNAL_LOAD_BRANCH">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1081,7 +1223,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_LOAD_SUB_BRANCHES">
+<a id="SIGNAL_LOAD_SUB_BRANCHES">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1096,7 +1238,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_LOAD_BRANCHES">
+<a id="SIGNAL_LOAD_BRANCHES">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1111,7 +1253,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_REPOSITORY_TYPE_NOTIFICATION">
+<a id="SIGNAL_REPOSITORY_TYPE_NOTIFICATION">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1126,7 +1268,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_REPOSITORY_STATE_NOTIFICATION">
+<a id="SIGNAL_REPOSITORY_STATE_NOTIFICATION">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1141,7 +1283,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_BRANCH_NOTIFICATION">
+<a id="SIGNAL_BRANCH_NOTIFICATION">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1156,7 +1298,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_LOAD_COMMIT_INFOS">
+<a id="SIGNAL_LOAD_COMMIT_INFOS">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1171,7 +1313,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_LOAD_COMMIT_DATA">
+<a id="SIGNAL_LOAD_COMMIT_DATA">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1186,7 +1328,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_REPLICATE_REPOSITORY">
+<a id="SIGNAL_REPLICATE_REPOSITORY">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1201,7 +1343,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_REPLICATE_REPOSITORY_RAW">
+<a id="SIGNAL_REPLICATE_REPOSITORY_RAW">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1216,7 +1358,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_LOAD_CHANGE_SETS">
+<a id="SIGNAL_LOAD_CHANGE_SETS">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1231,7 +1373,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_LOAD_MERGE_DATA">
+<a id="SIGNAL_LOAD_MERGE_DATA">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1246,7 +1388,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_QUERY_LOBS">
+<a id="SIGNAL_QUERY_LOBS">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1261,7 +1403,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_LOAD_LOB">
+<a id="SIGNAL_LOAD_LOB">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1276,7 +1418,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_HANDLE_REVISIONS">
+<a id="SIGNAL_HANDLE_REVISIONS">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1291,7 +1433,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_LOCK_DELEGATION">
+<a id="SIGNAL_LOCK_DELEGATION">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1306,7 +1448,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_UNLOCK_DELEGATION">
+<a id="SIGNAL_UNLOCK_DELEGATION">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1321,7 +1463,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_LOCK_NOTIFICATION">
+<a id="SIGNAL_LOCK_NOTIFICATION">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1336,7 +1478,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_LOCK_STATE">
+<a id="SIGNAL_LOCK_STATE">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1351,7 +1493,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_ENABLE_LOCK_NOTIFICATION">
+<a id="SIGNAL_ENABLE_LOCK_NOTIFICATION">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1366,7 +1508,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_SET_LOCK_NOTIFICATION_MODE">
+<a id="SIGNAL_SET_LOCK_NOTIFICATION_MODE">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1381,7 +1523,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_LOAD_PERMISSIONS">
+<a id="SIGNAL_LOAD_PERMISSIONS">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1396,7 +1538,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_CHANGE_CREDENTIALS">
+<a id="SIGNAL_CHANGE_CREDENTIALS">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1408,12 +1550,12 @@
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.3</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_CREDENTIALS_CHALLENGE"><code>SIGNAL_CREDENTIALS_CHALLENGE</code></a>, 
+<dd><a href="#SIGNAL_CREDENTIALS_CHALLENGE"><code>SIGNAL_CREDENTIALS_CHALLENGE</code></a>, 
 <a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_CHANGE_CREDENTIALS">Constant Field Values</a></dd>
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_CREDENTIALS_CHALLENGE">
+<a id="SIGNAL_CREDENTIALS_CHALLENGE">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1425,12 +1567,12 @@
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.3</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_CHANGE_CREDENTIALS"><code>SIGNAL_CHANGE_CREDENTIALS</code></a>, 
+<dd><a href="#SIGNAL_CHANGE_CREDENTIALS"><code>SIGNAL_CHANGE_CREDENTIALS</code></a>, 
 <a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_CREDENTIALS_CHALLENGE">Constant Field Values</a></dd>
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_RENAME_BRANCH">
+<a id="SIGNAL_RENAME_BRANCH">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1445,7 +1587,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_LOAD_OBJECT_LIFETIME">
+<a id="SIGNAL_LOAD_OBJECT_LIFETIME">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1460,7 +1602,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_OPENED_SESSION">
+<a id="SIGNAL_OPENED_SESSION">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1475,7 +1617,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_RESET_TRANSACTION">
+<a id="SIGNAL_RESET_TRANSACTION">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1490,7 +1632,7 @@
 </dl>
 </li>
 </ul>
-<a name="SIGNAL_UNIT">
+<a id="SIGNAL_UNIT">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1505,7 +1647,52 @@
 </dl>
 </li>
 </ul>
-<a name="REFRESH_FINISHED">
+<a id="SIGNAL_LOAD_TAGS">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>SIGNAL_LOAD_TAGS</h4>
+<pre>static final&nbsp;short SIGNAL_LOAD_TAGS</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.11</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_LOAD_TAGS">Constant Field Values</a></dd>
+</dl>
+</li>
+</ul>
+<a id="SIGNAL_CHANGE_TAG">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>SIGNAL_CHANGE_TAG</h4>
+<pre>static final&nbsp;short SIGNAL_CHANGE_TAG</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.11</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_CHANGE_TAG">Constant Field Values</a></dd>
+</dl>
+</li>
+</ul>
+<a id="SIGNAL_TAG_NOTIFICATION">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>SIGNAL_TAG_NOTIFICATION</h4>
+<pre>static final&nbsp;short SIGNAL_TAG_NOTIFICATION</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.11</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_TAG_NOTIFICATION">Constant Field Values</a></dd>
+</dl>
+</li>
+</ul>
+<a id="REFRESH_FINISHED">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1520,7 +1707,7 @@
 </dl>
 </li>
 </ul>
-<a name="REFRESH_PACKAGE_UNIT">
+<a id="REFRESH_PACKAGE_UNIT">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1535,7 +1722,7 @@
 </dl>
 </li>
 </ul>
-<a name="REFRESH_CHANGED_OBJECT">
+<a id="REFRESH_CHANGED_OBJECT">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1550,7 +1737,7 @@
 </dl>
 </li>
 </ul>
-<a name="REFRESH_DETACHED_OBJECT">
+<a id="REFRESH_DETACHED_OBJECT">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1565,7 +1752,7 @@
 </dl>
 </li>
 </ul>
-<a name="QUERY_RESULT_EXCEPTION">
+<a id="QUERY_RESULT_EXCEPTION">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1580,7 +1767,7 @@
 </dl>
 </li>
 </ul>
-<a name="QUERY_RESULT_PRIMITIVE">
+<a id="QUERY_RESULT_PRIMITIVE">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1595,7 +1782,7 @@
 </dl>
 </li>
 </ul>
-<a name="QUERY_RESULT_REVISION">
+<a id="QUERY_RESULT_REVISION">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1610,7 +1797,7 @@
 </dl>
 </li>
 </ul>
-<a name="QUERY_LANGUAGE_RESOURCES">
+<a id="QUERY_LANGUAGE_RESOURCES">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1623,7 +1810,7 @@
 </dl>
 </li>
 </ul>
-<a name="QUERY_LANGUAGE_RESOURCES_FOLDER_ID">
+<a id="QUERY_LANGUAGE_RESOURCES_FOLDER_ID">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1636,7 +1823,7 @@
 </dl>
 </li>
 </ul>
-<a name="QUERY_LANGUAGE_RESOURCES_EXACT_MATCH">
+<a id="QUERY_LANGUAGE_RESOURCES_EXACT_MATCH">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1649,7 +1836,7 @@
 </dl>
 </li>
 </ul>
-<a name="QUERY_LANGUAGE_INSTANCES">
+<a id="QUERY_LANGUAGE_INSTANCES">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1664,7 +1851,7 @@
 </dl>
 </li>
 </ul>
-<a name="QUERY_LANGUAGE_INSTANCES_TYPE">
+<a id="QUERY_LANGUAGE_INSTANCES_TYPE">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1679,7 +1866,7 @@
 </dl>
 </li>
 </ul>
-<a name="QUERY_LANGUAGE_INSTANCES_EXACT">
+<a id="QUERY_LANGUAGE_INSTANCES_EXACT">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1694,7 +1881,7 @@
 </dl>
 </li>
 </ul>
-<a name="QUERY_LANGUAGE_XREFS">
+<a id="QUERY_LANGUAGE_XREFS">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1709,7 +1896,7 @@
 </dl>
 </li>
 </ul>
-<a name="QUERY_LANGUAGE_XREFS_SOURCE_REFERENCES">
+<a id="QUERY_LANGUAGE_XREFS_SOURCE_REFERENCES">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1724,7 +1911,7 @@
 </dl>
 </li>
 </ul>
-<a name="RELEASE_ALL_LOCKS">
+<a id="RELEASE_ALL_LOCKS">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1737,7 +1924,7 @@
 </dl>
 </li>
 </ul>
-<a name="NO_MORE_REMOTE_SESSIONS">
+<a id="NO_MORE_REMOTE_SESSIONS">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1750,7 +1937,7 @@
 </dl>
 </li>
 </ul>
-<a name="REMOTE_SESSION_OPENED">
+<a id="REMOTE_SESSION_OPENED">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1763,7 +1950,7 @@
 </dl>
 </li>
 </ul>
-<a name="REMOTE_SESSION_CLOSED">
+<a id="REMOTE_SESSION_CLOSED">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1776,7 +1963,7 @@
 </dl>
 </li>
 </ul>
-<a name="REMOTE_SESSION_SUBSCRIBED">
+<a id="REMOTE_SESSION_SUBSCRIBED">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1789,7 +1976,7 @@
 </dl>
 </li>
 </ul>
-<a name="REMOTE_SESSION_UNSUBSCRIBED">
+<a id="REMOTE_SESSION_UNSUBSCRIBED">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1802,7 +1989,7 @@
 </dl>
 </li>
 </ul>
-<a name="REMOTE_SESSION_CUSTOM_DATA">
+<a id="REMOTE_SESSION_CUSTOM_DATA">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1817,7 +2004,7 @@
 </dl>
 </li>
 </ul>
-<a name="REPLICATE_FINISHED">
+<a id="REPLICATE_FINISHED">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1832,7 +2019,7 @@
 </dl>
 </li>
 </ul>
-<a name="REPLICATE_BRANCH">
+<a id="REPLICATE_BRANCH">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1847,7 +2034,7 @@
 </dl>
 </li>
 </ul>
-<a name="REPLICATE_COMMIT">
+<a id="REPLICATE_COMMIT">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1862,7 +2049,7 @@
 </dl>
 </li>
 </ul>
-<a name="REPLICATE_LOCKAREA">
+<a id="REPLICATE_LOCKAREA">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1877,7 +2064,7 @@
 </dl>
 </li>
 </ul>
-<a name="ROLLBACK_REASON_UNKNOWN">
+<a id="ROLLBACK_REASON_UNKNOWN">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1892,7 +2079,7 @@
 </dl>
 </li>
 </ul>
-<a name="ROLLBACK_REASON_OPTIMISTIC_LOCKING">
+<a id="ROLLBACK_REASON_OPTIMISTIC_LOCKING">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1907,7 +2094,7 @@
 </dl>
 </li>
 </ul>
-<a name="ROLLBACK_REASON_COMMIT_CONFLICT">
+<a id="ROLLBACK_REASON_COMMIT_CONFLICT">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1922,7 +2109,7 @@
 </dl>
 </li>
 </ul>
-<a name="ROLLBACK_REASON_CONTAINMENT_CYCLE">
+<a id="ROLLBACK_REASON_CONTAINMENT_CYCLE">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1937,7 +2124,7 @@
 </dl>
 </li>
 </ul>
-<a name="ROLLBACK_REASON_REFERENTIAL_INTEGRITY">
+<a id="ROLLBACK_REASON_REFERENTIAL_INTEGRITY">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1952,7 +2139,7 @@
 </dl>
 </li>
 </ul>
-<a name="ROLLBACK_REASON_VALIDATION_ERROR">
+<a id="ROLLBACK_REASON_VALIDATION_ERROR">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1967,7 +2154,7 @@
 </dl>
 </li>
 </ul>
-<a name="ROLLBACK_REASON_UNIT_INTEGRITY">
+<a id="ROLLBACK_REASON_UNIT_INTEGRITY">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -1982,7 +2169,7 @@
 </dl>
 </li>
 </ul>
-<a name="REVISION_DOES_NOT_EXIST">
+<a id="REVISION_DOES_NOT_EXIST">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -1999,21 +2186,25 @@
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/CDOProtocolConstants.html">Use</a></li>
@@ -2023,16 +2214,8 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocol.CommitNotificationInfo.html" title="class in org.eclipse.emf.cdo.common.protocol"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.UnitOpcode.html" title="enum in org.eclipse.emf.cdo.common.protocol"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html" target="_top">Frames</a></li>
-<li><a href="CDOProtocolConstants.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -2045,6 +2228,9 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -2061,10 +2247,12 @@
 <li>Method</li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

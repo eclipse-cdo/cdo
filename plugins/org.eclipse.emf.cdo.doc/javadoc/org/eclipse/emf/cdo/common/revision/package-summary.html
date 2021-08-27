@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>org.eclipse.emf.cdo.common.revision (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,20 +28,25 @@
     catch(err) {
     }
 //-->
-</script>
+var pathtoroot = "../../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li class="navBarCell1Rev">Package</li>
 <li>Class</li>
 <li><a href="package-use.html">Use</a></li>
@@ -41,16 +56,14 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/package-summary.html">Prev&nbsp;Package</a></li>
-<li><a href="../../../../../../org/eclipse/emf/cdo/common/revision/delta/package-summary.html">Next&nbsp;Package</a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/emf/cdo/common/revision/package-summary.html" target="_top">Frames</a></li>
-<li><a href="package-summary.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -63,22 +76,35 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
+<main role="main">
 <div class="header">
 <h1 title="Package" class="title">Package&nbsp;org.eclipse.emf.cdo.common.revision</h1>
-<div class="docSummary">
-<div class="block">Common concepts for dealing with revisions and revision lists.</div>
-</div>
-<p>See:&nbsp;<a href="#package.description">Description</a></p>
 </div>
 <div class="contentContainer">
+<section role="region"><a id="package.description">
+<!--   -->
+</a>
+<div class="block">Common concepts for dealing with revisions and revision lists.</div>
+</section>
 <ul class="blockList">
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<table class="typeSummary">
 <caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Interface</th>
@@ -86,139 +112,139 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDOAllRevisionsProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOAllRevisionsProvider</a></td>
+<th class="colFirst" scope="row"><a href="CDOAllRevisionsProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOAllRevisionsProvider</a></th>
 <td class="colLast">
-<div class="block">Provides consumers with all <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> available in an instance of this interface.</div>
+<div class="block">Provides consumers with all <a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> available in an instance of this interface.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDOElementProxy.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOElementProxy</a></td>
+<th class="colFirst" scope="row"><a href="CDOElementProxy.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOElementProxy</a></th>
 <td class="colLast">
-<div class="block">A moveable placeholder for the element of a <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDOList.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>list</code></a> at a specified <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDOElementProxy.html#getIndex--"><code>index</code></a>.</div>
+<div class="block">A moveable placeholder for the element of a <a href="CDOList.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>list</code></a> at a specified <a href="CDOElementProxy.html#getIndex()"><code>index</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDOIDAndBranch.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndBranch</a></td>
+<th class="colFirst" scope="row"><a href="CDOIDAndBranch.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndBranch</a></th>
 <td class="colLast">
-<div class="block">An <a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>ID</code></a> / <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch</code></a> pair.</div>
+<div class="block">An <a href="../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>ID</code></a> / <a href="../branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch</code></a> pair.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDOIDAndVersion.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndVersion</a></td>
+<th class="colFirst" scope="row"><a href="CDOIDAndVersion.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndVersion</a></th>
 <td class="colLast">
-<div class="block">An <a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>ID</code></a> / version number pair.</div>
+<div class="block">An <a href="../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>ID</code></a> / version number pair.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDOList.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOList</a></td>
+<th class="colFirst" scope="row"><a href="CDOList.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOList</a></th>
 <td class="colLast">
-<div class="block">A <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/MoveableList.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection"><code>moveable</code></a> <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util"><code>EList</code></a>.</div>
+<div class="block">A <code>moveable</code> <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink"><code>EList</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDOListFactory.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOListFactory</a></td>
+<th class="colFirst" scope="row"><a href="CDOListFactory.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOListFactory</a></th>
 <td class="colLast">
-<div class="block">Creates <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDOList.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>list</code></a> instances.</div>
+<div class="block">Creates <a href="CDOList.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>list</code></a> instances.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDOListResolver.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOListResolver</a></td>
+<th class="colFirst" scope="row"><a href="CDOListResolver.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOListResolver</a></th>
 <td class="colLast">
-<div class="block">A strategy that specifies which list elememts must be present (loaded) in a <a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>CDOID</code></a> list of a
- <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision</code></a> when a certain list index is accessed.</div>
+<div class="block">A strategy that specifies which list elememts must be present (loaded) in a <a href="../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>CDOID</code></a> list of a
+ <a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision</code></a> when a certain list index is accessed.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisable.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisable</a></td>
+<th class="colFirst" scope="row"><a href="CDORevisable.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisable</a></th>
 <td class="colLast">
-<div class="block">An entity that has a defined lifetime (creation plus revision) and a version in a <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch</code></a>.</div>
+<div class="block">An entity that has a defined lifetime (creation plus revision) and a version in a <a href="../branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a></td>
+<th class="colFirst" scope="row"><a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a></th>
 <td class="colLast">
-<div class="block">Encapsulates the immutable system information of a <b>single</b> CDO <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>object</code></a> between two
- <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>commits</code></a> in a <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch</code></a> and provides access to its modeled
- <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionData.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>data</code></a>.</div>
+<div class="block">Encapsulates the immutable system information of a <b>single</b> CDO <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>object</code></a> between two
+ <a href="../commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>commits</code></a> in a <a href="../branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch</code></a> and provides access to its modeled
+ <a href="CDORevisionData.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>data</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionCache.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCache</a></td>
+<th class="colFirst" scope="row"><a href="CDORevisionCache.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCache</a></th>
 <td class="colLast">
-<div class="block">Caches <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> and possibly <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionCache.EvictionEvent.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>evicts</code></a> those that are no longer strongly
+<div class="block">Caches <a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> and possibly <a href="CDORevisionCache.EvictionEvent.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>evicts</code></a> those that are no longer strongly
  referenced when free memory runs low.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionCache.EvictionEvent.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCache.EvictionEvent</a></td>
+<th class="colFirst" scope="row"><a href="CDORevisionCache.EvictionEvent.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCache.EvictionEvent</a></th>
 <td class="colLast">
-<div class="block">An <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event"><code>event</code></a> fired from a <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionCache.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision cache</code></a> for <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> that
+<div class="block">An <code>event</code> fired from a <a href="CDORevisionCache.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision cache</code></a> for <a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> that
  are evicted because they are no longer strongly referenced when free memory runs low.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionCacheAdder.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCacheAdder</a></td>
+<th class="colFirst" scope="row"><a href="CDORevisionCacheAdder.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCacheAdder</a></th>
 <td class="colLast">
-<div class="block">An entity that <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> can be added to.</div>
+<div class="block">An entity that <a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> can be added to.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionData.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionData</a></td>
+<th class="colFirst" scope="row"><a href="CDORevisionData.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionData</a></th>
 <td class="colLast">
-<div class="block">Encapsulates the modeled information and the EMF system values of a <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision</code></a>.</div>
+<div class="block">Encapsulates the modeled information and the EMF system values of a <a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionFactory.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionFactory</a></td>
+<th class="colFirst" scope="row"><a href="CDORevisionFactory.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionFactory</a></th>
 <td class="colLast">
-<div class="block">Creates <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision</code></a> instances.</div>
+<div class="block">Creates <a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision</code></a> instances.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionHandler.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionHandler</a></td>
+<th class="colFirst" scope="row"><a href="CDORevisionHandler.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionHandler</a></th>
 <td class="colLast">
-<div class="block">A call-back interface that indicates the ability to <i>handle</i> <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> that are passed from
+<div class="block">A call-back interface that indicates the ability to <i>handle</i> <a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> that are passed from
  other entities.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionKey.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionKey</a></td>
+<th class="colFirst" scope="row"><a href="CDORevisionKey.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionKey</a></th>
 <td class="colLast">
-<div class="block">Uniquely identifies a <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision</code></a> by version in a <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch</code></a>.</div>
+<div class="block">Uniquely identifies a <a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision</code></a> by version in a <a href="../branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionManager</a></td>
+<th class="colFirst" scope="row"><a href="CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionManager</a></th>
 <td class="colLast">
-<div class="block">Provides access to <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> in a CDO <a href="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common"><code>repository</code></a> by demand loading
+<div class="block">Provides access to <a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> in a CDO <a href="../CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common"><code>repository</code></a> by demand loading
  and caching them.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a></td>
+<th class="colFirst" scope="row"><a href="CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a></th>
 <td class="colLast">
-<div class="block">Provides consumers with the <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> of <a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>identifiable</code></a> CDO objects by selecting a
- particular one from several possible <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch points</code></a>.</div>
+<div class="block">Provides consumers with the <a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> of <a href="../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>identifiable</code></a> CDO objects by selecting a
+ particular one from several possible <a href="../branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch points</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionsLoadedEvent.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionsLoadedEvent</a></td>
+<th class="colFirst" scope="row"><a href="CDORevisionsLoadedEvent.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionsLoadedEvent</a></th>
 <td class="colLast">
-<div class="block">An <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event"><code>event</code></a> fired from a <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision manager</code></a> when a new <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision</code></a> has
+<div class="block">An <code>event</code> fired from a <a href="CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision manager</code></a> when a new <a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision</code></a> has
  been loaded.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionValueVisitor.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionValueVisitor</a></td>
+<th class="colFirst" scope="row"><a href="CDORevisionValueVisitor.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionValueVisitor</a></th>
 <td class="colLast">
-<div class="block">Visits <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionData.html#get-org.eclipse.emf.ecore.EStructuralFeature-int-"><code>values</code></a> of a <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionData.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision</code></a>.</div>
+<div class="block">Visits <a href="CDORevisionData.html#get(org.eclipse.emf.ecore.EStructuralFeature,int)"><code>values</code></a> of a <a href="CDORevisionData.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision</code></a>.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<table class="typeSummary">
 <caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Class</th>
@@ -226,76 +252,74 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionHandler.Filtered.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionHandler.Filtered</a></td>
+<th class="colFirst" scope="row"><a href="CDORevisionHandler.Filtered.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionHandler.Filtered</a></th>
 <td class="colLast">
-<div class="block">A delegating <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionHandler.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision handler</code></a> with a <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionHandler.Filtered.html#filter-org.eclipse.emf.cdo.common.revision.CDORevision-"><code>filter()</code></a> method used
+<div class="block">A delegating <a href="CDORevisionHandler.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision handler</code></a> with a <a href="CDORevisionHandler.Filtered.html#filter(org.eclipse.emf.cdo.common.revision.CDORevision)"><code>filter()</code></a> method used
  to suppress specific revisions.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionHandler.Filtered.Undetached.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionHandler.Filtered.Undetached</a></td>
+<th class="colFirst" scope="row"><a href="CDORevisionHandler.Filtered.Undetached.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionHandler.Filtered.Undetached</a></th>
 <td class="colLast">
-<div class="block">A delegating <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionHandler.Filtered.html" title="class in org.eclipse.emf.cdo.common.revision"><code>revision handler</code></a> that filters detached revisions.</div>
+<div class="block">A delegating <a href="CDORevisionHandler.Filtered.html" title="class in org.eclipse.emf.cdo.common.revision"><code>revision handler</code></a> that filters detached revisions.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionUtil</a></td>
+<th class="colFirst" scope="row"><a href="CDORevisionUtil.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionUtil</a></th>
 <td class="colLast">
-<div class="block">Various static helper methods for dealing with <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a>.</div>
+<div class="block">Various static helper methods for dealing with <a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.AllRevisionsDumper.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionUtil.AllRevisionsDumper</a></td>
+<th class="colFirst" scope="row"><a href="CDORevisionUtil.AllRevisionsDumper.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionUtil.AllRevisionsDumper</a></th>
 <td class="colLast">
-<div class="block">Dumps <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a>, sorted and grouped by <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch</code></a>, to various output formats and
+<div class="block">Dumps <a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a>, sorted and grouped by <a href="../branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch</code></a>, to various output formats and
  targets.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.AllRevisionsDumper.Stream.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionUtil.AllRevisionsDumper.Stream</a></td>
+<th class="colFirst" scope="row"><a href="CDORevisionUtil.AllRevisionsDumper.Stream.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionUtil.AllRevisionsDumper.Stream</a></th>
 <td class="colLast">
-<div class="block">A <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.AllRevisionsDumper.html" title="class in org.eclipse.emf.cdo.common.revision"><code>revision dumper</code></a> that directs all output to a stream.</div>
+<div class="block">A <a href="CDORevisionUtil.AllRevisionsDumper.html" title="class in org.eclipse.emf.cdo.common.revision"><code>revision dumper</code></a> that directs all output to a stream.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.AllRevisionsDumper.Stream.Html.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionUtil.AllRevisionsDumper.Stream.Html</a></td>
+<th class="colFirst" scope="row"><a href="CDORevisionUtil.AllRevisionsDumper.Stream.Html.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionUtil.AllRevisionsDumper.Stream.Html</a></th>
 <td class="colLast">
-<div class="block">A <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.AllRevisionsDumper.Stream.html" title="class in org.eclipse.emf.cdo.common.revision"><code>revision dumper</code></a> that directs all output as HTML text to a stream.</div>
+<div class="block">A <a href="CDORevisionUtil.AllRevisionsDumper.Stream.html" title="class in org.eclipse.emf.cdo.common.revision"><code>revision dumper</code></a> that directs all output as HTML text to a stream.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.AllRevisionsDumper.Stream.Plain.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionUtil.AllRevisionsDumper.Stream.Plain</a></td>
+<th class="colFirst" scope="row"><a href="CDORevisionUtil.AllRevisionsDumper.Stream.Plain.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionUtil.AllRevisionsDumper.Stream.Plain</a></th>
 <td class="colLast">
-<div class="block">A <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.AllRevisionsDumper.Stream.html" title="class in org.eclipse.emf.cdo.common.revision"><code>revision dumper</code></a> that directs all output as plain text to a stream.</div>
+<div class="block">A <a href="CDORevisionUtil.AllRevisionsDumper.Stream.html" title="class in org.eclipse.emf.cdo.common.revision"><code>revision dumper</code></a> that directs all output as plain text to a stream.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.CDORevisionComparator.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionUtil.CDORevisionComparator</a></td>
+<th class="colFirst" scope="row"><a href="CDORevisionUtil.CDORevisionComparator.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionUtil.CDORevisionComparator</a></th>
 <td class="colLast">
-<div class="block">Compares <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionKey.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision keys</code></a> by <a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOIdentifiable.html#getID--"><code>ID</code></a> and
- <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchVersion.html#getVersion--"><code>version</code></a>.</div>
+<div class="block">Compares <a href="CDORevisionKey.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision keys</code></a> by <a href="../id/CDOIdentifiable.html#getID()"><code>ID</code></a> and
+ <a href="../branch/CDOBranchVersion.html#getVersion()"><code>version</code></a>.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
 </ul>
-<a name="package.description">
-<!--   -->
-</a>
-<h2 title="Package org.eclipse.emf.cdo.common.revision Description">Package org.eclipse.emf.cdo.common.revision Description</h2>
-<div class="block">Common concepts for dealing with revisions and revision lists.</div>
 </div>
+</main>
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li class="navBarCell1Rev">Package</li>
 <li>Class</li>
 <li><a href="package-use.html">Use</a></li>
@@ -305,16 +329,8 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/package-summary.html">Prev&nbsp;Package</a></li>
-<li><a href="../../../../../../org/eclipse/emf/cdo/common/revision/delta/package-summary.html">Next&nbsp;Package</a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/emf/cdo/common/revision/package-summary.html" target="_top">Frames</a></li>
-<li><a href="package-summary.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -327,11 +343,16 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

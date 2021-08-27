@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>org.eclipse.emf.cdo.transfer (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,20 +28,25 @@
     catch(err) {
     }
 //-->
-</script>
+var pathtoroot = "../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li class="navBarCell1Rev">Package</li>
 <li>Class</li>
 <li><a href="package-use.html">Use</a></li>
@@ -41,16 +56,14 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/emf/cdo/transaction/package-summary.html">Prev&nbsp;Package</a></li>
-<li><a href="../../../../../org/eclipse/emf/cdo/transfer/spi/repository/package-summary.html">Next&nbsp;Package</a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/emf/cdo/transfer/package-summary.html" target="_top">Frames</a></li>
-<li><a href="package-summary.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -63,23 +76,36 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
+<main role="main">
 <div class="header">
 <h1 title="Package" class="title">Package&nbsp;org.eclipse.emf.cdo.transfer</h1>
-<div class="docSummary">
-<div class="block">Client concepts for dealing with transfers of <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resources</code></a>
- between <a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSystem.html" title="class in org.eclipse.emf.cdo.transfer"><code>systems</code></a>.</div>
-</div>
-<p>See:&nbsp;<a href="#package.description">Description</a></p>
 </div>
 <div class="contentContainer">
+<section role="region"><a id="package.description">
+<!--   -->
+</a>
+<div class="block">Client concepts for dealing with transfers of <a href="../eresource/CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resources</code></a>
+ between <a href="CDOTransferSystem.html" title="class in org.eclipse.emf.cdo.transfer"><code>systems</code></a>.</div>
+</section>
 <ul class="blockList">
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<table class="typeSummary">
 <caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Interface</th>
@@ -87,35 +113,35 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.ModelTransferResolution.html" title="interface in org.eclipse.emf.cdo.transfer">CDOTransfer.ModelTransferResolution</a></td>
+<th class="colFirst" scope="row"><a href="CDOTransfer.ModelTransferResolution.html" title="interface in org.eclipse.emf.cdo.transfer">CDOTransfer.ModelTransferResolution</a></th>
 <td class="colLast">
 <div class="block">Reserved for future use.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.PathProvider.html" title="interface in org.eclipse.emf.cdo.transfer">CDOTransfer.PathProvider</a></td>
+<th class="colFirst" scope="row"><a href="CDOTransfer.PathProvider.html" title="interface in org.eclipse.emf.cdo.transfer">CDOTransfer.PathProvider</a></th>
 <td class="colLast">
 <div class="block">Provides the path of a transfer element relative to its parent.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html" title="interface in org.eclipse.emf.cdo.transfer">CDOTransferMapping</a></td>
+<th class="colFirst" scope="row"><a href="CDOTransferMapping.html" title="interface in org.eclipse.emf.cdo.transfer">CDOTransferMapping</a></th>
 <td class="colLast">
-<div class="block">The mapping of a source <a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferElement.html" title="class in org.eclipse.emf.cdo.transfer"><code>element</code></a> to a target element in the context of a specific <a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html" title="class in org.eclipse.emf.cdo.transfer"><code>transfer</code></a>.</div>
+<div class="block">The mapping of a source <a href="CDOTransferElement.html" title="class in org.eclipse.emf.cdo.transfer"><code>element</code></a> to a target element in the context of a specific <a href="CDOTransfer.html" title="class in org.eclipse.emf.cdo.transfer"><code>transfer</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.Visitor.html" title="interface in org.eclipse.emf.cdo.transfer">CDOTransferMapping.Visitor</a></td>
+<th class="colFirst" scope="row"><a href="CDOTransferMapping.Visitor.html" title="interface in org.eclipse.emf.cdo.transfer">CDOTransferMapping.Visitor</a></th>
 <td class="colLast">
-<div class="block">A call-back that is called for a <a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html" title="interface in org.eclipse.emf.cdo.transfer"><code>mapping</code></a> and all its <a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html#getChildren--"><code>children</code></a> when
- passed into its <a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html#accept-org.eclipse.emf.cdo.transfer.CDOTransferMapping.Visitor-"><code>accept()</code></a> method.</div>
+<div class="block">A call-back that is called for a <a href="CDOTransferMapping.html" title="interface in org.eclipse.emf.cdo.transfer"><code>mapping</code></a> and all its <a href="CDOTransferMapping.html#getChildren()"><code>children</code></a> when
+ passed into its <a href="CDOTransferMapping.html#accept(org.eclipse.emf.cdo.transfer.CDOTransferMapping.Visitor)"><code>accept()</code></a> method.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<table class="typeSummary">
 <caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Class</th>
@@ -123,93 +149,93 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransfer</a></td>
+<th class="colFirst" scope="row"><a href="CDOTransfer.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransfer</a></th>
 <td class="colLast">
-<div class="block">Abstracts the transfer of a tree of <a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferElement.html" title="class in org.eclipse.emf.cdo.transfer"><code>elements</code></a> for a
- <a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html#getSourceSystem--"><code>source</code></a> to a <a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html#getTargetSystem--"><code>target</code></a> <a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSystem.html" title="class in org.eclipse.emf.cdo.transfer"><code>system</code></a>.</div>
+<div class="block">Abstracts the transfer of a tree of <a href="CDOTransferElement.html" title="class in org.eclipse.emf.cdo.transfer"><code>elements</code></a> for a
+ <a href="CDOTransfer.html#getSourceSystem()"><code>source</code></a> to a <a href="CDOTransfer.html#getTargetSystem()"><code>target</code></a> <a href="CDOTransferSystem.html" title="class in org.eclipse.emf.cdo.transfer"><code>system</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.ChildrenChangedEvent.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransfer.ChildrenChangedEvent</a></td>
+<th class="colFirst" scope="row"><a href="CDOTransfer.ChildrenChangedEvent.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransfer.ChildrenChangedEvent</a></th>
 <td class="colLast">
-<div class="block">A <a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.MappingEvent.html" title="class in org.eclipse.emf.cdo.transfer"><code>mapping event</code></a> fired from a <a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html" title="class in org.eclipse.emf.cdo.transfer"><code>transfer</code></a> when
- the <a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html#getChildren--"><code>children</code></a> of a mapping have changed.</div>
+<div class="block">A <a href="CDOTransfer.MappingEvent.html" title="class in org.eclipse.emf.cdo.transfer"><code>mapping event</code></a> fired from a <a href="CDOTransfer.html" title="class in org.eclipse.emf.cdo.transfer"><code>transfer</code></a> when
+ the <a href="CDOTransferMapping.html#getChildren()"><code>children</code></a> of a mapping have changed.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.MappingEvent.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransfer.MappingEvent</a></td>
+<th class="colFirst" scope="row"><a href="CDOTransfer.MappingEvent.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransfer.MappingEvent</a></th>
 <td class="colLast">
-<div class="block">An abstract base implementation of a <a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html" title="interface in org.eclipse.emf.cdo.transfer"><code>mapping</code></a> <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycleEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle"><code>event</code></a>.</div>
+<div class="block">An abstract base implementation of a <a href="CDOTransferMapping.html" title="interface in org.eclipse.emf.cdo.transfer"><code>mapping</code></a> <code>event</code>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.ModelTransferContext.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransfer.ModelTransferContext</a></td>
+<th class="colFirst" scope="row"><a href="CDOTransfer.ModelTransferContext.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransfer.ModelTransferContext</a></th>
 <td class="colLast">
-<div class="block">Encapsulates the model-specific aspects of a <a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html" title="class in org.eclipse.emf.cdo.transfer"><code>transfer</code></a>.</div>
+<div class="block">Encapsulates the model-specific aspects of a <a href="CDOTransfer.html" title="class in org.eclipse.emf.cdo.transfer"><code>transfer</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.ModelTransferContext.ResolveProxyAdapter.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransfer.ModelTransferContext.ResolveProxyAdapter</a></td>
+<th class="colFirst" scope="row"><a href="CDOTransfer.ModelTransferContext.ResolveProxyAdapter.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransfer.ModelTransferContext.ResolveProxyAdapter</a></th>
 <td class="colLast">
-<div class="block">An <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/impl/AdapterImpl.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify.impl"><code>adapter</code></a> for a <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>resource set</code></a> that resolves all proxies in all resources when they are loaded.</div>
+<div class="block">An <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/impl/AdapterImpl.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify.impl" class="externalLink"><code>adapter</code></a> for a <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource" class="externalLink"><code>resource set</code></a> that resolves all proxies in all resources when they are loaded.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.ModelTransferContext.ResolveProxyAdapter.LoadResourceAdapter.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransfer.ModelTransferContext.ResolveProxyAdapter.LoadResourceAdapter</a></td>
+<th class="colFirst" scope="row"><a href="CDOTransfer.ModelTransferContext.ResolveProxyAdapter.LoadResourceAdapter.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransfer.ModelTransferContext.ResolveProxyAdapter.LoadResourceAdapter</a></th>
 <td class="colLast">
-<div class="block">An <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/impl/AdapterImpl.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify.impl"><code>adapter</code></a> for a <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>resource</code></a> that resolves all proxies in that resource when it's demand loaded.</div>
+<div class="block">An <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/impl/AdapterImpl.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify.impl" class="externalLink"><code>adapter</code></a> for a <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource" class="externalLink"><code>resource</code></a> that resolves all proxies in that resource when it's demand loaded.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.RelativePathChangedEvent.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransfer.RelativePathChangedEvent</a></td>
+<th class="colFirst" scope="row"><a href="CDOTransfer.RelativePathChangedEvent.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransfer.RelativePathChangedEvent</a></th>
 <td class="colLast">
-<div class="block">A <a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.MappingEvent.html" title="class in org.eclipse.emf.cdo.transfer"><code>mapping event</code></a> fired from a <a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html" title="class in org.eclipse.emf.cdo.transfer"><code>transfer</code></a> when
- the <a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html#getRelativePath--"><code>relative path</code></a> of a mapping has changed.</div>
+<div class="block">A <a href="CDOTransfer.MappingEvent.html" title="class in org.eclipse.emf.cdo.transfer"><code>mapping event</code></a> fired from a <a href="CDOTransfer.html" title="class in org.eclipse.emf.cdo.transfer"><code>transfer</code></a> when
+ the <a href="CDOTransferMapping.html#getRelativePath()"><code>relative path</code></a> of a mapping has changed.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.TransferTypeChangedEvent.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransfer.TransferTypeChangedEvent</a></td>
+<th class="colFirst" scope="row"><a href="CDOTransfer.TransferTypeChangedEvent.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransfer.TransferTypeChangedEvent</a></th>
 <td class="colLast">
-<div class="block">A <a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.MappingEvent.html" title="class in org.eclipse.emf.cdo.transfer"><code>mapping event</code></a> fired from a <a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html" title="class in org.eclipse.emf.cdo.transfer"><code>transfer</code></a> when
- the <a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html#getTransferType--"><code>transfer type</code></a> of a mapping has changed.</div>
+<div class="block">A <a href="CDOTransfer.MappingEvent.html" title="class in org.eclipse.emf.cdo.transfer"><code>mapping event</code></a> fired from a <a href="CDOTransfer.html" title="class in org.eclipse.emf.cdo.transfer"><code>transfer</code></a> when
+ the <a href="CDOTransferMapping.html#getTransferType()"><code>transfer type</code></a> of a mapping has changed.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.UnmappedModelsEvent.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransfer.UnmappedModelsEvent</a></td>
+<th class="colFirst" scope="row"><a href="CDOTransfer.UnmappedModelsEvent.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransfer.UnmappedModelsEvent</a></th>
 <td class="colLast">
-<div class="block">An <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event"><code>event</code></a> fired from a <a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html" title="class in org.eclipse.emf.cdo.transfer"><code>transfer</code></a> when
- the set of <a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.ModelTransferContext.html#getUnmappedModels--"><code>unmapped models</code></a> has changed.</div>
+<div class="block">An <code>event</code> fired from a <a href="CDOTransfer.html" title="class in org.eclipse.emf.cdo.transfer"><code>transfer</code></a> when
+ the set of <a href="CDOTransfer.ModelTransferContext.html#getUnmappedModels()"><code>unmapped models</code></a> has changed.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferElement.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransferElement</a></td>
+<th class="colFirst" scope="row"><a href="CDOTransferElement.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransferElement</a></th>
 <td class="colLast">
-<div class="block">An abstraction of the elements (such as files or folders) of a <a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSystem.html" title="class in org.eclipse.emf.cdo.transfer"><code>transfer system</code></a>.</div>
+<div class="block">An abstraction of the elements (such as files or folders) of a <a href="CDOTransferSystem.html" title="class in org.eclipse.emf.cdo.transfer"><code>transfer system</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSystem.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransferSystem</a></td>
+<th class="colFirst" scope="row"><a href="CDOTransferSystem.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransferSystem</a></th>
 <td class="colLast">
-<div class="block">An abstraction of an end point system of a <a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html" title="class in org.eclipse.emf.cdo.transfer"><code>transfer</code></a>.</div>
+<div class="block">An abstraction of an end point system of a <a href="CDOTransfer.html" title="class in org.eclipse.emf.cdo.transfer"><code>transfer</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferType.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransferType</a></td>
+<th class="colFirst" scope="row"><a href="CDOTransferType.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransferType</a></th>
 <td class="colLast">
-<div class="block">Specifies how to treat a source <a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferElement.html" title="class in org.eclipse.emf.cdo.transfer"><code>element</code></a> when it is mapped to a target element by a <a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html" title="interface in org.eclipse.emf.cdo.transfer"><code>transfer mapping</code></a>.</div>
+<div class="block">Specifies how to treat a source <a href="CDOTransferElement.html" title="class in org.eclipse.emf.cdo.transfer"><code>element</code></a> when it is mapped to a target element by a <a href="CDOTransferMapping.html" title="interface in org.eclipse.emf.cdo.transfer"><code>transfer mapping</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferType.Text.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransferType.Text</a></td>
+<th class="colFirst" scope="row"><a href="CDOTransferType.Text.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransferType.Text</a></th>
 <td class="colLast">
-<div class="block">A <a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferType.html" title="class in org.eclipse.emf.cdo.transfer"><code>transfer type</code></a> for text <a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferElement.html" title="class in org.eclipse.emf.cdo.transfer"><code>elements</code></a> that have a special <a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferType.Text.html#getEncoding--"><code>encoding</code></a>.</div>
+<div class="block">A <a href="CDOTransferType.html" title="class in org.eclipse.emf.cdo.transfer"><code>transfer type</code></a> for text <a href="CDOTransferElement.html" title="class in org.eclipse.emf.cdo.transfer"><code>elements</code></a> that have a special <a href="CDOTransferType.Text.html#getEncoding()"><code>encoding</code></a>.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Enum Summary table, listing enums, and an explanation">
+<table class="typeSummary">
 <caption><span>Enum Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Enum</th>
@@ -217,38 +243,35 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.ChildrenChangedEvent.Kind.html" title="enum in org.eclipse.emf.cdo.transfer">CDOTransfer.ChildrenChangedEvent.Kind</a></td>
+<th class="colFirst" scope="row"><a href="CDOTransfer.ChildrenChangedEvent.Kind.html" title="enum in org.eclipse.emf.cdo.transfer">CDOTransfer.ChildrenChangedEvent.Kind</a></th>
 <td class="colLast">
-<div class="block">Enumerates the possible values of <a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.ChildrenChangedEvent.html#getKind--"><code>CDOTransfer.ChildrenChangedEvent.getKind()</code></a>.</div>
+<div class="block">Enumerates the possible values of <a href="CDOTransfer.ChildrenChangedEvent.html#getKind()"><code>CDOTransfer.ChildrenChangedEvent.getKind()</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.Status.html" title="enum in org.eclipse.emf.cdo.transfer">CDOTransferMapping.Status</a></td>
+<th class="colFirst" scope="row"><a href="CDOTransferMapping.Status.html" title="enum in org.eclipse.emf.cdo.transfer">CDOTransferMapping.Status</a></th>
 <td class="colLast">
-<div class="block">Enumerates the possibles values of <a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html#getStatus--"><code>CDOTransferMapping.getStatus()</code></a>.</div>
+<div class="block">Enumerates the possibles values of <a href="CDOTransferMapping.html#getStatus()"><code>CDOTransferMapping.getStatus()</code></a>.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
 </ul>
-<a name="package.description">
-<!--   -->
-</a>
-<h2 title="Package org.eclipse.emf.cdo.transfer Description">Package org.eclipse.emf.cdo.transfer Description</h2>
-<div class="block">Client concepts for dealing with transfers of <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resources</code></a>
- between <a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSystem.html" title="class in org.eclipse.emf.cdo.transfer"><code>systems</code></a>.</div>
 </div>
+</main>
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li class="navBarCell1Rev">Package</li>
 <li>Class</li>
 <li><a href="package-use.html">Use</a></li>
@@ -258,16 +281,8 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/emf/cdo/transaction/package-summary.html">Prev&nbsp;Package</a></li>
-<li><a href="../../../../../org/eclipse/emf/cdo/transfer/spi/repository/package-summary.html">Next&nbsp;Package</a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/emf/cdo/transfer/package-summary.html" target="_top">Frames</a></li>
-<li><a href="package-summary.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -280,11 +295,16 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

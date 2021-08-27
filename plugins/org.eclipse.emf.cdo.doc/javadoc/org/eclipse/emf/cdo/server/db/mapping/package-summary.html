@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>org.eclipse.emf.cdo.server.db.mapping (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,20 +28,25 @@
     catch(err) {
     }
 //-->
-</script>
+var pathtoroot = "../../../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../../index.html">Overview</a></li>
 <li class="navBarCell1Rev">Package</li>
 <li>Class</li>
 <li><a href="package-use.html">Use</a></li>
@@ -41,16 +56,14 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../../org/eclipse/emf/cdo/server/db/package-summary.html">Prev&nbsp;Package</a></li>
-<li><a href="../../../../../../../org/eclipse/emf/cdo/server/embedded/package-summary.html">Next&nbsp;Package</a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../../index.html?org/eclipse/emf/cdo/server/db/mapping/package-summary.html" target="_top">Frames</a></li>
-<li><a href="package-summary.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -63,22 +76,35 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
+<main role="main">
 <div class="header">
 <h1 title="Package" class="title">Package&nbsp;org.eclipse.emf.cdo.server.db.mapping</h1>
-<div class="docSummary">
-<div class="block">Server concepts for dealing with mapping strategies and mappings for classes, lists and types.</div>
-</div>
-<p>See:&nbsp;<a href="#package.description">Description</a></p>
 </div>
 <div class="contentContainer">
+<section role="region"><a id="package.description">
+<!--   -->
+</a>
+<div class="block">Server concepts for dealing with mapping strategies and mappings for classes, lists and types.</div>
+</section>
 <ul class="blockList">
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<table class="typeSummary">
 <caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Interface</th>
@@ -86,109 +112,109 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IClassMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IClassMapping</a></td>
+<th class="colFirst" scope="row"><a href="IClassMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IClassMapping</a></th>
 <td class="colLast">
 <div class="block">Basic interface for class mappings.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IClassMappingAuditSupport.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IClassMappingAuditSupport</a></td>
+<th class="colFirst" scope="row"><a href="IClassMappingAuditSupport.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IClassMappingAuditSupport</a></th>
 <td class="colLast">
-<div class="block">Interface which complements <a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IClassMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping"><code>IClassMapping</code></a> with methods to facilitate audit support.</div>
+<div class="block">Interface which complements <a href="IClassMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping"><code>IClassMapping</code></a> with methods to facilitate audit support.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IClassMappingDeltaSupport.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IClassMappingDeltaSupport</a></td>
+<th class="colFirst" scope="row"><a href="IClassMappingDeltaSupport.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IClassMappingDeltaSupport</a></th>
 <td class="colLast">
-<div class="block">Interface which complements <a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IClassMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping"><code>IClassMapping</code></a> with methods to facilitate revision delta support.</div>
+<div class="block">Interface which complements <a href="IClassMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping"><code>IClassMapping</code></a> with methods to facilitate revision delta support.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IClassMappingUnitSupport.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IClassMappingUnitSupport</a></td>
+<th class="colFirst" scope="row"><a href="IClassMappingUnitSupport.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IClassMappingUnitSupport</a></th>
 <td class="colLast">
-<div class="block">An extension interface for <a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IClassMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping"><code>class mappings</code></a> that support <i>units</i>.</div>
+<div class="block">An extension interface for <a href="IClassMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping"><code>class mappings</code></a> that support <i>units</i>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IListMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IListMapping</a></td>
+<th class="colFirst" scope="row"><a href="IListMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IListMapping</a></th>
 <td class="colLast">
 <div class="block">Interface for mapping features with <code>isMany() == true</code>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IListMapping2.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IListMapping2</a></td>
+<th class="colFirst" scope="row"><a href="IListMapping2.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IListMapping2</a></th>
 <td class="colLast">
-<div class="block">Extension interface to <a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IListMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping"><code>IListMapping</code></a>.</div>
+<div class="block">Extension interface to <a href="IListMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping"><code>IListMapping</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IListMapping3.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IListMapping3</a></td>
+<th class="colFirst" scope="row"><a href="IListMapping3.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IListMapping3</a></th>
 <td class="colLast">
-<div class="block">Extension interface to <a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IListMapping2.html" title="interface in org.eclipse.emf.cdo.server.db.mapping"><code>IListMapping2</code></a>.</div>
+<div class="block">Extension interface to <a href="IListMapping2.html" title="interface in org.eclipse.emf.cdo.server.db.mapping"><code>IListMapping2</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IListMapping4.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IListMapping4</a></td>
+<th class="colFirst" scope="row"><a href="IListMapping4.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IListMapping4</a></th>
 <td class="colLast">
-<div class="block">Extension interface to <a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IListMapping3.html" title="interface in org.eclipse.emf.cdo.server.db.mapping"><code>IListMapping3</code></a>.</div>
+<div class="block">Extension interface to <a href="IListMapping3.html" title="interface in org.eclipse.emf.cdo.server.db.mapping"><code>IListMapping3</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IListMappingDeltaSupport.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IListMappingDeltaSupport</a></td>
+<th class="colFirst" scope="row"><a href="IListMappingDeltaSupport.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IListMappingDeltaSupport</a></th>
 <td class="colLast">
-<div class="block">Interface to complement <a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IListMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping"><code>IListMapping</code></a> in order to provide list delta processing support.</div>
+<div class="block">Interface to complement <a href="IListMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping"><code>IListMapping</code></a> in order to provide list delta processing support.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IListMappingUnitSupport.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IListMappingUnitSupport</a></td>
+<th class="colFirst" scope="row"><a href="IListMappingUnitSupport.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IListMappingUnitSupport</a></th>
 <td class="colLast">
-<div class="block">Interface to complement <a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IListMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping"><code>IListMapping</code></a> in order to provide unit support.</div>
+<div class="block">Interface to complement <a href="IListMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping"><code>IListMapping</code></a> in order to provide unit support.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a></td>
+<th class="colFirst" scope="row"><a href="IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a></th>
 <td class="colLast">
 <div class="block">The mapping strategy acts as a connection between the DBStore and the database management (and OR-mapping) classes.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.Props.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy.Props</a></td>
+<th class="colFirst" scope="row"><a href="IMappingStrategy.Props.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy.Props</a></th>
 <td class="colLast">
-<div class="block">Contains symbolic constants that specifiy valid keys of <a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#getProperties--"><code>mapping strategy properties</code></a>.</div>
+<div class="block">Contains symbolic constants that specifiy valid keys of <a href="IMappingStrategy.html#getProperties()"><code>mapping strategy properties</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy2.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy2</a></td>
+<th class="colFirst" scope="row"><a href="IMappingStrategy2.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy2</a></th>
 <td class="colLast">
-<div class="block">Interface to complement <a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping"><code>IMappingStrategy</code></a>.</div>
+<div class="block">Interface to complement <a href="IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping"><code>IMappingStrategy</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</a></td>
+<th class="colFirst" scope="row"><a href="ITypeMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</a></th>
 <td class="colLast">
 <div class="block">Mapping of single values to and from the database.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.Descriptor.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping.Descriptor</a></td>
+<th class="colFirst" scope="row"><a href="ITypeMapping.Descriptor.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping.Descriptor</a></th>
 <td class="colLast">
 <div class="block">A descriptor which describes one type mapping class.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.Factory.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping.Factory</a></td>
+<th class="colFirst" scope="row"><a href="ITypeMapping.Factory.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping.Factory</a></th>
 <td class="colLast">
 <div class="block">A factory for typeMappings.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.Provider.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping.Provider</a></td>
+<th class="colFirst" scope="row"><a href="ITypeMapping.Provider.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping.Provider</a></th>
 <td class="colLast">
 <div class="block">A provider for type mapping information.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.Registry.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping.Registry</a></td>
+<th class="colFirst" scope="row"><a href="ITypeMapping.Registry.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping.Registry</a></th>
 <td class="colLast">
 <div class="block">A global (singleton) registry which collects all available type mappings which are either available in the CDO
  core, as declared extensions, or registered manually.</div>
@@ -198,7 +224,7 @@
 </table>
 </li>
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<table class="typeSummary">
 <caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Class</th>
@@ -206,50 +232,58 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/AbstractTypeMapping.html" title="class in org.eclipse.emf.cdo.server.db.mapping">AbstractTypeMapping</a></td>
+<th class="colFirst" scope="row"><a href="AbstractTypeMapping.html" title="class in org.eclipse.emf.cdo.server.db.mapping">AbstractTypeMapping</a></th>
 <td class="colLast">
-<div class="block">This is a default implementation for the <a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping"><code>ITypeMapping</code></a> interface which provides default behavor for all common
+<div class="block">This is a default implementation for the <a href="ITypeMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping"><code>ITypeMapping</code></a> interface which provides default behavor for all common
  types.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/AbstractTypeMappingFactory.html" title="class in org.eclipse.emf.cdo.server.db.mapping">AbstractTypeMappingFactory</a></td>
+<th class="colFirst" scope="row"><a href="AbstractTypeMappingFactory.html" title="class in org.eclipse.emf.cdo.server.db.mapping">AbstractTypeMappingFactory</a></th>
 <td class="colLast">
-<div class="block">Abstract implementation for <a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.Factory.html" title="interface in org.eclipse.emf.cdo.server.db.mapping"><code>ITypeMapping.Factory</code></a>.</div>
+<div class="block">Abstract implementation for <a href="ITypeMapping.Factory.html" title="interface in org.eclipse.emf.cdo.server.db.mapping"><code>ITypeMapping.Factory</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ColumnTypeModifier.html" title="class in org.eclipse.emf.cdo.server.db.mapping">ColumnTypeModifier</a></td>
+<th class="colFirst" scope="row"><a href="ColumnTypeModifier.html" title="class in org.eclipse.emf.cdo.server.db.mapping">ColumnTypeModifier</a></th>
 <td class="colLast">
-<div class="block">Can modify the column type of a <a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping"><code>type mapping</code></a> that is created by the <a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.Registry.html" title="interface in org.eclipse.emf.cdo.server.db.mapping"><code>type mapping registry</code></a>.</div>
+<div class="block">Can modify the column type of a <a href="ITypeMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping"><code>type mapping</code></a> that is created by the <a href="ITypeMapping.Registry.html" title="interface in org.eclipse.emf.cdo.server.db.mapping"><code>type mapping registry</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ColumnTypeModifier.Factory.html" title="class in org.eclipse.emf.cdo.server.db.mapping">ColumnTypeModifier.Factory</a></td>
+<th class="colFirst" scope="row"><a href="ColumnTypeModifier.Factory.html" title="class in org.eclipse.emf.cdo.server.db.mapping">ColumnTypeModifier.Factory</a></th>
 <td class="colLast">
-<div class="block">Creates <a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ColumnTypeModifier.html" title="class in org.eclipse.emf.cdo.server.db.mapping"><code>ColumnTypeModifier</code></a> instances.</div>
+<div class="block">Creates <a href="ColumnTypeModifier.html" title="class in org.eclipse.emf.cdo.server.db.mapping"><code>ColumnTypeModifier</code></a> instances.</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="DelegatingTypeMapping.html" title="class in org.eclipse.emf.cdo.server.db.mapping">DelegatingTypeMapping</a></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><a href="ITypeMapping.Provider.Factory.html" title="class in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping.Provider.Factory</a></th>
+<td class="colLast">
+<div class="block">A factory for typeMappingProviders.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
 </ul>
-<a name="package.description">
-<!--   -->
-</a>
-<h2 title="Package org.eclipse.emf.cdo.server.db.mapping Description">Package org.eclipse.emf.cdo.server.db.mapping Description</h2>
-<div class="block">Server concepts for dealing with mapping strategies and mappings for classes, lists and types.</div>
 </div>
+</main>
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../../index.html">Overview</a></li>
 <li class="navBarCell1Rev">Package</li>
 <li>Class</li>
 <li><a href="package-use.html">Use</a></li>
@@ -259,16 +293,8 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../../org/eclipse/emf/cdo/server/db/package-summary.html">Prev&nbsp;Package</a></li>
-<li><a href="../../../../../../../org/eclipse/emf/cdo/server/embedded/package-summary.html">Next&nbsp;Package</a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../../index.html?org/eclipse/emf/cdo/server/db/mapping/package-summary.html" target="_top">Frames</a></li>
-<li><a href="package-summary.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -281,11 +307,16 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

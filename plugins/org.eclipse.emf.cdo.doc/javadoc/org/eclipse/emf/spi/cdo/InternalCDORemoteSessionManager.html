@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>InternalCDORemoteSessionManager (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6};
+var data = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/InternalCDORemoteSessionManager.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDORemoteSession.html" title="interface in org.eclipse.emf.spi.cdo"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOResource.html" title="interface in org.eclipse.emf.spi.cdo"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/emf/spi/cdo/InternalCDORemoteSessionManager.html" target="_top">Frames</a></li>
-<li><a href="InternalCDORemoteSessionManager.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,11 +82,14 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
@@ -85,13 +101,22 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.emf.spi.cdo</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.spi.cdo</a></div>
 <h2 title="Interface InternalCDORemoteSessionManager" class="title">Interface InternalCDORemoteSessionManager</h2>
 </div>
 <div class="contentContainer">
@@ -100,12 +125,11 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionManager.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteSessionManager</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSession.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteSession</a>&gt;, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/IDeactivateable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">IDeactivateable</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</a></dd>
+<dd><code><a href="../../cdo/session/remote/CDORemoteSessionManager.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteSessionManager</a></code>, <code>org.eclipse.net4j.util.container.IContainer&lt;<a href="../../cdo/session/remote/CDORemoteSession.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteSession</a>&gt;</code>, <code>org.eclipse.net4j.util.lifecycle.IDeactivateable</code>, <code>org.eclipse.net4j.util.lifecycle.ILifecycle</code>, <code>org.eclipse.net4j.util.event.INotifier</code></dd>
 </dl>
 <hr>
-<br>
 <pre>public interface <span class="typeNameLabel">InternalCDORemoteSessionManager</span>
-extends <a href="../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionManager.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteSessionManager</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a></pre>
+extends <a href="../../cdo/session/remote/CDORemoteSessionManager.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteSessionManager</a>, org.eclipse.net4j.util.lifecycle.ILifecycle</pre>
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -124,112 +148,131 @@ extends <a href="../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSess
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="nested.class.summary">
+<li class="blockList"><a id="nested.class.summary">
 <!--   -->
 </a>
 <h3>Nested Class Summary</h3>
 <ul class="blockList">
-<li class="blockList"><a name="nested.classes.inherited.from.class.org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager">
+<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager">
 <!--   -->
 </a>
-<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.emf.cdo.session.remote.<a href="../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionManager.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteSessionManager</a></h3>
-<code><a href="../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionManager.EventAdapter.html" title="class in org.eclipse.emf.cdo.session.remote">CDORemoteSessionManager.EventAdapter</a>, <a href="../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionManager.LocalSubscriptionChangedEvent.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteSessionManager.LocalSubscriptionChangedEvent</a></code></li>
+<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.emf.cdo.session.remote.<a href="../../cdo/session/remote/CDORemoteSessionManager.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteSessionManager</a></h3>
+<code><a href="../../cdo/session/remote/CDORemoteSessionManager.EventAdapter.html" title="class in org.eclipse.emf.cdo.session.remote">CDORemoteSessionManager.EventAdapter</a>, <a href="../../cdo/session/remote/CDORemoteSessionManager.LocalSubscriptionChangedEvent.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteSessionManager.LocalSubscriptionChangedEvent</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="nested.classes.inherited.from.class.org.eclipse.net4j.util.container.IContainer">
+<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.net4j.util.container.IContainer">
 <!--   -->
 </a>
-<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.container.<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</a></h3>
-<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Modifiable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer.Modifiable</a>&lt;<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Modifiable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">E</a>&gt;, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Persistable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer.Persistable</a>&lt;<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Persistable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">E</a>&gt;, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Persistence.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer.Persistence</a>&lt;<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Persistence.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">E</a>&gt;</code></li>
+<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.container.IContainer</h3>
+<code>org.eclipse.net4j.util.container.IContainer.Modifiable&lt;E extends java.lang.Object&gt;, org.eclipse.net4j.util.container.IContainer.Persistable&lt;E extends java.lang.Object&gt;, org.eclipse.net4j.util.container.IContainer.Persistence&lt;E extends java.lang.Object&gt;</code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="nested.classes.inherited.from.class.org.eclipse.net4j.util.lifecycle.ILifecycle">
+<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.net4j.util.lifecycle.ILifecycle">
 <!--   -->
 </a>
-<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.lifecycle.<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a></h3>
-<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.DeferrableActivation.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle.DeferrableActivation</a></code></li>
+<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.lifecycle.ILifecycle</h3>
+<code>org.eclipse.net4j.util.lifecycle.ILifecycle.DeferrableActivation</code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.net4j.util.event.INotifier">
+<!--   -->
+</a>
+<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.event.INotifier</h3>
+<code>org.eclipse.net4j.util.event.INotifier.INotifier2</code></li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDORemoteSession.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDORemoteSession</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDORemoteSessionManager.html#createRemoteSession-int-java.lang.String-boolean-">createRemoteSession</a></span>(int&nbsp;sessionID,
+<td class="colFirst"><code><a href="InternalCDORemoteSession.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDORemoteSession</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createRemoteSession(int,java.lang.String,boolean)">createRemoteSession</a></span>&#8203;(int&nbsp;sessionID,
                    java.lang.String&nbsp;userID,
-                   boolean&nbsp;subscribed)</code>&nbsp;</td>
+                   boolean&nbsp;subscribed)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOSession</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDORemoteSessionManager.html#getLocalSession--">getLocalSession</a></span>()</code>
-<div class="block">Returns the <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>local session</code></a> this CDORemoteSessionManager belongs to.</div>
+<td class="colFirst"><code><a href="InternalCDOSession.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOSession</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLocalSession()">getLocalSession</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Returns the <a href="../../cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>local session</code></a> this CDORemoteSessionManager belongs to.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDORemoteSessionManager.html#handleRemoteSessionClosed-int-">handleRemoteSessionClosed</a></span>(int&nbsp;sessionID)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#handleRemoteSessionClosed(int)">handleRemoteSessionClosed</a></span>&#8203;(int&nbsp;sessionID)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDORemoteSessionManager.html#handleRemoteSessionMessage-int-org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage-">handleRemoteSessionMessage</a></span>(int&nbsp;sessionID,
-                          <a href="../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionMessage.html" title="class in org.eclipse.emf.cdo.session.remote">CDORemoteSessionMessage</a>&nbsp;message)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#handleRemoteSessionMessage(int,org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage)">handleRemoteSessionMessage</a></span>&#8203;(int&nbsp;sessionID,
+                          <a href="../../cdo/session/remote/CDORemoteSessionMessage.html" title="class in org.eclipse.emf.cdo.session.remote">CDORemoteSessionMessage</a>&nbsp;message)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDORemoteSessionManager.html#handleRemoteSessionOpened-int-java.lang.String-">handleRemoteSessionOpened</a></span>(int&nbsp;sessionID,
-                         java.lang.String&nbsp;userID)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#handleRemoteSessionOpened(int,java.lang.String)">handleRemoteSessionOpened</a></span>&#8203;(int&nbsp;sessionID,
+                         java.lang.String&nbsp;userID)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDORemoteSessionManager.html#handleRemoteSessionSubscribed-int-boolean-">handleRemoteSessionSubscribed</a></span>(int&nbsp;sessionID,
-                             boolean&nbsp;subscribed)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#handleRemoteSessionSubscribed(int,boolean)">handleRemoteSessionSubscribed</a></span>&#8203;(int&nbsp;sessionID,
+                             boolean&nbsp;subscribed)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDORemoteSessionManager.html#setLocalSession-org.eclipse.emf.spi.cdo.InternalCDOSession-">setLocalSession</a></span>(<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOSession</a>&nbsp;localSession)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setLocalSession(org.eclipse.emf.spi.cdo.InternalCDOSession)">setLocalSession</a></span>&#8203;(<a href="InternalCDOSession.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOSession</a>&nbsp;localSession)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.session.remote.<a href="../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionManager.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteSessionManager</a></h3>
-<code><a href="../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionManager.html#getRemoteSessions--">getRemoteSessions</a>, <a href="../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionManager.html#isForceSubscription--">isForceSubscription</a>, <a href="../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionManager.html#isSubscribed--">isSubscribed</a>, <a href="../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionManager.html#sendMessage-org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage-org.eclipse.emf.cdo.session.remote.CDORemoteSession...-">sendMessage</a>, <a href="../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionManager.html#sendMessage-org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage-java.util.Collection-">sendMessage</a>, <a href="../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionManager.html#setForceSubscription-boolean-">setForceSubscription</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.session.remote.<a href="../../cdo/session/remote/CDORemoteSessionManager.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteSessionManager</a></h3>
+<code><a href="../../cdo/session/remote/CDORemoteSessionManager.html#getRemoteSessions()">getRemoteSessions</a>, <a href="../../cdo/session/remote/CDORemoteSessionManager.html#isForceSubscription()">isForceSubscription</a>, <a href="../../cdo/session/remote/CDORemoteSessionManager.html#isSubscribed()">isSubscribed</a>, <a href="../../cdo/session/remote/CDORemoteSessionManager.html#sendMessage(org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage,java.util.Collection)">sendMessage</a>, <a href="../../cdo/session/remote/CDORemoteSessionManager.html#sendMessage(org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage,org.eclipse.emf.cdo.session.remote.CDORemoteSession...)">sendMessage</a>, <a href="../../cdo/session/remote/CDORemoteSessionManager.html#setForceSubscription(boolean)">setForceSubscription</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.container.IContainer">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.container.IContainer">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.container.<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</a></h3>
-<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true#getElements--" title="class or interface in org.eclipse.net4j.util.container">getElements</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true#isEmpty--" title="class or interface in org.eclipse.net4j.util.container">isEmpty</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.container.IContainer</h3>
+<code>getElements, isEmpty</code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.event.INotifier">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.lifecycle.ILifecycle">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.event.<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</a></h3>
-<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#addListener-org.eclipse.net4j.util.event.IListener-" title="class or interface in org.eclipse.net4j.util.event">addListener</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#getListeners--" title="class or interface in org.eclipse.net4j.util.event">getListeners</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#hasListeners--" title="class or interface in org.eclipse.net4j.util.event">hasListeners</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#removeListener-org.eclipse.net4j.util.event.IListener-" title="class or interface in org.eclipse.net4j.util.event">removeListener</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.lifecycle.ILifecycle</h3>
+<code>activate, deactivate, getLifecycleState, isActive</code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.lifecycle.ILifecycle">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.event.INotifier">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.lifecycle.<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a></h3>
-<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#activate--" title="class or interface in org.eclipse.net4j.util.lifecycle">activate</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#deactivate--" title="class or interface in org.eclipse.net4j.util.lifecycle">deactivate</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#getLifecycleState--" title="class or interface in org.eclipse.net4j.util.lifecycle">getLifecycleState</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#isActive--" title="class or interface in org.eclipse.net4j.util.lifecycle">isActive</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.event.INotifier</h3>
+<code>addListener, getListeners, hasListeners, removeListener</code></li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -237,48 +280,49 @@ extends <a href="../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSess
 <ul class="blockList">
 <li class="blockList">
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="getLocalSession--">
+<a id="getLocalSession()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getLocalSession</h4>
-<pre><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOSession</a>&nbsp;getLocalSession()</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionManager.html#getLocalSession--">CDORemoteSessionManager</a></code></span></div>
-<div class="block">Returns the <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>local session</code></a> this CDORemoteSessionManager belongs to.</div>
+<pre class="methodSignature"><a href="InternalCDOSession.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOSession</a>&nbsp;getLocalSession()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../cdo/session/remote/CDORemoteSessionManager.html#getLocalSession()">CDORemoteSessionManager</a></code></span></div>
+<div class="block">Returns the <a href="../../cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>local session</code></a> this CDORemoteSessionManager belongs to.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionManager.html#getLocalSession--">getLocalSession</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionManager.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteSessionManager</a></code></dd>
+<dd><code><a href="../../cdo/session/remote/CDORemoteSessionManager.html#getLocalSession()">getLocalSession</a></code>&nbsp;in interface&nbsp;<code><a href="../../cdo/session/remote/CDORemoteSessionManager.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteSessionManager</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
 </dl>
 </li>
 </ul>
-<a name="setLocalSession-org.eclipse.emf.spi.cdo.InternalCDOSession-">
+<a id="setLocalSession(org.eclipse.emf.spi.cdo.InternalCDOSession)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setLocalSession</h4>
-<pre>void&nbsp;setLocalSession(<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOSession</a>&nbsp;localSession)</pre>
+<pre class="methodSignature">void&nbsp;setLocalSession&#8203;(<a href="InternalCDOSession.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOSession</a>&nbsp;localSession)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
 </dl>
 </li>
 </ul>
-<a name="createRemoteSession-int-java.lang.String-boolean-">
+<a id="createRemoteSession(int,java.lang.String,boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createRemoteSession</h4>
-<pre><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDORemoteSession.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDORemoteSession</a>&nbsp;createRemoteSession(int&nbsp;sessionID,
+<pre class="methodSignature"><a href="InternalCDORemoteSession.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDORemoteSession</a>&nbsp;createRemoteSession&#8203;(int&nbsp;sessionID,
                                              java.lang.String&nbsp;userID,
                                              boolean&nbsp;subscribed)</pre>
 <dl>
@@ -287,43 +331,43 @@ extends <a href="../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSess
 </dl>
 </li>
 </ul>
-<a name="handleRemoteSessionOpened-int-java.lang.String-">
+<a id="handleRemoteSessionOpened(int,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>handleRemoteSessionOpened</h4>
-<pre>void&nbsp;handleRemoteSessionOpened(int&nbsp;sessionID,
+<pre class="methodSignature">void&nbsp;handleRemoteSessionOpened&#8203;(int&nbsp;sessionID,
                                java.lang.String&nbsp;userID)</pre>
 </li>
 </ul>
-<a name="handleRemoteSessionClosed-int-">
+<a id="handleRemoteSessionClosed(int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>handleRemoteSessionClosed</h4>
-<pre>void&nbsp;handleRemoteSessionClosed(int&nbsp;sessionID)</pre>
+<pre class="methodSignature">void&nbsp;handleRemoteSessionClosed&#8203;(int&nbsp;sessionID)</pre>
 </li>
 </ul>
-<a name="handleRemoteSessionSubscribed-int-boolean-">
+<a id="handleRemoteSessionSubscribed(int,boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>handleRemoteSessionSubscribed</h4>
-<pre>void&nbsp;handleRemoteSessionSubscribed(int&nbsp;sessionID,
+<pre class="methodSignature">void&nbsp;handleRemoteSessionSubscribed&#8203;(int&nbsp;sessionID,
                                    boolean&nbsp;subscribed)</pre>
 </li>
 </ul>
-<a name="handleRemoteSessionMessage-int-org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage-">
+<a id="handleRemoteSessionMessage(int,org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>handleRemoteSessionMessage</h4>
-<pre>void&nbsp;handleRemoteSessionMessage(int&nbsp;sessionID,
-                                <a href="../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionMessage.html" title="class in org.eclipse.emf.cdo.session.remote">CDORemoteSessionMessage</a>&nbsp;message)</pre>
+<pre class="methodSignature">void&nbsp;handleRemoteSessionMessage&#8203;(int&nbsp;sessionID,
+                                <a href="../../cdo/session/remote/CDORemoteSessionMessage.html" title="class in org.eclipse.emf.cdo.session.remote">CDORemoteSessionMessage</a>&nbsp;message)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
@@ -332,21 +376,25 @@ extends <a href="../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSess
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/InternalCDORemoteSessionManager.html">Use</a></li>
@@ -356,16 +404,8 @@ extends <a href="../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSess
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDORemoteSession.html" title="interface in org.eclipse.emf.spi.cdo"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOResource.html" title="interface in org.eclipse.emf.spi.cdo"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/emf/spi/cdo/InternalCDORemoteSessionManager.html" target="_top">Frames</a></li>
-<li><a href="InternalCDORemoteSessionManager.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -378,11 +418,14 @@ extends <a href="../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSess
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
@@ -394,10 +437,12 @@ extends <a href="../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSess
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

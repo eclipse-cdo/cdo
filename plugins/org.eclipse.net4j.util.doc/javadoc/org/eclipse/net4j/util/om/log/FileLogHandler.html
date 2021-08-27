@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>FileLogHandler (Net4j Utilities Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10};
+var data = {"i0":10,"i1":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/FileLogHandler.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/net4j/util/om/log/EclipseLoggingBridge.html" title="class in org.eclipse.net4j.util.om.log"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../../org/eclipse/net4j/util/om/log/Log.html" title="interface in org.eclipse.net4j.util.om.log"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/net4j/util/om/log/FileLogHandler.html" target="_top">Frames</a></li>
-<li><a href="FileLogHandler.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,6 +82,9 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -85,13 +101,22 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.net4j.util.om.log</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.net4j.util.om.log</a></div>
 <h2 title="Class FileLogHandler" class="title">Class FileLogHandler</h2>
 </div>
 <div class="contentContainer">
@@ -99,7 +124,7 @@ var activeTableTab = "activeTableTab";
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li><a href="../../../../../../org/eclipse/net4j/util/om/log/AbstractLogHandler.html" title="class in org.eclipse.net4j.util.om.log">org.eclipse.net4j.util.om.log.AbstractLogHandler</a></li>
+<li><a href="AbstractLogHandler.html" title="class in org.eclipse.net4j.util.om.log">org.eclipse.net4j.util.om.log.AbstractLogHandler</a></li>
 <li>
 <ul class="inheritance">
 <li>org.eclipse.net4j.util.om.log.FileLogHandler</li>
@@ -113,13 +138,12 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="../../../../../../org/eclipse/net4j/util/om/log/OMLogHandler.html" title="interface in org.eclipse.net4j.util.om.log">OMLogHandler</a></dd>
+<dd><code><a href="OMLogHandler.html" title="interface in org.eclipse.net4j.util.om.log">OMLogHandler</a></code></dd>
 </dl>
 <hr>
-<br>
 <pre>public class <span class="typeNameLabel">FileLogHandler</span>
-extends <a href="../../../../../../org/eclipse/net4j/util/om/log/AbstractLogHandler.html" title="class in org.eclipse.net4j.util.om.log">AbstractLogHandler</a></pre>
-<div class="block">A <a href="../../../../../../org/eclipse/net4j/util/om/log/OMLogHandler.html" title="interface in org.eclipse.net4j.util.om.log"><code>log handler</code></a> that appends log events to a <a href="../../../../../../org/eclipse/net4j/util/om/log/FileLogHandler.html#getLogFile--"><code>file</code></a>.
+extends <a href="AbstractLogHandler.html" title="class in org.eclipse.net4j.util.om.log">AbstractLogHandler</a></pre>
+<div class="block">A <a href="OMLogHandler.html" title="interface in org.eclipse.net4j.util.om.log"><code>log handler</code></a> that appends log events to a <a href="#getLogFile()"><code>file</code></a>.
  <p>
  The file is opened before and closed after each log event.</div>
 <dl>
@@ -128,7 +152,7 @@ extends <a href="../../../../../../org/eclipse/net4j/util/om/log/AbstractLogHand
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>Eike Stepper</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../../org/eclipse/net4j/util/om/log/PrintLogHandler.html" title="class in org.eclipse.net4j.util.om.log"><code>PrintLogHandler</code></a></dd>
+<dd><a href="PrintLogHandler.html" title="class in org.eclipse.net4j.util.om.log"><code>PrintLogHandler</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -137,59 +161,68 @@ extends <a href="../../../../../../org/eclipse/net4j/util/om/log/AbstractLogHand
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.summary">
+<li class="blockList"><a id="constructor.summary">
 <!--   -->
 </a>
 <h3>Constructor Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
+<table class="memberSummary">
 <caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Constructor and Description</th>
+<th class="colFirst" scope="col">Constructor</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/log/FileLogHandler.html#FileLogHandler-java.io.File-">FileLogHandler</a></span>(java.io.File&nbsp;logFile)</code>&nbsp;</td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.io.File)">FileLogHandler</a></span>&#8203;(java.io.File&nbsp;logFile)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/log/FileLogHandler.html#FileLogHandler-java.io.File-org.eclipse.net4j.util.om.log.OMLogger.Level-">FileLogHandler</a></span>(java.io.File&nbsp;logFile,
-              <a href="../../../../../../org/eclipse/net4j/util/om/log/OMLogger.Level.html" title="enum in org.eclipse.net4j.util.om.log">OMLogger.Level</a>&nbsp;logLevel)</code>&nbsp;</td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.io.File,org.eclipse.net4j.util.om.log.OMLogger.Level)">FileLogHandler</a></span>&#8203;(java.io.File&nbsp;logFile,
+              <a href="OMLogger.Level.html" title="enum in org.eclipse.net4j.util.om.log">OMLogger.Level</a>&nbsp;logLevel)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>java.io.File</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/log/FileLogHandler.html#getLogFile--">getLogFile</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLogFile()">getLogFile</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/log/FileLogHandler.html#writeLog-org.eclipse.net4j.util.om.log.OMLogger-org.eclipse.net4j.util.om.log.OMLogger.Level-java.lang.String-java.lang.Throwable-">writeLog</a></span>(<a href="../../../../../../org/eclipse/net4j/util/om/log/OMLogger.html" title="interface in org.eclipse.net4j.util.om.log">OMLogger</a>&nbsp;logger,
-        <a href="../../../../../../org/eclipse/net4j/util/om/log/OMLogger.Level.html" title="enum in org.eclipse.net4j.util.om.log">OMLogger.Level</a>&nbsp;level,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#writeLog(org.eclipse.net4j.util.om.log.OMLogger,org.eclipse.net4j.util.om.log.OMLogger.Level,java.lang.String,java.lang.Throwable)">writeLog</a></span>&#8203;(<a href="OMLogger.html" title="interface in org.eclipse.net4j.util.om.log">OMLogger</a>&nbsp;logger,
+        <a href="OMLogger.Level.html" title="enum in org.eclipse.net4j.util.om.log">OMLogger.Level</a>&nbsp;level,
         java.lang.String&nbsp;msg,
-        java.lang.Throwable&nbsp;t)</code>&nbsp;</td>
+        java.lang.Throwable&nbsp;t)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.om.log.AbstractLogHandler">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.om.log.AbstractLogHandler">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.om.log.<a href="../../../../../../org/eclipse/net4j/util/om/log/AbstractLogHandler.html" title="class in org.eclipse.net4j.util.om.log">AbstractLogHandler</a></h3>
-<code><a href="../../../../../../org/eclipse/net4j/util/om/log/AbstractLogHandler.html#getLogLevel--">getLogLevel</a>, <a href="../../../../../../org/eclipse/net4j/util/om/log/AbstractLogHandler.html#logged-org.eclipse.net4j.util.om.log.OMLogger-org.eclipse.net4j.util.om.log.OMLogger.Level-java.lang.String-java.lang.Throwable-">logged</a>, <a href="../../../../../../org/eclipse/net4j/util/om/log/AbstractLogHandler.html#setLogLevel-org.eclipse.net4j.util.om.log.OMLogger.Level-">setLogLevel</a>, <a href="../../../../../../org/eclipse/net4j/util/om/log/AbstractLogHandler.html#toString-org.eclipse.net4j.util.om.log.OMLogger.Level-">toString</a></code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.om.log.<a href="AbstractLogHandler.html" title="class in org.eclipse.net4j.util.om.log">AbstractLogHandler</a></h3>
+<code><a href="AbstractLogHandler.html#getLogLevel()">getLogLevel</a>, <a href="AbstractLogHandler.html#logged(org.eclipse.net4j.util.om.log.OMLogger,org.eclipse.net4j.util.om.log.OMLogger.Level,java.lang.String,java.lang.Throwable)">logged</a>, <a href="AbstractLogHandler.html#setLogLevel(org.eclipse.net4j.util.om.log.OMLogger.Level)">setLogLevel</a>, <a href="AbstractLogHandler.html#toString(org.eclipse.net4j.util.om.log.OMLogger.Level)">toString</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
+<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
@@ -197,6 +230,7 @@ extends <a href="../../../../../../org/eclipse/net4j/util/om/log/AbstractLogHand
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -204,61 +238,64 @@ extends <a href="../../../../../../org/eclipse/net4j/util/om/log/AbstractLogHand
 <ul class="blockList">
 <li class="blockList">
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.detail">
+<li class="blockList"><a id="constructor.detail">
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="FileLogHandler-java.io.File-org.eclipse.net4j.util.om.log.OMLogger.Level-">
+<a id="&lt;init&gt;(java.io.File,org.eclipse.net4j.util.om.log.OMLogger.Level)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>FileLogHandler</h4>
-<pre>public&nbsp;FileLogHandler(java.io.File&nbsp;logFile,
-                      <a href="../../../../../../org/eclipse/net4j/util/om/log/OMLogger.Level.html" title="enum in org.eclipse.net4j.util.om.log">OMLogger.Level</a>&nbsp;logLevel)</pre>
+<pre>public&nbsp;FileLogHandler&#8203;(java.io.File&nbsp;logFile,
+                      <a href="OMLogger.Level.html" title="enum in org.eclipse.net4j.util.om.log">OMLogger.Level</a>&nbsp;logLevel)</pre>
 </li>
 </ul>
-<a name="FileLogHandler-java.io.File-">
+<a id="&lt;init&gt;(java.io.File)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>FileLogHandler</h4>
-<pre>public&nbsp;FileLogHandler(java.io.File&nbsp;logFile)</pre>
+<pre>public&nbsp;FileLogHandler&#8203;(java.io.File&nbsp;logFile)</pre>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="getLogFile--">
+<a id="getLogFile()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getLogFile</h4>
-<pre>public&nbsp;java.io.File&nbsp;getLogFile()</pre>
+<pre class="methodSignature">public&nbsp;java.io.File&nbsp;getLogFile()</pre>
 </li>
 </ul>
-<a name="writeLog-org.eclipse.net4j.util.om.log.OMLogger-org.eclipse.net4j.util.om.log.OMLogger.Level-java.lang.String-java.lang.Throwable-">
+<a id="writeLog(org.eclipse.net4j.util.om.log.OMLogger,org.eclipse.net4j.util.om.log.OMLogger.Level,java.lang.String,java.lang.Throwable)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>writeLog</h4>
-<pre>protected&nbsp;void&nbsp;writeLog(<a href="../../../../../../org/eclipse/net4j/util/om/log/OMLogger.html" title="interface in org.eclipse.net4j.util.om.log">OMLogger</a>&nbsp;logger,
-                        <a href="../../../../../../org/eclipse/net4j/util/om/log/OMLogger.Level.html" title="enum in org.eclipse.net4j.util.om.log">OMLogger.Level</a>&nbsp;level,
+<pre class="methodSignature">protected&nbsp;void&nbsp;writeLog&#8203;(<a href="OMLogger.html" title="interface in org.eclipse.net4j.util.om.log">OMLogger</a>&nbsp;logger,
+                        <a href="OMLogger.Level.html" title="enum in org.eclipse.net4j.util.om.log">OMLogger.Level</a>&nbsp;level,
                         java.lang.String&nbsp;msg,
                         java.lang.Throwable&nbsp;t)
                  throws java.lang.Throwable</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../../org/eclipse/net4j/util/om/log/AbstractLogHandler.html#writeLog-org.eclipse.net4j.util.om.log.OMLogger-org.eclipse.net4j.util.om.log.OMLogger.Level-java.lang.String-java.lang.Throwable-">writeLog</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../org/eclipse/net4j/util/om/log/AbstractLogHandler.html" title="class in org.eclipse.net4j.util.om.log">AbstractLogHandler</a></code></dd>
+<dd><code><a href="AbstractLogHandler.html#writeLog(org.eclipse.net4j.util.om.log.OMLogger,org.eclipse.net4j.util.om.log.OMLogger.Level,java.lang.String,java.lang.Throwable)">writeLog</a></code>&nbsp;in class&nbsp;<code><a href="AbstractLogHandler.html" title="class in org.eclipse.net4j.util.om.log">AbstractLogHandler</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.lang.Throwable</code></dd>
 </dl>
@@ -266,21 +303,25 @@ extends <a href="../../../../../../org/eclipse/net4j/util/om/log/AbstractLogHand
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/FileLogHandler.html">Use</a></li>
@@ -290,16 +331,8 @@ extends <a href="../../../../../../org/eclipse/net4j/util/om/log/AbstractLogHand
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/net4j/util/om/log/EclipseLoggingBridge.html" title="class in org.eclipse.net4j.util.om.log"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../../org/eclipse/net4j/util/om/log/Log.html" title="interface in org.eclipse.net4j.util.om.log"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/net4j/util/om/log/FileLogHandler.html" target="_top">Frames</a></li>
-<li><a href="FileLogHandler.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -312,6 +345,9 @@ extends <a href="../../../../../../org/eclipse/net4j/util/om/log/AbstractLogHand
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -328,10 +364,12 @@ extends <a href="../../../../../../org/eclipse/net4j/util/om/log/AbstractLogHand
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

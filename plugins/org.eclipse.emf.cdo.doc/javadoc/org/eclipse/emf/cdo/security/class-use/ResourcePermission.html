@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>Uses of Interface org.eclipse.emf.cdo.security.ResourcePermission (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,39 +28,43 @@
     catch(err) {
     }
 //-->
-</script>
+var pathtoroot = "../../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="../package-summary.html">Package</a></li>
-<li><a href="../../../../../../org/eclipse/emf/cdo/security/ResourcePermission.html" title="interface in org.eclipse.emf.cdo.security">Class</a></li>
+<li><a href="../ResourcePermission.html" title="interface in org.eclipse.emf.cdo.security">Class</a></li>
 <li class="navBarCell1Rev">Use</li>
+<li><a href="../package-tree.html">Tree</a></li>
 <li><a href="../../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../../help-doc.html">Help</a></li>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev</li>
-<li>Next</li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/emf/cdo/security/class-use/ResourcePermission.html" target="_top">Frames</a></li>
-<li><a href="ResourcePermission.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -63,38 +77,50 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
+<main role="main">
 <div class="header">
 <h2 title="Uses of Interface org.eclipse.emf.cdo.security.ResourcePermission" class="title">Uses of Interface<br>org.eclipse.emf.cdo.security.ResourcePermission</h2>
 </div>
 <div class="classUseContainer">
 <ul class="blockList">
 <li class="blockList">
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing packages, and an explanation">
-<caption><span>Packages that use <a href="../../../../../../org/eclipse/emf/cdo/security/ResourcePermission.html" title="interface in org.eclipse.emf.cdo.security">ResourcePermission</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Packages that use <a href="../ResourcePermission.html" title="interface in org.eclipse.emf.cdo.security">ResourcePermission</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Package</th>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.security">org.eclipse.emf.cdo.security</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.security">org.eclipse.emf.cdo.security</a></th>
 <td class="colLast">
 <div class="block">The generated EMF API of the CDO security model.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.security.impl">org.eclipse.emf.cdo.security.impl</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.security.impl">org.eclipse.emf.cdo.security.impl</a></th>
 <td class="colLast">
 <div class="block">The generated EMF implementation of the CDO security model.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.security.util">org.eclipse.emf.cdo.security.util</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.security.util">org.eclipse.emf.cdo.security.util</a></th>
 <td class="colLast">
 <div class="block">The generated EMF utilities of the CDO security model.</div>
 </td>
@@ -104,139 +130,150 @@
 </li>
 <li class="blockList">
 <ul class="blockList">
-<li class="blockList"><a name="org.eclipse.emf.cdo.security">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.emf.cdo.security">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../org/eclipse/emf/cdo/security/ResourcePermission.html" title="interface in org.eclipse.emf.cdo.security">ResourcePermission</a> in <a href="../../../../../../org/eclipse/emf/cdo/security/package-summary.html">org.eclipse.emf.cdo.security</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../org/eclipse/emf/cdo/security/package-summary.html">org.eclipse.emf.cdo.security</a> that return <a href="../../../../../../org/eclipse/emf/cdo/security/ResourcePermission.html" title="interface in org.eclipse.emf.cdo.security">ResourcePermission</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../ResourcePermission.html" title="interface in org.eclipse.emf.cdo.security">ResourcePermission</a> in <a href="../package-summary.html">org.eclipse.emf.cdo.security</a></h3>
+<table class="useSummary">
+<caption><span>Methods in <a href="../package-summary.html">org.eclipse.emf.cdo.security</a> that return <a href="../ResourcePermission.html" title="interface in org.eclipse.emf.cdo.security">ResourcePermission</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/security/ResourcePermission.html" title="interface in org.eclipse.emf.cdo.security">ResourcePermission</a></code></td>
-<td class="colLast"><span class="typeNameLabel">SecurityFactory.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/security/SecurityFactory.html#createResourcePermission--">createResourcePermission</a></span>()</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">As of 4.3 use <a href="../../../../../../org/eclipse/emf/cdo/security/SecurityFactory.html#createFilterPermission--"><code>SecurityFactory.createFilterPermission()</code></a> and <a href="../../../../../../org/eclipse/emf/cdo/security/SecurityFactory.html#createResourceFilter--"><code>SecurityFactory.createResourceFilter()</code></a>.
- <!-- end-user-doc --></span></div>
+<td class="colFirst"><code><a href="../ResourcePermission.html" title="interface in org.eclipse.emf.cdo.security">ResourcePermission</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">SecurityFactory.</span><code><span class="memberNameLink"><a href="../SecurityFactory.html#createResourcePermission()">createResourcePermission</a></span>()</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.3 use <a href="../SecurityFactory.html#createFilterPermission()"><code>SecurityFactory.createFilterPermission()</code></a> and <a href="../SecurityFactory.html#createResourceFilter()"><code>SecurityFactory.createResourceFilter()</code></a>.</div>
 </div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/security/ResourcePermission.html" title="interface in org.eclipse.emf.cdo.security">ResourcePermission</a></code></td>
-<td class="colLast"><span class="typeNameLabel">SecurityFactory.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/security/SecurityFactory.html#createResourcePermission-java.lang.String-org.eclipse.emf.cdo.security.Access-">createResourcePermission</a></span>(java.lang.String&nbsp;pattern,
-                        <a href="../../../../../../org/eclipse/emf/cdo/security/Access.html" title="enum in org.eclipse.emf.cdo.security">Access</a>&nbsp;access)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">As of 4.3 use <a href="../../../../../../org/eclipse/emf/cdo/security/SecurityFactory.html#createFilterPermission--"><code>SecurityFactory.createFilterPermission()</code></a> and <a href="../../../../../../org/eclipse/emf/cdo/security/SecurityFactory.html#createResourceFilter-java.lang.String-"><code>SecurityFactory.createResourceFilter(String)</code></a>.</span></div>
+<td class="colFirst"><code><a href="../ResourcePermission.html" title="interface in org.eclipse.emf.cdo.security">ResourcePermission</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">SecurityFactory.</span><code><span class="memberNameLink"><a href="../SecurityFactory.html#createResourcePermission(java.lang.String,org.eclipse.emf.cdo.security.Access)">createResourcePermission</a></span>&#8203;(java.lang.String&nbsp;pattern,
+                        <a href="../Access.html" title="enum in org.eclipse.emf.cdo.security">Access</a>&nbsp;access)</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.3 use <a href="../SecurityFactory.html#createFilterPermission()"><code>SecurityFactory.createFilterPermission()</code></a> and <a href="../SecurityFactory.html#createResourceFilter(java.lang.String)"><code>SecurityFactory.createResourceFilter(String)</code></a>.</div>
 </div>
 </td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.security.impl">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.emf.cdo.security.impl">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../org/eclipse/emf/cdo/security/ResourcePermission.html" title="interface in org.eclipse.emf.cdo.security">ResourcePermission</a> in <a href="../../../../../../org/eclipse/emf/cdo/security/impl/package-summary.html">org.eclipse.emf.cdo.security.impl</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../../org/eclipse/emf/cdo/security/impl/package-summary.html">org.eclipse.emf.cdo.security.impl</a> that implement <a href="../../../../../../org/eclipse/emf/cdo/security/ResourcePermission.html" title="interface in org.eclipse.emf.cdo.security">ResourcePermission</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../ResourcePermission.html" title="interface in org.eclipse.emf.cdo.security">ResourcePermission</a> in <a href="../impl/package-summary.html">org.eclipse.emf.cdo.security.impl</a></h3>
+<table class="useSummary">
+<caption><span>Classes in <a href="../impl/package-summary.html">org.eclipse.emf.cdo.security.impl</a> that implement <a href="../ResourcePermission.html" title="interface in org.eclipse.emf.cdo.security">ResourcePermission</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Class and Description</th>
+<th class="colSecond" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/ResourcePermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ResourcePermissionImpl</a></span></code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../impl/ResourcePermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ResourcePermissionImpl</a></span></code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 </td>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../org/eclipse/emf/cdo/security/impl/package-summary.html">org.eclipse.emf.cdo.security.impl</a> that return <a href="../../../../../../org/eclipse/emf/cdo/security/ResourcePermission.html" title="interface in org.eclipse.emf.cdo.security">ResourcePermission</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Methods in <a href="../impl/package-summary.html">org.eclipse.emf.cdo.security.impl</a> that return <a href="../ResourcePermission.html" title="interface in org.eclipse.emf.cdo.security">ResourcePermission</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/security/ResourcePermission.html" title="interface in org.eclipse.emf.cdo.security">ResourcePermission</a></code></td>
-<td class="colLast"><span class="typeNameLabel">SecurityFactoryImpl.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/SecurityFactoryImpl.html#createResourcePermission--">createResourcePermission</a></span>()</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<td class="colFirst"><code><a href="../ResourcePermission.html" title="interface in org.eclipse.emf.cdo.security">ResourcePermission</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">SecurityFactoryImpl.</span><code><span class="memberNameLink"><a href="../impl/SecurityFactoryImpl.html#createResourcePermission()">createResourcePermission</a></span>()</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/security/ResourcePermission.html" title="interface in org.eclipse.emf.cdo.security">ResourcePermission</a></code></td>
-<td class="colLast"><span class="typeNameLabel">SecurityFactoryImpl.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/security/impl/SecurityFactoryImpl.html#createResourcePermission-java.lang.String-org.eclipse.emf.cdo.security.Access-">createResourcePermission</a></span>(java.lang.String&nbsp;pattern,
-                        <a href="../../../../../../org/eclipse/emf/cdo/security/Access.html" title="enum in org.eclipse.emf.cdo.security">Access</a>&nbsp;access)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<td class="colFirst"><code><a href="../ResourcePermission.html" title="interface in org.eclipse.emf.cdo.security">ResourcePermission</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">SecurityFactoryImpl.</span><code><span class="memberNameLink"><a href="../impl/SecurityFactoryImpl.html#createResourcePermission(java.lang.String,org.eclipse.emf.cdo.security.Access)">createResourcePermission</a></span>&#8203;(java.lang.String&nbsp;pattern,
+                        <a href="../Access.html" title="enum in org.eclipse.emf.cdo.security">Access</a>&nbsp;access)</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 </td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.security.util">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.emf.cdo.security.util">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../org/eclipse/emf/cdo/security/ResourcePermission.html" title="interface in org.eclipse.emf.cdo.security">ResourcePermission</a> in <a href="../../../../../../org/eclipse/emf/cdo/security/util/package-summary.html">org.eclipse.emf.cdo.security.util</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../org/eclipse/emf/cdo/security/util/package-summary.html">org.eclipse.emf.cdo.security.util</a> with parameters of type <a href="../../../../../../org/eclipse/emf/cdo/security/ResourcePermission.html" title="interface in org.eclipse.emf.cdo.security">ResourcePermission</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../ResourcePermission.html" title="interface in org.eclipse.emf.cdo.security">ResourcePermission</a> in <a href="../util/package-summary.html">org.eclipse.emf.cdo.security.util</a></h3>
+<table class="useSummary">
+<caption><span>Methods in <a href="../util/package-summary.html">org.eclipse.emf.cdo.security.util</a> with parameters of type <a href="../ResourcePermission.html" title="interface in org.eclipse.emf.cdo.security">ResourcePermission</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/security/util/SecuritySwitch.html" title="type parameter in SecuritySwitch">T</a></code></td>
-<td class="colLast"><span class="typeNameLabel">SecuritySwitch.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/security/util/SecuritySwitch.html#caseResourcePermission-org.eclipse.emf.cdo.security.ResourcePermission-">caseResourcePermission</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/security/ResourcePermission.html" title="interface in org.eclipse.emf.cdo.security">ResourcePermission</a>&nbsp;object)</code>
+<td class="colFirst"><code><a href="../util/SecuritySwitch.html" title="type parameter in SecuritySwitch">T</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">SecuritySwitch.</span><code><span class="memberNameLink"><a href="../util/SecuritySwitch.html#caseResourcePermission(org.eclipse.emf.cdo.security.ResourcePermission)">caseResourcePermission</a></span>&#8203;(<a href="../ResourcePermission.html" title="interface in org.eclipse.emf.cdo.security">ResourcePermission</a>&nbsp;object)</code></th>
+<td class="colLast">
 <div class="block">Returns the result of interpreting the object as an instance of '<em>Resource Permission</em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><span class="typeNameLabel">SecurityValidator.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/security/util/SecurityValidator.html#validateResourcePermission-org.eclipse.emf.cdo.security.ResourcePermission-org.eclipse.emf.common.util.DiagnosticChain-java.util.Map-">validateResourcePermission</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/security/ResourcePermission.html" title="interface in org.eclipse.emf.cdo.security">ResourcePermission</a>&nbsp;resourcePermission,
-                          <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/DiagnosticChain.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">DiagnosticChain</a>&nbsp;diagnostics,
-                          java.util.Map&lt;java.lang.Object,java.lang.Object&gt;&nbsp;context)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">SecurityValidator.</span><code><span class="memberNameLink"><a href="../util/SecurityValidator.html#validateResourcePermission(org.eclipse.emf.cdo.security.ResourcePermission,org.eclipse.emf.common.util.DiagnosticChain,java.util.Map)">validateResourcePermission</a></span>&#8203;(<a href="../ResourcePermission.html" title="interface in org.eclipse.emf.cdo.security">ResourcePermission</a>&nbsp;resourcePermission,
+                          <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/DiagnosticChain.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">DiagnosticChain</a>&nbsp;diagnostics,
+                          java.util.Map&lt;java.lang.Object,&#8203;java.lang.Object&gt;&nbsp;context)</code></th>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
 </ul>
 </li>
 </ul>
 </div>
+</main>
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="../package-summary.html">Package</a></li>
-<li><a href="../../../../../../org/eclipse/emf/cdo/security/ResourcePermission.html" title="interface in org.eclipse.emf.cdo.security">Class</a></li>
+<li><a href="../ResourcePermission.html" title="interface in org.eclipse.emf.cdo.security">Class</a></li>
 <li class="navBarCell1Rev">Use</li>
+<li><a href="../package-tree.html">Tree</a></li>
 <li><a href="../../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../../help-doc.html">Help</a></li>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev</li>
-<li>Next</li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/emf/cdo/security/class-use/ResourcePermission.html" target="_top">Frames</a></li>
-<li><a href="ResourcePermission.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -249,11 +286,16 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

@@ -40,6 +40,7 @@
   <article:Plugin name="org.eclipse.emf.cdo.ui.compare" label="CDO Model Repository Client UI Compare">
     <packages name="org.eclipse.emf.cdo.ui.compare"/>
   </article:Plugin>
+  <article:Plugin name="org.eclipse.emf.cdo.ui.jdt" label="CDO Model Repository Client UI JDT"/>
   <article:Plugin name="org.eclipse.emf.cdo.ui.team" label="CDO Model Repository Client UI Team"/>
   <article:Plugin name="org.eclipse.emf.cdo.workspace" label="CDO Model Repository Client Workspace">
     <packages name="org.eclipse.emf.cdo.spi.workspace"/>
@@ -69,6 +70,7 @@
     <packages name="org.eclipse.emf.cdo.spi.common.model"/>
     <packages name="org.eclipse.emf.cdo.spi.common.protocol"/>
     <packages name="org.eclipse.emf.cdo.spi.common.revision"/>
+    <packages name="org.eclipse.emf.cdo.spi.common.util"/>
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.explorer" label="CDO Model Repository Explorer">
     <packages name="org.eclipse.emf.cdo.explorer"/>

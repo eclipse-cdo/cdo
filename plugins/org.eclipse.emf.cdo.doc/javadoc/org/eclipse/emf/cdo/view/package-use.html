@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>Uses of Package org.eclipse.emf.cdo.view (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,39 +28,43 @@
     catch(err) {
     }
 //-->
-</script>
+var pathtoroot = "../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li>Class</li>
 <li class="navBarCell1Rev">Use</li>
+<li><a href="package-tree.html">Tree</a></li>
 <li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../help-doc.html">Help</a></li>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev</li>
-<li>Next</li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/emf/cdo/view/package-use.html" target="_top">Frames</a></li>
-<li><a href="package-use.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -63,153 +77,165 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
+<main role="main">
 <div class="header">
 <h1 title="Uses of Package org.eclipse.emf.cdo.view" class="title">Uses of Package<br>org.eclipse.emf.cdo.view</h1>
 </div>
 <div class="contentContainer">
 <ul class="blockList">
 <li class="blockList">
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing packages, and an explanation">
-<caption><span>Packages that use <a href="../../../../../org/eclipse/emf/cdo/view/package-summary.html">org.eclipse.emf.cdo.view</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Packages that use <a href="package-summary.html">org.eclipse.emf.cdo.view</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Package</th>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo">org.eclipse.emf.cdo</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo">org.eclipse.emf.cdo</a></th>
 <td class="colLast">
-<div class="block">Client concepts like <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>CDOObject</code></a> and <a href="../../../../../org/eclipse/emf/cdo/CDOState.html" title="enum in org.eclipse.emf.cdo"><code>CDOState</code></a>.</div>
+<div class="block">Client concepts like <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>CDOObject</code></a> and <a href="../CDOState.html" title="enum in org.eclipse.emf.cdo"><code>CDOState</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.compare">org.eclipse.emf.cdo.compare</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.compare">org.eclipse.emf.cdo.compare</a></th>
 <td class="colLast">
 <div class="block">Client concepts for integrating EMF Compare with CDO.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.explorer.checkouts">org.eclipse.emf.cdo.explorer.checkouts</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.explorer.checkouts">org.eclipse.emf.cdo.explorer.checkouts</a></th>
 <td class="colLast">
-<div class="block">Interfaces for working with <a href="../../../../../org/eclipse/emf/cdo/explorer/checkouts/CDOCheckout.html" title="interface in org.eclipse.emf.cdo.explorer.checkouts"><code>checkouts</code></a>.</div>
+<div class="block">Interfaces for working with <a href="../explorer/checkouts/CDOCheckout.html" title="interface in org.eclipse.emf.cdo.explorer.checkouts"><code>checkouts</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.explorer.repositories">org.eclipse.emf.cdo.explorer.repositories</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.explorer.repositories">org.eclipse.emf.cdo.explorer.repositories</a></th>
 <td class="colLast">
-<div class="block">Interfaces for working with <a href="../../../../../org/eclipse/emf/cdo/explorer/repositories/CDORepository.html" title="interface in org.eclipse.emf.cdo.explorer.repositories"><code>repositories</code></a>.</div>
+<div class="block">Interfaces for working with <a href="../explorer/repositories/CDORepository.html" title="interface in org.eclipse.emf.cdo.explorer.repositories"><code>repositories</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.net4j">org.eclipse.emf.cdo.net4j</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.net4j">org.eclipse.emf.cdo.net4j</a></th>
 <td class="colLast">
 <div class="block">Client concepts for dealing with Net4j-based sessions to remote repositories.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.security.impl">org.eclipse.emf.cdo.security.impl</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.security.impl">org.eclipse.emf.cdo.security.impl</a></th>
 <td class="colLast">
 <div class="block">The generated EMF implementation of the CDO security model.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.security.provider">org.eclipse.emf.cdo.security.provider</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.security.provider">org.eclipse.emf.cdo.security.provider</a></th>
 <td class="colLast">
 <div class="block">The generated EMF edit support of the CDO security model.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.security.ui">org.eclipse.emf.cdo.security.ui</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.security.ui">org.eclipse.emf.cdo.security.ui</a></th>
 <td class="colLast">
 <div class="block">Concepts and default implementations for the CDO security user interface.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.server">org.eclipse.emf.cdo.server</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.server">org.eclipse.emf.cdo.server</a></th>
 <td class="colLast">
 <div class="block">Server concepts for dealing with repositories and stores.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.server.ocl">org.eclipse.emf.cdo.server.ocl</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.server.ocl">org.eclipse.emf.cdo.server.ocl</a></th>
 <td class="colLast">
 <div class="block">Server implementation of a generic OCL query handler.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.session">org.eclipse.emf.cdo.session</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.session">org.eclipse.emf.cdo.session</a></th>
 <td class="colLast">
 <div class="block">Client concepts for dealing with sessions to CDO repositories.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.spi.server">org.eclipse.emf.cdo.spi.server</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.spi.server">org.eclipse.emf.cdo.spi.server</a></th>
 <td class="colLast">
 <div class="block">Server service provider interfaces and useful base implementations.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.transaction">org.eclipse.emf.cdo.transaction</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.transaction">org.eclipse.emf.cdo.transaction</a></th>
 <td class="colLast">
 <div class="block">Client concepts for dealing with transactions, distributed transactions and their save points.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.transfer.spi.repository">org.eclipse.emf.cdo.transfer.spi.repository</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.transfer.spi.repository">org.eclipse.emf.cdo.transfer.spi.repository</a></th>
 <td class="colLast">
-<div class="block">Client concepts for dealing with transfers of <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resources</code></a>
- between <a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSystem.html" title="class in org.eclipse.emf.cdo.transfer"><code>systems</code></a>.</div>
+<div class="block">Client concepts for dealing with transfers of <a href="../eresource/CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resources</code></a>
+ between <a href="../transfer/CDOTransferSystem.html" title="class in org.eclipse.emf.cdo.transfer"><code>systems</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.ui">org.eclipse.emf.cdo.ui</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.ui">org.eclipse.emf.cdo.ui</a></th>
 <td class="colLast">
 <div class="block">Reusable UI components specific to the CDO Model Repository.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.ui.compare">org.eclipse.emf.cdo.ui.compare</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.ui.compare">org.eclipse.emf.cdo.ui.compare</a></th>
 <td class="colLast">
 <div class="block">Classes that help to open EMF Compare user interfaces on CDO models.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.ui.widgets">org.eclipse.emf.cdo.ui.widgets</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.ui.widgets">org.eclipse.emf.cdo.ui.widgets</a></th>
 <td class="colLast">
 <div class="block">A library with reusable widgets.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.util">org.eclipse.emf.cdo.util</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.util">org.eclipse.emf.cdo.util</a></th>
 <td class="colLast">
 <div class="block">Client utility classes, some common interfaces and exceptions.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.view">org.eclipse.emf.cdo.view</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.view">org.eclipse.emf.cdo.view</a></th>
 <td class="colLast">
 <div class="block">Client concepts for dealing with views, view sets, queries, CDO objects and EMF resource sets.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.workspace">org.eclipse.emf.cdo.workspace</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.workspace">org.eclipse.emf.cdo.workspace</a></th>
 <td class="colLast">
-<div class="block">Concepts to checkout, open and further operate CDO <a href="../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspace.html" title="interface in org.eclipse.emf.cdo.workspace"><code>workspaces</code></a>.</div>
+<div class="block">Concepts to checkout, open and further operate CDO <a href="../workspace/CDOWorkspace.html" title="interface in org.eclipse.emf.cdo.workspace"><code>workspaces</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.emf.internal.cdo">org.eclipse.emf.internal.cdo</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.internal.cdo">org.eclipse.emf.internal.cdo</a></th>
 <td class="colLast">
-<div class="block">Exposes <a href="../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html" title="class in org.eclipse.emf.internal.cdo"><code>CDOObjectImpl</code></a> for extension in generated EMF models.</div>
+<div class="block">Exposes <a href="../../internal/cdo/CDOObjectImpl.html" title="class in org.eclipse.emf.internal.cdo"><code>CDOObjectImpl</code></a> for extension in generated EMF models.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.emf.spi.cdo">org.eclipse.emf.spi.cdo</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.spi.cdo">org.eclipse.emf.spi.cdo</a></th>
 <td class="colLast">
 <div class="block">Client service provider interfaces and useful base implementations.</div>
 </td>
@@ -217,660 +243,762 @@
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo">
+<li class="blockList"><a id="org.eclipse.emf.cdo">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../org/eclipse/emf/cdo/view/package-summary.html">org.eclipse.emf.cdo.view</a> used by <a href="../../../../../org/eclipse/emf/cdo/package-summary.html">org.eclipse.emf.cdo</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.emf.cdo.view</a> used by <a href="../package-summary.html">org.eclipse.emf.cdo</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOView.html#org.eclipse.emf.cdo">CDOView</a>
-<div class="block">A read-only view to the state of the object graph in the repository of the underlying <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> at a
- specific <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp--"><code>time</code></a> at a specific <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch--"><code>branch</code></a>.</div>
+<th class="colFirst" scope="row"><a href="class-use/CDOView.html#org.eclipse.emf.cdo">CDOView</a></th>
+<td class="colLast">
+<div class="block">A read-only view to the state of the object graph in the repository of the underlying <a href="../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> at a
+ specific <a href="../common/branch/CDOBranchPoint.html#getTimeStamp()"><code>time</code></a> at a specific <a href="../common/branch/CDOBranchPoint.html#getBranch()"><code>branch</code></a>.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.compare">
+<li class="blockList"><a id="org.eclipse.emf.cdo.compare">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../org/eclipse/emf/cdo/view/package-summary.html">org.eclipse.emf.cdo.view</a> used by <a href="../../../../../org/eclipse/emf/cdo/compare/package-summary.html">org.eclipse.emf.cdo.compare</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.emf.cdo.view</a> used by <a href="../compare/package-summary.html">org.eclipse.emf.cdo.compare</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOView.html#org.eclipse.emf.cdo.compare">CDOView</a>
-<div class="block">A read-only view to the state of the object graph in the repository of the underlying <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> at a
- specific <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp--"><code>time</code></a> at a specific <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch--"><code>branch</code></a>.</div>
+<th class="colFirst" scope="row"><a href="class-use/CDOView.html#org.eclipse.emf.cdo.compare">CDOView</a></th>
+<td class="colLast">
+<div class="block">A read-only view to the state of the object graph in the repository of the underlying <a href="../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> at a
+ specific <a href="../common/branch/CDOBranchPoint.html#getTimeStamp()"><code>time</code></a> at a specific <a href="../common/branch/CDOBranchPoint.html#getBranch()"><code>branch</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOViewOpener.html#org.eclipse.emf.cdo.compare">CDOViewOpener</a>
-<div class="block">Can open new <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a>.</div>
+<th class="colFirst" scope="row"><a href="class-use/CDOViewOpener.html#org.eclipse.emf.cdo.compare">CDOViewOpener</a></th>
+<td class="colLast">
+<div class="block">Can open new <a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a>.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.explorer.checkouts">
+<li class="blockList"><a id="org.eclipse.emf.cdo.explorer.checkouts">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../org/eclipse/emf/cdo/view/package-summary.html">org.eclipse.emf.cdo.view</a> used by <a href="../../../../../org/eclipse/emf/cdo/explorer/checkouts/package-summary.html">org.eclipse.emf.cdo.explorer.checkouts</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.emf.cdo.view</a> used by <a href="../explorer/checkouts/package-summary.html">org.eclipse.emf.cdo.explorer.checkouts</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOView.html#org.eclipse.emf.cdo.explorer.checkouts">CDOView</a>
-<div class="block">A read-only view to the state of the object graph in the repository of the underlying <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> at a
- specific <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp--"><code>time</code></a> at a specific <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch--"><code>branch</code></a>.</div>
+<th class="colFirst" scope="row"><a href="class-use/CDOView.html#org.eclipse.emf.cdo.explorer.checkouts">CDOView</a></th>
+<td class="colLast">
+<div class="block">A read-only view to the state of the object graph in the repository of the underlying <a href="../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> at a
+ specific <a href="../common/branch/CDOBranchPoint.html#getTimeStamp()"><code>time</code></a> at a specific <a href="../common/branch/CDOBranchPoint.html#getBranch()"><code>branch</code></a>.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.explorer.repositories">
+<li class="blockList"><a id="org.eclipse.emf.cdo.explorer.repositories">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../org/eclipse/emf/cdo/view/package-summary.html">org.eclipse.emf.cdo.view</a> used by <a href="../../../../../org/eclipse/emf/cdo/explorer/repositories/package-summary.html">org.eclipse.emf.cdo.explorer.repositories</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.emf.cdo.view</a> used by <a href="../explorer/repositories/package-summary.html">org.eclipse.emf.cdo.explorer.repositories</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOViewOpener.html#org.eclipse.emf.cdo.explorer.repositories">CDOViewOpener</a>
-<div class="block">Can open new <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a>.</div>
+<th class="colFirst" scope="row"><a href="class-use/CDOViewOpener.html#org.eclipse.emf.cdo.explorer.repositories">CDOViewOpener</a></th>
+<td class="colLast">
+<div class="block">Can open new <a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a>.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.net4j">
+<li class="blockList"><a id="org.eclipse.emf.cdo.net4j">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../org/eclipse/emf/cdo/view/package-summary.html">org.eclipse.emf.cdo.view</a> used by <a href="../../../../../org/eclipse/emf/cdo/net4j/package-summary.html">org.eclipse.emf.cdo.net4j</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.emf.cdo.view</a> used by <a href="../net4j/package-summary.html">org.eclipse.emf.cdo.net4j</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/AbstractCDOViewProvider.html#org.eclipse.emf.cdo.net4j">AbstractCDOViewProvider</a>
+<th class="colFirst" scope="row"><a href="class-use/AbstractCDOViewProvider.html#org.eclipse.emf.cdo.net4j">AbstractCDOViewProvider</a></th>
+<td class="colLast">
 <div class="block">Base logic to handle CDOViewProvider priority and regular expression.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOView.html#org.eclipse.emf.cdo.net4j">CDOView</a>
-<div class="block">A read-only view to the state of the object graph in the repository of the underlying <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> at a
- specific <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp--"><code>time</code></a> at a specific <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch--"><code>branch</code></a>.</div>
+<th class="colFirst" scope="row"><a href="class-use/CDOView.html#org.eclipse.emf.cdo.net4j">CDOView</a></th>
+<td class="colLast">
+<div class="block">A read-only view to the state of the object graph in the repository of the underlying <a href="../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> at a
+ specific <a href="../common/branch/CDOBranchPoint.html#getTimeStamp()"><code>time</code></a> at a specific <a href="../common/branch/CDOBranchPoint.html#getBranch()"><code>branch</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOViewContainer.html#org.eclipse.emf.cdo.net4j">CDOViewContainer</a>
-<div class="block">Can open new <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a> and provide access to openend views.</div>
+<th class="colFirst" scope="row"><a href="class-use/CDOViewContainer.html#org.eclipse.emf.cdo.net4j">CDOViewContainer</a></th>
+<td class="colLast">
+<div class="block">Can open new <a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a> and provide access to openend views.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOViewOpener.html#org.eclipse.emf.cdo.net4j">CDOViewOpener</a>
-<div class="block">Can open new <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a>.</div>
+<th class="colFirst" scope="row"><a href="class-use/CDOViewOpener.html#org.eclipse.emf.cdo.net4j">CDOViewOpener</a></th>
+<td class="colLast">
+<div class="block">Can open new <a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOViewProvider.html#org.eclipse.emf.cdo.net4j">CDOViewProvider</a>
+<th class="colFirst" scope="row"><a href="class-use/CDOViewProvider.html#org.eclipse.emf.cdo.net4j">CDOViewProvider</a></th>
+<td class="colLast">
 <div class="block">Capable of opening a <code>CDOView</code> on a target repository, defined by a URI.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOViewProvider.CDOViewProvider2.html#org.eclipse.emf.cdo.net4j">CDOViewProvider.CDOViewProvider2</a>&nbsp;</td>
+<th class="colFirst" scope="row"><a href="class-use/CDOViewProvider.CDOViewProvider2.html#org.eclipse.emf.cdo.net4j">CDOViewProvider.CDOViewProvider2</a></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.security.impl">
+<li class="blockList"><a id="org.eclipse.emf.cdo.security.impl">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../org/eclipse/emf/cdo/view/package-summary.html">org.eclipse.emf.cdo.view</a> used by <a href="../../../../../org/eclipse/emf/cdo/security/impl/package-summary.html">org.eclipse.emf.cdo.security.impl</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.emf.cdo.view</a> used by <a href="../security/impl/package-summary.html">org.eclipse.emf.cdo.security.impl</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOView.html#org.eclipse.emf.cdo.security.impl">CDOView</a>
-<div class="block">A read-only view to the state of the object graph in the repository of the underlying <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> at a
- specific <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp--"><code>time</code></a> at a specific <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch--"><code>branch</code></a>.</div>
+<th class="colFirst" scope="row"><a href="class-use/CDOView.html#org.eclipse.emf.cdo.security.impl">CDOView</a></th>
+<td class="colLast">
+<div class="block">A read-only view to the state of the object graph in the repository of the underlying <a href="../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> at a
+ specific <a href="../common/branch/CDOBranchPoint.html#getTimeStamp()"><code>time</code></a> at a specific <a href="../common/branch/CDOBranchPoint.html#getBranch()"><code>branch</code></a>.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.security.provider">
+<li class="blockList"><a id="org.eclipse.emf.cdo.security.provider">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../org/eclipse/emf/cdo/view/package-summary.html">org.eclipse.emf.cdo.view</a> used by <a href="../../../../../org/eclipse/emf/cdo/security/provider/package-summary.html">org.eclipse.emf.cdo.security.provider</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.emf.cdo.view</a> used by <a href="../security/provider/package-summary.html">org.eclipse.emf.cdo.security.provider</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOView.html#org.eclipse.emf.cdo.security.provider">CDOView</a>
-<div class="block">A read-only view to the state of the object graph in the repository of the underlying <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> at a
- specific <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp--"><code>time</code></a> at a specific <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch--"><code>branch</code></a>.</div>
+<th class="colFirst" scope="row"><a href="class-use/CDOView.html#org.eclipse.emf.cdo.security.provider">CDOView</a></th>
+<td class="colLast">
+<div class="block">A read-only view to the state of the object graph in the repository of the underlying <a href="../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> at a
+ specific <a href="../common/branch/CDOBranchPoint.html#getTimeStamp()"><code>time</code></a> at a specific <a href="../common/branch/CDOBranchPoint.html#getBranch()"><code>branch</code></a>.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.security.ui">
+<li class="blockList"><a id="org.eclipse.emf.cdo.security.ui">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../org/eclipse/emf/cdo/view/package-summary.html">org.eclipse.emf.cdo.view</a> used by <a href="../../../../../org/eclipse/emf/cdo/security/ui/package-summary.html">org.eclipse.emf.cdo.security.ui</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.emf.cdo.view</a> used by <a href="../security/ui/package-summary.html">org.eclipse.emf.cdo.security.ui</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOView.html#org.eclipse.emf.cdo.security.ui">CDOView</a>
-<div class="block">A read-only view to the state of the object graph in the repository of the underlying <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> at a
- specific <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp--"><code>time</code></a> at a specific <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch--"><code>branch</code></a>.</div>
+<th class="colFirst" scope="row"><a href="class-use/CDOView.html#org.eclipse.emf.cdo.security.ui">CDOView</a></th>
+<td class="colLast">
+<div class="block">A read-only view to the state of the object graph in the repository of the underlying <a href="../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> at a
+ specific <a href="../common/branch/CDOBranchPoint.html#getTimeStamp()"><code>time</code></a> at a specific <a href="../common/branch/CDOBranchPoint.html#getBranch()"><code>branch</code></a>.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.server">
+<li class="blockList"><a id="org.eclipse.emf.cdo.server">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../org/eclipse/emf/cdo/view/package-summary.html">org.eclipse.emf.cdo.view</a> used by <a href="../../../../../org/eclipse/emf/cdo/server/package-summary.html">org.eclipse.emf.cdo.server</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.emf.cdo.view</a> used by <a href="../server/package-summary.html">org.eclipse.emf.cdo.server</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOView.html#org.eclipse.emf.cdo.server">CDOView</a>
-<div class="block">A read-only view to the state of the object graph in the repository of the underlying <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> at a
- specific <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp--"><code>time</code></a> at a specific <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch--"><code>branch</code></a>.</div>
+<th class="colFirst" scope="row"><a href="class-use/CDOView.html#org.eclipse.emf.cdo.server">CDOView</a></th>
+<td class="colLast">
+<div class="block">A read-only view to the state of the object graph in the repository of the underlying <a href="../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> at a
+ specific <a href="../common/branch/CDOBranchPoint.html#getTimeStamp()"><code>time</code></a> at a specific <a href="../common/branch/CDOBranchPoint.html#getBranch()"><code>branch</code></a>.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.server.ocl">
+<li class="blockList"><a id="org.eclipse.emf.cdo.server.ocl">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../org/eclipse/emf/cdo/view/package-summary.html">org.eclipse.emf.cdo.view</a> used by <a href="../../../../../org/eclipse/emf/cdo/server/ocl/package-summary.html">org.eclipse.emf.cdo.server.ocl</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.emf.cdo.view</a> used by <a href="../server/ocl/package-summary.html">org.eclipse.emf.cdo.server.ocl</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOView.html#org.eclipse.emf.cdo.server.ocl">CDOView</a>
-<div class="block">A read-only view to the state of the object graph in the repository of the underlying <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> at a
- specific <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp--"><code>time</code></a> at a specific <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch--"><code>branch</code></a>.</div>
+<th class="colFirst" scope="row"><a href="class-use/CDOView.html#org.eclipse.emf.cdo.server.ocl">CDOView</a></th>
+<td class="colLast">
+<div class="block">A read-only view to the state of the object graph in the repository of the underlying <a href="../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> at a
+ specific <a href="../common/branch/CDOBranchPoint.html#getTimeStamp()"><code>time</code></a> at a specific <a href="../common/branch/CDOBranchPoint.html#getBranch()"><code>branch</code></a>.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.session">
+<li class="blockList"><a id="org.eclipse.emf.cdo.session">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../org/eclipse/emf/cdo/view/package-summary.html">org.eclipse.emf.cdo.view</a> used by <a href="../../../../../org/eclipse/emf/cdo/session/package-summary.html">org.eclipse.emf.cdo.session</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.emf.cdo.view</a> used by <a href="../session/package-summary.html">org.eclipse.emf.cdo.session</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOFetchRuleManager.html#org.eclipse.emf.cdo.session">CDOFetchRuleManager</a>
-<div class="block">Collects and updates <a href="../../../../../org/eclipse/emf/cdo/common/util/CDOFetchRule.html" title="class in org.eclipse.emf.cdo.common.util"><code>fetch rules</code></a> for <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a>, usually based on
- <a href="../../../../../org/eclipse/emf/cdo/view/CDOFeatureAnalyzer.html" title="interface in org.eclipse.emf.cdo.view"><code>feature analyzer</code></a> statistics.</div>
+<th class="colFirst" scope="row"><a href="class-use/CDOFetchRuleManager.html#org.eclipse.emf.cdo.session">CDOFetchRuleManager</a></th>
+<td class="colLast">
+<div class="block">Collects and updates <a href="../common/util/CDOFetchRule.html" title="class in org.eclipse.emf.cdo.common.util"><code>fetch rules</code></a> for <a href="../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a>, usually based on
+ <a href="CDOFeatureAnalyzer.html" title="interface in org.eclipse.emf.cdo.view"><code>feature analyzer</code></a> statistics.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOView.html#org.eclipse.emf.cdo.session">CDOView</a>
-<div class="block">A read-only view to the state of the object graph in the repository of the underlying <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> at a
- specific <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp--"><code>time</code></a> at a specific <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch--"><code>branch</code></a>.</div>
+<th class="colFirst" scope="row"><a href="class-use/CDOView.html#org.eclipse.emf.cdo.session">CDOView</a></th>
+<td class="colLast">
+<div class="block">A read-only view to the state of the object graph in the repository of the underlying <a href="../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> at a
+ specific <a href="../common/branch/CDOBranchPoint.html#getTimeStamp()"><code>time</code></a> at a specific <a href="../common/branch/CDOBranchPoint.html#getBranch()"><code>branch</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOViewContainer.html#org.eclipse.emf.cdo.session">CDOViewContainer</a>
-<div class="block">Can open new <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a> and provide access to openend views.</div>
+<th class="colFirst" scope="row"><a href="class-use/CDOViewContainer.html#org.eclipse.emf.cdo.session">CDOViewContainer</a></th>
+<td class="colLast">
+<div class="block">Can open new <a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a> and provide access to openend views.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOViewOpener.html#org.eclipse.emf.cdo.session">CDOViewOpener</a>
-<div class="block">Can open new <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a>.</div>
+<th class="colFirst" scope="row"><a href="class-use/CDOViewOpener.html#org.eclipse.emf.cdo.session">CDOViewOpener</a></th>
+<td class="colLast">
+<div class="block">Can open new <a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a>.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.spi.server">
+<li class="blockList"><a id="org.eclipse.emf.cdo.spi.server">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../org/eclipse/emf/cdo/view/package-summary.html">org.eclipse.emf.cdo.view</a> used by <a href="../../../../../org/eclipse/emf/cdo/spi/server/package-summary.html">org.eclipse.emf.cdo.spi.server</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.emf.cdo.view</a> used by <a href="../spi/server/package-summary.html">org.eclipse.emf.cdo.spi.server</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOView.html#org.eclipse.emf.cdo.spi.server">CDOView</a>
-<div class="block">A read-only view to the state of the object graph in the repository of the underlying <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> at a
- specific <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp--"><code>time</code></a> at a specific <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch--"><code>branch</code></a>.</div>
+<th class="colFirst" scope="row"><a href="class-use/CDOView.html#org.eclipse.emf.cdo.spi.server">CDOView</a></th>
+<td class="colLast">
+<div class="block">A read-only view to the state of the object graph in the repository of the underlying <a href="../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> at a
+ specific <a href="../common/branch/CDOBranchPoint.html#getTimeStamp()"><code>time</code></a> at a specific <a href="../common/branch/CDOBranchPoint.html#getBranch()"><code>branch</code></a>.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.transaction">
+<li class="blockList"><a id="org.eclipse.emf.cdo.transaction">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../org/eclipse/emf/cdo/view/package-summary.html">org.eclipse.emf.cdo.view</a> used by <a href="../../../../../org/eclipse/emf/cdo/transaction/package-summary.html">org.eclipse.emf.cdo.transaction</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.emf.cdo.view</a> used by <a href="../transaction/package-summary.html">org.eclipse.emf.cdo.transaction</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOObjectHandler.html#org.eclipse.emf.cdo.transaction">CDOObjectHandler</a>
-<div class="block">Call-back handler used by <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a> to tell implementors of this interface about <a href="../../../../../org/eclipse/emf/cdo/CDOState.html" title="enum in org.eclipse.emf.cdo"><code>state</code></a>
- changes of <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a>.</div>
+<th class="colFirst" scope="row"><a href="class-use/CDOObjectHandler.html#org.eclipse.emf.cdo.transaction">CDOObjectHandler</a></th>
+<td class="colLast">
+<div class="block">Call-back handler used by <a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a> to tell implementors of this interface about <a href="../CDOState.html" title="enum in org.eclipse.emf.cdo"><code>state</code></a>
+ changes of <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOQuery.html#org.eclipse.emf.cdo.transaction">CDOQuery</a>
-<div class="block">Provides access to the information that specifies a query from a <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html" title="interface in org.eclipse.emf.cdo.common"><code>view</code></a> to a
- <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common"><code>repository</code></a> and to the results of the remote query execution;</div>
+<th class="colFirst" scope="row"><a href="class-use/CDOQuery.html#org.eclipse.emf.cdo.transaction">CDOQuery</a></th>
+<td class="colLast">
+<div class="block">Provides access to the information that specifies a query from a <a href="../common/CDOCommonView.html" title="interface in org.eclipse.emf.cdo.common"><code>view</code></a> to a
+ <a href="../common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common"><code>repository</code></a> and to the results of the remote query execution;</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDORegistrationHandler.html#org.eclipse.emf.cdo.transaction">CDORegistrationHandler</a>
-<div class="block">Call-back handler used by <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a> to tell implementors of this interface about registrations and deregistrations
- of <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a> with <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a>.</div>
+<th class="colFirst" scope="row"><a href="class-use/CDORegistrationHandler.html#org.eclipse.emf.cdo.transaction">CDORegistrationHandler</a></th>
+<td class="colLast">
+<div class="block">Call-back handler used by <a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a> to tell implementors of this interface about registrations and deregistrations
+ of <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a> with <a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOUnitManager.html#org.eclipse.emf.cdo.transaction">CDOUnitManager</a>&nbsp;</td>
+<th class="colFirst" scope="row"><a href="class-use/CDOUnitManager.html#org.eclipse.emf.cdo.transaction">CDOUnitManager</a></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOView.html#org.eclipse.emf.cdo.transaction">CDOView</a>
-<div class="block">A read-only view to the state of the object graph in the repository of the underlying <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> at a
- specific <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp--"><code>time</code></a> at a specific <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch--"><code>branch</code></a>.</div>
+<th class="colFirst" scope="row"><a href="class-use/CDOView.html#org.eclipse.emf.cdo.transaction">CDOView</a></th>
+<td class="colLast">
+<div class="block">A read-only view to the state of the object graph in the repository of the underlying <a href="../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> at a
+ specific <a href="../common/branch/CDOBranchPoint.html#getTimeStamp()"><code>time</code></a> at a specific <a href="../common/branch/CDOBranchPoint.html#getBranch()"><code>branch</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOView.Options.html#org.eclipse.emf.cdo.transaction">CDOView.Options</a>
-<div class="block">Encapsulates a set of notifying <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> configuration options.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOViewContainer.html#org.eclipse.emf.cdo.transaction">CDOViewContainer</a>
-<div class="block">Can open new <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a> and provide access to openend views.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOViewEvent.html#org.eclipse.emf.cdo.transaction">CDOViewEvent</a>
-<div class="block">A generic <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event"><code>event</code></a> fired from a <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a>.</div>
+<th class="colFirst" scope="row"><a href="class-use/CDOView.Options.html#org.eclipse.emf.cdo.transaction">CDOView.Options</a></th>
+<td class="colLast">
+<div class="block">Encapsulates a set of notifying <a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> configuration options.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOViewOpener.html#org.eclipse.emf.cdo.transaction">CDOViewOpener</a>
-<div class="block">Can open new <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a>.</div>
+<th class="colFirst" scope="row"><a href="class-use/CDOViewContainer.html#org.eclipse.emf.cdo.transaction">CDOViewContainer</a></th>
+<td class="colLast">
+<div class="block">Can open new <a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a> and provide access to openend views.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOViewProvider.html#org.eclipse.emf.cdo.transaction">CDOViewProvider</a>
+<th class="colFirst" scope="row"><a href="class-use/CDOViewEvent.html#org.eclipse.emf.cdo.transaction">CDOViewEvent</a></th>
+<td class="colLast">
+<div class="block">A generic <code>event</code> fired from a <a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="class-use/CDOViewOpener.html#org.eclipse.emf.cdo.transaction">CDOViewOpener</a></th>
+<td class="colLast">
+<div class="block">Can open new <a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><a href="class-use/CDOViewProvider.html#org.eclipse.emf.cdo.transaction">CDOViewProvider</a></th>
+<td class="colLast">
 <div class="block">Capable of opening a <code>CDOView</code> on a target repository, defined by a URI.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOViewSet.html#org.eclipse.emf.cdo.transaction">CDOViewSet</a>
-<div class="block">A <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>ResourceSet</code></a> adapter to associate a set of <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOView</code></a> instances.</div>
+<th class="colFirst" scope="row"><a href="class-use/CDOViewSet.html#org.eclipse.emf.cdo.transaction">CDOViewSet</a></th>
+<td class="colLast">
+<div class="block">A <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource" class="externalLink"><code>ResourceSet</code></a> adapter to associate a set of <a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOView</code></a> instances.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.transfer.spi.repository">
+<li class="blockList"><a id="org.eclipse.emf.cdo.transfer.spi.repository">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../org/eclipse/emf/cdo/view/package-summary.html">org.eclipse.emf.cdo.view</a> used by <a href="../../../../../org/eclipse/emf/cdo/transfer/spi/repository/package-summary.html">org.eclipse.emf.cdo.transfer.spi.repository</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.emf.cdo.view</a> used by <a href="../transfer/spi/repository/package-summary.html">org.eclipse.emf.cdo.transfer.spi.repository</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOView.html#org.eclipse.emf.cdo.transfer.spi.repository">CDOView</a>
-<div class="block">A read-only view to the state of the object graph in the repository of the underlying <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> at a
- specific <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp--"><code>time</code></a> at a specific <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch--"><code>branch</code></a>.</div>
+<th class="colFirst" scope="row"><a href="class-use/CDOView.html#org.eclipse.emf.cdo.transfer.spi.repository">CDOView</a></th>
+<td class="colLast">
+<div class="block">A read-only view to the state of the object graph in the repository of the underlying <a href="../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> at a
+ specific <a href="../common/branch/CDOBranchPoint.html#getTimeStamp()"><code>time</code></a> at a specific <a href="../common/branch/CDOBranchPoint.html#getBranch()"><code>branch</code></a>.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.ui">
+<li class="blockList"><a id="org.eclipse.emf.cdo.ui">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../org/eclipse/emf/cdo/view/package-summary.html">org.eclipse.emf.cdo.view</a> used by <a href="../../../../../org/eclipse/emf/cdo/ui/package-summary.html">org.eclipse.emf.cdo.ui</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.emf.cdo.view</a> used by <a href="../ui/package-summary.html">org.eclipse.emf.cdo.ui</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOView.html#org.eclipse.emf.cdo.ui">CDOView</a>
-<div class="block">A read-only view to the state of the object graph in the repository of the underlying <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> at a
- specific <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp--"><code>time</code></a> at a specific <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch--"><code>branch</code></a>.</div>
+<th class="colFirst" scope="row"><a href="class-use/CDOView.html#org.eclipse.emf.cdo.ui">CDOView</a></th>
+<td class="colLast">
+<div class="block">A read-only view to the state of the object graph in the repository of the underlying <a href="../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> at a
+ specific <a href="../common/branch/CDOBranchPoint.html#getTimeStamp()"><code>time</code></a> at a specific <a href="../common/branch/CDOBranchPoint.html#getBranch()"><code>branch</code></a>.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.ui.compare">
+<li class="blockList"><a id="org.eclipse.emf.cdo.ui.compare">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../org/eclipse/emf/cdo/view/package-summary.html">org.eclipse.emf.cdo.view</a> used by <a href="../../../../../org/eclipse/emf/cdo/ui/compare/package-summary.html">org.eclipse.emf.cdo.ui.compare</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.emf.cdo.view</a> used by <a href="../ui/compare/package-summary.html">org.eclipse.emf.cdo.ui.compare</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOView.html#org.eclipse.emf.cdo.ui.compare">CDOView</a>
-<div class="block">A read-only view to the state of the object graph in the repository of the underlying <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> at a
- specific <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp--"><code>time</code></a> at a specific <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch--"><code>branch</code></a>.</div>
+<th class="colFirst" scope="row"><a href="class-use/CDOView.html#org.eclipse.emf.cdo.ui.compare">CDOView</a></th>
+<td class="colLast">
+<div class="block">A read-only view to the state of the object graph in the repository of the underlying <a href="../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> at a
+ specific <a href="../common/branch/CDOBranchPoint.html#getTimeStamp()"><code>time</code></a> at a specific <a href="../common/branch/CDOBranchPoint.html#getBranch()"><code>branch</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOViewOpener.html#org.eclipse.emf.cdo.ui.compare">CDOViewOpener</a>
-<div class="block">Can open new <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a>.</div>
+<th class="colFirst" scope="row"><a href="class-use/CDOViewOpener.html#org.eclipse.emf.cdo.ui.compare">CDOViewOpener</a></th>
+<td class="colLast">
+<div class="block">Can open new <a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a>.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.ui.widgets">
+<li class="blockList"><a id="org.eclipse.emf.cdo.ui.widgets">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../org/eclipse/emf/cdo/view/package-summary.html">org.eclipse.emf.cdo.view</a> used by <a href="../../../../../org/eclipse/emf/cdo/ui/widgets/package-summary.html">org.eclipse.emf.cdo.ui.widgets</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.emf.cdo.view</a> used by <a href="../ui/widgets/package-summary.html">org.eclipse.emf.cdo.ui.widgets</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOView.html#org.eclipse.emf.cdo.ui.widgets">CDOView</a>
-<div class="block">A read-only view to the state of the object graph in the repository of the underlying <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> at a
- specific <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp--"><code>time</code></a> at a specific <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch--"><code>branch</code></a>.</div>
+<th class="colFirst" scope="row"><a href="class-use/CDOView.html#org.eclipse.emf.cdo.ui.widgets">CDOView</a></th>
+<td class="colLast">
+<div class="block">A read-only view to the state of the object graph in the repository of the underlying <a href="../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> at a
+ specific <a href="../common/branch/CDOBranchPoint.html#getTimeStamp()"><code>time</code></a> at a specific <a href="../common/branch/CDOBranchPoint.html#getBranch()"><code>branch</code></a>.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.util">
+<li class="blockList"><a id="org.eclipse.emf.cdo.util">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../org/eclipse/emf/cdo/view/package-summary.html">org.eclipse.emf.cdo.view</a> used by <a href="../../../../../org/eclipse/emf/cdo/util/package-summary.html">org.eclipse.emf.cdo.util</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.emf.cdo.view</a> used by <a href="../util/package-summary.html">org.eclipse.emf.cdo.util</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOFeatureAnalyzer.html#org.eclipse.emf.cdo.util">CDOFeatureAnalyzer</a>
-<div class="block">A call-back interface that is called by a <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> on each model read access.</div>
+<th class="colFirst" scope="row"><a href="class-use/CDOFeatureAnalyzer.html#org.eclipse.emf.cdo.util">CDOFeatureAnalyzer</a></th>
+<td class="colLast">
+<div class="block">A call-back interface that is called by a <a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> on each model read access.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOFetchRuleManager.html#org.eclipse.emf.cdo.util">CDOFetchRuleManager</a>
-<div class="block">Collects and updates <a href="../../../../../org/eclipse/emf/cdo/common/util/CDOFetchRule.html" title="class in org.eclipse.emf.cdo.common.util"><code>fetch rules</code></a> for <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a>, usually based on
- <a href="../../../../../org/eclipse/emf/cdo/view/CDOFeatureAnalyzer.html" title="interface in org.eclipse.emf.cdo.view"><code>feature analyzer</code></a> statistics.</div>
+<th class="colFirst" scope="row"><a href="class-use/CDOFetchRuleManager.html#org.eclipse.emf.cdo.util">CDOFetchRuleManager</a></th>
+<td class="colLast">
+<div class="block">Collects and updates <a href="../common/util/CDOFetchRule.html" title="class in org.eclipse.emf.cdo.common.util"><code>fetch rules</code></a> for <a href="../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a>, usually based on
+ <a href="CDOFeatureAnalyzer.html" title="interface in org.eclipse.emf.cdo.view"><code>feature analyzer</code></a> statistics.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDORevisionPrefetchingPolicy.html#org.eclipse.emf.cdo.util">CDORevisionPrefetchingPolicy</a>
-<div class="block">A strategy interface to customize the <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision</code></a> prefetching behavior of a <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a>.</div>
+<th class="colFirst" scope="row"><a href="class-use/CDORevisionPrefetchingPolicy.html#org.eclipse.emf.cdo.util">CDORevisionPrefetchingPolicy</a></th>
+<td class="colLast">
+<div class="block">A strategy interface to customize the <a href="../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision</code></a> prefetching behavior of a <a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOView.html#org.eclipse.emf.cdo.util">CDOView</a>
-<div class="block">A read-only view to the state of the object graph in the repository of the underlying <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> at a
- specific <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp--"><code>time</code></a> at a specific <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch--"><code>branch</code></a>.</div>
+<th class="colFirst" scope="row"><a href="class-use/CDOView.html#org.eclipse.emf.cdo.util">CDOView</a></th>
+<td class="colLast">
+<div class="block">A read-only view to the state of the object graph in the repository of the underlying <a href="../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> at a
+ specific <a href="../common/branch/CDOBranchPoint.html#getTimeStamp()"><code>time</code></a> at a specific <a href="../common/branch/CDOBranchPoint.html#getBranch()"><code>branch</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOViewSet.html#org.eclipse.emf.cdo.util">CDOViewSet</a>
-<div class="block">A <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>ResourceSet</code></a> adapter to associate a set of <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOView</code></a> instances.</div>
+<th class="colFirst" scope="row"><a href="class-use/CDOViewSet.html#org.eclipse.emf.cdo.util">CDOViewSet</a></th>
+<td class="colLast">
+<div class="block">A <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource" class="externalLink"><code>ResourceSet</code></a> adapter to associate a set of <a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOView</code></a> instances.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.view">
+<li class="blockList"><a id="org.eclipse.emf.cdo.view">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../org/eclipse/emf/cdo/view/package-summary.html">org.eclipse.emf.cdo.view</a> used by <a href="../../../../../org/eclipse/emf/cdo/view/package-summary.html">org.eclipse.emf.cdo.view</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.emf.cdo.view</a> used by <a href="package-summary.html">org.eclipse.emf.cdo.view</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/AbstractCDOViewProvider.html#org.eclipse.emf.cdo.view">AbstractCDOViewProvider</a>
+<th class="colFirst" scope="row"><a href="class-use/AbstractCDOViewProvider.html#org.eclipse.emf.cdo.view">AbstractCDOViewProvider</a></th>
+<td class="colLast">
 <div class="block">Base logic to handle CDOViewProvider priority and regular expression.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOAdapterPolicy.html#org.eclipse.emf.cdo.view">CDOAdapterPolicy</a>
-<div class="block">A policy that allows to specify valid <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><code>Adapter</code></a> / <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>EObject</code></a> combinations.</div>
+<th class="colFirst" scope="row"><a href="class-use/CDOAdapterPolicy.html#org.eclipse.emf.cdo.view">CDOAdapterPolicy</a></th>
+<td class="colLast">
+<div class="block">A policy that allows to specify valid <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink"><code>Adapter</code></a> / <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>EObject</code></a> combinations.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOFeatureAnalyzer.html#org.eclipse.emf.cdo.view">CDOFeatureAnalyzer</a>
-<div class="block">A call-back interface that is called by a <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> on each model read access.</div>
+<th class="colFirst" scope="row"><a href="class-use/CDOFeatureAnalyzer.html#org.eclipse.emf.cdo.view">CDOFeatureAnalyzer</a></th>
+<td class="colLast">
+<div class="block">A call-back interface that is called by a <a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> on each model read access.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOInvalidationPolicy.html#org.eclipse.emf.cdo.view">CDOInvalidationPolicy</a>
-<div class="block">A strategy interface to customize the invalidation behavior of a <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a>.</div>
+<th class="colFirst" scope="row"><a href="class-use/CDOInvalidationPolicy.html#org.eclipse.emf.cdo.view">CDOInvalidationPolicy</a></th>
+<td class="colLast">
+<div class="block">A strategy interface to customize the invalidation behavior of a <a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOObjectHandler.html#org.eclipse.emf.cdo.view">CDOObjectHandler</a>
-<div class="block">Call-back handler used by <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a> to tell implementors of this interface about <a href="../../../../../org/eclipse/emf/cdo/CDOState.html" title="enum in org.eclipse.emf.cdo"><code>state</code></a>
- changes of <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a>.</div>
+<th class="colFirst" scope="row"><a href="class-use/CDOObjectHandler.html#org.eclipse.emf.cdo.view">CDOObjectHandler</a></th>
+<td class="colLast">
+<div class="block">Call-back handler used by <a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a> to tell implementors of this interface about <a href="../CDOState.html" title="enum in org.eclipse.emf.cdo"><code>state</code></a>
+ changes of <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOQuery.html#org.eclipse.emf.cdo.view">CDOQuery</a>
-<div class="block">Provides access to the information that specifies a query from a <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html" title="interface in org.eclipse.emf.cdo.common"><code>view</code></a> to a
- <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common"><code>repository</code></a> and to the results of the remote query execution;</div>
+<th class="colFirst" scope="row"><a href="class-use/CDOQuery.html#org.eclipse.emf.cdo.view">CDOQuery</a></th>
+<td class="colLast">
+<div class="block">Provides access to the information that specifies a query from a <a href="../common/CDOCommonView.html" title="interface in org.eclipse.emf.cdo.common"><code>view</code></a> to a
+ <a href="../common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common"><code>repository</code></a> and to the results of the remote query execution;</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDORegistrationHandler.html#org.eclipse.emf.cdo.view">CDORegistrationHandler</a>
-<div class="block">Call-back handler used by <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a> to tell implementors of this interface about registrations and deregistrations
- of <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a> with <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a>.</div>
+<th class="colFirst" scope="row"><a href="class-use/CDORegistrationHandler.html#org.eclipse.emf.cdo.view">CDORegistrationHandler</a></th>
+<td class="colLast">
+<div class="block">Call-back handler used by <a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a> to tell implementors of this interface about registrations and deregistrations
+ of <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a> with <a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDORevisionPrefetchingPolicy.html#org.eclipse.emf.cdo.view">CDORevisionPrefetchingPolicy</a>
-<div class="block">A strategy interface to customize the <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision</code></a> prefetching behavior of a <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a>.</div>
+<th class="colFirst" scope="row"><a href="class-use/CDORevisionPrefetchingPolicy.html#org.eclipse.emf.cdo.view">CDORevisionPrefetchingPolicy</a></th>
+<td class="colLast">
+<div class="block">A strategy interface to customize the <a href="../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision</code></a> prefetching behavior of a <a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOStaleReferencePolicy.html#org.eclipse.emf.cdo.view">CDOStaleReferencePolicy</a>
+<th class="colFirst" scope="row"><a href="class-use/CDOStaleReferencePolicy.html#org.eclipse.emf.cdo.view">CDOStaleReferencePolicy</a></th>
+<td class="colLast">
 <div class="block">Specifies a policy on how to deal with stale references.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOStaleReferencePolicy.DynamicProxy.html#org.eclipse.emf.cdo.view">CDOStaleReferencePolicy.DynamicProxy</a>&nbsp;</td>
+<th class="colFirst" scope="row"><a href="class-use/CDOStaleReferencePolicy.DynamicProxy.html#org.eclipse.emf.cdo.view">CDOStaleReferencePolicy.DynamicProxy</a></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOUnit.html#org.eclipse.emf.cdo.view">CDOUnit</a>&nbsp;</td>
+<th class="colFirst" scope="row"><a href="class-use/CDOUnit.html#org.eclipse.emf.cdo.view">CDOUnit</a></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOUnitManager.html#org.eclipse.emf.cdo.view">CDOUnitManager</a>&nbsp;</td>
+<th class="colFirst" scope="row"><a href="class-use/CDOUnitManager.html#org.eclipse.emf.cdo.view">CDOUnitManager</a></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOUnitManager.UnitExistsException.html#org.eclipse.emf.cdo.view">CDOUnitManager.UnitExistsException</a>&nbsp;</td>
+<th class="colFirst" scope="row"><a href="class-use/CDOUnitManager.UnitExistsException.html#org.eclipse.emf.cdo.view">CDOUnitManager.UnitExistsException</a></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOUnitManager.UnitNotFoundException.html#org.eclipse.emf.cdo.view">CDOUnitManager.UnitNotFoundException</a>&nbsp;</td>
+<th class="colFirst" scope="row"><a href="class-use/CDOUnitManager.UnitNotFoundException.html#org.eclipse.emf.cdo.view">CDOUnitManager.UnitNotFoundException</a></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOView.html#org.eclipse.emf.cdo.view">CDOView</a>
-<div class="block">A read-only view to the state of the object graph in the repository of the underlying <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> at a
- specific <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp--"><code>time</code></a> at a specific <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch--"><code>branch</code></a>.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOView.Options.html#org.eclipse.emf.cdo.view">CDOView.Options</a>
-<div class="block">Encapsulates a set of notifying <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> configuration options.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOView.Options.StrongReferencePolicyEvent.html#org.eclipse.emf.cdo.view">CDOView.Options.StrongReferencePolicyEvent</a>
-<div class="block">An <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options"><code>options event</code></a> fired from view <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#options--"><code>options</code></a> when the
- <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setStrongReferencePolicy-org.eclipse.emf.cdo.view.CDOAdapterPolicy-"><code>strong reference policy</code></a> option has changed.</div>
+<th class="colFirst" scope="row"><a href="class-use/CDOView.html#org.eclipse.emf.cdo.view">CDOView</a></th>
+<td class="colLast">
+<div class="block">A read-only view to the state of the object graph in the repository of the underlying <a href="../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> at a
+ specific <a href="../common/branch/CDOBranchPoint.html#getTimeStamp()"><code>time</code></a> at a specific <a href="../common/branch/CDOBranchPoint.html#getBranch()"><code>branch</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOViewEvent.html#org.eclipse.emf.cdo.view">CDOViewEvent</a>
-<div class="block">A generic <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event"><code>event</code></a> fired from a <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a>.</div>
+<th class="colFirst" scope="row"><a href="class-use/CDOView.Options.html#org.eclipse.emf.cdo.view">CDOView.Options</a></th>
+<td class="colLast">
+<div class="block">Encapsulates a set of notifying <a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> configuration options.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOViewOpener.html#org.eclipse.emf.cdo.view">CDOViewOpener</a>
-<div class="block">Can open new <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a>.</div>
+<th class="colFirst" scope="row"><a href="class-use/CDOView.Options.StrongReferencePolicyEvent.html#org.eclipse.emf.cdo.view">CDOView.Options.StrongReferencePolicyEvent</a></th>
+<td class="colLast">
+<div class="block">An <code>options event</code> fired from view <a href="CDOView.html#options()"><code>options</code></a> when the
+ <a href="CDOView.Options.html#setStrongReferencePolicy(org.eclipse.emf.cdo.view.CDOAdapterPolicy)"><code>strong reference policy</code></a> option has changed.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOViewProvider.html#org.eclipse.emf.cdo.view">CDOViewProvider</a>
-<div class="block">Capable of opening a <code>CDOView</code> on a target repository, defined by a URI.</div>
-</td>
+<th class="colFirst" scope="row"><a href="class-use/CDOViewConfigurator.html#org.eclipse.emf.cdo.view">CDOViewConfigurator</a></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOViewProvider.CDOViewProvider2.html#org.eclipse.emf.cdo.view">CDOViewProvider.CDOViewProvider2</a>&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOViewProviderRegistry.html#org.eclipse.emf.cdo.view">CDOViewProviderRegistry</a>
-<div class="block">A global registry of <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view"><code>view provider</code></a> implementations.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOViewRegistry.html#org.eclipse.emf.cdo.view">CDOViewRegistry</a>
-<div class="block">A global registry of all open <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a> and <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transactions</code></a>.</div>
+<th class="colFirst" scope="row"><a href="class-use/CDOViewEvent.html#org.eclipse.emf.cdo.view">CDOViewEvent</a></th>
+<td class="colLast">
+<div class="block">A generic <code>event</code> fired from a <a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOViewSet.html#org.eclipse.emf.cdo.view">CDOViewSet</a>
-<div class="block">A <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>ResourceSet</code></a> adapter to associate a set of <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOView</code></a> instances.</div>
-</td>
-</tr>
-</tbody>
-</table>
-</li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.workspace">
-<!--   -->
-</a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../org/eclipse/emf/cdo/view/package-summary.html">org.eclipse.emf.cdo.view</a> used by <a href="../../../../../org/eclipse/emf/cdo/workspace/package-summary.html">org.eclipse.emf.cdo.workspace</a></span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colOne" scope="col">Class and Description</th>
-</tr>
-<tbody>
-<tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOView.html#org.eclipse.emf.cdo.workspace">CDOView</a>
-<div class="block">A read-only view to the state of the object graph in the repository of the underlying <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> at a
- specific <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp--"><code>time</code></a> at a specific <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch--"><code>branch</code></a>.</div>
-</td>
-</tr>
-</tbody>
-</table>
-</li>
-<li class="blockList"><a name="org.eclipse.emf.internal.cdo">
-<!--   -->
-</a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../org/eclipse/emf/cdo/view/package-summary.html">org.eclipse.emf.cdo.view</a> used by <a href="../../../../../org/eclipse/emf/internal/cdo/package-summary.html">org.eclipse.emf.internal.cdo</a></span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colOne" scope="col">Class and Description</th>
-</tr>
-<tbody>
-<tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOView.html#org.eclipse.emf.internal.cdo">CDOView</a>
-<div class="block">A read-only view to the state of the object graph in the repository of the underlying <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> at a
- specific <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp--"><code>time</code></a> at a specific <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch--"><code>branch</code></a>.</div>
-</td>
-</tr>
-</tbody>
-</table>
-</li>
-<li class="blockList"><a name="org.eclipse.emf.spi.cdo">
-<!--   -->
-</a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../org/eclipse/emf/cdo/view/package-summary.html">org.eclipse.emf.cdo.view</a> used by <a href="../../../../../org/eclipse/emf/spi/cdo/package-summary.html">org.eclipse.emf.spi.cdo</a></span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colOne" scope="col">Class and Description</th>
-</tr>
-<tbody>
-<tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOAdapterPolicy.html#org.eclipse.emf.spi.cdo">CDOAdapterPolicy</a>
-<div class="block">A policy that allows to specify valid <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><code>Adapter</code></a> / <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>EObject</code></a> combinations.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOFeatureAnalyzer.html#org.eclipse.emf.spi.cdo">CDOFeatureAnalyzer</a>
-<div class="block">A call-back interface that is called by a <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> on each model read access.</div>
+<th class="colFirst" scope="row"><a href="class-use/CDOViewOpener.html#org.eclipse.emf.cdo.view">CDOViewOpener</a></th>
+<td class="colLast">
+<div class="block">Can open new <a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOFetchRuleManager.html#org.eclipse.emf.spi.cdo">CDOFetchRuleManager</a>
-<div class="block">Collects and updates <a href="../../../../../org/eclipse/emf/cdo/common/util/CDOFetchRule.html" title="class in org.eclipse.emf.cdo.common.util"><code>fetch rules</code></a> for <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a>, usually based on
- <a href="../../../../../org/eclipse/emf/cdo/view/CDOFeatureAnalyzer.html" title="interface in org.eclipse.emf.cdo.view"><code>feature analyzer</code></a> statistics.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOView.html#org.eclipse.emf.spi.cdo">CDOView</a>
-<div class="block">A read-only view to the state of the object graph in the repository of the underlying <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> at a
- specific <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp--"><code>time</code></a> at a specific <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch--"><code>branch</code></a>.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOViewContainer.html#org.eclipse.emf.spi.cdo">CDOViewContainer</a>
-<div class="block">Can open new <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a> and provide access to openend views.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOViewOpener.html#org.eclipse.emf.spi.cdo">CDOViewOpener</a>
-<div class="block">Can open new <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a>.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOViewProvider.html#org.eclipse.emf.spi.cdo">CDOViewProvider</a>
+<th class="colFirst" scope="row"><a href="class-use/CDOViewProvider.html#org.eclipse.emf.cdo.view">CDOViewProvider</a></th>
+<td class="colLast">
 <div class="block">Capable of opening a <code>CDOView</code> on a target repository, defined by a URI.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/view/class-use/CDOViewSet.html#org.eclipse.emf.spi.cdo">CDOViewSet</a>
-<div class="block">A <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>ResourceSet</code></a> adapter to associate a set of <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOView</code></a> instances.</div>
+<th class="colFirst" scope="row"><a href="class-use/CDOViewProvider.CDOViewProvider2.html#org.eclipse.emf.cdo.view">CDOViewProvider.CDOViewProvider2</a></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="class-use/CDOViewProviderRegistry.html#org.eclipse.emf.cdo.view">CDOViewProviderRegistry</a></th>
+<td class="colLast">
+<div class="block">A global registry of <a href="CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view"><code>view provider</code></a> implementations.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><a href="class-use/CDOViewRegistry.html#org.eclipse.emf.cdo.view">CDOViewRegistry</a></th>
+<td class="colLast">
+<div class="block">A global registry of all open <a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a> and <a href="../transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transactions</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="class-use/CDOViewSet.html#org.eclipse.emf.cdo.view">CDOViewSet</a></th>
+<td class="colLast">
+<div class="block">A <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource" class="externalLink"><code>ResourceSet</code></a> adapter to associate a set of <a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOView</code></a> instances.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList"><a id="org.eclipse.emf.cdo.workspace">
+<!--   -->
+</a>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.emf.cdo.view</a> used by <a href="../workspace/package-summary.html">org.eclipse.emf.cdo.workspace</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="class-use/CDOView.html#org.eclipse.emf.cdo.workspace">CDOView</a></th>
+<td class="colLast">
+<div class="block">A read-only view to the state of the object graph in the repository of the underlying <a href="../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> at a
+ specific <a href="../common/branch/CDOBranchPoint.html#getTimeStamp()"><code>time</code></a> at a specific <a href="../common/branch/CDOBranchPoint.html#getBranch()"><code>branch</code></a>.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList"><a id="org.eclipse.emf.internal.cdo">
+<!--   -->
+</a>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.emf.cdo.view</a> used by <a href="../../internal/cdo/package-summary.html">org.eclipse.emf.internal.cdo</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="class-use/CDOView.html#org.eclipse.emf.internal.cdo">CDOView</a></th>
+<td class="colLast">
+<div class="block">A read-only view to the state of the object graph in the repository of the underlying <a href="../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> at a
+ specific <a href="../common/branch/CDOBranchPoint.html#getTimeStamp()"><code>time</code></a> at a specific <a href="../common/branch/CDOBranchPoint.html#getBranch()"><code>branch</code></a>.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList"><a id="org.eclipse.emf.spi.cdo">
+<!--   -->
+</a>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.emf.cdo.view</a> used by <a href="../../spi/cdo/package-summary.html">org.eclipse.emf.spi.cdo</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="class-use/CDOAdapterPolicy.html#org.eclipse.emf.spi.cdo">CDOAdapterPolicy</a></th>
+<td class="colLast">
+<div class="block">A policy that allows to specify valid <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink"><code>Adapter</code></a> / <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>EObject</code></a> combinations.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><a href="class-use/CDOFeatureAnalyzer.html#org.eclipse.emf.spi.cdo">CDOFeatureAnalyzer</a></th>
+<td class="colLast">
+<div class="block">A call-back interface that is called by a <a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> on each model read access.</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="class-use/CDOFetchRuleManager.html#org.eclipse.emf.spi.cdo">CDOFetchRuleManager</a></th>
+<td class="colLast">
+<div class="block">Collects and updates <a href="../common/util/CDOFetchRule.html" title="class in org.eclipse.emf.cdo.common.util"><code>fetch rules</code></a> for <a href="../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a>, usually based on
+ <a href="CDOFeatureAnalyzer.html" title="interface in org.eclipse.emf.cdo.view"><code>feature analyzer</code></a> statistics.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><a href="class-use/CDOView.html#org.eclipse.emf.spi.cdo">CDOView</a></th>
+<td class="colLast">
+<div class="block">A read-only view to the state of the object graph in the repository of the underlying <a href="../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> at a
+ specific <a href="../common/branch/CDOBranchPoint.html#getTimeStamp()"><code>time</code></a> at a specific <a href="../common/branch/CDOBranchPoint.html#getBranch()"><code>branch</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="class-use/CDOViewContainer.html#org.eclipse.emf.spi.cdo">CDOViewContainer</a></th>
+<td class="colLast">
+<div class="block">Can open new <a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a> and provide access to openend views.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><a href="class-use/CDOViewOpener.html#org.eclipse.emf.spi.cdo">CDOViewOpener</a></th>
+<td class="colLast">
+<div class="block">Can open new <a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="class-use/CDOViewProvider.html#org.eclipse.emf.spi.cdo">CDOViewProvider</a></th>
+<td class="colLast">
+<div class="block">Capable of opening a <code>CDOView</code> on a target repository, defined by a URI.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><a href="class-use/CDOViewSet.html#org.eclipse.emf.spi.cdo">CDOViewSet</a></th>
+<td class="colLast">
+<div class="block">A <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource" class="externalLink"><code>ResourceSet</code></a> adapter to associate a set of <a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOView</code></a> instances.</div>
 </td>
 </tr>
 </tbody>
@@ -878,35 +1006,31 @@
 </li>
 </ul>
 </div>
+</main>
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li>Class</li>
 <li class="navBarCell1Rev">Use</li>
+<li><a href="package-tree.html">Tree</a></li>
 <li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../help-doc.html">Help</a></li>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev</li>
-<li>Next</li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/emf/cdo/view/package-use.html" target="_top">Frames</a></li>
-<li><a href="package-use.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -919,11 +1043,16 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

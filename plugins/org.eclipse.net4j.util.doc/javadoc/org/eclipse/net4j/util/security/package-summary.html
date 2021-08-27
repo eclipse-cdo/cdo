@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>org.eclipse.net4j.util.security (Net4j Utilities Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,20 +28,25 @@
     catch(err) {
     }
 //-->
-</script>
+var pathtoroot = "../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li class="navBarCell1Rev">Package</li>
 <li>Class</li>
 <li><a href="package-use.html">Use</a></li>
@@ -41,16 +56,14 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/net4j/util/registry/package-summary.html">Prev&nbsp;Package</a></li>
-<li><a href="../../../../../org/eclipse/net4j/util/transaction/package-summary.html">Next&nbsp;Package</a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/net4j/util/security/package-summary.html" target="_top">Frames</a></li>
-<li><a href="package-summary.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -63,22 +76,35 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
+<main role="main">
 <div class="header">
 <h1 title="Package" class="title">Package&nbsp;org.eclipse.net4j.util.security</h1>
-<div class="docSummary">
-<div class="block">Interfaces and classes for security, negotiation, authentication, authorization and cryptography.</div>
-</div>
-<p>See:&nbsp;<a href="#package.description">Description</a></p>
 </div>
 <div class="contentContainer">
+<section role="region"><a id="package.description">
+<!--   -->
+</a>
+<div class="block">Interfaces and classes for security, negotiation, authentication, authorization and cryptography.</div>
+</section>
 <ul class="blockList">
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<table class="typeSummary">
 <caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Interface</th>
@@ -86,98 +112,98 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/IAuthenticator.html" title="interface in org.eclipse.net4j.util.security">IAuthenticator</a></td>
+<th class="colFirst" scope="row"><a href="IAuthenticator.html" title="interface in org.eclipse.net4j.util.security">IAuthenticator</a></th>
 <td class="colLast">
 <div class="block">Authenticates users.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/IAuthenticator2.html" title="interface in org.eclipse.net4j.util.security">IAuthenticator2</a></td>
+<th class="colFirst" scope="row"><a href="IAuthenticator2.html" title="interface in org.eclipse.net4j.util.security">IAuthenticator2</a></th>
 <td class="colLast">
 <div class="block">Extension interface for authenticators that can update user credentials in addition to authenticating them.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/IChallengeResponse.html" title="interface in org.eclipse.net4j.util.security">IChallengeResponse</a></td>
+<th class="colFirst" scope="row"><a href="IChallengeResponse.html" title="interface in org.eclipse.net4j.util.security">IChallengeResponse</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/ICredentials.html" title="interface in org.eclipse.net4j.util.security">ICredentials</a></td>
+<th class="colFirst" scope="row"><a href="ICredentials.html" title="interface in org.eclipse.net4j.util.security">ICredentials</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/ICredentialsProvider.html" title="interface in org.eclipse.net4j.util.security">ICredentialsProvider</a></td>
+<th class="colFirst" scope="row"><a href="ICredentialsProvider.html" title="interface in org.eclipse.net4j.util.security">ICredentialsProvider</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/ICredentialsProvider2.html" title="interface in org.eclipse.net4j.util.security">ICredentialsProvider2</a></td>
+<th class="colFirst" scope="row"><a href="ICredentialsProvider2.html" title="interface in org.eclipse.net4j.util.security">ICredentialsProvider2</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/INegotiationContext.html" title="interface in org.eclipse.net4j.util.security">INegotiationContext</a></td>
+<th class="colFirst" scope="row"><a href="INegotiationContext.html" title="interface in org.eclipse.net4j.util.security">INegotiationContext</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/INegotiationContext.Receiver.html" title="interface in org.eclipse.net4j.util.security">INegotiationContext.Receiver</a></td>
+<th class="colFirst" scope="row"><a href="INegotiationContext.Receiver.html" title="interface in org.eclipse.net4j.util.security">INegotiationContext.Receiver</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/INegotiator.html" title="interface in org.eclipse.net4j.util.security">INegotiator</a></td>
+<th class="colFirst" scope="row"><a href="INegotiator.html" title="interface in org.eclipse.net4j.util.security">INegotiator</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/INegotiatorAware.html" title="interface in org.eclipse.net4j.util.security">INegotiatorAware</a></td>
+<th class="colFirst" scope="row"><a href="INegotiatorAware.html" title="interface in org.eclipse.net4j.util.security">INegotiatorAware</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/IPasswordCredentials.html" title="interface in org.eclipse.net4j.util.security">IPasswordCredentials</a></td>
+<th class="colFirst" scope="row"><a href="IPasswordCredentials.html" title="interface in org.eclipse.net4j.util.security">IPasswordCredentials</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/IPasswordCredentialsProvider.html" title="interface in org.eclipse.net4j.util.security">IPasswordCredentialsProvider</a></td>
+<th class="colFirst" scope="row"><a href="IPasswordCredentialsProvider.html" title="interface in org.eclipse.net4j.util.security">IPasswordCredentialsProvider</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/IPasswordCredentialsProvider.Provider.html" title="interface in org.eclipse.net4j.util.security">IPasswordCredentialsProvider.Provider</a></td>
+<th class="colFirst" scope="row"><a href="IPasswordCredentialsProvider.Provider.html" title="interface in org.eclipse.net4j.util.security">IPasswordCredentialsProvider.Provider</a></th>
 <td class="colLast">
 <div class="block">Interface implemented by protocol objects that can supply an
- <a href="../../../../../org/eclipse/net4j/util/security/IPasswordCredentialsProvider.html" title="interface in org.eclipse.net4j.util.security"><code>IPasswordCredentialsProvider</code></a>.</div>
+ <a href="IPasswordCredentialsProvider.html" title="interface in org.eclipse.net4j.util.security"><code>IPasswordCredentialsProvider</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/IPasswordCredentialsProvider2.html" title="interface in org.eclipse.net4j.util.security">IPasswordCredentialsProvider2</a></td>
+<th class="colFirst" scope="row"><a href="IPasswordCredentialsProvider2.html" title="interface in org.eclipse.net4j.util.security">IPasswordCredentialsProvider2</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/IPasswordCredentialsUpdate.html" title="interface in org.eclipse.net4j.util.security">IPasswordCredentialsUpdate</a></td>
+<th class="colFirst" scope="row"><a href="IPasswordCredentialsUpdate.html" title="interface in org.eclipse.net4j.util.security">IPasswordCredentialsUpdate</a></th>
 <td class="colLast">
 <div class="block">Password credentials with an update (new password) in addition to the usual
  user ID and password for authentication of the password change.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/IPasswordCredentialsUpdateProvider.html" title="interface in org.eclipse.net4j.util.security">IPasswordCredentialsUpdateProvider</a></td>
+<th class="colFirst" scope="row"><a href="IPasswordCredentialsUpdateProvider.html" title="interface in org.eclipse.net4j.util.security">IPasswordCredentialsUpdateProvider</a></th>
 <td class="colLast">
 <div class="block">Interface for providers of password credentials updates.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/IRandomizer.html" title="interface in org.eclipse.net4j.util.security">IRandomizer</a></td>
+<th class="colFirst" scope="row"><a href="IRandomizer.html" title="interface in org.eclipse.net4j.util.security">IRandomizer</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/IUserAware.html" title="interface in org.eclipse.net4j.util.security">IUserAware</a></td>
+<th class="colFirst" scope="row"><a href="IUserAware.html" title="interface in org.eclipse.net4j.util.security">IUserAware</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/IUserManager.html" title="interface in org.eclipse.net4j.util.security">IUserManager</a></td>
+<th class="colFirst" scope="row"><a href="IUserManager.html" title="interface in org.eclipse.net4j.util.security">IUserManager</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
 </li>
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<table class="typeSummary">
 <caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Class</th>
@@ -185,156 +211,156 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/AuthenticatorFactory.html" title="class in org.eclipse.net4j.util.security">AuthenticatorFactory</a></td>
+<th class="colFirst" scope="row"><a href="AuthenticatorFactory.html" title="class in org.eclipse.net4j.util.security">AuthenticatorFactory</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/ChallengeNegotiator.html" title="class in org.eclipse.net4j.util.security">ChallengeNegotiator</a></td>
+<th class="colFirst" scope="row"><a href="ChallengeNegotiator.html" title="class in org.eclipse.net4j.util.security">ChallengeNegotiator</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/ChallengeNegotiatorConfigurer.html" title="class in org.eclipse.net4j.util.security">ChallengeNegotiatorConfigurer</a></td>
+<th class="colFirst" scope="row"><a href="ChallengeNegotiatorConfigurer.html" title="class in org.eclipse.net4j.util.security">ChallengeNegotiatorConfigurer</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/ChallengeNegotiatorFactory.html" title="class in org.eclipse.net4j.util.security">ChallengeNegotiatorFactory</a></td>
+<th class="colFirst" scope="row"><a href="ChallengeNegotiatorFactory.html" title="class in org.eclipse.net4j.util.security">ChallengeNegotiatorFactory</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/ChallengeResponseNegotiator.html" title="class in org.eclipse.net4j.util.security">ChallengeResponseNegotiator</a></td>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/Credentials.html" title="class in org.eclipse.net4j.util.security">Credentials</a></td>
+<th class="colFirst" scope="row"><a href="ChallengeResponseNegotiator.html" title="class in org.eclipse.net4j.util.security">ChallengeResponseNegotiator</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/CredentialsProviderFactory.html" title="class in org.eclipse.net4j.util.security">CredentialsProviderFactory</a></td>
+<th class="colFirst" scope="row"><a href="Credentials.html" title="class in org.eclipse.net4j.util.security">Credentials</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/DiffieHellman.html" title="class in org.eclipse.net4j.util.security">DiffieHellman</a></td>
+<th class="colFirst" scope="row"><a href="CredentialsProviderFactory.html" title="class in org.eclipse.net4j.util.security">CredentialsProviderFactory</a></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><a href="DiffieHellman.html" title="class in org.eclipse.net4j.util.security">DiffieHellman</a></th>
 <td class="colLast">
-<div class="block">Executes the Diffie-Hellman key agreement protocol between 2 parties: <a href="../../../../../org/eclipse/net4j/util/security/DiffieHellman.Server.html" title="class in org.eclipse.net4j.util.security"><code>DiffieHellman.Server</code></a> and <a href="../../../../../org/eclipse/net4j/util/security/DiffieHellman.Client.html" title="class in org.eclipse.net4j.util.security"><code>DiffieHellman.Client</code></a>.</div>
+<div class="block">Executes the Diffie-Hellman key agreement protocol between 2 parties: <a href="DiffieHellman.Server.html" title="class in org.eclipse.net4j.util.security"><code>DiffieHellman.Server</code></a> and <a href="DiffieHellman.Client.html" title="class in org.eclipse.net4j.util.security"><code>DiffieHellman.Client</code></a>.</div>
 </td>
 </tr>
-<tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/DiffieHellman.Client.html" title="class in org.eclipse.net4j.util.security">DiffieHellman.Client</a></td>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="DiffieHellman.Client.html" title="class in org.eclipse.net4j.util.security">DiffieHellman.Client</a></th>
 <td class="colLast">
 <div class="block">Executes the client-side of the Diffie-Hellman key agreement protocol.</div>
 </td>
 </tr>
-<tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/DiffieHellman.Client.Response.html" title="class in org.eclipse.net4j.util.security">DiffieHellman.Client.Response</a></td>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><a href="DiffieHellman.Client.Response.html" title="class in org.eclipse.net4j.util.security">DiffieHellman.Client.Response</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/DiffieHellman.ParameterSpecGenerator.html" title="class in org.eclipse.net4j.util.security">DiffieHellman.ParameterSpecGenerator</a></td>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="DiffieHellman.ParameterSpecGenerator.html" title="class in org.eclipse.net4j.util.security">DiffieHellman.ParameterSpecGenerator</a></th>
 <td class="colLast">
 <div class="block">Creates Diffie-Hellman parameters.</div>
 </td>
 </tr>
-<tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/DiffieHellman.Server.html" title="class in org.eclipse.net4j.util.security">DiffieHellman.Server</a></td>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><a href="DiffieHellman.Server.html" title="class in org.eclipse.net4j.util.security">DiffieHellman.Server</a></th>
 <td class="colLast">
 <div class="block">Executes the server-side of the Diffie-Hellman key agreement protocol.</div>
 </td>
 </tr>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="DiffieHellman.Server.Challenge.html" title="class in org.eclipse.net4j.util.security">DiffieHellman.Server.Challenge</a></th>
+<td class="colLast">&nbsp;</td>
+</tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/DiffieHellman.Server.Challenge.html" title="class in org.eclipse.net4j.util.security">DiffieHellman.Server.Challenge</a></td>
+<th class="colFirst" scope="row"><a href="DiffieHellman.SkipParameterSpec.html" title="class in org.eclipse.net4j.util.security">DiffieHellman.SkipParameterSpec</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/DiffieHellman.SkipParameterSpec.html" title="class in org.eclipse.net4j.util.security">DiffieHellman.SkipParameterSpec</a></td>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/FileAuthenticatorFactory.html" title="class in org.eclipse.net4j.util.security">FileAuthenticatorFactory</a></td>
+<th class="colFirst" scope="row"><a href="FileAuthenticatorFactory.html" title="class in org.eclipse.net4j.util.security">FileAuthenticatorFactory</a></th>
 <td class="colLast">
 <div class="block">TODO Consider file attributes when creating initially empty file</div>
 </td>
 </tr>
-<tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/FileUserManager.html" title="class in org.eclipse.net4j.util.security">FileUserManager</a></td>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><a href="FileUserManager.html" title="class in org.eclipse.net4j.util.security">FileUserManager</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/FileUserManagerFactory.html" title="class in org.eclipse.net4j.util.security">FileUserManagerFactory</a></td>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="FileUserManagerFactory.html" title="class in org.eclipse.net4j.util.security">FileUserManagerFactory</a></th>
 <td class="colLast">
 <div class="block">TODO Consider file attributes when creating initially empty file</div>
 </td>
 </tr>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><a href="NegotiationContext.html" title="class in org.eclipse.net4j.util.security">NegotiationContext</a></th>
+<td class="colLast">&nbsp;</td>
+</tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/NegotiationContext.html" title="class in org.eclipse.net4j.util.security">NegotiationContext</a></td>
+<th class="colFirst" scope="row"><a href="Negotiator.html" title="class in org.eclipse.net4j.util.security">Negotiator</a>&lt;STATE extends java.lang.Enum&lt;?&gt;,&#8203;EVENT extends java.lang.Enum&lt;?&gt;&gt;</th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/Negotiator.html" title="class in org.eclipse.net4j.util.security">Negotiator</a>&lt;STATE extends java.lang.Enum&lt;?&gt;,EVENT extends java.lang.Enum&lt;?&gt;&gt;</td>
+<th class="colFirst" scope="row"><a href="NegotiatorFactory.html" title="class in org.eclipse.net4j.util.security">NegotiatorFactory</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/NegotiatorFactory.html" title="class in org.eclipse.net4j.util.security">NegotiatorFactory</a></td>
+<th class="colFirst" scope="row"><a href="PasswordCredentials.html" title="class in org.eclipse.net4j.util.security">PasswordCredentials</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/PasswordCredentials.html" title="class in org.eclipse.net4j.util.security">PasswordCredentials</a></td>
+<th class="colFirst" scope="row"><a href="PasswordCredentialsProvider.html" title="class in org.eclipse.net4j.util.security">PasswordCredentialsProvider</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/PasswordCredentialsProvider.html" title="class in org.eclipse.net4j.util.security">PasswordCredentialsProvider</a></td>
+<th class="colFirst" scope="row"><a href="PasswordCredentialsProvider.Delegating.html" title="class in org.eclipse.net4j.util.security">PasswordCredentialsProvider.Delegating</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/PasswordCredentialsProvider.Delegating.html" title="class in org.eclipse.net4j.util.security">PasswordCredentialsProvider.Delegating</a></td>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/PasswordCredentialsUpdate.html" title="class in org.eclipse.net4j.util.security">PasswordCredentialsUpdate</a></td>
+<th class="colFirst" scope="row"><a href="PasswordCredentialsUpdate.html" title="class in org.eclipse.net4j.util.security">PasswordCredentialsUpdate</a></th>
 <td class="colLast">
-<div class="block">Default implementation of the <a href="../../../../../org/eclipse/net4j/util/security/IPasswordCredentialsUpdate.html" title="interface in org.eclipse.net4j.util.security"><code>IPasswordCredentialsUpdate</code></a> interface.</div>
+<div class="block">Default implementation of the <a href="IPasswordCredentialsUpdate.html" title="interface in org.eclipse.net4j.util.security"><code>IPasswordCredentialsUpdate</code></a> interface.</div>
 </td>
 </tr>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="Randomizer.html" title="class in org.eclipse.net4j.util.security">Randomizer</a></th>
+<td class="colLast">&nbsp;</td>
+</tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/Randomizer.html" title="class in org.eclipse.net4j.util.security">Randomizer</a></td>
+<th class="colFirst" scope="row"><a href="RandomizerFactory.html" title="class in org.eclipse.net4j.util.security">RandomizerFactory</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/RandomizerFactory.html" title="class in org.eclipse.net4j.util.security">RandomizerFactory</a></td>
+<th class="colFirst" scope="row"><a href="ResponseNegotiator.html" title="class in org.eclipse.net4j.util.security">ResponseNegotiator</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/ResponseNegotiator.html" title="class in org.eclipse.net4j.util.security">ResponseNegotiator</a></td>
+<th class="colFirst" scope="row"><a href="ResponseNegotiatorFactory.html" title="class in org.eclipse.net4j.util.security">ResponseNegotiatorFactory</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/ResponseNegotiatorFactory.html" title="class in org.eclipse.net4j.util.security">ResponseNegotiatorFactory</a></td>
+<th class="colFirst" scope="row"><a href="ResponseNegotiatorInjector.html" title="class in org.eclipse.net4j.util.security">ResponseNegotiatorInjector</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/ResponseNegotiatorInjector.html" title="class in org.eclipse.net4j.util.security">ResponseNegotiatorInjector</a></td>
+<th class="colFirst" scope="row"><a href="SecurityUtil.html" title="class in org.eclipse.net4j.util.security">SecurityUtil</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/SecurityUtil.html" title="class in org.eclipse.net4j.util.security">SecurityUtil</a></td>
+<th class="colFirst" scope="row"><a href="UserManager.html" title="class in org.eclipse.net4j.util.security">UserManager</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/UserManager.html" title="class in org.eclipse.net4j.util.security">UserManager</a></td>
+<th class="colFirst" scope="row"><a href="UserManagerAuthenticator.html" title="class in org.eclipse.net4j.util.security">UserManagerAuthenticator</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/UserManagerAuthenticator.html" title="class in org.eclipse.net4j.util.security">UserManagerAuthenticator</a></td>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/UserManagerFactory.html" title="class in org.eclipse.net4j.util.security">UserManagerFactory</a></td>
+<th class="colFirst" scope="row"><a href="UserManagerFactory.html" title="class in org.eclipse.net4j.util.security">UserManagerFactory</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
 </li>
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Enum Summary table, listing enums, and an explanation">
+<table class="typeSummary">
 <caption><span>Enum Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Enum</th>
@@ -342,22 +368,22 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/CredentialsUpdateOperation.html" title="enum in org.eclipse.net4j.util.security">CredentialsUpdateOperation</a></td>
+<th class="colFirst" scope="row"><a href="CredentialsUpdateOperation.html" title="enum in org.eclipse.net4j.util.security">CredentialsUpdateOperation</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/IChallengeResponse.Event.html" title="enum in org.eclipse.net4j.util.security">IChallengeResponse.Event</a></td>
+<th class="colFirst" scope="row"><a href="IChallengeResponse.Event.html" title="enum in org.eclipse.net4j.util.security">IChallengeResponse.Event</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/IChallengeResponse.State.html" title="enum in org.eclipse.net4j.util.security">IChallengeResponse.State</a></td>
+<th class="colFirst" scope="row"><a href="IChallengeResponse.State.html" title="enum in org.eclipse.net4j.util.security">IChallengeResponse.State</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
 </li>
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Exception Summary table, listing exceptions, and an explanation">
+<table class="typeSummary">
 <caption><span>Exception Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Exception</th>
@@ -365,11 +391,11 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/NegotiationException.html" title="class in org.eclipse.net4j.util.security">NegotiationException</a></td>
+<th class="colFirst" scope="row"><a href="NegotiationException.html" title="class in org.eclipse.net4j.util.security">NegotiationException</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/security/NotAuthenticatedException.html" title="class in org.eclipse.net4j.util.security">NotAuthenticatedException</a></td>
+<th class="colFirst" scope="row"><a href="NotAuthenticatedException.html" title="class in org.eclipse.net4j.util.security">NotAuthenticatedException</a></th>
 <td class="colLast">
 <div class="block">An unchecked <code>security exception</code> indicating that a user has canceled an attempt to authenticate himself.</div>
 </td>
@@ -378,22 +404,20 @@
 </table>
 </li>
 </ul>
-<a name="package.description">
-<!--   -->
-</a>
-<h2 title="Package org.eclipse.net4j.util.security Description">Package org.eclipse.net4j.util.security Description</h2>
-<div class="block">Interfaces and classes for security, negotiation, authentication, authorization and cryptography.</div>
 </div>
+</main>
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li class="navBarCell1Rev">Package</li>
 <li>Class</li>
 <li><a href="package-use.html">Use</a></li>
@@ -403,16 +427,8 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/net4j/util/registry/package-summary.html">Prev&nbsp;Package</a></li>
-<li><a href="../../../../../org/eclipse/net4j/util/transaction/package-summary.html">Next&nbsp;Package</a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/net4j/util/security/package-summary.html" target="_top">Frames</a></li>
-<li><a href="package-summary.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -425,11 +441,16 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>org.eclipse.emf.cdo.server (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,20 +28,25 @@
     catch(err) {
     }
 //-->
-</script>
+var pathtoroot = "../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li class="navBarCell1Rev">Package</li>
 <li>Class</li>
 <li><a href="package-use.html">Use</a></li>
@@ -41,16 +56,14 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/emf/cdo/security/util/package-summary.html">Prev&nbsp;Package</a></li>
-<li><a href="../../../../../org/eclipse/emf/cdo/server/admin/package-summary.html">Next&nbsp;Package</a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/emf/cdo/server/package-summary.html" target="_top">Frames</a></li>
-<li><a href="package-summary.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -63,22 +76,35 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
+<main role="main">
 <div class="header">
 <h1 title="Package" class="title">Package&nbsp;org.eclipse.emf.cdo.server</h1>
-<div class="docSummary">
-<div class="block">Server concepts for dealing with repositories and stores.</div>
-</div>
-<p>See:&nbsp;<a href="#package.description">Description</a></p>
 </div>
 <div class="contentContainer">
+<section role="region"><a id="package.description">
+<!--   -->
+</a>
+<div class="block">Server concepts for dealing with repositories and stores.</div>
+</section>
 <ul class="blockList">
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<table class="typeSummary">
 <caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Interface</th>
@@ -86,265 +112,277 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.Page.html" title="interface in org.eclipse.emf.cdo.server">CDOServerBrowser.Page</a></td>
+<th class="colFirst" scope="row"><a href="CDOServerBrowser.Page.html" title="interface in org.eclipse.emf.cdo.server">CDOServerBrowser.Page</a></th>
 <td class="colLast">
-<div class="block">Represents pluggable content for a <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.html" title="class in org.eclipse.emf.cdo.server"><code>server browser</code></a>.</div>
+<div class="block">Represents pluggable content for a <a href="CDOServerBrowser.html" title="class in org.eclipse.emf.cdo.server"><code>server browser</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.BinaryConstants.html" title="interface in org.eclipse.emf.cdo.server">CDOServerExporter.BinaryConstants</a></td>
+<th class="colFirst" scope="row"><a href="CDOServerExporter.BinaryConstants.html" title="interface in org.eclipse.emf.cdo.server">CDOServerExporter.BinaryConstants</a></th>
 <td class="colLast">
-<div class="block">Binary constants being used by both <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.html" title="class in org.eclipse.emf.cdo.server"><code>exporters</code></a> and <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerImporter.html" title="class in org.eclipse.emf.cdo.server"><code>importers</code></a>.</div>
+<div class="block">Binary constants being used by both <a href="CDOServerExporter.html" title="class in org.eclipse.emf.cdo.server"><code>exporters</code></a> and <a href="CDOServerImporter.html" title="class in org.eclipse.emf.cdo.server"><code>importers</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html" title="interface in org.eclipse.emf.cdo.server">CDOServerExporter.XMLConstants</a></td>
+<th class="colFirst" scope="row"><a href="CDOServerExporter.XMLConstants.html" title="interface in org.eclipse.emf.cdo.server">CDOServerExporter.XMLConstants</a></th>
 <td class="colLast">
-<div class="block">XML constants being used by both <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.html" title="class in org.eclipse.emf.cdo.server"><code>exporters</code></a> and <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerImporter.html" title="class in org.eclipse.emf.cdo.server"><code>importers</code></a>.</div>
+<div class="block">XML constants being used by both <a href="CDOServerExporter.html" title="class in org.eclipse.emf.cdo.server"><code>exporters</code></a> and <a href="CDOServerImporter.html" title="class in org.eclipse.emf.cdo.server"><code>importers</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerImporter.Handler.html" title="interface in org.eclipse.emf.cdo.server">CDOServerImporter.Handler</a></td>
+<th class="colFirst" scope="row"><a href="CDOServerImporter.Handler.html" title="interface in org.eclipse.emf.cdo.server">CDOServerImporter.Handler</a></th>
 <td class="colLast">
-<div class="block">Persists the data that has been read by a <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerImporter.html" title="class in org.eclipse.emf.cdo.server"><code>importer</code></a> into a new <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server"><code>repository</code></a>.</div>
+<div class="block">Persists the data that has been read by a <a href="CDOServerImporter.html" title="class in org.eclipse.emf.cdo.server"><code>importer</code></a> into a new <a href="IRepository.html" title="interface in org.eclipse.emf.cdo.server"><code>repository</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerImporter.Handler2.html" title="interface in org.eclipse.emf.cdo.server">CDOServerImporter.Handler2</a></td>
+<th class="colFirst" scope="row"><a href="CDOServerImporter.Handler2.html" title="interface in org.eclipse.emf.cdo.server">CDOServerImporter.Handler2</a></th>
 <td class="colLast">
-<div class="block">Persists the data that has been read by a <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerImporter.html" title="class in org.eclipse.emf.cdo.server"><code>importer</code></a> into a new <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server"><code>repository</code></a>.</div>
+<div class="block">Persists the data that has been read by a <a href="CDOServerImporter.html" title="class in org.eclipse.emf.cdo.server"><code>importer</code></a> into a new <a href="IRepository.html" title="interface in org.eclipse.emf.cdo.server"><code>repository</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/ILockingManager.html" title="interface in org.eclipse.emf.cdo.server">ILockingManager</a></td>
+<th class="colFirst" scope="row"><a href="ILockingManager.html" title="interface in org.eclipse.emf.cdo.server">ILockingManager</a></th>
 <td class="colLast">
 <div class="block">Manages all persistent aspects of durable CDO views and provides for vetoable
- <a href="../../../../../org/eclipse/emf/cdo/server/ILockingManager.html#addDurableViewHandler-org.eclipse.emf.cdo.server.ILockingManager.DurableViewHandler-"><code>interception</code></a> of the durable view resumption
+ <a href="ILockingManager.html#addDurableViewHandler(org.eclipse.emf.cdo.server.ILockingManager.DurableViewHandler)"><code>interception</code></a> of the durable view resumption
  process.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/ILockingManager.DurableViewHandler.html" title="interface in org.eclipse.emf.cdo.server">ILockingManager.DurableViewHandler</a></td>
+<th class="colFirst" scope="row"><a href="ILockingManager.DurableViewHandler.html" title="interface in org.eclipse.emf.cdo.server">ILockingManager.DurableViewHandler</a></th>
 <td class="colLast">
 <div class="block">A call-back interface primarily intended to allow implementers to prevent the view from being opened by throwing an
  exception.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/IMEMStore.html" title="interface in org.eclipse.emf.cdo.server">IMEMStore</a></td>
-<td class="colLast">Deprecated
-<div class="block"><span class="deprecationComment">Use <a href="../../../../../org/eclipse/emf/cdo/server/mem/IMEMStore.html" title="interface in org.eclipse.emf.cdo.server.mem"><code>IMEMStore</code></a></span></div>
+<th class="colFirst" scope="row"><a href="IMEMStore.html" title="interface in org.eclipse.emf.cdo.server">IMEMStore</a></th>
+<td class="colLast">Deprecated.
+<div class="deprecationComment">Use <a href="mem/IMEMStore.html" title="interface in org.eclipse.emf.cdo.server.mem"><code>IMEMStore</code></a></div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/IPermissionManager.html" title="interface in org.eclipse.emf.cdo.server">IPermissionManager</a></td>
+<th class="colFirst" scope="row"><a href="IPermissionManager.html" title="interface in org.eclipse.emf.cdo.server">IPermissionManager</a></th>
 <td class="colLast">
-<div class="block">Provides the protection level of <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> in the context of a specific user.</div>
+<div class="block">Provides the protection level of <a href="../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> in the context of a specific user.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/IQueryContext.html" title="interface in org.eclipse.emf.cdo.server">IQueryContext</a></td>
+<th class="colFirst" scope="row"><a href="IQueryContext.html" title="interface in org.eclipse.emf.cdo.server">IQueryContext</a></th>
 <td class="colLast">
-<div class="block">Represents the execution state of a <a href="../../../../../org/eclipse/emf/cdo/view/CDOQuery.html" title="interface in org.eclipse.emf.cdo.view"><code>query</code></a> in the server towards a <a href="../../../../../org/eclipse/emf/cdo/server/IQueryHandler.html" title="interface in org.eclipse.emf.cdo.server"><code>query
+<div class="block">Represents the execution state of a <a href="../view/CDOQuery.html" title="interface in org.eclipse.emf.cdo.view"><code>query</code></a> in the server towards a <a href="IQueryHandler.html" title="interface in org.eclipse.emf.cdo.server"><code>query
  handler</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/IQueryHandler.html" title="interface in org.eclipse.emf.cdo.server">IQueryHandler</a></td>
+<th class="colFirst" scope="row"><a href="IQueryHandler.html" title="interface in org.eclipse.emf.cdo.server">IQueryHandler</a></th>
 <td class="colLast">
-<div class="block">A query language handler that is capable of executing a <a href="../../../../../org/eclipse/emf/cdo/view/CDOQuery.html" title="interface in org.eclipse.emf.cdo.view"><code>query</code></a>.</div>
+<div class="block">A query language handler that is capable of executing a <a href="../view/CDOQuery.html" title="interface in org.eclipse.emf.cdo.view"><code>query</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/IQueryHandlerProvider.html" title="interface in org.eclipse.emf.cdo.server">IQueryHandlerProvider</a></td>
+<th class="colFirst" scope="row"><a href="IQueryHandlerProvider.html" title="interface in org.eclipse.emf.cdo.server">IQueryHandlerProvider</a></th>
 <td class="colLast">
-<div class="block">Provides the consumer with <a href="../../../../../org/eclipse/emf/cdo/server/IQueryHandler.html" title="interface in org.eclipse.emf.cdo.server"><code>query handlers</code></a> that are capable of executing <a href="../../../../../org/eclipse/emf/cdo/view/CDOQuery.html" title="interface in org.eclipse.emf.cdo.view"><code>queries</code></a> represented by specific <a href="../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.html" title="interface in org.eclipse.emf.cdo.common.util"><code>query infos</code></a>.</div>
+<div class="block">Provides the consumer with <a href="IQueryHandler.html" title="interface in org.eclipse.emf.cdo.server"><code>query handlers</code></a> that are capable of executing <a href="../view/CDOQuery.html" title="interface in org.eclipse.emf.cdo.view"><code>queries</code></a> represented by specific <a href="../common/util/CDOQueryInfo.html" title="interface in org.eclipse.emf.cdo.common.util"><code>query infos</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></td>
+<th class="colFirst" scope="row"><a href="IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></th>
 <td class="colLast">
 <div class="block">A CDO repository.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/IRepository.Handler.html" title="interface in org.eclipse.emf.cdo.server">IRepository.Handler</a></td>
+<th class="colFirst" scope="row"><a href="IRepository.Handler.html" title="interface in org.eclipse.emf.cdo.server">IRepository.Handler</a></th>
 <td class="colLast">
-<div class="block">A marker interface to indicate valid arguments to <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html#addHandler-org.eclipse.emf.cdo.server.IRepository.Handler-"><code>IRepository.addHandler(Handler)</code></a> and
- <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html#removeHandler-org.eclipse.emf.cdo.server.IRepository.Handler-"><code>IRepository.removeHandler(Handler)</code></a>.</div>
+<div class="block">A marker interface to indicate valid arguments to <a href="IRepository.html#addHandler(org.eclipse.emf.cdo.server.IRepository.Handler)"><code>IRepository.addHandler(Handler)</code></a> and
+ <a href="IRepository.html#removeHandler(org.eclipse.emf.cdo.server.IRepository.Handler)"><code>IRepository.removeHandler(Handler)</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/IRepository.Props.html" title="interface in org.eclipse.emf.cdo.server">IRepository.Props</a></td>
+<th class="colFirst" scope="row"><a href="IRepository.Props.html" title="interface in org.eclipse.emf.cdo.server">IRepository.Props</a></th>
 <td class="colLast">
-<div class="block">Contains symbolic constants that specifiy valid keys of <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html#getProperties--"><code>repository properties</code></a>.</div>
+<div class="block">Contains symbolic constants that specifiy valid keys of <a href="IRepository.html#getProperties()"><code>repository properties</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/IRepository.ReadAccessHandler.html" title="interface in org.eclipse.emf.cdo.server">IRepository.ReadAccessHandler</a></td>
+<th class="colFirst" scope="row"><a href="IRepository.ReadAccessHandler.html" title="interface in org.eclipse.emf.cdo.server">IRepository.ReadAccessHandler</a></th>
 <td class="colLast">
 <div class="block">Provides a way to handle revisions that are to be sent to the client.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/IRepository.WriteAccessHandler.html" title="interface in org.eclipse.emf.cdo.server">IRepository.WriteAccessHandler</a></td>
+<th class="colFirst" scope="row"><a href="IRepository.WriteAccessHandler.html" title="interface in org.eclipse.emf.cdo.server">IRepository.WriteAccessHandler</a></th>
 <td class="colLast">
 <div class="block">Provides a way to handle commits that are received from a client.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/IRepositoryFactory.html" title="interface in org.eclipse.emf.cdo.server">IRepositoryFactory</a></td>
+<th class="colFirst" scope="row"><a href="IRepositoryFactory.html" title="interface in org.eclipse.emf.cdo.server">IRepositoryFactory</a></th>
 <td class="colLast">
-<div class="block">Creates CDO <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server"><code>repositories</code></a>.</div>
+<div class="block">Creates CDO <a href="IRepository.html" title="interface in org.eclipse.emf.cdo.server"><code>repositories</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/IRepositoryProvider.html" title="interface in org.eclipse.emf.cdo.server">IRepositoryProvider</a></td>
+<th class="colFirst" scope="row"><a href="IRepositoryProvider.html" title="interface in org.eclipse.emf.cdo.server">IRepositoryProvider</a></th>
 <td class="colLast">
-<div class="block">Provides the consumer with CDO <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server"><code>repositories</code></a> specified by their name.</div>
+<div class="block">Provides the consumer with CDO <a href="IRepository.html" title="interface in org.eclipse.emf.cdo.server"><code>repositories</code></a> specified by their name.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server">IRepositorySynchronizer</a></td>
+<th class="colFirst" scope="row"><a href="IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server">IRepositorySynchronizer</a></th>
 <td class="colLast">
-<div class="block">Synchronizes a <a href="../../../../../org/eclipse/emf/cdo/server/ISynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.server"><code>synchronizable repository</code></a> with a master repository.</div>
+<div class="block">Synchronizes a <a href="ISynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.server"><code>synchronizable repository</code></a> with a master repository.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a></td>
+<th class="colFirst" scope="row"><a href="ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a></th>
 <td class="colLast">
-<div class="block">The server-side representation of a client <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a>.</div>
+<div class="block">The server-side representation of a client <a href="../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/ISessionManager.html" title="interface in org.eclipse.emf.cdo.server">ISessionManager</a></td>
+<th class="colFirst" scope="row"><a href="ISessionManager.html" title="interface in org.eclipse.emf.cdo.server">ISessionManager</a></th>
 <td class="colLast">
-<div class="block">Manages the user <a href="../../../../../org/eclipse/emf/cdo/server/ISession.html" title="interface in org.eclipse.emf.cdo.server"><code>sessions</code></a> of a <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server"><code>repository</code></a>.</div>
+<div class="block">Manages the user <a href="ISession.html" title="interface in org.eclipse.emf.cdo.server"><code>sessions</code></a> of a <a href="IRepository.html" title="interface in org.eclipse.emf.cdo.server"><code>repository</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a></td>
+<th class="colFirst" scope="row"><a href="IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a></th>
 <td class="colLast">
-<div class="block">Represents the physical data storage back-end of a CDO <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server"><code>repository</code></a>, such as a database or a file
+<div class="block">Represents the physical data storage back-end of a CDO <a href="IRepository.html" title="interface in org.eclipse.emf.cdo.server"><code>repository</code></a>, such as a database or a file
  system folder.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/IStore.CanHandleClientAssignedIDs.html" title="interface in org.eclipse.emf.cdo.server">IStore.CanHandleClientAssignedIDs</a></td>
+<th class="colFirst" scope="row"><a href="IStore.CanHandleClientAssignedIDs.html" title="interface in org.eclipse.emf.cdo.server">IStore.CanHandleClientAssignedIDs</a></th>
 <td class="colLast">
-<div class="block">A marker interface for <a href="../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server"><code>stores</code></a> that can handle <a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>IDs</code></a> assigned by a
- <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.IDGenerationLocation.html#CLIENT"><code>client</code></a>, typically <a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.ObjectType.html#UUID"><code>UUIDs</code></a>.</div>
+<div class="block">A marker interface for <a href="IStore.html" title="interface in org.eclipse.emf.cdo.server"><code>stores</code></a> that can handle <a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>IDs</code></a> assigned by a
+ <a href="../common/CDOCommonRepository.IDGenerationLocation.html#CLIENT"><code>client</code></a>, typically <a href="../common/id/CDOID.ObjectType.html#UUID"><code>UUIDs</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor</a></td>
+<th class="colFirst" scope="row"><a href="IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor</a></th>
 <td class="colLast">
 <div class="block">Represents a <i>connection</i> to a physical data storage back-end.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.CommitContext</a></td>
+<th class="colFirst" scope="row"><a href="IStoreAccessor.CommitContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.CommitContext</a></th>
 <td class="colLast">
 <div class="block">Represents the state of a single, logical commit operation which is driven through multiple calls to several
- methods on the <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server"><code>IStoreAccessor</code></a> API.</div>
+ methods on the <a href="IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server"><code>IStoreAccessor</code></a> API.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.DurableLocking.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.DurableLocking</a></td>
+<th class="colFirst" scope="row"><a href="IStoreAccessor.CommitContext.ModificationContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.CommitContext.ModificationContext</a></th>
 <td class="colLast">
-<div class="block">An extension interface for <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server"><code>store accessors</code></a> that support <i>durable locking</i>.</div>
+<div class="block">A data and result context for the modifications in <a href="IStoreAccessor.CommitContext.html#modify(java.util.function.Consumer)"><code>IStoreAccessor.CommitContext.modify(Consumer)</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.DurableLocking2.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.DurableLocking2</a></td>
+<th class="colFirst" scope="row"><a href="IStoreAccessor.DurableLocking.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.DurableLocking</a></th>
 <td class="colLast">
-<div class="block">An extension interface for <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server"><code>store accessors</code></a> that support <i>durable locking</i>.</div>
+<div class="block">An extension interface for <a href="IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server"><code>store accessors</code></a> that support <i>durable locking</i>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.QueryResourcesContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.QueryResourcesContext</a></td>
+<th class="colFirst" scope="row"><a href="IStoreAccessor.DurableLocking2.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.DurableLocking2</a></th>
 <td class="colLast">
-<div class="block">Represents the query execution state of a <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#queryResources-org.eclipse.emf.cdo.server.IStoreAccessor.QueryResourcesContext-"><code>resources
+<div class="block">An extension interface for <a href="IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server"><code>store accessors</code></a> that support <i>durable locking</i>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><a href="IStoreAccessor.QueryResourcesContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.QueryResourcesContext</a></th>
+<td class="colLast">
+<div class="block">Represents the query execution state of a <a href="IStoreAccessor.html#queryResources(org.eclipse.emf.cdo.server.IStoreAccessor.QueryResourcesContext)"><code>resources
  query</code></a>.</div>
 </td>
 </tr>
-<tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.QueryResourcesContext.ExactMatch.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.QueryResourcesContext.ExactMatch</a></td>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="IStoreAccessor.QueryResourcesContext.ExactMatch.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.QueryResourcesContext.ExactMatch</a></th>
 <td class="colLast">
-<div class="block">Represents the query execution state of a <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#queryResources-org.eclipse.emf.cdo.server.IStoreAccessor.QueryResourcesContext-"><code>resources
+<div class="block">Represents the query execution state of a <a href="IStoreAccessor.html#queryResources(org.eclipse.emf.cdo.server.IStoreAccessor.QueryResourcesContext)"><code>resources
  query</code></a> that is supposed to deliver one exact resource, or <code>null</code>.</div>
 </td>
 </tr>
-<tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.QueryXRefsContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.QueryXRefsContext</a></td>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><a href="IStoreAccessor.QueryXRefsContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.QueryXRefsContext</a></th>
 <td class="colLast">
-<div class="block">Represents the query execution state of a <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#queryXRefs-org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext-"><code>XRefs query</code></a>.</div>
+<div class="block">Represents the query execution state of a <a href="IStoreAccessor.html#queryXRefs(org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext)"><code>XRefs query</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.Raw</a></th>
+<td class="colLast">
+<div class="block">An extension interface for <a href="IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server"><code>store accessors</code></a> that support <i>raw data access</i> as needed by
+ <a href="IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server"><code>repository synchronizers</code></a> or <a href="CDOServerImporter.html" title="class in org.eclipse.emf.cdo.server"><code>server importers</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.Raw</a></td>
+<th class="colFirst" scope="row"><a href="IStoreAccessor.Raw2.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.Raw2</a></th>
 <td class="colLast">
-<div class="block">An extension interface for <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server"><code>store accessors</code></a> that support <i>raw data access</i> as needed by
- <a href="../../../../../org/eclipse/emf/cdo/server/IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server"><code>repository synchronizers</code></a> or <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerImporter.html" title="class in org.eclipse.emf.cdo.server"><code>server importers</code></a>.</div>
+<div class="block">An extension interface for <a href="IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server"><code>store accessors</code></a> that support <i>raw data access</i> as needed by
+ <a href="IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server"><code>repository synchronizers</code></a> or <a href="CDOServerImporter.html" title="class in org.eclipse.emf.cdo.server"><code>server importers</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw2.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.Raw2</a></td>
+<th class="colFirst" scope="row"><a href="IStoreAccessor.UnitSupport.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.UnitSupport</a></th>
 <td class="colLast">
-<div class="block">An extension interface for <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server"><code>store accessors</code></a> that support <i>raw data access</i> as needed by
- <a href="../../../../../org/eclipse/emf/cdo/server/IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server"><code>repository synchronizers</code></a> or <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerImporter.html" title="class in org.eclipse.emf.cdo.server"><code>server importers</code></a>.</div>
+<div class="block">An extension interface for <a href="IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server"><code>store accessors</code></a> that support <i>units</i>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.UnitSupport.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.UnitSupport</a></td>
+<th class="colFirst" scope="row"><a href="IStoreChunkReader.html" title="interface in org.eclipse.emf.cdo.server">IStoreChunkReader</a></th>
 <td class="colLast">
-<div class="block">An extension interface for <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server"><code>store accessors</code></a> that support <i>units</i>.</div>
+<div class="block">Reads <a href="IStoreChunkReader.Chunk.html" title="class in org.eclipse.emf.cdo.server"><code>chunks</code></a> of
+ <a href="../session/CDOSession.Options.html#setCollectionLoadingPolicy(org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy)"><code>partially loaded</code></a> lists from a physical data storage backend.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreChunkReader.html" title="interface in org.eclipse.emf.cdo.server">IStoreChunkReader</a></td>
+<th class="colFirst" scope="row"><a href="IStoreFactory.html" title="interface in org.eclipse.emf.cdo.server">IStoreFactory</a></th>
 <td class="colLast">
-<div class="block">Reads <a href="../../../../../org/eclipse/emf/cdo/server/IStoreChunkReader.Chunk.html" title="class in org.eclipse.emf.cdo.server"><code>chunks</code></a> of
- <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.html#setCollectionLoadingPolicy-org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy-"><code>partially loaded</code></a> lists from a physical data storage backend.</div>
+<div class="block">Creates <a href="IStore.html" title="interface in org.eclipse.emf.cdo.server"><code>stores</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreFactory.html" title="interface in org.eclipse.emf.cdo.server">IStoreFactory</a></td>
+<th class="colFirst" scope="row"><a href="IStoreFactory.ParameterAware.html" title="interface in org.eclipse.emf.cdo.server">IStoreFactory.ParameterAware</a></th>
 <td class="colLast">
-<div class="block">Creates <a href="../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server"><code>stores</code></a>.</div>
+<div class="block">An extension interface for <a href="IStoreFactory.html" title="interface in org.eclipse.emf.cdo.server"><code>store factories</code></a> that want to receive parameters.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/ISynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.server">ISynchronizableRepository</a></td>
+<th class="colFirst" scope="row"><a href="ISynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.server">ISynchronizableRepository</a></th>
 <td class="colLast">
-<div class="block">A repository with the ability to <a href="../../../../../org/eclipse/emf/cdo/server/IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server"><code>synchronize</code></a> its content with another repository.</div>
+<div class="block">A repository with the ability to <a href="IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server"><code>synchronize</code></a> its content with another repository.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/ITransaction.html" title="interface in org.eclipse.emf.cdo.server">ITransaction</a></td>
+<th class="colFirst" scope="row"><a href="ITransaction.html" title="interface in org.eclipse.emf.cdo.server">ITransaction</a></th>
 <td class="colLast">
-<div class="block">The server-side representation of a client <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a>.</div>
+<div class="block">The server-side representation of a client <a href="../transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/IUnit.html" title="interface in org.eclipse.emf.cdo.server">IUnit</a></td>
+<th class="colFirst" scope="row"><a href="IUnit.html" title="interface in org.eclipse.emf.cdo.server">IUnit</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/IUnitManager.html" title="interface in org.eclipse.emf.cdo.server">IUnitManager</a></td>
+<th class="colFirst" scope="row"><a href="IUnitManager.html" title="interface in org.eclipse.emf.cdo.server">IUnitManager</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a></td>
+<th class="colFirst" scope="row"><a href="IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a></th>
 <td class="colLast">
-<div class="block">The server-side representation of a client <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a>.</div>
+<div class="block">The server-side representation of a client <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a>.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<table class="typeSummary">
 <caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Class</th>
@@ -352,139 +390,139 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.html" title="class in org.eclipse.emf.cdo.server">CDOServerBrowser</a></td>
+<th class="colFirst" scope="row"><a href="CDOServerBrowser.html" title="class in org.eclipse.emf.cdo.server">CDOServerBrowser</a></th>
 <td class="colLast">
 <div class="block">A simple HTTP server that web browsers can connect to in order to render internal server data for debugging purposes.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.AbstractPage.html" title="class in org.eclipse.emf.cdo.server">CDOServerBrowser.AbstractPage</a></td>
+<th class="colFirst" scope="row"><a href="CDOServerBrowser.AbstractPage.html" title="class in org.eclipse.emf.cdo.server">CDOServerBrowser.AbstractPage</a></th>
 <td class="colLast">
-<div class="block">An abstract base implementation of a <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.Page.html" title="interface in org.eclipse.emf.cdo.server"><code>server browser page</code></a>.</div>
+<div class="block">An abstract base implementation of a <a href="CDOServerBrowser.Page.html" title="interface in org.eclipse.emf.cdo.server"><code>server browser page</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.ContainerBased.html" title="class in org.eclipse.emf.cdo.server">CDOServerBrowser.ContainerBased</a></td>
+<th class="colFirst" scope="row"><a href="CDOServerBrowser.ContainerBased.html" title="class in org.eclipse.emf.cdo.server">CDOServerBrowser.ContainerBased</a></th>
 <td class="colLast">
-<div class="block">A <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.html" title="class in org.eclipse.emf.cdo.server"><code>server browser</code></a> for the repositories in a <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container"><code>managed container</code></a>.</div>
+<div class="block">A <a href="CDOServerBrowser.html" title="class in org.eclipse.emf.cdo.server"><code>server browser</code></a> for the repositories in a <code>managed container</code>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.ContainerBased.Factory.html" title="class in org.eclipse.emf.cdo.server">CDOServerBrowser.ContainerBased.Factory</a></td>
+<th class="colFirst" scope="row"><a href="CDOServerBrowser.ContainerBased.Factory.html" title="class in org.eclipse.emf.cdo.server">CDOServerBrowser.ContainerBased.Factory</a></th>
 <td class="colLast">
-<div class="block">Creates <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.html" title="class in org.eclipse.emf.cdo.server"><code>server browsers</code></a> for the repositories in a <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container"><code>managed
- container</code></a>.</div>
+<div class="block">Creates <a href="CDOServerBrowser.html" title="class in org.eclipse.emf.cdo.server"><code>server browsers</code></a> for the repositories in a <code>managed
+ container</code>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.HistoryPage.html" title="class in org.eclipse.emf.cdo.server">CDOServerBrowser.HistoryPage</a></td>
+<th class="colFirst" scope="row"><a href="CDOServerBrowser.HistoryPage.html" title="class in org.eclipse.emf.cdo.server">CDOServerBrowser.HistoryPage</a></th>
 <td class="colLast">
-<div class="block">A <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.Page.html" title="interface in org.eclipse.emf.cdo.server"><code>server browser page</code></a> that renders <a href="../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>commit infos</code></a>.</div>
+<div class="block">A <a href="CDOServerBrowser.Page.html" title="interface in org.eclipse.emf.cdo.server"><code>server browser page</code></a> that renders <a href="../common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>commit infos</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.LobsPage.html" title="class in org.eclipse.emf.cdo.server">CDOServerBrowser.LobsPage</a></td>
+<th class="colFirst" scope="row"><a href="CDOServerBrowser.LobsPage.html" title="class in org.eclipse.emf.cdo.server">CDOServerBrowser.LobsPage</a></th>
 <td class="colLast">
-<div class="block">A <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.Page.html" title="interface in org.eclipse.emf.cdo.server"><code>server browser page</code></a> that renders <a href="../../../../../org/eclipse/emf/cdo/common/lob/CDOLobInfo.html" title="class in org.eclipse.emf.cdo.common.lob"><code>large object infos</code></a>.</div>
+<div class="block">A <a href="CDOServerBrowser.Page.html" title="interface in org.eclipse.emf.cdo.server"><code>server browser page</code></a> that renders <a href="../common/lob/CDOLobInfo.html" title="class in org.eclipse.emf.cdo.common.lob"><code>large object infos</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.LocksPage.html" title="class in org.eclipse.emf.cdo.server">CDOServerBrowser.LocksPage</a></td>
+<th class="colFirst" scope="row"><a href="CDOServerBrowser.LocksPage.html" title="class in org.eclipse.emf.cdo.server">CDOServerBrowser.LocksPage</a></th>
 <td class="colLast">
-<div class="block">A <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.Page.html" title="interface in org.eclipse.emf.cdo.server"><code>server browser page</code></a> that renders the locking manager contents of a repository.</div>
+<div class="block">A <a href="CDOServerBrowser.Page.html" title="interface in org.eclipse.emf.cdo.server"><code>server browser page</code></a> that renders the locking manager contents of a repository.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.PackagesPage.html" title="class in org.eclipse.emf.cdo.server">CDOServerBrowser.PackagesPage</a></td>
+<th class="colFirst" scope="row"><a href="CDOServerBrowser.PackagesPage.html" title="class in org.eclipse.emf.cdo.server">CDOServerBrowser.PackagesPage</a></th>
 <td class="colLast">
-<div class="block">A <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.Page.html" title="interface in org.eclipse.emf.cdo.server"><code>server browser page</code></a> that renders the package registry contents of a repository.</div>
+<div class="block">A <a href="CDOServerBrowser.Page.html" title="interface in org.eclipse.emf.cdo.server"><code>server browser page</code></a> that renders the package registry contents of a repository.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.RevisionsPage.html" title="class in org.eclipse.emf.cdo.server">CDOServerBrowser.RevisionsPage</a></td>
+<th class="colFirst" scope="row"><a href="CDOServerBrowser.RevisionsPage.html" title="class in org.eclipse.emf.cdo.server">CDOServerBrowser.RevisionsPage</a></th>
 <td class="colLast">
-<div class="block">A <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.Page.html" title="interface in org.eclipse.emf.cdo.server"><code>server browser page</code></a> that renders <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a>.</div>
+<div class="block">A <a href="CDOServerBrowser.Page.html" title="interface in org.eclipse.emf.cdo.server"><code>server browser page</code></a> that renders <a href="../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.RevisionsPage.FromCache.html" title="class in org.eclipse.emf.cdo.server">CDOServerBrowser.RevisionsPage.FromCache</a></td>
+<th class="colFirst" scope="row"><a href="CDOServerBrowser.RevisionsPage.FromCache.html" title="class in org.eclipse.emf.cdo.server">CDOServerBrowser.RevisionsPage.FromCache</a></th>
 <td class="colLast">
-<div class="block">A <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.Page.html" title="interface in org.eclipse.emf.cdo.server"><code>server browser page</code></a> that renders the <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> in a revision cache.</div>
+<div class="block">A <a href="CDOServerBrowser.Page.html" title="interface in org.eclipse.emf.cdo.server"><code>server browser page</code></a> that renders the <a href="../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> in a revision cache.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.RevisionsPage.FromStore.html" title="class in org.eclipse.emf.cdo.server">CDOServerBrowser.RevisionsPage.FromStore</a></td>
+<th class="colFirst" scope="row"><a href="CDOServerBrowser.RevisionsPage.FromStore.html" title="class in org.eclipse.emf.cdo.server">CDOServerBrowser.RevisionsPage.FromStore</a></th>
 <td class="colLast">
-<div class="block">A <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.Page.html" title="interface in org.eclipse.emf.cdo.server"><code>server browser page</code></a> that renders the <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> in a <a href="../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server"><code>store</code></a>.</div>
+<div class="block">A <a href="CDOServerBrowser.Page.html" title="interface in org.eclipse.emf.cdo.server"><code>server browser page</code></a> that renders the <a href="../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> in a <a href="IStore.html" title="interface in org.eclipse.emf.cdo.server"><code>store</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.html" title="class in org.eclipse.emf.cdo.server">CDOServerExporter</a>&lt;OUT&gt;</td>
+<th class="colFirst" scope="row"><a href="CDOServerExporter.html" title="class in org.eclipse.emf.cdo.server">CDOServerExporter</a>&lt;OUT&gt;</th>
 <td class="colLast">
-<div class="block">Exports the complete contents of a <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server"><code>repository</code></a> in a format suitable for <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerImporter.html" title="class in org.eclipse.emf.cdo.server"><code>imports</code></a> into new repositories.</div>
+<div class="block">Exports the complete contents of a <a href="IRepository.html" title="interface in org.eclipse.emf.cdo.server"><code>repository</code></a> in a format suitable for <a href="CDOServerImporter.html" title="class in org.eclipse.emf.cdo.server"><code>imports</code></a> into new repositories.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.Binary.html" title="class in org.eclipse.emf.cdo.server">CDOServerExporter.Binary</a></td>
+<th class="colFirst" scope="row"><a href="CDOServerExporter.Binary.html" title="class in org.eclipse.emf.cdo.server">CDOServerExporter.Binary</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.Statistics.html" title="class in org.eclipse.emf.cdo.server">CDOServerExporter.Statistics</a></td>
+<th class="colFirst" scope="row"><a href="CDOServerExporter.Statistics.html" title="class in org.eclipse.emf.cdo.server">CDOServerExporter.Statistics</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XML.html" title="class in org.eclipse.emf.cdo.server">CDOServerExporter.XML</a></td>
+<th class="colFirst" scope="row"><a href="CDOServerExporter.XML.html" title="class in org.eclipse.emf.cdo.server">CDOServerExporter.XML</a></th>
 <td class="colLast">
-<div class="block">An <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.html" title="class in org.eclipse.emf.cdo.server"><code>exporter</code></a> that creates XML output suitable to be interpreted by an
- <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerImporter.XML.html" title="class in org.eclipse.emf.cdo.server"><code>XML importer</code></a>.</div>
+<div class="block">An <a href="CDOServerExporter.html" title="class in org.eclipse.emf.cdo.server"><code>exporter</code></a> that creates XML output suitable to be interpreted by an
+ <a href="CDOServerImporter.XML.html" title="class in org.eclipse.emf.cdo.server"><code>XML importer</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerImporter.html" title="class in org.eclipse.emf.cdo.server">CDOServerImporter</a></td>
+<th class="colFirst" scope="row"><a href="CDOServerImporter.html" title="class in org.eclipse.emf.cdo.server">CDOServerImporter</a></th>
 <td class="colLast">
-<div class="block">Imports the complete contents of a <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server"><code>repository</code></a> from the output created by a
- <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.html" title="class in org.eclipse.emf.cdo.server"><code>exporter</code></a> into a new repository.</div>
+<div class="block">Imports the complete contents of a <a href="IRepository.html" title="interface in org.eclipse.emf.cdo.server"><code>repository</code></a> from the output created by a
+ <a href="CDOServerExporter.html" title="class in org.eclipse.emf.cdo.server"><code>exporter</code></a> into a new repository.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerImporter.Binary.html" title="class in org.eclipse.emf.cdo.server">CDOServerImporter.Binary</a></td>
+<th class="colFirst" scope="row"><a href="CDOServerImporter.Binary.html" title="class in org.eclipse.emf.cdo.server">CDOServerImporter.Binary</a></th>
 <td class="colLast">
-<div class="block">An <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerImporter.html" title="class in org.eclipse.emf.cdo.server"><code>importer</code></a> that reads and interprets XML output created by an
- <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XML.html" title="class in org.eclipse.emf.cdo.server"><code>XML exporter</code></a>.</div>
+<div class="block">An <a href="CDOServerImporter.html" title="class in org.eclipse.emf.cdo.server"><code>importer</code></a> that reads and interprets XML output created by an
+ <a href="CDOServerExporter.XML.html" title="class in org.eclipse.emf.cdo.server"><code>XML exporter</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerImporter.XML.html" title="class in org.eclipse.emf.cdo.server">CDOServerImporter.XML</a></td>
+<th class="colFirst" scope="row"><a href="CDOServerImporter.XML.html" title="class in org.eclipse.emf.cdo.server">CDOServerImporter.XML</a></th>
 <td class="colLast">
-<div class="block">An <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerImporter.html" title="class in org.eclipse.emf.cdo.server"><code>importer</code></a> that reads and interprets XML output created by an
- <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XML.html" title="class in org.eclipse.emf.cdo.server"><code>XML exporter</code></a>.</div>
+<div class="block">An <a href="CDOServerImporter.html" title="class in org.eclipse.emf.cdo.server"><code>importer</code></a> that reads and interprets XML output created by an
+ <a href="CDOServerExporter.XML.html" title="class in org.eclipse.emf.cdo.server"><code>XML exporter</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html" title="class in org.eclipse.emf.cdo.server">CDOServerUtil</a></td>
+<th class="colFirst" scope="row"><a href="CDOServerUtil.html" title="class in org.eclipse.emf.cdo.server">CDOServerUtil</a></th>
 <td class="colLast">
-<div class="block">Various static methods that may help with CDO <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server"><code>repositories</code></a> and server-side <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a>.</div>
+<div class="block">Various static methods that may help with CDO <a href="IRepository.html" title="interface in org.eclipse.emf.cdo.server"><code>repositories</code></a> and server-side <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.RepositoryReadAccessValidator.html" title="class in org.eclipse.emf.cdo.server">CDOServerUtil.RepositoryReadAccessValidator</a></td>
+<th class="colFirst" scope="row"><a href="CDOServerUtil.RepositoryReadAccessValidator.html" title="class in org.eclipse.emf.cdo.server">CDOServerUtil.RepositoryReadAccessValidator</a></th>
 <td class="colLast">
-<div class="block">An abstract <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.ReadAccessHandler.html" title="interface in org.eclipse.emf.cdo.server"><code>read-access handler</code></a> that grants or denies access to single
- <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a>.</div>
+<div class="block">An abstract <a href="IRepository.ReadAccessHandler.html" title="interface in org.eclipse.emf.cdo.server"><code>read-access handler</code></a> that grants or denies access to single
+ <a href="../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreChunkReader.Chunk.html" title="class in org.eclipse.emf.cdo.server">IStoreChunkReader.Chunk</a></td>
+<th class="colFirst" scope="row"><a href="IStoreChunkReader.Chunk.html" title="class in org.eclipse.emf.cdo.server">IStoreChunkReader.Chunk</a></th>
 <td class="colLast">
 <div class="block">Represents a <code>sublist</code> of consecutive elements that are subject to <i>partial
  collection loading</i>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/StoreThreadLocal.html" title="class in org.eclipse.emf.cdo.server">StoreThreadLocal</a></td>
+<th class="colFirst" scope="row"><a href="StoreThreadLocal.html" title="class in org.eclipse.emf.cdo.server">StoreThreadLocal</a></th>
 <td class="colLast">
-<div class="block">Provides server-side consumers with the <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server"><code>store accessor</code></a> that is valid in the context of a
- specific <a href="../../../../../org/eclipse/emf/cdo/server/ISession.html" title="interface in org.eclipse.emf.cdo.server"><code>session</code></a> during read operations or a specific <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html" title="interface in org.eclipse.emf.cdo.server"><code>commit context</code></a> during
+<div class="block">Provides server-side consumers with the <a href="IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server"><code>store accessor</code></a> that is valid in the context of a
+ specific <a href="ISession.html" title="interface in org.eclipse.emf.cdo.server"><code>session</code></a> during read operations or a specific <a href="IStoreAccessor.CommitContext.html" title="interface in org.eclipse.emf.cdo.server"><code>commit context</code></a> during
  write operations.</div>
 </td>
 </tr>
@@ -492,7 +530,7 @@
 </table>
 </li>
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Enum Summary table, listing enums, and an explanation">
+<table class="typeSummary">
 <caption><span>Enum Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Enum</th>
@@ -500,28 +538,28 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/IStore.ChangeFormat.html" title="enum in org.eclipse.emf.cdo.server">IStore.ChangeFormat</a></td>
+<th class="colFirst" scope="row"><a href="IStore.ChangeFormat.html" title="enum in org.eclipse.emf.cdo.server">IStore.ChangeFormat</a></th>
 <td class="colLast">
-<div class="block">Enumerates the possible data formats a <a href="../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server"><code>store</code></a> can accept for commit operations.</div>
+<div class="block">Enumerates the possible data formats a <a href="IStore.html" title="interface in org.eclipse.emf.cdo.server"><code>store</code></a> can accept for commit operations.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/IStore.RevisionParallelism.html" title="enum in org.eclipse.emf.cdo.server">IStore.RevisionParallelism</a></td>
+<th class="colFirst" scope="row"><a href="IStore.RevisionParallelism.html" title="enum in org.eclipse.emf.cdo.server">IStore.RevisionParallelism</a></th>
 <td class="colLast">
-<div class="block">Enumerates the possible branching options a <a href="../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server"><code>store</code></a> can accept.</div>
+<div class="block">Enumerates the possible branching options a <a href="IStore.html" title="interface in org.eclipse.emf.cdo.server"><code>store</code></a> can accept.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/IStore.RevisionTemporality.html" title="enum in org.eclipse.emf.cdo.server">IStore.RevisionTemporality</a></td>
+<th class="colFirst" scope="row"><a href="IStore.RevisionTemporality.html" title="enum in org.eclipse.emf.cdo.server">IStore.RevisionTemporality</a></th>
 <td class="colLast">
-<div class="block">Enumerates the possible history recording options a <a href="../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server"><code>store</code></a> can accept.</div>
+<div class="block">Enumerates the possible history recording options a <a href="IStore.html" title="interface in org.eclipse.emf.cdo.server"><code>store</code></a> can accept.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Exception Summary table, listing exceptions, and an explanation">
+<table class="typeSummary">
 <caption><span>Exception Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Exception</th>
@@ -529,51 +567,49 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/ContainmentCycleDetectedException.html" title="class in org.eclipse.emf.cdo.server">ContainmentCycleDetectedException</a></td>
-<td class="colLast">Deprecated
-<div class="block"><span class="deprecationComment">As of 4.2 no longer used in the server; replaced by <a href="../../../../../org/eclipse/emf/cdo/util/ContainmentCycleException.html" title="class in org.eclipse.emf.cdo.util"><code>ContainmentCycleException</code></a> in the client.</span></div>
+<th class="colFirst" scope="row"><a href="ContainmentCycleDetectedException.html" title="class in org.eclipse.emf.cdo.server">ContainmentCycleDetectedException</a></th>
+<td class="colLast">Deprecated.
+<div class="deprecationComment">As of 4.2 no longer used in the server; replaced by <a href="../util/ContainmentCycleException.html" title="class in org.eclipse.emf.cdo.util"><code>ContainmentCycleException</code></a> in the client.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/IRepository.WriteAccessHandler.TransactionValidationException.html" title="class in org.eclipse.emf.cdo.server">IRepository.WriteAccessHandler.TransactionValidationException</a></td>
+<th class="colFirst" scope="row"><a href="IRepository.WriteAccessHandler.TransactionValidationException.html" title="class in org.eclipse.emf.cdo.server">IRepository.WriteAccessHandler.TransactionValidationException</a></th>
 <td class="colLast">
-<div class="block">An exception that a <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.WriteAccessHandler.html" title="interface in org.eclipse.emf.cdo.server"><code>IRepository.WriteAccessHandler</code></a> may throw to indicate that a
- <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.WriteAccessHandler.html#handleTransactionBeforeCommitting-org.eclipse.emf.cdo.server.ITransaction-org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext-org.eclipse.net4j.util.om.monitor.OMMonitor-">transaction commit</a>
+<div class="block">An exception that a <a href="IRepository.WriteAccessHandler.html" title="interface in org.eclipse.emf.cdo.server"><code>IRepository.WriteAccessHandler</code></a> may throw to indicate that a
+ <a href="IRepository.WriteAccessHandler.html#handleTransactionBeforeCommitting(org.eclipse.emf.cdo.server.ITransaction,org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext,org.eclipse.net4j.util.om.monitor.OMMonitor)">transaction commit</a>
  was rejected because one or more semantic validation checks reported errors.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/RepositoryNotFoundException.html" title="class in org.eclipse.emf.cdo.server">RepositoryNotFoundException</a></td>
+<th class="colFirst" scope="row"><a href="RepositoryNotFoundException.html" title="class in org.eclipse.emf.cdo.server">RepositoryNotFoundException</a></th>
 <td class="colLast">
-<div class="block">An unchecked exception being thrown when opening a <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> to a named <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server"><code>repository</code></a> that cannot be found.</div>
+<div class="block">An unchecked exception being thrown when opening a <a href="../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> to a named <a href="IRepository.html" title="interface in org.eclipse.emf.cdo.server"><code>repository</code></a> that cannot be found.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/StoreThreadLocal.NoSessionRegisteredException.html" title="class in org.eclipse.emf.cdo.server">StoreThreadLocal.NoSessionRegisteredException</a></td>
+<th class="colFirst" scope="row"><a href="StoreThreadLocal.NoSessionRegisteredException.html" title="class in org.eclipse.emf.cdo.server">StoreThreadLocal.NoSessionRegisteredException</a></th>
 <td class="colLast">
-<div class="block">An <code>IllegalStateException</code> that can be thrown from <a href="../../../../../org/eclipse/emf/cdo/server/StoreThreadLocal.html#getSession--"><code>StoreThreadLocal.getSession()</code></a>.</div>
+<div class="block">An <code>IllegalStateException</code> that can be thrown from <a href="StoreThreadLocal.html#getSession()"><code>StoreThreadLocal.getSession()</code></a>.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
 </ul>
-<a name="package.description">
-<!--   -->
-</a>
-<h2 title="Package org.eclipse.emf.cdo.server Description">Package org.eclipse.emf.cdo.server Description</h2>
-<div class="block">Server concepts for dealing with repositories and stores.</div>
 </div>
+</main>
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li class="navBarCell1Rev">Package</li>
 <li>Class</li>
 <li><a href="package-use.html">Use</a></li>
@@ -583,16 +619,8 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/emf/cdo/security/util/package-summary.html">Prev&nbsp;Package</a></li>
-<li><a href="../../../../../org/eclipse/emf/cdo/server/admin/package-summary.html">Next&nbsp;Package</a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/emf/cdo/server/package-summary.html" target="_top">Frames</a></li>
-<li><a href="package-summary.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -605,11 +633,16 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

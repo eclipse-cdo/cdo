@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>org.eclipse.emf.cdo.expressions.impl (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,20 +28,25 @@
     catch(err) {
     }
 //-->
-</script>
+var pathtoroot = "../../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li class="navBarCell1Rev">Package</li>
 <li>Class</li>
 <li><a href="package-use.html">Use</a></li>
@@ -41,16 +56,14 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/emf/cdo/expressions/package-summary.html">Prev&nbsp;Package</a></li>
-<li><a href="../../../../../../org/eclipse/emf/cdo/expressions/provider/package-summary.html">Next&nbsp;Package</a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/emf/cdo/expressions/impl/package-summary.html" target="_top">Frames</a></li>
-<li><a href="package-summary.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -63,22 +76,35 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
+<main role="main">
 <div class="header">
 <h1 title="Package" class="title">Package&nbsp;org.eclipse.emf.cdo.expressions.impl</h1>
-<div class="docSummary">
-<div class="block">The generated EMF implementation of the CDO expressions model.</div>
-</div>
-<p>See:&nbsp;<a href="#package.description">Description</a></p>
 </div>
 <div class="contentContainer">
+<section role="region"><a id="package.description">
+<!--   -->
+</a>
+<div class="block">The generated EMF implementation of the CDO expressions model.</div>
+</section>
 <ul class="blockList">
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<table class="typeSummary">
 <caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Interface</th>
@@ -86,16 +112,16 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/expressions/impl/InvocationImpl.Invocable.html" title="interface in org.eclipse.emf.cdo.expressions.impl">InvocationImpl.Invocable</a></td>
+<th class="colFirst" scope="row"><a href="InvocationImpl.Invocable.html" title="interface in org.eclipse.emf.cdo.expressions.impl">InvocationImpl.Invocable</a></th>
 <td class="colLast">
-<div class="block">An abstraction of something that can be invoked, for example an <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EOperation.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>EOperation</code></a> or a <code>Method</code>.</div>
+<div class="block">An abstraction of something that can be invoked, for example an <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EOperation.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>EOperation</code></a> or a <code>Method</code>.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<table class="typeSummary">
 <caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Class</th>
@@ -103,145 +129,145 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/expressions/impl/AccessImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">AccessImpl</a></td>
+<th class="colFirst" scope="row"><a href="AccessImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">AccessImpl</a></th>
 <td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Access</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/expressions/impl/BooleanValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">BooleanValueImpl</a></td>
+<th class="colFirst" scope="row"><a href="BooleanValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">BooleanValueImpl</a></th>
 <td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Boolean Value</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/expressions/impl/ByteValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">ByteValueImpl</a></td>
+<th class="colFirst" scope="row"><a href="ByteValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">ByteValueImpl</a></th>
 <td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Byte Value</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/expressions/impl/CharValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">CharValueImpl</a></td>
+<th class="colFirst" scope="row"><a href="CharValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">CharValueImpl</a></th>
 <td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Char Value</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/expressions/impl/ContainedObjectImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">ContainedObjectImpl</a></td>
+<th class="colFirst" scope="row"><a href="ContainedObjectImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">ContainedObjectImpl</a></th>
 <td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Contained Object</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/expressions/impl/ContextAccessImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">ContextAccessImpl</a></td>
+<th class="colFirst" scope="row"><a href="ContextAccessImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">ContextAccessImpl</a></th>
 <td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Context Value</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/expressions/impl/DoubleValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">DoubleValueImpl</a></td>
+<th class="colFirst" scope="row"><a href="DoubleValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">DoubleValueImpl</a></th>
 <td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Double Value</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/expressions/impl/EvaluationContextImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">EvaluationContextImpl</a></td>
+<th class="colFirst" scope="row"><a href="EvaluationContextImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">EvaluationContextImpl</a></th>
 <td class="colLast">
-<div class="block">A <code>HashMap</code>-based default implementation of an <a href="../../../../../../org/eclipse/emf/cdo/expressions/EvaluationContext.html" title="interface in org.eclipse.emf.cdo.expressions"><code>EvaluationContext</code></a>.</div>
+<div class="block">A <code>HashMap</code>-based default implementation of an <a href="../EvaluationContext.html" title="interface in org.eclipse.emf.cdo.expressions"><code>EvaluationContext</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/expressions/impl/ExpressionsFactoryImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">ExpressionsFactoryImpl</a></td>
+<th class="colFirst" scope="row"><a href="ExpressionsFactoryImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">ExpressionsFactoryImpl</a></th>
 <td class="colLast">
 <div class="block">An implementation of the model <b>Factory</b>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/expressions/impl/ExpressionsPackageImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">ExpressionsPackageImpl</a></td>
+<th class="colFirst" scope="row"><a href="ExpressionsPackageImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">ExpressionsPackageImpl</a></th>
 <td class="colLast">
 <div class="block">An implementation of the model <b>Package</b>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/expressions/impl/FloatValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">FloatValueImpl</a></td>
+<th class="colFirst" scope="row"><a href="FloatValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">FloatValueImpl</a></th>
 <td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Float Value</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/expressions/impl/FunctionInvocationImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">FunctionInvocationImpl</a></td>
+<th class="colFirst" scope="row"><a href="FunctionInvocationImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">FunctionInvocationImpl</a></th>
 <td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Function Invocation</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/expressions/impl/IntValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">IntValueImpl</a></td>
+<th class="colFirst" scope="row"><a href="IntValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">IntValueImpl</a></th>
 <td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Int Value</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/expressions/impl/InvocationImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">InvocationImpl</a></td>
+<th class="colFirst" scope="row"><a href="InvocationImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">InvocationImpl</a></th>
 <td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Invocation</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/expressions/impl/LinkedExpressionImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">LinkedExpressionImpl</a></td>
+<th class="colFirst" scope="row"><a href="LinkedExpressionImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">LinkedExpressionImpl</a></th>
 <td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Linked Expression</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/expressions/impl/LinkedObjectImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">LinkedObjectImpl</a></td>
+<th class="colFirst" scope="row"><a href="LinkedObjectImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">LinkedObjectImpl</a></th>
 <td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Object Value</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/expressions/impl/ListConstructionImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">ListConstructionImpl</a></td>
+<th class="colFirst" scope="row"><a href="ListConstructionImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">ListConstructionImpl</a></th>
 <td class="colLast">
 <div class="block">An implementation of the model object '<em><b>List Value</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/expressions/impl/LongValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">LongValueImpl</a></td>
+<th class="colFirst" scope="row"><a href="LongValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">LongValueImpl</a></th>
 <td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Long Value</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/expressions/impl/MemberAccessImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">MemberAccessImpl</a></td>
+<th class="colFirst" scope="row"><a href="MemberAccessImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">MemberAccessImpl</a></th>
 <td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Member Access</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/expressions/impl/MemberInvocationImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">MemberInvocationImpl</a></td>
+<th class="colFirst" scope="row"><a href="MemberInvocationImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">MemberInvocationImpl</a></th>
 <td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Member Invocation</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/expressions/impl/ShortValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">ShortValueImpl</a></td>
+<th class="colFirst" scope="row"><a href="ShortValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">ShortValueImpl</a></th>
 <td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Short Value</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/expressions/impl/StaticAccessImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">StaticAccessImpl</a></td>
+<th class="colFirst" scope="row"><a href="StaticAccessImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">StaticAccessImpl</a></th>
 <td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Static Access</b></em>'.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/expressions/impl/StringValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">StringValueImpl</a></td>
+<th class="colFirst" scope="row"><a href="StringValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">StringValueImpl</a></th>
 <td class="colLast">
 <div class="block">An implementation of the model object '<em><b>String Value</b></em>'.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/expressions/impl/ValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">ValueImpl</a></td>
+<th class="colFirst" scope="row"><a href="ValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">ValueImpl</a></th>
 <td class="colLast">
 <div class="block">An implementation of the model object '<em><b>Primitive Value</b></em>'.</div>
 </td>
@@ -250,22 +276,20 @@
 </table>
 </li>
 </ul>
-<a name="package.description">
-<!--   -->
-</a>
-<h2 title="Package org.eclipse.emf.cdo.expressions.impl Description">Package org.eclipse.emf.cdo.expressions.impl Description</h2>
-<div class="block">The generated EMF implementation of the CDO expressions model.</div>
 </div>
+</main>
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li class="navBarCell1Rev">Package</li>
 <li>Class</li>
 <li><a href="package-use.html">Use</a></li>
@@ -275,16 +299,8 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/emf/cdo/expressions/package-summary.html">Prev&nbsp;Package</a></li>
-<li><a href="../../../../../../org/eclipse/emf/cdo/expressions/provider/package-summary.html">Next&nbsp;Package</a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/emf/cdo/expressions/impl/package-summary.html" target="_top">Frames</a></li>
-<li><a href="package-summary.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -297,11 +313,16 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

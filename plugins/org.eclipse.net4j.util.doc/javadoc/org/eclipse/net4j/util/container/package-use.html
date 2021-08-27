@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>Uses of Package org.eclipse.net4j.util.container (Net4j Utilities Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,39 +28,43 @@
     catch(err) {
     }
 //-->
-</script>
+var pathtoroot = "../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li>Class</li>
 <li class="navBarCell1Rev">Use</li>
+<li><a href="package-tree.html">Tree</a></li>
 <li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../help-doc.html">Help</a></li>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev</li>
-<li>Next</li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/net4j/util/container/package-use.html" target="_top">Frames</a></li>
-<li><a href="package-use.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -63,74 +77,86 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
+<main role="main">
 <div class="header">
 <h1 title="Uses of Package org.eclipse.net4j.util.container" class="title">Uses of Package<br>org.eclipse.net4j.util.container</h1>
 </div>
 <div class="contentContainer">
 <ul class="blockList">
 <li class="blockList">
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing packages, and an explanation">
-<caption><span>Packages that use <a href="../../../../../org/eclipse/net4j/util/container/package-summary.html">org.eclipse.net4j.util.container</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Packages that use <a href="package-summary.html">org.eclipse.net4j.util.container</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Package</th>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.util.concurrent">org.eclipse.net4j.util.concurrent</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.util.concurrent">org.eclipse.net4j.util.concurrent</a></th>
 <td class="colLast">
 <div class="block">Utility interfaces and classes commonly useful in concurrent programming.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.util.container">org.eclipse.net4j.util.container</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.util.container">org.eclipse.net4j.util.container</a></th>
 <td class="colLast">
 <div class="block">A framework of notifying collections and wiring containers.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.util.container.delegate">org.eclipse.net4j.util.container.delegate</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.util.container.delegate">org.eclipse.net4j.util.container.delegate</a></th>
 <td class="colLast">
 <div class="block">Hybrid interfaces of notifying containers and the Java Collection Framework.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.util.registry">org.eclipse.net4j.util.registry</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.util.registry">org.eclipse.net4j.util.registry</a></th>
 <td class="colLast">
 <div class="block">Interfaces and classes for general purpose registries.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.util.security">org.eclipse.net4j.util.security</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.util.security">org.eclipse.net4j.util.security</a></th>
 <td class="colLast">
 <div class="block">Interfaces and classes for security, negotiation, authentication, authorization and cryptography.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.util.ui">org.eclipse.net4j.util.ui</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.util.ui">org.eclipse.net4j.util.ui</a></th>
 <td class="colLast">
 <div class="block">Reusable UI components.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.util.ui.container">org.eclipse.net4j.util.ui.container</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.util.ui.container">org.eclipse.net4j.util.ui.container</a></th>
 <td class="colLast">
 <div class="block">An element wizard framework for managed containers.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.util.ui.views">org.eclipse.net4j.util.ui.views</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.util.ui.views">org.eclipse.net4j.util.ui.views</a></th>
 <td class="colLast">
 <div class="block">Helpers for Eclipse view parts.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.util.ui.widgets">org.eclipse.net4j.util.ui.widgets</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.util.ui.widgets">org.eclipse.net4j.util.ui.widgets</a></th>
 <td class="colLast">
 <div class="block">A library with reusable widgets.</div>
 </td>
@@ -138,300 +164,344 @@
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.concurrent">
+<li class="blockList"><a id="org.eclipse.net4j.util.concurrent">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../org/eclipse/net4j/util/container/package-summary.html">org.eclipse.net4j.util.container</a> used by <a href="../../../../../org/eclipse/net4j/util/concurrent/package-summary.html">org.eclipse.net4j.util.concurrent</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.net4j.util.container</a> used by <a href="../concurrent/package-summary.html">org.eclipse.net4j.util.concurrent</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/container/class-use/IManagedContainer.html#org.eclipse.net4j.util.concurrent">IManagedContainer</a>
-<div class="block">A <a href="../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container"><code>container</code></a> that populates itself by means of element <a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getFactoryRegistry--"><code>factories</code></a> and
- <a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getPostProcessors--"><code>post processors</code></a> .</div>
+<th class="colFirst" scope="row"><a href="class-use/IManagedContainer.html#org.eclipse.net4j.util.concurrent">IManagedContainer</a></th>
+<td class="colLast">
+<div class="block">A <a href="IContainer.html" title="interface in org.eclipse.net4j.util.container"><code>container</code></a> that populates itself by means of element <a href="IManagedContainer.html#getFactoryRegistry()"><code>factories</code></a> and
+ <a href="IManagedContainer.html#getPostProcessors()"><code>post processors</code></a> .</div>
 </td>
+</tr>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><a href="class-use/IManagedContainerProvider.html#org.eclipse.net4j.util.concurrent">IManagedContainerProvider</a></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.container">
+<li class="blockList"><a id="org.eclipse.net4j.util.container">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../org/eclipse/net4j/util/container/package-summary.html">org.eclipse.net4j.util.container</a> used by <a href="../../../../../org/eclipse/net4j/util/container/package-summary.html">org.eclipse.net4j.util.container</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.net4j.util.container</a> used by <a href="package-summary.html">org.eclipse.net4j.util.container</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/container/class-use/Container.html#org.eclipse.net4j.util.container">Container</a>
-<div class="block">An abstract base implementation of a <a href="../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container"><code>container</code></a> with a <a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle"><code>lifecycle</code></a>.</div>
+<th class="colFirst" scope="row"><a href="class-use/Container.html#org.eclipse.net4j.util.container">Container</a></th>
+<td class="colLast">
+<div class="block">An abstract base implementation of a <a href="IContainer.html" title="interface in org.eclipse.net4j.util.container"><code>container</code></a> with a <a href="../lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle"><code>lifecycle</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/container/class-use/ContainerEvent.html#org.eclipse.net4j.util.container">ContainerEvent</a>
-<div class="block">A default <a href="../../../../../org/eclipse/net4j/util/container/IContainerEvent.html" title="interface in org.eclipse.net4j.util.container"><code>container event</code></a> implementation.</div>
+<th class="colFirst" scope="row"><a href="class-use/ContainerEvent.html#org.eclipse.net4j.util.container">ContainerEvent</a></th>
+<td class="colLast">
+<div class="block">A default <a href="IContainerEvent.html" title="interface in org.eclipse.net4j.util.container"><code>container event</code></a> implementation.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/container/class-use/ContainerPersistence.html#org.eclipse.net4j.util.container">ContainerPersistence</a>&nbsp;</td>
+<th class="colFirst" scope="row"><a href="class-use/ContainerPersistence.html#org.eclipse.net4j.util.container">ContainerPersistence</a></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/container/class-use/FactoryNotFoundException.html#org.eclipse.net4j.util.container">FactoryNotFoundException</a>
-<div class="block">An unchecked exception that indicates the absence of a <a href="../../../../../org/eclipse/net4j/util/factory/IFactory.html" title="interface in org.eclipse.net4j.util.factory"><code>factory</code></a> identified by
- <a href="../../../../../org/eclipse/net4j/util/factory/IFactoryKey.html#getProductGroup--"><code>product group</code></a> and <a href="../../../../../org/eclipse/net4j/util/factory/IFactoryKey.html#getType--"><code>type</code></a>.</div>
+<th class="colFirst" scope="row"><a href="class-use/FactoryNotFoundException.html#org.eclipse.net4j.util.container">FactoryNotFoundException</a></th>
+<td class="colLast">
+<div class="block">An unchecked exception that indicates the absence of a <a href="../factory/IFactory.html" title="interface in org.eclipse.net4j.util.factory"><code>factory</code></a> identified by
+ <a href="../factory/IFactoryKey.html#getProductGroup()"><code>product group</code></a> and <a href="../factory/IFactoryKey.html#getType()"><code>type</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/container/class-use/IContainer.html#org.eclipse.net4j.util.container">IContainer</a>
+<th class="colFirst" scope="row"><a href="class-use/IContainer.html#org.eclipse.net4j.util.container">IContainer</a></th>
+<td class="colLast">
 <div class="block">Contains a number of elements and notifies about element addition and removal.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/container/class-use/IContainer.Modifiable.html#org.eclipse.net4j.util.container">IContainer.Modifiable</a>
-<div class="block">A <a href="../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container"><code>container</code></a> with additional methods to add or remove elements.</div>
+<th class="colFirst" scope="row"><a href="class-use/IContainer.Modifiable.html#org.eclipse.net4j.util.container">IContainer.Modifiable</a></th>
+<td class="colLast">
+<div class="block">A <a href="IContainer.html" title="interface in org.eclipse.net4j.util.container"><code>container</code></a> with additional methods to add or remove elements.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/container/class-use/IContainer.Persistable.html#org.eclipse.net4j.util.container">IContainer.Persistable</a>
-<div class="block">A <a href="../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container"><code>container</code></a> with additional methods to add or remove elements.</div>
+<th class="colFirst" scope="row"><a href="class-use/IContainer.Persistable.html#org.eclipse.net4j.util.container">IContainer.Persistable</a></th>
+<td class="colLast">
+<div class="block">A <a href="IContainer.html" title="interface in org.eclipse.net4j.util.container"><code>container</code></a> with additional methods to add or remove elements.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/container/class-use/IContainer.Persistence.html#org.eclipse.net4j.util.container">IContainer.Persistence</a>&nbsp;</td>
+<th class="colFirst" scope="row"><a href="class-use/IContainer.Persistence.html#org.eclipse.net4j.util.container">IContainer.Persistence</a></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/container/class-use/IContainerDelta.html#org.eclipse.net4j.util.container">IContainerDelta</a>
-<div class="block">Describes the addition or removal of a single element from a <a href="../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container"><code>container</code></a>.</div>
+<th class="colFirst" scope="row"><a href="class-use/IContainerDelta.html#org.eclipse.net4j.util.container">IContainerDelta</a></th>
+<td class="colLast">
+<div class="block">Describes the addition or removal of a single element from a <a href="IContainer.html" title="interface in org.eclipse.net4j.util.container"><code>container</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/container/class-use/IContainerDelta.Kind.html#org.eclipse.net4j.util.container">IContainerDelta.Kind</a>
-<div class="block">Enumerates the possible <a href="../../../../../org/eclipse/net4j/util/container/IContainerDelta.html" title="interface in org.eclipse.net4j.util.container"><code>container delta</code></a> kinds <a href="../../../../../org/eclipse/net4j/util/container/IContainerDelta.Kind.html#ADDED"><code>IContainerDelta.Kind.ADDED</code></a> or <a href="../../../../../org/eclipse/net4j/util/container/IContainerDelta.Kind.html#REMOVED"><code>IContainerDelta.Kind.REMOVED</code></a>.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/container/class-use/IContainerEvent.html#org.eclipse.net4j.util.container">IContainerEvent</a>
-<div class="block">An <a href="../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event"><code>event</code></a> fired from a <a href="../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container"><code>container</code></a> when its elements have changed.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/container/class-use/IContainerEventVisitor.html#org.eclipse.net4j.util.container">IContainerEventVisitor</a>
-<div class="block">A callback interface for visiting <a href="../../../../../org/eclipse/net4j/util/container/IContainerDelta.html" title="interface in org.eclipse.net4j.util.container"><code>container deltas</code></a>.</div>
+<th class="colFirst" scope="row"><a href="class-use/IContainerDelta.Kind.html#org.eclipse.net4j.util.container">IContainerDelta.Kind</a></th>
+<td class="colLast">
+<div class="block">Enumerates the possible <a href="IContainerDelta.html" title="interface in org.eclipse.net4j.util.container"><code>container delta</code></a> kinds <a href="IContainerDelta.Kind.html#ADDED"><code>IContainerDelta.Kind.ADDED</code></a> or <a href="IContainerDelta.Kind.html#REMOVED"><code>IContainerDelta.Kind.REMOVED</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/container/class-use/IElementProcessor.html#org.eclipse.net4j.util.container">IElementProcessor</a>
-<div class="block">Processes elements of a <a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container"><code>managed container</code></a> when they're added to the container.</div>
+<th class="colFirst" scope="row"><a href="class-use/IContainerEvent.html#org.eclipse.net4j.util.container">IContainerEvent</a></th>
+<td class="colLast">
+<div class="block">An <a href="../event/IEvent.html" title="interface in org.eclipse.net4j.util.event"><code>event</code></a> fired from a <a href="IContainer.html" title="interface in org.eclipse.net4j.util.container"><code>container</code></a> when its elements have changed.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/container/class-use/IManagedContainer.html#org.eclipse.net4j.util.container">IManagedContainer</a>
-<div class="block">A <a href="../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container"><code>container</code></a> that populates itself by means of element <a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getFactoryRegistry--"><code>factories</code></a> and
- <a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getPostProcessors--"><code>post processors</code></a> .</div>
+<th class="colFirst" scope="row"><a href="class-use/IContainerEventVisitor.html#org.eclipse.net4j.util.container">IContainerEventVisitor</a></th>
+<td class="colLast">
+<div class="block">A callback interface for visiting <a href="IContainerDelta.html" title="interface in org.eclipse.net4j.util.container"><code>container deltas</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/container/class-use/IManagedContainer.ContainerAware.html#org.eclipse.net4j.util.container">IManagedContainer.ContainerAware</a>&nbsp;</td>
+<th class="colFirst" scope="row"><a href="class-use/IElementProcessor.html#org.eclipse.net4j.util.container">IElementProcessor</a></th>
+<td class="colLast">
+<div class="block">Processes elements of a <a href="IManagedContainer.html" title="interface in org.eclipse.net4j.util.container"><code>managed container</code></a> when they're added to the container.</div>
+</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/container/class-use/IPluginContainer.html#org.eclipse.net4j.util.container">IPluginContainer</a>
-<div class="block">A <a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container"><code>managed container</code></a> that is configured by the <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IExtensionRegistry.html?is-external=true" title="class or interface in org.eclipse.core.runtime"><code>extension registry</code></a>
+<th class="colFirst" scope="row"><a href="class-use/IManagedContainer.html#org.eclipse.net4j.util.container">IManagedContainer</a></th>
+<td class="colLast">
+<div class="block">A <a href="IContainer.html" title="interface in org.eclipse.net4j.util.container"><code>container</code></a> that populates itself by means of element <a href="IManagedContainer.html#getFactoryRegistry()"><code>factories</code></a> and
+ <a href="IManagedContainer.html#getPostProcessors()"><code>post processors</code></a> .</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="class-use/IManagedContainer.ContainerAware.html#org.eclipse.net4j.util.container">IManagedContainer.ContainerAware</a></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><a href="class-use/IPluginContainer.html#org.eclipse.net4j.util.container">IPluginContainer</a></th>
+<td class="colLast">
+<div class="block">A <a href="IManagedContainer.html" title="interface in org.eclipse.net4j.util.container"><code>managed container</code></a> that is configured by the <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IExtensionRegistry.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink"><code>extension registry</code></a>
  .</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/container/class-use/ManagedContainer.html#org.eclipse.net4j.util.container">ManagedContainer</a>
-<div class="block">A default implementation of a <a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container"><code>managed container</code></a>.</div>
+<th class="colFirst" scope="row"><a href="class-use/ManagedContainer.html#org.eclipse.net4j.util.container">ManagedContainer</a></th>
+<td class="colLast">
+<div class="block">A default implementation of a <a href="IManagedContainer.html" title="interface in org.eclipse.net4j.util.container"><code>managed container</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/container/class-use/SelfAttachingContainerListener.html#org.eclipse.net4j.util.container">SelfAttachingContainerListener</a>&nbsp;</td>
+<th class="colFirst" scope="row"><a href="class-use/SelfAttachingContainerListener.html#org.eclipse.net4j.util.container">SelfAttachingContainerListener</a></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/container/class-use/SingleDeltaContainerEvent.html#org.eclipse.net4j.util.container">SingleDeltaContainerEvent</a>
-<div class="block">A <a href="../../../../../org/eclipse/net4j/util/container/IContainerEvent.html" title="interface in org.eclipse.net4j.util.container"><code>container event</code></a> with a single element <a href="../../../../../org/eclipse/net4j/util/container/IContainerDelta.html" title="interface in org.eclipse.net4j.util.container"><code>delta</code></a>.</div>
+<th class="colFirst" scope="row"><a href="class-use/SingleDeltaContainerEvent.html#org.eclipse.net4j.util.container">SingleDeltaContainerEvent</a></th>
+<td class="colLast">
+<div class="block">A <a href="IContainerEvent.html" title="interface in org.eclipse.net4j.util.container"><code>container event</code></a> with a single element <a href="IContainerDelta.html" title="interface in org.eclipse.net4j.util.container"><code>delta</code></a>.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.container.delegate">
+<li class="blockList"><a id="org.eclipse.net4j.util.container.delegate">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../org/eclipse/net4j/util/container/package-summary.html">org.eclipse.net4j.util.container</a> used by <a href="../../../../../org/eclipse/net4j/util/container/delegate/package-summary.html">org.eclipse.net4j.util.container.delegate</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.net4j.util.container</a> used by <a href="delegate/package-summary.html">org.eclipse.net4j.util.container.delegate</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/container/class-use/ContainerEvent.html#org.eclipse.net4j.util.container.delegate">ContainerEvent</a>
-<div class="block">A default <a href="../../../../../org/eclipse/net4j/util/container/IContainerEvent.html" title="interface in org.eclipse.net4j.util.container"><code>container event</code></a> implementation.</div>
+<th class="colFirst" scope="row"><a href="class-use/ContainerEvent.html#org.eclipse.net4j.util.container.delegate">ContainerEvent</a></th>
+<td class="colLast">
+<div class="block">A default <a href="IContainerEvent.html" title="interface in org.eclipse.net4j.util.container"><code>container event</code></a> implementation.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/container/class-use/IContainer.html#org.eclipse.net4j.util.container.delegate">IContainer</a>
+<th class="colFirst" scope="row"><a href="class-use/IContainer.html#org.eclipse.net4j.util.container.delegate">IContainer</a></th>
+<td class="colLast">
 <div class="block">Contains a number of elements and notifies about element addition and removal.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/container/class-use/IContainerDelta.Kind.html#org.eclipse.net4j.util.container.delegate">IContainerDelta.Kind</a>
-<div class="block">Enumerates the possible <a href="../../../../../org/eclipse/net4j/util/container/IContainerDelta.html" title="interface in org.eclipse.net4j.util.container"><code>container delta</code></a> kinds <a href="../../../../../org/eclipse/net4j/util/container/IContainerDelta.Kind.html#ADDED"><code>IContainerDelta.Kind.ADDED</code></a> or <a href="../../../../../org/eclipse/net4j/util/container/IContainerDelta.Kind.html#REMOVED"><code>IContainerDelta.Kind.REMOVED</code></a>.</div>
+<th class="colFirst" scope="row"><a href="class-use/IContainerDelta.Kind.html#org.eclipse.net4j.util.container.delegate">IContainerDelta.Kind</a></th>
+<td class="colLast">
+<div class="block">Enumerates the possible <a href="IContainerDelta.html" title="interface in org.eclipse.net4j.util.container"><code>container delta</code></a> kinds <a href="IContainerDelta.Kind.html#ADDED"><code>IContainerDelta.Kind.ADDED</code></a> or <a href="IContainerDelta.Kind.html#REMOVED"><code>IContainerDelta.Kind.REMOVED</code></a>.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.registry">
+<li class="blockList"><a id="org.eclipse.net4j.util.registry">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../org/eclipse/net4j/util/container/package-summary.html">org.eclipse.net4j.util.container</a> used by <a href="../../../../../org/eclipse/net4j/util/registry/package-summary.html">org.eclipse.net4j.util.registry</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.net4j.util.container</a> used by <a href="../registry/package-summary.html">org.eclipse.net4j.util.registry</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/container/class-use/Container.html#org.eclipse.net4j.util.registry">Container</a>
-<div class="block">An abstract base implementation of a <a href="../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container"><code>container</code></a> with a <a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle"><code>lifecycle</code></a>.</div>
+<th class="colFirst" scope="row"><a href="class-use/Container.html#org.eclipse.net4j.util.registry">Container</a></th>
+<td class="colLast">
+<div class="block">An abstract base implementation of a <a href="IContainer.html" title="interface in org.eclipse.net4j.util.container"><code>container</code></a> with a <a href="../lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle"><code>lifecycle</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/container/class-use/IContainer.html#org.eclipse.net4j.util.registry">IContainer</a>
-<div class="block">Contains a number of elements and notifies about element addition and removal.</div>
-</td>
-</tr>
-</tbody>
-</table>
-</li>
-<li class="blockList"><a name="org.eclipse.net4j.util.security">
-<!--   -->
-</a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../org/eclipse/net4j/util/container/package-summary.html">org.eclipse.net4j.util.container</a> used by <a href="../../../../../org/eclipse/net4j/util/security/package-summary.html">org.eclipse.net4j.util.security</a></span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colOne" scope="col">Class and Description</th>
-</tr>
-<tbody>
-<tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/container/class-use/IElementProcessor.html#org.eclipse.net4j.util.security">IElementProcessor</a>
-<div class="block">Processes elements of a <a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container"><code>managed container</code></a> when they're added to the container.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/container/class-use/IManagedContainer.html#org.eclipse.net4j.util.security">IManagedContainer</a>
-<div class="block">A <a href="../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container"><code>container</code></a> that populates itself by means of element <a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getFactoryRegistry--"><code>factories</code></a> and
- <a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getPostProcessors--"><code>post processors</code></a> .</div>
-</td>
-</tr>
-</tbody>
-</table>
-</li>
-<li class="blockList"><a name="org.eclipse.net4j.util.ui">
-<!--   -->
-</a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../org/eclipse/net4j/util/container/package-summary.html">org.eclipse.net4j.util.container</a> used by <a href="../../../../../org/eclipse/net4j/util/ui/package-summary.html">org.eclipse.net4j.util.ui</a></span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colOne" scope="col">Class and Description</th>
-</tr>
-<tbody>
-<tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/container/class-use/IManagedContainer.html#org.eclipse.net4j.util.ui">IManagedContainer</a>
-<div class="block">A <a href="../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container"><code>container</code></a> that populates itself by means of element <a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getFactoryRegistry--"><code>factories</code></a> and
- <a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getPostProcessors--"><code>post processors</code></a> .</div>
-</td>
-</tr>
-</tbody>
-</table>
-</li>
-<li class="blockList"><a name="org.eclipse.net4j.util.ui.container">
-<!--   -->
-</a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../org/eclipse/net4j/util/container/package-summary.html">org.eclipse.net4j.util.container</a> used by <a href="../../../../../org/eclipse/net4j/util/ui/container/package-summary.html">org.eclipse.net4j.util.ui.container</a></span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colOne" scope="col">Class and Description</th>
-</tr>
-<tbody>
-<tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/container/class-use/IManagedContainer.html#org.eclipse.net4j.util.ui.container">IManagedContainer</a>
-<div class="block">A <a href="../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container"><code>container</code></a> that populates itself by means of element <a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getFactoryRegistry--"><code>factories</code></a> and
- <a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getPostProcessors--"><code>post processors</code></a> .</div>
-</td>
-</tr>
-</tbody>
-</table>
-</li>
-<li class="blockList"><a name="org.eclipse.net4j.util.ui.views">
-<!--   -->
-</a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../org/eclipse/net4j/util/container/package-summary.html">org.eclipse.net4j.util.container</a> used by <a href="../../../../../org/eclipse/net4j/util/ui/views/package-summary.html">org.eclipse.net4j.util.ui.views</a></span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colOne" scope="col">Class and Description</th>
-</tr>
-<tbody>
-<tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/container/class-use/IContainer.html#org.eclipse.net4j.util.ui.views">IContainer</a>
+<th class="colFirst" scope="row"><a href="class-use/IContainer.html#org.eclipse.net4j.util.registry">IContainer</a></th>
+<td class="colLast">
 <div class="block">Contains a number of elements and notifies about element addition and removal.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.ui.widgets">
+<li class="blockList"><a id="org.eclipse.net4j.util.security">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../org/eclipse/net4j/util/container/package-summary.html">org.eclipse.net4j.util.container</a> used by <a href="../../../../../org/eclipse/net4j/util/ui/widgets/package-summary.html">org.eclipse.net4j.util.ui.widgets</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.net4j.util.container</a> used by <a href="../security/package-summary.html">org.eclipse.net4j.util.security</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/container/class-use/IManagedContainer.html#org.eclipse.net4j.util.ui.widgets">IManagedContainer</a>
-<div class="block">A <a href="../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container"><code>container</code></a> that populates itself by means of element <a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getFactoryRegistry--"><code>factories</code></a> and
- <a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getPostProcessors--"><code>post processors</code></a> .</div>
+<th class="colFirst" scope="row"><a href="class-use/IElementProcessor.html#org.eclipse.net4j.util.security">IElementProcessor</a></th>
+<td class="colLast">
+<div class="block">Processes elements of a <a href="IManagedContainer.html" title="interface in org.eclipse.net4j.util.container"><code>managed container</code></a> when they're added to the container.</div>
 </td>
+</tr>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><a href="class-use/IManagedContainer.html#org.eclipse.net4j.util.security">IManagedContainer</a></th>
+<td class="colLast">
+<div class="block">A <a href="IContainer.html" title="interface in org.eclipse.net4j.util.container"><code>container</code></a> that populates itself by means of element <a href="IManagedContainer.html#getFactoryRegistry()"><code>factories</code></a> and
+ <a href="IManagedContainer.html#getPostProcessors()"><code>post processors</code></a> .</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList"><a id="org.eclipse.net4j.util.ui">
+<!--   -->
+</a>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.net4j.util.container</a> used by <a href="../ui/package-summary.html">org.eclipse.net4j.util.ui</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="class-use/IManagedContainer.html#org.eclipse.net4j.util.ui">IManagedContainer</a></th>
+<td class="colLast">
+<div class="block">A <a href="IContainer.html" title="interface in org.eclipse.net4j.util.container"><code>container</code></a> that populates itself by means of element <a href="IManagedContainer.html#getFactoryRegistry()"><code>factories</code></a> and
+ <a href="IManagedContainer.html#getPostProcessors()"><code>post processors</code></a> .</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList"><a id="org.eclipse.net4j.util.ui.container">
+<!--   -->
+</a>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.net4j.util.container</a> used by <a href="../ui/container/package-summary.html">org.eclipse.net4j.util.ui.container</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="class-use/IManagedContainer.html#org.eclipse.net4j.util.ui.container">IManagedContainer</a></th>
+<td class="colLast">
+<div class="block">A <a href="IContainer.html" title="interface in org.eclipse.net4j.util.container"><code>container</code></a> that populates itself by means of element <a href="IManagedContainer.html#getFactoryRegistry()"><code>factories</code></a> and
+ <a href="IManagedContainer.html#getPostProcessors()"><code>post processors</code></a> .</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList"><a id="org.eclipse.net4j.util.ui.views">
+<!--   -->
+</a>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.net4j.util.container</a> used by <a href="../ui/views/package-summary.html">org.eclipse.net4j.util.ui.views</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="class-use/IContainer.html#org.eclipse.net4j.util.ui.views">IContainer</a></th>
+<td class="colLast">
+<div class="block">Contains a number of elements and notifies about element addition and removal.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList"><a id="org.eclipse.net4j.util.ui.widgets">
+<!--   -->
+</a>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.net4j.util.container</a> used by <a href="../ui/widgets/package-summary.html">org.eclipse.net4j.util.ui.widgets</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="class-use/IManagedContainer.html#org.eclipse.net4j.util.ui.widgets">IManagedContainer</a></th>
+<td class="colLast">
+<div class="block">A <a href="IContainer.html" title="interface in org.eclipse.net4j.util.container"><code>container</code></a> that populates itself by means of element <a href="IManagedContainer.html#getFactoryRegistry()"><code>factories</code></a> and
+ <a href="IManagedContainer.html#getPostProcessors()"><code>post processors</code></a> .</div>
+</td>
+</tr>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><a href="class-use/IManagedContainerProvider.html#org.eclipse.net4j.util.ui.widgets">IManagedContainerProvider</a></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
 </li>
 </ul>
 </div>
+</main>
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li>Class</li>
 <li class="navBarCell1Rev">Use</li>
+<li><a href="package-tree.html">Tree</a></li>
 <li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../help-doc.html">Help</a></li>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev</li>
-<li>Next</li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/net4j/util/container/package-use.html" target="_top">Frames</a></li>
-<li><a href="package-use.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -444,11 +514,16 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

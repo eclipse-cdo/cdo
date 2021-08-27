@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>FactoryDescriptor (Net4j Utilities Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/FactoryDescriptor.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/net4j/util/factory/FactoryCreationException.html" title="class in org.eclipse.net4j.util.factory"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/net4j/util/factory/FactoryKey.html" title="class in org.eclipse.net4j.util.factory"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/net4j/util/factory/FactoryDescriptor.html" target="_top">Frames</a></li>
-<li><a href="FactoryDescriptor.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,6 +82,9 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -85,13 +101,22 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.net4j.util.factory</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.net4j.util.factory</a></div>
 <h2 title="Class FactoryDescriptor" class="title">Class FactoryDescriptor</h2>
 </div>
 <div class="contentContainer">
@@ -99,7 +124,7 @@ var activeTableTab = "activeTableTab";
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li><a href="../../../../../org/eclipse/net4j/util/factory/Factory.html" title="class in org.eclipse.net4j.util.factory">org.eclipse.net4j.util.factory.Factory</a></li>
+<li><a href="Factory.html" title="class in org.eclipse.net4j.util.factory">org.eclipse.net4j.util.factory.Factory</a></li>
 <li>
 <ul class="inheritance">
 <li>org.eclipse.net4j.util.factory.FactoryDescriptor</li>
@@ -113,13 +138,12 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="../../../../../org/eclipse/net4j/util/factory/IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a></dd>
+<dd><code><a href="IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a></code></dd>
 </dl>
 <hr>
-<br>
 <pre>public class <span class="typeNameLabel">FactoryDescriptor</span>
-extends <a href="../../../../../org/eclipse/net4j/util/factory/Factory.html" title="class in org.eclipse.net4j.util.factory">Factory</a></pre>
-<div class="block">A <a href="../../../../../org/eclipse/net4j/util/factory/IFactory.html" title="interface in org.eclipse.net4j.util.factory"><code>factory</code></a> that delegates to an <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IExtensionRegistry.html?is-external=true" title="class or interface in org.eclipse.core.runtime"><code>extension registry</code></a> contribution.
+extends <a href="Factory.html" title="class in org.eclipse.net4j.util.factory">Factory</a></pre>
+<div class="block">A <a href="IFactory.html" title="interface in org.eclipse.net4j.util.factory"><code>factory</code></a> that delegates to an <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IExtensionRegistry.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink"><code>extension registry</code></a> contribution.
  <p>
  Example contribution:
 
@@ -145,60 +169,70 @@ extends <a href="../../../../../org/eclipse/net4j/util/factory/Factory.html" tit
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.summary">
+<li class="blockList"><a id="constructor.summary">
 <!--   -->
 </a>
 <h3>Constructor Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
+<table class="memberSummary">
 <caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Constructor and Description</th>
+<th class="colFirst" scope="col">Constructor</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/factory/FactoryDescriptor.html#FactoryDescriptor-org.eclipse.core.runtime.IConfigurationElement-">FactoryDescriptor</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IConfigurationElement.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IConfigurationElement</a>&nbsp;configurationElement)</code>&nbsp;</td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(org.eclipse.core.runtime.IConfigurationElement)">FactoryDescriptor</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IConfigurationElement.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IConfigurationElement</a>&nbsp;configurationElement)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>java.lang.Object</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/factory/FactoryDescriptor.html#create-java.lang.String-">create</a></span>(java.lang.String&nbsp;description)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#create(java.lang.String)">create</a></span>&#8203;(java.lang.String&nbsp;description)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/factory/IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/factory/FactoryDescriptor.html#createFactory--">createFactory</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createFactory()">createFactory</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IConfigurationElement.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IConfigurationElement</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/factory/FactoryDescriptor.html#getConfigurationElement--">getConfigurationElement</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IConfigurationElement.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IConfigurationElement</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getConfigurationElement()">getConfigurationElement</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/factory/FactoryDescriptor.html#getDescriptionFor-java.lang.Object-">getDescriptionFor</a></span>(java.lang.Object&nbsp;product)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDescriptionFor(java.lang.Object)">getDescriptionFor</a></span>&#8203;(java.lang.Object&nbsp;product)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.factory.Factory">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.factory.Factory">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.factory.<a href="../../../../../org/eclipse/net4j/util/factory/Factory.html" title="class in org.eclipse.net4j.util.factory">Factory</a></h3>
-<code><a href="../../../../../org/eclipse/net4j/util/factory/Factory.html#getKey--">getKey</a>, <a href="../../../../../org/eclipse/net4j/util/factory/Factory.html#getProductGroup--">getProductGroup</a>, <a href="../../../../../org/eclipse/net4j/util/factory/Factory.html#getType--">getType</a>, <a href="../../../../../org/eclipse/net4j/util/factory/Factory.html#toString--">toString</a></code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.factory.<a href="Factory.html" title="class in org.eclipse.net4j.util.factory">Factory</a></h3>
+<code><a href="Factory.html#getKey()">getKey</a>, <a href="Factory.html#getProductGroup()">getProductGroup</a>, <a href="Factory.html#getType()">getType</a>, <a href="Factory.html#toString()">toString</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
+<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
@@ -206,6 +240,7 @@ extends <a href="../../../../../org/eclipse/net4j/util/factory/Factory.html" tit
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -213,87 +248,94 @@ extends <a href="../../../../../org/eclipse/net4j/util/factory/Factory.html" tit
 <ul class="blockList">
 <li class="blockList">
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.detail">
+<li class="blockList"><a id="constructor.detail">
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="FactoryDescriptor-org.eclipse.core.runtime.IConfigurationElement-">
+<a id="&lt;init&gt;(org.eclipse.core.runtime.IConfigurationElement)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>FactoryDescriptor</h4>
-<pre>public&nbsp;FactoryDescriptor(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IConfigurationElement.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IConfigurationElement</a>&nbsp;configurationElement)</pre>
+<pre>public&nbsp;FactoryDescriptor&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IConfigurationElement.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IConfigurationElement</a>&nbsp;configurationElement)</pre>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="getConfigurationElement--">
+<a id="getConfigurationElement()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getConfigurationElement</h4>
-<pre>public&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IConfigurationElement.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IConfigurationElement</a>&nbsp;getConfigurationElement()</pre>
+<pre class="methodSignature">public&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IConfigurationElement.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IConfigurationElement</a>&nbsp;getConfigurationElement()</pre>
 </li>
 </ul>
-<a name="createFactory--">
+<a id="createFactory()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createFactory</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/factory/IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a>&nbsp;createFactory()</pre>
+<pre class="methodSignature">public&nbsp;<a href="IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a>&nbsp;createFactory()</pre>
 </li>
 </ul>
-<a name="create-java.lang.String-">
+<a id="create(java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>create</h4>
-<pre>public&nbsp;java.lang.Object&nbsp;create(java.lang.String&nbsp;description)</pre>
+<pre class="methodSignature">public&nbsp;java.lang.Object&nbsp;create&#8203;(java.lang.String&nbsp;description)</pre>
 </li>
 </ul>
-<a name="getDescriptionFor-java.lang.Object-">
+<a id="getDescriptionFor(java.lang.Object)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getDescriptionFor</h4>
-<pre>public&nbsp;java.lang.String&nbsp;getDescriptionFor(java.lang.Object&nbsp;product)</pre>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getDescriptionFor&#8203;(java.lang.Object&nbsp;product)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/factory/IFactory.html#getDescriptionFor-java.lang.Object-">getDescriptionFor</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/factory/IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a></code></dd>
+<dd><code><a href="IFactory.html#getDescriptionFor(java.lang.Object)">getDescriptionFor</a></code>&nbsp;in interface&nbsp;<code><a href="IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/factory/Factory.html#getDescriptionFor-java.lang.Object-">getDescriptionFor</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/factory/Factory.html" title="class in org.eclipse.net4j.util.factory">Factory</a></code></dd>
+<dd><code><a href="Factory.html#getDescriptionFor(java.lang.Object)">getDescriptionFor</a></code>&nbsp;in class&nbsp;<code><a href="Factory.html" title="class in org.eclipse.net4j.util.factory">Factory</a></code></dd>
 </dl>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/FactoryDescriptor.html">Use</a></li>
@@ -303,16 +345,8 @@ extends <a href="../../../../../org/eclipse/net4j/util/factory/Factory.html" tit
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/net4j/util/factory/FactoryCreationException.html" title="class in org.eclipse.net4j.util.factory"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/net4j/util/factory/FactoryKey.html" title="class in org.eclipse.net4j.util.factory"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/net4j/util/factory/FactoryDescriptor.html" target="_top">Frames</a></li>
-<li><a href="FactoryDescriptor.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -325,6 +359,9 @@ extends <a href="../../../../../org/eclipse/net4j/util/factory/Factory.html" tit
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -341,10 +378,12 @@ extends <a href="../../../../../org/eclipse/net4j/util/factory/Factory.html" tit
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

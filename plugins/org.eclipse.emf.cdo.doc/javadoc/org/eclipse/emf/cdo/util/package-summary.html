@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>org.eclipse.emf.cdo.util (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,20 +28,25 @@
     catch(err) {
     }
 //-->
-</script>
+var pathtoroot = "../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li class="navBarCell1Rev">Package</li>
 <li>Class</li>
 <li><a href="package-use.html">Use</a></li>
@@ -41,16 +56,14 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/emf/cdo/ui/widgets/package-summary.html">Prev&nbsp;Package</a></li>
-<li><a href="../../../../../org/eclipse/emf/cdo/view/package-summary.html">Next&nbsp;Package</a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/emf/cdo/util/package-summary.html" target="_top">Frames</a></li>
-<li><a href="package-summary.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -63,22 +76,35 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
+<main role="main">
 <div class="header">
 <h1 title="Package" class="title">Package&nbsp;org.eclipse.emf.cdo.util</h1>
-<div class="docSummary">
-<div class="block">Client utility classes, some common interfaces and exceptions.</div>
-</div>
-<p>See:&nbsp;<a href="#package.description">Description</a></p>
 </div>
 <div class="contentContainer">
+<section role="region"><a id="package.description">
+<!--   -->
+</a>
+<div class="block">Client utility classes, some common interfaces and exceptions.</div>
+</section>
 <ul class="blockList">
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<table class="typeSummary">
 <caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Interface</th>
@@ -86,23 +112,23 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/util/CDOFactory.html" title="interface in org.eclipse.emf.cdo.util">CDOFactory</a></td>
+<th class="colFirst" scope="row"><a href="CDOFactory.html" title="interface in org.eclipse.emf.cdo.util">CDOFactory</a></th>
 <td class="colLast">
-<div class="block">Creates CDO <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a>.</div>
+<div class="block">Creates CDO <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html" title="interface in org.eclipse.emf.cdo.util">CDOUpdatable</a></td>
+<th class="colFirst" scope="row"><a href="CDOUpdatable.html" title="interface in org.eclipse.emf.cdo.util">CDOUpdatable</a></th>
 <td class="colLast">
 <div class="block">Represents facilities that can receive
- <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#setPassiveUpdateEnabled-boolean-"><code>passive updates</code></a>.</div>
+ <a href="../common/CDOCommonSession.Options.html#setPassiveUpdateEnabled(boolean)"><code>passive updates</code></a>.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<table class="typeSummary">
 <caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Class</th>
@@ -110,46 +136,46 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/util/CDOBalancedTree.html" title="class in org.eclipse.emf.cdo.util">CDOBalancedTree</a></td>
+<th class="colFirst" scope="row"><a href="CDOBalancedTree.html" title="class in org.eclipse.emf.cdo.util">CDOBalancedTree</a></th>
 <td class="colLast">
-<div class="block">A utility class that attaches <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>objects</code></a> to a <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceFolder.html" title="interface in org.eclipse.emf.cdo.eresource"><code>folder</code></a> rooted, balanced tree such that configurable
+<div class="block">A utility class that attaches <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>objects</code></a> to a <a href="../eresource/CDOResourceFolder.html" title="interface in org.eclipse.emf.cdo.eresource"><code>folder</code></a> rooted, balanced tree such that configurable
  capacities for resources per folder and objects per resource are never exceeded.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/util/CDOCrossReferenceAdapter.html" title="class in org.eclipse.emf.cdo.util">CDOCrossReferenceAdapter</a></td>
+<th class="colFirst" scope="row"><a href="CDOCrossReferenceAdapter.html" title="class in org.eclipse.emf.cdo.util">CDOCrossReferenceAdapter</a></th>
 <td class="colLast">
-<div class="block">An <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/ECrossReferenceAdapter.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.util"><code>ECrossReferenceAdapter</code></a> that does instanceof checks of <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notifier.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><code>Notifier</code></a> instances
- in the order <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>Resource</code></a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>EObject</code></a>, and <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>ResourceSet</code></a>.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/util/CDOLazyContentAdapter.html" title="class in org.eclipse.emf.cdo.util">CDOLazyContentAdapter</a></td>
-<td class="colLast">
-<div class="block">A scalable <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/EContentAdapter.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.util"><code>content adapter</code></a> that uses CDO mechanisms to attach itself to <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a> when they are lazily loaded.</div>
+<div class="block">An <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/ECrossReferenceAdapter.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.util" class="externalLink"><code>ECrossReferenceAdapter</code></a> that does instanceof checks of <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notifier.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink"><code>Notifier</code></a> instances
+ in the order <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource" class="externalLink"><code>Resource</code></a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>EObject</code></a>, and <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource" class="externalLink"><code>ResourceSet</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/util/CDOModificationTrackingAdapter.html" title="class in org.eclipse.emf.cdo.util">CDOModificationTrackingAdapter</a></td>
+<th class="colFirst" scope="row"><a href="CDOLazyContentAdapter.html" title="class in org.eclipse.emf.cdo.util">CDOLazyContentAdapter</a></th>
 <td class="colLast">
-<div class="block">Maintains the <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html?is-external=true#isModified--" title="class or interface in org.eclipse.emf.ecore.resource"><code>modified state</code></a> of a CDO <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resource</code></a> with the help of a
- <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction handler</code></a>.</div>
+<div class="block">A scalable <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/EContentAdapter.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.util" class="externalLink"><code>content adapter</code></a> that uses CDO mechanisms to attach itself to <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a> when they are lazily loaded.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIData.html" title="class in org.eclipse.emf.cdo.util">CDOURIData</a></td>
+<th class="colFirst" scope="row"><a href="CDOModificationTrackingAdapter.html" title="class in org.eclipse.emf.cdo.util">CDOModificationTrackingAdapter</a></th>
 <td class="colLast">
-<div class="block">Represents a CDO-specific <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util"><code>URI</code></a> in connection-aware format.</div>
+<div class="block">Maintains the <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html?is-external=true#isModified()" title="class or interface in org.eclipse.emf.ecore.resource" class="externalLink"><code>modified state</code></a> of a CDO <a href="../eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resource</code></a> with the help of a
+ <a href="../transaction/CDOTransactionHandler.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction handler</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIUtil.html" title="class in org.eclipse.emf.cdo.util">CDOURIUtil</a></td>
+<th class="colFirst" scope="row"><a href="CDOURIData.html" title="class in org.eclipse.emf.cdo.util">CDOURIData</a></th>
 <td class="colLast">
-<div class="block">Various static methods that may help with CDO-specific <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util"><code>URIs</code></a>.</div>
+<div class="block">Represents a CDO-specific <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink"><code>URI</code></a> in connection-aware format.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/util/CDOUtil.html" title="class in org.eclipse.emf.cdo.util">CDOUtil</a></td>
+<th class="colFirst" scope="row"><a href="CDOURIUtil.html" title="class in org.eclipse.emf.cdo.util">CDOURIUtil</a></th>
+<td class="colLast">
+<div class="block">Various static methods that may help with CDO-specific <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink"><code>URIs</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="CDOUtil.html" title="class in org.eclipse.emf.cdo.util">CDOUtil</a></th>
 <td class="colLast">
 <div class="block">Various static methods that may help in CDO client applications.</div>
 </td>
@@ -158,7 +184,7 @@
 </table>
 </li>
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Exception Summary table, listing exceptions, and an explanation">
+<table class="typeSummary">
 <caption><span>Exception Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Exception</th>
@@ -166,136 +192,136 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/util/CommitConflictException.html" title="class in org.eclipse.emf.cdo.util">CommitConflictException</a></td>
+<th class="colFirst" scope="row"><a href="CommitConflictException.html" title="class in org.eclipse.emf.cdo.util">CommitConflictException</a></th>
 <td class="colLast">
-<div class="block">A <a href="../../../../../org/eclipse/emf/cdo/util/ConcurrentAccessException.html" title="class in org.eclipse.emf.cdo.util"><code>concurrent access exception</code></a> that indicates that some of the local modifications are based on old revisions
+<div class="block">A <a href="ConcurrentAccessException.html" title="class in org.eclipse.emf.cdo.util"><code>concurrent access exception</code></a> that indicates that some of the local modifications are based on old revisions
  because other transactions have intermittently committed their modifications.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/util/CommitException.html" title="class in org.eclipse.emf.cdo.util">CommitException</a></td>
+<th class="colFirst" scope="row"><a href="CommitException.html" title="class in org.eclipse.emf.cdo.util">CommitException</a></th>
 <td class="colLast">
-<div class="block">A checked exception being thrown from <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit--"><code>CDOUserTransaction.commit()</code></a> in case of commit problems such as commit conflicts.</div>
+<div class="block">A checked exception being thrown from <a href="../transaction/CDOUserTransaction.html#commit()"><code>CDOUserTransaction.commit()</code></a> in case of commit problems such as commit conflicts.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/util/CommitIntegrityException.html" title="class in org.eclipse.emf.cdo.util">CommitIntegrityException</a></td>
+<th class="colFirst" scope="row"><a href="CommitIntegrityException.html" title="class in org.eclipse.emf.cdo.util">CommitIntegrityException</a></th>
 <td class="colLast">
-<div class="block">A local <a href="../../../../../org/eclipse/emf/cdo/util/DataIntegrityException.html" title="class in org.eclipse.emf.cdo.util"><code>data integrity exception</code></a> that indicates that the subset of object modifications in a
- <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html#setCommittables-java.util.Set-"><code>partial commit</code></a> is inconsistent.</div>
+<div class="block">A local <a href="DataIntegrityException.html" title="class in org.eclipse.emf.cdo.util"><code>data integrity exception</code></a> that indicates that the subset of object modifications in a
+ <a href="../transaction/CDOTransaction.html#setCommittables(java.util.Set)"><code>partial commit</code></a> is inconsistent.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/util/ConcurrentAccessException.html" title="class in org.eclipse.emf.cdo.util">ConcurrentAccessException</a></td>
+<th class="colFirst" scope="row"><a href="ConcurrentAccessException.html" title="class in org.eclipse.emf.cdo.util">ConcurrentAccessException</a></th>
 <td class="colLast">
-<div class="block">A <a href="../../../../../org/eclipse/emf/cdo/util/CommitException.html" title="class in org.eclipse.emf.cdo.util"><code>commit exception</code></a> that indicates problems that are caused by concurrent access to the repository.</div>
+<div class="block">A <a href="CommitException.html" title="class in org.eclipse.emf.cdo.util"><code>commit exception</code></a> that indicates problems that are caused by concurrent access to the repository.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/util/ContainmentCycleException.html" title="class in org.eclipse.emf.cdo.util">ContainmentCycleException</a></td>
+<th class="colFirst" scope="row"><a href="ContainmentCycleException.html" title="class in org.eclipse.emf.cdo.util">ContainmentCycleException</a></th>
 <td class="colLast">
-<div class="block">A <a href="../../../../../org/eclipse/emf/cdo/util/ConcurrentAccessException.html" title="class in org.eclipse.emf.cdo.util"><code>concurrent access exception</code></a> that indicates an attempt of the local transaction to introduce a <i>containment cycle</i>.</div>
+<div class="block">A <a href="ConcurrentAccessException.html" title="class in org.eclipse.emf.cdo.util"><code>concurrent access exception</code></a> that indicates an attempt of the local transaction to introduce a <i>containment cycle</i>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/util/DanglingIntegrityException.html" title="class in org.eclipse.emf.cdo.util">DanglingIntegrityException</a></td>
+<th class="colFirst" scope="row"><a href="DanglingIntegrityException.html" title="class in org.eclipse.emf.cdo.util">DanglingIntegrityException</a></th>
 <td class="colLast">
-<div class="block">A local <a href="../../../../../org/eclipse/emf/cdo/util/DataIntegrityException.html" title="class in org.eclipse.emf.cdo.util"><code>data integrity exception</code></a> that indicates the addition of one or more cross references to objects
+<div class="block">A local <a href="DataIntegrityException.html" title="class in org.eclipse.emf.cdo.util"><code>data integrity exception</code></a> that indicates the addition of one or more cross references to objects
  that are not (or no longer) contained in the repository.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/util/DanglingReferenceException.html" title="class in org.eclipse.emf.cdo.util">DanglingReferenceException</a></td>
+<th class="colFirst" scope="row"><a href="DanglingReferenceException.html" title="class in org.eclipse.emf.cdo.util">DanglingReferenceException</a></th>
 <td class="colLast">
-<div class="block">An unchecked exception being thrown from <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit--"><code>CDOUserTransaction.commit()</code></a> if the commit <a href="../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>change
- set</code></a> is referencing <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>objects</code></a> that are not contained by any <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>resource</code></a> before the server
+<div class="block">An unchecked exception being thrown from <a href="../transaction/CDOUserTransaction.html#commit()"><code>CDOUserTransaction.commit()</code></a> if the commit <a href="../common/commit/CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>change
+ set</code></a> is referencing <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>objects</code></a> that are not contained by any <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource" class="externalLink"><code>resource</code></a> before the server
  is contacted.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/util/DataIntegrityException.html" title="class in org.eclipse.emf.cdo.util">DataIntegrityException</a></td>
+<th class="colFirst" scope="row"><a href="DataIntegrityException.html" title="class in org.eclipse.emf.cdo.util">DataIntegrityException</a></th>
 <td class="colLast">
-<div class="block">A <a href="../../../../../org/eclipse/emf/cdo/util/CommitException.html" title="class in org.eclipse.emf.cdo.util"><code>commit exception</code></a> that indicates data integrity problems.</div>
+<div class="block">A <a href="CommitException.html" title="class in org.eclipse.emf.cdo.util"><code>commit exception</code></a> that indicates data integrity problems.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/util/InvalidObjectException.html" title="class in org.eclipse.emf.cdo.util">InvalidObjectException</a></td>
+<th class="colFirst" scope="row"><a href="InvalidObjectException.html" title="class in org.eclipse.emf.cdo.util">InvalidObjectException</a></th>
 <td class="colLast">
 <div class="block">Exception occurs when an object isn't valid anymore.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/util/InvalidURIException.html" title="class in org.eclipse.emf.cdo.util">InvalidURIException</a></td>
+<th class="colFirst" scope="row"><a href="InvalidURIException.html" title="class in org.eclipse.emf.cdo.util">InvalidURIException</a></th>
 <td class="colLast">
-<div class="block">An unchecked exception being thrown to indicate problems with the <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util"><code>URI</code></a> of a <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resource</code></a>.</div>
+<div class="block">An unchecked exception being thrown to indicate problems with the <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink"><code>URI</code></a> of a <a href="../eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resource</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/util/LegacyModeNotEnabledException.html" title="class in org.eclipse.emf.cdo.util">LegacyModeNotEnabledException</a></td>
-<td class="colLast">Deprecated
-<div class="block"><span class="deprecationComment">As of 4.2 the legacy mode is always enabled.</span></div>
+<th class="colFirst" scope="row"><a href="LegacyModeNotEnabledException.html" title="class in org.eclipse.emf.cdo.util">LegacyModeNotEnabledException</a></th>
+<td class="colLast">Deprecated.
+<div class="deprecationComment">As of 4.2 the legacy mode is always enabled.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/util/LocalCommitConflictException.html" title="class in org.eclipse.emf.cdo.util">LocalCommitConflictException</a></td>
+<th class="colFirst" scope="row"><a href="LocalCommitConflictException.html" title="class in org.eclipse.emf.cdo.util">LocalCommitConflictException</a></th>
 <td class="colLast">
-<div class="block">A <a href="../../../../../org/eclipse/emf/cdo/util/CommitConflictException.html" title="class in org.eclipse.emf.cdo.util"><code>commit conflict exception</code></a> that indicates that the transaction has local <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html#hasConflict--"><code>conflicts</code></a>.</div>
+<div class="block">A <a href="CommitConflictException.html" title="class in org.eclipse.emf.cdo.util"><code>commit conflict exception</code></a> that indicates that the transaction has local <a href="../transaction/CDOTransaction.html#hasConflict()"><code>conflicts</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/util/LockTimeoutException.html" title="class in org.eclipse.emf.cdo.util">LockTimeoutException</a></td>
+<th class="colFirst" scope="row"><a href="LockTimeoutException.html" title="class in org.eclipse.emf.cdo.util">LockTimeoutException</a></th>
 <td class="colLast">
-<div class="block">An unchecked exception being thrown if <a href="../../../../../org/eclipse/emf/cdo/CDOLock.html" title="interface in org.eclipse.emf.cdo"><code>locks</code></a> could not be
- <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#lockObjects-java.util.Collection-org.eclipse.net4j.util.concurrent.IRWLockManager.LockType-long-"><code>acquired</code></a> within the specified timeout period.</div>
+<div class="block">An unchecked exception being thrown if <a href="../CDOLock.html" title="interface in org.eclipse.emf.cdo"><code>locks</code></a> could not be
+ <a href="../view/CDOView.html#lockObjects(java.util.Collection,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,long)"><code>acquired</code></a> within the specified timeout period.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/util/ObjectNotFoundException.html" title="class in org.eclipse.emf.cdo.util">ObjectNotFoundException</a></td>
+<th class="colFirst" scope="row"><a href="ObjectNotFoundException.html" title="class in org.eclipse.emf.cdo.util">ObjectNotFoundException</a></th>
 <td class="colLast">
 <div class="block">Exception occurs when an id doesn't exist on the server.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/util/OptimisticLockingException.html" title="class in org.eclipse.emf.cdo.util">OptimisticLockingException</a></td>
+<th class="colFirst" scope="row"><a href="OptimisticLockingException.html" title="class in org.eclipse.emf.cdo.util">OptimisticLockingException</a></th>
 <td class="colLast">
-<div class="block">A <a href="../../../../../org/eclipse/emf/cdo/util/ConcurrentAccessException.html" title="class in org.eclipse.emf.cdo.util"><code>concurrent access exception</code></a> that indicates that the repository can not acquire optimistic locks for some of the locally modified objects.</div>
+<div class="block">A <a href="ConcurrentAccessException.html" title="class in org.eclipse.emf.cdo.util"><code>concurrent access exception</code></a> that indicates that the repository can not acquire optimistic locks for some of the locally modified objects.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/util/ReadOnlyException.html" title="class in org.eclipse.emf.cdo.util">ReadOnlyException</a></td>
+<th class="colFirst" scope="row"><a href="ReadOnlyException.html" title="class in org.eclipse.emf.cdo.util">ReadOnlyException</a></th>
 <td class="colLast">
-<div class="block">An unchecked exception being thrown if write access to <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a> of a <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html#isReadOnly--"><code>read-only</code></a> view is attempted.</div>
+<div class="block">An unchecked exception being thrown if write access to <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a> of a <a href="../common/CDOCommonView.html#isReadOnly()"><code>read-only</code></a> view is attempted.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/util/ReferentialIntegrityException.html" title="class in org.eclipse.emf.cdo.util">ReferentialIntegrityException</a></td>
+<th class="colFirst" scope="row"><a href="ReferentialIntegrityException.html" title="class in org.eclipse.emf.cdo.util">ReferentialIntegrityException</a></th>
 <td class="colLast">
-<div class="block">A <a href="../../../../../org/eclipse/emf/cdo/util/DataIntegrityException.html" title="class in org.eclipse.emf.cdo.util"><code>data integrity exception</code></a> that indicates an attempt to create <i>stale references</i>.</div>
+<div class="block">A <a href="DataIntegrityException.html" title="class in org.eclipse.emf.cdo.util"><code>data integrity exception</code></a> that indicates an attempt to create <i>stale references</i>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/util/ServerException.html" title="class in org.eclipse.emf.cdo.util">ServerException</a></td>
-<td class="colLast">Deprecated
-<div class="block"><span class="deprecationComment">Not used.</span></div>
+<th class="colFirst" scope="row"><a href="ServerException.html" title="class in org.eclipse.emf.cdo.util">ServerException</a></th>
+<td class="colLast">Deprecated.
+<div class="deprecationComment">Not used.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/util/StaleRevisionLockException.html" title="class in org.eclipse.emf.cdo.util">StaleRevisionLockException</a></td>
+<th class="colFirst" scope="row"><a href="StaleRevisionLockException.html" title="class in org.eclipse.emf.cdo.util">StaleRevisionLockException</a></th>
 <td class="colLast">
 <div class="block">An unchecked exception being thrown when attempting to
- <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#lockObjects-java.util.Collection-org.eclipse.net4j.util.concurrent.IRWLockManager.LockType-long-"><code>lock</code></a> <i>stale</i> objects.</div>
+ <a href="../view/CDOView.html#lockObjects(java.util.Collection,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,long)"><code>lock</code></a> <i>stale</i> objects.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/util/UnitIntegrityException.html" title="class in org.eclipse.emf.cdo.util">UnitIntegrityException</a></td>
+<th class="colFirst" scope="row"><a href="UnitIntegrityException.html" title="class in org.eclipse.emf.cdo.util">UnitIntegrityException</a></th>
 <td class="colLast">
-<div class="block">A <a href="../../../../../org/eclipse/emf/cdo/util/DataIntegrityException.html" title="class in org.eclipse.emf.cdo.util"><code>data integrity exception</code></a> that indicates an attempt to move objects between units.</div>
+<div class="block">A <a href="DataIntegrityException.html" title="class in org.eclipse.emf.cdo.util"><code>data integrity exception</code></a> that indicates an attempt to move objects between units.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/util/ValidationException.html" title="class in org.eclipse.emf.cdo.util">ValidationException</a></td>
+<th class="colFirst" scope="row"><a href="ValidationException.html" title="class in org.eclipse.emf.cdo.util">ValidationException</a></th>
 <td class="colLast">
-<div class="block">A <a href="../../../../../org/eclipse/emf/cdo/util/DataIntegrityException.html" title="class in org.eclipse.emf.cdo.util"><code>data integrity exception</code></a> indicating that the attempt
+<div class="block">A <a href="DataIntegrityException.html" title="class in org.eclipse.emf.cdo.util"><code>data integrity exception</code></a> indicating that the attempt
  to commit a transaction was rejected because of violation of server-side validation checks.</div>
 </td>
 </tr>
@@ -303,22 +329,20 @@
 </table>
 </li>
 </ul>
-<a name="package.description">
-<!--   -->
-</a>
-<h2 title="Package org.eclipse.emf.cdo.util Description">Package org.eclipse.emf.cdo.util Description</h2>
-<div class="block">Client utility classes, some common interfaces and exceptions.</div>
 </div>
+</main>
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li class="navBarCell1Rev">Package</li>
 <li>Class</li>
 <li><a href="package-use.html">Use</a></li>
@@ -328,16 +352,8 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/emf/cdo/ui/widgets/package-summary.html">Prev&nbsp;Package</a></li>
-<li><a href="../../../../../org/eclipse/emf/cdo/view/package-summary.html">Next&nbsp;Package</a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/emf/cdo/util/package-summary.html" target="_top">Frames</a></li>
-<li><a href="package-summary.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -350,11 +366,16 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

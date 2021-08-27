@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>RepositoryConfigurator (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":9,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":9,"i16":9,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/RepositoryConfigurator.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryActivityLog.Rolling.Factory.html" title="class in org.eclipse.emf.cdo.spi.server"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.Factory.html" title="class in org.eclipse.emf.cdo.spi.server"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html" target="_top">Frames</a></li>
-<li><a href="RepositoryConfigurator.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,6 +82,9 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -85,13 +101,22 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.emf.cdo.spi.server</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.cdo.spi.server</a></div>
 <h2 title="Class RepositoryConfigurator" class="title">Class RepositoryConfigurator</h2>
 </div>
 <div class="contentContainer">
@@ -106,10 +131,14 @@ var activeTableTab = "activeTableTab";
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
+<dl>
+<dt>All Implemented Interfaces:</dt>
+<dd><code>org.eclipse.net4j.util.container.IManagedContainerProvider</code></dd>
+</dl>
 <hr>
-<br>
 <pre>public class <span class="typeNameLabel">RepositoryConfigurator</span>
-extends java.lang.Object</pre>
+extends java.lang.Object
+implements org.eclipse.net4j.util.container.IManagedContainerProvider</pre>
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -124,172 +153,245 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="nested.class.summary">
+<li class="blockList"><a id="nested.class.summary">
 <!--   -->
 </a>
 <h3>Nested Class Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Nested Class Summary table, listing nested classes, and an explanation">
+<table class="memberSummary">
 <caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Class and Description</th>
+<th class="colSecond" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.Factory.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryConfigurator.Factory</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="RepositoryConfigurator.Factory.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryConfigurator.Factory</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.summary">
+<li class="blockList"><a id="constructor.summary">
 <!--   -->
 </a>
 <h3>Constructor Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
+<table class="memberSummary">
 <caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Constructor and Description</th>
+<th class="colFirst" scope="col">Constructor</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#RepositoryConfigurator--">RepositoryConfigurator</a></span>()</code>&nbsp;</td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">RepositoryConfigurator</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#RepositoryConfigurator-org.eclipse.net4j.util.container.IManagedContainer-">RepositoryConfigurator</a></span>(<a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container)</code>&nbsp;</td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(org.eclipse.net4j.util.container.IManagedContainer)">RepositoryConfigurator</a></span>&#8203;(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>protected <a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#configure-org.w3c.dom.Document-">configure</a></span>(org.w3c.dom.Document&nbsp;document)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../../server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#configure(java.io.File)">configure</a></span>&#8203;(java.io.File&nbsp;configFile)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#configure-java.io.File-">configure</a></span>(java.io.File&nbsp;configFile)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../../server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#configure(java.io.Reader)">configure</a></span>&#8203;(java.io.Reader&nbsp;configReader)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#configure-java.io.Reader-">configure</a></span>(java.io.Reader&nbsp;configReader)</code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="../../server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#configure(org.w3c.dom.Document)">configure</a></span>&#8203;(org.w3c.dom.Document&nbsp;document)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>protected <a href="../../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#createStore-java.lang.String-java.util.Map-org.w3c.dom.Element-">createStore</a></span>(java.lang.String&nbsp;repositoryName,
-           java.util.Map&lt;java.lang.String,java.lang.String&gt;&nbsp;repositoryProperties,
-           org.w3c.dom.Element&nbsp;storeConfig)</code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="../../server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createStore(java.lang.String,java.util.Map,org.w3c.dom.Element)">createStore</a></span>&#8203;(java.lang.String&nbsp;repositoryName,
+           java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;repositoryProperties,
+           org.w3c.dom.Element&nbsp;storeConfig)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>protected <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IAuthenticator.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">IAuthenticator</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#getAuthenticator-org.w3c.dom.Element-">getAuthenticator</a></span>(org.w3c.dom.Element&nbsp;authenticatorConfig)</code>&nbsp;</td>
+<td class="colFirst"><code>protected java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAttribute(org.w3c.dom.Element,java.lang.String)">getAttribute</a></span>&#8203;(org.w3c.dom.Element&nbsp;element,
+            java.lang.String&nbsp;name)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code>protected <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IAuthenticator.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">IAuthenticator</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#getAuthenticator-java.lang.String-java.lang.String-">getAuthenticator</a></span>(java.lang.String&nbsp;type,
-                java.lang.String&nbsp;description)</code>&nbsp;</td>
+<td class="colFirst"><code>protected org.eclipse.net4j.util.security.IAuthenticator</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAuthenticator(java.lang.String,java.lang.String)">getAuthenticator</a></span>&#8203;(java.lang.String&nbsp;type,
+                java.lang.String&nbsp;description)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code>protected org.w3c.dom.Element</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#getAuthenticatorConfig-org.w3c.dom.Element-">getAuthenticatorConfig</a></span>(org.w3c.dom.Element&nbsp;repositoryConfig)</code>&nbsp;</td>
+<td class="colFirst"><code>protected org.eclipse.net4j.util.security.IAuthenticator</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAuthenticator(org.w3c.dom.Element)">getAuthenticator</a></span>&#8203;(org.w3c.dom.Element&nbsp;authenticatorConfig)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#getContainer--">getContainer</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>protected org.w3c.dom.Element</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAuthenticatorConfig(org.w3c.dom.Element)">getAuthenticatorConfig</a></span>&#8203;(org.w3c.dom.Element&nbsp;repositoryConfig)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
-<td class="colFirst"><code>protected &lt;T&gt;&nbsp;T</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#getContainerElement-org.w3c.dom.Element-java.lang.String-">getContainerElement</a></span>(org.w3c.dom.Element&nbsp;element,
-                   java.lang.String&nbsp;defaultType)</code>&nbsp;</td>
+<td class="colFirst"><code>protected org.w3c.dom.Element</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getChildElement(org.w3c.dom.Element,java.lang.String)">getChildElement</a></span>&#8203;(org.w3c.dom.Element&nbsp;element,
+               java.lang.String&nbsp;name)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
-<td class="colFirst"><code>protected org.w3c.dom.Document</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#getDocument-java.io.File-">getDocument</a></span>(java.io.File&nbsp;configFile)</code>&nbsp;</td>
+<td class="colFirst"><code>org.eclipse.net4j.util.container.IManagedContainer</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getContainer()">getContainer</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
-<td class="colFirst"><code>protected org.w3c.dom.Document</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#getDocument-java.io.Reader-">getDocument</a></span>(java.io.Reader&nbsp;configReader)</code>&nbsp;</td>
+<td class="colFirst"><code>protected &lt;T&gt;&nbsp;T</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getContainerElement(org.w3c.dom.Element,java.lang.String)">getContainerElement</a></span>&#8203;(org.w3c.dom.Element&nbsp;element,
+                   java.lang.String&nbsp;defaultType)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i11" class="rowColor">
-<td class="colFirst"><code>protected <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</a>[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#getInitialPackages-org.w3c.dom.Element-">getInitialPackages</a></span>(org.w3c.dom.Element&nbsp;repositoryConfig)</code>&nbsp;</td>
+<td class="colFirst"><code>protected org.w3c.dom.Document</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDocument(java.io.File)">getDocument</a></span>&#8203;(java.io.File&nbsp;configFile)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i12" class="altColor">
-<td class="colFirst"><code>static java.util.Map&lt;java.lang.String,java.lang.String&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#getProperties-org.w3c.dom.Element-int-">getProperties</a></span>(org.w3c.dom.Element&nbsp;element,
-             int&nbsp;levels)</code>&nbsp;</td>
+<td class="colFirst"><code>protected org.w3c.dom.Document</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDocument(java.io.Reader)">getDocument</a></span>&#8203;(java.io.Reader&nbsp;configReader)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i13" class="rowColor">
-<td class="colFirst"><code>protected <a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#getRepository-org.w3c.dom.Element-">getRepository</a></span>(org.w3c.dom.Element&nbsp;repositoryConfig)</code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage</a>[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInitialPackages(org.w3c.dom.Element)">getInitialPackages</a></span>&#8203;(org.w3c.dom.Element&nbsp;repositoryConfig)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i14" class="altColor">
-<td class="colFirst"><code>protected <a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#getRepository-java.lang.String-">getRepository</a></span>(java.lang.String&nbsp;repositoryType)</code>&nbsp;</td>
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getParameter(java.lang.String)">getParameter</a></span>&#8203;(java.lang.String&nbsp;key)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i15" class="rowColor">
-<td class="colFirst"><code>java.util.Map&lt;java.lang.String,<a href="../../../../../../org/eclipse/emf/cdo/server/IRepositoryFactory.html" title="interface in org.eclipse.emf.cdo.server">IRepositoryFactory</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#getRepositoryFactories--">getRepositoryFactories</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>static java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getProperties(org.w3c.dom.Element,int)">getProperties</a></span>&#8203;(org.w3c.dom.Element&nbsp;element,
+             int&nbsp;levels)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i16" class="altColor">
-<td class="colFirst"><code>protected <a href="../../../../../../org/eclipse/emf/cdo/server/IRepositoryFactory.html" title="interface in org.eclipse.emf.cdo.server">IRepositoryFactory</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#getRepositoryFactory-java.lang.String-">getRepositoryFactory</a></span>(java.lang.String&nbsp;type)</code>&nbsp;</td>
+<td class="colFirst"><code>static java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getProperties(org.w3c.dom.Element,int,java.util.Map)">getProperties</a></span>&#8203;(org.w3c.dom.Element&nbsp;element,
+             int&nbsp;levels,
+             java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;parameters)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i17" class="rowColor">
-<td class="colFirst"><code>protected org.w3c.dom.Element</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#getStoreConfig-org.w3c.dom.Element-">getStoreConfig</a></span>(org.w3c.dom.Element&nbsp;repositoryConfig)</code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="../../server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRepository(java.lang.String)">getRepository</a></span>&#8203;(java.lang.String&nbsp;repositoryType)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i18" class="altColor">
-<td class="colFirst"><code>java.util.Map&lt;java.lang.String,<a href="../../../../../../org/eclipse/emf/cdo/server/IStoreFactory.html" title="interface in org.eclipse.emf.cdo.server">IStoreFactory</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#getStoreFactories--">getStoreFactories</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="../../server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRepository(org.w3c.dom.Element)">getRepository</a></span>&#8203;(org.w3c.dom.Element&nbsp;repositoryConfig)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i19" class="rowColor">
-<td class="colFirst"><code>protected <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreFactory.html" title="interface in org.eclipse.emf.cdo.server">IStoreFactory</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#getStoreFactory-java.lang.String-">getStoreFactory</a></span>(java.lang.String&nbsp;type)</code>&nbsp;</td>
+<td class="colFirst"><code>java.util.Map&lt;java.lang.String,&#8203;<a href="../../server/IRepositoryFactory.html" title="interface in org.eclipse.emf.cdo.server">IRepositoryFactory</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRepositoryFactories()">getRepositoryFactories</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i20" class="altColor">
-<td class="colFirst"><code>protected <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IUserManager.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">IUserManager</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#getUserManager-org.w3c.dom.Element-">getUserManager</a></span>(org.w3c.dom.Element&nbsp;userManagerConfig)</code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="../../server/IRepositoryFactory.html" title="interface in org.eclipse.emf.cdo.server">IRepositoryFactory</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRepositoryFactory(java.lang.String)">getRepositoryFactory</a></span>&#8203;(java.lang.String&nbsp;type)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i21" class="rowColor">
-<td class="colFirst"><code>protected <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IUserManager.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">IUserManager</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#getUserManager-java.lang.String-java.lang.String-">getUserManager</a></span>(java.lang.String&nbsp;type,
-              java.lang.String&nbsp;description)</code>&nbsp;</td>
+<td class="colFirst"><code>protected org.w3c.dom.Element</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getStoreConfig(org.w3c.dom.Element)">getStoreConfig</a></span>&#8203;(org.w3c.dom.Element&nbsp;repositoryConfig)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i22" class="altColor">
-<td class="colFirst"><code>protected org.w3c.dom.Element</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#getUserManagerConfig-org.w3c.dom.Element-">getUserManagerConfig</a></span>(org.w3c.dom.Element&nbsp;repositoryConfig)</code>&nbsp;</td>
+<td class="colFirst"><code>java.util.Map&lt;java.lang.String,&#8203;<a href="../../server/IStoreFactory.html" title="interface in org.eclipse.emf.cdo.server">IStoreFactory</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getStoreFactories()">getStoreFactories</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i23" class="rowColor">
-<td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#setActivityLog-org.eclipse.emf.cdo.spi.server.InternalRepository-org.w3c.dom.Element-">setActivityLog</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository,
-              org.w3c.dom.Element&nbsp;repositoryConfig)</code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="../../server/IStoreFactory.html" title="interface in org.eclipse.emf.cdo.server">IStoreFactory</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getStoreFactory(java.lang.String)">getStoreFactory</a></span>&#8203;(java.lang.String&nbsp;type)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i24" class="altColor">
-<td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#setAuthenticator-org.eclipse.emf.cdo.spi.server.InternalRepository-org.w3c.dom.Element-">setAuthenticator</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository,
-                org.w3c.dom.Element&nbsp;repositoryConfig)</code>&nbsp;</td>
+<td class="colFirst"><code>protected org.eclipse.net4j.util.security.IUserManager</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getUserManager(java.lang.String,java.lang.String)">getUserManager</a></span>&#8203;(java.lang.String&nbsp;type,
+              java.lang.String&nbsp;description)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i25" class="rowColor">
+<td class="colFirst"><code>protected org.eclipse.net4j.util.security.IUserManager</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getUserManager(org.w3c.dom.Element)">getUserManager</a></span>&#8203;(org.w3c.dom.Element&nbsp;userManagerConfig)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i26" class="altColor">
+<td class="colFirst"><code>protected org.w3c.dom.Element</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getUserManagerConfig(org.w3c.dom.Element)">getUserManagerConfig</a></span>&#8203;(org.w3c.dom.Element&nbsp;repositoryConfig)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i27" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#setUserManager-org.eclipse.emf.cdo.spi.server.InternalRepository-org.w3c.dom.Element-">setUserManager</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository,
-              org.w3c.dom.Element&nbsp;repositoryConfig)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setActivityLog(org.eclipse.emf.cdo.spi.server.InternalRepository,org.w3c.dom.Element)">setActivityLog</a></span>&#8203;(<a href="InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository,
+              org.w3c.dom.Element&nbsp;repositoryConfig)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i28" class="altColor">
+<td class="colFirst"><code>protected void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAuthenticator(org.eclipse.emf.cdo.spi.server.InternalRepository,org.w3c.dom.Element)">setAuthenticator</a></span>&#8203;(<a href="InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository,
+                org.w3c.dom.Element&nbsp;repositoryConfig)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i29" class="rowColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setParameter(java.lang.String,java.lang.String)">setParameter</a></span>&#8203;(java.lang.String&nbsp;key,
+            java.lang.String&nbsp;value)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i30" class="altColor">
+<td class="colFirst"><code>protected void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setUserManager(org.eclipse.emf.cdo.spi.server.InternalRepository,org.w3c.dom.Element)">setUserManager</a></span>&#8203;(<a href="InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository,
+              org.w3c.dom.Element&nbsp;repositoryConfig)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i31" class="rowColor">
+<td class="colFirst"><code>static java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#substituteParameters(java.lang.String,java.util.Map)">substituteParameters</a></span>&#8203;(java.lang.String&nbsp;value,
+                    java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;parameters)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
+<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
@@ -297,6 +399,7 @@ extends java.lang.Object</pre>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -304,12 +407,13 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.detail">
+<li class="blockList"><a id="constructor.detail">
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="RepositoryConfigurator--">
+<a id="&lt;init&gt;()">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -318,121 +422,154 @@ extends java.lang.Object</pre>
 <pre>public&nbsp;RepositoryConfigurator()</pre>
 </li>
 </ul>
-<a name="RepositoryConfigurator-org.eclipse.net4j.util.container.IManagedContainer-">
+<a id="&lt;init&gt;(org.eclipse.net4j.util.container.IManagedContainer)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>RepositoryConfigurator</h4>
-<pre>public&nbsp;RepositoryConfigurator(<a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container)</pre>
+<pre>public&nbsp;RepositoryConfigurator&#8203;(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container)</pre>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="getContainer--">
+<a id="getContainer()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getContainer</h4>
-<pre>public&nbsp;<a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;getContainer()</pre>
+<pre class="methodSignature">public&nbsp;org.eclipse.net4j.util.container.IManagedContainer&nbsp;getContainer()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code>getContainer</code>&nbsp;in interface&nbsp;<code>org.eclipse.net4j.util.container.IManagedContainerProvider</code></dd>
+</dl>
 </li>
 </ul>
-<a name="getRepositoryFactories--">
+<a id="getRepositoryFactories()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getRepositoryFactories</h4>
-<pre>public&nbsp;java.util.Map&lt;java.lang.String,<a href="../../../../../../org/eclipse/emf/cdo/server/IRepositoryFactory.html" title="interface in org.eclipse.emf.cdo.server">IRepositoryFactory</a>&gt;&nbsp;getRepositoryFactories()</pre>
+<pre class="methodSignature">public&nbsp;java.util.Map&lt;java.lang.String,&#8203;<a href="../../server/IRepositoryFactory.html" title="interface in org.eclipse.emf.cdo.server">IRepositoryFactory</a>&gt;&nbsp;getRepositoryFactories()</pre>
 </li>
 </ul>
-<a name="getStoreFactories--">
+<a id="getStoreFactories()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getStoreFactories</h4>
-<pre>public&nbsp;java.util.Map&lt;java.lang.String,<a href="../../../../../../org/eclipse/emf/cdo/server/IStoreFactory.html" title="interface in org.eclipse.emf.cdo.server">IStoreFactory</a>&gt;&nbsp;getStoreFactories()</pre>
+<pre class="methodSignature">public&nbsp;java.util.Map&lt;java.lang.String,&#8203;<a href="../../server/IStoreFactory.html" title="interface in org.eclipse.emf.cdo.server">IStoreFactory</a>&gt;&nbsp;getStoreFactories()</pre>
 </li>
 </ul>
-<a name="configure-java.io.File-">
+<a id="getParameter(java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>configure</h4>
-<pre>public&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>[]&nbsp;configure(java.io.File&nbsp;configFile)
-                        throws javax.xml.parsers.ParserConfigurationException,
-                               org.xml.sax.SAXException,
-                               java.io.IOException,
-                               <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime">CoreException</a></pre>
+<h4>getParameter</h4>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getParameter&#8203;(java.lang.String&nbsp;key)</pre>
 <dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>javax.xml.parsers.ParserConfigurationException</code></dd>
-<dd><code>org.xml.sax.SAXException</code></dd>
-<dd><code>java.io.IOException</code></dd>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime">CoreException</a></code></dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.10</dd>
 </dl>
 </li>
 </ul>
-<a name="configure-java.io.Reader-">
+<a id="setParameter(java.lang.String,java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setParameter</h4>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;setParameter&#8203;(java.lang.String&nbsp;key,
+                                     java.lang.String&nbsp;value)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.10</dd>
+</dl>
+</li>
+</ul>
+<a id="configure(java.io.File)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>configure</h4>
-<pre>public&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>[]&nbsp;configure(java.io.Reader&nbsp;configReader)
+<pre class="methodSignature">public&nbsp;<a href="../../server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>[]&nbsp;configure&#8203;(java.io.File&nbsp;configFile)
                         throws javax.xml.parsers.ParserConfigurationException,
                                org.xml.sax.SAXException,
                                java.io.IOException,
-                               <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime">CoreException</a></pre>
+                               <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">CoreException</a></pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>javax.xml.parsers.ParserConfigurationException</code></dd>
 <dd><code>org.xml.sax.SAXException</code></dd>
 <dd><code>java.io.IOException</code></dd>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime">CoreException</a></code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">CoreException</a></code></dd>
+</dl>
+</li>
+</ul>
+<a id="configure(java.io.Reader)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>configure</h4>
+<pre class="methodSignature">public&nbsp;<a href="../../server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>[]&nbsp;configure&#8203;(java.io.Reader&nbsp;configReader)
+                        throws javax.xml.parsers.ParserConfigurationException,
+                               org.xml.sax.SAXException,
+                               java.io.IOException,
+                               <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">CoreException</a></pre>
+<dl>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code>javax.xml.parsers.ParserConfigurationException</code></dd>
+<dd><code>org.xml.sax.SAXException</code></dd>
+<dd><code>java.io.IOException</code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">CoreException</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.3</dd>
 </dl>
 </li>
 </ul>
-<a name="configure-org.w3c.dom.Document-">
+<a id="configure(org.w3c.dom.Document)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>configure</h4>
-<pre>protected&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>[]&nbsp;configure(org.w3c.dom.Document&nbsp;document)
+<pre class="methodSignature">protected&nbsp;<a href="../../server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>[]&nbsp;configure&#8203;(org.w3c.dom.Document&nbsp;document)
                            throws javax.xml.parsers.ParserConfigurationException,
                                   org.xml.sax.SAXException,
                                   java.io.IOException,
-                                  <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime">CoreException</a></pre>
+                                  <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">CoreException</a></pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>javax.xml.parsers.ParserConfigurationException</code></dd>
 <dd><code>org.xml.sax.SAXException</code></dd>
 <dd><code>java.io.IOException</code></dd>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime">CoreException</a></code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">CoreException</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.3</dd>
 </dl>
 </li>
 </ul>
-<a name="getDocument-java.io.File-">
+<a id="getDocument(java.io.File)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getDocument</h4>
-<pre>protected&nbsp;org.w3c.dom.Document&nbsp;getDocument(java.io.File&nbsp;configFile)
+<pre class="methodSignature">protected&nbsp;org.w3c.dom.Document&nbsp;getDocument&#8203;(java.io.File&nbsp;configFile)
                                     throws javax.xml.parsers.ParserConfigurationException,
                                            org.xml.sax.SAXException,
                                            java.io.IOException</pre>
@@ -444,13 +581,13 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a name="getDocument-java.io.Reader-">
+<a id="getDocument(java.io.Reader)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getDocument</h4>
-<pre>protected&nbsp;org.w3c.dom.Document&nbsp;getDocument(java.io.Reader&nbsp;configReader)
+<pre class="methodSignature">protected&nbsp;org.w3c.dom.Document&nbsp;getDocument&#8203;(java.io.Reader&nbsp;configReader)
                                     throws javax.xml.parsers.ParserConfigurationException,
                                            org.xml.sax.SAXException,
                                            java.io.IOException</pre>
@@ -464,173 +601,173 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a name="getRepositoryFactory-java.lang.String-">
+<a id="getRepositoryFactory(java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getRepositoryFactory</h4>
-<pre>protected&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/server/IRepositoryFactory.html" title="interface in org.eclipse.emf.cdo.server">IRepositoryFactory</a>&nbsp;getRepositoryFactory(java.lang.String&nbsp;type)
-                                           throws <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime">CoreException</a></pre>
+<pre class="methodSignature">protected&nbsp;<a href="../../server/IRepositoryFactory.html" title="interface in org.eclipse.emf.cdo.server">IRepositoryFactory</a>&nbsp;getRepositoryFactory&#8203;(java.lang.String&nbsp;type)
+                                           throws <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">CoreException</a></pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime">CoreException</a></code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">CoreException</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="getRepository-org.w3c.dom.Element-">
+<a id="getRepository(org.w3c.dom.Element)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getRepository</h4>
-<pre>protected&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&nbsp;getRepository(org.w3c.dom.Element&nbsp;repositoryConfig)
-                             throws <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime">CoreException</a></pre>
+<pre class="methodSignature">protected&nbsp;<a href="../../server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&nbsp;getRepository&#8203;(org.w3c.dom.Element&nbsp;repositoryConfig)
+                             throws <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">CoreException</a></pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime">CoreException</a></code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">CoreException</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="getRepository-java.lang.String-">
+<a id="getRepository(java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getRepository</h4>
-<pre>protected&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&nbsp;getRepository(java.lang.String&nbsp;repositoryType)
-                             throws <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime">CoreException</a></pre>
+<pre class="methodSignature">protected&nbsp;<a href="../../server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&nbsp;getRepository&#8203;(java.lang.String&nbsp;repositoryType)
+                             throws <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">CoreException</a></pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime">CoreException</a></code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">CoreException</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="getUserManagerConfig-org.w3c.dom.Element-">
+<a id="getUserManagerConfig(org.w3c.dom.Element)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getUserManagerConfig</h4>
-<pre>protected&nbsp;org.w3c.dom.Element&nbsp;getUserManagerConfig(org.w3c.dom.Element&nbsp;repositoryConfig)</pre>
+<pre class="methodSignature">protected&nbsp;org.w3c.dom.Element&nbsp;getUserManagerConfig&#8203;(org.w3c.dom.Element&nbsp;repositoryConfig)</pre>
 </li>
 </ul>
-<a name="getUserManager-org.w3c.dom.Element-">
+<a id="getUserManager(org.w3c.dom.Element)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getUserManager</h4>
-<pre>protected&nbsp;<a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IUserManager.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">IUserManager</a>&nbsp;getUserManager(org.w3c.dom.Element&nbsp;userManagerConfig)
-                               throws <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime">CoreException</a></pre>
+<pre class="methodSignature">protected&nbsp;org.eclipse.net4j.util.security.IUserManager&nbsp;getUserManager&#8203;(org.w3c.dom.Element&nbsp;userManagerConfig)
+                                                               throws <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">CoreException</a></pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime">CoreException</a></code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">CoreException</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="getUserManager-java.lang.String-java.lang.String-">
+<a id="getUserManager(java.lang.String,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getUserManager</h4>
-<pre>protected&nbsp;<a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IUserManager.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">IUserManager</a>&nbsp;getUserManager(java.lang.String&nbsp;type,
-                                      java.lang.String&nbsp;description)
-                               throws <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime">CoreException</a></pre>
+<pre class="methodSignature">protected&nbsp;org.eclipse.net4j.util.security.IUserManager&nbsp;getUserManager&#8203;(java.lang.String&nbsp;type,
+                                                                      java.lang.String&nbsp;description)
+                                                               throws <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">CoreException</a></pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime">CoreException</a></code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">CoreException</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="setUserManager-org.eclipse.emf.cdo.spi.server.InternalRepository-org.w3c.dom.Element-">
+<a id="setUserManager(org.eclipse.emf.cdo.spi.server.InternalRepository,org.w3c.dom.Element)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setUserManager</h4>
-<pre>protected&nbsp;void&nbsp;setUserManager(<a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository,
+<pre class="methodSignature">protected&nbsp;void&nbsp;setUserManager&#8203;(<a href="InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository,
                               org.w3c.dom.Element&nbsp;repositoryConfig)
-                       throws <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime">CoreException</a></pre>
+                       throws <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">CoreException</a></pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime">CoreException</a></code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">CoreException</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
 </li>
 </ul>
-<a name="getAuthenticatorConfig-org.w3c.dom.Element-">
+<a id="getAuthenticatorConfig(org.w3c.dom.Element)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getAuthenticatorConfig</h4>
-<pre>protected&nbsp;org.w3c.dom.Element&nbsp;getAuthenticatorConfig(org.w3c.dom.Element&nbsp;repositoryConfig)</pre>
+<pre class="methodSignature">protected&nbsp;org.w3c.dom.Element&nbsp;getAuthenticatorConfig&#8203;(org.w3c.dom.Element&nbsp;repositoryConfig)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
 </li>
 </ul>
-<a name="getAuthenticator-org.w3c.dom.Element-">
+<a id="getAuthenticator(org.w3c.dom.Element)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getAuthenticator</h4>
-<pre>protected&nbsp;<a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IAuthenticator.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">IAuthenticator</a>&nbsp;getAuthenticator(org.w3c.dom.Element&nbsp;authenticatorConfig)
-                                   throws <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime">CoreException</a></pre>
+<pre class="methodSignature">protected&nbsp;org.eclipse.net4j.util.security.IAuthenticator&nbsp;getAuthenticator&#8203;(org.w3c.dom.Element&nbsp;authenticatorConfig)
+                                                                   throws <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">CoreException</a></pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime">CoreException</a></code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">CoreException</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
 </li>
 </ul>
-<a name="getAuthenticator-java.lang.String-java.lang.String-">
+<a id="getAuthenticator(java.lang.String,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getAuthenticator</h4>
-<pre>protected&nbsp;<a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IAuthenticator.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">IAuthenticator</a>&nbsp;getAuthenticator(java.lang.String&nbsp;type,
-                                          java.lang.String&nbsp;description)
-                                   throws <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime">CoreException</a></pre>
+<pre class="methodSignature">protected&nbsp;org.eclipse.net4j.util.security.IAuthenticator&nbsp;getAuthenticator&#8203;(java.lang.String&nbsp;type,
+                                                                          java.lang.String&nbsp;description)
+                                                                   throws <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">CoreException</a></pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime">CoreException</a></code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">CoreException</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
 </li>
 </ul>
-<a name="setAuthenticator-org.eclipse.emf.cdo.spi.server.InternalRepository-org.w3c.dom.Element-">
+<a id="setAuthenticator(org.eclipse.emf.cdo.spi.server.InternalRepository,org.w3c.dom.Element)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setAuthenticator</h4>
-<pre>protected&nbsp;void&nbsp;setAuthenticator(<a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository,
+<pre class="methodSignature">protected&nbsp;void&nbsp;setAuthenticator&#8203;(<a href="InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository,
                                 org.w3c.dom.Element&nbsp;repositoryConfig)
-                         throws <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime">CoreException</a></pre>
+                         throws <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">CoreException</a></pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime">CoreException</a></code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">CoreException</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
 </li>
 </ul>
-<a name="setActivityLog-org.eclipse.emf.cdo.spi.server.InternalRepository-org.w3c.dom.Element-">
+<a id="setActivityLog(org.eclipse.emf.cdo.spi.server.InternalRepository,org.w3c.dom.Element)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setActivityLog</h4>
-<pre>protected&nbsp;void&nbsp;setActivityLog(<a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository,
+<pre class="methodSignature">protected&nbsp;void&nbsp;setActivityLog&#8203;(<a href="InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository,
                               org.w3c.dom.Element&nbsp;repositoryConfig)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -638,61 +775,61 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a name="getInitialPackages-org.w3c.dom.Element-">
+<a id="getInitialPackages(org.w3c.dom.Element)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getInitialPackages</h4>
-<pre>protected&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</a>[]&nbsp;getInitialPackages(org.w3c.dom.Element&nbsp;repositoryConfig)</pre>
+<pre class="methodSignature">protected&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage</a>[]&nbsp;getInitialPackages&#8203;(org.w3c.dom.Element&nbsp;repositoryConfig)</pre>
 </li>
 </ul>
-<a name="getStoreConfig-org.w3c.dom.Element-">
+<a id="getStoreConfig(org.w3c.dom.Element)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getStoreConfig</h4>
-<pre>protected&nbsp;org.w3c.dom.Element&nbsp;getStoreConfig(org.w3c.dom.Element&nbsp;repositoryConfig)</pre>
+<pre class="methodSignature">protected&nbsp;org.w3c.dom.Element&nbsp;getStoreConfig&#8203;(org.w3c.dom.Element&nbsp;repositoryConfig)</pre>
 </li>
 </ul>
-<a name="getStoreFactory-java.lang.String-">
+<a id="getStoreFactory(java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getStoreFactory</h4>
-<pre>protected&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/server/IStoreFactory.html" title="interface in org.eclipse.emf.cdo.server">IStoreFactory</a>&nbsp;getStoreFactory(java.lang.String&nbsp;type)
-                                 throws <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime">CoreException</a></pre>
+<pre class="methodSignature">protected&nbsp;<a href="../../server/IStoreFactory.html" title="interface in org.eclipse.emf.cdo.server">IStoreFactory</a>&nbsp;getStoreFactory&#8203;(java.lang.String&nbsp;type)
+                                 throws <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">CoreException</a></pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime">CoreException</a></code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">CoreException</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="createStore-java.lang.String-java.util.Map-org.w3c.dom.Element-">
+<a id="createStore(java.lang.String,java.util.Map,org.w3c.dom.Element)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createStore</h4>
-<pre>protected&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a>&nbsp;createStore(java.lang.String&nbsp;repositoryName,
-                             java.util.Map&lt;java.lang.String,java.lang.String&gt;&nbsp;repositoryProperties,
+<pre class="methodSignature">protected&nbsp;<a href="../../server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a>&nbsp;createStore&#8203;(java.lang.String&nbsp;repositoryName,
+                             java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;repositoryProperties,
                              org.w3c.dom.Element&nbsp;storeConfig)
-                      throws <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime">CoreException</a></pre>
+                      throws <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">CoreException</a></pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime">CoreException</a></code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">CoreException</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="getContainerElement-org.w3c.dom.Element-java.lang.String-">
+<a id="getContainerElement(org.w3c.dom.Element,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getContainerElement</h4>
-<pre>protected&nbsp;&lt;T&gt;&nbsp;T&nbsp;getContainerElement(org.w3c.dom.Element&nbsp;element,
+<pre class="methodSignature">protected&nbsp;&lt;T&gt;&nbsp;T&nbsp;getContainerElement&#8203;(org.w3c.dom.Element&nbsp;element,
                                     java.lang.String&nbsp;defaultType)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -700,33 +837,94 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a name="getProperties-org.w3c.dom.Element-int-">
+<a id="getChildElement(org.w3c.dom.Element,java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getChildElement</h4>
+<pre class="methodSignature">protected&nbsp;org.w3c.dom.Element&nbsp;getChildElement&#8203;(org.w3c.dom.Element&nbsp;element,
+                                              java.lang.String&nbsp;name)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.10</dd>
+</dl>
+</li>
+</ul>
+<a id="getAttribute(org.w3c.dom.Element,java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getAttribute</h4>
+<pre class="methodSignature">protected&nbsp;java.lang.String&nbsp;getAttribute&#8203;(org.w3c.dom.Element&nbsp;element,
+                                        java.lang.String&nbsp;name)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.10</dd>
+</dl>
+</li>
+</ul>
+<a id="substituteParameters(java.lang.String,java.util.Map)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>substituteParameters</h4>
+<pre class="methodSignature">public static&nbsp;java.lang.String&nbsp;substituteParameters&#8203;(java.lang.String&nbsp;value,
+                                                    java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;parameters)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.10</dd>
+</dl>
+</li>
+</ul>
+<a id="getProperties(org.w3c.dom.Element,int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getProperties</h4>
+<pre class="methodSignature">public static&nbsp;java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;getProperties&#8203;(org.w3c.dom.Element&nbsp;element,
+                                                                                   int&nbsp;levels)</pre>
+</li>
+</ul>
+<a id="getProperties(org.w3c.dom.Element,int,java.util.Map)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getProperties</h4>
-<pre>public static&nbsp;java.util.Map&lt;java.lang.String,java.lang.String&gt;&nbsp;getProperties(org.w3c.dom.Element&nbsp;element,
-                                                                             int&nbsp;levels)</pre>
+<pre class="methodSignature">public static&nbsp;java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;getProperties&#8203;(org.w3c.dom.Element&nbsp;element,
+                                                                                   int&nbsp;levels,
+                                                                                   java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;parameters)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.10</dd>
+</dl>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/RepositoryConfigurator.html">Use</a></li>
@@ -736,16 +934,8 @@ extends java.lang.Object</pre>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryActivityLog.Rolling.Factory.html" title="class in org.eclipse.emf.cdo.spi.server"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.Factory.html" title="class in org.eclipse.emf.cdo.spi.server"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html" target="_top">Frames</a></li>
-<li><a href="RepositoryConfigurator.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -758,6 +948,9 @@ extends java.lang.Object</pre>
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -774,10 +967,12 @@ extends java.lang.Object</pre>
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>CDOItemProvider (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":9,"i23":9,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":9,"i23":9,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/CDOItemProvider.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/emf/cdo/ui/CDOInvalidRootAgent.html" title="class in org.eclipse.emf.cdo.ui"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.EditorRegistryListener.html" title="class in org.eclipse.emf.cdo.ui"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/emf/cdo/ui/CDOItemProvider.html" target="_top">Frames</a></li>
-<li><a href="CDOItemProvider.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,12 +82,15 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
-<li><a href="#fields.inherited.from.class.org.eclipse.net4j.util.ui.views.ContainerItemProvider">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
@@ -85,13 +101,22 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.emf.cdo.ui</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.cdo.ui</a></div>
 <h2 title="Class CDOItemProvider" class="title">Class CDOItemProvider</h2>
 </div>
 <div class="contentContainer">
@@ -99,19 +124,19 @@ var activeTableTab = "activeTableTab";
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerComparator.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">org.eclipse.jface.viewers.ViewerComparator</a></li>
+<li><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerComparator.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">org.eclipse.jface.viewers.ViewerComparator</a></li>
 <li>
 <ul class="inheritance">
-<li><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerSorter.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">org.eclipse.jface.viewers.ViewerSorter</a></li>
+<li><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerSorter.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">org.eclipse.jface.viewers.ViewerSorter</a></li>
 <li>
 <ul class="inheritance">
-<li><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/StructuredContentProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ui">org.eclipse.net4j.util.ui.StructuredContentProvider</a>&lt;INPUT&gt;</li>
+<li>org.eclipse.net4j.util.ui.StructuredContentProvider&lt;INPUT&gt;</li>
 <li>
 <ul class="inheritance">
-<li><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ItemProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ui.views">org.eclipse.net4j.util.ui.views.ItemProvider</a>&lt;CONTAINER&gt;</li>
+<li>org.eclipse.net4j.util.ui.views.ItemProvider&lt;CONTAINER&gt;</li>
 <li>
 <ul class="inheritance">
-<li><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ui.views">org.eclipse.net4j.util.ui.views.ContainerItemProvider</a>&lt;<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;&gt;</li>
+<li>org.eclipse.net4j.util.ui.views.ContainerItemProvider&lt;org.eclipse.net4j.util.container.IContainer&lt;java.lang.Object&gt;&gt;</li>
 <li>
 <ul class="inheritance">
 <li>org.eclipse.emf.cdo.ui.CDOItemProvider</li>
@@ -133,25 +158,24 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd>java.util.EventListener, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/DelegatingStyledCellLabelProvider.IStyledLabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">DelegatingStyledCellLabelProvider.IStyledLabelProvider</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IBaseLabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IBaseLabelProvider</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IColorProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IColorProvider</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IContentProvider</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IFontProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IFontProvider</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ILabelProvider</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IStructuredContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IStructuredContentProvider</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ITreeContentProvider</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IListener.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">IListener</a></dd>
+<dd><code>java.util.EventListener</code>, <code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/DelegatingStyledCellLabelProvider.IStyledLabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">DelegatingStyledCellLabelProvider.IStyledLabelProvider</a></code>, <code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IBaseLabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">IBaseLabelProvider</a></code>, <code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IColorProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">IColorProvider</a></code>, <code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">IContentProvider</a></code>, <code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IFontProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">IFontProvider</a></code>, <code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">ILabelProvider</a></code>, <code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IStructuredContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">IStructuredContentProvider</a></code>, <code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">ITreeContentProvider</a></code>, <code>org.eclipse.net4j.util.event.IListener</code></dd>
 </dl>
 <hr>
-<br>
 <pre>public class <span class="typeNameLabel">CDOItemProvider</span>
-extends <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider</a>&lt;<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;&gt;</pre>
+extends org.eclipse.net4j.util.ui.views.ContainerItemProvider&lt;org.eclipse.net4j.util.container.IContainer&lt;java.lang.Object&gt;&gt;</pre>
 <div class="block">Implements multiple functionality related with UI representation of basic CDO concepts on
- <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/TreeViewer.html?is-external=true" title="class or interface in org.eclipse.jface.viewers"><code>TreeViewer</code></a>-based editors and views.
+ <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/TreeViewer.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink"><code>TreeViewer</code></a>-based editors and views.
  <p>
- For instance, behaves as <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers"><code>content</code></a> and
- <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers"><code>label</code></a> provider for concepts such as <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>CDOSession</code></a>,
- <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOView</code></a>, <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOResource</code></a> and <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceFolder.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOResourceFolder</code></a>. It also providers common context menu action over
+ For instance, behaves as <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink"><code>content</code></a> and
+ <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink"><code>label</code></a> provider for concepts such as <a href="../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>CDOSession</code></a>,
+ <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOView</code></a>, <a href="../eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOResource</code></a> and <a href="../eresource/CDOResourceFolder.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOResourceFolder</code></a>. It also providers common context menu action over
  those elements.</div>
 <dl>
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>Eike Stepper</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers"><code>IContentProvider</code></a>, 
-<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers"><code>ILabelProvider</code></a></dd>
+<dd><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink"><code>IContentProvider</code></a>, 
+<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink"><code>ILabelProvider</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -160,282 +184,326 @@ extends <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/ecl
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="nested.class.summary">
+<li class="blockList"><a id="nested.class.summary">
 <!--   -->
 </a>
 <h3>Nested Class Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Nested Class Summary table, listing nested classes, and an explanation">
+<table class="memberSummary">
 <caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Class and Description</th>
+<th class="colSecond" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected static class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.EditorRegistryListener.html" title="class in org.eclipse.emf.cdo.ui">CDOItemProvider.EditorRegistryListener</a></span></code>
-<div class="block">A <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IPropertyListener.html?is-external=true" title="class or interface in org.eclipse.ui"><code>listener</code></a> on the platform's <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IEditorRegistry.html?is-external=true" title="class or interface in org.eclipse.ui"><code>editor registry</code></a> that fires <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/LabelProviderChangedEvent.html?is-external=true" title="class or interface in org.eclipse.jface.viewers"><code>label events</code></a>
- from the associated <a href="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.EditorRegistryListener.html#getItemProvider--"><code>item provider</code></a> when <a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferElement.html" title="class in org.eclipse.emf.cdo.transfer"><code>element</code></a> labels need to be updated.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CDOItemProvider.EditorRegistryListener.html" title="class in org.eclipse.emf.cdo.ui">CDOItemProvider.EditorRegistryListener</a></span></code></th>
+<td class="colLast">
+<div class="block">A <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IPropertyListener.html?is-external=true" title="class or interface in org.eclipse.ui" class="externalLink"><code>listener</code></a> on the platform's <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IEditorRegistry.html?is-external=true" title="class or interface in org.eclipse.ui" class="externalLink"><code>editor registry</code></a> that fires <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/LabelProviderChangedEvent.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink"><code>label events</code></a>
+ from the associated <a href="CDOItemProvider.EditorRegistryListener.html#getItemProvider()"><code>item provider</code></a> when <a href="../transfer/CDOTransferElement.html" title="class in org.eclipse.emf.cdo.transfer"><code>element</code></a> labels need to be updated.</div>
 </td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="nested.classes.inherited.from.class.org.eclipse.net4j.util.ui.views.ContainerItemProvider">
+<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.net4j.util.ui.views.ContainerItemProvider">
 <!--   -->
 </a>
-<h3>Nested classes/interfaces inherited from class&nbsp;org.eclipse.net4j.util.ui.views.<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider</a></h3>
-<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.AbstractContainerNode.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.AbstractContainerNode</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.AbstractNode.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.AbstractNode</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.ContainerNode.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.ContainerNode</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.ErrorElement.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.ErrorElement</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.LazyElement.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.LazyElement</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.LeafNode.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.LeafNode</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.SlowElement.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.SlowElement</a></code></li>
+<h3>Nested classes/interfaces inherited from class&nbsp;org.eclipse.net4j.util.ui.views.ContainerItemProvider</h3>
+<code>org.eclipse.net4j.util.ui.views.ContainerItemProvider.AbstractContainerNode, org.eclipse.net4j.util.ui.views.ContainerItemProvider.AbstractNode, org.eclipse.net4j.util.ui.views.ContainerItemProvider.ContainerNode, org.eclipse.net4j.util.ui.views.ContainerItemProvider.ErrorElement, org.eclipse.net4j.util.ui.views.ContainerItemProvider.FixedChildrenNode, org.eclipse.net4j.util.ui.views.ContainerItemProvider.LazyElement, org.eclipse.net4j.util.ui.views.ContainerItemProvider.LeafNode, org.eclipse.net4j.util.ui.views.ContainerItemProvider.Node, org.eclipse.net4j.util.ui.views.ContainerItemProvider.SlowElement</code></li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- =========== FIELD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.summary">
+<li class="blockList"><a id="field.summary">
 <!--   -->
 </a>
 <h3>Field Summary</h3>
 <ul class="blockList">
-<li class="blockList"><a name="fields.inherited.from.class.org.eclipse.net4j.util.ui.views.ContainerItemProvider">
+<li class="blockList"><a id="fields.inherited.from.class.org.eclipse.net4j.util.ui.views.ContainerItemProvider">
 <!--   -->
 </a>
-<h3>Fields inherited from class&nbsp;org.eclipse.net4j.util.ui.views.<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider</a></h3>
-<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true#ERROR_IMAGE" title="class or interface in org.eclipse.net4j.util.ui.views">ERROR_IMAGE</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true#PENDING_COLOR" title="class or interface in org.eclipse.net4j.util.ui.views">PENDING_COLOR</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true#PENDING_IMAGE" title="class or interface in org.eclipse.net4j.util.ui.views">PENDING_IMAGE</a></code></li>
+<h3>Fields inherited from class&nbsp;org.eclipse.net4j.util.ui.views.ContainerItemProvider</h3>
+<code>ERROR_IMAGE, PENDING_COLOR, PENDING_IMAGE</code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="fields.inherited.from.class.org.eclipse.net4j.util.ui.views.ItemProvider">
+<li class="blockList"><a id="fields.inherited.from.class.org.eclipse.net4j.util.ui.views.ItemProvider">
 <!--   -->
 </a>
-<h3>Fields inherited from class&nbsp;org.eclipse.net4j.util.ui.views.<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ItemProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ui.views">ItemProvider</a></h3>
-<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ItemProvider.html?is-external=true#NO_ELEMENTS" title="class or interface in org.eclipse.net4j.util.ui.views">NO_ELEMENTS</a></code></li>
+<h3>Fields inherited from class&nbsp;org.eclipse.net4j.util.ui.views.ItemProvider</h3>
+<code>NO_ELEMENTS</code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="fields.inherited.from.class.org.eclipse.jface.viewers.ViewerSorter">
+<li class="blockList"><a id="fields.inherited.from.class.org.eclipse.jface.viewers.ViewerSorter">
 <!--   -->
 </a>
-<h3>Fields inherited from class&nbsp;org.eclipse.jface.viewers.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerSorter.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ViewerSorter</a></h3>
-<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerSorter.html?is-external=true#collator" title="class or interface in org.eclipse.jface.viewers">collator</a></code></li>
+<h3>Fields inherited from class&nbsp;org.eclipse.jface.viewers.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerSorter.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">ViewerSorter</a></h3>
+<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerSorter.html?is-external=true#collator" title="class or interface in org.eclipse.jface.viewers" class="externalLink">collator</a></code></li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.summary">
+<li class="blockList"><a id="constructor.summary">
 <!--   -->
 </a>
 <h3>Constructor Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
+<table class="memberSummary">
 <caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Constructor and Description</th>
+<th class="colFirst" scope="col">Constructor</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#CDOItemProvider-org.eclipse.ui.IWorkbenchPage-">CDOItemProvider</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPage.html?is-external=true" title="class or interface in org.eclipse.ui">IWorkbenchPage</a>&nbsp;page)</code>&nbsp;</td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(org.eclipse.ui.IWorkbenchPage)">CDOItemProvider</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPage.html?is-external=true" title="class or interface in org.eclipse.ui" class="externalLink">IWorkbenchPage</a>&nbsp;page)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#CDOItemProvider-org.eclipse.ui.IWorkbenchPage-org.eclipse.net4j.util.ui.views.IElementFilter-">CDOItemProvider</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPage.html?is-external=true" title="class or interface in org.eclipse.ui">IWorkbenchPage</a>&nbsp;page,
-               <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/IElementFilter.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ui.views">IElementFilter</a>&nbsp;rootElementFilter)</code>&nbsp;</td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(org.eclipse.ui.IWorkbenchPage,org.eclipse.net4j.util.ui.views.IElementFilter)">CDOItemProvider</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPage.html?is-external=true" title="class or interface in org.eclipse.ui" class="externalLink">IWorkbenchPage</a>&nbsp;page,
+               org.eclipse.net4j.util.ui.views.IElementFilter&nbsp;rootElementFilter)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#compare-org.eclipse.jface.viewers.Viewer-java.lang.Object-java.lang.Object-">compare</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/Viewer.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">Viewer</a>&nbsp;viewer,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#compare(org.eclipse.jface.viewers.Viewer,java.lang.Object,java.lang.Object)">compare</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/Viewer.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">Viewer</a>&nbsp;viewer,
        java.lang.Object&nbsp;e1,
-       java.lang.Object&nbsp;e2)</code>&nbsp;</td>
+       java.lang.Object&nbsp;e2)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#dispose--">dispose</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dispose()">dispose</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#elementAdded-java.lang.Object-java.lang.Object-">elementAdded</a></span>(java.lang.Object&nbsp;element,
-            java.lang.Object&nbsp;parent)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#elementAdded(java.lang.Object,java.lang.Object)">elementAdded</a></span>&#8203;(java.lang.Object&nbsp;element,
+            java.lang.Object&nbsp;parent)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#fillBinaryResource-org.eclipse.jface.action.IMenuManager-org.eclipse.emf.cdo.eresource.CDOBinaryResource-">fillBinaryResource</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IMenuManager</a>&nbsp;manager,
-                  <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOBinaryResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOBinaryResource</a>&nbsp;resource)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#fillBinaryResource(org.eclipse.jface.action.IMenuManager,org.eclipse.emf.cdo.eresource.CDOBinaryResource)">fillBinaryResource</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">IMenuManager</a>&nbsp;manager,
+                  <a href="../eresource/CDOBinaryResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOBinaryResource</a>&nbsp;resource)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#fillBranch-org.eclipse.jface.action.IMenuManager-org.eclipse.emf.cdo.common.branch.CDOBranch-">fillBranch</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IMenuManager</a>&nbsp;manager,
-          <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#fillBranch(org.eclipse.jface.action.IMenuManager,org.eclipse.emf.cdo.common.branch.CDOBranch)">fillBranch</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">IMenuManager</a>&nbsp;manager,
+          <a href="../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#fillContextMenu-org.eclipse.jface.action.IMenuManager-org.eclipse.jface.viewers.ITreeSelection-">fillContextMenu</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IMenuManager</a>&nbsp;manager,
-               <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeSelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ITreeSelection</a>&nbsp;selection)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#fillContextMenu(org.eclipse.jface.action.IMenuManager,org.eclipse.jface.viewers.ITreeSelection)">fillContextMenu</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">IMenuManager</a>&nbsp;manager,
+               <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeSelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">ITreeSelection</a>&nbsp;selection)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#fillGenerated-org.eclipse.jface.action.MenuManager-org.eclipse.emf.cdo.session.CDOSession-">fillGenerated</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">MenuManager</a>&nbsp;manager,
-             <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#fillGenerated(org.eclipse.jface.action.MenuManager,org.eclipse.emf.cdo.session.CDOSession)">fillGenerated</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">MenuManager</a>&nbsp;manager,
+             <a href="../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#fillResource-org.eclipse.jface.action.IMenuManager-org.eclipse.emf.cdo.eresource.CDOResource-">fillResource</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IMenuManager</a>&nbsp;manager,
-            <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResource</a>&nbsp;resource)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#fillResource(org.eclipse.jface.action.IMenuManager,org.eclipse.emf.cdo.eresource.CDOResource)">fillResource</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">IMenuManager</a>&nbsp;manager,
+            <a href="../eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResource</a>&nbsp;resource)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#fillResourceFolder-org.eclipse.jface.action.IMenuManager-org.eclipse.emf.cdo.eresource.CDOResourceFolder-">fillResourceFolder</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IMenuManager</a>&nbsp;manager,
-                  <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceFolder.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceFolder</a>&nbsp;folder)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#fillResourceFolder(org.eclipse.jface.action.IMenuManager,org.eclipse.emf.cdo.eresource.CDOResourceFolder)">fillResourceFolder</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">IMenuManager</a>&nbsp;manager,
+                  <a href="../eresource/CDOResourceFolder.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceFolder</a>&nbsp;folder)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#fillResourceLeaf-org.eclipse.jface.action.IMenuManager-java.lang.Object-">fillResourceLeaf</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IMenuManager</a>&nbsp;manager,
-                java.lang.Object&nbsp;object)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#fillResourceLeaf(org.eclipse.jface.action.IMenuManager,java.lang.Object)">fillResourceLeaf</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">IMenuManager</a>&nbsp;manager,
+                java.lang.Object&nbsp;object)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#fillResourceNode-org.eclipse.jface.action.IMenuManager-org.eclipse.emf.cdo.eresource.CDOResourceNode-">fillResourceNode</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IMenuManager</a>&nbsp;manager,
-                <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceNode</a>&nbsp;node)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#fillResourceNode(org.eclipse.jface.action.IMenuManager,org.eclipse.emf.cdo.eresource.CDOResourceNode)">fillResourceNode</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">IMenuManager</a>&nbsp;manager,
+                <a href="../eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceNode</a>&nbsp;node)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#fillSession-org.eclipse.jface.action.IMenuManager-org.eclipse.emf.cdo.session.CDOSession-">fillSession</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IMenuManager</a>&nbsp;manager,
-           <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#fillSession(org.eclipse.jface.action.IMenuManager,org.eclipse.emf.cdo.session.CDOSession)">fillSession</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">IMenuManager</a>&nbsp;manager,
+           <a href="../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#fillTextResource-org.eclipse.jface.action.IMenuManager-org.eclipse.emf.cdo.eresource.CDOTextResource-">fillTextResource</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IMenuManager</a>&nbsp;manager,
-                <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOTextResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOTextResource</a>&nbsp;resource)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#fillTextResource(org.eclipse.jface.action.IMenuManager,org.eclipse.emf.cdo.eresource.CDOTextResource)">fillTextResource</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">IMenuManager</a>&nbsp;manager,
+                <a href="../eresource/CDOTextResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOTextResource</a>&nbsp;resource)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#fillView-org.eclipse.jface.action.IMenuManager-org.eclipse.emf.cdo.view.CDOView-">fillView</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IMenuManager</a>&nbsp;manager,
-        <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#fillView(org.eclipse.jface.action.IMenuManager,org.eclipse.emf.cdo.view.CDOView)">fillView</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">IMenuManager</a>&nbsp;manager,
+        <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i14" class="altColor">
-<td class="colFirst"><code>protected java.lang.Object[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#getChildren-org.eclipse.emf.cdo.common.branch.CDOBranch-">getChildren</a></span>(<a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch)</code>&nbsp;</td>
+<td class="colFirst"><code>java.lang.Object[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getChildren(java.lang.Object)">getChildren</a></span>&#8203;(java.lang.Object&nbsp;element)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i15" class="rowColor">
-<td class="colFirst"><code>java.lang.Object[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#getChildren-java.lang.Object-">getChildren</a></span>(java.lang.Object&nbsp;element)</code>&nbsp;</td>
+<td class="colFirst"><code>protected java.lang.Object[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getChildren(org.eclipse.emf.cdo.common.branch.CDOBranch)">getChildren</a></span>&#8203;(<a href="../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i16" class="altColor">
-<td class="colFirst"><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Font.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Font</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#getFont-java.lang.Object-">getFont</a></span>(java.lang.Object&nbsp;obj)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Font.html?is-external=true" title="class or interface in org.eclipse.swt.graphics" class="externalLink">Font</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getFont(java.lang.Object)">getFont</a></span>&#8203;(java.lang.Object&nbsp;obj)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i17" class="rowColor">
-<td class="colFirst"><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Color.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Color</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#getForeground-java.lang.Object-">getForeground</a></span>(java.lang.Object&nbsp;obj)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Color.html?is-external=true" title="class or interface in org.eclipse.swt.graphics" class="externalLink">Color</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getForeground(java.lang.Object)">getForeground</a></span>&#8203;(java.lang.Object&nbsp;obj)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i18" class="altColor">
-<td class="colFirst"><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Image.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Image</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#getImage-java.lang.Object-">getImage</a></span>(java.lang.Object&nbsp;obj)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Image.html?is-external=true" title="class or interface in org.eclipse.swt.graphics" class="externalLink">Image</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getImage(java.lang.Object)">getImage</a></span>&#8203;(java.lang.Object&nbsp;obj)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i19" class="rowColor">
 <td class="colFirst"><code>java.lang.Object</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#getParent-java.lang.Object-">getParent</a></span>(java.lang.Object&nbsp;element)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getParent(java.lang.Object)">getParent</a></span>&#8203;(java.lang.Object&nbsp;element)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i20" class="altColor">
-<td class="colFirst"><code>protected <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/resource/ResourceManager.html?is-external=true" title="class or interface in org.eclipse.jface.resource">ResourceManager</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#getResourceManager--">getResourceManager</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/resource/ResourceManager.html?is-external=true" title="class or interface in org.eclipse.jface.resource" class="externalLink">ResourceManager</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getResourceManager()">getResourceManager</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i21" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#getText-java.lang.Object-">getText</a></span>(java.lang.Object&nbsp;obj)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getText(java.lang.Object)">getText</a></span>&#8203;(java.lang.Object&nbsp;obj)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i22" class="altColor">
-<td class="colFirst"><code>static <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Image.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Image</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#getViewImage-org.eclipse.emf.cdo.view.CDOView-">getViewImage</a></span>(<a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view)</code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Image.html?is-external=true" title="class or interface in org.eclipse.swt.graphics" class="externalLink">Image</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getViewImage(org.eclipse.emf.cdo.view.CDOView)">getViewImage</a></span>&#8203;(<a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i23" class="rowColor">
-<td class="colFirst"><code>static <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/resource/ImageDescriptor.html?is-external=true" title="class or interface in org.eclipse.jface.resource">ImageDescriptor</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#getViewImageDescriptor-org.eclipse.emf.cdo.view.CDOView-">getViewImageDescriptor</a></span>(<a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view)</code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/resource/ImageDescriptor.html?is-external=true" title="class or interface in org.eclipse.jface.resource" class="externalLink">ImageDescriptor</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getViewImageDescriptor(org.eclipse.emf.cdo.view.CDOView)">getViewImageDescriptor</a></span>&#8203;(<a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i24" class="altColor">
-<td class="colFirst"><code>protected <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Image.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Image</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#getWorkbenchImage-java.lang.String-">getWorkbenchImage</a></span>(java.lang.String&nbsp;name)</code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Image.html?is-external=true" title="class or interface in org.eclipse.swt.graphics" class="externalLink">Image</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getWorkbenchImage(java.lang.String)">getWorkbenchImage</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i25" class="rowColor">
-<td class="colFirst"><code>protected boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#hasChildren-org.eclipse.emf.cdo.common.branch.CDOBranch-">hasChildren</a></span>(<a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch)</code>&nbsp;</td>
+<td class="colFirst"><code>boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hasChildren(java.lang.Object)">hasChildren</a></span>&#8203;(java.lang.Object&nbsp;element)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i26" class="altColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#hasChildren-java.lang.Object-">hasChildren</a></span>(java.lang.Object&nbsp;element)</code>&nbsp;</td>
+<td class="colFirst"><code>protected boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hasChildren(org.eclipse.emf.cdo.common.branch.CDOBranch)">hasChildren</a></span>&#8203;(<a href="../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i27" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#isMergeMainBranchWithSession--">isMergeMainBranchWithSession</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isMergeMainBranchWithSession()">isMergeMainBranchWithSession</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i28" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#setMergeMainBranchWithSession-boolean-">setMergeMainBranchWithSession</a></span>(boolean&nbsp;mergeMainBranchWithSession)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setMergeMainBranchWithSession(boolean)">setMergeMainBranchWithSession</a></span>&#8203;(boolean&nbsp;mergeMainBranchWithSession)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i29" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#useFullPath-java.lang.Object-">useFullPath</a></span>(java.lang.Object&nbsp;object)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#useFullPath(java.lang.Object)">useFullPath</a></span>&#8203;(java.lang.Object&nbsp;object)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.ui.views.ContainerItemProvider">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.ui.views.ContainerItemProvider">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.ui.views.<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider</a></h3>
-<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true#addNode-java.lang.Object-org.eclipse.net4j.util.ui.views.ContainerItemProvider.Node-" title="class or interface in org.eclipse.net4j.util.ui.views">addNode</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true#clearNodesCache--" title="class or interface in org.eclipse.net4j.util.ui.views">clearNodesCache</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true#connectInput-CONTAINER-" title="class or interface in org.eclipse.net4j.util.ui.views">connectInput</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true#createContaineNode-org.eclipse.net4j.util.ui.views.ContainerItemProvider.Node-java.lang.Object-" title="class or interface in org.eclipse.net4j.util.ui.views">createContaineNode</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true#createLeafNode-org.eclipse.net4j.util.ui.views.ContainerItemProvider.Node-java.lang.Object-" title="class or interface in org.eclipse.net4j.util.ui.views">createLeafNode</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true#createNode-org.eclipse.net4j.util.ui.views.ContainerItemProvider.Node-java.lang.Object-" title="class or interface in org.eclipse.net4j.util.ui.views">createNode</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true#createSlowElement-org.eclipse.net4j.util.container.IContainer-" title="class or interface in org.eclipse.net4j.util.ui.views">createSlowElement</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true#createSlowInput-java.lang.String-" title="class or interface in org.eclipse.net4j.util.ui.views">createSlowInput</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true#disconnectInput-CONTAINER-" title="class or interface in org.eclipse.net4j.util.ui.views">disconnectInput</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true#elementRemoved-java.lang.Object-java.lang.Object-" title="class or interface in org.eclipse.net4j.util.ui.views">elementRemoved</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true#executeRunnable-java.lang.Runnable-" title="class or interface in org.eclipse.net4j.util.ui.views">executeRunnable</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true#filterRootElement-java.lang.Object-" title="class or interface in org.eclipse.net4j.util.ui.views">filterRootElement</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true#getContainerChildren-org.eclipse.net4j.util.ui.views.ContainerItemProvider.AbstractContainerNode-org.eclipse.net4j.util.container.IContainer-" title="class or interface in org.eclipse.net4j.util.ui.views">getContainerChildren</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true#getErrorText-org.eclipse.net4j.util.container.IContainer-" title="class or interface in org.eclipse.net4j.util.ui.views">getErrorText</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true#getNode-java.lang.Object-" title="class or interface in org.eclipse.net4j.util.ui.views">getNode</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true#getNodes--" title="class or interface in org.eclipse.net4j.util.ui.views">getNodes</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true#getRoot--" title="class or interface in org.eclipse.net4j.util.ui.views">getRoot</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true#getRootElementFilter--" title="class or interface in org.eclipse.net4j.util.ui.views">getRootElementFilter</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true#getSlowText-org.eclipse.net4j.util.container.IContainer-" title="class or interface in org.eclipse.net4j.util.ui.views">getSlowText</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true#handleElementEvent-org.eclipse.net4j.util.event.IEvent-" title="class or interface in org.eclipse.net4j.util.ui.views">handleElementEvent</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true#handleInactiveElement-java.util.Iterator-org.eclipse.net4j.util.ui.views.ContainerItemProvider.Node-" title="class or interface in org.eclipse.net4j.util.ui.views">handleInactiveElement</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true#isComputeChildrenEagerly--" title="class or interface in org.eclipse.net4j.util.ui.views">isComputeChildrenEagerly</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true#isSlow-org.eclipse.net4j.util.container.IContainer-" title="class or interface in org.eclipse.net4j.util.ui.views">isSlow</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true#removeNode-java.lang.Object-" title="class or interface in org.eclipse.net4j.util.ui.views">removeNode</a></code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.ui.views.ContainerItemProvider</h3>
+<code>addNode, clearNodesCache, connectInput, createContaineNode, createLeafNode, createNode, createSlowElement, createSlowInput, disconnectInput, elementRemoved, executeRunnable, filterRootElement, getContainerChildren, getErrorText, getNode, getNodes, getRoot, getRootElementFilter, getSlowText, handleElementEvent, handleInactiveElement, isComputeChildrenEagerly, isSlow, removeNode</code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.ui.views.ItemProvider">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.ui.views.ItemProvider">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.ui.views.<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ItemProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ui.views">ItemProvider</a></h3>
-<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ItemProvider.html?is-external=true#addListener-org.eclipse.jface.viewers.ILabelProviderListener-" title="class or interface in org.eclipse.net4j.util.ui.views">addListener</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ItemProvider.html?is-external=true#fireLabelProviderChanged--" title="class or interface in org.eclipse.net4j.util.ui.views">fireLabelProviderChanged</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ItemProvider.html?is-external=true#fireLabelProviderChanged-java.lang.Object-" title="class or interface in org.eclipse.net4j.util.ui.views">fireLabelProviderChanged</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ItemProvider.html?is-external=true#fireLabelProviderChanged-java.lang.Object:A-" title="class or interface in org.eclipse.net4j.util.ui.views">fireLabelProviderChanged</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ItemProvider.html?is-external=true#getBackground-java.lang.Object-" title="class or interface in org.eclipse.net4j.util.ui.views">getBackground</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ItemProvider.html?is-external=true#getElements-java.lang.Object-" title="class or interface in org.eclipse.net4j.util.ui.views">getElements</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ItemProvider.html?is-external=true#getListeners--" title="class or interface in org.eclipse.net4j.util.ui.views">getListeners</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ItemProvider.html?is-external=true#getStyledText-java.lang.Object-" title="class or interface in org.eclipse.net4j.util.ui.views">getStyledText</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ItemProvider.html?is-external=true#isLabelProperty-java.lang.Object-java.lang.String-" title="class or interface in org.eclipse.net4j.util.ui.views">isLabelProperty</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ItemProvider.html?is-external=true#removeListener-org.eclipse.jface.viewers.ILabelProviderListener-" title="class or interface in org.eclipse.net4j.util.ui.views">removeListener</a></code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.ui.views.ItemProvider</h3>
+<code>addListener, fireLabelProviderChanged, fireLabelProviderChanged, fireLabelProviderChanged, getBackground, getElements, getListeners, getStyledText, isLabelProperty, removeListener</code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.ui.StructuredContentProvider">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.ui.StructuredContentProvider">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.ui.<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/StructuredContentProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ui">StructuredContentProvider</a></h3>
-<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/StructuredContentProvider.html?is-external=true#expandElement-java.lang.Object-int-" title="class or interface in org.eclipse.net4j.util.ui">expandElement</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/StructuredContentProvider.html?is-external=true#getBoldFont--" title="class or interface in org.eclipse.net4j.util.ui">getBoldFont</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/StructuredContentProvider.html?is-external=true#getDisplay--" title="class or interface in org.eclipse.net4j.util.ui">getDisplay</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/StructuredContentProvider.html?is-external=true#getInput--" title="class or interface in org.eclipse.net4j.util.ui">getInput</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/StructuredContentProvider.html?is-external=true#getItalicFont--" title="class or interface in org.eclipse.net4j.util.ui">getItalicFont</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/StructuredContentProvider.html?is-external=true#getViewer--" title="class or interface in org.eclipse.net4j.util.ui">getViewer</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/StructuredContentProvider.html?is-external=true#inputChanged-org.eclipse.jface.viewers.Viewer-java.lang.Object-java.lang.Object-" title="class or interface in org.eclipse.net4j.util.ui">inputChanged</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/StructuredContentProvider.html?is-external=true#notifyEvent-org.eclipse.net4j.util.event.IEvent-" title="class or interface in org.eclipse.net4j.util.ui">notifyEvent</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/StructuredContentProvider.html?is-external=true#refreshElement-java.lang.Object-boolean-" title="class or interface in org.eclipse.net4j.util.ui">refreshElement</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/StructuredContentProvider.html?is-external=true#refreshSynced-java.lang.Object-boolean-" title="class or interface in org.eclipse.net4j.util.ui">refreshSynced</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/StructuredContentProvider.html?is-external=true#refreshViewer-boolean-" title="class or interface in org.eclipse.net4j.util.ui">refreshViewer</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/StructuredContentProvider.html?is-external=true#revealElement-java.lang.Object-" title="class or interface in org.eclipse.net4j.util.ui">revealElement</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/StructuredContentProvider.html?is-external=true#selectElement-java.lang.Object-boolean-" title="class or interface in org.eclipse.net4j.util.ui">selectElement</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/StructuredContentProvider.html?is-external=true#updateLabels-java.lang.Object-" title="class or interface in org.eclipse.net4j.util.ui">updateLabels</a></code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.ui.StructuredContentProvider</h3>
+<code>expandElement, getBoldFont, getDisplay, getInput, getItalicFont, getViewer, inputChanged, notifyEvent, refreshElement, refreshSynced, refreshViewer, revealElement, selectElement, updateLabels</code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.jface.viewers.ViewerSorter">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.jface.viewers.ViewerSorter">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.jface.viewers.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerSorter.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ViewerSorter</a></h3>
-<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerSorter.html?is-external=true#getCollator--" title="class or interface in org.eclipse.jface.viewers">getCollator</a></code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.jface.viewers.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerSorter.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">ViewerSorter</a></h3>
+<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerSorter.html?is-external=true#getCollator()" title="class or interface in org.eclipse.jface.viewers" class="externalLink">getCollator</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.jface.viewers.ViewerComparator">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.jface.viewers.ViewerComparator">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.jface.viewers.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerComparator.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ViewerComparator</a></h3>
-<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerComparator.html?is-external=true#category-java.lang.Object-" title="class or interface in org.eclipse.jface.viewers">category</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerComparator.html?is-external=true#getComparator--" title="class or interface in org.eclipse.jface.viewers">getComparator</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerComparator.html?is-external=true#isSorterProperty-java.lang.Object-java.lang.String-" title="class or interface in org.eclipse.jface.viewers">isSorterProperty</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerComparator.html?is-external=true#sort-org.eclipse.jface.viewers.Viewer-java.lang.Object:A-" title="class or interface in org.eclipse.jface.viewers">sort</a></code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.jface.viewers.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerComparator.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">ViewerComparator</a></h3>
+<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerComparator.html?is-external=true#category(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers" class="externalLink">category</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerComparator.html?is-external=true#getComparator()" title="class or interface in org.eclipse.jface.viewers" class="externalLink">getComparator</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerComparator.html?is-external=true#isSorterProperty(java.lang.Object,java.lang.String)" title="class or interface in org.eclipse.jface.viewers" class="externalLink">isSorterProperty</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerComparator.html?is-external=true#sort(org.eclipse.jface.viewers.Viewer,java.lang.Object%5B%5D)" title="class or interface in org.eclipse.jface.viewers" class="externalLink">sort</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
+<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
 <code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.jface.viewers.IContentProvider">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.jface.viewers.IContentProvider">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.jface.viewers.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IContentProvider</a></h3>
-<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IContentProvider.html?is-external=true#inputChanged-org.eclipse.jface.viewers.Viewer-java.lang.Object-java.lang.Object-" title="class or interface in org.eclipse.jface.viewers">inputChanged</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.jface.viewers.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">IContentProvider</a></h3>
+<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IContentProvider.html?is-external=true#inputChanged(org.eclipse.jface.viewers.Viewer,java.lang.Object,java.lang.Object)" title="class or interface in org.eclipse.jface.viewers" class="externalLink">inputChanged</a></code></li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -443,360 +511,363 @@ extends <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/ecl
 <ul class="blockList">
 <li class="blockList">
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.detail">
+<li class="blockList"><a id="constructor.detail">
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="CDOItemProvider-org.eclipse.ui.IWorkbenchPage-org.eclipse.net4j.util.ui.views.IElementFilter-">
+<a id="&lt;init&gt;(org.eclipse.ui.IWorkbenchPage,org.eclipse.net4j.util.ui.views.IElementFilter)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>CDOItemProvider</h4>
-<pre>public&nbsp;CDOItemProvider(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPage.html?is-external=true" title="class or interface in org.eclipse.ui">IWorkbenchPage</a>&nbsp;page,
-                       <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/IElementFilter.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ui.views">IElementFilter</a>&nbsp;rootElementFilter)</pre>
+<pre>public&nbsp;CDOItemProvider&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPage.html?is-external=true" title="class or interface in org.eclipse.ui" class="externalLink">IWorkbenchPage</a>&nbsp;page,
+                       org.eclipse.net4j.util.ui.views.IElementFilter&nbsp;rootElementFilter)</pre>
 </li>
 </ul>
-<a name="CDOItemProvider-org.eclipse.ui.IWorkbenchPage-">
+<a id="&lt;init&gt;(org.eclipse.ui.IWorkbenchPage)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>CDOItemProvider</h4>
-<pre>public&nbsp;CDOItemProvider(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPage.html?is-external=true" title="class or interface in org.eclipse.ui">IWorkbenchPage</a>&nbsp;page)</pre>
+<pre>public&nbsp;CDOItemProvider&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPage.html?is-external=true" title="class or interface in org.eclipse.ui" class="externalLink">IWorkbenchPage</a>&nbsp;page)</pre>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="dispose--">
+<a id="dispose()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>dispose</h4>
-<pre>public&nbsp;void&nbsp;dispose()</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;dispose()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IBaseLabelProvider.html?is-external=true#dispose--" title="class or interface in org.eclipse.jface.viewers">dispose</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IBaseLabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IBaseLabelProvider</a></code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IBaseLabelProvider.html?is-external=true#dispose()" title="class or interface in org.eclipse.jface.viewers" class="externalLink">dispose</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IBaseLabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">IBaseLabelProvider</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IContentProvider.html?is-external=true#dispose--" title="class or interface in org.eclipse.jface.viewers">dispose</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IContentProvider</a></code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IContentProvider.html?is-external=true#dispose()" title="class or interface in org.eclipse.jface.viewers" class="externalLink">dispose</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">IContentProvider</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/StructuredContentProvider.html?is-external=true#dispose--" title="class or interface in org.eclipse.net4j.util.ui">dispose</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/StructuredContentProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ui">StructuredContentProvider</a>&lt;<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;&gt;</code></dd>
+<dd><code>dispose</code>&nbsp;in class&nbsp;<code>org.eclipse.net4j.util.ui.StructuredContentProvider&lt;org.eclipse.net4j.util.container.IContainer&lt;java.lang.Object&gt;&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="useFullPath-java.lang.Object-">
+<a id="useFullPath(java.lang.Object)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>useFullPath</h4>
-<pre>public&nbsp;boolean&nbsp;useFullPath(java.lang.Object&nbsp;object)</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;useFullPath&#8203;(java.lang.Object&nbsp;object)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.4</dd>
 </dl>
 </li>
 </ul>
-<a name="isMergeMainBranchWithSession--">
+<a id="isMergeMainBranchWithSession()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>isMergeMainBranchWithSession</h4>
-<pre>public&nbsp;boolean&nbsp;isMergeMainBranchWithSession()</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;isMergeMainBranchWithSession()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
 </li>
 </ul>
-<a name="setMergeMainBranchWithSession-boolean-">
+<a id="setMergeMainBranchWithSession(boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setMergeMainBranchWithSession</h4>
-<pre>public&nbsp;void&nbsp;setMergeMainBranchWithSession(boolean&nbsp;mergeMainBranchWithSession)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setMergeMainBranchWithSession&#8203;(boolean&nbsp;mergeMainBranchWithSession)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
 </li>
 </ul>
-<a name="getChildren-java.lang.Object-">
+<a id="getChildren(java.lang.Object)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getChildren</h4>
-<pre>public&nbsp;java.lang.Object[]&nbsp;getChildren(java.lang.Object&nbsp;element)</pre>
+<pre class="methodSignature">public&nbsp;java.lang.Object[]&nbsp;getChildren&#8203;(java.lang.Object&nbsp;element)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeContentProvider.html?is-external=true#getChildren-java.lang.Object-" title="class or interface in org.eclipse.jface.viewers">getChildren</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ITreeContentProvider</a></code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeContentProvider.html?is-external=true#getChildren(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers" class="externalLink">getChildren</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">ITreeContentProvider</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true#getChildren-java.lang.Object-" title="class or interface in org.eclipse.net4j.util.ui.views">getChildren</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider</a>&lt;<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;&gt;</code></dd>
+<dd><code>getChildren</code>&nbsp;in class&nbsp;<code>org.eclipse.net4j.util.ui.views.ContainerItemProvider&lt;org.eclipse.net4j.util.container.IContainer&lt;java.lang.Object&gt;&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="getChildren-org.eclipse.emf.cdo.common.branch.CDOBranch-">
+<a id="getChildren(org.eclipse.emf.cdo.common.branch.CDOBranch)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getChildren</h4>
-<pre>protected&nbsp;java.lang.Object[]&nbsp;getChildren(<a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch)</pre>
+<pre class="methodSignature">protected&nbsp;java.lang.Object[]&nbsp;getChildren&#8203;(<a href="../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
 </li>
 </ul>
-<a name="hasChildren-java.lang.Object-">
+<a id="hasChildren(java.lang.Object)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>hasChildren</h4>
-<pre>public&nbsp;boolean&nbsp;hasChildren(java.lang.Object&nbsp;element)</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;hasChildren&#8203;(java.lang.Object&nbsp;element)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeContentProvider.html?is-external=true#hasChildren-java.lang.Object-" title="class or interface in org.eclipse.jface.viewers">hasChildren</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ITreeContentProvider</a></code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeContentProvider.html?is-external=true#hasChildren(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers" class="externalLink">hasChildren</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">ITreeContentProvider</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true#hasChildren-java.lang.Object-" title="class or interface in org.eclipse.net4j.util.ui.views">hasChildren</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider</a>&lt;<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;&gt;</code></dd>
+<dd><code>hasChildren</code>&nbsp;in class&nbsp;<code>org.eclipse.net4j.util.ui.views.ContainerItemProvider&lt;org.eclipse.net4j.util.container.IContainer&lt;java.lang.Object&gt;&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="hasChildren-org.eclipse.emf.cdo.common.branch.CDOBranch-">
+<a id="hasChildren(org.eclipse.emf.cdo.common.branch.CDOBranch)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>hasChildren</h4>
-<pre>protected&nbsp;boolean&nbsp;hasChildren(<a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch)</pre>
+<pre class="methodSignature">protected&nbsp;boolean&nbsp;hasChildren&#8203;(<a href="../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
 </li>
 </ul>
-<a name="getParent-java.lang.Object-">
+<a id="getParent(java.lang.Object)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getParent</h4>
-<pre>public&nbsp;java.lang.Object&nbsp;getParent(java.lang.Object&nbsp;element)</pre>
+<pre class="methodSignature">public&nbsp;java.lang.Object&nbsp;getParent&#8203;(java.lang.Object&nbsp;element)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeContentProvider.html?is-external=true#getParent-java.lang.Object-" title="class or interface in org.eclipse.jface.viewers">getParent</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ITreeContentProvider</a></code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeContentProvider.html?is-external=true#getParent(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers" class="externalLink">getParent</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">ITreeContentProvider</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true#getParent-java.lang.Object-" title="class or interface in org.eclipse.net4j.util.ui.views">getParent</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider</a>&lt;<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;&gt;</code></dd>
+<dd><code>getParent</code>&nbsp;in class&nbsp;<code>org.eclipse.net4j.util.ui.views.ContainerItemProvider&lt;org.eclipse.net4j.util.container.IContainer&lt;java.lang.Object&gt;&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="getText-java.lang.Object-">
+<a id="getText(java.lang.Object)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getText</h4>
-<pre>public&nbsp;java.lang.String&nbsp;getText(java.lang.Object&nbsp;obj)</pre>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getText&#8203;(java.lang.Object&nbsp;obj)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelProvider.html?is-external=true#getText-java.lang.Object-" title="class or interface in org.eclipse.jface.viewers">getText</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ILabelProvider</a></code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelProvider.html?is-external=true#getText(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers" class="externalLink">getText</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">ILabelProvider</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ItemProvider.html?is-external=true#getText-java.lang.Object-" title="class or interface in org.eclipse.net4j.util.ui.views">getText</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ItemProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ui.views">ItemProvider</a>&lt;<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;&gt;</code></dd>
+<dd><code>getText</code>&nbsp;in class&nbsp;<code>org.eclipse.net4j.util.ui.views.ItemProvider&lt;org.eclipse.net4j.util.container.IContainer&lt;java.lang.Object&gt;&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="getImage-java.lang.Object-">
+<a id="getImage(java.lang.Object)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getImage</h4>
-<pre>public&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Image.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Image</a>&nbsp;getImage(java.lang.Object&nbsp;obj)</pre>
+<pre class="methodSignature">public&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Image.html?is-external=true" title="class or interface in org.eclipse.swt.graphics" class="externalLink">Image</a>&nbsp;getImage&#8203;(java.lang.Object&nbsp;obj)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/DelegatingStyledCellLabelProvider.IStyledLabelProvider.html?is-external=true#getImage-java.lang.Object-" title="class or interface in org.eclipse.jface.viewers">getImage</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/DelegatingStyledCellLabelProvider.IStyledLabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">DelegatingStyledCellLabelProvider.IStyledLabelProvider</a></code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/DelegatingStyledCellLabelProvider.IStyledLabelProvider.html?is-external=true#getImage(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers" class="externalLink">getImage</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/DelegatingStyledCellLabelProvider.IStyledLabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">DelegatingStyledCellLabelProvider.IStyledLabelProvider</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelProvider.html?is-external=true#getImage-java.lang.Object-" title="class or interface in org.eclipse.jface.viewers">getImage</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ILabelProvider</a></code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelProvider.html?is-external=true#getImage(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers" class="externalLink">getImage</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">ILabelProvider</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true#getImage-java.lang.Object-" title="class or interface in org.eclipse.net4j.util.ui.views">getImage</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider</a>&lt;<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;&gt;</code></dd>
+<dd><code>getImage</code>&nbsp;in class&nbsp;<code>org.eclipse.net4j.util.ui.views.ContainerItemProvider&lt;org.eclipse.net4j.util.container.IContainer&lt;java.lang.Object&gt;&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="getWorkbenchImage-java.lang.String-">
+<a id="getWorkbenchImage(java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getWorkbenchImage</h4>
-<pre>protected&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Image.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Image</a>&nbsp;getWorkbenchImage(java.lang.String&nbsp;name)</pre>
+<pre class="methodSignature">protected&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Image.html?is-external=true" title="class or interface in org.eclipse.swt.graphics" class="externalLink">Image</a>&nbsp;getWorkbenchImage&#8203;(java.lang.String&nbsp;name)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
 </li>
 </ul>
-<a name="getResourceManager--">
+<a id="getResourceManager()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getResourceManager</h4>
-<pre>protected&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/resource/ResourceManager.html?is-external=true" title="class or interface in org.eclipse.jface.resource">ResourceManager</a>&nbsp;getResourceManager()</pre>
+<pre class="methodSignature">protected&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/resource/ResourceManager.html?is-external=true" title="class or interface in org.eclipse.jface.resource" class="externalLink">ResourceManager</a>&nbsp;getResourceManager()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
 </li>
 </ul>
-<a name="getForeground-java.lang.Object-">
+<a id="getForeground(java.lang.Object)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getForeground</h4>
-<pre>public&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Color.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Color</a>&nbsp;getForeground(java.lang.Object&nbsp;obj)</pre>
+<pre class="methodSignature">public&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Color.html?is-external=true" title="class or interface in org.eclipse.swt.graphics" class="externalLink">Color</a>&nbsp;getForeground&#8203;(java.lang.Object&nbsp;obj)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IColorProvider.html?is-external=true#getForeground-java.lang.Object-" title="class or interface in org.eclipse.jface.viewers">getForeground</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IColorProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IColorProvider</a></code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IColorProvider.html?is-external=true#getForeground(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers" class="externalLink">getForeground</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IColorProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">IColorProvider</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true#getForeground-java.lang.Object-" title="class or interface in org.eclipse.net4j.util.ui.views">getForeground</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider</a>&lt;<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;&gt;</code></dd>
+<dd><code>getForeground</code>&nbsp;in class&nbsp;<code>org.eclipse.net4j.util.ui.views.ContainerItemProvider&lt;org.eclipse.net4j.util.container.IContainer&lt;java.lang.Object&gt;&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="getFont-java.lang.Object-">
+<a id="getFont(java.lang.Object)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getFont</h4>
-<pre>public&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Font.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Font</a>&nbsp;getFont(java.lang.Object&nbsp;obj)</pre>
+<pre class="methodSignature">public&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Font.html?is-external=true" title="class or interface in org.eclipse.swt.graphics" class="externalLink">Font</a>&nbsp;getFont&#8203;(java.lang.Object&nbsp;obj)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IFontProvider.html?is-external=true#getFont-java.lang.Object-" title="class or interface in org.eclipse.jface.viewers">getFont</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IFontProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IFontProvider</a></code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IFontProvider.html?is-external=true#getFont(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers" class="externalLink">getFont</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IFontProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">IFontProvider</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true#getFont-java.lang.Object-" title="class or interface in org.eclipse.net4j.util.ui.views">getFont</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider</a>&lt;<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;&gt;</code></dd>
+<dd><code>getFont</code>&nbsp;in class&nbsp;<code>org.eclipse.net4j.util.ui.views.ContainerItemProvider&lt;org.eclipse.net4j.util.container.IContainer&lt;java.lang.Object&gt;&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="fillContextMenu-org.eclipse.jface.action.IMenuManager-org.eclipse.jface.viewers.ITreeSelection-">
+<a id="fillContextMenu(org.eclipse.jface.action.IMenuManager,org.eclipse.jface.viewers.ITreeSelection)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>fillContextMenu</h4>
-<pre>public&nbsp;void&nbsp;fillContextMenu(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IMenuManager</a>&nbsp;manager,
-                            <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeSelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ITreeSelection</a>&nbsp;selection)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;fillContextMenu&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">IMenuManager</a>&nbsp;manager,
+                            <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeSelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">ITreeSelection</a>&nbsp;selection)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true#fillContextMenu-org.eclipse.jface.action.IMenuManager-org.eclipse.jface.viewers.ITreeSelection-" title="class or interface in org.eclipse.net4j.util.ui.views">fillContextMenu</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider</a>&lt;<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;&gt;</code></dd>
+<dd><code>fillContextMenu</code>&nbsp;in class&nbsp;<code>org.eclipse.net4j.util.ui.views.ContainerItemProvider&lt;org.eclipse.net4j.util.container.IContainer&lt;java.lang.Object&gt;&gt;</code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
 </li>
 </ul>
-<a name="fillSession-org.eclipse.jface.action.IMenuManager-org.eclipse.emf.cdo.session.CDOSession-">
+<a id="fillSession(org.eclipse.jface.action.IMenuManager,org.eclipse.emf.cdo.session.CDOSession)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>fillSession</h4>
-<pre>public&nbsp;void&nbsp;fillSession(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IMenuManager</a>&nbsp;manager,
-                        <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;fillSession&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">IMenuManager</a>&nbsp;manager,
+                        <a href="../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
 </li>
 </ul>
-<a name="fillGenerated-org.eclipse.jface.action.MenuManager-org.eclipse.emf.cdo.session.CDOSession-">
+<a id="fillGenerated(org.eclipse.jface.action.MenuManager,org.eclipse.emf.cdo.session.CDOSession)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>fillGenerated</h4>
-<pre>public&nbsp;boolean&nbsp;fillGenerated(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">MenuManager</a>&nbsp;manager,
-                             <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session)</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;fillGenerated&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">MenuManager</a>&nbsp;manager,
+                             <a href="../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
 </li>
 </ul>
-<a name="fillView-org.eclipse.jface.action.IMenuManager-org.eclipse.emf.cdo.view.CDOView-">
+<a id="fillView(org.eclipse.jface.action.IMenuManager,org.eclipse.emf.cdo.view.CDOView)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>fillView</h4>
-<pre>public&nbsp;void&nbsp;fillView(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IMenuManager</a>&nbsp;manager,
-                     <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;fillView&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">IMenuManager</a>&nbsp;manager,
+                     <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
 </li>
 </ul>
-<a name="fillBranch-org.eclipse.jface.action.IMenuManager-org.eclipse.emf.cdo.common.branch.CDOBranch-">
+<a id="fillBranch(org.eclipse.jface.action.IMenuManager,org.eclipse.emf.cdo.common.branch.CDOBranch)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>fillBranch</h4>
-<pre>public&nbsp;void&nbsp;fillBranch(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IMenuManager</a>&nbsp;manager,
-                       <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;fillBranch&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">IMenuManager</a>&nbsp;manager,
+                       <a href="../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
 </li>
 </ul>
-<a name="fillResourceNode-org.eclipse.jface.action.IMenuManager-org.eclipse.emf.cdo.eresource.CDOResourceNode-">
+<a id="fillResourceNode(org.eclipse.jface.action.IMenuManager,org.eclipse.emf.cdo.eresource.CDOResourceNode)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>fillResourceNode</h4>
-<pre>public&nbsp;void&nbsp;fillResourceNode(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IMenuManager</a>&nbsp;manager,
-                             <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceNode</a>&nbsp;node)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;fillResourceNode&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">IMenuManager</a>&nbsp;manager,
+                             <a href="../eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceNode</a>&nbsp;node)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.4</dd>
 </dl>
 </li>
 </ul>
-<a name="fillResourceFolder-org.eclipse.jface.action.IMenuManager-org.eclipse.emf.cdo.eresource.CDOResourceFolder-">
+<a id="fillResourceFolder(org.eclipse.jface.action.IMenuManager,org.eclipse.emf.cdo.eresource.CDOResourceFolder)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>fillResourceFolder</h4>
-<pre>public&nbsp;void&nbsp;fillResourceFolder(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IMenuManager</a>&nbsp;manager,
-                               <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceFolder.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceFolder</a>&nbsp;folder)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;fillResourceFolder&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">IMenuManager</a>&nbsp;manager,
+                               <a href="../eresource/CDOResourceFolder.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceFolder</a>&nbsp;folder)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
 </li>
 </ul>
-<a name="fillResourceLeaf-org.eclipse.jface.action.IMenuManager-java.lang.Object-">
+<a id="fillResourceLeaf(org.eclipse.jface.action.IMenuManager,java.lang.Object)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>fillResourceLeaf</h4>
-<pre>public&nbsp;void&nbsp;fillResourceLeaf(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IMenuManager</a>&nbsp;manager,
+<pre class="methodSignature">public&nbsp;void&nbsp;fillResourceLeaf&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">IMenuManager</a>&nbsp;manager,
                              java.lang.Object&nbsp;object)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -804,99 +875,99 @@ extends <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/ecl
 </dl>
 </li>
 </ul>
-<a name="fillResource-org.eclipse.jface.action.IMenuManager-org.eclipse.emf.cdo.eresource.CDOResource-">
+<a id="fillResource(org.eclipse.jface.action.IMenuManager,org.eclipse.emf.cdo.eresource.CDOResource)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>fillResource</h4>
-<pre>public&nbsp;void&nbsp;fillResource(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IMenuManager</a>&nbsp;manager,
-                         <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResource</a>&nbsp;resource)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;fillResource&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">IMenuManager</a>&nbsp;manager,
+                         <a href="../eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResource</a>&nbsp;resource)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
 </li>
 </ul>
-<a name="fillTextResource-org.eclipse.jface.action.IMenuManager-org.eclipse.emf.cdo.eresource.CDOTextResource-">
+<a id="fillTextResource(org.eclipse.jface.action.IMenuManager,org.eclipse.emf.cdo.eresource.CDOTextResource)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>fillTextResource</h4>
-<pre>public&nbsp;void&nbsp;fillTextResource(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IMenuManager</a>&nbsp;manager,
-                             <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOTextResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOTextResource</a>&nbsp;resource)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;fillTextResource&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">IMenuManager</a>&nbsp;manager,
+                             <a href="../eresource/CDOTextResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOTextResource</a>&nbsp;resource)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
 </li>
 </ul>
-<a name="fillBinaryResource-org.eclipse.jface.action.IMenuManager-org.eclipse.emf.cdo.eresource.CDOBinaryResource-">
+<a id="fillBinaryResource(org.eclipse.jface.action.IMenuManager,org.eclipse.emf.cdo.eresource.CDOBinaryResource)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>fillBinaryResource</h4>
-<pre>public&nbsp;void&nbsp;fillBinaryResource(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IMenuManager</a>&nbsp;manager,
-                               <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOBinaryResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOBinaryResource</a>&nbsp;resource)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;fillBinaryResource&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">IMenuManager</a>&nbsp;manager,
+                               <a href="../eresource/CDOBinaryResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOBinaryResource</a>&nbsp;resource)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
 </li>
 </ul>
-<a name="elementAdded-java.lang.Object-java.lang.Object-">
+<a id="elementAdded(java.lang.Object,java.lang.Object)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>elementAdded</h4>
-<pre>protected&nbsp;void&nbsp;elementAdded(java.lang.Object&nbsp;element,
+<pre class="methodSignature">protected&nbsp;void&nbsp;elementAdded&#8203;(java.lang.Object&nbsp;element,
                             java.lang.Object&nbsp;parent)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true#elementAdded-java.lang.Object-java.lang.Object-" title="class or interface in org.eclipse.net4j.util.ui.views">elementAdded</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider</a>&lt;<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;&gt;</code></dd>
+<dd><code>elementAdded</code>&nbsp;in class&nbsp;<code>org.eclipse.net4j.util.ui.views.ContainerItemProvider&lt;org.eclipse.net4j.util.container.IContainer&lt;java.lang.Object&gt;&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="compare-org.eclipse.jface.viewers.Viewer-java.lang.Object-java.lang.Object-">
+<a id="compare(org.eclipse.jface.viewers.Viewer,java.lang.Object,java.lang.Object)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>compare</h4>
-<pre>public&nbsp;int&nbsp;compare(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/Viewer.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">Viewer</a>&nbsp;viewer,
+<pre class="methodSignature">public&nbsp;int&nbsp;compare&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/Viewer.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">Viewer</a>&nbsp;viewer,
                    java.lang.Object&nbsp;e1,
                    java.lang.Object&nbsp;e2)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerComparator.html?is-external=true#compare-org.eclipse.jface.viewers.Viewer-java.lang.Object-java.lang.Object-" title="class or interface in org.eclipse.jface.viewers">compare</a></code>&nbsp;in class&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerComparator.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ViewerComparator</a></code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerComparator.html?is-external=true#compare(org.eclipse.jface.viewers.Viewer,java.lang.Object,java.lang.Object)" title="class or interface in org.eclipse.jface.viewers" class="externalLink">compare</a></code>&nbsp;in class&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerComparator.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">ViewerComparator</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
 </li>
 </ul>
-<a name="getViewImageDescriptor-org.eclipse.emf.cdo.view.CDOView-">
+<a id="getViewImageDescriptor(org.eclipse.emf.cdo.view.CDOView)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getViewImageDescriptor</h4>
-<pre>public static&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/resource/ImageDescriptor.html?is-external=true" title="class or interface in org.eclipse.jface.resource">ImageDescriptor</a>&nbsp;getViewImageDescriptor(<a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view)</pre>
+<pre class="methodSignature">public static&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/resource/ImageDescriptor.html?is-external=true" title="class or interface in org.eclipse.jface.resource" class="externalLink">ImageDescriptor</a>&nbsp;getViewImageDescriptor&#8203;(<a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
 </dl>
 </li>
 </ul>
-<a name="getViewImage-org.eclipse.emf.cdo.view.CDOView-">
+<a id="getViewImage(org.eclipse.emf.cdo.view.CDOView)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getViewImage</h4>
-<pre>public static&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Image.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Image</a>&nbsp;getViewImage(<a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view)</pre>
+<pre class="methodSignature">public static&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Image.html?is-external=true" title="class or interface in org.eclipse.swt.graphics" class="externalLink">Image</a>&nbsp;getViewImage&#8203;(<a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
@@ -905,21 +976,25 @@ extends <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/ecl
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/CDOItemProvider.html">Use</a></li>
@@ -929,16 +1004,8 @@ extends <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/ecl
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/emf/cdo/ui/CDOInvalidRootAgent.html" title="class in org.eclipse.emf.cdo.ui"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.EditorRegistryListener.html" title="class in org.eclipse.emf.cdo.ui"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/emf/cdo/ui/CDOItemProvider.html" target="_top">Frames</a></li>
-<li><a href="CDOItemProvider.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -951,12 +1018,15 @@ extends <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/ecl
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
-<li><a href="#fields.inherited.from.class.org.eclipse.net4j.util.ui.views.ContainerItemProvider">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
@@ -967,10 +1037,12 @@ extends <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/ecl
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

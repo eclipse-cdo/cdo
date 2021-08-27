@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>org.eclipse.emf.cdo.spi.server (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,20 +28,25 @@
     catch(err) {
     }
 //-->
-</script>
+var pathtoroot = "../../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li class="navBarCell1Rev">Package</li>
 <li>Class</li>
 <li><a href="package-use.html">Use</a></li>
@@ -41,16 +56,14 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/emf/cdo/spi/common/revision/package-summary.html">Prev&nbsp;Package</a></li>
-<li><a href="../../../../../../org/eclipse/emf/cdo/spi/transfer/package-summary.html">Next&nbsp;Package</a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/emf/cdo/spi/server/package-summary.html" target="_top">Frames</a></li>
-<li><a href="package-summary.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -63,22 +76,35 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
+<main role="main">
 <div class="header">
 <h1 title="Package" class="title">Package&nbsp;org.eclipse.emf.cdo.spi.server</h1>
-<div class="docSummary">
-<div class="block">Server service provider interfaces and useful base implementations.</div>
-</div>
-<p>See:&nbsp;<a href="#package.description">Description</a></p>
 </div>
 <div class="contentContainer">
+<section role="region"><a id="package.description">
+<!--   -->
+</a>
+<div class="block">Server service provider interfaces and useful base implementations.</div>
+</section>
 <ul class="blockList">
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<table class="typeSummary">
 <caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Interface</th>
@@ -86,179 +112,191 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/IAppExtension.html" title="interface in org.eclipse.emf.cdo.spi.server">IAppExtension</a></td>
+<th class="colFirst" scope="row"><a href="IAppExtension.html" title="interface in org.eclipse.emf.cdo.spi.server">IAppExtension</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/IAppExtension2.html" title="interface in org.eclipse.emf.cdo.spi.server">IAppExtension2</a></td>
+<th class="colFirst" scope="row"><a href="IAppExtension2.html" title="interface in org.eclipse.emf.cdo.spi.server">IAppExtension2</a></th>
 <td class="colLast">
-<div class="block">An optional extension of the <a href="../../../../../../org/eclipse/emf/cdo/spi/server/IAppExtension.html" title="interface in org.eclipse.emf.cdo.spi.server"><code>IAppExtension</code></a> interface for app extensions that support invocation
+<div class="block">An optional extension of the <a href="IAppExtension.html" title="interface in org.eclipse.emf.cdo.spi.server"><code>IAppExtension</code></a> interface for app extensions that support invocation
  on the XML configurations of dynamically-managed repositories.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/IAuthenticationProtocol.html" title="interface in org.eclipse.emf.cdo.spi.server">IAuthenticationProtocol</a></td>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/ICommitConflictResolver.html" title="interface in org.eclipse.emf.cdo.spi.server">ICommitConflictResolver</a></td>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a></td>
+<th class="colFirst" scope="row"><a href="IAppExtension3.html" title="interface in org.eclipse.emf.cdo.spi.server">IAppExtension3</a></th>
 <td class="colLast">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">An optional extension of the <a href="IAppExtension.html" title="interface in org.eclipse.emf.cdo.spi.server"><code>IAppExtension</code></a> interface for <a href="../../server/IRepository.html" title="interface in org.eclipse.emf.cdo.server"><code>repository-aware</code></a> app extensions.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitManager.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitManager</a></td>
+<th class="colFirst" scope="row"><a href="IAppExtension4.html" title="interface in org.eclipse.emf.cdo.spi.server">IAppExtension4</a></th>
 <td class="colLast">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">An optional extension of the <a href="IAppExtension.html" title="interface in org.eclipse.emf.cdo.spi.server"><code>IAppExtension</code></a> interface for  <a href="IAppExtension4.html#getPriority()"><code>prioritized</code></a> app extensions.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalFailoverParticipant.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalFailoverParticipant</a></td>
+<th class="colFirst" scope="row"><a href="IAuthenticationProtocol.html" title="interface in org.eclipse.emf.cdo.spi.server">IAuthenticationProtocol</a></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><a href="ICommitConflictResolver.html" title="interface in org.eclipse.emf.cdo.spi.server">ICommitConflictResolver</a></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalLockManager.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalLockManager</a></td>
+<th class="colFirst" scope="row"><a href="InternalCommitManager.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitManager</a></th>
 <td class="colLast">
-<div class="block">The type of the to-be-locked objects is either <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDOIDAndBranch.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>CDOIDAndBranch</code></a> or <a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>CDOID</code></a>, depending on whether
+<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="InternalFailoverParticipant.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalFailoverParticipant</a></th>
+<td class="colLast">
+<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+</td>
+</tr>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><a href="InternalLockManager.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalLockManager</a></th>
+<td class="colLast">
+<div class="block">The type of the to-be-locked objects is either <a href="../../common/revision/CDOIDAndBranch.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>CDOIDAndBranch</code></a> or <a href="../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>CDOID</code></a>, depending on whether
  branching is supported by the repository or not.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalQueryManager.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalQueryManager</a></td>
+<th class="colFirst" scope="row"><a href="InternalQueryManager.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalQueryManager</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalQueryResult.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalQueryResult</a></td>
+<th class="colFirst" scope="row"><a href="InternalQueryResult.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalQueryResult</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></td>
+<th class="colFirst" scope="row"><a href="InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.PackagesInitializedEvent.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository.PackagesInitializedEvent</a></td>
+<th class="colFirst" scope="row"><a href="InternalRepository.PackagesInitializedEvent.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository.PackagesInitializedEvent</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepositorySynchronizer</a></td>
+<th class="colFirst" scope="row"><a href="InternalRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepositorySynchronizer</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a></td>
+<th class="colFirst" scope="row"><a href="InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalSessionManager.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSessionManager</a></td>
+<th class="colFirst" scope="row"><a href="InternalSessionManager.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSessionManager</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalStore.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore</a></td>
+<th class="colFirst" scope="row"><a href="InternalStore.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalStore.NoChangeSets.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore.NoChangeSets</a></td>
+<th class="colFirst" scope="row"><a href="InternalStore.NoChangeSets.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore.NoChangeSets</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalStore.NoCommitInfos.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore.NoCommitInfos</a></td>
+<th class="colFirst" scope="row"><a href="InternalStore.NoCommitInfos.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore.NoCommitInfos</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalStore.NoDurableLocking.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore.NoDurableLocking</a></td>
+<th class="colFirst" scope="row"><a href="InternalStore.NoDurableLocking.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore.NoDurableLocking</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalStore.NoExternalReferences.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore.NoExternalReferences</a></td>
-<td class="colLast">Deprecated
-<div class="block"><span class="deprecationComment">As of 4.6 use IRepositoryConfig.CAPABILITY_EXTERNAL_REFS.</span></div>
+<th class="colFirst" scope="row"><a href="InternalStore.NoExternalReferences.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore.NoExternalReferences</a></th>
+<td class="colLast">Deprecated.
+<div class="deprecationComment">As of 4.6 use IRepositoryConfig.CAPABILITY_EXTERNAL_REFS.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalStore.NoFeatureMaps.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore.NoFeatureMaps</a></td>
-<td class="colLast">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<th class="colFirst" scope="row"><a href="InternalStore.NoFeatureMaps.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore.NoFeatureMaps</a></th>
+<td class="colLast">Deprecated.
+<div class="deprecationComment">As of 4.5 <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/FeatureMap.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.util" class="externalLink"><code>feature maps</code></a> are no longer supported.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalStore.NoHandleRevisions.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore.NoHandleRevisions</a></td>
-<td class="colLast">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalStore.NoLargeObjects.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore.NoLargeObjects</a></td>
-<td class="colLast">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalStore.NoQueryXRefs.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore.NoQueryXRefs</a></td>
+<th class="colFirst" scope="row"><a href="InternalStore.NoHandleRevisions.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore.NoHandleRevisions</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalStore.NoRawAccess.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore.NoRawAccess</a></td>
+<th class="colFirst" scope="row"><a href="InternalStore.NoLargeObjects.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore.NoLargeObjects</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalSynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSynchronizableRepository</a></td>
+<th class="colFirst" scope="row"><a href="InternalStore.NoQueryXRefs.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore.NoQueryXRefs</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalTransaction.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalTransaction</a></td>
+<th class="colFirst" scope="row"><a href="InternalStore.NoRawAccess.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore.NoRawAccess</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalUnitManager.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalUnitManager</a></td>
+<th class="colFirst" scope="row"><a href="InternalSynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSynchronizableRepository</a></th>
+<td class="colLast">
+<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="InternalTransaction.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalTransaction</a></th>
+<td class="colLast">
+<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+</td>
+</tr>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><a href="InternalUnitManager.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalUnitManager</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalUnitManager.InternalObjectAttacher.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalUnitManager.InternalObjectAttacher</a></td>
+<th class="colFirst" scope="row"><a href="InternalUnitManager.InternalObjectAttacher.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalUnitManager.InternalObjectAttacher</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalView.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalView</a></td>
+<th class="colFirst" scope="row"><a href="InternalView.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalView</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/ISessionProtocol.html" title="interface in org.eclipse.emf.cdo.spi.server">ISessionProtocol</a></td>
+<th class="colFirst" scope="row"><a href="ISessionProtocol.html" title="interface in org.eclipse.emf.cdo.spi.server">ISessionProtocol</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
@@ -267,7 +305,7 @@
 </table>
 </li>
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<table class="typeSummary">
 <caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Class</th>
@@ -275,200 +313,204 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/AuthenticationUtil.html" title="class in org.eclipse.emf.cdo.spi.server">AuthenticationUtil</a></td>
-<td class="colLast">
-<div class="block">Static utility methods for binding <a href="../../../../../../org/eclipse/emf/cdo/spi/server/IAuthenticationProtocol.html" title="interface in org.eclipse.emf.cdo.spi.server"><code>authentication protocols</code></a> to the current thread.</div>
-</td>
+<th class="colFirst" scope="row"><a href="AppExtension.html" title="class in org.eclipse.emf.cdo.spi.server">AppExtension</a></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/AuthenticationUtil.AuthenticatingOperation.html" title="class in org.eclipse.emf.cdo.spi.server">AuthenticationUtil.AuthenticatingOperation</a>&lt;V&gt;</td>
+<th class="colFirst" scope="row"><a href="AuthenticationUtil.html" title="class in org.eclipse.emf.cdo.spi.server">AuthenticationUtil</a></th>
+<td class="colLast">
+<div class="block">Static utility methods for binding <a href="IAuthenticationProtocol.html" title="interface in org.eclipse.emf.cdo.spi.server"><code>authentication protocols</code></a> to the current thread.</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="AuthenticationUtil.AuthenticatingOperation.html" title="class in org.eclipse.emf.cdo.spi.server">AuthenticationUtil.AuthenticatingOperation</a>&lt;V&gt;</th>
 <td class="colLast">
 <div class="block">Encapsulation of an administrative operation requiring (potentially) client
  authentication to authorize the operation.</div>
 </td>
 </tr>
-<tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/CDOCommand.html" title="class in org.eclipse.emf.cdo.spi.server">CDOCommand</a></td>
-<td class="colLast">&nbsp;</td>
-</tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/CDOCommand.CommandParameter.html" title="class in org.eclipse.emf.cdo.spi.server">CDOCommand.CommandParameter</a></td>
+<th class="colFirst" scope="row"><a href="CDOCommand.html" title="class in org.eclipse.emf.cdo.spi.server">CDOCommand</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/CDOCommand.WithAccessor.html" title="class in org.eclipse.emf.cdo.spi.server">CDOCommand.WithAccessor</a></td>
+<th class="colFirst" scope="row"><a href="CDOCommand.CommandParameter.html" title="class in org.eclipse.emf.cdo.spi.server">CDOCommand.CommandParameter</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/CDOCommand.WithRepository.html" title="class in org.eclipse.emf.cdo.spi.server">CDOCommand.WithRepository</a></td>
+<th class="colFirst" scope="row"><a href="CDOCommand.WithAccessor.html" title="class in org.eclipse.emf.cdo.spi.server">CDOCommand.WithAccessor</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/ContainerQueryHandlerProvider.html" title="class in org.eclipse.emf.cdo.spi.server">ContainerQueryHandlerProvider</a></td>
-<td class="colLast">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/ContainerRepositoryProvider.html" title="class in org.eclipse.emf.cdo.spi.server">ContainerRepositoryProvider</a></td>
-<td class="colLast">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/DelegatingQueryResourcesContext.html" title="class in org.eclipse.emf.cdo.spi.server">DelegatingQueryResourcesContext</a></td>
-<td class="colLast">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/DurableLockArea.html" title="class in org.eclipse.emf.cdo.spi.server">DurableLockArea</a></td>
-<td class="colLast">Deprecated
-<div class="block"><span class="deprecationComment">Use <a href="../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockUtil.html#createLockArea-java.lang.String-java.lang.String-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-boolean-java.util.Map-"><code>CDOLockUtil.createLockArea(String, String, CDOBranchPoint, boolean, Map)</code></a> instead</span></div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/FactoriesQueryHandlerProvider.html" title="class in org.eclipse.emf.cdo.spi.server">FactoriesQueryHandlerProvider</a></td>
-<td class="colLast">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/ICommitConflictResolver.Merging.html" title="class in org.eclipse.emf.cdo.spi.server">ICommitConflictResolver.Merging</a></td>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalTransaction.CommitAttempt.html" title="class in org.eclipse.emf.cdo.spi.server">InternalTransaction.CommitAttempt</a></td>
+<th class="colFirst" scope="row"><a href="CDOCommand.WithRepository.html" title="class in org.eclipse.emf.cdo.spi.server">CDOCommand.WithRepository</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/LongIDStore.html" title="class in org.eclipse.emf.cdo.spi.server">LongIDStore</a></td>
+<th class="colFirst" scope="row"><a href="ContainerQueryHandlerProvider.html" title="class in org.eclipse.emf.cdo.spi.server">ContainerQueryHandlerProvider</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/LongIDStoreAccessor.html" title="class in org.eclipse.emf.cdo.spi.server">LongIDStoreAccessor</a></td>
+<th class="colFirst" scope="row"><a href="ContainerRepositoryProvider.html" title="class in org.eclipse.emf.cdo.spi.server">ContainerRepositoryProvider</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/ObjectWriteAccessHandler.html" title="class in org.eclipse.emf.cdo.spi.server">ObjectWriteAccessHandler</a></td>
+<th class="colFirst" scope="row"><a href="DelegatingQueryResourcesContext.html" title="class in org.eclipse.emf.cdo.spi.server">DelegatingQueryResourcesContext</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/PluginRepositoryProvider.html" title="class in org.eclipse.emf.cdo.spi.server">PluginRepositoryProvider</a></td>
-<td class="colLast">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<th class="colFirst" scope="row"><a href="DurableLockArea.html" title="class in org.eclipse.emf.cdo.spi.server">DurableLockArea</a></th>
+<td class="colLast">Deprecated.
+<div class="deprecationComment">Use <a href="../../common/lock/CDOLockUtil.html#createLockArea(java.lang.String,java.lang.String,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,boolean,java.util.Map)"><code>CDOLockUtil.createLockArea(String, String, CDOBranchPoint, boolean, Map)</code></a> instead</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/QueryHandlerFactory.html" title="class in org.eclipse.emf.cdo.spi.server">QueryHandlerFactory</a></td>
+<th class="colFirst" scope="row"><a href="FactoriesQueryHandlerProvider.html" title="class in org.eclipse.emf.cdo.spi.server">FactoriesQueryHandlerProvider</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryActivityLog.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryActivityLog</a></td>
+<th class="colFirst" scope="row"><a href="ICommitConflictResolver.Merging.html" title="class in org.eclipse.emf.cdo.spi.server">ICommitConflictResolver.Merging</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryActivityLog.Factory.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryActivityLog.Factory</a></td>
+<th class="colFirst" scope="row"><a href="InternalTransaction.CommitAttempt.html" title="class in org.eclipse.emf.cdo.spi.server">InternalTransaction.CommitAttempt</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryActivityLog.Rolling.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryActivityLog.Rolling</a></td>
+<th class="colFirst" scope="row"><a href="LongIDStore.html" title="class in org.eclipse.emf.cdo.spi.server">LongIDStore</a></th>
+<td class="colLast">
+<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+</td>
+</tr>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><a href="LongIDStoreAccessor.html" title="class in org.eclipse.emf.cdo.spi.server">LongIDStoreAccessor</a></th>
+<td class="colLast">
+<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="ObjectWriteAccessHandler.html" title="class in org.eclipse.emf.cdo.spi.server">ObjectWriteAccessHandler</a></th>
+<td class="colLast">
+<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+</td>
+</tr>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><a href="PluginRepositoryProvider.html" title="class in org.eclipse.emf.cdo.spi.server">PluginRepositoryProvider</a></th>
+<td class="colLast">
+<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="QueryHandlerFactory.html" title="class in org.eclipse.emf.cdo.spi.server">QueryHandlerFactory</a></th>
+<td class="colLast">
+<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+</td>
+</tr>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><a href="RepositoryActivityLog.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryActivityLog</a></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="RepositoryActivityLog.Factory.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryActivityLog.Factory</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryActivityLog.Rolling.Factory.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryActivityLog.Rolling.Factory</a></td>
+<th class="colFirst" scope="row"><a href="RepositoryActivityLog.Rolling.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryActivityLog.Rolling</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryConfigurator</a></td>
-<td class="colLast">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.Factory.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryConfigurator.Factory</a></td>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.Factory.Default.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryConfigurator.Factory.Default</a></td>
+<th class="colFirst" scope="row"><a href="RepositoryActivityLog.Rolling.Factory.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryActivityLog.Rolling.Factory</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryFactory.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryFactory</a></td>
+<th class="colFirst" scope="row"><a href="RepositoryConfigurator.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryConfigurator</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryUserManager.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryUserManager</a></td>
+<th class="colFirst" scope="row"><a href="RepositoryConfigurator.Factory.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryConfigurator.Factory</a></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><a href="RepositoryConfigurator.Factory.Default.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryConfigurator.Factory.Default</a></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="RepositoryFactory.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryFactory</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryUserManager.RepositoryAuthenticatorFactory.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryUserManager.RepositoryAuthenticatorFactory</a></td>
+<th class="colFirst" scope="row"><a href="RepositoryUserManager.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryUserManager</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryUserManager.RepositoryInjector.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryUserManager.RepositoryInjector</a></td>
+<th class="colFirst" scope="row"><a href="RepositoryUserManager.RepositoryAuthenticatorFactory.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryUserManager.RepositoryAuthenticatorFactory</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryUserManager.RepositoryUserManagerFactory.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryUserManager.RepositoryUserManagerFactory</a></td>
+<th class="colFirst" scope="row"><a href="RepositoryUserManager.RepositoryInjector.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryUserManager.RepositoryInjector</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/Store.html" title="class in org.eclipse.emf.cdo.spi.server">Store</a></td>
+<th class="colFirst" scope="row"><a href="RepositoryUserManager.RepositoryUserManagerFactory.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryUserManager.RepositoryUserManagerFactory</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/StoreAccessor.html" title="class in org.eclipse.emf.cdo.spi.server">StoreAccessor</a></td>
+<th class="colFirst" scope="row"><a href="Store.html" title="class in org.eclipse.emf.cdo.spi.server">Store</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/StoreAccessorBase.html" title="class in org.eclipse.emf.cdo.spi.server">StoreAccessorBase</a></td>
+<th class="colFirst" scope="row"><a href="StoreAccessor.html" title="class in org.eclipse.emf.cdo.spi.server">StoreAccessor</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/StoreAccessorBase.CommitDataRevisionHandler.html" title="class in org.eclipse.emf.cdo.spi.server">StoreAccessorBase.CommitDataRevisionHandler</a></td>
+<th class="colFirst" scope="row"><a href="StoreAccessorBase.html" title="class in org.eclipse.emf.cdo.spi.server">StoreAccessorBase</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/StoreAccessorPool.html" title="class in org.eclipse.emf.cdo.spi.server">StoreAccessorPool</a></td>
+<th class="colFirst" scope="row"><a href="StoreAccessorBase.CommitDataRevisionHandler.html" title="class in org.eclipse.emf.cdo.spi.server">StoreAccessorBase.CommitDataRevisionHandler</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/StoreChunkReader.html" title="class in org.eclipse.emf.cdo.spi.server">StoreChunkReader</a></td>
+<th class="colFirst" scope="row"><a href="StoreAccessorPool.html" title="class in org.eclipse.emf.cdo.spi.server">StoreAccessorPool</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/SyncingUtil.html" title="class in org.eclipse.emf.cdo.spi.server">SyncingUtil</a></td>
+<th class="colFirst" scope="row"><a href="StoreChunkReader.html" title="class in org.eclipse.emf.cdo.spi.server">StoreChunkReader</a></th>
+<td class="colLast">
+<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+</td>
+</tr>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><a href="SyncingUtil.html" title="class in org.eclipse.emf.cdo.spi.server">SyncingUtil</a></th>
 <td class="colLast">
 <div class="block">Static methods that may help with classes related to repository synchronization.</div>
 </td>
@@ -477,7 +519,7 @@
 </table>
 </li>
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Exception Summary table, listing exceptions, and an explanation">
+<table class="typeSummary">
 <caption><span>Exception Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Exception</th>
@@ -485,29 +527,27 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/CDOCommand.CommandException.html" title="class in org.eclipse.emf.cdo.spi.server">CDOCommand.CommandException</a></td>
+<th class="colFirst" scope="row"><a href="CDOCommand.CommandException.html" title="class in org.eclipse.emf.cdo.spi.server">CDOCommand.CommandException</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
 </li>
 </ul>
-<a name="package.description">
-<!--   -->
-</a>
-<h2 title="Package org.eclipse.emf.cdo.spi.server Description">Package org.eclipse.emf.cdo.spi.server Description</h2>
-<div class="block">Server service provider interfaces and useful base implementations.</div>
 </div>
+</main>
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li class="navBarCell1Rev">Package</li>
 <li>Class</li>
 <li><a href="package-use.html">Use</a></li>
@@ -517,16 +557,8 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/emf/cdo/spi/common/revision/package-summary.html">Prev&nbsp;Package</a></li>
-<li><a href="../../../../../../org/eclipse/emf/cdo/spi/transfer/package-summary.html">Next&nbsp;Package</a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/emf/cdo/spi/server/package-summary.html" target="_top">Frames</a></li>
-<li><a href="package-summary.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -539,11 +571,16 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

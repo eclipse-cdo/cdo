@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>CDOType (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6};
+var data = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/CDOType.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.Type.html" title="enum in org.eclipse.emf.cdo.common.model"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../../org/eclipse/emf/cdo/common/model/EMFPredicates.html" title="class in org.eclipse.emf.cdo.common.model"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/emf/cdo/common/model/CDOType.html" target="_top">Frames</a></li>
-<li><a href="CDOType.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,6 +82,9 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -85,13 +101,22 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.emf.cdo.common.model</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.cdo.common.model</a></div>
 <h2 title="Interface CDOType" class="title">Interface CDOType</h2>
 </div>
 <div class="contentContainer">
@@ -99,7 +124,6 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<br>
 <pre>public interface <span class="typeNameLabel">CDOType</span></pre>
 <div class="block">Provides access to all CDO-supported data types.</div>
 <dl>
@@ -117,221 +141,276 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <!-- =========== FIELD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.summary">
+<li class="blockList"><a id="field.summary">
 <!--   -->
 </a>
 <h3>Field Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Field Summary table, listing fields, and an explanation">
+<table class="memberSummary">
 <caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Field and Description</th>
+<th class="colSecond" scope="col">Field</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html#BIG_DECIMAL">BIG_DECIMAL</a></span></code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#BIG_DECIMAL">BIG_DECIMAL</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html#BIG_INTEGER">BIG_INTEGER</a></span></code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#BIG_INTEGER">BIG_INTEGER</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html#BLOB">BLOB</a></span></code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#BLOB">BLOB</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html#BOOLEAN">BOOLEAN</a></span></code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#BOOLEAN">BOOLEAN</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html#BOOLEAN_OBJECT">BOOLEAN_OBJECT</a></span></code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#BOOLEAN_OBJECT">BOOLEAN_OBJECT</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html#BYTE">BYTE</a></span></code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#BYTE">BYTE</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html#BYTE_ARRAY">BYTE_ARRAY</a></span></code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#BYTE_ARRAY">BYTE_ARRAY</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html#BYTE_OBJECT">BYTE_OBJECT</a></span></code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#BYTE_OBJECT">BYTE_OBJECT</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html#CHAR">CHAR</a></span></code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#CHAR">CHAR</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html#CHARACTER_OBJECT">CHARACTER_OBJECT</a></span></code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#CHARACTER_OBJECT">CHARACTER_OBJECT</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html#CLOB">CLOB</a></span></code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#CLOB">CLOB</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html#CUSTOM">CUSTOM</a></span></code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#CUSTOM">CUSTOM</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html#DATE">DATE</a></span></code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#DATE">DATE</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html#DOUBLE">DOUBLE</a></span></code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#DOUBLE">DOUBLE</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html#DOUBLE_OBJECT">DOUBLE_OBJECT</a></span></code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#DOUBLE_OBJECT">DOUBLE_OBJECT</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html#ENUM_LITERAL">ENUM_LITERAL</a></span></code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ENUM_LITERAL">ENUM_LITERAL</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html#ENUM_ORDINAL">ENUM_ORDINAL</a></span></code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ENUM_ORDINAL">ENUM_ORDINAL</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html#EXCEPTION">EXCEPTION</a></span></code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#EXCEPTION">EXCEPTION</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html#FEATURE_MAP_ENTRY">FEATURE_MAP_ENTRY</a></span></code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#FEATURE_MAP_ENTRY">FEATURE_MAP_ENTRY</a></span></code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.5 <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/FeatureMap.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.util" class="externalLink"><code>feature maps</code></a> are no longer supported.</div>
+</div>
+</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html#FLOAT">FLOAT</a></span></code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#FLOAT">FLOAT</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html#FLOAT_OBJECT">FLOAT_OBJECT</a></span></code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#FLOAT_OBJECT">FLOAT_OBJECT</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html#INT">INT</a></span></code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#INT">INT</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html#INTEGER_OBJECT">INTEGER_OBJECT</a></span></code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#INTEGER_OBJECT">INTEGER_OBJECT</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html#JAVA_CLASS">JAVA_CLASS</a></span></code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#JAVA_CLASS">JAVA_CLASS</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html#JAVA_OBJECT">JAVA_OBJECT</a></span></code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#JAVA_OBJECT">JAVA_OBJECT</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html#LIST">LIST</a></span></code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#LIST">LIST</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html#LONG">LONG</a></span></code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#LONG">LONG</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html#LONG_OBJECT">LONG_OBJECT</a></span></code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#LONG_OBJECT">LONG_OBJECT</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html#MAP">MAP</a></span></code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#MAP">MAP</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html#OBJECT">OBJECT</a></span></code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#OBJECT">OBJECT</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html#OBJECT_ARRAY">OBJECT_ARRAY</a></span></code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#OBJECT_ARRAY">OBJECT_ARRAY</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html#SET">SET</a></span></code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SET">SET</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html#SHORT">SHORT</a></span></code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SHORT">SHORT</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html#SHORT_OBJECT">SHORT_OBJECT</a></span></code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SHORT_OBJECT">SHORT_OBJECT</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html#STRING">STRING</a></span></code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#STRING">STRING</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>java.lang.Object</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html#adjustReferences-org.eclipse.emf.cdo.spi.common.revision.CDOReferenceAdjuster-java.lang.Object-org.eclipse.emf.ecore.EStructuralFeature-int-">adjustReferences</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/spi/common/revision/CDOReferenceAdjuster.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">CDOReferenceAdjuster</a>&nbsp;adjuster,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#adjustReferences(org.eclipse.emf.cdo.spi.common.revision.CDOReferenceAdjuster,java.lang.Object,org.eclipse.emf.ecore.EStructuralFeature,int)">adjustReferences</a></span>&#8203;(<a href="../../spi/common/revision/CDOReferenceAdjuster.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">CDOReferenceAdjuster</a>&nbsp;adjuster,
                 java.lang.Object&nbsp;value,
-                <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature,
-                int&nbsp;index)</code>&nbsp;</td>
+                <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&nbsp;feature,
+                int&nbsp;index)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html#canBeNull--">canBeNull</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#canBeNull()">canBeNull</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>java.lang.Object</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html#convertToCDO-org.eclipse.emf.ecore.EClassifier-java.lang.Object-">convertToCDO</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClassifier</a>&nbsp;feature,
-            java.lang.Object&nbsp;value)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#convertToCDO(org.eclipse.emf.ecore.EClassifier,java.lang.Object)">convertToCDO</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClassifier</a>&nbsp;feature,
+            java.lang.Object&nbsp;value)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>java.lang.Object</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html#convertToEMF-org.eclipse.emf.ecore.EClassifier-java.lang.Object-">convertToEMF</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClassifier</a>&nbsp;feature,
-            java.lang.Object&nbsp;value)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#convertToEMF(org.eclipse.emf.ecore.EClassifier,java.lang.Object)">convertToEMF</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClassifier</a>&nbsp;feature,
+            java.lang.Object&nbsp;value)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>java.lang.Object</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html#copyValue-java.lang.Object-">copyValue</a></span>(java.lang.Object&nbsp;value)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#copyValue(java.lang.Object)">copyValue</a></span>&#8203;(java.lang.Object&nbsp;value)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>java.lang.Object</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html#getDefaultValue--">getDefaultValue</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDefaultValue()">getDefaultValue</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html#getName--">getName</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getName()">getName</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>byte</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html#getTypeID--">getTypeID</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTypeID()">getTypeID</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>java.lang.Object</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html#readValue-org.eclipse.emf.cdo.common.protocol.CDODataInput-">readValue</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a>&nbsp;in)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readValue(org.eclipse.emf.cdo.common.protocol.CDODataInput)">readValue</a></span>&#8203;(<a href="../protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a>&nbsp;in)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html#writeValue-org.eclipse.emf.cdo.common.protocol.CDODataOutput-java.lang.Object-">writeValue</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
-          java.lang.Object&nbsp;value)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#writeValue(org.eclipse.emf.cdo.common.protocol.CDODataOutput,java.lang.Object)">writeValue</a></span>&#8203;(<a href="../protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
+          java.lang.Object&nbsp;value)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -339,376 +418,381 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <!-- ============ FIELD DETAIL =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.detail">
+<li class="blockList"><a id="field.detail">
 <!--   -->
 </a>
 <h3>Field Detail</h3>
-<a name="OBJECT">
+<a id="OBJECT">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>OBJECT</h4>
-<pre>static final&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> OBJECT</pre>
+<pre>static final&nbsp;<a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> OBJECT</pre>
 </li>
 </ul>
-<a name="BOOLEAN">
+<a id="BOOLEAN">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>BOOLEAN</h4>
-<pre>static final&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> BOOLEAN</pre>
+<pre>static final&nbsp;<a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> BOOLEAN</pre>
 </li>
 </ul>
-<a name="BOOLEAN_OBJECT">
+<a id="BOOLEAN_OBJECT">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>BOOLEAN_OBJECT</h4>
-<pre>static final&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> BOOLEAN_OBJECT</pre>
+<pre>static final&nbsp;<a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> BOOLEAN_OBJECT</pre>
 </li>
 </ul>
-<a name="BYTE">
+<a id="BYTE">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>BYTE</h4>
-<pre>static final&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> BYTE</pre>
+<pre>static final&nbsp;<a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> BYTE</pre>
 </li>
 </ul>
-<a name="BYTE_OBJECT">
+<a id="BYTE_OBJECT">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>BYTE_OBJECT</h4>
-<pre>static final&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> BYTE_OBJECT</pre>
+<pre>static final&nbsp;<a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> BYTE_OBJECT</pre>
 </li>
 </ul>
-<a name="CHAR">
+<a id="CHAR">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>CHAR</h4>
-<pre>static final&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> CHAR</pre>
+<pre>static final&nbsp;<a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> CHAR</pre>
 </li>
 </ul>
-<a name="CHARACTER_OBJECT">
+<a id="CHARACTER_OBJECT">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>CHARACTER_OBJECT</h4>
-<pre>static final&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> CHARACTER_OBJECT</pre>
+<pre>static final&nbsp;<a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> CHARACTER_OBJECT</pre>
 </li>
 </ul>
-<a name="DATE">
+<a id="DATE">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>DATE</h4>
-<pre>static final&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> DATE</pre>
+<pre>static final&nbsp;<a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> DATE</pre>
 </li>
 </ul>
-<a name="DOUBLE">
+<a id="DOUBLE">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>DOUBLE</h4>
-<pre>static final&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> DOUBLE</pre>
+<pre>static final&nbsp;<a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> DOUBLE</pre>
 </li>
 </ul>
-<a name="DOUBLE_OBJECT">
+<a id="DOUBLE_OBJECT">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>DOUBLE_OBJECT</h4>
-<pre>static final&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> DOUBLE_OBJECT</pre>
+<pre>static final&nbsp;<a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> DOUBLE_OBJECT</pre>
 </li>
 </ul>
-<a name="FLOAT">
+<a id="FLOAT">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>FLOAT</h4>
-<pre>static final&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> FLOAT</pre>
+<pre>static final&nbsp;<a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> FLOAT</pre>
 </li>
 </ul>
-<a name="FLOAT_OBJECT">
+<a id="FLOAT_OBJECT">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>FLOAT_OBJECT</h4>
-<pre>static final&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> FLOAT_OBJECT</pre>
+<pre>static final&nbsp;<a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> FLOAT_OBJECT</pre>
 </li>
 </ul>
-<a name="INT">
+<a id="INT">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>INT</h4>
-<pre>static final&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> INT</pre>
+<pre>static final&nbsp;<a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> INT</pre>
 </li>
 </ul>
-<a name="INTEGER_OBJECT">
+<a id="INTEGER_OBJECT">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>INTEGER_OBJECT</h4>
-<pre>static final&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> INTEGER_OBJECT</pre>
+<pre>static final&nbsp;<a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> INTEGER_OBJECT</pre>
 </li>
 </ul>
-<a name="LONG">
+<a id="LONG">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>LONG</h4>
-<pre>static final&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> LONG</pre>
+<pre>static final&nbsp;<a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> LONG</pre>
 </li>
 </ul>
-<a name="LONG_OBJECT">
+<a id="LONG_OBJECT">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>LONG_OBJECT</h4>
-<pre>static final&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> LONG_OBJECT</pre>
+<pre>static final&nbsp;<a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> LONG_OBJECT</pre>
 </li>
 </ul>
-<a name="SHORT">
+<a id="SHORT">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>SHORT</h4>
-<pre>static final&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> SHORT</pre>
+<pre>static final&nbsp;<a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> SHORT</pre>
 </li>
 </ul>
-<a name="SHORT_OBJECT">
+<a id="SHORT_OBJECT">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>SHORT_OBJECT</h4>
-<pre>static final&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> SHORT_OBJECT</pre>
+<pre>static final&nbsp;<a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> SHORT_OBJECT</pre>
 </li>
 </ul>
-<a name="STRING">
+<a id="STRING">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>STRING</h4>
-<pre>static final&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> STRING</pre>
+<pre>static final&nbsp;<a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> STRING</pre>
 </li>
 </ul>
-<a name="BYTE_ARRAY">
+<a id="BYTE_ARRAY">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>BYTE_ARRAY</h4>
-<pre>static final&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> BYTE_ARRAY</pre>
+<pre>static final&nbsp;<a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> BYTE_ARRAY</pre>
 </li>
 </ul>
-<a name="OBJECT_ARRAY">
+<a id="OBJECT_ARRAY">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>OBJECT_ARRAY</h4>
-<pre>static final&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> OBJECT_ARRAY</pre>
+<pre>static final&nbsp;<a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> OBJECT_ARRAY</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
 </dl>
 </li>
 </ul>
-<a name="MAP">
+<a id="MAP">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>MAP</h4>
-<pre>static final&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> MAP</pre>
+<pre>static final&nbsp;<a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> MAP</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.0</dd>
 </dl>
 </li>
 </ul>
-<a name="SET">
+<a id="SET">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>SET</h4>
-<pre>static final&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> SET</pre>
+<pre>static final&nbsp;<a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> SET</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.1</dd>
 </dl>
 </li>
 </ul>
-<a name="LIST">
+<a id="LIST">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>LIST</h4>
-<pre>static final&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> LIST</pre>
+<pre>static final&nbsp;<a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> LIST</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.1</dd>
 </dl>
 </li>
 </ul>
-<a name="BIG_DECIMAL">
+<a id="BIG_DECIMAL">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>BIG_DECIMAL</h4>
-<pre>static final&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> BIG_DECIMAL</pre>
+<pre>static final&nbsp;<a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> BIG_DECIMAL</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
 </dl>
 </li>
 </ul>
-<a name="BIG_INTEGER">
+<a id="BIG_INTEGER">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>BIG_INTEGER</h4>
-<pre>static final&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> BIG_INTEGER</pre>
+<pre>static final&nbsp;<a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> BIG_INTEGER</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
 </dl>
 </li>
 </ul>
-<a name="ENUM_ORDINAL">
+<a id="ENUM_ORDINAL">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>ENUM_ORDINAL</h4>
-<pre>static final&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> ENUM_ORDINAL</pre>
+<pre>static final&nbsp;<a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> ENUM_ORDINAL</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
 </dl>
 </li>
 </ul>
-<a name="ENUM_LITERAL">
+<a id="ENUM_LITERAL">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>ENUM_LITERAL</h4>
-<pre>static final&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> ENUM_LITERAL</pre>
+<pre>static final&nbsp;<a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> ENUM_LITERAL</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
 </dl>
 </li>
 </ul>
-<a name="BLOB">
+<a id="BLOB">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>BLOB</h4>
-<pre>static final&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> BLOB</pre>
+<pre>static final&nbsp;<a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> BLOB</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.0</dd>
 </dl>
 </li>
 </ul>
-<a name="CLOB">
+<a id="CLOB">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>CLOB</h4>
-<pre>static final&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> CLOB</pre>
+<pre>static final&nbsp;<a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> CLOB</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.0</dd>
 </dl>
 </li>
 </ul>
-<a name="JAVA_CLASS">
+<a id="JAVA_CLASS">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>JAVA_CLASS</h4>
-<pre>static final&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> JAVA_CLASS</pre>
+<pre>static final&nbsp;<a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> JAVA_CLASS</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
 </li>
 </ul>
-<a name="JAVA_OBJECT">
+<a id="JAVA_OBJECT">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>JAVA_OBJECT</h4>
-<pre>static final&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> JAVA_OBJECT</pre>
+<pre>static final&nbsp;<a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> JAVA_OBJECT</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
 </li>
 </ul>
-<a name="CUSTOM">
+<a id="CUSTOM">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>CUSTOM</h4>
-<pre>static final&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> CUSTOM</pre>
+<pre>static final&nbsp;<a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> CUSTOM</pre>
 </li>
 </ul>
-<a name="FEATURE_MAP_ENTRY">
+<a id="FEATURE_MAP_ENTRY">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>FEATURE_MAP_ENTRY</h4>
-<pre>static final&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> FEATURE_MAP_ENTRY</pre>
+<pre>@Deprecated
+static final&nbsp;<a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> FEATURE_MAP_ENTRY</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.5 <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/FeatureMap.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.util" class="externalLink"><code>feature maps</code></a> are no longer supported.</div>
+</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
 </dl>
 </li>
 </ul>
-<a name="EXCEPTION">
+<a id="EXCEPTION">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>EXCEPTION</h4>
-<pre>static final&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> EXCEPTION</pre>
+<pre>static final&nbsp;<a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a> EXCEPTION</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.3</dd>
@@ -717,70 +801,72 @@ var activeTableTab = "activeTableTab";
 </ul>
 </li>
 </ul>
+</section>
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="getName--">
+<a id="getName()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getName</h4>
-<pre>java.lang.String&nbsp;getName()</pre>
+<pre class="methodSignature">java.lang.String&nbsp;getName()</pre>
 </li>
 </ul>
-<a name="getTypeID--">
+<a id="getTypeID()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getTypeID</h4>
-<pre>byte&nbsp;getTypeID()</pre>
+<pre class="methodSignature">byte&nbsp;getTypeID()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.0</dd>
 </dl>
 </li>
 </ul>
-<a name="canBeNull--">
+<a id="canBeNull()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>canBeNull</h4>
-<pre>boolean&nbsp;canBeNull()</pre>
+<pre class="methodSignature">boolean&nbsp;canBeNull()</pre>
 </li>
 </ul>
-<a name="getDefaultValue--">
+<a id="getDefaultValue()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getDefaultValue</h4>
-<pre>java.lang.Object&nbsp;getDefaultValue()</pre>
+<pre class="methodSignature">java.lang.Object&nbsp;getDefaultValue()</pre>
 </li>
 </ul>
-<a name="copyValue-java.lang.Object-">
+<a id="copyValue(java.lang.Object)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>copyValue</h4>
-<pre>java.lang.Object&nbsp;copyValue(java.lang.Object&nbsp;value)</pre>
+<pre class="methodSignature">java.lang.Object&nbsp;copyValue&#8203;(java.lang.Object&nbsp;value)</pre>
 </li>
 </ul>
-<a name="adjustReferences-org.eclipse.emf.cdo.spi.common.revision.CDOReferenceAdjuster-java.lang.Object-org.eclipse.emf.ecore.EStructuralFeature-int-">
+<a id="adjustReferences(org.eclipse.emf.cdo.spi.common.revision.CDOReferenceAdjuster,java.lang.Object,org.eclipse.emf.ecore.EStructuralFeature,int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>adjustReferences</h4>
-<pre>java.lang.Object&nbsp;adjustReferences(<a href="../../../../../../org/eclipse/emf/cdo/spi/common/revision/CDOReferenceAdjuster.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">CDOReferenceAdjuster</a>&nbsp;adjuster,
+<pre class="methodSignature">java.lang.Object&nbsp;adjustReferences&#8203;(<a href="../../spi/common/revision/CDOReferenceAdjuster.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">CDOReferenceAdjuster</a>&nbsp;adjuster,
                                   java.lang.Object&nbsp;value,
-                                  <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature,
+                                  <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&nbsp;feature,
                                   int&nbsp;index)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -788,13 +874,13 @@ var activeTableTab = "activeTableTab";
 </dl>
 </li>
 </ul>
-<a name="readValue-org.eclipse.emf.cdo.common.protocol.CDODataInput-">
+<a id="readValue(org.eclipse.emf.cdo.common.protocol.CDODataInput)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>readValue</h4>
-<pre>java.lang.Object&nbsp;readValue(<a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a>&nbsp;in)
+<pre class="methodSignature">java.lang.Object&nbsp;readValue&#8203;(<a href="../protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a>&nbsp;in)
                     throws java.io.IOException</pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -804,13 +890,13 @@ var activeTableTab = "activeTableTab";
 </dl>
 </li>
 </ul>
-<a name="writeValue-org.eclipse.emf.cdo.common.protocol.CDODataOutput-java.lang.Object-">
+<a id="writeValue(org.eclipse.emf.cdo.common.protocol.CDODataOutput,java.lang.Object)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>writeValue</h4>
-<pre>void&nbsp;writeValue(<a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
+<pre class="methodSignature">void&nbsp;writeValue&#8203;(<a href="../protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
                 java.lang.Object&nbsp;value)
          throws java.io.IOException</pre>
 <dl>
@@ -821,13 +907,13 @@ var activeTableTab = "activeTableTab";
 </dl>
 </li>
 </ul>
-<a name="convertToEMF-org.eclipse.emf.ecore.EClassifier-java.lang.Object-">
+<a id="convertToEMF(org.eclipse.emf.ecore.EClassifier,java.lang.Object)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>convertToEMF</h4>
-<pre>java.lang.Object&nbsp;convertToEMF(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClassifier</a>&nbsp;feature,
+<pre class="methodSignature">java.lang.Object&nbsp;convertToEMF&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClassifier</a>&nbsp;feature,
                               java.lang.Object&nbsp;value)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -835,13 +921,13 @@ var activeTableTab = "activeTableTab";
 </dl>
 </li>
 </ul>
-<a name="convertToCDO-org.eclipse.emf.ecore.EClassifier-java.lang.Object-">
+<a id="convertToCDO(org.eclipse.emf.ecore.EClassifier,java.lang.Object)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>convertToCDO</h4>
-<pre>java.lang.Object&nbsp;convertToCDO(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClassifier</a>&nbsp;feature,
+<pre class="methodSignature">java.lang.Object&nbsp;convertToCDO&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClassifier</a>&nbsp;feature,
                               java.lang.Object&nbsp;value)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -851,21 +937,25 @@ var activeTableTab = "activeTableTab";
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/CDOType.html">Use</a></li>
@@ -875,16 +965,8 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.Type.html" title="enum in org.eclipse.emf.cdo.common.model"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../../org/eclipse/emf/cdo/common/model/EMFPredicates.html" title="class in org.eclipse.emf.cdo.common.model"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/emf/cdo/common/model/CDOType.html" target="_top">Frames</a></li>
-<li><a href="CDOType.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -897,6 +979,9 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -913,10 +998,12 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

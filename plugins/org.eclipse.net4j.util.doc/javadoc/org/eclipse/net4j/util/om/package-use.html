@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>Uses of Package org.eclipse.net4j.util.om (Net4j Utilities Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,39 +28,43 @@
     catch(err) {
     }
 //-->
-</script>
+var pathtoroot = "../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li>Class</li>
 <li class="navBarCell1Rev">Use</li>
+<li><a href="package-tree.html">Tree</a></li>
 <li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../help-doc.html">Help</a></li>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev</li>
-<li>Next</li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/net4j/util/om/package-use.html" target="_top">Frames</a></li>
-<li><a href="package-use.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -63,50 +77,62 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
+<main role="main">
 <div class="header">
 <h1 title="Uses of Package org.eclipse.net4j.util.om" class="title">Uses of Package<br>org.eclipse.net4j.util.om</h1>
 </div>
 <div class="contentContainer">
 <ul class="blockList">
 <li class="blockList">
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing packages, and an explanation">
-<caption><span>Packages that use <a href="../../../../../org/eclipse/net4j/util/om/package-summary.html">org.eclipse.net4j.util.om</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Packages that use <a href="package-summary.html">org.eclipse.net4j.util.om</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Package</th>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.util.om">org.eclipse.net4j.util.om</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.util.om">org.eclipse.net4j.util.om</a></th>
 <td class="colLast">
 <div class="block">Interfaces and classes for platform-independent <i>operations and maintenance</i> (O&amp;M).</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.util.om.log">org.eclipse.net4j.util.om.log</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.util.om.log">org.eclipse.net4j.util.om.log</a></th>
 <td class="colLast">
 <div class="block">Interfaces and classes for platform-independent logging.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.util.om.pref">org.eclipse.net4j.util.om.pref</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.util.om.pref">org.eclipse.net4j.util.om.pref</a></th>
 <td class="colLast">
 <div class="block">Interfaces and classes for platform-independent preference management.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.util.om.trace">org.eclipse.net4j.util.om.trace</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.util.om.trace">org.eclipse.net4j.util.om.trace</a></th>
 <td class="colLast">
 <div class="block">Interfaces and classes for platform-independent tracing.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.util.ui">org.eclipse.net4j.util.ui</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.util.ui">org.eclipse.net4j.util.ui</a></th>
 <td class="colLast">
 <div class="block">Reusable UI components.</div>
 </td>
@@ -114,108 +140,122 @@
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.om">
+<li class="blockList"><a id="org.eclipse.net4j.util.om">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../org/eclipse/net4j/util/om/package-summary.html">org.eclipse.net4j.util.om</a> used by <a href="../../../../../org/eclipse/net4j/util/om/package-summary.html">org.eclipse.net4j.util.om</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.net4j.util.om</a> used by <a href="package-summary.html">org.eclipse.net4j.util.om</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/om/class-use/OMBundle.html#org.eclipse.net4j.util.om">OMBundle</a>
-<div class="block">Represents a <code>bundle</code>, whether OSGi <a href="../../../../../org/eclipse/net4j/util/om/OMPlatform.html#isOSGiRunning--"><code>is running</code></a> or not.</div>
+<th class="colFirst" scope="row"><a href="class-use/OMBundle.html#org.eclipse.net4j.util.om">OMBundle</a></th>
+<td class="colLast">
+<div class="block">Represents a <code>bundle</code>, whether OSGi <a href="OMPlatform.html#isOSGiRunning()"><code>is running</code></a> or not.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/om/class-use/OMBundle.DebugSupport.html#org.eclipse.net4j.util.om">OMBundle.DebugSupport</a>
-<div class="block">A facility for accessing OSGi <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/osgi/service/debug/DebugOptions.html?is-external=true" title="class or interface in org.eclipse.osgi.service.debug"><code>debug options</code></a>, whether OSGi <a href="../../../../../org/eclipse/net4j/util/om/OMPlatform.html#isOSGiRunning--"><code>is
+<th class="colFirst" scope="row"><a href="class-use/OMBundle.DebugSupport.html#org.eclipse.net4j.util.om">OMBundle.DebugSupport</a></th>
+<td class="colLast">
+<div class="block">A facility for accessing OSGi <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/osgi/service/debug/DebugOptions.html?is-external=true" title="class or interface in org.eclipse.osgi.service.debug" class="externalLink"><code>debug options</code></a>, whether OSGi <a href="OMPlatform.html#isOSGiRunning()"><code>is
  running</code></a> or not.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/om/class-use/OMBundle.TranslationSupport.html#org.eclipse.net4j.util.om">OMBundle.TranslationSupport</a>
+<th class="colFirst" scope="row"><a href="class-use/OMBundle.TranslationSupport.html#org.eclipse.net4j.util.om">OMBundle.TranslationSupport</a></th>
+<td class="colLast">
 <div class="block">A facility for accessing <code>resource bundles</code>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/om/class-use/OMPlatform.html#org.eclipse.net4j.util.om">OMPlatform</a>
-<div class="block">Represents the platform that <a href="../../../../../org/eclipse/net4j/util/om/OMBundle.html" title="interface in org.eclipse.net4j.util.om"><code>bundles</code></a> are deployed into, whether OSGi <a href="../../../../../org/eclipse/net4j/util/om/OMPlatform.html#isOSGiRunning--"><code>is
+<th class="colFirst" scope="row"><a href="class-use/OMPlatform.html#org.eclipse.net4j.util.om">OMPlatform</a></th>
+<td class="colLast">
+<div class="block">Represents the platform that <a href="OMBundle.html" title="interface in org.eclipse.net4j.util.om"><code>bundles</code></a> are deployed into, whether OSGi <a href="OMPlatform.html#isOSGiRunning()"><code>is
  running</code></a> or not.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/om/class-use/OSGiActivator.html#org.eclipse.net4j.util.om">OSGiActivator</a>
-<div class="block">A default implementation of an OSGi <code>bundle activator</code> for OM <a href="../../../../../org/eclipse/net4j/util/om/OMBundle.html" title="interface in org.eclipse.net4j.util.om"><code>bundles</code></a>.</div>
+<th class="colFirst" scope="row"><a href="class-use/OSGiActivator.html#org.eclipse.net4j.util.om">OSGiActivator</a></th>
+<td class="colLast">
+<div class="block">A default implementation of an OSGi <code>bundle activator</code> for OM <a href="OMBundle.html" title="interface in org.eclipse.net4j.util.om"><code>bundles</code></a>.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.om.log">
+<li class="blockList"><a id="org.eclipse.net4j.util.om.log">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../org/eclipse/net4j/util/om/package-summary.html">org.eclipse.net4j.util.om</a> used by <a href="../../../../../org/eclipse/net4j/util/om/log/package-summary.html">org.eclipse.net4j.util.om.log</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.net4j.util.om</a> used by <a href="log/package-summary.html">org.eclipse.net4j.util.om.log</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/om/class-use/OMBundle.html#org.eclipse.net4j.util.om.log">OMBundle</a>
-<div class="block">Represents a <code>bundle</code>, whether OSGi <a href="../../../../../org/eclipse/net4j/util/om/OMPlatform.html#isOSGiRunning--"><code>is running</code></a> or not.</div>
+<th class="colFirst" scope="row"><a href="class-use/OMBundle.html#org.eclipse.net4j.util.om.log">OMBundle</a></th>
+<td class="colLast">
+<div class="block">Represents a <code>bundle</code>, whether OSGi <a href="OMPlatform.html#isOSGiRunning()"><code>is running</code></a> or not.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.om.pref">
+<li class="blockList"><a id="org.eclipse.net4j.util.om.pref">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../org/eclipse/net4j/util/om/package-summary.html">org.eclipse.net4j.util.om</a> used by <a href="../../../../../org/eclipse/net4j/util/om/pref/package-summary.html">org.eclipse.net4j.util.om.pref</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.net4j.util.om</a> used by <a href="pref/package-summary.html">org.eclipse.net4j.util.om.pref</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/om/class-use/OMBundle.html#org.eclipse.net4j.util.om.pref">OMBundle</a>
-<div class="block">Represents a <code>bundle</code>, whether OSGi <a href="../../../../../org/eclipse/net4j/util/om/OMPlatform.html#isOSGiRunning--"><code>is running</code></a> or not.</div>
+<th class="colFirst" scope="row"><a href="class-use/OMBundle.html#org.eclipse.net4j.util.om.pref">OMBundle</a></th>
+<td class="colLast">
+<div class="block">Represents a <code>bundle</code>, whether OSGi <a href="OMPlatform.html#isOSGiRunning()"><code>is running</code></a> or not.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.om.trace">
+<li class="blockList"><a id="org.eclipse.net4j.util.om.trace">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../org/eclipse/net4j/util/om/package-summary.html">org.eclipse.net4j.util.om</a> used by <a href="../../../../../org/eclipse/net4j/util/om/trace/package-summary.html">org.eclipse.net4j.util.om.trace</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.net4j.util.om</a> used by <a href="trace/package-summary.html">org.eclipse.net4j.util.om.trace</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/om/class-use/OMBundle.html#org.eclipse.net4j.util.om.trace">OMBundle</a>
-<div class="block">Represents a <code>bundle</code>, whether OSGi <a href="../../../../../org/eclipse/net4j/util/om/OMPlatform.html#isOSGiRunning--"><code>is running</code></a> or not.</div>
+<th class="colFirst" scope="row"><a href="class-use/OMBundle.html#org.eclipse.net4j.util.om.trace">OMBundle</a></th>
+<td class="colLast">
+<div class="block">Represents a <code>bundle</code>, whether OSGi <a href="OMPlatform.html#isOSGiRunning()"><code>is running</code></a> or not.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.ui">
+<li class="blockList"><a id="org.eclipse.net4j.util.ui">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../org/eclipse/net4j/util/om/package-summary.html">org.eclipse.net4j.util.om</a> used by <a href="../../../../../org/eclipse/net4j/util/ui/package-summary.html">org.eclipse.net4j.util.ui</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.net4j.util.om</a> used by <a href="../ui/package-summary.html">org.eclipse.net4j.util.ui</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/net4j/util/om/class-use/OMBundle.html#org.eclipse.net4j.util.ui">OMBundle</a>
-<div class="block">Represents a <code>bundle</code>, whether OSGi <a href="../../../../../org/eclipse/net4j/util/om/OMPlatform.html#isOSGiRunning--"><code>is running</code></a> or not.</div>
+<th class="colFirst" scope="row"><a href="class-use/OMBundle.html#org.eclipse.net4j.util.ui">OMBundle</a></th>
+<td class="colLast">
+<div class="block">Represents a <code>bundle</code>, whether OSGi <a href="OMPlatform.html#isOSGiRunning()"><code>is running</code></a> or not.</div>
 </td>
 </tr>
 </tbody>
@@ -223,35 +263,31 @@
 </li>
 </ul>
 </div>
+</main>
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li>Class</li>
 <li class="navBarCell1Rev">Use</li>
+<li><a href="package-tree.html">Tree</a></li>
 <li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../help-doc.html">Help</a></li>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev</li>
-<li>Next</li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/net4j/util/om/package-use.html" target="_top">Frames</a></li>
-<li><a href="package-use.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -264,11 +300,16 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

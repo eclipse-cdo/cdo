@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>EresourceItemProviderAdapterFactory (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/EresourceItemProviderAdapterFactory.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/emf/cdo/eresource/provider/CDOTextResourceItemProvider.html" title="class in org.eclipse.emf.cdo.eresource.provider"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li>Next&nbsp;Class</li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/emf/cdo/eresource/provider/EresourceItemProviderAdapterFactory.html" target="_top">Frames</a></li>
-<li><a href="EresourceItemProviderAdapterFactory.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,11 +82,14 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
@@ -85,13 +101,22 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.emf.cdo.eresource.provider</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.cdo.eresource.provider</a></div>
 <h2 title="Class EresourceItemProviderAdapterFactory" class="title">Class EresourceItemProviderAdapterFactory</h2>
 </div>
 <div class="contentContainer">
@@ -99,10 +124,10 @@ var activeTableTab = "activeTableTab";
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/impl/AdapterFactoryImpl.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify.impl">org.eclipse.emf.common.notify.impl.AdapterFactoryImpl</a></li>
+<li><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/impl/AdapterFactoryImpl.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify.impl" class="externalLink">org.eclipse.emf.common.notify.impl.AdapterFactoryImpl</a></li>
 <li>
 <ul class="inheritance">
-<li><a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceAdapterFactory.html" title="class in org.eclipse.emf.cdo.eresource.util">org.eclipse.emf.cdo.eresource.util.EresourceAdapterFactory</a></li>
+<li><a href="../util/EresourceAdapterFactory.html" title="class in org.eclipse.emf.cdo.eresource.util">org.eclipse.emf.cdo.eresource.util.EresourceAdapterFactory</a></li>
 <li>
 <ul class="inheritance">
 <li>org.eclipse.emf.cdo.eresource.provider.EresourceItemProviderAdapterFactory</li>
@@ -118,18 +143,19 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/AdapterFactory.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">AdapterFactory</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/ComposeableAdapterFactory.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">ComposeableAdapterFactory</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IChangeNotifier.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IChangeNotifier</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IChildCreationExtender.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IChildCreationExtender</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IDisposable.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IDisposable</a></dd>
+<dd><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/AdapterFactory.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">AdapterFactory</a></code>, <code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/ComposeableAdapterFactory.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider" class="externalLink">ComposeableAdapterFactory</a></code>, <code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IChangeNotifier.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider" class="externalLink">IChangeNotifier</a></code>, <code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IChildCreationExtender.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider" class="externalLink">IChildCreationExtender</a></code>, <code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IDisposable.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider" class="externalLink">IDisposable</a></code></dd>
 </dl>
 <hr>
-<br>
 <pre>public class <span class="typeNameLabel">EresourceItemProviderAdapterFactory</span>
-extends <a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceAdapterFactory.html" title="class in org.eclipse.emf.cdo.eresource.util">EresourceAdapterFactory</a>
-implements <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/ComposeableAdapterFactory.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">ComposeableAdapterFactory</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IChangeNotifier.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IChangeNotifier</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IDisposable.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IDisposable</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IChildCreationExtender.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IChildCreationExtender</a></pre>
+extends <a href="../util/EresourceAdapterFactory.html" title="class in org.eclipse.emf.cdo.eresource.util">EresourceAdapterFactory</a>
+implements <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/ComposeableAdapterFactory.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider" class="externalLink">ComposeableAdapterFactory</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IChangeNotifier.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider" class="externalLink">IChangeNotifier</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IDisposable.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider" class="externalLink">IDisposable</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IChildCreationExtender.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider" class="externalLink">IChildCreationExtender</a></pre>
 <div class="block">This is the factory that is used to provide the interfaces needed to support Viewers. The adapters generated by this
- factory convert EMF adapter notifications into calls to <a href="../../../../../../org/eclipse/emf/cdo/eresource/provider/EresourceItemProviderAdapterFactory.html#fireNotifyChanged-org.eclipse.emf.common.notify.Notification-"><code>fireNotifyChanged</code></a>. The adapters
+ factory convert EMF adapter notifications into calls to <a href="#fireNotifyChanged(org.eclipse.emf.common.notify.Notification)"><code>fireNotifyChanged</code></a>. The adapters
  also support Eclipse property sheets. Note that most of the adapters are shared among multiple instances. <!--
- begin-user-doc --> @since 2.0 <!-- end-user-doc --></div>
+ begin-user-doc --></div>
 <dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>2.0 <!-- end-user-doc --></dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
@@ -139,241 +165,272 @@ implements <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/or
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="nested.class.summary">
+<li class="blockList"><a id="nested.class.summary">
 <!--   -->
 </a>
 <h3>Nested Class Summary</h3>
 <ul class="blockList">
-<li class="blockList"><a name="nested.classes.inherited.from.class.org.eclipse.emf.edit.provider.IChildCreationExtender">
+<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.emf.edit.provider.IChildCreationExtender">
 <!--   -->
 </a>
-<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.emf.edit.provider.<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IChildCreationExtender.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IChildCreationExtender</a></h3>
-<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IChildCreationExtender.Descriptor.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IChildCreationExtender.Descriptor</a></code></li>
+<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.emf.edit.provider.<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IChildCreationExtender.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider" class="externalLink">IChildCreationExtender</a></h3>
+<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IChildCreationExtender.Descriptor.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider" class="externalLink">IChildCreationExtender.Descriptor</a></code></li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- =========== FIELD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.summary">
+<li class="blockList"><a id="field.summary">
 <!--   -->
 </a>
 <h3>Field Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Field Summary table, listing fields, and an explanation">
+<table class="memberSummary">
 <caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Field and Description</th>
+<th class="colSecond" scope="col">Field</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>protected <a href="../../../../../../org/eclipse/emf/cdo/eresource/provider/CDOBinaryResourceItemProvider.html" title="class in org.eclipse.emf.cdo.eresource.provider">CDOBinaryResourceItemProvider</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/eresource/provider/EresourceItemProviderAdapterFactory.html#cdoBinaryResourceItemProvider">cdoBinaryResourceItemProvider</a></span></code>
-<div class="block">This keeps track of the one adapter used for all <a href="../../../../../../org/eclipse/emf/cdo/eresource/CDOBinaryResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOBinaryResource</code></a> instances.</div>
+<td class="colFirst"><code>protected <a href="CDOBinaryResourceItemProvider.html" title="class in org.eclipse.emf.cdo.eresource.provider">CDOBinaryResourceItemProvider</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#cdoBinaryResourceItemProvider">cdoBinaryResourceItemProvider</a></span></code></th>
+<td class="colLast">
+<div class="block">This keeps track of the one adapter used for all <a href="../CDOBinaryResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOBinaryResource</code></a> instances.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>protected <a href="../../../../../../org/eclipse/emf/cdo/eresource/provider/CDOResourceFolderItemProvider.html" title="class in org.eclipse.emf.cdo.eresource.provider">CDOResourceFolderItemProvider</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/eresource/provider/EresourceItemProviderAdapterFactory.html#cdoResourceFolderItemProvider">cdoResourceFolderItemProvider</a></span></code>
-<div class="block">This keeps track of the one adapter used for all <a href="../../../../../../org/eclipse/emf/cdo/eresource/CDOResourceFolder.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOResourceFolder</code></a> instances.</div>
+<td class="colFirst"><code>protected <a href="CDOResourceFolderItemProvider.html" title="class in org.eclipse.emf.cdo.eresource.provider">CDOResourceFolderItemProvider</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#cdoResourceFolderItemProvider">cdoResourceFolderItemProvider</a></span></code></th>
+<td class="colLast">
+<div class="block">This keeps track of the one adapter used for all <a href="../CDOResourceFolder.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOResourceFolder</code></a> instances.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>protected <a href="../../../../../../org/eclipse/emf/cdo/eresource/provider/CDOResourceItemProvider.html" title="class in org.eclipse.emf.cdo.eresource.provider">CDOResourceItemProvider</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/eresource/provider/EresourceItemProviderAdapterFactory.html#cdoResourceItemProvider">cdoResourceItemProvider</a></span></code>
-<div class="block">This keeps track of the one adapter used for all <a href="../../../../../../org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOResource</code></a> instances.</div>
+<td class="colFirst"><code>protected <a href="CDOResourceItemProvider.html" title="class in org.eclipse.emf.cdo.eresource.provider">CDOResourceItemProvider</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#cdoResourceItemProvider">cdoResourceItemProvider</a></span></code></th>
+<td class="colLast">
+<div class="block">This keeps track of the one adapter used for all <a href="../CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOResource</code></a> instances.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>protected <a href="../../../../../../org/eclipse/emf/cdo/eresource/provider/CDOTextResourceItemProvider.html" title="class in org.eclipse.emf.cdo.eresource.provider">CDOTextResourceItemProvider</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/eresource/provider/EresourceItemProviderAdapterFactory.html#cdoTextResourceItemProvider">cdoTextResourceItemProvider</a></span></code>
-<div class="block">This keeps track of the one adapter used for all <a href="../../../../../../org/eclipse/emf/cdo/eresource/CDOTextResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOTextResource</code></a> instances.</div>
+<td class="colFirst"><code>protected <a href="CDOTextResourceItemProvider.html" title="class in org.eclipse.emf.cdo.eresource.provider">CDOTextResourceItemProvider</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#cdoTextResourceItemProvider">cdoTextResourceItemProvider</a></span></code></th>
+<td class="colLast">
+<div class="block">This keeps track of the one adapter used for all <a href="../CDOTextResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOTextResource</code></a> instances.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>protected <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IChangeNotifier.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IChangeNotifier</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/eresource/provider/EresourceItemProviderAdapterFactory.html#changeNotifier">changeNotifier</a></span></code>
-<div class="block">This is used to implement <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IChangeNotifier.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider"><code>IChangeNotifier</code></a>.</div>
+<td class="colFirst"><code>protected <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IChangeNotifier.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider" class="externalLink">IChangeNotifier</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#changeNotifier">changeNotifier</a></span></code></th>
+<td class="colLast">
+<div class="block">This is used to implement <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IChangeNotifier.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider" class="externalLink"><code>IChangeNotifier</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>protected <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/ChildCreationExtenderManager.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">ChildCreationExtenderManager</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/eresource/provider/EresourceItemProviderAdapterFactory.html#childCreationExtenderManager">childCreationExtenderManager</a></span></code>
+<td class="colFirst"><code>protected <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/ChildCreationExtenderManager.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider" class="externalLink">ChildCreationExtenderManager</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#childCreationExtenderManager">childCreationExtenderManager</a></span></code></th>
+<td class="colLast">
 <div class="block">This helps manage the child creation extenders.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>protected <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/ComposedAdapterFactory.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">ComposedAdapterFactory</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/eresource/provider/EresourceItemProviderAdapterFactory.html#parentAdapterFactory">parentAdapterFactory</a></span></code>
+<td class="colFirst"><code>protected <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/ComposedAdapterFactory.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider" class="externalLink">ComposedAdapterFactory</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parentAdapterFactory">parentAdapterFactory</a></span></code></th>
+<td class="colLast">
 <div class="block">This keeps track of the root adapter factory that delegates to this adapter factory.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected java.util.Collection&lt;java.lang.Object&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/eresource/provider/EresourceItemProviderAdapterFactory.html#supportedTypes">supportedTypes</a></span></code>
-<div class="block">This keeps track of all the supported types checked by <a href="../../../../../../org/eclipse/emf/cdo/eresource/provider/EresourceItemProviderAdapterFactory.html#isFactoryForType-java.lang.Object-"><code>isFactoryForType</code></a>.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#supportedTypes">supportedTypes</a></span></code></th>
+<td class="colLast">
+<div class="block">This keeps track of all the supported types checked by <a href="#isFactoryForType(java.lang.Object)"><code>isFactoryForType</code></a>.</div>
 </td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="fields.inherited.from.class.org.eclipse.emf.cdo.eresource.util.EresourceAdapterFactory">
+<li class="blockList"><a id="fields.inherited.from.class.org.eclipse.emf.cdo.eresource.util.EresourceAdapterFactory">
 <!--   -->
 </a>
-<h3>Fields inherited from class&nbsp;org.eclipse.emf.cdo.eresource.util.<a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceAdapterFactory.html" title="class in org.eclipse.emf.cdo.eresource.util">EresourceAdapterFactory</a></h3>
-<code><a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceAdapterFactory.html#modelPackage">modelPackage</a>, <a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceAdapterFactory.html#modelSwitch">modelSwitch</a></code></li>
+<h3>Fields inherited from class&nbsp;org.eclipse.emf.cdo.eresource.util.<a href="../util/EresourceAdapterFactory.html" title="class in org.eclipse.emf.cdo.eresource.util">EresourceAdapterFactory</a></h3>
+<code><a href="../util/EresourceAdapterFactory.html#modelPackage">modelPackage</a>, <a href="../util/EresourceAdapterFactory.html#modelSwitch">modelSwitch</a></code></li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.summary">
+<li class="blockList"><a id="constructor.summary">
 <!--   -->
 </a>
 <h3>Constructor Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
+<table class="memberSummary">
 <caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Constructor and Description</th>
+<th class="colFirst" scope="col">Constructor</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/eresource/provider/EresourceItemProviderAdapterFactory.html#EresourceItemProviderAdapterFactory--">EresourceItemProviderAdapterFactory</a></span>()</code>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">EresourceItemProviderAdapterFactory</a></span>()</code></th>
+<td class="colLast">
 <div class="block">This constructs an instance.</div>
 </td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/eresource/provider/EresourceItemProviderAdapterFactory.html#adapt-org.eclipse.emf.common.notify.Notifier-java.lang.Object-">adapt</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notifier.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notifier</a>&nbsp;notifier,
-     java.lang.Object&nbsp;type)</code>
+<td class="colFirst"><code>java.lang.Object</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#adapt(java.lang.Object,java.lang.Object)">adapt</a></span>&#8203;(java.lang.Object&nbsp;object,
+     java.lang.Object&nbsp;type)</code></th>
+</tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">Adapter</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#adapt(org.eclipse.emf.common.notify.Notifier,java.lang.Object)">adapt</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notifier.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">Notifier</a>&nbsp;notifier,
+     java.lang.Object&nbsp;type)</code></th>
+<td class="colLast">
 <div class="block">This implementation substitutes the factory itself as the key for the adapter.</div>
 </td>
 </tr>
-<tr id="i1" class="rowColor">
-<td class="colFirst"><code>java.lang.Object</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/eresource/provider/EresourceItemProviderAdapterFactory.html#adapt-java.lang.Object-java.lang.Object-">adapt</a></span>(java.lang.Object&nbsp;object,
-     java.lang.Object&nbsp;type)</code>&nbsp;</td>
-</tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/eresource/provider/EresourceItemProviderAdapterFactory.html#addListener-org.eclipse.emf.edit.provider.INotifyChangedListener-">addListener</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/INotifyChangedListener.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">INotifyChangedListener</a>&nbsp;notifyChangedListener)</code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addListener(org.eclipse.emf.edit.provider.INotifyChangedListener)">addListener</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/INotifyChangedListener.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider" class="externalLink">INotifyChangedListener</a>&nbsp;notifyChangedListener)</code></th>
+<td class="colLast">
 <div class="block">This adds a listener.</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/eresource/provider/EresourceItemProviderAdapterFactory.html#createCDOBinaryResourceAdapter--">createCDOBinaryResourceAdapter</a></span>()</code>
-<div class="block">This creates an adapter for a <a href="../../../../../../org/eclipse/emf/cdo/eresource/CDOBinaryResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOBinaryResource</code></a>.</div>
+<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">Adapter</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createCDOBinaryResourceAdapter()">createCDOBinaryResourceAdapter</a></span>()</code></th>
+<td class="colLast">
+<div class="block">This creates an adapter for a <a href="../CDOBinaryResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOBinaryResource</code></a>.</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/eresource/provider/EresourceItemProviderAdapterFactory.html#createCDOResourceAdapter--">createCDOResourceAdapter</a></span>()</code>
-<div class="block">This creates an adapter for a <a href="../../../../../../org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOResource</code></a>.</div>
+<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">Adapter</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createCDOResourceAdapter()">createCDOResourceAdapter</a></span>()</code></th>
+<td class="colLast">
+<div class="block">This creates an adapter for a <a href="../CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOResource</code></a>.</div>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/eresource/provider/EresourceItemProviderAdapterFactory.html#createCDOResourceFolderAdapter--">createCDOResourceFolderAdapter</a></span>()</code>
-<div class="block">This creates an adapter for a <a href="../../../../../../org/eclipse/emf/cdo/eresource/CDOResourceFolder.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOResourceFolder</code></a>.</div>
+<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">Adapter</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createCDOResourceFolderAdapter()">createCDOResourceFolderAdapter</a></span>()</code></th>
+<td class="colLast">
+<div class="block">This creates an adapter for a <a href="../CDOResourceFolder.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOResourceFolder</code></a>.</div>
 </td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/eresource/provider/EresourceItemProviderAdapterFactory.html#createCDOTextResourceAdapter--">createCDOTextResourceAdapter</a></span>()</code>
-<div class="block">This creates an adapter for a <a href="../../../../../../org/eclipse/emf/cdo/eresource/CDOTextResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOTextResource</code></a>.</div>
+<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">Adapter</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createCDOTextResourceAdapter()">createCDOTextResourceAdapter</a></span>()</code></th>
+<td class="colLast">
+<div class="block">This creates an adapter for a <a href="../CDOTextResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOTextResource</code></a>.</div>
 </td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/eresource/provider/EresourceItemProviderAdapterFactory.html#dispose--">dispose</a></span>()</code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dispose()">dispose</a></span>()</code></th>
+<td class="colLast">
 <div class="block">This disposes all of the item providers created by this factory.</div>
 </td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/eresource/provider/EresourceItemProviderAdapterFactory.html#fireNotifyChanged-org.eclipse.emf.common.notify.Notification-">fireNotifyChanged</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notification</a>&nbsp;notification)</code>
-<div class="block">This delegates to <a href="../../../../../../org/eclipse/emf/cdo/eresource/provider/EresourceItemProviderAdapterFactory.html#changeNotifier"><code>changeNotifier</code></a> and to <a href="../../../../../../org/eclipse/emf/cdo/eresource/provider/EresourceItemProviderAdapterFactory.html#parentAdapterFactory"><code>parentAdapterFactory</code></a>.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#fireNotifyChanged(org.eclipse.emf.common.notify.Notification)">fireNotifyChanged</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">Notification</a>&nbsp;notification)</code></th>
+<td class="colLast">
+<div class="block">This delegates to <a href="#changeNotifier"><code>changeNotifier</code></a> and to <a href="#parentAdapterFactory"><code>parentAdapterFactory</code></a>.</div>
 </td>
 </tr>
 <tr id="i9" class="rowColor">
-<td class="colFirst"><code>java.util.List&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IChildCreationExtender.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IChildCreationExtender</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/eresource/provider/EresourceItemProviderAdapterFactory.html#getChildCreationExtenders--">getChildCreationExtenders</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>java.util.List&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IChildCreationExtender.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider" class="externalLink">IChildCreationExtender</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getChildCreationExtenders()">getChildCreationExtenders</a></span>()</code></th>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>java.util.Collection&lt;?&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/eresource/provider/EresourceItemProviderAdapterFactory.html#getNewChildDescriptors-java.lang.Object-org.eclipse.emf.edit.domain.EditingDomain-">getNewChildDescriptors</a></span>(java.lang.Object&nbsp;object,
-                      <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/domain/EditingDomain.html?is-external=true" title="class or interface in org.eclipse.emf.edit.domain">EditingDomain</a>&nbsp;editingDomain)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNewChildDescriptors(java.lang.Object,org.eclipse.emf.edit.domain.EditingDomain)">getNewChildDescriptors</a></span>&#8203;(java.lang.Object&nbsp;object,
+                      <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/domain/EditingDomain.html?is-external=true" title="class or interface in org.eclipse.emf.edit.domain" class="externalLink">EditingDomain</a>&nbsp;editingDomain)</code></th>
 </tr>
 <tr id="i11" class="rowColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/ResourceLocator.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">ResourceLocator</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/eresource/provider/EresourceItemProviderAdapterFactory.html#getResourceLocator--">getResourceLocator</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/ResourceLocator.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">ResourceLocator</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getResourceLocator()">getResourceLocator</a></span>()</code></th>
 </tr>
 <tr id="i12" class="altColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/ComposeableAdapterFactory.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">ComposeableAdapterFactory</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/eresource/provider/EresourceItemProviderAdapterFactory.html#getRootAdapterFactory--">getRootAdapterFactory</a></span>()</code>
+<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/ComposeableAdapterFactory.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider" class="externalLink">ComposeableAdapterFactory</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRootAdapterFactory()">getRootAdapterFactory</a></span>()</code></th>
+<td class="colLast">
 <div class="block">This returns the root adapter factory that contains this factory.</div>
 </td>
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/eresource/provider/EresourceItemProviderAdapterFactory.html#isFactoryForType-java.lang.Object-">isFactoryForType</a></span>(java.lang.Object&nbsp;type)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isFactoryForType(java.lang.Object)">isFactoryForType</a></span>&#8203;(java.lang.Object&nbsp;type)</code></th>
 </tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/eresource/provider/EresourceItemProviderAdapterFactory.html#removeListener-org.eclipse.emf.edit.provider.INotifyChangedListener-">removeListener</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/INotifyChangedListener.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">INotifyChangedListener</a>&nbsp;notifyChangedListener)</code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeListener(org.eclipse.emf.edit.provider.INotifyChangedListener)">removeListener</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/INotifyChangedListener.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider" class="externalLink">INotifyChangedListener</a>&nbsp;notifyChangedListener)</code></th>
+<td class="colLast">
 <div class="block">This removes a listener.</div>
 </td>
 </tr>
 <tr id="i15" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/eresource/provider/EresourceItemProviderAdapterFactory.html#setParentAdapterFactory-org.eclipse.emf.edit.provider.ComposedAdapterFactory-">setParentAdapterFactory</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/ComposedAdapterFactory.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">ComposedAdapterFactory</a>&nbsp;parentAdapterFactory)</code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setParentAdapterFactory(org.eclipse.emf.edit.provider.ComposedAdapterFactory)">setParentAdapterFactory</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/ComposedAdapterFactory.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider" class="externalLink">ComposedAdapterFactory</a>&nbsp;parentAdapterFactory)</code></th>
+<td class="colLast">
 <div class="block">This sets the composed adapter factory that contains this factory.</div>
 </td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.emf.cdo.eresource.util.EresourceAdapterFactory">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.cdo.eresource.util.EresourceAdapterFactory">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.emf.cdo.eresource.util.<a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceAdapterFactory.html" title="class in org.eclipse.emf.cdo.eresource.util">EresourceAdapterFactory</a></h3>
-<code><a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceAdapterFactory.html#createAdapter-org.eclipse.emf.common.notify.Notifier-">createAdapter</a>, <a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceAdapterFactory.html#createCDOFileResourceAdapter--">createCDOFileResourceAdapter</a>, <a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceAdapterFactory.html#createCDOResourceLeafAdapter--">createCDOResourceLeafAdapter</a>, <a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceAdapterFactory.html#createCDOResourceNodeAdapter--">createCDOResourceNodeAdapter</a>, <a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceAdapterFactory.html#createEObjectAdapter--">createEObjectAdapter</a></code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.emf.cdo.eresource.util.<a href="../util/EresourceAdapterFactory.html" title="class in org.eclipse.emf.cdo.eresource.util">EresourceAdapterFactory</a></h3>
+<code><a href="../util/EresourceAdapterFactory.html#createAdapter(org.eclipse.emf.common.notify.Notifier)">createAdapter</a>, <a href="../util/EresourceAdapterFactory.html#createCDOFileResourceAdapter()">createCDOFileResourceAdapter</a>, <a href="../util/EresourceAdapterFactory.html#createCDOResourceLeafAdapter()">createCDOResourceLeafAdapter</a>, <a href="../util/EresourceAdapterFactory.html#createCDOResourceNodeAdapter()">createCDOResourceNodeAdapter</a>, <a href="../util/EresourceAdapterFactory.html#createEObjectAdapter()">createEObjectAdapter</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.emf.common.notify.impl.AdapterFactoryImpl">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.common.notify.impl.AdapterFactoryImpl">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.emf.common.notify.impl.<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/impl/AdapterFactoryImpl.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify.impl">AdapterFactoryImpl</a></h3>
-<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/impl/AdapterFactoryImpl.html?is-external=true#adaptAllNew-org.eclipse.emf.common.notify.Notifier-" title="class or interface in org.eclipse.emf.common.notify.impl">adaptAllNew</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/impl/AdapterFactoryImpl.html?is-external=true#adaptNew-org.eclipse.emf.common.notify.Notifier-java.lang.Object-" title="class or interface in org.eclipse.emf.common.notify.impl">adaptNew</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/impl/AdapterFactoryImpl.html?is-external=true#associate-org.eclipse.emf.common.notify.Adapter-org.eclipse.emf.common.notify.Notifier-" title="class or interface in org.eclipse.emf.common.notify.impl">associate</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/impl/AdapterFactoryImpl.html?is-external=true#createAdapter-org.eclipse.emf.common.notify.Notifier-java.lang.Object-" title="class or interface in org.eclipse.emf.common.notify.impl">createAdapter</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/impl/AdapterFactoryImpl.html?is-external=true#resolve-java.lang.Object-java.lang.Object-" title="class or interface in org.eclipse.emf.common.notify.impl">resolve</a></code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.emf.common.notify.impl.<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/impl/AdapterFactoryImpl.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify.impl" class="externalLink">AdapterFactoryImpl</a></h3>
+<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/impl/AdapterFactoryImpl.html?is-external=true#adaptAllNew(org.eclipse.emf.common.notify.Notifier)" title="class or interface in org.eclipse.emf.common.notify.impl" class="externalLink">adaptAllNew</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/impl/AdapterFactoryImpl.html?is-external=true#adaptNew(org.eclipse.emf.common.notify.Notifier,java.lang.Object)" title="class or interface in org.eclipse.emf.common.notify.impl" class="externalLink">adaptNew</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/impl/AdapterFactoryImpl.html?is-external=true#associate(org.eclipse.emf.common.notify.Adapter,org.eclipse.emf.common.notify.Notifier)" title="class or interface in org.eclipse.emf.common.notify.impl" class="externalLink">associate</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/impl/AdapterFactoryImpl.html?is-external=true#createAdapter(org.eclipse.emf.common.notify.Notifier,java.lang.Object)" title="class or interface in org.eclipse.emf.common.notify.impl" class="externalLink">createAdapter</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/impl/AdapterFactoryImpl.html?is-external=true#resolve(java.lang.Object,java.lang.Object)" title="class or interface in org.eclipse.emf.common.notify.impl" class="externalLink">resolve</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
+<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
 <code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.emf.common.notify.AdapterFactory">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.common.notify.AdapterFactory">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.emf.common.notify.<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/AdapterFactory.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">AdapterFactory</a></h3>
-<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/AdapterFactory.html?is-external=true#adaptAllNew-org.eclipse.emf.common.notify.Notifier-" title="class or interface in org.eclipse.emf.common.notify">adaptAllNew</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/AdapterFactory.html?is-external=true#adaptNew-org.eclipse.emf.common.notify.Notifier-java.lang.Object-" title="class or interface in org.eclipse.emf.common.notify">adaptNew</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.emf.common.notify.<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/AdapterFactory.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">AdapterFactory</a></h3>
+<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/AdapterFactory.html?is-external=true#adaptAllNew(org.eclipse.emf.common.notify.Notifier)" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">adaptAllNew</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/AdapterFactory.html?is-external=true#adaptNew(org.eclipse.emf.common.notify.Notifier,java.lang.Object)" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">adaptNew</a></code></li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -381,18 +438,19 @@ implements <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/or
 <ul class="blockList">
 <li class="blockList">
 <!-- ============ FIELD DETAIL =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.detail">
+<li class="blockList"><a id="field.detail">
 <!--   -->
 </a>
 <h3>Field Detail</h3>
-<a name="parentAdapterFactory">
+<a id="parentAdapterFactory">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>parentAdapterFactory</h4>
-<pre>protected&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/ComposedAdapterFactory.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">ComposedAdapterFactory</a> parentAdapterFactory</pre>
+<pre>protected&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/ComposedAdapterFactory.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider" class="externalLink">ComposedAdapterFactory</a> parentAdapterFactory</pre>
 <div class="block">This keeps track of the root adapter factory that delegates to this adapter factory.
  <!-- begin-user-doc --> <!--
  end-user-doc --></div>
@@ -401,14 +459,14 @@ implements <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/or
 </dl>
 </li>
 </ul>
-<a name="changeNotifier">
+<a id="changeNotifier">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>changeNotifier</h4>
-<pre>protected&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IChangeNotifier.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IChangeNotifier</a> changeNotifier</pre>
-<div class="block">This is used to implement <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IChangeNotifier.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider"><code>IChangeNotifier</code></a>.
+<pre>protected&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IChangeNotifier.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider" class="externalLink">IChangeNotifier</a> changeNotifier</pre>
+<div class="block">This is used to implement <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IChangeNotifier.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider" class="externalLink"><code>IChangeNotifier</code></a>.
  <!-- begin-user-doc --> <!--
  end-user-doc --></div>
 <dl>
@@ -416,13 +474,13 @@ implements <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/or
 </dl>
 </li>
 </ul>
-<a name="childCreationExtenderManager">
+<a id="childCreationExtenderManager">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>childCreationExtenderManager</h4>
-<pre>protected&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/ChildCreationExtenderManager.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">ChildCreationExtenderManager</a> childCreationExtenderManager</pre>
+<pre>protected&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/ChildCreationExtenderManager.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider" class="externalLink">ChildCreationExtenderManager</a> childCreationExtenderManager</pre>
 <div class="block">This helps manage the child creation extenders.
  <!-- begin-user-doc --> <!-- end-user-doc --></div>
 <dl>
@@ -430,56 +488,56 @@ implements <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/or
 </dl>
 </li>
 </ul>
-<a name="supportedTypes">
+<a id="supportedTypes">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>supportedTypes</h4>
 <pre>protected&nbsp;java.util.Collection&lt;java.lang.Object&gt; supportedTypes</pre>
-<div class="block">This keeps track of all the supported types checked by <a href="../../../../../../org/eclipse/emf/cdo/eresource/provider/EresourceItemProviderAdapterFactory.html#isFactoryForType-java.lang.Object-"><code>isFactoryForType</code></a>. <!--
+<div class="block">This keeps track of all the supported types checked by <a href="#isFactoryForType(java.lang.Object)"><code>isFactoryForType</code></a>. <!--
  begin-user-doc --> <!-- end-user-doc --></div>
 <dl>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
 </ul>
-<a name="cdoResourceFolderItemProvider">
+<a id="cdoResourceFolderItemProvider">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>cdoResourceFolderItemProvider</h4>
-<pre>protected&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/eresource/provider/CDOResourceFolderItemProvider.html" title="class in org.eclipse.emf.cdo.eresource.provider">CDOResourceFolderItemProvider</a> cdoResourceFolderItemProvider</pre>
-<div class="block">This keeps track of the one adapter used for all <a href="../../../../../../org/eclipse/emf/cdo/eresource/CDOResourceFolder.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOResourceFolder</code></a> instances.
+<pre>protected&nbsp;<a href="CDOResourceFolderItemProvider.html" title="class in org.eclipse.emf.cdo.eresource.provider">CDOResourceFolderItemProvider</a> cdoResourceFolderItemProvider</pre>
+<div class="block">This keeps track of the one adapter used for all <a href="../CDOResourceFolder.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOResourceFolder</code></a> instances.
  <!-- begin-user-doc --> <!-- end-user-doc --></div>
 <dl>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
 </ul>
-<a name="cdoResourceItemProvider">
+<a id="cdoResourceItemProvider">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>cdoResourceItemProvider</h4>
-<pre>protected&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/eresource/provider/CDOResourceItemProvider.html" title="class in org.eclipse.emf.cdo.eresource.provider">CDOResourceItemProvider</a> cdoResourceItemProvider</pre>
-<div class="block">This keeps track of the one adapter used for all <a href="../../../../../../org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOResource</code></a> instances. <!--
+<pre>protected&nbsp;<a href="CDOResourceItemProvider.html" title="class in org.eclipse.emf.cdo.eresource.provider">CDOResourceItemProvider</a> cdoResourceItemProvider</pre>
+<div class="block">This keeps track of the one adapter used for all <a href="../CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOResource</code></a> instances. <!--
  begin-user-doc --> <!-- end-user-doc --></div>
 <dl>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
 </ul>
-<a name="cdoBinaryResourceItemProvider">
+<a id="cdoBinaryResourceItemProvider">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>cdoBinaryResourceItemProvider</h4>
-<pre>protected&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/eresource/provider/CDOBinaryResourceItemProvider.html" title="class in org.eclipse.emf.cdo.eresource.provider">CDOBinaryResourceItemProvider</a> cdoBinaryResourceItemProvider</pre>
-<div class="block">This keeps track of the one adapter used for all <a href="../../../../../../org/eclipse/emf/cdo/eresource/CDOBinaryResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOBinaryResource</code></a> instances.
+<pre>protected&nbsp;<a href="CDOBinaryResourceItemProvider.html" title="class in org.eclipse.emf.cdo.eresource.provider">CDOBinaryResourceItemProvider</a> cdoBinaryResourceItemProvider</pre>
+<div class="block">This keeps track of the one adapter used for all <a href="../CDOBinaryResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOBinaryResource</code></a> instances.
  <!-- begin-user-doc --></div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -488,14 +546,14 @@ implements <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/or
 </dl>
 </li>
 </ul>
-<a name="cdoTextResourceItemProvider">
+<a id="cdoTextResourceItemProvider">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>cdoTextResourceItemProvider</h4>
-<pre>protected&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/eresource/provider/CDOTextResourceItemProvider.html" title="class in org.eclipse.emf.cdo.eresource.provider">CDOTextResourceItemProvider</a> cdoTextResourceItemProvider</pre>
-<div class="block">This keeps track of the one adapter used for all <a href="../../../../../../org/eclipse/emf/cdo/eresource/CDOTextResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOTextResource</code></a> instances.
+<pre>protected&nbsp;<a href="CDOTextResourceItemProvider.html" title="class in org.eclipse.emf.cdo.eresource.provider">CDOTextResourceItemProvider</a> cdoTextResourceItemProvider</pre>
+<div class="block">This keeps track of the one adapter used for all <a href="../CDOTextResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOTextResource</code></a> instances.
  <!-- begin-user-doc --></div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -506,13 +564,15 @@ implements <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/or
 </ul>
 </li>
 </ul>
+</section>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.detail">
+<li class="blockList"><a id="constructor.detail">
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="EresourceItemProviderAdapterFactory--">
+<a id="&lt;init&gt;()">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -528,311 +588,317 @@ implements <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/or
 </ul>
 </li>
 </ul>
+</section>
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="createCDOResourceFolderAdapter--">
+<a id="createCDOResourceFolderAdapter()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createCDOResourceFolderAdapter</h4>
-<pre>public&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a>&nbsp;createCDOResourceFolderAdapter()</pre>
-<div class="block">This creates an adapter for a <a href="../../../../../../org/eclipse/emf/cdo/eresource/CDOResourceFolder.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOResourceFolder</code></a>.
+<pre class="methodSignature">public&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">Adapter</a>&nbsp;createCDOResourceFolderAdapter()</pre>
+<div class="block">This creates an adapter for a <a href="../CDOResourceFolder.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOResourceFolder</code></a>.
  <!-- begin-user-doc --> <!--
  end-user-doc --></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceAdapterFactory.html#createCDOResourceFolderAdapter--">createCDOResourceFolderAdapter</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceAdapterFactory.html" title="class in org.eclipse.emf.cdo.eresource.util">EresourceAdapterFactory</a></code></dd>
+<dd><code><a href="../util/EresourceAdapterFactory.html#createCDOResourceFolderAdapter()">createCDOResourceFolderAdapter</a></code>&nbsp;in class&nbsp;<code><a href="../util/EresourceAdapterFactory.html" title="class in org.eclipse.emf.cdo.eresource.util">EresourceAdapterFactory</a></code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the new adapter.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../../org/eclipse/emf/cdo/eresource/CDOResourceFolder.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOResourceFolder</code></a></dd>
+<dd><a href="../CDOResourceFolder.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOResourceFolder</code></a></dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
 </ul>
-<a name="createCDOResourceAdapter--">
+<a id="createCDOResourceAdapter()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createCDOResourceAdapter</h4>
-<pre>public&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a>&nbsp;createCDOResourceAdapter()</pre>
-<div class="block">This creates an adapter for a <a href="../../../../../../org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOResource</code></a>.
+<pre class="methodSignature">public&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">Adapter</a>&nbsp;createCDOResourceAdapter()</pre>
+<div class="block">This creates an adapter for a <a href="../CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOResource</code></a>.
  <!-- begin-user-doc --> <!--
  end-user-doc --></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceAdapterFactory.html#createCDOResourceAdapter--">createCDOResourceAdapter</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceAdapterFactory.html" title="class in org.eclipse.emf.cdo.eresource.util">EresourceAdapterFactory</a></code></dd>
+<dd><code><a href="../util/EresourceAdapterFactory.html#createCDOResourceAdapter()">createCDOResourceAdapter</a></code>&nbsp;in class&nbsp;<code><a href="../util/EresourceAdapterFactory.html" title="class in org.eclipse.emf.cdo.eresource.util">EresourceAdapterFactory</a></code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the new adapter.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../../org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOResource</code></a></dd>
+<dd><a href="../CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOResource</code></a></dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
 </ul>
-<a name="createCDOBinaryResourceAdapter--">
+<a id="createCDOBinaryResourceAdapter()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createCDOBinaryResourceAdapter</h4>
-<pre>public&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a>&nbsp;createCDOBinaryResourceAdapter()</pre>
-<div class="block">This creates an adapter for a <a href="../../../../../../org/eclipse/emf/cdo/eresource/CDOBinaryResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOBinaryResource</code></a>.
+<pre class="methodSignature">public&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">Adapter</a>&nbsp;createCDOBinaryResourceAdapter()</pre>
+<div class="block">This creates an adapter for a <a href="../CDOBinaryResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOBinaryResource</code></a>.
  <!-- begin-user-doc --> <!--
  end-user-doc --></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceAdapterFactory.html#createCDOBinaryResourceAdapter--">createCDOBinaryResourceAdapter</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceAdapterFactory.html" title="class in org.eclipse.emf.cdo.eresource.util">EresourceAdapterFactory</a></code></dd>
+<dd><code><a href="../util/EresourceAdapterFactory.html#createCDOBinaryResourceAdapter()">createCDOBinaryResourceAdapter</a></code>&nbsp;in class&nbsp;<code><a href="../util/EresourceAdapterFactory.html" title="class in org.eclipse.emf.cdo.eresource.util">EresourceAdapterFactory</a></code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the new adapter.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../../org/eclipse/emf/cdo/eresource/CDOBinaryResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOBinaryResource</code></a></dd>
+<dd><a href="../CDOBinaryResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOBinaryResource</code></a></dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
 </ul>
-<a name="createCDOTextResourceAdapter--">
+<a id="createCDOTextResourceAdapter()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createCDOTextResourceAdapter</h4>
-<pre>public&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a>&nbsp;createCDOTextResourceAdapter()</pre>
-<div class="block">This creates an adapter for a <a href="../../../../../../org/eclipse/emf/cdo/eresource/CDOTextResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOTextResource</code></a>.
+<pre class="methodSignature">public&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">Adapter</a>&nbsp;createCDOTextResourceAdapter()</pre>
+<div class="block">This creates an adapter for a <a href="../CDOTextResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOTextResource</code></a>.
  <!-- begin-user-doc --> <!--
  end-user-doc --></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceAdapterFactory.html#createCDOTextResourceAdapter--">createCDOTextResourceAdapter</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceAdapterFactory.html" title="class in org.eclipse.emf.cdo.eresource.util">EresourceAdapterFactory</a></code></dd>
+<dd><code><a href="../util/EresourceAdapterFactory.html#createCDOTextResourceAdapter()">createCDOTextResourceAdapter</a></code>&nbsp;in class&nbsp;<code><a href="../util/EresourceAdapterFactory.html" title="class in org.eclipse.emf.cdo.eresource.util">EresourceAdapterFactory</a></code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the new adapter.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../../org/eclipse/emf/cdo/eresource/CDOTextResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOTextResource</code></a></dd>
+<dd><a href="../CDOTextResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOTextResource</code></a></dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
 </ul>
-<a name="getRootAdapterFactory--">
+<a id="getRootAdapterFactory()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getRootAdapterFactory</h4>
-<pre>public&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/ComposeableAdapterFactory.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">ComposeableAdapterFactory</a>&nbsp;getRootAdapterFactory()</pre>
+<pre class="methodSignature">public&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/ComposeableAdapterFactory.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider" class="externalLink">ComposeableAdapterFactory</a>&nbsp;getRootAdapterFactory()</pre>
 <div class="block">This returns the root adapter factory that contains this factory.
  <!-- begin-user-doc --> <!-- end-user-doc --></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/ComposeableAdapterFactory.html?is-external=true#getRootAdapterFactory--" title="class or interface in org.eclipse.emf.edit.provider">getRootAdapterFactory</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/ComposeableAdapterFactory.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">ComposeableAdapterFactory</a></code></dd>
+<dd><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/ComposeableAdapterFactory.html?is-external=true#getRootAdapterFactory()" title="class or interface in org.eclipse.emf.edit.provider" class="externalLink">getRootAdapterFactory</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/ComposeableAdapterFactory.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider" class="externalLink">ComposeableAdapterFactory</a></code></dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
 </ul>
-<a name="setParentAdapterFactory-org.eclipse.emf.edit.provider.ComposedAdapterFactory-">
+<a id="setParentAdapterFactory(org.eclipse.emf.edit.provider.ComposedAdapterFactory)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setParentAdapterFactory</h4>
-<pre>public&nbsp;void&nbsp;setParentAdapterFactory(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/ComposedAdapterFactory.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">ComposedAdapterFactory</a>&nbsp;parentAdapterFactory)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setParentAdapterFactory&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/ComposedAdapterFactory.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider" class="externalLink">ComposedAdapterFactory</a>&nbsp;parentAdapterFactory)</pre>
 <div class="block">This sets the composed adapter factory that contains this factory.
  <!-- begin-user-doc --> <!-- end-user-doc --></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/ComposeableAdapterFactory.html?is-external=true#setParentAdapterFactory-org.eclipse.emf.edit.provider.ComposedAdapterFactory-" title="class or interface in org.eclipse.emf.edit.provider">setParentAdapterFactory</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/ComposeableAdapterFactory.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">ComposeableAdapterFactory</a></code></dd>
+<dd><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/ComposeableAdapterFactory.html?is-external=true#setParentAdapterFactory(org.eclipse.emf.edit.provider.ComposedAdapterFactory)" title="class or interface in org.eclipse.emf.edit.provider" class="externalLink">setParentAdapterFactory</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/ComposeableAdapterFactory.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider" class="externalLink">ComposeableAdapterFactory</a></code></dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
 </ul>
-<a name="isFactoryForType-java.lang.Object-">
+<a id="isFactoryForType(java.lang.Object)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>isFactoryForType</h4>
-<pre>public&nbsp;boolean&nbsp;isFactoryForType(java.lang.Object&nbsp;type)</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;isFactoryForType&#8203;(java.lang.Object&nbsp;type)</pre>
 <div class="block"><!-- begin-user-doc --> <!-- end-user-doc --></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/AdapterFactory.html?is-external=true#isFactoryForType-java.lang.Object-" title="class or interface in org.eclipse.emf.common.notify">isFactoryForType</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/AdapterFactory.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">AdapterFactory</a></code></dd>
+<dd><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/AdapterFactory.html?is-external=true#isFactoryForType(java.lang.Object)" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">isFactoryForType</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/AdapterFactory.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">AdapterFactory</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceAdapterFactory.html#isFactoryForType-java.lang.Object-">isFactoryForType</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceAdapterFactory.html" title="class in org.eclipse.emf.cdo.eresource.util">EresourceAdapterFactory</a></code></dd>
+<dd><code><a href="../util/EresourceAdapterFactory.html#isFactoryForType(java.lang.Object)">isFactoryForType</a></code>&nbsp;in class&nbsp;<code><a href="../util/EresourceAdapterFactory.html" title="class in org.eclipse.emf.cdo.eresource.util">EresourceAdapterFactory</a></code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>whether this factory is applicable for the type of the object.</dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
 </ul>
-<a name="adapt-org.eclipse.emf.common.notify.Notifier-java.lang.Object-">
+<a id="adapt(org.eclipse.emf.common.notify.Notifier,java.lang.Object)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>adapt</h4>
-<pre>public&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a>&nbsp;adapt(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notifier.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notifier</a>&nbsp;notifier,
+<pre class="methodSignature">public&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">Adapter</a>&nbsp;adapt&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notifier.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">Notifier</a>&nbsp;notifier,
                      java.lang.Object&nbsp;type)</pre>
 <div class="block">This implementation substitutes the factory itself as the key for the adapter.
  <!-- begin-user-doc --> <!--
  end-user-doc --></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/AdapterFactory.html?is-external=true#adapt-org.eclipse.emf.common.notify.Notifier-java.lang.Object-" title="class or interface in org.eclipse.emf.common.notify">adapt</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/AdapterFactory.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">AdapterFactory</a></code></dd>
+<dd><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/AdapterFactory.html?is-external=true#adapt(org.eclipse.emf.common.notify.Notifier,java.lang.Object)" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">adapt</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/AdapterFactory.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">AdapterFactory</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/impl/AdapterFactoryImpl.html?is-external=true#adapt-org.eclipse.emf.common.notify.Notifier-java.lang.Object-" title="class or interface in org.eclipse.emf.common.notify.impl">adapt</a></code>&nbsp;in class&nbsp;<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/impl/AdapterFactoryImpl.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify.impl">AdapterFactoryImpl</a></code></dd>
+<dd><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/impl/AdapterFactoryImpl.html?is-external=true#adapt(org.eclipse.emf.common.notify.Notifier,java.lang.Object)" title="class or interface in org.eclipse.emf.common.notify.impl" class="externalLink">adapt</a></code>&nbsp;in class&nbsp;<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/impl/AdapterFactoryImpl.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify.impl" class="externalLink">AdapterFactoryImpl</a></code></dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
 </ul>
-<a name="adapt-java.lang.Object-java.lang.Object-">
+<a id="adapt(java.lang.Object,java.lang.Object)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>adapt</h4>
-<pre>public&nbsp;java.lang.Object&nbsp;adapt(java.lang.Object&nbsp;object,
+<pre class="methodSignature">public&nbsp;java.lang.Object&nbsp;adapt&#8203;(java.lang.Object&nbsp;object,
                               java.lang.Object&nbsp;type)</pre>
 <div class="block"><!-- begin-user-doc --> <!-- end-user-doc --></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/AdapterFactory.html?is-external=true#adapt-java.lang.Object-java.lang.Object-" title="class or interface in org.eclipse.emf.common.notify">adapt</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/AdapterFactory.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">AdapterFactory</a></code></dd>
+<dd><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/AdapterFactory.html?is-external=true#adapt(java.lang.Object,java.lang.Object)" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">adapt</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/AdapterFactory.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">AdapterFactory</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/impl/AdapterFactoryImpl.html?is-external=true#adapt-java.lang.Object-java.lang.Object-" title="class or interface in org.eclipse.emf.common.notify.impl">adapt</a></code>&nbsp;in class&nbsp;<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/impl/AdapterFactoryImpl.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify.impl">AdapterFactoryImpl</a></code></dd>
+<dd><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/impl/AdapterFactoryImpl.html?is-external=true#adapt(java.lang.Object,java.lang.Object)" title="class or interface in org.eclipse.emf.common.notify.impl" class="externalLink">adapt</a></code>&nbsp;in class&nbsp;<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/impl/AdapterFactoryImpl.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify.impl" class="externalLink">AdapterFactoryImpl</a></code></dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
 </ul>
-<a name="getChildCreationExtenders--">
+<a id="getChildCreationExtenders()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getChildCreationExtenders</h4>
-<pre>public&nbsp;java.util.List&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IChildCreationExtender.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IChildCreationExtender</a>&gt;&nbsp;getChildCreationExtenders()</pre>
+<pre class="methodSignature">public&nbsp;java.util.List&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IChildCreationExtender.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider" class="externalLink">IChildCreationExtender</a>&gt;&nbsp;getChildCreationExtenders()</pre>
 <div class="block"><!-- begin-user-doc --> <!-- end-user-doc --></div>
 <dl>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
 </ul>
-<a name="getNewChildDescriptors-java.lang.Object-org.eclipse.emf.edit.domain.EditingDomain-">
+<a id="getNewChildDescriptors(java.lang.Object,org.eclipse.emf.edit.domain.EditingDomain)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getNewChildDescriptors</h4>
-<pre>public&nbsp;java.util.Collection&lt;?&gt;&nbsp;getNewChildDescriptors(java.lang.Object&nbsp;object,
-                                                      <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/domain/EditingDomain.html?is-external=true" title="class or interface in org.eclipse.emf.edit.domain">EditingDomain</a>&nbsp;editingDomain)</pre>
+<pre class="methodSignature">public&nbsp;java.util.Collection&lt;?&gt;&nbsp;getNewChildDescriptors&#8203;(java.lang.Object&nbsp;object,
+                                                      <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/domain/EditingDomain.html?is-external=true" title="class or interface in org.eclipse.emf.edit.domain" class="externalLink">EditingDomain</a>&nbsp;editingDomain)</pre>
 <div class="block"><!-- begin-user-doc --> <!-- end-user-doc --></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IChildCreationExtender.html?is-external=true#getNewChildDescriptors-java.lang.Object-org.eclipse.emf.edit.domain.EditingDomain-" title="class or interface in org.eclipse.emf.edit.provider">getNewChildDescriptors</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IChildCreationExtender.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IChildCreationExtender</a></code></dd>
+<dd><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IChildCreationExtender.html?is-external=true#getNewChildDescriptors(java.lang.Object,org.eclipse.emf.edit.domain.EditingDomain)" title="class or interface in org.eclipse.emf.edit.provider" class="externalLink">getNewChildDescriptors</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IChildCreationExtender.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider" class="externalLink">IChildCreationExtender</a></code></dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
 </ul>
-<a name="getResourceLocator--">
+<a id="getResourceLocator()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getResourceLocator</h4>
-<pre>public&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/ResourceLocator.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">ResourceLocator</a>&nbsp;getResourceLocator()</pre>
+<pre class="methodSignature">public&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/ResourceLocator.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">ResourceLocator</a>&nbsp;getResourceLocator()</pre>
 <div class="block"><!-- begin-user-doc --> <!-- end-user-doc --></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IChildCreationExtender.html?is-external=true#getResourceLocator--" title="class or interface in org.eclipse.emf.edit.provider">getResourceLocator</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IChildCreationExtender.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IChildCreationExtender</a></code></dd>
+<dd><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IChildCreationExtender.html?is-external=true#getResourceLocator()" title="class or interface in org.eclipse.emf.edit.provider" class="externalLink">getResourceLocator</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IChildCreationExtender.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider" class="externalLink">IChildCreationExtender</a></code></dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
 </ul>
-<a name="addListener-org.eclipse.emf.edit.provider.INotifyChangedListener-">
+<a id="addListener(org.eclipse.emf.edit.provider.INotifyChangedListener)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>addListener</h4>
-<pre>public&nbsp;void&nbsp;addListener(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/INotifyChangedListener.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">INotifyChangedListener</a>&nbsp;notifyChangedListener)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;addListener&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/INotifyChangedListener.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider" class="externalLink">INotifyChangedListener</a>&nbsp;notifyChangedListener)</pre>
 <div class="block">This adds a listener.
  <!-- begin-user-doc --> <!-- end-user-doc --></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IChangeNotifier.html?is-external=true#addListener-org.eclipse.emf.edit.provider.INotifyChangedListener-" title="class or interface in org.eclipse.emf.edit.provider">addListener</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IChangeNotifier.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IChangeNotifier</a></code></dd>
+<dd><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IChangeNotifier.html?is-external=true#addListener(org.eclipse.emf.edit.provider.INotifyChangedListener)" title="class or interface in org.eclipse.emf.edit.provider" class="externalLink">addListener</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IChangeNotifier.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider" class="externalLink">IChangeNotifier</a></code></dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
 </ul>
-<a name="removeListener-org.eclipse.emf.edit.provider.INotifyChangedListener-">
+<a id="removeListener(org.eclipse.emf.edit.provider.INotifyChangedListener)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>removeListener</h4>
-<pre>public&nbsp;void&nbsp;removeListener(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/INotifyChangedListener.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">INotifyChangedListener</a>&nbsp;notifyChangedListener)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;removeListener&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/INotifyChangedListener.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider" class="externalLink">INotifyChangedListener</a>&nbsp;notifyChangedListener)</pre>
 <div class="block">This removes a listener.
  <!-- begin-user-doc --> <!-- end-user-doc --></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IChangeNotifier.html?is-external=true#removeListener-org.eclipse.emf.edit.provider.INotifyChangedListener-" title="class or interface in org.eclipse.emf.edit.provider">removeListener</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IChangeNotifier.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IChangeNotifier</a></code></dd>
+<dd><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IChangeNotifier.html?is-external=true#removeListener(org.eclipse.emf.edit.provider.INotifyChangedListener)" title="class or interface in org.eclipse.emf.edit.provider" class="externalLink">removeListener</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IChangeNotifier.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider" class="externalLink">IChangeNotifier</a></code></dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
 </ul>
-<a name="fireNotifyChanged-org.eclipse.emf.common.notify.Notification-">
+<a id="fireNotifyChanged(org.eclipse.emf.common.notify.Notification)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>fireNotifyChanged</h4>
-<pre>public&nbsp;void&nbsp;fireNotifyChanged(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notification</a>&nbsp;notification)</pre>
-<div class="block">This delegates to <a href="../../../../../../org/eclipse/emf/cdo/eresource/provider/EresourceItemProviderAdapterFactory.html#changeNotifier"><code>changeNotifier</code></a> and to <a href="../../../../../../org/eclipse/emf/cdo/eresource/provider/EresourceItemProviderAdapterFactory.html#parentAdapterFactory"><code>parentAdapterFactory</code></a>.
+<pre class="methodSignature">public&nbsp;void&nbsp;fireNotifyChanged&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">Notification</a>&nbsp;notification)</pre>
+<div class="block">This delegates to <a href="#changeNotifier"><code>changeNotifier</code></a> and to <a href="#parentAdapterFactory"><code>parentAdapterFactory</code></a>.
  <!-- begin-user-doc --> <!--
  end-user-doc --></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IChangeNotifier.html?is-external=true#fireNotifyChanged-org.eclipse.emf.common.notify.Notification-" title="class or interface in org.eclipse.emf.edit.provider">fireNotifyChanged</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IChangeNotifier.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IChangeNotifier</a></code></dd>
+<dd><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IChangeNotifier.html?is-external=true#fireNotifyChanged(org.eclipse.emf.common.notify.Notification)" title="class or interface in org.eclipse.emf.edit.provider" class="externalLink">fireNotifyChanged</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IChangeNotifier.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider" class="externalLink">IChangeNotifier</a></code></dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
 </ul>
-<a name="dispose--">
+<a id="dispose()">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>dispose</h4>
-<pre>public&nbsp;void&nbsp;dispose()</pre>
-<div class="block">This disposes all of the item providers created by this factory.
+<pre class="methodSignature">public&nbsp;void&nbsp;dispose()</pre>
+<div class="block">This disposes all of the item providers created by this factory. 
  <!-- begin-user-doc --> <!-- end-user-doc --></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IDisposable.html?is-external=true#dispose--" title="class or interface in org.eclipse.emf.edit.provider">dispose</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IDisposable.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IDisposable</a></code></dd>
+<dd><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IDisposable.html?is-external=true#dispose()" title="class or interface in org.eclipse.emf.edit.provider" class="externalLink">dispose</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/IDisposable.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider" class="externalLink">IDisposable</a></code></dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/EresourceItemProviderAdapterFactory.html">Use</a></li>
@@ -842,16 +908,8 @@ implements <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/or
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/emf/cdo/eresource/provider/CDOTextResourceItemProvider.html" title="class in org.eclipse.emf.cdo.eresource.provider"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li>Next&nbsp;Class</li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/emf/cdo/eresource/provider/EresourceItemProviderAdapterFactory.html" target="_top">Frames</a></li>
-<li><a href="EresourceItemProviderAdapterFactory.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -864,11 +922,14 @@ implements <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/or
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
@@ -880,10 +941,12 @@ implements <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/or
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

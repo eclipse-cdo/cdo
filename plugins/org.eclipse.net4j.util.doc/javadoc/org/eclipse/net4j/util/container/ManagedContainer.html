@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>ManagedContainer (Net4j Utilities Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":10,"i39":10,"i40":10,"i41":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/ManagedContainer.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/net4j/util/container/LifecycleEventConverter.html" title="class in org.eclipse.net4j.util.container"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/net4j/util/container/SelfAttachingContainerListener.html" title="class in org.eclipse.net4j.util.container"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/net4j/util/container/ManagedContainer.html" target="_top">Frames</a></li>
-<li><a href="ManagedContainer.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,12 +82,15 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
-<li><a href="#fields.inherited.from.class.org.eclipse.net4j.util.lifecycle.Lifecycle">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
@@ -85,13 +101,22 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.net4j.util.container</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.net4j.util.container</a></div>
 <h2 title="Class ManagedContainer" class="title">Class ManagedContainer</h2>
 </div>
 <div class="contentContainer">
@@ -99,10 +124,10 @@ var activeTableTab = "activeTableTab";
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li><a href="../../../../../org/eclipse/net4j/util/event/Notifier.html" title="class in org.eclipse.net4j.util.event">org.eclipse.net4j.util.event.Notifier</a></li>
+<li><a href="../event/Notifier.html" title="class in org.eclipse.net4j.util.event">org.eclipse.net4j.util.event.Notifier</a></li>
 <li>
 <ul class="inheritance">
-<li><a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">org.eclipse.net4j.util.lifecycle.Lifecycle</a></li>
+<li><a href="../lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">org.eclipse.net4j.util.lifecycle.Lifecycle</a></li>
 <li>
 <ul class="inheritance">
 <li>org.eclipse.net4j.util.container.ManagedContainer</li>
@@ -118,14 +143,13 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;, <a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a>, <a href="../../../../../org/eclipse/net4j/util/event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/IDeactivateable.html" title="interface in org.eclipse.net4j.util.lifecycle">IDeactivateable</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.DeferrableActivation.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle.DeferrableActivation</a></dd>
+<dd><code><a href="IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;</code>, <code><a href="IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code>, <code><a href="../event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a></code>, <code><a href="../event/INotifier.INotifier2.html" title="interface in org.eclipse.net4j.util.event">INotifier.INotifier2</a></code>, <code><a href="../lifecycle/IDeactivateable.html" title="interface in org.eclipse.net4j.util.lifecycle">IDeactivateable</a></code>, <code><a href="../lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a></code>, <code><a href="../lifecycle/ILifecycle.DeferrableActivation.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle.DeferrableActivation</a></code></dd>
 </dl>
 <hr>
-<br>
 <pre>public class <span class="typeNameLabel">ManagedContainer</span>
-extends <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a>
-implements <a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></pre>
-<div class="block">A default implementation of a <a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container"><code>managed container</code></a>.</div>
+extends <a href="../lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a>
+implements <a href="IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></pre>
+<div class="block">A default implementation of a <a href="IManagedContainer.html" title="interface in org.eclipse.net4j.util.container"><code>managed container</code></a>.</div>
 <dl>
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>Eike Stepper</dd>
@@ -137,291 +161,377 @@ implements <a href="../../../../../org/eclipse/net4j/util/container/IManagedCont
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="nested.class.summary">
+<li class="blockList"><a id="nested.class.summary">
 <!--   -->
 </a>
 <h3>Nested Class Summary</h3>
 <ul class="blockList">
-<li class="blockList"><a name="nested.classes.inherited.from.class.org.eclipse.net4j.util.container.IManagedContainer">
+<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.net4j.util.container.IContainer">
 <!--   -->
 </a>
-<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.container.<a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></h3>
-<code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.ContainerAware.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer.ContainerAware</a></code></li>
+<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.container.<a href="IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a></h3>
+<code><a href="IContainer.Modifiable.html" title="interface in org.eclipse.net4j.util.container">IContainer.Modifiable</a>&lt;<a href="IContainer.Modifiable.html" title="type parameter in IContainer.Modifiable">E</a>&gt;, <a href="IContainer.Persistable.html" title="interface in org.eclipse.net4j.util.container">IContainer.Persistable</a>&lt;<a href="IContainer.Persistable.html" title="type parameter in IContainer.Persistable">E</a>&gt;, <a href="IContainer.Persistence.html" title="interface in org.eclipse.net4j.util.container">IContainer.Persistence</a>&lt;<a href="IContainer.Persistence.html" title="type parameter in IContainer.Persistence">E</a>&gt;</code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="nested.classes.inherited.from.class.org.eclipse.net4j.util.container.IContainer">
+<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.net4j.util.lifecycle.ILifecycle">
 <!--   -->
 </a>
-<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.container.<a href="../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a></h3>
-<code><a href="../../../../../org/eclipse/net4j/util/container/IContainer.Modifiable.html" title="interface in org.eclipse.net4j.util.container">IContainer.Modifiable</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/IContainer.Modifiable.html" title="type parameter in IContainer.Modifiable">E</a>&gt;, <a href="../../../../../org/eclipse/net4j/util/container/IContainer.Persistable.html" title="interface in org.eclipse.net4j.util.container">IContainer.Persistable</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/IContainer.Persistable.html" title="type parameter in IContainer.Persistable">E</a>&gt;, <a href="../../../../../org/eclipse/net4j/util/container/IContainer.Persistence.html" title="interface in org.eclipse.net4j.util.container">IContainer.Persistence</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/IContainer.Persistence.html" title="type parameter in IContainer.Persistence">E</a>&gt;</code></li>
+<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.lifecycle.<a href="../lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a></h3>
+<code><a href="../lifecycle/ILifecycle.DeferrableActivation.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle.DeferrableActivation</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="nested.classes.inherited.from.class.org.eclipse.net4j.util.lifecycle.ILifecycle">
+<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.net4j.util.container.IManagedContainer">
 <!--   -->
 </a>
-<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.lifecycle.<a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a></h3>
-<code><a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.DeferrableActivation.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle.DeferrableActivation</a></code></li>
+<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.container.<a href="IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></h3>
+<code><a href="IManagedContainer.ContainerAware.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer.ContainerAware</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.net4j.util.event.INotifier">
+<!--   -->
+</a>
+<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.event.<a href="../event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a></h3>
+<code><a href="../event/INotifier.INotifier2.html" title="interface in org.eclipse.net4j.util.event">INotifier.INotifier2</a></code></li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- =========== FIELD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.summary">
+<li class="blockList"><a id="field.summary">
 <!--   -->
 </a>
 <h3>Field Summary</h3>
 <ul class="blockList">
-<li class="blockList"><a name="fields.inherited.from.class.org.eclipse.net4j.util.lifecycle.Lifecycle">
+<li class="blockList"><a id="fields.inherited.from.class.org.eclipse.net4j.util.lifecycle.Lifecycle">
 <!--   -->
 </a>
-<h3>Fields inherited from class&nbsp;org.eclipse.net4j.util.lifecycle.<a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a></h3>
-<code><a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#USE_LABEL">USE_LABEL</a></code></li>
+<h3>Fields inherited from class&nbsp;org.eclipse.net4j.util.lifecycle.<a href="../lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a></h3>
+<code><a href="../lifecycle/Lifecycle.html#USE_LABEL">USE_LABEL</a></code></li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.summary">
+<li class="blockList"><a id="constructor.summary">
 <!--   -->
 </a>
 <h3>Constructor Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
+<table class="memberSummary">
 <caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Constructor and Description</th>
+<th class="colFirst" scope="col">Constructor</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#ManagedContainer--">ManagedContainer</a></span>()</code>&nbsp;</td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">ManagedContainer</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#activateElement-java.lang.Object-">activateElement</a></span>(java.lang.Object&nbsp;element)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#activateElement(java.lang.Object)">activateElement</a></span>&#8203;(java.lang.Object&nbsp;element)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#addPostProcessor-org.eclipse.net4j.util.container.IElementProcessor-">addPostProcessor</a></span>(<a href="../../../../../org/eclipse/net4j/util/container/IElementProcessor.html" title="interface in org.eclipse.net4j.util.container">IElementProcessor</a>&nbsp;postProcessor)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addPostProcessor(org.eclipse.net4j.util.container.IElementProcessor)">addPostProcessor</a></span>&#8203;(<a href="IElementProcessor.html" title="interface in org.eclipse.net4j.util.container">IElementProcessor</a>&nbsp;postProcessor)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#addPostProcessor-org.eclipse.net4j.util.container.IElementProcessor-boolean-">addPostProcessor</a></span>(<a href="../../../../../org/eclipse/net4j/util/container/IElementProcessor.html" title="interface in org.eclipse.net4j.util.container">IElementProcessor</a>&nbsp;postProcessor,
-                boolean&nbsp;processExistingElements)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addPostProcessor(org.eclipse.net4j.util.container.IElementProcessor,boolean)">addPostProcessor</a></span>&#8203;(<a href="IElementProcessor.html" title="interface in org.eclipse.net4j.util.container">IElementProcessor</a>&nbsp;postProcessor,
+                boolean&nbsp;processExistingElements)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#clearElements--">clearElements</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearElements()">clearElements</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>protected java.lang.Object</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#createElement-java.lang.String-java.lang.String-java.lang.String-">createElement</a></span>(java.lang.String&nbsp;productGroup,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createElement(java.lang.String,java.lang.String,java.lang.String)">createElement</a></span>&#8203;(java.lang.String&nbsp;productGroup,
              java.lang.String&nbsp;factoryType,
-             java.lang.String&nbsp;description)</code>&nbsp;</td>
+             java.lang.String&nbsp;description)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code>protected <a href="../../../../../org/eclipse/net4j/util/registry/IRegistry.html" title="interface in org.eclipse.net4j.util.registry">IRegistry</a>&lt;<a href="../../../../../org/eclipse/net4j/util/factory/IFactoryKey.html" title="interface in org.eclipse.net4j.util.factory">IFactoryKey</a>,<a href="../../../../../org/eclipse/net4j/util/factory/IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#createFactoryRegistry--">createFactoryRegistry</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="../registry/IRegistry.html" title="interface in org.eclipse.net4j.util.registry">IRegistry</a>&lt;<a href="../factory/IFactoryKey.html" title="interface in org.eclipse.net4j.util.factory">IFactoryKey</a>,&#8203;<a href="../factory/IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createFactoryRegistry()">createFactoryRegistry</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code>protected java.util.List&lt;<a href="../../../../../org/eclipse/net4j/util/container/IElementProcessor.html" title="interface in org.eclipse.net4j.util.container">IElementProcessor</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#createPostProcessors--">createPostProcessors</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>protected java.util.List&lt;<a href="IElementProcessor.html" title="interface in org.eclipse.net4j.util.container">IElementProcessor</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createPostProcessors()">createPostProcessors</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#doActivate--">doActivate</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#doActivate()">doActivate</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#doDeactivate--">doDeactivate</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#doDeactivate()">doDeactivate</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#fireEvent-org.eclipse.net4j.util.event.IEvent-">fireEvent</a></span>(<a href="../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#fireEvent(org.eclipse.net4j.util.event.IEvent)">fireEvent</a></span>&#8203;(<a href="../event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
-<td class="colFirst"><code>java.lang.Object</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#getElement-java.lang.String-java.lang.String-java.lang.String-">getElement</a></span>(java.lang.String&nbsp;productGroup,
-          java.lang.String&nbsp;factoryType,
-          java.lang.String&nbsp;description)</code>&nbsp;</td>
+<td class="colFirst"><code>&lt;T&gt;&nbsp;void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#forEachElement(java.lang.String,java.lang.Class,java.lang.String,java.util.function.Consumer)">forEachElement</a></span>&#8203;(java.lang.String&nbsp;productGroup,
+              java.lang.Class&lt;T&gt;&nbsp;productType,
+              java.lang.String&nbsp;description,
+              java.util.function.Consumer&lt;T&gt;&nbsp;consumer)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i11" class="rowColor">
-<td class="colFirst"><code>java.lang.Object</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#getElement-java.lang.String-java.lang.String-java.lang.String-boolean-">getElement</a></span>(java.lang.String&nbsp;productGroup,
-          java.lang.String&nbsp;factoryType,
-          java.lang.String&nbsp;description,
-          boolean&nbsp;activate)</code>&nbsp;</td>
+<td class="colFirst"><code>&lt;T&gt;&nbsp;void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#forEachElement(java.lang.String,java.lang.Class,java.util.function.Consumer)">forEachElement</a></span>&#8203;(java.lang.String&nbsp;productGroup,
+              java.lang.Class&lt;T&gt;&nbsp;productType,
+              java.util.function.Consumer&lt;T&gt;&nbsp;consumer)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i12" class="altColor">
-<td class="colFirst"><code>java.lang.String[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#getElementKey-java.lang.Object-">getElementKey</a></span>(java.lang.Object&nbsp;element)</code>&nbsp;</td>
+<td class="colFirst"><code>&lt;T&gt;&nbsp;void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#forEachElement(java.lang.String,java.lang.Class,java.util.function.Function,java.util.function.Consumer)">forEachElement</a></span>&#8203;(java.lang.String&nbsp;productGroup,
+              java.lang.Class&lt;T&gt;&nbsp;productType,
+              java.util.function.Function&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;descriptionProvider,
+              java.util.function.Consumer&lt;T&gt;&nbsp;consumer)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i13" class="rowColor">
-<td class="colFirst"><code>protected java.util.Map.Entry&lt;org.eclipse.net4j.util.container.ManagedContainer.ElementKey,java.lang.Object&gt;[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#getElementRegistryEntries--">getElementRegistryEntries</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>java.lang.Object</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getElement(java.lang.String,java.lang.String,java.lang.String)">getElement</a></span>&#8203;(java.lang.String&nbsp;productGroup,
+          java.lang.String&nbsp;factoryType,
+          java.lang.String&nbsp;description)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i14" class="altColor">
-<td class="colFirst"><code>protected org.eclipse.net4j.util.container.ManagedContainer.ElementKey[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#getElementRegistryKeys--">getElementRegistryKeys</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>java.lang.Object</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getElement(java.lang.String,java.lang.String,java.lang.String,boolean)">getElement</a></span>&#8203;(java.lang.String&nbsp;productGroup,
+          java.lang.String&nbsp;factoryType,
+          java.lang.String&nbsp;description,
+          boolean&nbsp;activate)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i15" class="rowColor">
-<td class="colFirst"><code>protected java.lang.Object[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#getElementRegistryValues--">getElementRegistryValues</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>java.lang.String[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getElementKey(java.lang.Object)">getElementKey</a></span>&#8203;(java.lang.Object&nbsp;element)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i16" class="altColor">
-<td class="colFirst"><code>java.lang.Object[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#getElements--">getElements</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>&lt;T&gt;&nbsp;T</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getElementOrNull(java.lang.String,java.lang.String,java.lang.String)">getElementOrNull</a></span>&#8203;(java.lang.String&nbsp;productGroup,
+                java.lang.String&nbsp;factoryType,
+                java.lang.String&nbsp;description)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i17" class="rowColor">
-<td class="colFirst"><code>java.lang.Object[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#getElements-java.lang.String-">getElements</a></span>(java.lang.String&nbsp;productGroup)</code>&nbsp;</td>
+<td class="colFirst"><code>protected java.util.Map.Entry&lt;org.eclipse.net4j.util.container.ManagedContainer.ElementKey,&#8203;java.lang.Object&gt;[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getElementRegistryEntries()">getElementRegistryEntries</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i18" class="altColor">
-<td class="colFirst"><code>java.lang.Object[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#getElements-java.lang.String-java.lang.String-">getElements</a></span>(java.lang.String&nbsp;productGroup,
-           java.lang.String&nbsp;factoryType)</code>&nbsp;</td>
+<td class="colFirst"><code>protected org.eclipse.net4j.util.container.ManagedContainer.ElementKey[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getElementRegistryKeys()">getElementRegistryKeys</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i19" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/factory/IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#getFactory-java.lang.String-java.lang.String-">getFactory</a></span>(java.lang.String&nbsp;productGroup,
-          java.lang.String&nbsp;factoryType)</code>&nbsp;</td>
+<td class="colFirst"><code>protected java.lang.Object[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getElementRegistryValues()">getElementRegistryValues</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i20" class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/registry/IRegistry.html" title="interface in org.eclipse.net4j.util.registry">IRegistry</a>&lt;<a href="../../../../../org/eclipse/net4j/util/factory/IFactoryKey.html" title="interface in org.eclipse.net4j.util.factory">IFactoryKey</a>,<a href="../../../../../org/eclipse/net4j/util/factory/IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#getFactoryRegistry--">getFactoryRegistry</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>java.lang.Object[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getElements()">getElements</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i21" class="rowColor">
-<td class="colFirst"><code>java.util.Set&lt;java.lang.String&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#getFactoryTypes-java.lang.String-">getFactoryTypes</a></span>(java.lang.String&nbsp;productGroup)</code>&nbsp;</td>
+<td class="colFirst"><code>java.lang.Object[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getElements(java.lang.String)">getElements</a></span>&#8203;(java.lang.String&nbsp;productGroup)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i22" class="altColor">
+<td class="colFirst"><code>java.lang.Object[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getElements(java.lang.String,java.lang.String)">getElements</a></span>&#8203;(java.lang.String&nbsp;productGroup,
+           java.lang.String&nbsp;factoryType)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i23" class="rowColor">
+<td class="colFirst"><code><a href="../factory/IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getFactory(java.lang.String,java.lang.String)">getFactory</a></span>&#8203;(java.lang.String&nbsp;productGroup,
+          java.lang.String&nbsp;factoryType)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i24" class="altColor">
+<td class="colFirst"><code><a href="../registry/IRegistry.html" title="interface in org.eclipse.net4j.util.registry">IRegistry</a>&lt;<a href="../factory/IFactoryKey.html" title="interface in org.eclipse.net4j.util.factory">IFactoryKey</a>,&#8203;<a href="../factory/IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getFactoryRegistry()">getFactoryRegistry</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i25" class="rowColor">
+<td class="colFirst"><code>java.util.Set&lt;java.lang.String&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getFactoryTypes(java.lang.String)">getFactoryTypes</a></span>&#8203;(java.lang.String&nbsp;productGroup)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i26" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#getName--">getName</a></span>()</code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getName()">getName</a></span>()</code></th>
+<td class="colLast">
 <div class="block">Returns the name of this container, or <code>null</code> if no name has been set.</div>
 </td>
 </tr>
-<tr id="i23" class="rowColor">
-<td class="colFirst"><code>java.util.List&lt;<a href="../../../../../org/eclipse/net4j/util/container/IElementProcessor.html" title="interface in org.eclipse.net4j.util.container">IElementProcessor</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#getPostProcessors--">getPostProcessors</a></span>()</code>&nbsp;</td>
-</tr>
-<tr id="i24" class="altColor">
-<td class="colFirst"><code>java.util.Set&lt;java.lang.String&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#getProductGroups--">getProductGroups</a></span>()</code>&nbsp;</td>
-</tr>
-<tr id="i25" class="rowColor">
-<td class="colFirst"><code>protected java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#getTypeName--">getTypeName</a></span>()</code>&nbsp;</td>
-</tr>
-<tr id="i26" class="altColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#isEmpty--">isEmpty</a></span>()</code>&nbsp;</td>
-</tr>
 <tr id="i27" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#loadElements-java.io.InputStream-">loadElements</a></span>(java.io.InputStream&nbsp;stream)</code>&nbsp;</td>
+<td class="colFirst"><code>java.util.List&lt;<a href="IElementProcessor.html" title="interface in org.eclipse.net4j.util.container">IElementProcessor</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPostProcessors()">getPostProcessors</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i28" class="altColor">
-<td class="colFirst"><code>protected java.lang.Object</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#postProcessElement-java.lang.String-java.lang.String-java.lang.String-java.lang.Object-">postProcessElement</a></span>(java.lang.String&nbsp;productGroup,
-                  java.lang.String&nbsp;factoryType,
-                  java.lang.String&nbsp;description,
-                  java.lang.Object&nbsp;element)</code>&nbsp;</td>
+<td class="colFirst"><code>java.util.Set&lt;java.lang.String&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getProductGroups()">getProductGroups</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i29" class="rowColor">
-<td class="colFirst"><code>protected java.lang.Object</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#putElement-org.eclipse.net4j.util.container.ManagedContainer.ElementKey-java.lang.Object-">putElement</a></span>(org.eclipse.net4j.util.container.ManagedContainer.ElementKey&nbsp;key,
-          java.lang.Object&nbsp;element)</code>&nbsp;</td>
+<td class="colFirst"><code>protected java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTypeName()">getTypeName</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i30" class="altColor">
-<td class="colFirst"><code>java.lang.Object</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#putElement-java.lang.String-java.lang.String-java.lang.String-java.lang.Object-">putElement</a></span>(java.lang.String&nbsp;productGroup,
-          java.lang.String&nbsp;factoryType,
-          java.lang.String&nbsp;description,
-          java.lang.Object&nbsp;element)</code>&nbsp;</td>
+<td class="colFirst"><code>boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isEmpty()">isEmpty</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i31" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html" title="class in org.eclipse.net4j.util.container">ManagedContainer</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#registerFactory-org.eclipse.net4j.util.factory.IFactory-">registerFactory</a></span>(<a href="../../../../../org/eclipse/net4j/util/factory/IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a>&nbsp;factory)</code>&nbsp;</td>
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#loadElements(java.io.InputStream)">loadElements</a></span>&#8203;(java.io.InputStream&nbsp;stream)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i32" class="altColor">
 <td class="colFirst"><code>protected java.lang.Object</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#removeElement-org.eclipse.net4j.util.container.ManagedContainer.ElementKey-">removeElement</a></span>(org.eclipse.net4j.util.container.ManagedContainer.ElementKey&nbsp;key)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#postProcessElement(java.lang.String,java.lang.String,java.lang.String,java.lang.Object)">postProcessElement</a></span>&#8203;(java.lang.String&nbsp;productGroup,
+                  java.lang.String&nbsp;factoryType,
+                  java.lang.String&nbsp;description,
+                  java.lang.Object&nbsp;element)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i33" class="rowColor">
 <td class="colFirst"><code>java.lang.Object</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#removeElement-java.lang.String-java.lang.String-java.lang.String-">removeElement</a></span>(java.lang.String&nbsp;productGroup,
-             java.lang.String&nbsp;factoryType,
-             java.lang.String&nbsp;description)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#putElement(java.lang.String,java.lang.String,java.lang.String,java.lang.Object)">putElement</a></span>&#8203;(java.lang.String&nbsp;productGroup,
+          java.lang.String&nbsp;factoryType,
+          java.lang.String&nbsp;description,
+          java.lang.Object&nbsp;element)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i34" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#removePostProcessor-org.eclipse.net4j.util.container.IElementProcessor-">removePostProcessor</a></span>(<a href="../../../../../org/eclipse/net4j/util/container/IElementProcessor.html" title="interface in org.eclipse.net4j.util.container">IElementProcessor</a>&nbsp;postProcessor)</code>&nbsp;</td>
+<td class="colFirst"><code>protected java.lang.Object</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#putElement(org.eclipse.net4j.util.container.ManagedContainer.ElementKey,java.lang.Object)">putElement</a></span>&#8203;(org.eclipse.net4j.util.container.ManagedContainer.ElementKey&nbsp;key,
+          java.lang.Object&nbsp;element)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i35" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#saveElements-java.io.OutputStream-">saveElements</a></span>(java.io.OutputStream&nbsp;stream)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="ManagedContainer.html" title="class in org.eclipse.net4j.util.container">ManagedContainer</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#registerFactory(org.eclipse.net4j.util.factory.IFactory)">registerFactory</a></span>&#8203;(<a href="../factory/IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a>&nbsp;factory)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i36" class="altColor">
+<td class="colFirst"><code>java.lang.Object</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeElement(java.lang.String,java.lang.String,java.lang.String)">removeElement</a></span>&#8203;(java.lang.String&nbsp;productGroup,
+             java.lang.String&nbsp;factoryType,
+             java.lang.String&nbsp;description)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i37" class="rowColor">
+<td class="colFirst"><code>protected java.lang.Object</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeElement(org.eclipse.net4j.util.container.ManagedContainer.ElementKey)">removeElement</a></span>&#8203;(org.eclipse.net4j.util.container.ManagedContainer.ElementKey&nbsp;key)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i38" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#setName-java.lang.String-">setName</a></span>(java.lang.String&nbsp;name)</code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removePostProcessor(org.eclipse.net4j.util.container.IElementProcessor)">removePostProcessor</a></span>&#8203;(<a href="IElementProcessor.html" title="interface in org.eclipse.net4j.util.container">IElementProcessor</a>&nbsp;postProcessor)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i39" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#saveElements(java.io.OutputStream)">saveElements</a></span>&#8203;(java.io.OutputStream&nbsp;stream)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i40" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setName(java.lang.String)">setName</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
+<td class="colLast">
 <div class="block">Sets the name of this container before it is activated.</div>
 </td>
 </tr>
-<tr id="i37" class="rowColor">
+<tr id="i41" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#toString--">toString</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.lifecycle.Lifecycle">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.lifecycle.Lifecycle">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.lifecycle.<a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a></h3>
-<code><a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#activate--">activate</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkActive--">checkActive</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkArg-boolean-java.lang.String-">checkArg</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkArg-java.lang.Object-java.lang.String-">checkArg</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkInactive--">checkInactive</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkNull-java.lang.Object-java.lang.String-">checkNull</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkState-boolean-java.lang.String-">checkState</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkState-java.lang.Object-java.lang.String-">checkState</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#deactivate--">deactivate</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#deferredActivate-boolean-">deferredActivate</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#doAfterActivate--">doAfterActivate</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#doBeforeActivate--">doBeforeActivate</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#doBeforeDeactivate--">doBeforeDeactivate</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#dump--">dump</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#getLifecycleState--">getLifecycleState</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#isActive--">isActive</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#isDeferredActivation--">isDeferredActivation</a></code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.lifecycle.<a href="../lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a></h3>
+<code><a href="../lifecycle/Lifecycle.html#activate()">activate</a>, <a href="../lifecycle/Lifecycle.html#checkActive()">checkActive</a>, <a href="../lifecycle/Lifecycle.html#checkArg(boolean,java.lang.String)">checkArg</a>, <a href="../lifecycle/Lifecycle.html#checkArg(java.lang.Object,java.lang.String)">checkArg</a>, <a href="../lifecycle/Lifecycle.html#checkInactive()">checkInactive</a>, <a href="../lifecycle/Lifecycle.html#checkNull(java.lang.Object,java.lang.String)">checkNull</a>, <a href="../lifecycle/Lifecycle.html#checkState(boolean,java.lang.String)">checkState</a>, <a href="../lifecycle/Lifecycle.html#checkState(java.lang.Object,java.lang.String)">checkState</a>, <a href="../lifecycle/Lifecycle.html#deactivate()">deactivate</a>, <a href="../lifecycle/Lifecycle.html#deferredActivate(boolean)">deferredActivate</a>, <a href="../lifecycle/Lifecycle.html#doAfterActivate()">doAfterActivate</a>, <a href="../lifecycle/Lifecycle.html#doBeforeActivate()">doBeforeActivate</a>, <a href="../lifecycle/Lifecycle.html#doBeforeDeactivate()">doBeforeDeactivate</a>, <a href="../lifecycle/Lifecycle.html#dump()">dump</a>, <a href="../lifecycle/Lifecycle.html#getLifecycleState()">getLifecycleState</a>, <a href="../lifecycle/Lifecycle.html#isActive()">isActive</a>, <a href="../lifecycle/Lifecycle.html#isDeferredActivation()">isDeferredActivation</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.event.Notifier">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.event.Notifier">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.event.<a href="../../../../../org/eclipse/net4j/util/event/Notifier.html" title="class in org.eclipse.net4j.util.event">Notifier</a></h3>
-<code><a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#addListener-org.eclipse.net4j.util.event.IListener-">addListener</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#fireEvent--">fireEvent</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#fireEvent-org.eclipse.net4j.util.event.IEvent-org.eclipse.net4j.util.event.IListener:A-">fireEvent</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#fireThrowable-java.lang.Throwable-">fireThrowable</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#firstListenerAdded--">firstListenerAdded</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#getListeners--">getListeners</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#getNotificationService--">getNotificationService</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#hasListeners--">hasListeners</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#lastListenerRemoved--">lastListenerRemoved</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#removeListener-org.eclipse.net4j.util.event.IListener-">removeListener</a></code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.event.<a href="../event/Notifier.html" title="class in org.eclipse.net4j.util.event">Notifier</a></h3>
+<code><a href="../event/Notifier.html#addListener(org.eclipse.net4j.util.event.IListener)">addListener</a>, <a href="../event/Notifier.html#addUniqueListener(org.eclipse.net4j.util.event.IListener)">addUniqueListener</a>, <a href="../event/Notifier.html#fireEvent()">fireEvent</a>, <a href="../event/Notifier.html#fireEvent(org.eclipse.net4j.util.event.IEvent,org.eclipse.net4j.util.event.IListener%5B%5D)">fireEvent</a>, <a href="../event/Notifier.html#fireThrowable(java.lang.Throwable)">fireThrowable</a>, <a href="../event/Notifier.html#firstListenerAdded()">firstListenerAdded</a>, <a href="../event/Notifier.html#getListeners()">getListeners</a>, <a href="../event/Notifier.html#getNotificationService()">getNotificationService</a>, <a href="../event/Notifier.html#hasListener(org.eclipse.net4j.util.event.IListener)">hasListener</a>, <a href="../event/Notifier.html#hasListeners()">hasListeners</a>, <a href="../event/Notifier.html#lastListenerRemoved()">lastListenerRemoved</a>, <a href="../event/Notifier.html#listenerAdded(org.eclipse.net4j.util.event.IListener)">listenerAdded</a>, <a href="../event/Notifier.html#listenerRemoved(org.eclipse.net4j.util.event.IListener)">listenerRemoved</a>, <a href="../event/Notifier.html#removeListener(org.eclipse.net4j.util.event.IListener)">removeListener</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
+<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
 <code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, wait, wait, wait</code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.lifecycle.ILifecycle">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.lifecycle.ILifecycle">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.lifecycle.<a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a></h3>
-<code><a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html#activate--">activate</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html#deactivate--">deactivate</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html#getLifecycleState--">getLifecycleState</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html#isActive--">isActive</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.lifecycle.<a href="../lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a></h3>
+<code><a href="../lifecycle/ILifecycle.html#activate()">activate</a>, <a href="../lifecycle/ILifecycle.html#deactivate()">deactivate</a>, <a href="../lifecycle/ILifecycle.html#getLifecycleState()">getLifecycleState</a>, <a href="../lifecycle/ILifecycle.html#isActive()">isActive</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.event.INotifier">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.event.INotifier">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.event.<a href="../../../../../org/eclipse/net4j/util/event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a></h3>
-<code><a href="../../../../../org/eclipse/net4j/util/event/INotifier.html#addListener-org.eclipse.net4j.util.event.IListener-">addListener</a>, <a href="../../../../../org/eclipse/net4j/util/event/INotifier.html#getListeners--">getListeners</a>, <a href="../../../../../org/eclipse/net4j/util/event/INotifier.html#hasListeners--">hasListeners</a>, <a href="../../../../../org/eclipse/net4j/util/event/INotifier.html#removeListener-org.eclipse.net4j.util.event.IListener-">removeListener</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.event.<a href="../event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a></h3>
+<code><a href="../event/INotifier.html#addListener(org.eclipse.net4j.util.event.IListener)">addListener</a>, <a href="../event/INotifier.html#getListeners()">getListeners</a>, <a href="../event/INotifier.html#hasListeners()">hasListeners</a>, <a href="../event/INotifier.html#removeListener(org.eclipse.net4j.util.event.IListener)">removeListener</a></code></li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -429,12 +539,13 @@ implements <a href="../../../../../org/eclipse/net4j/util/container/IManagedCont
 <ul class="blockList">
 <li class="blockList">
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.detail">
+<li class="blockList"><a id="constructor.detail">
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="ManagedContainer--">
+<a id="&lt;init&gt;()">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -445,542 +556,606 @@ implements <a href="../../../../../org/eclipse/net4j/util/container/IManagedCont
 </ul>
 </li>
 </ul>
+</section>
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="getName--">
+<a id="getName()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getName</h4>
-<pre>public&nbsp;java.lang.String&nbsp;getName()</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getName--">IManagedContainer</a></code></span></div>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getName()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="IManagedContainer.html#getName()">IManagedContainer</a></code></span></div>
 <div class="block">Returns the name of this container, or <code>null</code> if no name has been set.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getName--">getName</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
+<dd><code><a href="IManagedContainer.html#getName()">getName</a></code>&nbsp;in interface&nbsp;<code><a href="IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.8</dd>
 </dl>
 </li>
 </ul>
-<a name="setName-java.lang.String-">
+<a id="setName(java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setName</h4>
-<pre>public&nbsp;void&nbsp;setName(java.lang.String&nbsp;name)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#setName-java.lang.String-">IManagedContainer</a></code></span></div>
+<pre class="methodSignature">public&nbsp;void&nbsp;setName&#8203;(java.lang.String&nbsp;name)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="IManagedContainer.html#setName(java.lang.String)">IManagedContainer</a></code></span></div>
 <div class="block">Sets the name of this container before it is activated.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#setName-java.lang.String-">setName</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
+<dd><code><a href="IManagedContainer.html#setName(java.lang.String)">setName</a></code>&nbsp;in interface&nbsp;<code><a href="IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.8</dd>
 </dl>
 </li>
 </ul>
-<a name="getFactoryRegistry--">
+<a id="getFactoryRegistry()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getFactoryRegistry</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/registry/IRegistry.html" title="interface in org.eclipse.net4j.util.registry">IRegistry</a>&lt;<a href="../../../../../org/eclipse/net4j/util/factory/IFactoryKey.html" title="interface in org.eclipse.net4j.util.factory">IFactoryKey</a>,<a href="../../../../../org/eclipse/net4j/util/factory/IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a>&gt;&nbsp;getFactoryRegistry()</pre>
+<pre class="methodSignature">public&nbsp;<a href="../registry/IRegistry.html" title="interface in org.eclipse.net4j.util.registry">IRegistry</a>&lt;<a href="../factory/IFactoryKey.html" title="interface in org.eclipse.net4j.util.factory">IFactoryKey</a>,&#8203;<a href="../factory/IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a>&gt;&nbsp;getFactoryRegistry()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getFactoryRegistry--">getFactoryRegistry</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
+<dd><code><a href="IManagedContainer.html#getFactoryRegistry()">getFactoryRegistry</a></code>&nbsp;in interface&nbsp;<code><a href="IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="registerFactory-org.eclipse.net4j.util.factory.IFactory-">
+<a id="registerFactory(org.eclipse.net4j.util.factory.IFactory)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>registerFactory</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html" title="class in org.eclipse.net4j.util.container">ManagedContainer</a>&nbsp;registerFactory(<a href="../../../../../org/eclipse/net4j/util/factory/IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a>&nbsp;factory)</pre>
+<pre class="methodSignature">public&nbsp;<a href="ManagedContainer.html" title="class in org.eclipse.net4j.util.container">ManagedContainer</a>&nbsp;registerFactory&#8203;(<a href="../factory/IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a>&nbsp;factory)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#registerFactory-org.eclipse.net4j.util.factory.IFactory-">registerFactory</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
+<dd><code><a href="IManagedContainer.html#registerFactory(org.eclipse.net4j.util.factory.IFactory)">registerFactory</a></code>&nbsp;in interface&nbsp;<code><a href="IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="getPostProcessors--">
+<a id="getPostProcessors()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getPostProcessors</h4>
-<pre>public&nbsp;java.util.List&lt;<a href="../../../../../org/eclipse/net4j/util/container/IElementProcessor.html" title="interface in org.eclipse.net4j.util.container">IElementProcessor</a>&gt;&nbsp;getPostProcessors()</pre>
+<pre class="methodSignature">public&nbsp;java.util.List&lt;<a href="IElementProcessor.html" title="interface in org.eclipse.net4j.util.container">IElementProcessor</a>&gt;&nbsp;getPostProcessors()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getPostProcessors--">getPostProcessors</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
+<dd><code><a href="IManagedContainer.html#getPostProcessors()">getPostProcessors</a></code>&nbsp;in interface&nbsp;<code><a href="IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="addPostProcessor-org.eclipse.net4j.util.container.IElementProcessor-boolean-">
+<a id="addPostProcessor(org.eclipse.net4j.util.container.IElementProcessor,boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>addPostProcessor</h4>
-<pre>public&nbsp;void&nbsp;addPostProcessor(<a href="../../../../../org/eclipse/net4j/util/container/IElementProcessor.html" title="interface in org.eclipse.net4j.util.container">IElementProcessor</a>&nbsp;postProcessor,
+<pre class="methodSignature">public&nbsp;void&nbsp;addPostProcessor&#8203;(<a href="IElementProcessor.html" title="interface in org.eclipse.net4j.util.container">IElementProcessor</a>&nbsp;postProcessor,
                              boolean&nbsp;processExistingElements)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#addPostProcessor-org.eclipse.net4j.util.container.IElementProcessor-boolean-">addPostProcessor</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
+<dd><code><a href="IManagedContainer.html#addPostProcessor(org.eclipse.net4j.util.container.IElementProcessor,boolean)">addPostProcessor</a></code>&nbsp;in interface&nbsp;<code><a href="IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="addPostProcessor-org.eclipse.net4j.util.container.IElementProcessor-">
+<a id="addPostProcessor(org.eclipse.net4j.util.container.IElementProcessor)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>addPostProcessor</h4>
-<pre>public&nbsp;void&nbsp;addPostProcessor(<a href="../../../../../org/eclipse/net4j/util/container/IElementProcessor.html" title="interface in org.eclipse.net4j.util.container">IElementProcessor</a>&nbsp;postProcessor)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;addPostProcessor&#8203;(<a href="IElementProcessor.html" title="interface in org.eclipse.net4j.util.container">IElementProcessor</a>&nbsp;postProcessor)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#addPostProcessor-org.eclipse.net4j.util.container.IElementProcessor-">addPostProcessor</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
+<dd><code><a href="IManagedContainer.html#addPostProcessor(org.eclipse.net4j.util.container.IElementProcessor)">addPostProcessor</a></code>&nbsp;in interface&nbsp;<code><a href="IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="removePostProcessor-org.eclipse.net4j.util.container.IElementProcessor-">
+<a id="removePostProcessor(org.eclipse.net4j.util.container.IElementProcessor)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>removePostProcessor</h4>
-<pre>public&nbsp;void&nbsp;removePostProcessor(<a href="../../../../../org/eclipse/net4j/util/container/IElementProcessor.html" title="interface in org.eclipse.net4j.util.container">IElementProcessor</a>&nbsp;postProcessor)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;removePostProcessor&#8203;(<a href="IElementProcessor.html" title="interface in org.eclipse.net4j.util.container">IElementProcessor</a>&nbsp;postProcessor)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#removePostProcessor-org.eclipse.net4j.util.container.IElementProcessor-">removePostProcessor</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
+<dd><code><a href="IManagedContainer.html#removePostProcessor(org.eclipse.net4j.util.container.IElementProcessor)">removePostProcessor</a></code>&nbsp;in interface&nbsp;<code><a href="IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="getProductGroups--">
+<a id="getProductGroups()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getProductGroups</h4>
-<pre>public&nbsp;java.util.Set&lt;java.lang.String&gt;&nbsp;getProductGroups()</pre>
+<pre class="methodSignature">public&nbsp;java.util.Set&lt;java.lang.String&gt;&nbsp;getProductGroups()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getProductGroups--">getProductGroups</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
+<dd><code><a href="IManagedContainer.html#getProductGroups()">getProductGroups</a></code>&nbsp;in interface&nbsp;<code><a href="IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="getFactoryTypes-java.lang.String-">
+<a id="getFactoryTypes(java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getFactoryTypes</h4>
-<pre>public&nbsp;java.util.Set&lt;java.lang.String&gt;&nbsp;getFactoryTypes(java.lang.String&nbsp;productGroup)</pre>
+<pre class="methodSignature">public&nbsp;java.util.Set&lt;java.lang.String&gt;&nbsp;getFactoryTypes&#8203;(java.lang.String&nbsp;productGroup)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getFactoryTypes-java.lang.String-">getFactoryTypes</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
+<dd><code><a href="IManagedContainer.html#getFactoryTypes(java.lang.String)">getFactoryTypes</a></code>&nbsp;in interface&nbsp;<code><a href="IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="getFactory-java.lang.String-java.lang.String-">
+<a id="getFactory(java.lang.String,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getFactory</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/factory/IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a>&nbsp;getFactory(java.lang.String&nbsp;productGroup,
+<pre class="methodSignature">public&nbsp;<a href="../factory/IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a>&nbsp;getFactory&#8203;(java.lang.String&nbsp;productGroup,
                            java.lang.String&nbsp;factoryType)
-                    throws <a href="../../../../../org/eclipse/net4j/util/container/FactoryNotFoundException.html" title="class in org.eclipse.net4j.util.container">FactoryNotFoundException</a></pre>
+                    throws <a href="FactoryNotFoundException.html" title="class in org.eclipse.net4j.util.container">FactoryNotFoundException</a></pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getFactory-java.lang.String-java.lang.String-">getFactory</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
+<dd><code><a href="IManagedContainer.html#getFactory(java.lang.String,java.lang.String)">getFactory</a></code>&nbsp;in interface&nbsp;<code><a href="IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/container/FactoryNotFoundException.html" title="class in org.eclipse.net4j.util.container">FactoryNotFoundException</a></code></dd>
+<dd><code><a href="FactoryNotFoundException.html" title="class in org.eclipse.net4j.util.container">FactoryNotFoundException</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="isEmpty--">
+<a id="isEmpty()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>isEmpty</h4>
-<pre>public&nbsp;boolean&nbsp;isEmpty()</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;isEmpty()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/container/IContainer.html#isEmpty--">isEmpty</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;</code></dd>
+<dd><code><a href="IContainer.html#isEmpty()">isEmpty</a></code>&nbsp;in interface&nbsp;<code><a href="IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="getElementKey-java.lang.Object-">
+<a id="getElementKey(java.lang.Object)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getElementKey</h4>
-<pre>public&nbsp;java.lang.String[]&nbsp;getElementKey(java.lang.Object&nbsp;element)</pre>
+<pre class="methodSignature">public&nbsp;java.lang.String[]&nbsp;getElementKey&#8203;(java.lang.Object&nbsp;element)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getElementKey-java.lang.Object-">getElementKey</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
+<dd><code><a href="IManagedContainer.html#getElementKey(java.lang.Object)">getElementKey</a></code>&nbsp;in interface&nbsp;<code><a href="IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="getElements--">
+<a id="getElements()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getElements</h4>
-<pre>public&nbsp;java.lang.Object[]&nbsp;getElements()</pre>
+<pre class="methodSignature">public&nbsp;java.lang.Object[]&nbsp;getElements()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/container/IContainer.html#getElements--">getElements</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;</code></dd>
+<dd><code><a href="IContainer.html#getElements()">getElements</a></code>&nbsp;in interface&nbsp;<code><a href="IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="getElements-java.lang.String-">
+<a id="getElements(java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getElements</h4>
-<pre>public&nbsp;java.lang.Object[]&nbsp;getElements(java.lang.String&nbsp;productGroup)</pre>
+<pre class="methodSignature">public&nbsp;java.lang.Object[]&nbsp;getElements&#8203;(java.lang.String&nbsp;productGroup)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getElements-java.lang.String-">getElements</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
+<dd><code><a href="IManagedContainer.html#getElements(java.lang.String)">getElements</a></code>&nbsp;in interface&nbsp;<code><a href="IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="getElements-java.lang.String-java.lang.String-">
+<a id="getElements(java.lang.String,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getElements</h4>
-<pre>public&nbsp;java.lang.Object[]&nbsp;getElements(java.lang.String&nbsp;productGroup,
+<pre class="methodSignature">public&nbsp;java.lang.Object[]&nbsp;getElements&#8203;(java.lang.String&nbsp;productGroup,
                                       java.lang.String&nbsp;factoryType)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getElements-java.lang.String-java.lang.String-">getElements</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
+<dd><code><a href="IManagedContainer.html#getElements(java.lang.String,java.lang.String)">getElements</a></code>&nbsp;in interface&nbsp;<code><a href="IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="getElement-java.lang.String-java.lang.String-java.lang.String-">
+<a id="getElement(java.lang.String,java.lang.String,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getElement</h4>
-<pre>public&nbsp;java.lang.Object&nbsp;getElement(java.lang.String&nbsp;productGroup,
+<pre class="methodSignature">public&nbsp;java.lang.Object&nbsp;getElement&#8203;(java.lang.String&nbsp;productGroup,
                                    java.lang.String&nbsp;factoryType,
                                    java.lang.String&nbsp;description)
-                            throws <a href="../../../../../org/eclipse/net4j/util/container/FactoryNotFoundException.html" title="class in org.eclipse.net4j.util.container">FactoryNotFoundException</a>,
-                                   <a href="../../../../../org/eclipse/net4j/util/factory/ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">ProductCreationException</a></pre>
+                            throws <a href="FactoryNotFoundException.html" title="class in org.eclipse.net4j.util.container">FactoryNotFoundException</a>,
+                                   <a href="../factory/ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">ProductCreationException</a></pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getElement-java.lang.String-java.lang.String-java.lang.String-">getElement</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
+<dd><code><a href="IManagedContainer.html#getElement(java.lang.String,java.lang.String,java.lang.String)">getElement</a></code>&nbsp;in interface&nbsp;<code><a href="IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/container/FactoryNotFoundException.html" title="class in org.eclipse.net4j.util.container">FactoryNotFoundException</a></code></dd>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/factory/ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">ProductCreationException</a></code></dd>
+<dd><code><a href="FactoryNotFoundException.html" title="class in org.eclipse.net4j.util.container">FactoryNotFoundException</a></code></dd>
+<dd><code><a href="../factory/ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">ProductCreationException</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="getElement-java.lang.String-java.lang.String-java.lang.String-boolean-">
+<a id="getElement(java.lang.String,java.lang.String,java.lang.String,boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getElement</h4>
-<pre>public&nbsp;java.lang.Object&nbsp;getElement(java.lang.String&nbsp;productGroup,
+<pre class="methodSignature">public&nbsp;java.lang.Object&nbsp;getElement&#8203;(java.lang.String&nbsp;productGroup,
                                    java.lang.String&nbsp;factoryType,
                                    java.lang.String&nbsp;description,
                                    boolean&nbsp;activate)
-                            throws <a href="../../../../../org/eclipse/net4j/util/container/FactoryNotFoundException.html" title="class in org.eclipse.net4j.util.container">FactoryNotFoundException</a>,
-                                   <a href="../../../../../org/eclipse/net4j/util/factory/ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">ProductCreationException</a></pre>
+                            throws <a href="FactoryNotFoundException.html" title="class in org.eclipse.net4j.util.container">FactoryNotFoundException</a>,
+                                   <a href="../factory/ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">ProductCreationException</a></pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getElement-java.lang.String-java.lang.String-java.lang.String-boolean-">getElement</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
+<dd><code><a href="IManagedContainer.html#getElement(java.lang.String,java.lang.String,java.lang.String,boolean)">getElement</a></code>&nbsp;in interface&nbsp;<code><a href="IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/container/FactoryNotFoundException.html" title="class in org.eclipse.net4j.util.container">FactoryNotFoundException</a></code></dd>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/factory/ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">ProductCreationException</a></code></dd>
+<dd><code><a href="FactoryNotFoundException.html" title="class in org.eclipse.net4j.util.container">FactoryNotFoundException</a></code></dd>
+<dd><code><a href="../factory/ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">ProductCreationException</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
 </dl>
 </li>
 </ul>
-<a name="activateElement-java.lang.Object-">
+<a id="getElementOrNull(java.lang.String,java.lang.String,java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getElementOrNull</h4>
+<pre class="methodSignature">public&nbsp;&lt;T&gt;&nbsp;T&nbsp;getElementOrNull&#8203;(java.lang.String&nbsp;productGroup,
+                              java.lang.String&nbsp;factoryType,
+                              java.lang.String&nbsp;description)</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="IManagedContainer.html#getElementOrNull(java.lang.String,java.lang.String,java.lang.String)">getElementOrNull</a></code>&nbsp;in interface&nbsp;<code><a href="IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
+</dl>
+</li>
+</ul>
+<a id="activateElement(java.lang.Object)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>activateElement</h4>
-<pre>protected&nbsp;void&nbsp;activateElement(java.lang.Object&nbsp;element)</pre>
+<pre class="methodSignature">protected&nbsp;void&nbsp;activateElement&#8203;(java.lang.Object&nbsp;element)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.2</dd>
 </dl>
 </li>
 </ul>
-<a name="putElement-java.lang.String-java.lang.String-java.lang.String-java.lang.Object-">
+<a id="putElement(java.lang.String,java.lang.String,java.lang.String,java.lang.Object)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>putElement</h4>
-<pre>public&nbsp;java.lang.Object&nbsp;putElement(java.lang.String&nbsp;productGroup,
+<pre class="methodSignature">public&nbsp;java.lang.Object&nbsp;putElement&#8203;(java.lang.String&nbsp;productGroup,
                                    java.lang.String&nbsp;factoryType,
                                    java.lang.String&nbsp;description,
                                    java.lang.Object&nbsp;element)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#putElement-java.lang.String-java.lang.String-java.lang.String-java.lang.Object-">putElement</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
+<dd><code><a href="IManagedContainer.html#putElement(java.lang.String,java.lang.String,java.lang.String,java.lang.Object)">putElement</a></code>&nbsp;in interface&nbsp;<code><a href="IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="putElement-org.eclipse.net4j.util.container.ManagedContainer.ElementKey-java.lang.Object-">
+<a id="putElement(org.eclipse.net4j.util.container.ManagedContainer.ElementKey,java.lang.Object)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>putElement</h4>
-<pre>protected&nbsp;java.lang.Object&nbsp;putElement(org.eclipse.net4j.util.container.ManagedContainer.ElementKey&nbsp;key,
+<pre class="methodSignature">protected&nbsp;java.lang.Object&nbsp;putElement&#8203;(org.eclipse.net4j.util.container.ManagedContainer.ElementKey&nbsp;key,
                                       java.lang.Object&nbsp;element)</pre>
 </li>
 </ul>
-<a name="removeElement-java.lang.String-java.lang.String-java.lang.String-">
+<a id="removeElement(java.lang.String,java.lang.String,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>removeElement</h4>
-<pre>public&nbsp;java.lang.Object&nbsp;removeElement(java.lang.String&nbsp;productGroup,
+<pre class="methodSignature">public&nbsp;java.lang.Object&nbsp;removeElement&#8203;(java.lang.String&nbsp;productGroup,
                                       java.lang.String&nbsp;factoryType,
                                       java.lang.String&nbsp;description)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#removeElement-java.lang.String-java.lang.String-java.lang.String-">removeElement</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
+<dd><code><a href="IManagedContainer.html#removeElement(java.lang.String,java.lang.String,java.lang.String)">removeElement</a></code>&nbsp;in interface&nbsp;<code><a href="IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="removeElement-org.eclipse.net4j.util.container.ManagedContainer.ElementKey-">
+<a id="removeElement(org.eclipse.net4j.util.container.ManagedContainer.ElementKey)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>removeElement</h4>
-<pre>protected&nbsp;java.lang.Object&nbsp;removeElement(org.eclipse.net4j.util.container.ManagedContainer.ElementKey&nbsp;key)</pre>
+<pre class="methodSignature">protected&nbsp;java.lang.Object&nbsp;removeElement&#8203;(org.eclipse.net4j.util.container.ManagedContainer.ElementKey&nbsp;key)</pre>
 </li>
 </ul>
-<a name="clearElements--">
+<a id="forEachElement(java.lang.String,java.lang.Class,java.util.function.Function,java.util.function.Consumer)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>forEachElement</h4>
+<pre class="methodSignature">public&nbsp;&lt;T&gt;&nbsp;void&nbsp;forEachElement&#8203;(java.lang.String&nbsp;productGroup,
+                               java.lang.Class&lt;T&gt;&nbsp;productType,
+                               java.util.function.Function&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;descriptionProvider,
+                               java.util.function.Consumer&lt;T&gt;&nbsp;consumer)</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="IManagedContainer.html#forEachElement(java.lang.String,java.lang.Class,java.util.function.Function,java.util.function.Consumer)">forEachElement</a></code>&nbsp;in interface&nbsp;<code><a href="IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
+</dl>
+</li>
+</ul>
+<a id="forEachElement(java.lang.String,java.lang.Class,java.lang.String,java.util.function.Consumer)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>forEachElement</h4>
+<pre class="methodSignature">public&nbsp;&lt;T&gt;&nbsp;void&nbsp;forEachElement&#8203;(java.lang.String&nbsp;productGroup,
+                               java.lang.Class&lt;T&gt;&nbsp;productType,
+                               java.lang.String&nbsp;description,
+                               java.util.function.Consumer&lt;T&gt;&nbsp;consumer)</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="IManagedContainer.html#forEachElement(java.lang.String,java.lang.Class,java.lang.String,java.util.function.Consumer)">forEachElement</a></code>&nbsp;in interface&nbsp;<code><a href="IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
+</dl>
+</li>
+</ul>
+<a id="forEachElement(java.lang.String,java.lang.Class,java.util.function.Consumer)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>forEachElement</h4>
+<pre class="methodSignature">public&nbsp;&lt;T&gt;&nbsp;void&nbsp;forEachElement&#8203;(java.lang.String&nbsp;productGroup,
+                               java.lang.Class&lt;T&gt;&nbsp;productType,
+                               java.util.function.Consumer&lt;T&gt;&nbsp;consumer)</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="IManagedContainer.html#forEachElement(java.lang.String,java.lang.Class,java.util.function.Consumer)">forEachElement</a></code>&nbsp;in interface&nbsp;<code><a href="IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
+</dl>
+</li>
+</ul>
+<a id="clearElements()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>clearElements</h4>
-<pre>public&nbsp;void&nbsp;clearElements()</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;clearElements()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#clearElements--">clearElements</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
+<dd><code><a href="IManagedContainer.html#clearElements()">clearElements</a></code>&nbsp;in interface&nbsp;<code><a href="IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="loadElements-java.io.InputStream-">
+<a id="loadElements(java.io.InputStream)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>loadElements</h4>
-<pre>public&nbsp;void&nbsp;loadElements(java.io.InputStream&nbsp;stream)
+<pre class="methodSignature">public&nbsp;void&nbsp;loadElements&#8203;(java.io.InputStream&nbsp;stream)
                   throws java.io.IOException,
-                         <a href="../../../../../org/eclipse/net4j/util/container/FactoryNotFoundException.html" title="class in org.eclipse.net4j.util.container">FactoryNotFoundException</a>,
-                         <a href="../../../../../org/eclipse/net4j/util/factory/ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">ProductCreationException</a></pre>
+                         <a href="FactoryNotFoundException.html" title="class in org.eclipse.net4j.util.container">FactoryNotFoundException</a>,
+                         <a href="../factory/ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">ProductCreationException</a></pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#loadElements-java.io.InputStream-">loadElements</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
+<dd><code><a href="IManagedContainer.html#loadElements(java.io.InputStream)">loadElements</a></code>&nbsp;in interface&nbsp;<code><a href="IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.io.IOException</code></dd>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/container/FactoryNotFoundException.html" title="class in org.eclipse.net4j.util.container">FactoryNotFoundException</a></code></dd>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/factory/ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">ProductCreationException</a></code></dd>
+<dd><code><a href="FactoryNotFoundException.html" title="class in org.eclipse.net4j.util.container">FactoryNotFoundException</a></code></dd>
+<dd><code><a href="../factory/ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">ProductCreationException</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="saveElements-java.io.OutputStream-">
+<a id="saveElements(java.io.OutputStream)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>saveElements</h4>
-<pre>public&nbsp;void&nbsp;saveElements(java.io.OutputStream&nbsp;stream)
+<pre class="methodSignature">public&nbsp;void&nbsp;saveElements&#8203;(java.io.OutputStream&nbsp;stream)
                   throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#saveElements-java.io.OutputStream-">saveElements</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
+<dd><code><a href="IManagedContainer.html#saveElements(java.io.OutputStream)">saveElements</a></code>&nbsp;in interface&nbsp;<code><a href="IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.io.IOException</code></dd>
 </dl>
 </li>
 </ul>
-<a name="fireEvent-org.eclipse.net4j.util.event.IEvent-">
+<a id="fireEvent(org.eclipse.net4j.util.event.IEvent)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>fireEvent</h4>
-<pre>public&nbsp;void&nbsp;fireEvent(<a href="../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;fireEvent&#8203;(<a href="../event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#fireEvent-org.eclipse.net4j.util.event.IEvent-">fireEvent</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/event/Notifier.html" title="class in org.eclipse.net4j.util.event">Notifier</a></code></dd>
+<dd><code><a href="../event/Notifier.html#fireEvent(org.eclipse.net4j.util.event.IEvent)">fireEvent</a></code>&nbsp;in class&nbsp;<code><a href="../event/Notifier.html" title="class in org.eclipse.net4j.util.event">Notifier</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="toString--">
+<a id="toString()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>toString</h4>
-<pre>public&nbsp;java.lang.String&nbsp;toString()</pre>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;toString()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#toString--">toString</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a></code></dd>
+<dd><code><a href="../lifecycle/Lifecycle.html#toString()">toString</a></code>&nbsp;in class&nbsp;<code><a href="../lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="getTypeName--">
+<a id="getTypeName()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getTypeName</h4>
-<pre>protected&nbsp;java.lang.String&nbsp;getTypeName()</pre>
+<pre class="methodSignature">protected&nbsp;java.lang.String&nbsp;getTypeName()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.8</dd>
 </dl>
 </li>
 </ul>
-<a name="createFactoryRegistry--">
+<a id="createFactoryRegistry()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createFactoryRegistry</h4>
-<pre>protected&nbsp;<a href="../../../../../org/eclipse/net4j/util/registry/IRegistry.html" title="interface in org.eclipse.net4j.util.registry">IRegistry</a>&lt;<a href="../../../../../org/eclipse/net4j/util/factory/IFactoryKey.html" title="interface in org.eclipse.net4j.util.factory">IFactoryKey</a>,<a href="../../../../../org/eclipse/net4j/util/factory/IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a>&gt;&nbsp;createFactoryRegistry()</pre>
+<pre class="methodSignature">protected&nbsp;<a href="../registry/IRegistry.html" title="interface in org.eclipse.net4j.util.registry">IRegistry</a>&lt;<a href="../factory/IFactoryKey.html" title="interface in org.eclipse.net4j.util.factory">IFactoryKey</a>,&#8203;<a href="../factory/IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a>&gt;&nbsp;createFactoryRegistry()</pre>
 </li>
 </ul>
-<a name="createPostProcessors--">
+<a id="createPostProcessors()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createPostProcessors</h4>
-<pre>protected&nbsp;java.util.List&lt;<a href="../../../../../org/eclipse/net4j/util/container/IElementProcessor.html" title="interface in org.eclipse.net4j.util.container">IElementProcessor</a>&gt;&nbsp;createPostProcessors()</pre>
+<pre class="methodSignature">protected&nbsp;java.util.List&lt;<a href="IElementProcessor.html" title="interface in org.eclipse.net4j.util.container">IElementProcessor</a>&gt;&nbsp;createPostProcessors()</pre>
 </li>
 </ul>
-<a name="getElementRegistryKeys--">
+<a id="getElementRegistryKeys()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getElementRegistryKeys</h4>
-<pre>protected&nbsp;org.eclipse.net4j.util.container.ManagedContainer.ElementKey[]&nbsp;getElementRegistryKeys()</pre>
+<pre class="methodSignature">protected&nbsp;org.eclipse.net4j.util.container.ManagedContainer.ElementKey[]&nbsp;getElementRegistryKeys()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
 </dl>
 </li>
 </ul>
-<a name="getElementRegistryValues--">
+<a id="getElementRegistryValues()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getElementRegistryValues</h4>
-<pre>protected&nbsp;java.lang.Object[]&nbsp;getElementRegistryValues()</pre>
+<pre class="methodSignature">protected&nbsp;java.lang.Object[]&nbsp;getElementRegistryValues()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
 </dl>
 </li>
 </ul>
-<a name="getElementRegistryEntries--">
+<a id="getElementRegistryEntries()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getElementRegistryEntries</h4>
-<pre>protected&nbsp;java.util.Map.Entry&lt;org.eclipse.net4j.util.container.ManagedContainer.ElementKey,java.lang.Object&gt;[]&nbsp;getElementRegistryEntries()</pre>
+<pre class="methodSignature">protected&nbsp;java.util.Map.Entry&lt;org.eclipse.net4j.util.container.ManagedContainer.ElementKey,&#8203;java.lang.Object&gt;[]&nbsp;getElementRegistryEntries()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
 </dl>
 </li>
 </ul>
-<a name="createElement-java.lang.String-java.lang.String-java.lang.String-">
+<a id="createElement(java.lang.String,java.lang.String,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createElement</h4>
-<pre>protected&nbsp;java.lang.Object&nbsp;createElement(java.lang.String&nbsp;productGroup,
+<pre class="methodSignature">protected&nbsp;java.lang.Object&nbsp;createElement&#8203;(java.lang.String&nbsp;productGroup,
                                          java.lang.String&nbsp;factoryType,
                                          java.lang.String&nbsp;description)
-                                  throws <a href="../../../../../org/eclipse/net4j/util/container/FactoryNotFoundException.html" title="class in org.eclipse.net4j.util.container">FactoryNotFoundException</a>,
-                                         <a href="../../../../../org/eclipse/net4j/util/factory/ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">ProductCreationException</a></pre>
+                                  throws <a href="FactoryNotFoundException.html" title="class in org.eclipse.net4j.util.container">FactoryNotFoundException</a>,
+                                         <a href="../factory/ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">ProductCreationException</a></pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/container/FactoryNotFoundException.html" title="class in org.eclipse.net4j.util.container">FactoryNotFoundException</a></code></dd>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/factory/ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">ProductCreationException</a></code></dd>
+<dd><code><a href="FactoryNotFoundException.html" title="class in org.eclipse.net4j.util.container">FactoryNotFoundException</a></code></dd>
+<dd><code><a href="../factory/ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">ProductCreationException</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="postProcessElement-java.lang.String-java.lang.String-java.lang.String-java.lang.Object-">
+<a id="postProcessElement(java.lang.String,java.lang.String,java.lang.String,java.lang.Object)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>postProcessElement</h4>
-<pre>protected&nbsp;java.lang.Object&nbsp;postProcessElement(java.lang.String&nbsp;productGroup,
+<pre class="methodSignature">protected&nbsp;java.lang.Object&nbsp;postProcessElement&#8203;(java.lang.String&nbsp;productGroup,
                                               java.lang.String&nbsp;factoryType,
                                               java.lang.String&nbsp;description,
                                               java.lang.Object&nbsp;element)</pre>
 </li>
 </ul>
-<a name="doActivate--">
+<a id="doActivate()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>doActivate</h4>
-<pre>protected&nbsp;void&nbsp;doActivate()
+<pre class="methodSignature">protected&nbsp;void&nbsp;doActivate()
                    throws java.lang.Exception</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#doActivate--">doActivate</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a></code></dd>
+<dd><code><a href="../lifecycle/Lifecycle.html#doActivate()">doActivate</a></code>&nbsp;in class&nbsp;<code><a href="../lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.lang.Exception</code></dd>
 </dl>
 </li>
 </ul>
-<a name="doDeactivate--">
+<a id="doDeactivate()">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>doDeactivate</h4>
-<pre>protected&nbsp;void&nbsp;doDeactivate()
+<pre class="methodSignature">protected&nbsp;void&nbsp;doDeactivate()
                      throws java.lang.Exception</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#doDeactivate--">doDeactivate</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a></code></dd>
+<dd><code><a href="../lifecycle/Lifecycle.html#doDeactivate()">doDeactivate</a></code>&nbsp;in class&nbsp;<code><a href="../lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.lang.Exception</code></dd>
 </dl>
@@ -988,21 +1163,25 @@ implements <a href="../../../../../org/eclipse/net4j/util/container/IManagedCont
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/ManagedContainer.html">Use</a></li>
@@ -1012,16 +1191,8 @@ implements <a href="../../../../../org/eclipse/net4j/util/container/IManagedCont
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/net4j/util/container/LifecycleEventConverter.html" title="class in org.eclipse.net4j.util.container"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/net4j/util/container/SelfAttachingContainerListener.html" title="class in org.eclipse.net4j.util.container"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/net4j/util/container/ManagedContainer.html" target="_top">Frames</a></li>
-<li><a href="ManagedContainer.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -1034,12 +1205,15 @@ implements <a href="../../../../../org/eclipse/net4j/util/container/IManagedCont
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
-<li><a href="#fields.inherited.from.class.org.eclipse.net4j.util.lifecycle.Lifecycle">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
@@ -1050,10 +1224,12 @@ implements <a href="../../../../../org/eclipse/net4j/util/container/IManagedCont
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

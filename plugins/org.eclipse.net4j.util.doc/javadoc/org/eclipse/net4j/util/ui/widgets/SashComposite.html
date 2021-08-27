@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>SashComposite (Net4j Utilities Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":6,"i2":6,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10};
+var data = {"i0":10,"i1":6,"i2":6,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/SashComposite.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/net4j/util/ui/widgets/PreferenceButton.html" title="class in org.eclipse.net4j.util.ui.widgets"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../../org/eclipse/net4j/util/ui/widgets/SashComposite.OrientationChangedEvent.html" title="class in org.eclipse.net4j.util.ui.widgets"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/net4j/util/ui/widgets/SashComposite.html" target="_top">Frames</a></li>
-<li><a href="SashComposite.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,12 +82,15 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
-<li><a href="#fields.inherited.from.class.org.eclipse.swt.widgets.Control">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
@@ -85,13 +101,22 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.net4j.util.ui.widgets</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.net4j.util.ui.widgets</a></div>
 <h2 title="Class SashComposite" class="title">Class SashComposite</h2>
 </div>
 <div class="contentContainer">
@@ -99,16 +124,16 @@ var activeTableTab = "activeTableTab";
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">org.eclipse.swt.widgets.Widget</a></li>
+<li><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true" title="class or interface in org.eclipse.swt.widgets" class="externalLink">org.eclipse.swt.widgets.Widget</a></li>
 <li>
 <ul class="inheritance">
-<li><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">org.eclipse.swt.widgets.Control</a></li>
+<li><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets" class="externalLink">org.eclipse.swt.widgets.Control</a></li>
 <li>
 <ul class="inheritance">
-<li><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Scrollable.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">org.eclipse.swt.widgets.Scrollable</a></li>
+<li><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Scrollable.html?is-external=true" title="class or interface in org.eclipse.swt.widgets" class="externalLink">org.eclipse.swt.widgets.Scrollable</a></li>
 <li>
 <ul class="inheritance">
-<li><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">org.eclipse.swt.widgets.Composite</a></li>
+<li><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets" class="externalLink">org.eclipse.swt.widgets.Composite</a></li>
 <li>
 <ul class="inheritance">
 <li>org.eclipse.net4j.util.ui.widgets.SashComposite</li>
@@ -128,13 +153,12 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="../../../../../../org/eclipse/net4j/util/event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Drawable.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Drawable</a></dd>
+<dd><code><a href="../../event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a></code>, <code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Drawable.html?is-external=true" title="class or interface in org.eclipse.swt.graphics" class="externalLink">Drawable</a></code></dd>
 </dl>
 <hr>
-<br>
 <pre>public abstract class <span class="typeNameLabel">SashComposite</span>
-extends <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Composite</a>
-implements <a href="../../../../../../org/eclipse/net4j/util/event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a></pre>
+extends <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets" class="externalLink">Composite</a>
+implements <a href="../../event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a></pre>
 <dl>
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>Eike Stepper</dd>
@@ -146,195 +170,232 @@ implements <a href="../../../../../../org/eclipse/net4j/util/event/INotifier.htm
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="nested.class.summary">
+<li class="blockList"><a id="nested.class.summary">
 <!--   -->
 </a>
 <h3>Nested Class Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Nested Class Summary table, listing nested classes, and an explanation">
+<table class="memberSummary">
 <caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Class and Description</th>
+<th class="colSecond" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/widgets/SashComposite.OrientationChangedEvent.html" title="class in org.eclipse.net4j.util.ui.widgets">SashComposite.OrientationChangedEvent</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="SashComposite.OrientationChangedEvent.html" title="class in org.eclipse.net4j.util.ui.widgets">SashComposite.OrientationChangedEvent</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
+<ul class="blockList">
+<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.net4j.util.event.INotifier">
+<!--   -->
+</a>
+<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.event.<a href="../../event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a></h3>
+<code><a href="../../event/INotifier.INotifier2.html" title="interface in org.eclipse.net4j.util.event">INotifier.INotifier2</a></code></li>
+</ul>
 </li>
 </ul>
+</section>
 <!-- =========== FIELD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.summary">
+<li class="blockList"><a id="field.summary">
 <!--   -->
 </a>
 <h3>Field Summary</h3>
 <ul class="blockList">
-<li class="blockList"><a name="fields.inherited.from.class.org.eclipse.swt.widgets.Control">
+<li class="blockList"><a id="fields.inherited.from.class.org.eclipse.swt.widgets.Control">
 <!--   -->
 </a>
-<h3>Fields inherited from class&nbsp;org.eclipse.swt.widgets.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Control</a></h3>
-<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#handle" title="class or interface in org.eclipse.swt.widgets">handle</a></code></li>
+<h3>Fields inherited from class&nbsp;org.eclipse.swt.widgets.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets" class="externalLink">Control</a></h3>
+<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#handle" title="class or interface in org.eclipse.swt.widgets" class="externalLink">handle</a></code></li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.summary">
+<li class="blockList"><a id="constructor.summary">
 <!--   -->
 </a>
 <h3>Constructor Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
+<table class="memberSummary">
 <caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Constructor and Description</th>
+<th class="colFirst" scope="col">Constructor</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/widgets/SashComposite.html#SashComposite-org.eclipse.swt.widgets.Composite-int-int-int-">SashComposite</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Composite</a>&nbsp;parent,
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(org.eclipse.swt.widgets.Composite,int,int,int)">SashComposite</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets" class="externalLink">Composite</a>&nbsp;parent,
              int&nbsp;style,
              int&nbsp;limit,
-             int&nbsp;percent)</code>&nbsp;</td>
+             int&nbsp;percent)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/widgets/SashComposite.html#SashComposite-org.eclipse.swt.widgets.Composite-int-int-int-boolean-">SashComposite</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Composite</a>&nbsp;parent,
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(org.eclipse.swt.widgets.Composite,int,int,int,boolean)">SashComposite</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets" class="externalLink">Composite</a>&nbsp;parent,
              int&nbsp;style,
              int&nbsp;limit,
              int&nbsp;percent,
-             boolean&nbsp;borders)</code>&nbsp;</td>
+             boolean&nbsp;borders)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/widgets/SashComposite.html#addListener-org.eclipse.net4j.util.event.IListener-">addListener</a></span>(<a href="../../../../../../org/eclipse/net4j/util/event/IListener.html" title="interface in org.eclipse.net4j.util.event">IListener</a>&nbsp;listener)</code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addListener(org.eclipse.net4j.util.event.IListener)">addListener</a></span>&#8203;(<a href="../../event/IListener.html" title="interface in org.eclipse.net4j.util.event">IListener</a>&nbsp;listener)</code></th>
+<td class="colLast">
 <div class="block">Adds a listener to this notifier.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>protected abstract <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Control</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/widgets/SashComposite.html#createControl1-org.eclipse.swt.widgets.Composite-">createControl1</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Composite</a>&nbsp;parent)</code>&nbsp;</td>
+<td class="colFirst"><code>protected abstract <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets" class="externalLink">Control</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createControl1(org.eclipse.swt.widgets.Composite)">createControl1</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets" class="externalLink">Composite</a>&nbsp;parent)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>protected abstract <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Control</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/widgets/SashComposite.html#createControl2-org.eclipse.swt.widgets.Composite-">createControl2</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Composite</a>&nbsp;parent)</code>&nbsp;</td>
+<td class="colFirst"><code>protected abstract <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets" class="externalLink">Control</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createControl2(org.eclipse.swt.widgets.Composite)">createControl2</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets" class="externalLink">Composite</a>&nbsp;parent)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>protected <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Sash.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Sash</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/widgets/SashComposite.html#createSash-org.eclipse.swt.widgets.Composite-">createSash</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Composite</a>&nbsp;parent)</code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Sash.html?is-external=true" title="class or interface in org.eclipse.swt.widgets" class="externalLink">Sash</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createSash(org.eclipse.swt.widgets.Composite)">createSash</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets" class="externalLink">Composite</a>&nbsp;parent)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/widgets/SashComposite.html#dispose--">dispose</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dispose()">dispose</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Control</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/widgets/SashComposite.html#getControl1--">getControl1</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets" class="externalLink">Control</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getControl1()">getControl1</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Control</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/widgets/SashComposite.html#getControl2--">getControl2</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets" class="externalLink">Control</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getControl2()">getControl2</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../org/eclipse/net4j/util/event/IListener.html" title="interface in org.eclipse.net4j.util.event">IListener</a>[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/widgets/SashComposite.html#getListeners--">getListeners</a></span>()</code>
+<td class="colFirst"><code><a href="../../event/IListener.html" title="interface in org.eclipse.net4j.util.event">IListener</a>[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getListeners()">getListeners</a></span>()</code></th>
+<td class="colLast">
 <div class="block">Returns the listeners that are registered with this notifier.</div>
 </td>
 </tr>
 <tr id="i8" class="altColor">
-<td class="colFirst"><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Sash.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Sash</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/widgets/SashComposite.html#getSash--">getSash</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Sash.html?is-external=true" title="class or interface in org.eclipse.swt.widgets" class="externalLink">Sash</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSash()">getSash</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/widgets/SashComposite.html#hasListeners--">hasListeners</a></span>()</code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hasListeners()">hasListeners</a></span>()</code></th>
+<td class="colLast">
 <div class="block">Returns <code>true</code> if one or more listeners are registered with this notifier, <code>false</code> otherwise.</div>
 </td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/widgets/SashComposite.html#init--">init</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#init()">init</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/widgets/SashComposite.html#isVertical--">isVertical</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isVertical()">isVertical</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/widgets/SashComposite.html#removeListener-org.eclipse.net4j.util.event.IListener-">removeListener</a></span>(<a href="../../../../../../org/eclipse/net4j/util/event/IListener.html" title="interface in org.eclipse.net4j.util.event">IListener</a>&nbsp;listener)</code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeListener(org.eclipse.net4j.util.event.IListener)">removeListener</a></span>&#8203;(<a href="../../event/IListener.html" title="interface in org.eclipse.net4j.util.event">IListener</a>&nbsp;listener)</code></th>
+<td class="colLast">
 <div class="block">Removes a listener from this notifier.</div>
 </td>
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/widgets/SashComposite.html#setVertical-boolean-">setVertical</a></span>(boolean&nbsp;vertical)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setVertical(boolean)">setVertical</a></span>&#8203;(boolean&nbsp;vertical)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/widgets/SashComposite.html#swap--">swap</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#swap()">swap</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i15" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/widgets/SashComposite.html#swap-org.eclipse.swt.layout.FormData-">swap</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/layout/FormData.html?is-external=true" title="class or interface in org.eclipse.swt.layout">FormData</a>&nbsp;formData)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#swap(org.eclipse.swt.layout.FormData)">swap</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/layout/FormData.html?is-external=true" title="class or interface in org.eclipse.swt.layout" class="externalLink">FormData</a>&nbsp;formData)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.swt.widgets.Composite">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.swt.widgets.Composite">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.swt.widgets.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Composite</a></h3>
-<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#changed-org.eclipse.swt.widgets.Control:A-" title="class or interface in org.eclipse.swt.widgets">changed</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#checkSubclass--" title="class or interface in org.eclipse.swt.widgets">checkSubclass</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#drawBackground-org.eclipse.swt.graphics.GC-int-int-int-int-int-int-" title="class or interface in org.eclipse.swt.widgets">drawBackground</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#getBackgroundMode--" title="class or interface in org.eclipse.swt.widgets">getBackgroundMode</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#getChildren--" title="class or interface in org.eclipse.swt.widgets">getChildren</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#getLayout--" title="class or interface in org.eclipse.swt.widgets">getLayout</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#getLayoutDeferred--" title="class or interface in org.eclipse.swt.widgets">getLayoutDeferred</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#getTabList--" title="class or interface in org.eclipse.swt.widgets">getTabList</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#isLayoutDeferred--" title="class or interface in org.eclipse.swt.widgets">isLayoutDeferred</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#layout--" title="class or interface in org.eclipse.swt.widgets">layout</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#layout-boolean-" title="class or interface in org.eclipse.swt.widgets">layout</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#layout-boolean-boolean-" title="class or interface in org.eclipse.swt.widgets">layout</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#layout-org.eclipse.swt.widgets.Control:A-" title="class or interface in org.eclipse.swt.widgets">layout</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#layout-org.eclipse.swt.widgets.Control:A-int-" title="class or interface in org.eclipse.swt.widgets">layout</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#setBackgroundMode-int-" title="class or interface in org.eclipse.swt.widgets">setBackgroundMode</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#setFocus--" title="class or interface in org.eclipse.swt.widgets">setFocus</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#setLayout-org.eclipse.swt.widgets.Layout-" title="class or interface in org.eclipse.swt.widgets">setLayout</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#setLayoutDeferred-boolean-" title="class or interface in org.eclipse.swt.widgets">setLayoutDeferred</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#setTabList-org.eclipse.swt.widgets.Control:A-" title="class or interface in org.eclipse.swt.widgets">setTabList</a></code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.swt.widgets.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets" class="externalLink">Composite</a></h3>
+<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#changed(org.eclipse.swt.widgets.Control%5B%5D)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">changed</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#checkSubclass()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">checkSubclass</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#drawBackground(org.eclipse.swt.graphics.GC,int,int,int,int,int,int)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">drawBackground</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#getBackgroundMode()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">getBackgroundMode</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#getChildren()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">getChildren</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#getLayout()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">getLayout</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#getLayoutDeferred()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">getLayoutDeferred</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#getTabList()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">getTabList</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#isLayoutDeferred()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">isLayoutDeferred</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#layout()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">layout</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#layout(boolean)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">layout</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#layout(boolean,boolean)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">layout</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#layout(org.eclipse.swt.widgets.Control%5B%5D)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">layout</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#layout(org.eclipse.swt.widgets.Control%5B%5D,int)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">layout</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#setBackgroundMode(int)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">setBackgroundMode</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#setFocus()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">setFocus</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#setLayout(org.eclipse.swt.widgets.Layout)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">setLayout</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#setLayoutDeferred(boolean)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">setLayoutDeferred</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#setTabList(org.eclipse.swt.widgets.Control%5B%5D)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">setTabList</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.swt.widgets.Scrollable">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.swt.widgets.Scrollable">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.swt.widgets.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Scrollable.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Scrollable</a></h3>
-<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Scrollable.html?is-external=true#computeTrim-int-int-int-int-" title="class or interface in org.eclipse.swt.widgets">computeTrim</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Scrollable.html?is-external=true#getClientArea--" title="class or interface in org.eclipse.swt.widgets">getClientArea</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Scrollable.html?is-external=true#getHorizontalBar--" title="class or interface in org.eclipse.swt.widgets">getHorizontalBar</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Scrollable.html?is-external=true#getScrollbarsMode--" title="class or interface in org.eclipse.swt.widgets">getScrollbarsMode</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Scrollable.html?is-external=true#getVerticalBar--" title="class or interface in org.eclipse.swt.widgets">getVerticalBar</a></code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.swt.widgets.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Scrollable.html?is-external=true" title="class or interface in org.eclipse.swt.widgets" class="externalLink">Scrollable</a></h3>
+<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Scrollable.html?is-external=true#computeTrim(int,int,int,int)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">computeTrim</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Scrollable.html?is-external=true#getClientArea()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">getClientArea</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Scrollable.html?is-external=true#getHorizontalBar()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">getHorizontalBar</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Scrollable.html?is-external=true#getScrollbarsMode()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">getScrollbarsMode</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Scrollable.html?is-external=true#getVerticalBar()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">getVerticalBar</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.swt.widgets.Control">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.swt.widgets.Control">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.swt.widgets.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Control</a></h3>
-<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#addControlListener-org.eclipse.swt.events.ControlListener-" title="class or interface in org.eclipse.swt.widgets">addControlListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#addDragDetectListener-org.eclipse.swt.events.DragDetectListener-" title="class or interface in org.eclipse.swt.widgets">addDragDetectListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#addFocusListener-org.eclipse.swt.events.FocusListener-" title="class or interface in org.eclipse.swt.widgets">addFocusListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#addGestureListener-org.eclipse.swt.events.GestureListener-" title="class or interface in org.eclipse.swt.widgets">addGestureListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#addHelpListener-org.eclipse.swt.events.HelpListener-" title="class or interface in org.eclipse.swt.widgets">addHelpListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#addKeyListener-org.eclipse.swt.events.KeyListener-" title="class or interface in org.eclipse.swt.widgets">addKeyListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#addMenuDetectListener-org.eclipse.swt.events.MenuDetectListener-" title="class or interface in org.eclipse.swt.widgets">addMenuDetectListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#addMouseListener-org.eclipse.swt.events.MouseListener-" title="class or interface in org.eclipse.swt.widgets">addMouseListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#addMouseMoveListener-org.eclipse.swt.events.MouseMoveListener-" title="class or interface in org.eclipse.swt.widgets">addMouseMoveListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#addMouseTrackListener-org.eclipse.swt.events.MouseTrackListener-" title="class or interface in org.eclipse.swt.widgets">addMouseTrackListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#addMouseWheelListener-org.eclipse.swt.events.MouseWheelListener-" title="class or interface in org.eclipse.swt.widgets">addMouseWheelListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#addPaintListener-org.eclipse.swt.events.PaintListener-" title="class or interface in org.eclipse.swt.widgets">addPaintListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#addTouchListener-org.eclipse.swt.events.TouchListener-" title="class or interface in org.eclipse.swt.widgets">addTouchListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#addTraverseListener-org.eclipse.swt.events.TraverseListener-" title="class or interface in org.eclipse.swt.widgets">addTraverseListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#computeSize-int-int-" title="class or interface in org.eclipse.swt.widgets">computeSize</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#computeSize-int-int-boolean-" title="class or interface in org.eclipse.swt.widgets">computeSize</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#dragDetect-org.eclipse.swt.widgets.Event-" title="class or interface in org.eclipse.swt.widgets">dragDetect</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#dragDetect-org.eclipse.swt.events.MouseEvent-" title="class or interface in org.eclipse.swt.widgets">dragDetect</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#forceFocus--" title="class or interface in org.eclipse.swt.widgets">forceFocus</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getAccessible--" title="class or interface in org.eclipse.swt.widgets">getAccessible</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getBackground--" title="class or interface in org.eclipse.swt.widgets">getBackground</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getBackgroundImage--" title="class or interface in org.eclipse.swt.widgets">getBackgroundImage</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getBorderWidth--" title="class or interface in org.eclipse.swt.widgets">getBorderWidth</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getBounds--" title="class or interface in org.eclipse.swt.widgets">getBounds</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getCursor--" title="class or interface in org.eclipse.swt.widgets">getCursor</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getDragDetect--" title="class or interface in org.eclipse.swt.widgets">getDragDetect</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getEnabled--" title="class or interface in org.eclipse.swt.widgets">getEnabled</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getFont--" title="class or interface in org.eclipse.swt.widgets">getFont</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getForeground--" title="class or interface in org.eclipse.swt.widgets">getForeground</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getLayoutData--" title="class or interface in org.eclipse.swt.widgets">getLayoutData</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getLocation--" title="class or interface in org.eclipse.swt.widgets">getLocation</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getMenu--" title="class or interface in org.eclipse.swt.widgets">getMenu</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getMonitor--" title="class or interface in org.eclipse.swt.widgets">getMonitor</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getOrientation--" title="class or interface in org.eclipse.swt.widgets">getOrientation</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getParent--" title="class or interface in org.eclipse.swt.widgets">getParent</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getRegion--" title="class or interface in org.eclipse.swt.widgets">getRegion</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getShell--" title="class or interface in org.eclipse.swt.widgets">getShell</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getSize--" title="class or interface in org.eclipse.swt.widgets">getSize</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getTextDirection--" title="class or interface in org.eclipse.swt.widgets">getTextDirection</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getToolTipText--" title="class or interface in org.eclipse.swt.widgets">getToolTipText</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getTouchEnabled--" title="class or interface in org.eclipse.swt.widgets">getTouchEnabled</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getVisible--" title="class or interface in org.eclipse.swt.widgets">getVisible</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#internal_dispose_GC-long-org.eclipse.swt.graphics.GCData-" title="class or interface in org.eclipse.swt.widgets">internal_dispose_GC</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#internal_new_GC-org.eclipse.swt.graphics.GCData-" title="class or interface in org.eclipse.swt.widgets">internal_new_GC</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#isEnabled--" title="class or interface in org.eclipse.swt.widgets">isEnabled</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#isFocusControl--" title="class or interface in org.eclipse.swt.widgets">isFocusControl</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#isReparentable--" title="class or interface in org.eclipse.swt.widgets">isReparentable</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#isVisible--" title="class or interface in org.eclipse.swt.widgets">isVisible</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#moveAbove-org.eclipse.swt.widgets.Control-" title="class or interface in org.eclipse.swt.widgets">moveAbove</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#moveBelow-org.eclipse.swt.widgets.Control-" title="class or interface in org.eclipse.swt.widgets">moveBelow</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#pack--" title="class or interface in org.eclipse.swt.widgets">pack</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#pack-boolean-" title="class or interface in org.eclipse.swt.widgets">pack</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#print-org.eclipse.swt.graphics.GC-" title="class or interface in org.eclipse.swt.widgets">print</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#redraw--" title="class or interface in org.eclipse.swt.widgets">redraw</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#redraw-int-int-int-int-boolean-" title="class or interface in org.eclipse.swt.widgets">redraw</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#removeControlListener-org.eclipse.swt.events.ControlListener-" title="class or interface in org.eclipse.swt.widgets">removeControlListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#removeDragDetectListener-org.eclipse.swt.events.DragDetectListener-" title="class or interface in org.eclipse.swt.widgets">removeDragDetectListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#removeFocusListener-org.eclipse.swt.events.FocusListener-" title="class or interface in org.eclipse.swt.widgets">removeFocusListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#removeGestureListener-org.eclipse.swt.events.GestureListener-" title="class or interface in org.eclipse.swt.widgets">removeGestureListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#removeHelpListener-org.eclipse.swt.events.HelpListener-" title="class or interface in org.eclipse.swt.widgets">removeHelpListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#removeKeyListener-org.eclipse.swt.events.KeyListener-" title="class or interface in org.eclipse.swt.widgets">removeKeyListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#removeMenuDetectListener-org.eclipse.swt.events.MenuDetectListener-" title="class or interface in org.eclipse.swt.widgets">removeMenuDetectListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#removeMouseListener-org.eclipse.swt.events.MouseListener-" title="class or interface in org.eclipse.swt.widgets">removeMouseListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#removeMouseMoveListener-org.eclipse.swt.events.MouseMoveListener-" title="class or interface in org.eclipse.swt.widgets">removeMouseMoveListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#removeMouseTrackListener-org.eclipse.swt.events.MouseTrackListener-" title="class or interface in org.eclipse.swt.widgets">removeMouseTrackListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#removeMouseWheelListener-org.eclipse.swt.events.MouseWheelListener-" title="class or interface in org.eclipse.swt.widgets">removeMouseWheelListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#removePaintListener-org.eclipse.swt.events.PaintListener-" title="class or interface in org.eclipse.swt.widgets">removePaintListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#removeTouchListener-org.eclipse.swt.events.TouchListener-" title="class or interface in org.eclipse.swt.widgets">removeTouchListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#removeTraverseListener-org.eclipse.swt.events.TraverseListener-" title="class or interface in org.eclipse.swt.widgets">removeTraverseListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#requestLayout--" title="class or interface in org.eclipse.swt.widgets">requestLayout</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setBackground-org.eclipse.swt.graphics.Color-" title="class or interface in org.eclipse.swt.widgets">setBackground</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setBackgroundImage-org.eclipse.swt.graphics.Image-" title="class or interface in org.eclipse.swt.widgets">setBackgroundImage</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setBounds-int-int-int-int-" title="class or interface in org.eclipse.swt.widgets">setBounds</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setBounds-org.eclipse.swt.graphics.Rectangle-" title="class or interface in org.eclipse.swt.widgets">setBounds</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setCapture-boolean-" title="class or interface in org.eclipse.swt.widgets">setCapture</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setCursor-org.eclipse.swt.graphics.Cursor-" title="class or interface in org.eclipse.swt.widgets">setCursor</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setDragDetect-boolean-" title="class or interface in org.eclipse.swt.widgets">setDragDetect</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setEnabled-boolean-" title="class or interface in org.eclipse.swt.widgets">setEnabled</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setFont-org.eclipse.swt.graphics.Font-" title="class or interface in org.eclipse.swt.widgets">setFont</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setForeground-org.eclipse.swt.graphics.Color-" title="class or interface in org.eclipse.swt.widgets">setForeground</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setLayoutData-java.lang.Object-" title="class or interface in org.eclipse.swt.widgets">setLayoutData</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setLocation-int-int-" title="class or interface in org.eclipse.swt.widgets">setLocation</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setLocation-org.eclipse.swt.graphics.Point-" title="class or interface in org.eclipse.swt.widgets">setLocation</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setMenu-org.eclipse.swt.widgets.Menu-" title="class or interface in org.eclipse.swt.widgets">setMenu</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setOrientation-int-" title="class or interface in org.eclipse.swt.widgets">setOrientation</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setParent-org.eclipse.swt.widgets.Composite-" title="class or interface in org.eclipse.swt.widgets">setParent</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setRedraw-boolean-" title="class or interface in org.eclipse.swt.widgets">setRedraw</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setRegion-org.eclipse.swt.graphics.Region-" title="class or interface in org.eclipse.swt.widgets">setRegion</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setSize-int-int-" title="class or interface in org.eclipse.swt.widgets">setSize</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setSize-org.eclipse.swt.graphics.Point-" title="class or interface in org.eclipse.swt.widgets">setSize</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setTextDirection-int-" title="class or interface in org.eclipse.swt.widgets">setTextDirection</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setToolTipText-java.lang.String-" title="class or interface in org.eclipse.swt.widgets">setToolTipText</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setTouchEnabled-boolean-" title="class or interface in org.eclipse.swt.widgets">setTouchEnabled</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setVisible-boolean-" title="class or interface in org.eclipse.swt.widgets">setVisible</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#toControl-int-int-" title="class or interface in org.eclipse.swt.widgets">toControl</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#toControl-org.eclipse.swt.graphics.Point-" title="class or interface in org.eclipse.swt.widgets">toControl</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#toDisplay-int-int-" title="class or interface in org.eclipse.swt.widgets">toDisplay</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#toDisplay-org.eclipse.swt.graphics.Point-" title="class or interface in org.eclipse.swt.widgets">toDisplay</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#traverse-int-" title="class or interface in org.eclipse.swt.widgets">traverse</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#traverse-int-org.eclipse.swt.widgets.Event-" title="class or interface in org.eclipse.swt.widgets">traverse</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#traverse-int-org.eclipse.swt.events.KeyEvent-" title="class or interface in org.eclipse.swt.widgets">traverse</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#update--" title="class or interface in org.eclipse.swt.widgets">update</a></code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.swt.widgets.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets" class="externalLink">Control</a></h3>
+<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#addControlListener(org.eclipse.swt.events.ControlListener)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">addControlListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#addDragDetectListener(org.eclipse.swt.events.DragDetectListener)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">addDragDetectListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#addFocusListener(org.eclipse.swt.events.FocusListener)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">addFocusListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#addGestureListener(org.eclipse.swt.events.GestureListener)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">addGestureListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#addHelpListener(org.eclipse.swt.events.HelpListener)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">addHelpListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#addKeyListener(org.eclipse.swt.events.KeyListener)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">addKeyListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#addMenuDetectListener(org.eclipse.swt.events.MenuDetectListener)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">addMenuDetectListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#addMouseListener(org.eclipse.swt.events.MouseListener)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">addMouseListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#addMouseMoveListener(org.eclipse.swt.events.MouseMoveListener)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">addMouseMoveListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#addMouseTrackListener(org.eclipse.swt.events.MouseTrackListener)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">addMouseTrackListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#addMouseWheelListener(org.eclipse.swt.events.MouseWheelListener)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">addMouseWheelListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#addPaintListener(org.eclipse.swt.events.PaintListener)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">addPaintListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#addTouchListener(org.eclipse.swt.events.TouchListener)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">addTouchListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#addTraverseListener(org.eclipse.swt.events.TraverseListener)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">addTraverseListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#computeSize(int,int)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">computeSize</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#computeSize(int,int,boolean)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">computeSize</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#dragDetect(org.eclipse.swt.events.MouseEvent)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">dragDetect</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#dragDetect(org.eclipse.swt.widgets.Event)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">dragDetect</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#forceFocus()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">forceFocus</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getAccessible()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">getAccessible</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getBackground()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">getBackground</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getBackgroundImage()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">getBackgroundImage</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getBorderWidth()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">getBorderWidth</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getBounds()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">getBounds</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getCursor()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">getCursor</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getDragDetect()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">getDragDetect</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getEnabled()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">getEnabled</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getFont()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">getFont</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getForeground()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">getForeground</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getLayoutData()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">getLayoutData</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getLocation()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">getLocation</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getMenu()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">getMenu</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getMonitor()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">getMonitor</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getOrientation()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">getOrientation</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getParent()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">getParent</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getRegion()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">getRegion</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getShell()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">getShell</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getSize()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">getSize</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getTextDirection()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">getTextDirection</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getToolTipText()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">getToolTipText</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getTouchEnabled()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">getTouchEnabled</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getVisible()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">getVisible</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#internal_dispose_GC(long,org.eclipse.swt.graphics.GCData)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">internal_dispose_GC</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#internal_new_GC(org.eclipse.swt.graphics.GCData)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">internal_new_GC</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#isEnabled()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">isEnabled</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#isFocusControl()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">isFocusControl</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#isReparentable()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">isReparentable</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#isVisible()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">isVisible</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#moveAbove(org.eclipse.swt.widgets.Control)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">moveAbove</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#moveBelow(org.eclipse.swt.widgets.Control)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">moveBelow</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#pack()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">pack</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#pack(boolean)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">pack</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#print(org.eclipse.swt.graphics.GC)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">print</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#redraw()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">redraw</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#redraw(int,int,int,int,boolean)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">redraw</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#removeControlListener(org.eclipse.swt.events.ControlListener)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">removeControlListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#removeDragDetectListener(org.eclipse.swt.events.DragDetectListener)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">removeDragDetectListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#removeFocusListener(org.eclipse.swt.events.FocusListener)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">removeFocusListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#removeGestureListener(org.eclipse.swt.events.GestureListener)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">removeGestureListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#removeHelpListener(org.eclipse.swt.events.HelpListener)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">removeHelpListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#removeKeyListener(org.eclipse.swt.events.KeyListener)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">removeKeyListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#removeMenuDetectListener(org.eclipse.swt.events.MenuDetectListener)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">removeMenuDetectListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#removeMouseListener(org.eclipse.swt.events.MouseListener)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">removeMouseListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#removeMouseMoveListener(org.eclipse.swt.events.MouseMoveListener)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">removeMouseMoveListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#removeMouseTrackListener(org.eclipse.swt.events.MouseTrackListener)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">removeMouseTrackListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#removeMouseWheelListener(org.eclipse.swt.events.MouseWheelListener)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">removeMouseWheelListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#removePaintListener(org.eclipse.swt.events.PaintListener)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">removePaintListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#removeTouchListener(org.eclipse.swt.events.TouchListener)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">removeTouchListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#removeTraverseListener(org.eclipse.swt.events.TraverseListener)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">removeTraverseListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#requestLayout()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">requestLayout</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setBackground(org.eclipse.swt.graphics.Color)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">setBackground</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setBackgroundImage(org.eclipse.swt.graphics.Image)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">setBackgroundImage</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setBounds(int,int,int,int)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">setBounds</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setBounds(org.eclipse.swt.graphics.Rectangle)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">setBounds</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setCapture(boolean)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">setCapture</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setCursor(org.eclipse.swt.graphics.Cursor)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">setCursor</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setDragDetect(boolean)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">setDragDetect</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setEnabled(boolean)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">setEnabled</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setFont(org.eclipse.swt.graphics.Font)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">setFont</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setForeground(org.eclipse.swt.graphics.Color)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">setForeground</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setLayoutData(java.lang.Object)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">setLayoutData</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setLocation(int,int)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">setLocation</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setLocation(org.eclipse.swt.graphics.Point)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">setLocation</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setMenu(org.eclipse.swt.widgets.Menu)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">setMenu</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setOrientation(int)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">setOrientation</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setParent(org.eclipse.swt.widgets.Composite)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">setParent</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setRedraw(boolean)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">setRedraw</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setRegion(org.eclipse.swt.graphics.Region)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">setRegion</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setSize(int,int)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">setSize</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setSize(org.eclipse.swt.graphics.Point)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">setSize</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setTextDirection(int)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">setTextDirection</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setToolTipText(java.lang.String)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">setToolTipText</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setTouchEnabled(boolean)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">setTouchEnabled</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setVisible(boolean)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">setVisible</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#toControl(int,int)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">toControl</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#toControl(org.eclipse.swt.graphics.Point)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">toControl</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#toDisplay(int,int)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">toDisplay</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#toDisplay(org.eclipse.swt.graphics.Point)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">toDisplay</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#traverse(int)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">traverse</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#traverse(int,org.eclipse.swt.events.KeyEvent)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">traverse</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#traverse(int,org.eclipse.swt.widgets.Event)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">traverse</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#update()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">update</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.swt.widgets.Widget">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.swt.widgets.Widget">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.swt.widgets.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Widget</a></h3>
-<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#addDisposeListener-org.eclipse.swt.events.DisposeListener-" title="class or interface in org.eclipse.swt.widgets">addDisposeListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#addListener-int-org.eclipse.swt.widgets.Listener-" title="class or interface in org.eclipse.swt.widgets">addListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#checkWidget--" title="class or interface in org.eclipse.swt.widgets">checkWidget</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#getData--" title="class or interface in org.eclipse.swt.widgets">getData</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#getData-java.lang.String-" title="class or interface in org.eclipse.swt.widgets">getData</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#getDisplay--" title="class or interface in org.eclipse.swt.widgets">getDisplay</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#getListeners-int-" title="class or interface in org.eclipse.swt.widgets">getListeners</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#getStyle--" title="class or interface in org.eclipse.swt.widgets">getStyle</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#isAutoDirection--" title="class or interface in org.eclipse.swt.widgets">isAutoDirection</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#isDisposed--" title="class or interface in org.eclipse.swt.widgets">isDisposed</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#isListening-int-" title="class or interface in org.eclipse.swt.widgets">isListening</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#notifyListeners-int-org.eclipse.swt.widgets.Event-" title="class or interface in org.eclipse.swt.widgets">notifyListeners</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#removeDisposeListener-org.eclipse.swt.events.DisposeListener-" title="class or interface in org.eclipse.swt.widgets">removeDisposeListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#removeListener-int-org.eclipse.swt.widgets.Listener-" title="class or interface in org.eclipse.swt.widgets">removeListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#removeListener-int-org.eclipse.swt.internal.SWTEventListener-" title="class or interface in org.eclipse.swt.widgets">removeListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#reskin-int-" title="class or interface in org.eclipse.swt.widgets">reskin</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#setData-java.lang.Object-" title="class or interface in org.eclipse.swt.widgets">setData</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#setData-java.lang.String-java.lang.Object-" title="class or interface in org.eclipse.swt.widgets">setData</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#toString--" title="class or interface in org.eclipse.swt.widgets">toString</a></code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.swt.widgets.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true" title="class or interface in org.eclipse.swt.widgets" class="externalLink">Widget</a></h3>
+<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#addDisposeListener(org.eclipse.swt.events.DisposeListener)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">addDisposeListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#addListener(int,org.eclipse.swt.widgets.Listener)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">addListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#checkWidget()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">checkWidget</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#getData()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">getData</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#getData(java.lang.String)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">getData</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#getDisplay()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">getDisplay</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#getListeners(int)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">getListeners</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#getStyle()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">getStyle</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#isAutoDirection()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">isAutoDirection</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#isDisposed()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">isDisposed</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#isListening(int)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">isListening</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#notifyListeners(int,org.eclipse.swt.widgets.Event)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">notifyListeners</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#removeDisposeListener(org.eclipse.swt.events.DisposeListener)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">removeDisposeListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#removeListener(int,org.eclipse.swt.internal.SWTEventListener)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">removeListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#removeListener(int,org.eclipse.swt.widgets.Listener)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">removeListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#reskin(int)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">reskin</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#setData(java.lang.Object)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">setData</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#setData(java.lang.String,java.lang.Object)" title="class or interface in org.eclipse.swt.widgets" class="externalLink">setData</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#toString()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">toString</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
+<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
 <code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, wait, wait, wait</code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.swt.graphics.Drawable">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.swt.graphics.Drawable">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.swt.graphics.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Drawable.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Drawable</a></h3>
-<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Drawable.html?is-external=true#isAutoScalable--" title="class or interface in org.eclipse.swt.graphics">isAutoScalable</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.swt.graphics.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Drawable.html?is-external=true" title="class or interface in org.eclipse.swt.graphics" class="externalLink">Drawable</a></h3>
+<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Drawable.html?is-external=true#isAutoScalable()" title="class or interface in org.eclipse.swt.graphics" class="externalLink">isAutoScalable</a></code></li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -342,30 +403,31 @@ implements <a href="../../../../../../org/eclipse/net4j/util/event/INotifier.htm
 <ul class="blockList">
 <li class="blockList">
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.detail">
+<li class="blockList"><a id="constructor.detail">
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="SashComposite-org.eclipse.swt.widgets.Composite-int-int-int-">
+<a id="&lt;init&gt;(org.eclipse.swt.widgets.Composite,int,int,int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>SashComposite</h4>
-<pre>public&nbsp;SashComposite(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Composite</a>&nbsp;parent,
+<pre>public&nbsp;SashComposite&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets" class="externalLink">Composite</a>&nbsp;parent,
                      int&nbsp;style,
                      int&nbsp;limit,
                      int&nbsp;percent)</pre>
 </li>
 </ul>
-<a name="SashComposite-org.eclipse.swt.widgets.Composite-int-int-int-boolean-">
+<a id="&lt;init&gt;(org.eclipse.swt.widgets.Composite,int,int,int,boolean)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>SashComposite</h4>
-<pre>public&nbsp;SashComposite(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Composite</a>&nbsp;parent,
+<pre>public&nbsp;SashComposite&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets" class="externalLink">Composite</a>&nbsp;parent,
                      int&nbsp;style,
                      int&nbsp;limit,
                      int&nbsp;percent,
@@ -374,216 +436,222 @@ implements <a href="../../../../../../org/eclipse/net4j/util/event/INotifier.htm
 </ul>
 </li>
 </ul>
+</section>
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="dispose--">
+<a id="dispose()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>dispose</h4>
-<pre>public&nbsp;void&nbsp;dispose()</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;dispose()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#dispose--" title="class or interface in org.eclipse.swt.widgets">dispose</a></code>&nbsp;in class&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Widget</a></code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#dispose()" title="class or interface in org.eclipse.swt.widgets" class="externalLink">dispose</a></code>&nbsp;in class&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true" title="class or interface in org.eclipse.swt.widgets" class="externalLink">Widget</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
 </dl>
 </li>
 </ul>
-<a name="addListener-org.eclipse.net4j.util.event.IListener-">
+<a id="addListener(org.eclipse.net4j.util.event.IListener)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>addListener</h4>
-<pre>public&nbsp;void&nbsp;addListener(<a href="../../../../../../org/eclipse/net4j/util/event/IListener.html" title="interface in org.eclipse.net4j.util.event">IListener</a>&nbsp;listener)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../../org/eclipse/net4j/util/event/INotifier.html#addListener-org.eclipse.net4j.util.event.IListener-">INotifier</a></code></span></div>
+<pre class="methodSignature">public&nbsp;void&nbsp;addListener&#8203;(<a href="../../event/IListener.html" title="interface in org.eclipse.net4j.util.event">IListener</a>&nbsp;listener)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../event/INotifier.html#addListener(org.eclipse.net4j.util.event.IListener)">INotifier</a></code></span></div>
 <div class="block">Adds a listener to this notifier.
  <p>
  Depending on the implementation duplicate listeners may lead to duplicate event delivery or not. Implementors are
  encouraged to prevent events from being delivered more than once to the same listener,</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../../org/eclipse/net4j/util/event/INotifier.html#addListener-org.eclipse.net4j.util.event.IListener-">addListener</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../org/eclipse/net4j/util/event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a></code></dd>
+<dd><code><a href="../../event/INotifier.html#addListener(org.eclipse.net4j.util.event.IListener)">addListener</a></code>&nbsp;in interface&nbsp;<code><a href="../../event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
 </dl>
 </li>
 </ul>
-<a name="getListeners--">
+<a id="getListeners()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getListeners</h4>
-<pre>public&nbsp;<a href="../../../../../../org/eclipse/net4j/util/event/IListener.html" title="interface in org.eclipse.net4j.util.event">IListener</a>[]&nbsp;getListeners()</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../../org/eclipse/net4j/util/event/INotifier.html#getListeners--">INotifier</a></code></span></div>
+<pre class="methodSignature">public&nbsp;<a href="../../event/IListener.html" title="interface in org.eclipse.net4j.util.event">IListener</a>[]&nbsp;getListeners()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../event/INotifier.html#getListeners()">INotifier</a></code></span></div>
 <div class="block">Returns the listeners that are registered with this notifier.
  <p>
  Depending on the implementation duplicate listeners may be contained in the returned array.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../../org/eclipse/net4j/util/event/INotifier.html#getListeners--">getListeners</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../org/eclipse/net4j/util/event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a></code></dd>
+<dd><code><a href="../../event/INotifier.html#getListeners()">getListeners</a></code>&nbsp;in interface&nbsp;<code><a href="../../event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
 </dl>
 </li>
 </ul>
-<a name="hasListeners--">
+<a id="hasListeners()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>hasListeners</h4>
-<pre>public&nbsp;boolean&nbsp;hasListeners()</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../../org/eclipse/net4j/util/event/INotifier.html#hasListeners--">INotifier</a></code></span></div>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;hasListeners()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../event/INotifier.html#hasListeners()">INotifier</a></code></span></div>
 <div class="block">Returns <code>true</code> if one or more listeners are registered with this notifier, <code>false</code> otherwise.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../../org/eclipse/net4j/util/event/INotifier.html#hasListeners--">hasListeners</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../org/eclipse/net4j/util/event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a></code></dd>
+<dd><code><a href="../../event/INotifier.html#hasListeners()">hasListeners</a></code>&nbsp;in interface&nbsp;<code><a href="../../event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
 </dl>
 </li>
 </ul>
-<a name="removeListener-org.eclipse.net4j.util.event.IListener-">
+<a id="removeListener(org.eclipse.net4j.util.event.IListener)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>removeListener</h4>
-<pre>public&nbsp;void&nbsp;removeListener(<a href="../../../../../../org/eclipse/net4j/util/event/IListener.html" title="interface in org.eclipse.net4j.util.event">IListener</a>&nbsp;listener)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../../org/eclipse/net4j/util/event/INotifier.html#removeListener-org.eclipse.net4j.util.event.IListener-">INotifier</a></code></span></div>
+<pre class="methodSignature">public&nbsp;void&nbsp;removeListener&#8203;(<a href="../../event/IListener.html" title="interface in org.eclipse.net4j.util.event">IListener</a>&nbsp;listener)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../event/INotifier.html#removeListener(org.eclipse.net4j.util.event.IListener)">INotifier</a></code></span></div>
 <div class="block">Removes a listener from this notifier.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../../org/eclipse/net4j/util/event/INotifier.html#removeListener-org.eclipse.net4j.util.event.IListener-">removeListener</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../org/eclipse/net4j/util/event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a></code></dd>
+<dd><code><a href="../../event/INotifier.html#removeListener(org.eclipse.net4j.util.event.IListener)">removeListener</a></code>&nbsp;in interface&nbsp;<code><a href="../../event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
 </dl>
 </li>
 </ul>
-<a name="isVertical--">
+<a id="isVertical()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>isVertical</h4>
-<pre>public&nbsp;boolean&nbsp;isVertical()</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;isVertical()</pre>
 </li>
 </ul>
-<a name="setVertical-boolean-">
+<a id="setVertical(boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setVertical</h4>
-<pre>public&nbsp;void&nbsp;setVertical(boolean&nbsp;vertical)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setVertical&#8203;(boolean&nbsp;vertical)</pre>
 </li>
 </ul>
-<a name="getSash--">
+<a id="getSash()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getSash</h4>
-<pre>public&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Sash.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Sash</a>&nbsp;getSash()</pre>
+<pre class="methodSignature">public&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Sash.html?is-external=true" title="class or interface in org.eclipse.swt.widgets" class="externalLink">Sash</a>&nbsp;getSash()</pre>
 </li>
 </ul>
-<a name="getControl1--">
+<a id="getControl1()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getControl1</h4>
-<pre>public&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Control</a>&nbsp;getControl1()</pre>
+<pre class="methodSignature">public&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets" class="externalLink">Control</a>&nbsp;getControl1()</pre>
 </li>
 </ul>
-<a name="getControl2--">
+<a id="getControl2()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getControl2</h4>
-<pre>public&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Control</a>&nbsp;getControl2()</pre>
+<pre class="methodSignature">public&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets" class="externalLink">Control</a>&nbsp;getControl2()</pre>
 </li>
 </ul>
-<a name="init--">
+<a id="init()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>init</h4>
-<pre>protected&nbsp;void&nbsp;init()</pre>
+<pre class="methodSignature">protected&nbsp;void&nbsp;init()</pre>
 </li>
 </ul>
-<a name="swap--">
+<a id="swap()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>swap</h4>
-<pre>protected&nbsp;void&nbsp;swap()</pre>
+<pre class="methodSignature">protected&nbsp;void&nbsp;swap()</pre>
 </li>
 </ul>
-<a name="swap-org.eclipse.swt.layout.FormData-">
+<a id="swap(org.eclipse.swt.layout.FormData)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>swap</h4>
-<pre>protected&nbsp;void&nbsp;swap(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/layout/FormData.html?is-external=true" title="class or interface in org.eclipse.swt.layout">FormData</a>&nbsp;formData)</pre>
+<pre class="methodSignature">protected&nbsp;void&nbsp;swap&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/layout/FormData.html?is-external=true" title="class or interface in org.eclipse.swt.layout" class="externalLink">FormData</a>&nbsp;formData)</pre>
 </li>
 </ul>
-<a name="createSash-org.eclipse.swt.widgets.Composite-">
+<a id="createSash(org.eclipse.swt.widgets.Composite)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createSash</h4>
-<pre>protected&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Sash.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Sash</a>&nbsp;createSash(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Composite</a>&nbsp;parent)</pre>
+<pre class="methodSignature">protected&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Sash.html?is-external=true" title="class or interface in org.eclipse.swt.widgets" class="externalLink">Sash</a>&nbsp;createSash&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets" class="externalLink">Composite</a>&nbsp;parent)</pre>
 </li>
 </ul>
-<a name="createControl1-org.eclipse.swt.widgets.Composite-">
+<a id="createControl1(org.eclipse.swt.widgets.Composite)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createControl1</h4>
-<pre>protected abstract&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Control</a>&nbsp;createControl1(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Composite</a>&nbsp;parent)</pre>
+<pre class="methodSignature">protected abstract&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets" class="externalLink">Control</a>&nbsp;createControl1&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets" class="externalLink">Composite</a>&nbsp;parent)</pre>
 </li>
 </ul>
-<a name="createControl2-org.eclipse.swt.widgets.Composite-">
+<a id="createControl2(org.eclipse.swt.widgets.Composite)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>createControl2</h4>
-<pre>protected abstract&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Control</a>&nbsp;createControl2(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Composite</a>&nbsp;parent)</pre>
+<pre class="methodSignature">protected abstract&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets" class="externalLink">Control</a>&nbsp;createControl2&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets" class="externalLink">Composite</a>&nbsp;parent)</pre>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/SashComposite.html">Use</a></li>
@@ -593,16 +661,8 @@ implements <a href="../../../../../../org/eclipse/net4j/util/event/INotifier.htm
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/net4j/util/ui/widgets/PreferenceButton.html" title="class in org.eclipse.net4j.util.ui.widgets"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../../org/eclipse/net4j/util/ui/widgets/SashComposite.OrientationChangedEvent.html" title="class in org.eclipse.net4j.util.ui.widgets"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/net4j/util/ui/widgets/SashComposite.html" target="_top">Frames</a></li>
-<li><a href="SashComposite.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -615,12 +675,15 @@ implements <a href="../../../../../../org/eclipse/net4j/util/event/INotifier.htm
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
-<li><a href="#fields.inherited.from.class.org.eclipse.swt.widgets.Control">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
@@ -631,10 +694,12 @@ implements <a href="../../../../../../org/eclipse/net4j/util/event/INotifier.htm
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

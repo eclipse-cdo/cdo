@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>Uses of Interface org.eclipse.net4j.channel.IChannel (Net4j Signalling Platform Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,39 +28,43 @@
     catch(err) {
     }
 //-->
-</script>
+var pathtoroot = "../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="../package-summary.html">Package</a></li>
-<li><a href="../../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">Class</a></li>
+<li><a href="../IChannel.html" title="interface in org.eclipse.net4j.channel">Class</a></li>
 <li class="navBarCell1Rev">Use</li>
+<li><a href="../package-tree.html">Tree</a></li>
 <li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../help-doc.html">Help</a></li>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev</li>
-<li>Next</li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/net4j/channel/class-use/IChannel.html" target="_top">Frames</a></li>
-<li><a href="IChannel.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -63,50 +77,62 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
+<main role="main">
 <div class="header">
 <h2 title="Uses of Interface org.eclipse.net4j.channel.IChannel" class="title">Uses of Interface<br>org.eclipse.net4j.channel.IChannel</h2>
 </div>
 <div class="classUseContainer">
 <ul class="blockList">
 <li class="blockList">
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing packages, and an explanation">
-<caption><span>Packages that use <a href="../../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Packages that use <a href="../IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Package</th>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.channel">org.eclipse.net4j.channel</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.channel">org.eclipse.net4j.channel</a></th>
 <td class="colLast">
 <div class="block">The Net4j transport layer concepts for dealing with channels.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.jvm">org.eclipse.net4j.jvm</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.jvm">org.eclipse.net4j.jvm</a></th>
 <td class="colLast">
 <div class="block">Transport layer extension with support for JVM embedded connections.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.protocol">org.eclipse.net4j.protocol</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.protocol">org.eclipse.net4j.protocol</a></th>
 <td class="colLast">
 <div class="block">The Net4j transport layer concepts for dealing with protocols.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.signal">org.eclipse.net4j.signal</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.signal">org.eclipse.net4j.signal</a></th>
 <td class="colLast">
 <div class="block">A framework for request/response based communication on top of the Net4j transport layer.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.spi.net4j">org.eclipse.spi.net4j</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.spi.net4j">org.eclipse.spi.net4j</a></th>
 <td class="colLast">
 <div class="block">Server service provider interfaces and useful base implementations for the Net4j transport layer.</div>
 </td>
@@ -116,264 +142,302 @@
 </li>
 <li class="blockList">
 <ul class="blockList">
-<li class="blockList"><a name="org.eclipse.net4j.channel">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.net4j.channel">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a> in <a href="../../../../../org/eclipse/net4j/channel/package-summary.html">org.eclipse.net4j.channel</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../org/eclipse/net4j/channel/package-summary.html">org.eclipse.net4j.channel</a> that return <a href="../../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a> in <a href="../package-summary.html">org.eclipse.net4j.channel</a></h3>
+<table class="useSummary">
+<caption><span>Methods in <a href="../package-summary.html">org.eclipse.net4j.channel</a> that return <a href="../IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></code></td>
-<td class="colLast"><span class="typeNameLabel">ChannelInputStream.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/channel/ChannelInputStream.html#getChannel--">getChannel</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">ChannelInputStream.</span><code><span class="memberNameLink"><a href="../ChannelInputStream.html#getChannel()">getChannel</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></code></td>
-<td class="colLast"><span class="typeNameLabel">IChannelMultiplexer.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/channel/IChannelMultiplexer.html#openChannel--">openChannel</a></span>()</code>
-<div class="block">Synchronous request to open a new <a href="../../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel"><code>IChannel</code></a> with an undefined channel protocol.</div>
+<td class="colFirst"><code><a href="../IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">IChannelMultiplexer.</span><code><span class="memberNameLink"><a href="../IChannelMultiplexer.html#openChannel()">openChannel</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Synchronous request to open a new <a href="../IChannel.html" title="interface in org.eclipse.net4j.channel"><code>IChannel</code></a> with an undefined channel protocol.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></code></td>
-<td class="colLast"><span class="typeNameLabel">IChannelMultiplexer.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/channel/IChannelMultiplexer.html#openChannel-org.eclipse.net4j.protocol.IProtocol-">openChannel</a></span>(<a href="../../../../../org/eclipse/net4j/protocol/IProtocol.html" title="interface in org.eclipse.net4j.protocol">IProtocol</a>&lt;?&gt;&nbsp;protocol)</code>
-<div class="block">Synchronous request to open a new <a href="../../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel"><code>IChannel</code></a> with the given channel protocol .</div>
+<td class="colFirst"><code><a href="../IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">IChannelMultiplexer.</span><code><span class="memberNameLink"><a href="../IChannelMultiplexer.html#openChannel(java.lang.String,java.lang.Object)">openChannel</a></span>&#8203;(java.lang.String&nbsp;protocolID,
+           java.lang.Object&nbsp;infraStructure)</code></th>
+<td class="colLast">
+<div class="block">Synchronous request to open a new <a href="../IChannel.html" title="interface in org.eclipse.net4j.channel"><code>IChannel</code></a> with a channel protocol defined by a given protocol identifier.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></code></td>
-<td class="colLast"><span class="typeNameLabel">IChannelMultiplexer.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/channel/IChannelMultiplexer.html#openChannel-java.lang.String-java.lang.Object-">openChannel</a></span>(java.lang.String&nbsp;protocolID,
-           java.lang.Object&nbsp;infraStructure)</code>
-<div class="block">Synchronous request to open a new <a href="../../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel"><code>IChannel</code></a> with a channel protocol defined by a given protocol identifier.</div>
+<td class="colFirst"><code><a href="../IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">IChannelMultiplexer.</span><code><span class="memberNameLink"><a href="../IChannelMultiplexer.html#openChannel(org.eclipse.net4j.protocol.IProtocol)">openChannel</a></span>&#8203;(<a href="../../protocol/IProtocol.html" title="interface in org.eclipse.net4j.protocol">IProtocol</a>&lt;?&gt;&nbsp;protocol)</code></th>
+<td class="colLast">
+<div class="block">Synchronous request to open a new <a href="../IChannel.html" title="interface in org.eclipse.net4j.channel"><code>IChannel</code></a> with the given channel protocol .</div>
 </td>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../org/eclipse/net4j/channel/package-summary.html">org.eclipse.net4j.channel</a> that return types with arguments of type <a href="../../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Methods in <a href="../package-summary.html">org.eclipse.net4j.channel</a> that return types with arguments of type <a href="../IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code>java.util.Collection&lt;<a href="../../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a>&gt;</code></td>
-<td class="colLast"><span class="typeNameLabel">IChannelMultiplexer.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/channel/IChannelMultiplexer.html#getChannels--">getChannels</a></span>()</code>
+<td class="colFirst"><code>java.util.Collection&lt;<a href="../IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a>&gt;</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">IChannelMultiplexer.</span><code><span class="memberNameLink"><a href="../IChannelMultiplexer.html#getChannels()">getChannels</a></span>()</code></th>
+<td class="colLast">
 <div class="block">Returns a collection of currently open channels.</div>
 </td>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing constructors, and an explanation">
-<caption><span>Constructors in <a href="../../../../../org/eclipse/net4j/channel/package-summary.html">org.eclipse.net4j.channel</a> with parameters of type <a href="../../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Constructors in <a href="../package-summary.html">org.eclipse.net4j.channel</a> with parameters of type <a href="../IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Constructor and Description</th>
+<th class="colFirst" scope="col">Constructor</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/channel/ChannelInputStream.html#ChannelInputStream-org.eclipse.net4j.channel.IChannel-">ChannelInputStream</a></span>(<a href="../../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a>&nbsp;channel)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../ChannelInputStream.html#%3Cinit%3E(org.eclipse.net4j.channel.IChannel)">ChannelInputStream</a></span>&#8203;(<a href="../IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a>&nbsp;channel)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/channel/ChannelInputStream.html#ChannelInputStream-org.eclipse.net4j.channel.IChannel-long-">ChannelInputStream</a></span>(<a href="../../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a>&nbsp;channel,
-                  long&nbsp;millisBeforeTimeout)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../ChannelInputStream.html#%3Cinit%3E(org.eclipse.net4j.channel.IChannel,long)">ChannelInputStream</a></span>&#8203;(<a href="../IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a>&nbsp;channel,
+                  long&nbsp;millisBeforeTimeout)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/channel/ChannelOutputStream.html#ChannelOutputStream-org.eclipse.net4j.channel.IChannel-">ChannelOutputStream</a></span>(<a href="../../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a>&nbsp;channel)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../ChannelOutputStream.html#%3Cinit%3E(org.eclipse.net4j.channel.IChannel)">ChannelOutputStream</a></span>&#8203;(<a href="../IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a>&nbsp;channel)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/channel/ChannelOutputStream.html#ChannelOutputStream-org.eclipse.net4j.channel.IChannel-org.eclipse.net4j.buffer.IBufferProvider-">ChannelOutputStream</a></span>(<a href="../../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a>&nbsp;channel,
-                   <a href="../../../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a>&nbsp;bufferProvider)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../ChannelOutputStream.html#%3Cinit%3E(org.eclipse.net4j.channel.IChannel,org.eclipse.net4j.buffer.IBufferProvider)">ChannelOutputStream</a></span>&#8203;(<a href="../IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a>&nbsp;channel,
+                   <a href="../../buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a>&nbsp;bufferProvider)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.jvm">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.net4j.jvm">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a> in <a href="../../../../../org/eclipse/net4j/jvm/package-summary.html">org.eclipse.net4j.jvm</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing subinterfaces, and an explanation">
-<caption><span>Subinterfaces of <a href="../../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a> in <a href="../../../../../org/eclipse/net4j/jvm/package-summary.html">org.eclipse.net4j.jvm</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a> in <a href="../../jvm/package-summary.html">org.eclipse.net4j.jvm</a></h3>
+<table class="useSummary">
+<caption><span>Subinterfaces of <a href="../IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a> in <a href="../../jvm/package-summary.html">org.eclipse.net4j.jvm</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Interface and Description</th>
+<th class="colSecond" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/jvm/IJVMChannel.html" title="interface in org.eclipse.net4j.jvm">IJVMChannel</a></span></code>
-<div class="block">A <a href="../../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel"><code>channel</code></a> of a <a href="../../../../../org/eclipse/net4j/jvm/IJVMConnector.html" title="interface in org.eclipse.net4j.jvm"><code>JVM connector</code></a>.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../jvm/IJVMChannel.html" title="interface in org.eclipse.net4j.jvm">IJVMChannel</a></span></code></th>
+<td class="colLast">
+<div class="block">A <a href="../IChannel.html" title="interface in org.eclipse.net4j.channel"><code>channel</code></a> of a <a href="../../jvm/IJVMConnector.html" title="interface in org.eclipse.net4j.jvm"><code>JVM connector</code></a>.</div>
 </td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.protocol">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.net4j.protocol">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a> in <a href="../../../../../org/eclipse/net4j/protocol/package-summary.html">org.eclipse.net4j.protocol</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../org/eclipse/net4j/protocol/package-summary.html">org.eclipse.net4j.protocol</a> that return <a href="../../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a> in <a href="../../protocol/package-summary.html">org.eclipse.net4j.protocol</a></h3>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../protocol/package-summary.html">org.eclipse.net4j.protocol</a> that return <a href="../IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></code></td>
-<td class="colLast"><span class="typeNameLabel">IProtocol.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/protocol/IProtocol.html#getChannel--">getChannel</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">IProtocol.</span><code><span class="memberNameLink"><a href="../../protocol/IProtocol.html#getChannel()">getChannel</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../org/eclipse/net4j/protocol/package-summary.html">org.eclipse.net4j.protocol</a> with parameters of type <a href="../../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../protocol/package-summary.html">org.eclipse.net4j.protocol</a> with parameters of type <a href="../IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">IProtocol.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/protocol/IProtocol.html#setChannel-org.eclipse.net4j.channel.IChannel-">setChannel</a></span>(<a href="../../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a>&nbsp;channel)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">IProtocol.</span><code><span class="memberNameLink"><a href="../../protocol/IProtocol.html#setChannel(org.eclipse.net4j.channel.IChannel)">setChannel</a></span>&#8203;(<a href="../IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a>&nbsp;channel)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.signal">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.net4j.signal">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a> in <a href="../../../../../org/eclipse/net4j/signal/package-summary.html">org.eclipse.net4j.signal</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../org/eclipse/net4j/signal/package-summary.html">org.eclipse.net4j.signal</a> that return <a href="../../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a> in <a href="../../signal/package-summary.html">org.eclipse.net4j.signal</a></h3>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../signal/package-summary.html">org.eclipse.net4j.signal</a> that return <a href="../IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></code></td>
-<td class="colLast"><span class="typeNameLabel">ISignalProtocol.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/signal/ISignalProtocol.html#open-org.eclipse.net4j.connector.IConnector-">open</a></span>(<a href="../../../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector">IConnector</a>&nbsp;connector)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">ISignalProtocol.</span><code><span class="memberNameLink"><a href="../../signal/ISignalProtocol.html#open(org.eclipse.net4j.connector.IConnector)">open</a></span>&#8203;(<a href="../../connector/IConnector.html" title="interface in org.eclipse.net4j.connector">IConnector</a>&nbsp;connector)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></code></td>
-<td class="colLast"><span class="typeNameLabel">SignalProtocol.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/signal/SignalProtocol.html#open-org.eclipse.net4j.connector.IConnector-">open</a></span>(<a href="../../../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector">IConnector</a>&nbsp;connector)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">SignalProtocol.</span><code><span class="memberNameLink"><a href="../../signal/SignalProtocol.html#open(org.eclipse.net4j.connector.IConnector)">open</a></span>&#8203;(<a href="../../connector/IConnector.html" title="interface in org.eclipse.net4j.connector">IConnector</a>&nbsp;connector)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.spi.net4j">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.spi.net4j">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a> in <a href="../../../../../org/eclipse/spi/net4j/package-summary.html">org.eclipse.spi.net4j</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing subinterfaces, and an explanation">
-<caption><span>Subinterfaces of <a href="../../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a> in <a href="../../../../../org/eclipse/spi/net4j/package-summary.html">org.eclipse.spi.net4j</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a> in <a href="../../../spi/net4j/package-summary.html">org.eclipse.spi.net4j</a></h3>
+<table class="useSummary">
+<caption><span>Subinterfaces of <a href="../IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a> in <a href="../../../spi/net4j/package-summary.html">org.eclipse.spi.net4j</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Interface and Description</th>
+<th class="colSecond" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a></span></code></th>
+<td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../org/eclipse/spi/net4j/package-summary.html">org.eclipse.spi.net4j</a> that implement <a href="../../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="../../../spi/net4j/package-summary.html">org.eclipse.spi.net4j</a> that implement <a href="../IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Class and Description</th>
+<th class="colSecond" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/spi/net4j/Channel.html" title="class in org.eclipse.spi.net4j">Channel</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../spi/net4j/Channel.html" title="class in org.eclipse.spi.net4j">Channel</a></span></code></th>
+<td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../org/eclipse/spi/net4j/package-summary.html">org.eclipse.spi.net4j</a> that return <a href="../../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../../spi/net4j/package-summary.html">org.eclipse.spi.net4j</a> that return <a href="../IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></code></td>
-<td class="colLast"><span class="typeNameLabel">Protocol.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/spi/net4j/Protocol.html#getChannel--">getChannel</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">Protocol.</span><code><span class="memberNameLink"><a href="../../../spi/net4j/Protocol.html#getChannel()">getChannel</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a>[]</code></td>
-<td class="colLast"><span class="typeNameLabel">ChannelMultiplexer.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html#getElements--">getElements</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a>[]</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">ChannelMultiplexer.</span><code><span class="memberNameLink"><a href="../../../spi/net4j/ChannelMultiplexer.html#getElements()">getElements</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../org/eclipse/spi/net4j/package-summary.html">org.eclipse.spi.net4j</a> that return types with arguments of type <a href="../../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../../spi/net4j/package-summary.html">org.eclipse.spi.net4j</a> that return types with arguments of type <a href="../IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code>java.util.Collection&lt;<a href="../../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a>&gt;</code></td>
-<td class="colLast"><span class="typeNameLabel">ChannelMultiplexer.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html#getChannels--">getChannels</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>java.util.Collection&lt;<a href="../IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a>&gt;</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">ChannelMultiplexer.</span><code><span class="memberNameLink"><a href="../../../spi/net4j/ChannelMultiplexer.html#getChannels()">getChannels</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../org/eclipse/spi/net4j/package-summary.html">org.eclipse.spi.net4j</a> with parameters of type <a href="../../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../../spi/net4j/package-summary.html">org.eclipse.spi.net4j</a> with parameters of type <a href="../IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">Protocol.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/spi/net4j/Protocol.html#setChannel-org.eclipse.net4j.channel.IChannel-">setChannel</a></span>(<a href="../../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a>&nbsp;newChannel)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">Protocol.</span><code><span class="memberNameLink"><a href="../../../spi/net4j/Protocol.html#setChannel(org.eclipse.net4j.channel.IChannel)">setChannel</a></span>&#8203;(<a href="../IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a>&nbsp;newChannel)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
 </ul>
 </li>
 </ul>
 </div>
+</main>
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="../package-summary.html">Package</a></li>
-<li><a href="../../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">Class</a></li>
+<li><a href="../IChannel.html" title="interface in org.eclipse.net4j.channel">Class</a></li>
 <li class="navBarCell1Rev">Use</li>
+<li><a href="../package-tree.html">Tree</a></li>
 <li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../help-doc.html">Help</a></li>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev</li>
-<li>Next</li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/net4j/channel/class-use/IChannel.html" target="_top">Frames</a></li>
-<li><a href="IChannel.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -386,11 +450,16 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

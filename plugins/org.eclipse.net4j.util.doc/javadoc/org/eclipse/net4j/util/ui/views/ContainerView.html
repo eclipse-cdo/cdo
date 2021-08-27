@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>ContainerView (Net4j Utilities Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":9,"i22":10,"i23":9,"i24":6,"i25":9,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":9,"i34":10,"i35":10,"i36":10,"i37":10,"i38":10,"i39":10,"i40":10,"i41":10,"i42":10,"i43":10,"i44":10,"i45":10,"i46":10,"i47":10,"i48":10,"i49":10,"i50":10,"i51":10,"i52":10,"i53":10,"i54":10};
-var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":42,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":9,"i25":10,"i26":9,"i27":6,"i28":9,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":9,"i38":10,"i39":10,"i40":10,"i41":10,"i42":10,"i43":10,"i44":10,"i45":10,"i46":10,"i47":10,"i48":10,"i49":10,"i50":10,"i51":10,"i52":10,"i53":10,"i54":10,"i55":10,"i56":10,"i57":10,"i58":10,"i59":10};
+var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/ContainerView.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerPathItemProvider.html" title="class in org.eclipse.net4j.util.ui.views"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.Default.html" title="class in org.eclipse.net4j.util.ui.views"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/net4j/util/ui/views/ContainerView.html" target="_top">Frames</a></li>
-<li><a href="ContainerView.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,12 +82,15 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
@@ -85,13 +101,22 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.net4j.util.ui.views</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.net4j.util.ui.views</a></div>
 <h2 title="Class ContainerView" class="title">Class ContainerView</h2>
 </div>
 <div class="contentContainer">
@@ -99,13 +124,13 @@ var activeTableTab = "activeTableTab";
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/common/EventManager.html?is-external=true" title="class or interface in org.eclipse.core.commands.common">org.eclipse.core.commands.common.EventManager</a></li>
+<li><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/common/EventManager.html?is-external=true" title="class or interface in org.eclipse.core.commands.common" class="externalLink">org.eclipse.core.commands.common.EventManager</a></li>
 <li>
 <ul class="inheritance">
-<li><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true" title="class or interface in org.eclipse.ui.part">org.eclipse.ui.part.WorkbenchPart</a></li>
+<li><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true" title="class or interface in org.eclipse.ui.part" class="externalLink">org.eclipse.ui.part.WorkbenchPart</a></li>
 <li>
 <ul class="inheritance">
-<li><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/ViewPart.html?is-external=true" title="class or interface in org.eclipse.ui.part">org.eclipse.ui.part.ViewPart</a></li>
+<li><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/ViewPart.html?is-external=true" title="class or interface in org.eclipse.ui.part" class="externalLink">org.eclipse.ui.part.ViewPart</a></li>
 <li>
 <ul class="inheritance">
 <li>org.eclipse.net4j.util.ui.views.ContainerView</li>
@@ -123,17 +148,20 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IAdaptable</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IExecutableExtension.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IExecutableExtension</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelectionProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ISelectionProvider</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IPersistable.html?is-external=true" title="class or interface in org.eclipse.ui">IPersistable</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IViewPart.html?is-external=true" title="class or interface in org.eclipse.ui">IViewPart</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPart.html?is-external=true" title="class or interface in org.eclipse.ui">IWorkbenchPart</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPart2.html?is-external=true" title="class or interface in org.eclipse.ui">IWorkbenchPart2</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPart3.html?is-external=true" title="class or interface in org.eclipse.ui">IWorkbenchPart3</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/ISetSelectionTarget.html?is-external=true" title="class or interface in org.eclipse.ui.part">ISetSelectionTarget</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/IWorkbenchPartOrientation.html?is-external=true" title="class or interface in org.eclipse.ui.part">IWorkbenchPartOrientation</a></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IAdaptable</a></code>, <code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IExecutableExtension.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IExecutableExtension</a></code>, <code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelectionProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">ISelectionProvider</a></code>, <code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IPersistable.html?is-external=true" title="class or interface in org.eclipse.ui" class="externalLink">IPersistable</a></code>, <code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IViewPart.html?is-external=true" title="class or interface in org.eclipse.ui" class="externalLink">IViewPart</a></code>, <code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPart.html?is-external=true" title="class or interface in org.eclipse.ui" class="externalLink">IWorkbenchPart</a></code>, <code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPart2.html?is-external=true" title="class or interface in org.eclipse.ui" class="externalLink">IWorkbenchPart2</a></code>, <code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPart3.html?is-external=true" title="class or interface in org.eclipse.ui" class="externalLink">IWorkbenchPart3</a></code>, <code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/ISetSelectionTarget.html?is-external=true" title="class or interface in org.eclipse.ui.part" class="externalLink">ISetSelectionTarget</a></code>, <code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/IWorkbenchPartOrientation.html?is-external=true" title="class or interface in org.eclipse.ui.part" class="externalLink">IWorkbenchPartOrientation</a></code></dd>
 </dl>
 <dl>
 <dt>Direct Known Subclasses:</dt>
-<dd><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.Default.html" title="class in org.eclipse.net4j.util.ui.views">ContainerView.Default</a></dd>
+<dd><code><a href="ContainerView.Default.html" title="class in org.eclipse.net4j.util.ui.views">ContainerView.Default</a></code></dd>
 </dl>
 <hr>
-<br>
 <pre>public abstract class <span class="typeNameLabel">ContainerView</span>
-extends <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/ViewPart.html?is-external=true" title="class or interface in org.eclipse.ui.part">ViewPart</a>
-implements <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelectionProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ISelectionProvider</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/ISetSelectionTarget.html?is-external=true" title="class or interface in org.eclipse.ui.part">ISetSelectionTarget</a></pre>
+extends <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/ViewPart.html?is-external=true" title="class or interface in org.eclipse.ui.part" class="externalLink">ViewPart</a>
+implements <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelectionProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">ISelectionProvider</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/ISetSelectionTarget.html?is-external=true" title="class or interface in org.eclipse.ui.part" class="externalLink">ISetSelectionTarget</a></pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.9</dd>
+</dl>
 </li>
 </ul>
 </div>
@@ -141,335 +169,439 @@ implements <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="nested.class.summary">
+<li class="blockList"><a id="nested.class.summary">
 <!--   -->
 </a>
 <h3>Nested Class Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Nested Class Summary table, listing nested classes, and an explanation">
+<table class="memberSummary">
 <caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Class and Description</th>
+<th class="colSecond" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>static class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.Default.html" title="class in org.eclipse.net4j.util.ui.views">ContainerView.Default</a>&lt;<a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.Default.html" title="type parameter in ContainerView.Default">CONTAINER</a> extends <a href="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;?&gt;&gt;</span></code>&nbsp;</td>
+<td class="colFirst"><code>class&nbsp;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="ContainerView.ContainerViewItemProvider.html" title="class in org.eclipse.net4j.util.ui.views">ContainerView.ContainerViewItemProvider</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code>static class&nbsp;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="ContainerView.Default.html" title="class in org.eclipse.net4j.util.ui.views">ContainerView.Default</a>&lt;<a href="ContainerView.Default.html" title="type parameter in ContainerView.Default">CONTAINER</a> extends <a href="../../container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;?&gt;&gt;</span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code>protected static class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.MessageType.html" title="enum in org.eclipse.net4j.util.ui.views">ContainerView.MessageType</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="ContainerView.MessageType.html" title="enum in org.eclipse.net4j.util.ui.views">ContainerView.MessageType</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- =========== FIELD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.summary">
+<li class="blockList"><a id="field.summary">
 <!--   -->
 </a>
 <h3>Field Summary</h3>
 <ul class="blockList">
-<li class="blockList"><a name="fields.inherited.from.class.org.eclipse.ui.IWorkbenchPart">
+<li class="blockList"><a id="fields.inherited.from.class.org.eclipse.ui.IWorkbenchPart">
 <!--   -->
 </a>
-<h3>Fields inherited from interface&nbsp;org.eclipse.ui.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPart.html?is-external=true" title="class or interface in org.eclipse.ui">IWorkbenchPart</a></h3>
-<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPart.html?is-external=true#PROP_TITLE" title="class or interface in org.eclipse.ui">PROP_TITLE</a></code></li>
+<h3>Fields inherited from interface&nbsp;org.eclipse.ui.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPart.html?is-external=true" title="class or interface in org.eclipse.ui" class="externalLink">IWorkbenchPart</a></h3>
+<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPart.html?is-external=true#PROP_TITLE" title="class or interface in org.eclipse.ui" class="externalLink">PROP_TITLE</a></code></li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.summary">
+<li class="blockList"><a id="constructor.summary">
 <!--   -->
 </a>
 <h3>Constructor Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
+<table class="memberSummary">
 <caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Constructor and Description</th>
+<th class="colFirst" scope="col">Constructor</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#ContainerView--">ContainerView</a></span>()</code>&nbsp;</td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">ContainerView</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<table class="memberSummary">
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t6" class="tableTab"><span><a href="javascript:show(32);">Deprecated Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#addCollapseAllAction-org.eclipse.jface.action.IContributionManager-">addCollapseAllAction</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IContributionManager</a>&nbsp;manager)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addCollapseAllAction(org.eclipse.jface.action.IContributionManager)">addCollapseAllAction</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">IContributionManager</a>&nbsp;manager)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#addRefreshAction-org.eclipse.jface.action.IContributionManager-">addRefreshAction</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IContributionManager</a>&nbsp;manager)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addMenuGroup(org.eclipse.jface.action.IContributionManager,java.lang.String)">addMenuGroup</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">IContributionManager</a>&nbsp;manager,
+            java.lang.String&nbsp;groupName)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#addSelectionChangedListener-org.eclipse.jface.viewers.ISelectionChangedListener-">addSelectionChangedListener</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelectionChangedListener.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ISelectionChangedListener</a>&nbsp;listener)</code>&nbsp;</td>
+<td class="colFirst"><code>protected void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addMenuGroupAdditions(org.eclipse.jface.action.IContributionManager)">addMenuGroupAdditions</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">IContributionManager</a>&nbsp;manager)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#addSeparator-org.eclipse.jface.action.IContributionManager-">addSeparator</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IContributionManager</a>&nbsp;manager)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addRefreshAction(org.eclipse.jface.action.IContributionManager)">addRefreshAction</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">IContributionManager</a>&nbsp;manager)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#closeView--">closeView</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addSelectionChangedListener(org.eclipse.jface.viewers.ISelectionChangedListener)">addSelectionChangedListener</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelectionChangedListener.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">ISelectionChangedListener</a>&nbsp;listener)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#collapseAllPressed--">collapseAllPressed</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addSeparator(org.eclipse.jface.action.IContributionManager)">addSeparator</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">IContributionManager</a>&nbsp;manager)</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 3.9 use <a href="#addMenuGroupAdditions(org.eclipse.jface.action.IContributionManager)"><code>addMenuGroupAdditions(IContributionManager)</code></a>.</div>
+</div>
+</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#contributeToActionBars--">contributeToActionBars</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#closeView()">closeView</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code>protected <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider</a>&lt;<a href="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#createContainerItemProvider--">createContainerItemProvider</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>protected void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#collapseAllPressed()">collapseAllPressed</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
-<td class="colFirst"><code>protected <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IContentProvider</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#createContentProvider--">createContentProvider</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>protected void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#contributeToActionBars()">contributeToActionBars</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
-<td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#createdUI--">createdUI</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="ContainerItemProvider.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider</a>&lt;<a href="../../container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createContainerItemProvider()">createContainerItemProvider</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
-<td class="colFirst"><code>protected <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelDecorator.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ILabelDecorator</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#createLabelDecorator--">createLabelDecorator</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">IContentProvider</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createContentProvider()">createContentProvider</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i11" class="rowColor">
-<td class="colFirst"><code>protected <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IBaseLabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IBaseLabelProvider</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#createLabelProvider--">createLabelProvider</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>protected void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createdUI()">createdUI</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i12" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#createPartControl-org.eclipse.swt.widgets.Composite-">createPartControl</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Composite</a>&nbsp;parent)</code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelDecorator.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">ILabelDecorator</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createLabelDecorator()">createLabelDecorator</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i13" class="rowColor">
-<td class="colFirst"><code>protected <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Control</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#createUI-org.eclipse.swt.widgets.Composite-">createUI</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Composite</a>&nbsp;parent)</code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IBaseLabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">IBaseLabelProvider</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createLabelProvider()">createLabelProvider</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i14" class="altColor">
-<td class="colFirst"><code>protected <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerSorter.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ViewerSorter</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#createViewerSorter--">createViewerSorter</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createPartControl(org.eclipse.swt.widgets.Composite)">createPartControl</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets" class="externalLink">Composite</a>&nbsp;parent)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i15" class="rowColor">
-<td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#doubleClicked-java.lang.Object-">doubleClicked</a></span>(java.lang.Object&nbsp;object)</code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets" class="externalLink">Control</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createUI(org.eclipse.swt.widgets.Composite)">createUI</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets" class="externalLink">Composite</a>&nbsp;parent)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i16" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#expandElement-java.lang.Object-int-">expandElement</a></span>(java.lang.Object&nbsp;element,
-             int&nbsp;level)</code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerComparator.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">ViewerComparator</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createViewerComparator()">createViewerComparator</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i17" class="rowColor">
-<td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#fillContextMenu-org.eclipse.jface.action.IMenuManager-org.eclipse.jface.viewers.ITreeSelection-">fillContextMenu</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IMenuManager</a>&nbsp;manager,
-               <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeSelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ITreeSelection</a>&nbsp;selection)</code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerSorter.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">ViewerSorter</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createViewerSorter()">createViewerSorter</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i18" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#fillLocalPullDown-org.eclipse.jface.action.IMenuManager-">fillLocalPullDown</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IMenuManager</a>&nbsp;manager)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#doubleClicked(java.lang.Object)">doubleClicked</a></span>&#8203;(java.lang.Object&nbsp;object)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i19" class="rowColor">
-<td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#fillLocalToolBar-org.eclipse.jface.action.IToolBarManager-">fillLocalToolBar</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IToolBarManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IToolBarManager</a>&nbsp;manager)</code>&nbsp;</td>
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#expandElement(java.lang.Object,int)">expandElement</a></span>&#8203;(java.lang.Object&nbsp;element,
+             int&nbsp;level)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i20" class="altColor">
-<td class="colFirst"><code>&lt;T&gt;&nbsp;T</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#getAdapter-java.lang.Class-">getAdapter</a></span>(java.lang.Class&lt;T&gt;&nbsp;adapter)</code>&nbsp;</td>
+<td class="colFirst"><code>protected void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#fillContextMenu(org.eclipse.jface.action.IMenuManager,org.eclipse.jface.viewers.ITreeSelection)">fillContextMenu</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">IMenuManager</a>&nbsp;manager,
+               <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeSelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">ITreeSelection</a>&nbsp;selection)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i21" class="rowColor">
-<td class="colFirst"><code>static <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/resource/ImageDescriptor.html?is-external=true" title="class or interface in org.eclipse.jface.resource">ImageDescriptor</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#getAddImageDescriptor--">getAddImageDescriptor</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>protected void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#fillLocalPullDown(org.eclipse.jface.action.IMenuManager)">fillLocalPullDown</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">IMenuManager</a>&nbsp;manager)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i22" class="altColor">
-<td class="colFirst"><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/Action.html?is-external=true" title="class or interface in org.eclipse.jface.action">Action</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#getCollapseAllAction--">getCollapseAllAction</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>protected void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#fillLocalToolBar(org.eclipse.jface.action.IToolBarManager)">fillLocalToolBar</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IToolBarManager.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">IToolBarManager</a>&nbsp;manager)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i23" class="rowColor">
-<td class="colFirst"><code>static <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/resource/ImageDescriptor.html?is-external=true" title="class or interface in org.eclipse.jface.resource">ImageDescriptor</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#getCollapseAllImageDescriptor--">getCollapseAllImageDescriptor</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>&lt;T&gt;&nbsp;T</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAdapter(java.lang.Class)">getAdapter</a></span>&#8203;(java.lang.Class&lt;T&gt;&nbsp;adapter)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i24" class="altColor">
-<td class="colFirst"><code>protected abstract <a href="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;?&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#getContainer--">getContainer</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/resource/ImageDescriptor.html?is-external=true" title="class or interface in org.eclipse.jface.resource" class="externalLink">ImageDescriptor</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAddImageDescriptor()">getAddImageDescriptor</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i25" class="rowColor">
-<td class="colFirst"><code>static <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/resource/ImageDescriptor.html?is-external=true" title="class or interface in org.eclipse.jface.resource">ImageDescriptor</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#getDeleteImageDescriptor--">getDeleteImageDescriptor</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/Action.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">Action</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCollapseAllAction()">getCollapseAllAction</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i26" class="altColor">
-<td class="colFirst"><code>protected <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Display.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Display</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#getDisplay--">getDisplay</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/resource/ImageDescriptor.html?is-external=true" title="class or interface in org.eclipse.jface.resource" class="externalLink">ImageDescriptor</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCollapseAllImageDescriptor()">getCollapseAllImageDescriptor</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i27" class="rowColor">
-<td class="colFirst"><code>protected <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Color.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Color</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#getElementBackground-java.lang.Object-">getElementBackground</a></span>(java.lang.Object&nbsp;element)</code>&nbsp;</td>
+<td class="colFirst"><code>protected abstract <a href="../../container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;?&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getContainer()">getContainer</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i28" class="altColor">
-<td class="colFirst"><code>protected <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Font.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Font</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#getElementFont-java.lang.Object-">getElementFont</a></span>(java.lang.Object&nbsp;element)</code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/resource/ImageDescriptor.html?is-external=true" title="class or interface in org.eclipse.jface.resource" class="externalLink">ImageDescriptor</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDeleteImageDescriptor()">getDeleteImageDescriptor</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i29" class="rowColor">
-<td class="colFirst"><code>protected <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Color.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Color</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#getElementForeground-java.lang.Object-">getElementForeground</a></span>(java.lang.Object&nbsp;element)</code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Display.html?is-external=true" title="class or interface in org.eclipse.swt.widgets" class="externalLink">Display</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDisplay()">getDisplay</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i30" class="altColor">
-<td class="colFirst"><code>protected <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Image.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Image</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#getElementImage-java.lang.Object-">getElementImage</a></span>(java.lang.Object&nbsp;element)</code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Color.html?is-external=true" title="class or interface in org.eclipse.swt.graphics" class="externalLink">Color</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getElementBackground(java.lang.Object)">getElementBackground</a></span>&#8203;(java.lang.Object&nbsp;element)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i31" class="rowColor">
-<td class="colFirst"><code>protected java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#getElementText-java.lang.Object-">getElementText</a></span>(java.lang.Object&nbsp;element)</code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Font.html?is-external=true" title="class or interface in org.eclipse.swt.graphics" class="externalLink">Font</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getElementFont(java.lang.Object)">getElementFont</a></span>&#8203;(java.lang.Object&nbsp;element)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i32" class="altColor">
-<td class="colFirst"><code>protected <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/Action.html?is-external=true" title="class or interface in org.eclipse.jface.action">Action</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#getRefreshAction--">getRefreshAction</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Color.html?is-external=true" title="class or interface in org.eclipse.swt.graphics" class="externalLink">Color</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getElementForeground(java.lang.Object)">getElementForeground</a></span>&#8203;(java.lang.Object&nbsp;element)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i33" class="rowColor">
-<td class="colFirst"><code>static <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/resource/ImageDescriptor.html?is-external=true" title="class or interface in org.eclipse.jface.resource">ImageDescriptor</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#getRefreshImageDescriptor--">getRefreshImageDescriptor</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Image.html?is-external=true" title="class or interface in org.eclipse.swt.graphics" class="externalLink">Image</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getElementImage(java.lang.Object)">getElementImage</a></span>&#8203;(java.lang.Object&nbsp;element)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i34" class="altColor">
-<td class="colFirst"><code>protected <a href="../../../../../../org/eclipse/net4j/util/ui/views/IElementFilter.html" title="interface in org.eclipse.net4j.util.ui.views">IElementFilter</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#getRootElementFilter--">getRootElementFilter</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>protected java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getElementText(java.lang.Object)">getElementText</a></span>&#8203;(java.lang.Object&nbsp;element)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i35" class="rowColor">
-<td class="colFirst"><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ISelection</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#getSelection--">getSelection</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="ContainerItemProvider.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider</a>&lt;<a href="../../container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getItemProvider()">getItemProvider</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i36" class="altColor">
-<td class="colFirst"><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Shell.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Shell</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#getShell--">getShell</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/Action.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">Action</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRefreshAction()">getRefreshAction</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i37" class="rowColor">
-<td class="colFirst"><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/TreeViewer.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">TreeViewer</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#getViewer--">getViewer</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/resource/ImageDescriptor.html?is-external=true" title="class or interface in org.eclipse.jface.resource" class="externalLink">ImageDescriptor</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRefreshImageDescriptor()">getRefreshImageDescriptor</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i38" class="altColor">
-<td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#hookContextMenu--">hookContextMenu</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="IElementFilter.html" title="interface in org.eclipse.net4j.util.ui.views">IElementFilter</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRootElementFilter()">getRootElementFilter</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i39" class="rowColor">
-<td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#hookDoubleClick--">hookDoubleClick</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">ISelection</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSelection()">getSelection</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i40" class="altColor">
-<td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#initViewer--">initViewer</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Shell.html?is-external=true" title="class or interface in org.eclipse.swt.widgets" class="externalLink">Shell</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getShell()">getShell</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i41" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#refreshElement-java.lang.Object-boolean-">refreshElement</a></span>(java.lang.Object&nbsp;element,
-              boolean&nbsp;updateLabels)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/TreeViewer.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">TreeViewer</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getViewer()">getViewer</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i42" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#refreshPressed--">refreshPressed</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#handleElementEvent(org.eclipse.net4j.util.event.IEvent)">handleElementEvent</a></span>&#8203;(<a href="../../event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i43" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#refreshPropertySheetPage--">refreshPropertySheetPage</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>protected void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hookContextMenu()">hookContextMenu</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i44" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#refreshViewer-boolean-">refreshViewer</a></span>(boolean&nbsp;updateLabels)</code>&nbsp;</td>
+<td class="colFirst"><code>protected void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hookDoubleClick()">hookDoubleClick</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i45" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#removeSelectionChangedListener-org.eclipse.jface.viewers.ISelectionChangedListener-">removeSelectionChangedListener</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelectionChangedListener.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ISelectionChangedListener</a>&nbsp;listener)</code>&nbsp;</td>
+<td class="colFirst"><code>protected void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#initViewer()">initViewer</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i46" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#resetInput--">resetInput</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#refreshElement(java.lang.Object,boolean)">refreshElement</a></span>&#8203;(java.lang.Object&nbsp;element,
+              boolean&nbsp;updateLabels)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i47" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#revealElement-java.lang.Object-">revealElement</a></span>(java.lang.Object&nbsp;element)</code>&nbsp;</td>
+<td class="colFirst"><code>protected void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#refreshPressed()">refreshPressed</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i48" class="altColor">
-<td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#selectionChanged-org.eclipse.ui.IActionBars-org.eclipse.jface.viewers.ITreeSelection-">selectionChanged</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IActionBars.html?is-external=true" title="class or interface in org.eclipse.ui">IActionBars</a>&nbsp;bars,
-                <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeSelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ITreeSelection</a>&nbsp;selection)</code>&nbsp;</td>
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#refreshPropertySheetPage()">refreshPropertySheetPage</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i49" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#selectReveal-org.eclipse.jface.viewers.ISelection-">selectReveal</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ISelection</a>&nbsp;selection)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#refreshViewer(boolean)">refreshViewer</a></span>&#8203;(boolean&nbsp;updateLabels)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i50" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#setFocus--">setFocus</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeSelectionChangedListener(org.eclipse.jface.viewers.ISelectionChangedListener)">removeSelectionChangedListener</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelectionChangedListener.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">ISelectionChangedListener</a>&nbsp;listener)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i51" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#setSelection-org.eclipse.jface.viewers.ISelection-">setSelection</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ISelection</a>&nbsp;selection)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#resetInput()">resetInput</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i52" class="altColor">
-<td class="colFirst"><code>protected boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#showMessage-org.eclipse.net4j.util.ui.views.ContainerView.MessageType-java.lang.String-">showMessage</a></span>(<a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.MessageType.html" title="enum in org.eclipse.net4j.util.ui.views">ContainerView.MessageType</a>&nbsp;type,
-           java.lang.String&nbsp;message)</code>&nbsp;</td>
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#revealElement(java.lang.Object)">revealElement</a></span>&#8203;(java.lang.Object&nbsp;element)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i53" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#showMessage-java.lang.String-">showMessage</a></span>(java.lang.String&nbsp;message)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#selectionChanged(org.eclipse.ui.IActionBars,org.eclipse.jface.viewers.ITreeSelection)">selectionChanged</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IActionBars.html?is-external=true" title="class or interface in org.eclipse.ui" class="externalLink">IActionBars</a>&nbsp;bars,
+                <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeSelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">ITreeSelection</a>&nbsp;selection)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i54" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#updateLabels-java.lang.Object-">updateLabels</a></span>(java.lang.Object&nbsp;element)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#selectReveal(org.eclipse.jface.viewers.ISelection)">selectReveal</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">ISelection</a>&nbsp;selection)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i55" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setFocus()">setFocus</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i56" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSelection(org.eclipse.jface.viewers.ISelection)">setSelection</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">ISelection</a>&nbsp;selection)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i57" class="rowColor">
+<td class="colFirst"><code>protected void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#showMessage(java.lang.String)">showMessage</a></span>&#8203;(java.lang.String&nbsp;message)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i58" class="altColor">
+<td class="colFirst"><code>protected boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#showMessage(org.eclipse.net4j.util.ui.views.ContainerView.MessageType,java.lang.String)">showMessage</a></span>&#8203;(<a href="ContainerView.MessageType.html" title="enum in org.eclipse.net4j.util.ui.views">ContainerView.MessageType</a>&nbsp;type,
+           java.lang.String&nbsp;message)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i59" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateLabels(java.lang.Object)">updateLabels</a></span>&#8203;(java.lang.Object&nbsp;element)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.ui.part.ViewPart">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.ui.part.ViewPart">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.ui.part.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/ViewPart.html?is-external=true" title="class or interface in org.eclipse.ui.part">ViewPart</a></h3>
-<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/ViewPart.html?is-external=true#checkSite-org.eclipse.ui.IWorkbenchPartSite-" title="class or interface in org.eclipse.ui.part">checkSite</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/ViewPart.html?is-external=true#getViewSite--" title="class or interface in org.eclipse.ui.part">getViewSite</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/ViewPart.html?is-external=true#init-org.eclipse.ui.IViewSite-" title="class or interface in org.eclipse.ui.part">init</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/ViewPart.html?is-external=true#init-org.eclipse.ui.IViewSite-org.eclipse.ui.IMemento-" title="class or interface in org.eclipse.ui.part">init</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/ViewPart.html?is-external=true#saveState-org.eclipse.ui.IMemento-" title="class or interface in org.eclipse.ui.part">saveState</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/ViewPart.html?is-external=true#setContentDescription-java.lang.String-" title="class or interface in org.eclipse.ui.part">setContentDescription</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/ViewPart.html?is-external=true#setInitializationData-org.eclipse.core.runtime.IConfigurationElement-java.lang.String-java.lang.Object-" title="class or interface in org.eclipse.ui.part">setInitializationData</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/ViewPart.html?is-external=true#setPartName-java.lang.String-" title="class or interface in org.eclipse.ui.part">setPartName</a></code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.ui.part.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/ViewPart.html?is-external=true" title="class or interface in org.eclipse.ui.part" class="externalLink">ViewPart</a></h3>
+<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/ViewPart.html?is-external=true#checkSite(org.eclipse.ui.IWorkbenchPartSite)" title="class or interface in org.eclipse.ui.part" class="externalLink">checkSite</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/ViewPart.html?is-external=true#getViewSite()" title="class or interface in org.eclipse.ui.part" class="externalLink">getViewSite</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/ViewPart.html?is-external=true#init(org.eclipse.ui.IViewSite)" title="class or interface in org.eclipse.ui.part" class="externalLink">init</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/ViewPart.html?is-external=true#init(org.eclipse.ui.IViewSite,org.eclipse.ui.IMemento)" title="class or interface in org.eclipse.ui.part" class="externalLink">init</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/ViewPart.html?is-external=true#saveState(org.eclipse.ui.IMemento)" title="class or interface in org.eclipse.ui.part" class="externalLink">saveState</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/ViewPart.html?is-external=true#setContentDescription(java.lang.String)" title="class or interface in org.eclipse.ui.part" class="externalLink">setContentDescription</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/ViewPart.html?is-external=true#setInitializationData(org.eclipse.core.runtime.IConfigurationElement,java.lang.String,java.lang.Object)" title="class or interface in org.eclipse.ui.part" class="externalLink">setInitializationData</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/ViewPart.html?is-external=true#setPartName(java.lang.String)" title="class or interface in org.eclipse.ui.part" class="externalLink">setPartName</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.ui.part.WorkbenchPart">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.ui.part.WorkbenchPart">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.ui.part.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true" title="class or interface in org.eclipse.ui.part">WorkbenchPart</a></h3>
-<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#addPartPropertyListener-org.eclipse.jface.util.IPropertyChangeListener-" title="class or interface in org.eclipse.ui.part">addPartPropertyListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#addPropertyListener-org.eclipse.ui.IPropertyListener-" title="class or interface in org.eclipse.ui.part">addPropertyListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#dispose--" title="class or interface in org.eclipse.ui.part">dispose</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#firePartPropertyChanged-java.lang.String-java.lang.String-java.lang.String-" title="class or interface in org.eclipse.ui.part">firePartPropertyChanged</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#firePropertyChange-int-" title="class or interface in org.eclipse.ui.part">firePropertyChange</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#getConfigurationElement--" title="class or interface in org.eclipse.ui.part">getConfigurationElement</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#getContentDescription--" title="class or interface in org.eclipse.ui.part">getContentDescription</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#getDefaultImage--" title="class or interface in org.eclipse.ui.part">getDefaultImage</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#getOrientation--" title="class or interface in org.eclipse.ui.part">getOrientation</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#getPartName--" title="class or interface in org.eclipse.ui.part">getPartName</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#getPartProperties--" title="class or interface in org.eclipse.ui.part">getPartProperties</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#getPartProperty-java.lang.String-" title="class or interface in org.eclipse.ui.part">getPartProperty</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#getSite--" title="class or interface in org.eclipse.ui.part">getSite</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#getTitle--" title="class or interface in org.eclipse.ui.part">getTitle</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#getTitleImage--" title="class or interface in org.eclipse.ui.part">getTitleImage</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#getTitleToolTip--" title="class or interface in org.eclipse.ui.part">getTitleToolTip</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#removePartPropertyListener-org.eclipse.jface.util.IPropertyChangeListener-" title="class or interface in org.eclipse.ui.part">removePartPropertyListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#removePropertyListener-org.eclipse.ui.IPropertyListener-" title="class or interface in org.eclipse.ui.part">removePropertyListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#setPartProperty-java.lang.String-java.lang.String-" title="class or interface in org.eclipse.ui.part">setPartProperty</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#setSite-org.eclipse.ui.IWorkbenchPartSite-" title="class or interface in org.eclipse.ui.part">setSite</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#setTitle-java.lang.String-" title="class or interface in org.eclipse.ui.part">setTitle</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#setTitleImage-org.eclipse.swt.graphics.Image-" title="class or interface in org.eclipse.ui.part">setTitleImage</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#setTitleToolTip-java.lang.String-" title="class or interface in org.eclipse.ui.part">setTitleToolTip</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#showBusy-boolean-" title="class or interface in org.eclipse.ui.part">showBusy</a></code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.ui.part.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true" title="class or interface in org.eclipse.ui.part" class="externalLink">WorkbenchPart</a></h3>
+<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#addPartPropertyListener(org.eclipse.jface.util.IPropertyChangeListener)" title="class or interface in org.eclipse.ui.part" class="externalLink">addPartPropertyListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#addPropertyListener(org.eclipse.ui.IPropertyListener)" title="class or interface in org.eclipse.ui.part" class="externalLink">addPropertyListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#dispose()" title="class or interface in org.eclipse.ui.part" class="externalLink">dispose</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#firePartPropertyChanged(java.lang.String,java.lang.String,java.lang.String)" title="class or interface in org.eclipse.ui.part" class="externalLink">firePartPropertyChanged</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#firePropertyChange(int)" title="class or interface in org.eclipse.ui.part" class="externalLink">firePropertyChange</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#getConfigurationElement()" title="class or interface in org.eclipse.ui.part" class="externalLink">getConfigurationElement</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#getContentDescription()" title="class or interface in org.eclipse.ui.part" class="externalLink">getContentDescription</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#getDefaultImage()" title="class or interface in org.eclipse.ui.part" class="externalLink">getDefaultImage</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#getOrientation()" title="class or interface in org.eclipse.ui.part" class="externalLink">getOrientation</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#getPartName()" title="class or interface in org.eclipse.ui.part" class="externalLink">getPartName</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#getPartProperties()" title="class or interface in org.eclipse.ui.part" class="externalLink">getPartProperties</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#getPartProperty(java.lang.String)" title="class or interface in org.eclipse.ui.part" class="externalLink">getPartProperty</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#getSite()" title="class or interface in org.eclipse.ui.part" class="externalLink">getSite</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#getTitle()" title="class or interface in org.eclipse.ui.part" class="externalLink">getTitle</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#getTitleImage()" title="class or interface in org.eclipse.ui.part" class="externalLink">getTitleImage</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#getTitleToolTip()" title="class or interface in org.eclipse.ui.part" class="externalLink">getTitleToolTip</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#removePartPropertyListener(org.eclipse.jface.util.IPropertyChangeListener)" title="class or interface in org.eclipse.ui.part" class="externalLink">removePartPropertyListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#removePropertyListener(org.eclipse.ui.IPropertyListener)" title="class or interface in org.eclipse.ui.part" class="externalLink">removePropertyListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#setPartProperty(java.lang.String,java.lang.String)" title="class or interface in org.eclipse.ui.part" class="externalLink">setPartProperty</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#setSite(org.eclipse.ui.IWorkbenchPartSite)" title="class or interface in org.eclipse.ui.part" class="externalLink">setSite</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#setTitle(java.lang.String)" title="class or interface in org.eclipse.ui.part" class="externalLink">setTitle</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#setTitleImage(org.eclipse.swt.graphics.Image)" title="class or interface in org.eclipse.ui.part" class="externalLink">setTitleImage</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#setTitleToolTip(java.lang.String)" title="class or interface in org.eclipse.ui.part" class="externalLink">setTitleToolTip</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#showBusy(boolean)" title="class or interface in org.eclipse.ui.part" class="externalLink">showBusy</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.core.commands.common.EventManager">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.core.commands.common.EventManager">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.core.commands.common.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/common/EventManager.html?is-external=true" title="class or interface in org.eclipse.core.commands.common">EventManager</a></h3>
-<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/common/EventManager.html?is-external=true#addListenerObject-java.lang.Object-" title="class or interface in org.eclipse.core.commands.common">addListenerObject</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/common/EventManager.html?is-external=true#clearListeners--" title="class or interface in org.eclipse.core.commands.common">clearListeners</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/common/EventManager.html?is-external=true#getListeners--" title="class or interface in org.eclipse.core.commands.common">getListeners</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/common/EventManager.html?is-external=true#isListenerAttached--" title="class or interface in org.eclipse.core.commands.common">isListenerAttached</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/common/EventManager.html?is-external=true#removeListenerObject-java.lang.Object-" title="class or interface in org.eclipse.core.commands.common">removeListenerObject</a></code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.core.commands.common.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/common/EventManager.html?is-external=true" title="class or interface in org.eclipse.core.commands.common" class="externalLink">EventManager</a></h3>
+<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/common/EventManager.html?is-external=true#addListenerObject(java.lang.Object)" title="class or interface in org.eclipse.core.commands.common" class="externalLink">addListenerObject</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/common/EventManager.html?is-external=true#clearListeners()" title="class or interface in org.eclipse.core.commands.common" class="externalLink">clearListeners</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/common/EventManager.html?is-external=true#getListeners()" title="class or interface in org.eclipse.core.commands.common" class="externalLink">getListeners</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/common/EventManager.html?is-external=true#isListenerAttached()" title="class or interface in org.eclipse.core.commands.common" class="externalLink">isListenerAttached</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/common/EventManager.html?is-external=true#removeListenerObject(java.lang.Object)" title="class or interface in org.eclipse.core.commands.common" class="externalLink">removeListenerObject</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
+<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
 <code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.ui.IWorkbenchPart">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.ui.IWorkbenchPart">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.ui.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPart.html?is-external=true" title="class or interface in org.eclipse.ui">IWorkbenchPart</a></h3>
-<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPart.html?is-external=true#addPropertyListener-org.eclipse.ui.IPropertyListener-" title="class or interface in org.eclipse.ui">addPropertyListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPart.html?is-external=true#dispose--" title="class or interface in org.eclipse.ui">dispose</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPart.html?is-external=true#getSite--" title="class or interface in org.eclipse.ui">getSite</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPart.html?is-external=true#getTitle--" title="class or interface in org.eclipse.ui">getTitle</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPart.html?is-external=true#getTitleImage--" title="class or interface in org.eclipse.ui">getTitleImage</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPart.html?is-external=true#getTitleToolTip--" title="class or interface in org.eclipse.ui">getTitleToolTip</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPart.html?is-external=true#removePropertyListener-org.eclipse.ui.IPropertyListener-" title="class or interface in org.eclipse.ui">removePropertyListener</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.ui.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPart.html?is-external=true" title="class or interface in org.eclipse.ui" class="externalLink">IWorkbenchPart</a></h3>
+<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPart.html?is-external=true#addPropertyListener(org.eclipse.ui.IPropertyListener)" title="class or interface in org.eclipse.ui" class="externalLink">addPropertyListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPart.html?is-external=true#dispose()" title="class or interface in org.eclipse.ui" class="externalLink">dispose</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPart.html?is-external=true#getSite()" title="class or interface in org.eclipse.ui" class="externalLink">getSite</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPart.html?is-external=true#getTitle()" title="class or interface in org.eclipse.ui" class="externalLink">getTitle</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPart.html?is-external=true#getTitleImage()" title="class or interface in org.eclipse.ui" class="externalLink">getTitleImage</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPart.html?is-external=true#getTitleToolTip()" title="class or interface in org.eclipse.ui" class="externalLink">getTitleToolTip</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPart.html?is-external=true#removePropertyListener(org.eclipse.ui.IPropertyListener)" title="class or interface in org.eclipse.ui" class="externalLink">removePropertyListener</a></code></li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -477,12 +609,13 @@ implements <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/
 <ul class="blockList">
 <li class="blockList">
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.detail">
+<li class="blockList"><a id="constructor.detail">
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="ContainerView--">
+<a id="&lt;init&gt;()">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -493,587 +626,663 @@ implements <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/
 </ul>
 </li>
 </ul>
+</section>
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="getShell--">
+<a id="getShell()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getShell</h4>
-<pre>public&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Shell.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Shell</a>&nbsp;getShell()</pre>
+<pre class="methodSignature">public&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Shell.html?is-external=true" title="class or interface in org.eclipse.swt.widgets" class="externalLink">Shell</a>&nbsp;getShell()</pre>
 </li>
 </ul>
-<a name="getViewer--">
+<a id="getItemProvider()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getItemProvider</h4>
+<pre class="methodSignature">public&nbsp;<a href="ContainerItemProvider.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider</a>&lt;<a href="../../container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;&gt;&nbsp;getItemProvider()</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.9</dd>
+</dl>
+</li>
+</ul>
+<a id="getViewer()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getViewer</h4>
-<pre>public&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/TreeViewer.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">TreeViewer</a>&nbsp;getViewer()</pre>
+<pre class="methodSignature">public&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/TreeViewer.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">TreeViewer</a>&nbsp;getViewer()</pre>
 </li>
 </ul>
-<a name="setFocus--">
+<a id="setFocus()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setFocus</h4>
-<pre>public&nbsp;void&nbsp;setFocus()</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setFocus()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPart.html?is-external=true#setFocus--" title="class or interface in org.eclipse.ui">setFocus</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPart.html?is-external=true" title="class or interface in org.eclipse.ui">IWorkbenchPart</a></code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPart.html?is-external=true#setFocus()" title="class or interface in org.eclipse.ui" class="externalLink">setFocus</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPart.html?is-external=true" title="class or interface in org.eclipse.ui" class="externalLink">IWorkbenchPart</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#setFocus--" title="class or interface in org.eclipse.ui.part">setFocus</a></code>&nbsp;in class&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true" title="class or interface in org.eclipse.ui.part">WorkbenchPart</a></code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#setFocus()" title="class or interface in org.eclipse.ui.part" class="externalLink">setFocus</a></code>&nbsp;in class&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true" title="class or interface in org.eclipse.ui.part" class="externalLink">WorkbenchPart</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="resetInput--">
+<a id="resetInput()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>resetInput</h4>
-<pre>public&nbsp;void&nbsp;resetInput()</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;resetInput()</pre>
 </li>
 </ul>
-<a name="getSelection--">
+<a id="getSelection()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getSelection</h4>
-<pre>public&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ISelection</a>&nbsp;getSelection()</pre>
+<pre class="methodSignature">public&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">ISelection</a>&nbsp;getSelection()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelectionProvider.html?is-external=true#getSelection--" title="class or interface in org.eclipse.jface.viewers">getSelection</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelectionProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ISelectionProvider</a></code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelectionProvider.html?is-external=true#getSelection()" title="class or interface in org.eclipse.jface.viewers" class="externalLink">getSelection</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelectionProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">ISelectionProvider</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
 </dl>
 </li>
 </ul>
-<a name="setSelection-org.eclipse.jface.viewers.ISelection-">
+<a id="setSelection(org.eclipse.jface.viewers.ISelection)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setSelection</h4>
-<pre>public&nbsp;void&nbsp;setSelection(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ISelection</a>&nbsp;selection)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setSelection&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">ISelection</a>&nbsp;selection)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelectionProvider.html?is-external=true#setSelection-org.eclipse.jface.viewers.ISelection-" title="class or interface in org.eclipse.jface.viewers">setSelection</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelectionProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ISelectionProvider</a></code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelectionProvider.html?is-external=true#setSelection(org.eclipse.jface.viewers.ISelection)" title="class or interface in org.eclipse.jface.viewers" class="externalLink">setSelection</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelectionProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">ISelectionProvider</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
 </dl>
 </li>
 </ul>
-<a name="addSelectionChangedListener-org.eclipse.jface.viewers.ISelectionChangedListener-">
+<a id="addSelectionChangedListener(org.eclipse.jface.viewers.ISelectionChangedListener)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>addSelectionChangedListener</h4>
-<pre>public&nbsp;void&nbsp;addSelectionChangedListener(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelectionChangedListener.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ISelectionChangedListener</a>&nbsp;listener)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;addSelectionChangedListener&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelectionChangedListener.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">ISelectionChangedListener</a>&nbsp;listener)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelectionProvider.html?is-external=true#addSelectionChangedListener-org.eclipse.jface.viewers.ISelectionChangedListener-" title="class or interface in org.eclipse.jface.viewers">addSelectionChangedListener</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelectionProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ISelectionProvider</a></code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelectionProvider.html?is-external=true#addSelectionChangedListener(org.eclipse.jface.viewers.ISelectionChangedListener)" title="class or interface in org.eclipse.jface.viewers" class="externalLink">addSelectionChangedListener</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelectionProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">ISelectionProvider</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
 </dl>
 </li>
 </ul>
-<a name="removeSelectionChangedListener-org.eclipse.jface.viewers.ISelectionChangedListener-">
+<a id="removeSelectionChangedListener(org.eclipse.jface.viewers.ISelectionChangedListener)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>removeSelectionChangedListener</h4>
-<pre>public&nbsp;void&nbsp;removeSelectionChangedListener(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelectionChangedListener.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ISelectionChangedListener</a>&nbsp;listener)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;removeSelectionChangedListener&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelectionChangedListener.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">ISelectionChangedListener</a>&nbsp;listener)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelectionProvider.html?is-external=true#removeSelectionChangedListener-org.eclipse.jface.viewers.ISelectionChangedListener-" title="class or interface in org.eclipse.jface.viewers">removeSelectionChangedListener</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelectionProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ISelectionProvider</a></code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelectionProvider.html?is-external=true#removeSelectionChangedListener(org.eclipse.jface.viewers.ISelectionChangedListener)" title="class or interface in org.eclipse.jface.viewers" class="externalLink">removeSelectionChangedListener</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelectionProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">ISelectionProvider</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
 </dl>
 </li>
 </ul>
-<a name="selectReveal-org.eclipse.jface.viewers.ISelection-">
+<a id="selectReveal(org.eclipse.jface.viewers.ISelection)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>selectReveal</h4>
-<pre>public&nbsp;void&nbsp;selectReveal(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ISelection</a>&nbsp;selection)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;selectReveal&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">ISelection</a>&nbsp;selection)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/ISetSelectionTarget.html?is-external=true#selectReveal-org.eclipse.jface.viewers.ISelection-" title="class or interface in org.eclipse.ui.part">selectReveal</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/ISetSelectionTarget.html?is-external=true" title="class or interface in org.eclipse.ui.part">ISetSelectionTarget</a></code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/ISetSelectionTarget.html?is-external=true#selectReveal(org.eclipse.jface.viewers.ISelection)" title="class or interface in org.eclipse.ui.part" class="externalLink">selectReveal</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/ISetSelectionTarget.html?is-external=true" title="class or interface in org.eclipse.ui.part" class="externalLink">ISetSelectionTarget</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="createPartControl-org.eclipse.swt.widgets.Composite-">
+<a id="createPartControl(org.eclipse.swt.widgets.Composite)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createPartControl</h4>
-<pre>public final&nbsp;void&nbsp;createPartControl(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Composite</a>&nbsp;parent)</pre>
+<pre class="methodSignature">public final&nbsp;void&nbsp;createPartControl&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets" class="externalLink">Composite</a>&nbsp;parent)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPart.html?is-external=true#createPartControl-org.eclipse.swt.widgets.Composite-" title="class or interface in org.eclipse.ui">createPartControl</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPart.html?is-external=true" title="class or interface in org.eclipse.ui">IWorkbenchPart</a></code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPart.html?is-external=true#createPartControl(org.eclipse.swt.widgets.Composite)" title="class or interface in org.eclipse.ui" class="externalLink">createPartControl</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPart.html?is-external=true" title="class or interface in org.eclipse.ui" class="externalLink">IWorkbenchPart</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#createPartControl-org.eclipse.swt.widgets.Composite-" title="class or interface in org.eclipse.ui.part">createPartControl</a></code>&nbsp;in class&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true" title="class or interface in org.eclipse.ui.part">WorkbenchPart</a></code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#createPartControl(org.eclipse.swt.widgets.Composite)" title="class or interface in org.eclipse.ui.part" class="externalLink">createPartControl</a></code>&nbsp;in class&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true" title="class or interface in org.eclipse.ui.part" class="externalLink">WorkbenchPart</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="createUI-org.eclipse.swt.widgets.Composite-">
+<a id="createUI(org.eclipse.swt.widgets.Composite)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createUI</h4>
-<pre>protected&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Control</a>&nbsp;createUI(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Composite</a>&nbsp;parent)</pre>
+<pre class="methodSignature">protected&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets" class="externalLink">Control</a>&nbsp;createUI&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets" class="externalLink">Composite</a>&nbsp;parent)</pre>
 </li>
 </ul>
-<a name="createdUI--">
+<a id="createdUI()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createdUI</h4>
-<pre>protected&nbsp;void&nbsp;createdUI()</pre>
+<pre class="methodSignature">protected&nbsp;void&nbsp;createdUI()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.1</dd>
 </dl>
 </li>
 </ul>
-<a name="initViewer--">
+<a id="initViewer()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>initViewer</h4>
-<pre>protected&nbsp;void&nbsp;initViewer()</pre>
+<pre class="methodSignature">protected&nbsp;void&nbsp;initViewer()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.1</dd>
 </dl>
 </li>
 </ul>
-<a name="createViewerSorter--">
+<a id="createViewerComparator()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>createViewerComparator</h4>
+<pre class="methodSignature">protected&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerComparator.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">ViewerComparator</a>&nbsp;createViewerComparator()</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.9</dd>
+</dl>
+</li>
+</ul>
+<a id="createViewerSorter()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createViewerSorter</h4>
-<pre>protected&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerSorter.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ViewerSorter</a>&nbsp;createViewerSorter()</pre>
+<pre class="methodSignature">protected&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerSorter.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">ViewerSorter</a>&nbsp;createViewerSorter()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.3</dd>
 </dl>
 </li>
 </ul>
-<a name="createContentProvider--">
+<a id="createContentProvider()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createContentProvider</h4>
-<pre>protected&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IContentProvider</a>&nbsp;createContentProvider()</pre>
+<pre class="methodSignature">protected&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">IContentProvider</a>&nbsp;createContentProvider()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
 </dl>
 </li>
 </ul>
-<a name="createLabelProvider--">
+<a id="createLabelProvider()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createLabelProvider</h4>
-<pre>protected&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IBaseLabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IBaseLabelProvider</a>&nbsp;createLabelProvider()</pre>
+<pre class="methodSignature">protected&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IBaseLabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">IBaseLabelProvider</a>&nbsp;createLabelProvider()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
 </dl>
 </li>
 </ul>
-<a name="createLabelDecorator--">
+<a id="createLabelDecorator()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createLabelDecorator</h4>
-<pre>protected&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelDecorator.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ILabelDecorator</a>&nbsp;createLabelDecorator()</pre>
+<pre class="methodSignature">protected&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelDecorator.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">ILabelDecorator</a>&nbsp;createLabelDecorator()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
 </dl>
 </li>
 </ul>
-<a name="createContainerItemProvider--">
+<a id="createContainerItemProvider()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createContainerItemProvider</h4>
-<pre>protected&nbsp;<a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider</a>&lt;<a href="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;&gt;&nbsp;createContainerItemProvider()</pre>
+<pre class="methodSignature">protected&nbsp;<a href="ContainerItemProvider.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider</a>&lt;<a href="../../container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;&gt;&nbsp;createContainerItemProvider()</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.9</dd>
+</dl>
 </li>
 </ul>
-<a name="getElementText-java.lang.Object-">
+<a id="handleElementEvent(org.eclipse.net4j.util.event.IEvent)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>handleElementEvent</h4>
+<pre class="methodSignature">protected&nbsp;void&nbsp;handleElementEvent&#8203;(<a href="../../event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.9</dd>
+</dl>
+</li>
+</ul>
+<a id="getElementText(java.lang.Object)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getElementText</h4>
-<pre>protected&nbsp;java.lang.String&nbsp;getElementText(java.lang.Object&nbsp;element)</pre>
+<pre class="methodSignature">protected&nbsp;java.lang.String&nbsp;getElementText&#8203;(java.lang.Object&nbsp;element)</pre>
 </li>
 </ul>
-<a name="getElementImage-java.lang.Object-">
+<a id="getElementImage(java.lang.Object)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getElementImage</h4>
-<pre>protected&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Image.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Image</a>&nbsp;getElementImage(java.lang.Object&nbsp;element)</pre>
+<pre class="methodSignature">protected&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Image.html?is-external=true" title="class or interface in org.eclipse.swt.graphics" class="externalLink">Image</a>&nbsp;getElementImage&#8203;(java.lang.Object&nbsp;element)</pre>
 </li>
 </ul>
-<a name="getElementForeground-java.lang.Object-">
+<a id="getElementForeground(java.lang.Object)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getElementForeground</h4>
-<pre>protected&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Color.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Color</a>&nbsp;getElementForeground(java.lang.Object&nbsp;element)</pre>
+<pre class="methodSignature">protected&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Color.html?is-external=true" title="class or interface in org.eclipse.swt.graphics" class="externalLink">Color</a>&nbsp;getElementForeground&#8203;(java.lang.Object&nbsp;element)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
 </dl>
 </li>
 </ul>
-<a name="getElementBackground-java.lang.Object-">
+<a id="getElementBackground(java.lang.Object)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getElementBackground</h4>
-<pre>protected&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Color.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Color</a>&nbsp;getElementBackground(java.lang.Object&nbsp;element)</pre>
+<pre class="methodSignature">protected&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Color.html?is-external=true" title="class or interface in org.eclipse.swt.graphics" class="externalLink">Color</a>&nbsp;getElementBackground&#8203;(java.lang.Object&nbsp;element)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
 </dl>
 </li>
 </ul>
-<a name="getElementFont-java.lang.Object-">
+<a id="getElementFont(java.lang.Object)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getElementFont</h4>
-<pre>protected&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Font.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Font</a>&nbsp;getElementFont(java.lang.Object&nbsp;element)</pre>
+<pre class="methodSignature">protected&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Font.html?is-external=true" title="class or interface in org.eclipse.swt.graphics" class="externalLink">Font</a>&nbsp;getElementFont&#8203;(java.lang.Object&nbsp;element)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
 </dl>
 </li>
 </ul>
-<a name="getRootElementFilter--">
+<a id="getRootElementFilter()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getRootElementFilter</h4>
-<pre>protected&nbsp;<a href="../../../../../../org/eclipse/net4j/util/ui/views/IElementFilter.html" title="interface in org.eclipse.net4j.util.ui.views">IElementFilter</a>&nbsp;getRootElementFilter()</pre>
+<pre class="methodSignature">protected&nbsp;<a href="IElementFilter.html" title="interface in org.eclipse.net4j.util.ui.views">IElementFilter</a>&nbsp;getRootElementFilter()</pre>
 </li>
 </ul>
-<a name="getContainer--">
+<a id="getContainer()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getContainer</h4>
-<pre>protected abstract&nbsp;<a href="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;?&gt;&nbsp;getContainer()</pre>
+<pre class="methodSignature">protected abstract&nbsp;<a href="../../container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;?&gt;&nbsp;getContainer()</pre>
 </li>
 </ul>
-<a name="hookDoubleClick--">
+<a id="hookDoubleClick()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>hookDoubleClick</h4>
-<pre>protected&nbsp;void&nbsp;hookDoubleClick()</pre>
+<pre class="methodSignature">protected&nbsp;void&nbsp;hookDoubleClick()</pre>
 </li>
 </ul>
-<a name="hookContextMenu--">
+<a id="hookContextMenu()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>hookContextMenu</h4>
-<pre>protected&nbsp;void&nbsp;hookContextMenu()</pre>
+<pre class="methodSignature">protected&nbsp;void&nbsp;hookContextMenu()</pre>
 </li>
 </ul>
-<a name="contributeToActionBars--">
+<a id="contributeToActionBars()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>contributeToActionBars</h4>
-<pre>protected&nbsp;void&nbsp;contributeToActionBars()</pre>
+<pre class="methodSignature">protected&nbsp;void&nbsp;contributeToActionBars()</pre>
 </li>
 </ul>
-<a name="fillLocalPullDown-org.eclipse.jface.action.IMenuManager-">
+<a id="fillLocalPullDown(org.eclipse.jface.action.IMenuManager)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>fillLocalPullDown</h4>
-<pre>protected&nbsp;void&nbsp;fillLocalPullDown(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IMenuManager</a>&nbsp;manager)</pre>
+<pre class="methodSignature">protected&nbsp;void&nbsp;fillLocalPullDown&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">IMenuManager</a>&nbsp;manager)</pre>
 </li>
 </ul>
-<a name="fillLocalToolBar-org.eclipse.jface.action.IToolBarManager-">
+<a id="fillLocalToolBar(org.eclipse.jface.action.IToolBarManager)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>fillLocalToolBar</h4>
-<pre>protected&nbsp;void&nbsp;fillLocalToolBar(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IToolBarManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IToolBarManager</a>&nbsp;manager)</pre>
+<pre class="methodSignature">protected&nbsp;void&nbsp;fillLocalToolBar&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IToolBarManager.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">IToolBarManager</a>&nbsp;manager)</pre>
 </li>
 </ul>
-<a name="fillContextMenu-org.eclipse.jface.action.IMenuManager-org.eclipse.jface.viewers.ITreeSelection-">
+<a id="fillContextMenu(org.eclipse.jface.action.IMenuManager,org.eclipse.jface.viewers.ITreeSelection)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>fillContextMenu</h4>
-<pre>protected&nbsp;void&nbsp;fillContextMenu(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IMenuManager</a>&nbsp;manager,
-                               <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeSelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ITreeSelection</a>&nbsp;selection)</pre>
+<pre class="methodSignature">protected&nbsp;void&nbsp;fillContextMenu&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">IMenuManager</a>&nbsp;manager,
+                               <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeSelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">ITreeSelection</a>&nbsp;selection)</pre>
 </li>
 </ul>
-<a name="addSeparator-org.eclipse.jface.action.IContributionManager-">
+<a id="addSeparator(org.eclipse.jface.action.IContributionManager)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>addSeparator</h4>
-<pre>protected&nbsp;void&nbsp;addSeparator(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IContributionManager</a>&nbsp;manager)</pre>
+<pre class="methodSignature">@Deprecated
+protected&nbsp;void&nbsp;addSeparator&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">IContributionManager</a>&nbsp;manager)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 3.9 use <a href="#addMenuGroupAdditions(org.eclipse.jface.action.IContributionManager)"><code>addMenuGroupAdditions(IContributionManager)</code></a>.</div>
+</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.5</dd>
 </dl>
 </li>
 </ul>
-<a name="addRefreshAction-org.eclipse.jface.action.IContributionManager-">
+<a id="addMenuGroupAdditions(org.eclipse.jface.action.IContributionManager)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addMenuGroupAdditions</h4>
+<pre class="methodSignature">protected&nbsp;void&nbsp;addMenuGroupAdditions&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">IContributionManager</a>&nbsp;manager)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.9</dd>
+</dl>
+</li>
+</ul>
+<a id="addMenuGroup(org.eclipse.jface.action.IContributionManager,java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addMenuGroup</h4>
+<pre class="methodSignature">protected&nbsp;void&nbsp;addMenuGroup&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">IContributionManager</a>&nbsp;manager,
+                            java.lang.String&nbsp;groupName)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.9</dd>
+</dl>
+</li>
+</ul>
+<a id="addRefreshAction(org.eclipse.jface.action.IContributionManager)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>addRefreshAction</h4>
-<pre>protected&nbsp;void&nbsp;addRefreshAction(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IContributionManager</a>&nbsp;manager)</pre>
+<pre class="methodSignature">protected&nbsp;void&nbsp;addRefreshAction&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">IContributionManager</a>&nbsp;manager)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.5</dd>
 </dl>
 </li>
 </ul>
-<a name="addCollapseAllAction-org.eclipse.jface.action.IContributionManager-">
+<a id="addCollapseAllAction(org.eclipse.jface.action.IContributionManager)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>addCollapseAllAction</h4>
-<pre>protected&nbsp;void&nbsp;addCollapseAllAction(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IContributionManager</a>&nbsp;manager)</pre>
+<pre class="methodSignature">protected&nbsp;void&nbsp;addCollapseAllAction&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">IContributionManager</a>&nbsp;manager)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.5</dd>
 </dl>
 </li>
 </ul>
-<a name="selectionChanged-org.eclipse.ui.IActionBars-org.eclipse.jface.viewers.ITreeSelection-">
+<a id="selectionChanged(org.eclipse.ui.IActionBars,org.eclipse.jface.viewers.ITreeSelection)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>selectionChanged</h4>
-<pre>protected&nbsp;void&nbsp;selectionChanged(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IActionBars.html?is-external=true" title="class or interface in org.eclipse.ui">IActionBars</a>&nbsp;bars,
-                                <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeSelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ITreeSelection</a>&nbsp;selection)</pre>
+<pre class="methodSignature">protected&nbsp;void&nbsp;selectionChanged&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IActionBars.html?is-external=true" title="class or interface in org.eclipse.ui" class="externalLink">IActionBars</a>&nbsp;bars,
+                                <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeSelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink">ITreeSelection</a>&nbsp;selection)</pre>
 </li>
 </ul>
-<a name="doubleClicked-java.lang.Object-">
+<a id="doubleClicked(java.lang.Object)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>doubleClicked</h4>
-<pre>protected&nbsp;void&nbsp;doubleClicked(java.lang.Object&nbsp;object)</pre>
+<pre class="methodSignature">protected&nbsp;void&nbsp;doubleClicked&#8203;(java.lang.Object&nbsp;object)</pre>
 </li>
 </ul>
-<a name="refreshPressed--">
+<a id="refreshPressed()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>refreshPressed</h4>
-<pre>protected&nbsp;void&nbsp;refreshPressed()</pre>
+<pre class="methodSignature">protected&nbsp;void&nbsp;refreshPressed()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.1</dd>
 </dl>
 </li>
 </ul>
-<a name="collapseAllPressed--">
+<a id="collapseAllPressed()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>collapseAllPressed</h4>
-<pre>protected&nbsp;void&nbsp;collapseAllPressed()</pre>
+<pre class="methodSignature">protected&nbsp;void&nbsp;collapseAllPressed()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.3</dd>
 </dl>
 </li>
 </ul>
-<a name="closeView--">
+<a id="closeView()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>closeView</h4>
-<pre>protected&nbsp;void&nbsp;closeView()</pre>
+<pre class="methodSignature">protected&nbsp;void&nbsp;closeView()</pre>
 </li>
 </ul>
-<a name="showMessage-java.lang.String-">
+<a id="showMessage(java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>showMessage</h4>
-<pre>protected&nbsp;void&nbsp;showMessage(java.lang.String&nbsp;message)</pre>
+<pre class="methodSignature">protected&nbsp;void&nbsp;showMessage&#8203;(java.lang.String&nbsp;message)</pre>
 </li>
 </ul>
-<a name="showMessage-org.eclipse.net4j.util.ui.views.ContainerView.MessageType-java.lang.String-">
+<a id="showMessage(org.eclipse.net4j.util.ui.views.ContainerView.MessageType,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>showMessage</h4>
-<pre>protected&nbsp;boolean&nbsp;showMessage(<a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.MessageType.html" title="enum in org.eclipse.net4j.util.ui.views">ContainerView.MessageType</a>&nbsp;type,
+<pre class="methodSignature">protected&nbsp;boolean&nbsp;showMessage&#8203;(<a href="ContainerView.MessageType.html" title="enum in org.eclipse.net4j.util.ui.views">ContainerView.MessageType</a>&nbsp;type,
                               java.lang.String&nbsp;message)</pre>
 </li>
 </ul>
-<a name="getRefreshAction--">
+<a id="getRefreshAction()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getRefreshAction</h4>
-<pre>protected&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/Action.html?is-external=true" title="class or interface in org.eclipse.jface.action">Action</a>&nbsp;getRefreshAction()</pre>
+<pre class="methodSignature">protected&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/Action.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">Action</a>&nbsp;getRefreshAction()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.1</dd>
 </dl>
 </li>
 </ul>
-<a name="getCollapseAllAction--">
+<a id="getCollapseAllAction()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getCollapseAllAction</h4>
-<pre>public&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/Action.html?is-external=true" title="class or interface in org.eclipse.jface.action">Action</a>&nbsp;getCollapseAllAction()</pre>
+<pre class="methodSignature">public&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/Action.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">Action</a>&nbsp;getCollapseAllAction()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.3</dd>
 </dl>
 </li>
 </ul>
-<a name="getDisplay--">
+<a id="getDisplay()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getDisplay</h4>
-<pre>protected&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Display.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Display</a>&nbsp;getDisplay()</pre>
+<pre class="methodSignature">protected&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Display.html?is-external=true" title="class or interface in org.eclipse.swt.widgets" class="externalLink">Display</a>&nbsp;getDisplay()</pre>
 </li>
 </ul>
-<a name="getAdapter-java.lang.Class-">
+<a id="getAdapter(java.lang.Class)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getAdapter</h4>
-<pre>public&nbsp;&lt;T&gt;&nbsp;T&nbsp;getAdapter(java.lang.Class&lt;T&gt;&nbsp;adapter)</pre>
+<pre class="methodSignature">public&nbsp;&lt;T&gt;&nbsp;T&nbsp;getAdapter&#8203;(java.lang.Class&lt;T&gt;&nbsp;adapter)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html?is-external=true#getAdapter-java.lang.Class-" title="class or interface in org.eclipse.core.runtime">getAdapter</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IAdaptable</a></code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html?is-external=true#getAdapter(java.lang.Class)" title="class or interface in org.eclipse.core.runtime" class="externalLink">getAdapter</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IAdaptable</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#getAdapter-java.lang.Class-" title="class or interface in org.eclipse.ui.part">getAdapter</a></code>&nbsp;in class&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true" title="class or interface in org.eclipse.ui.part">WorkbenchPart</a></code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true#getAdapter(java.lang.Class)" title="class or interface in org.eclipse.ui.part" class="externalLink">getAdapter</a></code>&nbsp;in class&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/part/WorkbenchPart.html?is-external=true" title="class or interface in org.eclipse.ui.part" class="externalLink">WorkbenchPart</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="refreshPropertySheetPage--">
+<a id="refreshPropertySheetPage()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>refreshPropertySheetPage</h4>
-<pre>public&nbsp;void&nbsp;refreshPropertySheetPage()</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;refreshPropertySheetPage()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.5</dd>
 </dl>
 </li>
 </ul>
-<a name="refreshViewer-boolean-">
+<a id="refreshViewer(boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>refreshViewer</h4>
-<pre>public&nbsp;void&nbsp;refreshViewer(boolean&nbsp;updateLabels)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;refreshViewer&#8203;(boolean&nbsp;updateLabels)</pre>
 </li>
 </ul>
-<a name="refreshElement-java.lang.Object-boolean-">
+<a id="refreshElement(java.lang.Object,boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>refreshElement</h4>
-<pre>public&nbsp;void&nbsp;refreshElement(java.lang.Object&nbsp;element,
+<pre class="methodSignature">public&nbsp;void&nbsp;refreshElement&#8203;(java.lang.Object&nbsp;element,
                            boolean&nbsp;updateLabels)</pre>
 </li>
 </ul>
-<a name="updateLabels-java.lang.Object-">
+<a id="updateLabels(java.lang.Object)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>updateLabels</h4>
-<pre>public&nbsp;void&nbsp;updateLabels(java.lang.Object&nbsp;element)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;updateLabels&#8203;(java.lang.Object&nbsp;element)</pre>
 </li>
 </ul>
-<a name="revealElement-java.lang.Object-">
+<a id="revealElement(java.lang.Object)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>revealElement</h4>
-<pre>public&nbsp;void&nbsp;revealElement(java.lang.Object&nbsp;element)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;revealElement&#8203;(java.lang.Object&nbsp;element)</pre>
 </li>
 </ul>
-<a name="expandElement-java.lang.Object-int-">
+<a id="expandElement(java.lang.Object,int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>expandElement</h4>
-<pre>public&nbsp;void&nbsp;expandElement(java.lang.Object&nbsp;element,
+<pre class="methodSignature">public&nbsp;void&nbsp;expandElement&#8203;(java.lang.Object&nbsp;element,
                           int&nbsp;level)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -1081,40 +1290,40 @@ implements <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/
 </dl>
 </li>
 </ul>
-<a name="getAddImageDescriptor--">
+<a id="getAddImageDescriptor()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getAddImageDescriptor</h4>
-<pre>public static&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/resource/ImageDescriptor.html?is-external=true" title="class or interface in org.eclipse.jface.resource">ImageDescriptor</a>&nbsp;getAddImageDescriptor()</pre>
+<pre class="methodSignature">public static&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/resource/ImageDescriptor.html?is-external=true" title="class or interface in org.eclipse.jface.resource" class="externalLink">ImageDescriptor</a>&nbsp;getAddImageDescriptor()</pre>
 </li>
 </ul>
-<a name="getDeleteImageDescriptor--">
+<a id="getDeleteImageDescriptor()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getDeleteImageDescriptor</h4>
-<pre>public static&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/resource/ImageDescriptor.html?is-external=true" title="class or interface in org.eclipse.jface.resource">ImageDescriptor</a>&nbsp;getDeleteImageDescriptor()</pre>
+<pre class="methodSignature">public static&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/resource/ImageDescriptor.html?is-external=true" title="class or interface in org.eclipse.jface.resource" class="externalLink">ImageDescriptor</a>&nbsp;getDeleteImageDescriptor()</pre>
 </li>
 </ul>
-<a name="getRefreshImageDescriptor--">
+<a id="getRefreshImageDescriptor()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getRefreshImageDescriptor</h4>
-<pre>public static&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/resource/ImageDescriptor.html?is-external=true" title="class or interface in org.eclipse.jface.resource">ImageDescriptor</a>&nbsp;getRefreshImageDescriptor()</pre>
+<pre class="methodSignature">public static&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/resource/ImageDescriptor.html?is-external=true" title="class or interface in org.eclipse.jface.resource" class="externalLink">ImageDescriptor</a>&nbsp;getRefreshImageDescriptor()</pre>
 </li>
 </ul>
-<a name="getCollapseAllImageDescriptor--">
+<a id="getCollapseAllImageDescriptor()">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getCollapseAllImageDescriptor</h4>
-<pre>public static&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/resource/ImageDescriptor.html?is-external=true" title="class or interface in org.eclipse.jface.resource">ImageDescriptor</a>&nbsp;getCollapseAllImageDescriptor()</pre>
+<pre class="methodSignature">public static&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/resource/ImageDescriptor.html?is-external=true" title="class or interface in org.eclipse.jface.resource" class="externalLink">ImageDescriptor</a>&nbsp;getCollapseAllImageDescriptor()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.3</dd>
@@ -1123,21 +1332,25 @@ implements <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/ContainerView.html">Use</a></li>
@@ -1147,16 +1360,8 @@ implements <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerPathItemProvider.html" title="class in org.eclipse.net4j.util.ui.views"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.Default.html" title="class in org.eclipse.net4j.util.ui.views"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/net4j/util/ui/views/ContainerView.html" target="_top">Frames</a></li>
-<li><a href="ContainerView.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -1169,12 +1374,15 @@ implements <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
@@ -1185,10 +1393,12 @@ implements <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>SynchronizingCorrelator (Net4j Utilities Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/SynchronizingCorrelator.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/net4j/util/concurrent/Stoppable.html" title="class in org.eclipse.net4j.util.concurrent"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronousExecutor.html" title="class in org.eclipse.net4j.util.concurrent"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" target="_top">Frames</a></li>
-<li><a href="SynchronizingCorrelator.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,6 +82,9 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -85,21 +101,30 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.net4j.util.concurrent</div>
-<h2 title="Class SynchronizingCorrelator" class="title">Class SynchronizingCorrelator&lt;CORRELATION,RESULT&gt;</h2>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.net4j.util.concurrent</a></div>
+<h2 title="Class SynchronizingCorrelator" class="title">Class SynchronizingCorrelator&lt;CORRELATION,&#8203;RESULT&gt;</h2>
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li>org.eclipse.net4j.util.concurrent.SynchronizingCorrelator&lt;CORRELATION,RESULT&gt;</li>
+<li>org.eclipse.net4j.util.concurrent.SynchronizingCorrelator&lt;CORRELATION,&#8203;RESULT&gt;</li>
 </ul>
 </li>
 </ul>
@@ -108,13 +133,12 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="../../../../../org/eclipse/net4j/util/concurrent/ICorrelator.html" title="interface in org.eclipse.net4j.util.concurrent">ICorrelator</a>&lt;CORRELATION,<a href="../../../../../org/eclipse/net4j/util/concurrent/ISynchronizer.html" title="interface in org.eclipse.net4j.util.concurrent">ISynchronizer</a>&lt;RESULT&gt;&gt;</dd>
+<dd><code><a href="ICorrelator.html" title="interface in org.eclipse.net4j.util.concurrent">ICorrelator</a>&lt;CORRELATION,&#8203;<a href="ISynchronizer.html" title="interface in org.eclipse.net4j.util.concurrent">ISynchronizer</a>&lt;RESULT&gt;&gt;</code></dd>
 </dl>
 <hr>
-<br>
-<pre>public class <span class="typeNameLabel">SynchronizingCorrelator&lt;CORRELATION,RESULT&gt;</span>
+<pre>public class <span class="typeNameLabel">SynchronizingCorrelator&lt;CORRELATION,&#8203;RESULT&gt;</span>
 extends java.lang.Object
-implements <a href="../../../../../org/eclipse/net4j/util/concurrent/ICorrelator.html" title="interface in org.eclipse.net4j.util.concurrent">ICorrelator</a>&lt;CORRELATION,<a href="../../../../../org/eclipse/net4j/util/concurrent/ISynchronizer.html" title="interface in org.eclipse.net4j.util.concurrent">ISynchronizer</a>&lt;RESULT&gt;&gt;</pre>
+implements <a href="ICorrelator.html" title="interface in org.eclipse.net4j.util.concurrent">ICorrelator</a>&lt;CORRELATION,&#8203;<a href="ISynchronizer.html" title="interface in org.eclipse.net4j.util.concurrent">ISynchronizer</a>&lt;RESULT&gt;&gt;</pre>
 <dl>
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>Eike Stepper</dd>
@@ -126,86 +150,103 @@ implements <a href="../../../../../org/eclipse/net4j/util/concurrent/ICorrelator
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.summary">
+<li class="blockList"><a id="constructor.summary">
 <!--   -->
 </a>
 <h3>Constructor Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
+<table class="memberSummary">
 <caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Constructor and Description</th>
+<th class="colFirst" scope="col">Constructor</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html#SynchronizingCorrelator--">SynchronizingCorrelator</a></span>()</code>&nbsp;</td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">SynchronizingCorrelator</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/concurrent/ISynchronizer.html" title="interface in org.eclipse.net4j.util.concurrent">ISynchronizer</a>&lt;<a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">RESULT</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html#correlate-CORRELATION-">correlate</a></span>(<a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">CORRELATION</a>&nbsp;correlation)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="ISynchronizer.html" title="interface in org.eclipse.net4j.util.concurrent">ISynchronizer</a>&lt;<a href="SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">RESULT</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#correlate(CORRELATION)">correlate</a></span>&#8203;(<a href="SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">CORRELATION</a>&nbsp;correlation)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/concurrent/ISynchronizer.html" title="interface in org.eclipse.net4j.util.concurrent">ISynchronizer</a>&lt;<a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">RESULT</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html#correlateUnique-CORRELATION-">correlateUnique</a></span>(<a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">CORRELATION</a>&nbsp;correlation)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="ISynchronizer.html" title="interface in org.eclipse.net4j.util.concurrent">ISynchronizer</a>&lt;<a href="SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">RESULT</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#correlateUnique(CORRELATION)">correlateUnique</a></span>&#8203;(<a href="SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">CORRELATION</a>&nbsp;correlation)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>protected <a href="../../../../../org/eclipse/net4j/util/concurrent/ISynchronizer.html" title="interface in org.eclipse.net4j.util.concurrent">ISynchronizer</a>&lt;<a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">RESULT</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html#createSynchronizer-CORRELATION-">createSynchronizer</a></span>(<a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">CORRELATION</a>&nbsp;correlation)</code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="ISynchronizer.html" title="interface in org.eclipse.net4j.util.concurrent">ISynchronizer</a>&lt;<a href="SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">RESULT</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createSynchronizer(CORRELATION)">createSynchronizer</a></span>&#8203;(<a href="SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">CORRELATION</a>&nbsp;correlation)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">RESULT</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html#get-CORRELATION-long-">get</a></span>(<a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">CORRELATION</a>&nbsp;correlation,
-   long&nbsp;timeout)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">RESULT</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#get(CORRELATION,long)">get</a></span>&#8203;(<a href="SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">CORRELATION</a>&nbsp;correlation,
+   long&nbsp;timeout)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/concurrent/ISynchronizer.html" title="interface in org.eclipse.net4j.util.concurrent">ISynchronizer</a>&lt;<a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">RESULT</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html#getSynchronizer-CORRELATION-">getSynchronizer</a></span>(<a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">CORRELATION</a>&nbsp;correlation)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="ISynchronizer.html" title="interface in org.eclipse.net4j.util.concurrent">ISynchronizer</a>&lt;<a href="SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">RESULT</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSynchronizer(CORRELATION)">getSynchronizer</a></span>&#8203;(<a href="SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">CORRELATION</a>&nbsp;correlation)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html#isCorrelated-CORRELATION-">isCorrelated</a></span>(<a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">CORRELATION</a>&nbsp;correlation)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isCorrelated(CORRELATION)">isCorrelated</a></span>&#8203;(<a href="SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">CORRELATION</a>&nbsp;correlation)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html#put-CORRELATION-RESULT-">put</a></span>(<a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">CORRELATION</a>&nbsp;correlation,
-   <a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">RESULT</a>&nbsp;result)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#put(CORRELATION,RESULT)">put</a></span>&#8203;(<a href="SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">CORRELATION</a>&nbsp;correlation,
+   <a href="SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">RESULT</a>&nbsp;result)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html#put-CORRELATION-RESULT-long-">put</a></span>(<a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">CORRELATION</a>&nbsp;correlation,
-   <a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">RESULT</a>&nbsp;result,
-   long&nbsp;timeout)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#put(CORRELATION,RESULT,long)">put</a></span>&#8203;(<a href="SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">CORRELATION</a>&nbsp;correlation,
+   <a href="SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">RESULT</a>&nbsp;result,
+   long&nbsp;timeout)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html#putIfCorrelated-CORRELATION-RESULT-">putIfCorrelated</a></span>(<a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">CORRELATION</a>&nbsp;correlation,
-               <a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">RESULT</a>&nbsp;result)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#putIfCorrelated(CORRELATION,RESULT)">putIfCorrelated</a></span>&#8203;(<a href="SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">CORRELATION</a>&nbsp;correlation,
+               <a href="SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">RESULT</a>&nbsp;result)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html#toString--">toString</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/concurrent/ISynchronizer.html" title="interface in org.eclipse.net4j.util.concurrent">ISynchronizer</a>&lt;<a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">RESULT</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html#uncorrelate-CORRELATION-">uncorrelate</a></span>(<a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">CORRELATION</a>&nbsp;correlation)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="ISynchronizer.html" title="interface in org.eclipse.net4j.util.concurrent">ISynchronizer</a>&lt;<a href="SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">RESULT</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#uncorrelate(CORRELATION)">uncorrelate</a></span>&#8203;(<a href="SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">CORRELATION</a>&nbsp;correlation)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
+<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
@@ -213,6 +254,7 @@ implements <a href="../../../../../org/eclipse/net4j/util/concurrent/ICorrelator
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -220,12 +262,13 @@ implements <a href="../../../../../org/eclipse/net4j/util/concurrent/ICorrelator
 <ul class="blockList">
 <li class="blockList">
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.detail">
+<li class="blockList"><a id="constructor.detail">
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="SynchronizingCorrelator--">
+<a id="&lt;init&gt;()">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -236,158 +279,160 @@ implements <a href="../../../../../org/eclipse/net4j/util/concurrent/ICorrelator
 </ul>
 </li>
 </ul>
+</section>
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="getSynchronizer-java.lang.Object-">
+<a id="getSynchronizer(java.lang.Object)">
 <!--   -->
-</a><a name="getSynchronizer-CORRELATION-">
+</a><a id="getSynchronizer(CORRELATION)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getSynchronizer</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/concurrent/ISynchronizer.html" title="interface in org.eclipse.net4j.util.concurrent">ISynchronizer</a>&lt;<a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">RESULT</a>&gt;&nbsp;getSynchronizer(<a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">CORRELATION</a>&nbsp;correlation)</pre>
+<pre class="methodSignature">public&nbsp;<a href="ISynchronizer.html" title="interface in org.eclipse.net4j.util.concurrent">ISynchronizer</a>&lt;<a href="SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">RESULT</a>&gt;&nbsp;getSynchronizer&#8203;(<a href="SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">CORRELATION</a>&nbsp;correlation)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
 </dl>
 </li>
 </ul>
-<a name="isCorrelated-java.lang.Object-">
+<a id="isCorrelated(java.lang.Object)">
 <!--   -->
-</a><a name="isCorrelated-CORRELATION-">
+</a><a id="isCorrelated(CORRELATION)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>isCorrelated</h4>
-<pre>public&nbsp;boolean&nbsp;isCorrelated(<a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">CORRELATION</a>&nbsp;correlation)</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;isCorrelated&#8203;(<a href="SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">CORRELATION</a>&nbsp;correlation)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/concurrent/ICorrelator.html#isCorrelated-CORRELATION-">isCorrelated</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/concurrent/ICorrelator.html" title="interface in org.eclipse.net4j.util.concurrent">ICorrelator</a>&lt;<a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">CORRELATION</a>,<a href="../../../../../org/eclipse/net4j/util/concurrent/ISynchronizer.html" title="interface in org.eclipse.net4j.util.concurrent">ISynchronizer</a>&lt;<a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">RESULT</a>&gt;&gt;</code></dd>
+<dd><code><a href="ICorrelator.html#isCorrelated(CORRELATION)">isCorrelated</a></code>&nbsp;in interface&nbsp;<code><a href="ICorrelator.html" title="interface in org.eclipse.net4j.util.concurrent">ICorrelator</a>&lt;<a href="SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">CORRELATION</a>,&#8203;<a href="SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">RESULT</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="correlate-java.lang.Object-">
+<a id="correlate(java.lang.Object)">
 <!--   -->
-</a><a name="correlate-CORRELATION-">
+</a><a id="correlate(CORRELATION)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>correlate</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/concurrent/ISynchronizer.html" title="interface in org.eclipse.net4j.util.concurrent">ISynchronizer</a>&lt;<a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">RESULT</a>&gt;&nbsp;correlate(<a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">CORRELATION</a>&nbsp;correlation)</pre>
+<pre class="methodSignature">public&nbsp;<a href="ISynchronizer.html" title="interface in org.eclipse.net4j.util.concurrent">ISynchronizer</a>&lt;<a href="SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">RESULT</a>&gt;&nbsp;correlate&#8203;(<a href="SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">CORRELATION</a>&nbsp;correlation)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/concurrent/ICorrelator.html#correlate-CORRELATION-">correlate</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/concurrent/ICorrelator.html" title="interface in org.eclipse.net4j.util.concurrent">ICorrelator</a>&lt;<a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">CORRELATION</a>,<a href="../../../../../org/eclipse/net4j/util/concurrent/ISynchronizer.html" title="interface in org.eclipse.net4j.util.concurrent">ISynchronizer</a>&lt;<a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">RESULT</a>&gt;&gt;</code></dd>
+<dd><code><a href="ICorrelator.html#correlate(CORRELATION)">correlate</a></code>&nbsp;in interface&nbsp;<code><a href="ICorrelator.html" title="interface in org.eclipse.net4j.util.concurrent">ICorrelator</a>&lt;<a href="SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">CORRELATION</a>,&#8203;<a href="SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">RESULT</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="correlateUnique-java.lang.Object-">
+<a id="correlateUnique(java.lang.Object)">
 <!--   -->
-</a><a name="correlateUnique-CORRELATION-">
+</a><a id="correlateUnique(CORRELATION)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>correlateUnique</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/concurrent/ISynchronizer.html" title="interface in org.eclipse.net4j.util.concurrent">ISynchronizer</a>&lt;<a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">RESULT</a>&gt;&nbsp;correlateUnique(<a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">CORRELATION</a>&nbsp;correlation)</pre>
+<pre class="methodSignature">public&nbsp;<a href="ISynchronizer.html" title="interface in org.eclipse.net4j.util.concurrent">ISynchronizer</a>&lt;<a href="SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">RESULT</a>&gt;&nbsp;correlateUnique&#8203;(<a href="SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">CORRELATION</a>&nbsp;correlation)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/concurrent/ICorrelator.html#correlateUnique-CORRELATION-">correlateUnique</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/concurrent/ICorrelator.html" title="interface in org.eclipse.net4j.util.concurrent">ICorrelator</a>&lt;<a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">CORRELATION</a>,<a href="../../../../../org/eclipse/net4j/util/concurrent/ISynchronizer.html" title="interface in org.eclipse.net4j.util.concurrent">ISynchronizer</a>&lt;<a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">RESULT</a>&gt;&gt;</code></dd>
+<dd><code><a href="ICorrelator.html#correlateUnique(CORRELATION)">correlateUnique</a></code>&nbsp;in interface&nbsp;<code><a href="ICorrelator.html" title="interface in org.eclipse.net4j.util.concurrent">ICorrelator</a>&lt;<a href="SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">CORRELATION</a>,&#8203;<a href="SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">RESULT</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="uncorrelate-java.lang.Object-">
+<a id="uncorrelate(java.lang.Object)">
 <!--   -->
-</a><a name="uncorrelate-CORRELATION-">
+</a><a id="uncorrelate(CORRELATION)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>uncorrelate</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/concurrent/ISynchronizer.html" title="interface in org.eclipse.net4j.util.concurrent">ISynchronizer</a>&lt;<a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">RESULT</a>&gt;&nbsp;uncorrelate(<a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">CORRELATION</a>&nbsp;correlation)</pre>
+<pre class="methodSignature">public&nbsp;<a href="ISynchronizer.html" title="interface in org.eclipse.net4j.util.concurrent">ISynchronizer</a>&lt;<a href="SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">RESULT</a>&gt;&nbsp;uncorrelate&#8203;(<a href="SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">CORRELATION</a>&nbsp;correlation)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/concurrent/ICorrelator.html#uncorrelate-CORRELATION-">uncorrelate</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/concurrent/ICorrelator.html" title="interface in org.eclipse.net4j.util.concurrent">ICorrelator</a>&lt;<a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">CORRELATION</a>,<a href="../../../../../org/eclipse/net4j/util/concurrent/ISynchronizer.html" title="interface in org.eclipse.net4j.util.concurrent">ISynchronizer</a>&lt;<a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">RESULT</a>&gt;&gt;</code></dd>
+<dd><code><a href="ICorrelator.html#uncorrelate(CORRELATION)">uncorrelate</a></code>&nbsp;in interface&nbsp;<code><a href="ICorrelator.html" title="interface in org.eclipse.net4j.util.concurrent">ICorrelator</a>&lt;<a href="SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">CORRELATION</a>,&#8203;<a href="SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">RESULT</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="get-java.lang.Object-long-">
+<a id="get(java.lang.Object,long)">
 <!--   -->
-</a><a name="get-CORRELATION-long-">
+</a><a id="get(CORRELATION,long)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>get</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">RESULT</a>&nbsp;get(<a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">CORRELATION</a>&nbsp;correlation,
+<pre class="methodSignature">public&nbsp;<a href="SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">RESULT</a>&nbsp;get&#8203;(<a href="SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">CORRELATION</a>&nbsp;correlation,
                   long&nbsp;timeout)</pre>
 </li>
 </ul>
-<a name="put-java.lang.Object-java.lang.Object-">
+<a id="put(java.lang.Object,java.lang.Object)">
 <!--   -->
-</a><a name="put-CORRELATION-RESULT-">
+</a><a id="put(CORRELATION,RESULT)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>put</h4>
-<pre>public&nbsp;void&nbsp;put(<a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">CORRELATION</a>&nbsp;correlation,
-                <a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">RESULT</a>&nbsp;result)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;put&#8203;(<a href="SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">CORRELATION</a>&nbsp;correlation,
+                <a href="SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">RESULT</a>&nbsp;result)</pre>
 </li>
 </ul>
-<a name="putIfCorrelated-java.lang.Object-java.lang.Object-">
+<a id="putIfCorrelated(java.lang.Object,java.lang.Object)">
 <!--   -->
-</a><a name="putIfCorrelated-CORRELATION-RESULT-">
+</a><a id="putIfCorrelated(CORRELATION,RESULT)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>putIfCorrelated</h4>
-<pre>public&nbsp;boolean&nbsp;putIfCorrelated(<a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">CORRELATION</a>&nbsp;correlation,
-                               <a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">RESULT</a>&nbsp;result)</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;putIfCorrelated&#8203;(<a href="SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">CORRELATION</a>&nbsp;correlation,
+                               <a href="SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">RESULT</a>&nbsp;result)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
 </dl>
 </li>
 </ul>
-<a name="put-java.lang.Object-java.lang.Object-long-">
+<a id="put(java.lang.Object,java.lang.Object,long)">
 <!--   -->
-</a><a name="put-CORRELATION-RESULT-long-">
+</a><a id="put(CORRELATION,RESULT,long)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>put</h4>
-<pre>public&nbsp;boolean&nbsp;put(<a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">CORRELATION</a>&nbsp;correlation,
-                   <a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">RESULT</a>&nbsp;result,
+<pre class="methodSignature">public&nbsp;boolean&nbsp;put&#8203;(<a href="SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">CORRELATION</a>&nbsp;correlation,
+                   <a href="SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">RESULT</a>&nbsp;result,
                    long&nbsp;timeout)</pre>
 </li>
 </ul>
-<a name="createSynchronizer-java.lang.Object-">
+<a id="createSynchronizer(java.lang.Object)">
 <!--   -->
-</a><a name="createSynchronizer-CORRELATION-">
+</a><a id="createSynchronizer(CORRELATION)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createSynchronizer</h4>
-<pre>protected&nbsp;<a href="../../../../../org/eclipse/net4j/util/concurrent/ISynchronizer.html" title="interface in org.eclipse.net4j.util.concurrent">ISynchronizer</a>&lt;<a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">RESULT</a>&gt;&nbsp;createSynchronizer(<a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">CORRELATION</a>&nbsp;correlation)</pre>
+<pre class="methodSignature">protected&nbsp;<a href="ISynchronizer.html" title="interface in org.eclipse.net4j.util.concurrent">ISynchronizer</a>&lt;<a href="SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">RESULT</a>&gt;&nbsp;createSynchronizer&#8203;(<a href="SynchronizingCorrelator.html" title="type parameter in SynchronizingCorrelator">CORRELATION</a>&nbsp;correlation)</pre>
 </li>
 </ul>
-<a name="toString--">
+<a id="toString()">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>toString</h4>
-<pre>public&nbsp;java.lang.String&nbsp;toString()</pre>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;toString()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>toString</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
@@ -396,21 +441,25 @@ implements <a href="../../../../../org/eclipse/net4j/util/concurrent/ICorrelator
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/SynchronizingCorrelator.html">Use</a></li>
@@ -420,16 +469,8 @@ implements <a href="../../../../../org/eclipse/net4j/util/concurrent/ICorrelator
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/net4j/util/concurrent/Stoppable.html" title="class in org.eclipse.net4j.util.concurrent"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronousExecutor.html" title="class in org.eclipse.net4j.util.concurrent"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" target="_top">Frames</a></li>
-<li><a href="SynchronizingCorrelator.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -442,6 +483,9 @@ implements <a href="../../../../../org/eclipse/net4j/util/concurrent/ICorrelator
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -458,10 +502,12 @@ implements <a href="../../../../../org/eclipse/net4j/util/concurrent/ICorrelator
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>CDOWithID (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6};
+var data = {"i0":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/CDOWithID.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOReference.html" title="interface in org.eclipse.emf.cdo.common.id"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li>Next&nbsp;Class</li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/emf/cdo/common/id/CDOWithID.html" target="_top">Frames</a></li>
-<li><a href="CDOWithID.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,6 +82,9 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -85,13 +101,22 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.emf.cdo.common.id</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.cdo.common.id</a></div>
 <h2 title="Interface CDOWithID" class="title">Interface CDOWithID</h2>
 </div>
 <div class="contentContainer">
@@ -100,14 +125,13 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Known Subinterfaces:</dt>
-<dd><a href="../../../../../../org/eclipse/emf/cdo/expressions/Access.html" title="interface in org.eclipse.emf.cdo.expressions">Access</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/AndFilter.html" title="interface in org.eclipse.emf.cdo.security">AndFilter</a>, <a href="../../../../../../org/eclipse/emf/cdo/etypes/Annotation.html" title="interface in org.eclipse.emf.cdo.etypes">Annotation</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/Assignee.html" title="interface in org.eclipse.emf.cdo.security">Assignee</a>, <a href="../../../../../../org/eclipse/emf/cdo/expressions/BooleanValue.html" title="interface in org.eclipse.emf.cdo.expressions">BooleanValue</a>, <a href="../../../../../../org/eclipse/emf/cdo/expressions/ByteValue.html" title="interface in org.eclipse.emf.cdo.expressions">ByteValue</a>, <a href="../../../../../../org/eclipse/emf/cdo/eresource/CDOBinaryResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOBinaryResource</a>, <a href="../../../../../../org/eclipse/emf/cdo/eresource/CDOFileResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOFileResource</a>&lt;IO&gt;, <a href="../../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>, <a href="../../../../../../org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResource</a>, <a href="../../../../../../org/eclipse/emf/cdo/eresource/CDOResourceFolder.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceFolder</a>, <a href="../../../../../../org/eclipse/emf/cdo/eresource/CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceLeaf</a>, <a href="../../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceNode</a>, <a href="../../../../../../org/eclipse/emf/cdo/view/CDOStaleObject.html" title="interface in org.eclipse.emf.cdo.view">CDOStaleObject</a>, <a href="../../../../../../org/eclipse/emf/cdo/eresource/CDOTextResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOTextResource</a>, <a href="../../../../../../org/eclipse/emf/cdo/expressions/CharValue.html" title="interface in org.eclipse.emf.cdo.expressions">CharValue</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/ClassFilter.html" title="interface in org.eclipse.emf.cdo.security">ClassFilter</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/ClassPermission.html" title="interface in org.eclipse.emf.cdo.security">ClassPermission</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/CombinedFilter.html" title="interface in org.eclipse.emf.cdo.security">CombinedFilter</a>, <a href="../../../../../../org/eclipse/emf/cdo/expressions/ContainedObject.html" title="interface in org.eclipse.emf.cdo.expressions">ContainedObject</a>, <a href="../../../../../../org/eclipse/emf/cdo/expressions/ContextAccess.html" title="interface in org.eclipse.emf.cdo.expressions">ContextAccess</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/Directory.html" title="interface in org.eclipse.emf.cdo.security">Directory</a>, <a href="../../../../../../org/eclipse/emf/cdo/expressions/DoubleValue.html" title="interface in org.eclipse.emf.cdo.expressions">DoubleValue</a>, <a href="../../../../../../org/eclipse/emf/cdo/expressions/Expression.html" title="interface in org.eclipse.emf.cdo.expressions">Expression</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/ExpressionFilter.html" title="interface in org.eclipse.emf.cdo.security">ExpressionFilter</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/FilterPermission.html" title="interface in org.eclipse.emf.cdo.security">FilterPermission</a>, <a href="../../../../../../org/eclipse/emf/cdo/expressions/FloatValue.html" title="interface in org.eclipse.emf.cdo.expressions">FloatValue</a>, <a href="../../../../../../org/eclipse/emf/cdo/expressions/FunctionInvocation.html" title="interface in org.eclipse.emf.cdo.expressions">FunctionInvocation</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/Group.html" title="interface in org.eclipse.emf.cdo.security">Group</a>, <a href="../../../../../../org/eclipse/emf/spi/cdo/InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>, <a href="../../../../../../org/eclipse/emf/spi/cdo/InternalCDOResource.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOResource</a>, <a href="../../../../../../org/eclipse/emf/cdo/expressions/IntValue.html" title="interface in org.eclipse.emf.cdo.expressions">IntValue</a>, <a href="../../../../../../org/eclipse/emf/cdo/expressions/Invocation.html" title="interface in org.eclipse.emf.cdo.expressions">Invocation</a>, <a href="../../../../../../org/eclipse/emf/cdo/expressions/LinkedExpression.html" title="interface in org.eclipse.emf.cdo.expressions">LinkedExpression</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/LinkedFilter.html" title="interface in org.eclipse.emf.cdo.security">LinkedFilter</a>, <a href="../../../../../../org/eclipse/emf/cdo/expressions/LinkedObject.html" title="interface in org.eclipse.emf.cdo.expressions">LinkedObject</a>, <a href="../../../../../../org/eclipse/emf/cdo/expressions/ListConstruction.html" title="interface in org.eclipse.emf.cdo.expressions">ListConstruction</a>, <a href="../../../../../../org/eclipse/emf/cdo/expressions/LongValue.html" title="interface in org.eclipse.emf.cdo.expressions">LongValue</a>, <a href="../../../../../../org/eclipse/emf/cdo/expressions/MemberAccess.html" title="interface in org.eclipse.emf.cdo.expressions">MemberAccess</a>, <a href="../../../../../../org/eclipse/emf/cdo/expressions/MemberInvocation.html" title="interface in org.eclipse.emf.cdo.expressions">MemberInvocation</a>, <a href="../../../../../../org/eclipse/emf/cdo/etypes/ModelElement.html" title="interface in org.eclipse.emf.cdo.etypes">ModelElement</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/NotFilter.html" title="interface in org.eclipse.emf.cdo.security">NotFilter</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/ObjectFilter.html" title="interface in org.eclipse.emf.cdo.security">ObjectFilter</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/ObjectPermission.html" title="interface in org.eclipse.emf.cdo.security">ObjectPermission</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/OrFilter.html" title="interface in org.eclipse.emf.cdo.security">OrFilter</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/PackageFilter.html" title="interface in org.eclipse.emf.cdo.security">PackageFilter</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/PackagePermission.html" title="interface in org.eclipse.emf.cdo.security">PackagePermission</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/Permission.html" title="interface in org.eclipse.emf.cdo.security">Permission</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/Realm.html" title="interface in org.eclipse.emf.cdo.security">Realm</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/ResourceFilter.html" title="interface in org.eclipse.emf.cdo.security">ResourceFilter</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/ResourcePermission.html" title="interface in org.eclipse.emf.cdo.security">ResourcePermission</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/Role.html" title="interface in org.eclipse.emf.cdo.security">Role</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/SecurityElement.html" title="interface in org.eclipse.emf.cdo.security">SecurityElement</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/SecurityItem.html" title="interface in org.eclipse.emf.cdo.security">SecurityItem</a>, <a href="../../../../../../org/eclipse/emf/cdo/expressions/ShortValue.html" title="interface in org.eclipse.emf.cdo.expressions">ShortValue</a>, <a href="../../../../../../org/eclipse/emf/cdo/expressions/StaticAccess.html" title="interface in org.eclipse.emf.cdo.expressions">StaticAccess</a>, <a href="../../../../../../org/eclipse/emf/cdo/expressions/StringValue.html" title="interface in org.eclipse.emf.cdo.expressions">StringValue</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/User.html" title="interface in org.eclipse.emf.cdo.security">User</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/UserPassword.html" title="interface in org.eclipse.emf.cdo.security">UserPassword</a>, <a href="../../../../../../org/eclipse/emf/cdo/expressions/Value.html" title="interface in org.eclipse.emf.cdo.expressions">Value</a></dd>
+<dd><code><a href="../../expressions/Access.html" title="interface in org.eclipse.emf.cdo.expressions">Access</a></code>, <code><a href="../../security/AndFilter.html" title="interface in org.eclipse.emf.cdo.security">AndFilter</a></code>, <code><a href="../../etypes/Annotation.html" title="interface in org.eclipse.emf.cdo.etypes">Annotation</a></code>, <code><a href="../../security/Assignee.html" title="interface in org.eclipse.emf.cdo.security">Assignee</a></code>, <code><a href="../../expressions/BooleanValue.html" title="interface in org.eclipse.emf.cdo.expressions">BooleanValue</a></code>, <code><a href="../../expressions/ByteValue.html" title="interface in org.eclipse.emf.cdo.expressions">ByteValue</a></code>, <code><a href="../../eresource/CDOBinaryResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOBinaryResource</a></code>, <code><a href="../../eresource/CDOFileResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOFileResource</a>&lt;IO&gt;</code>, <code><a href="../../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a></code>, <code><a href="../../eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResource</a></code>, <code><a href="../../eresource/CDOResourceFolder.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceFolder</a></code>, <code><a href="../../eresource/CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceLeaf</a></code>, <code><a href="../../eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceNode</a></code>, <code><a href="../../view/CDOStaleObject.html" title="interface in org.eclipse.emf.cdo.view">CDOStaleObject</a></code>, <code><a href="../../eresource/CDOTextResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOTextResource</a></code>, <code><a href="../../expressions/CharValue.html" title="interface in org.eclipse.emf.cdo.expressions">CharValue</a></code>, <code><a href="../../security/ClassFilter.html" title="interface in org.eclipse.emf.cdo.security">ClassFilter</a></code>, <code><a href="../../security/ClassPermission.html" title="interface in org.eclipse.emf.cdo.security">ClassPermission</a></code>, <code><a href="../../security/CombinedFilter.html" title="interface in org.eclipse.emf.cdo.security">CombinedFilter</a></code>, <code><a href="../../expressions/ContainedObject.html" title="interface in org.eclipse.emf.cdo.expressions">ContainedObject</a></code>, <code><a href="../../expressions/ContextAccess.html" title="interface in org.eclipse.emf.cdo.expressions">ContextAccess</a></code>, <code><a href="../../security/Directory.html" title="interface in org.eclipse.emf.cdo.security">Directory</a></code>, <code><a href="../../expressions/DoubleValue.html" title="interface in org.eclipse.emf.cdo.expressions">DoubleValue</a></code>, <code><a href="../../expressions/Expression.html" title="interface in org.eclipse.emf.cdo.expressions">Expression</a></code>, <code><a href="../../security/ExpressionFilter.html" title="interface in org.eclipse.emf.cdo.security">ExpressionFilter</a></code>, <code><a href="../../security/FilterPermission.html" title="interface in org.eclipse.emf.cdo.security">FilterPermission</a></code>, <code><a href="../../expressions/FloatValue.html" title="interface in org.eclipse.emf.cdo.expressions">FloatValue</a></code>, <code><a href="../../expressions/FunctionInvocation.html" title="interface in org.eclipse.emf.cdo.expressions">FunctionInvocation</a></code>, <code><a href="../../security/Group.html" title="interface in org.eclipse.emf.cdo.security">Group</a></code>, <code><a href="../../../spi/cdo/InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a></code>, <code><a href="../../../spi/cdo/InternalCDOResource.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOResource</a></code>, <code><a href="../../expressions/IntValue.html" title="interface in org.eclipse.emf.cdo.expressions">IntValue</a></code>, <code><a href="../../expressions/Invocation.html" title="interface in org.eclipse.emf.cdo.expressions">Invocation</a></code>, <code><a href="../../expressions/LinkedExpression.html" title="interface in org.eclipse.emf.cdo.expressions">LinkedExpression</a></code>, <code><a href="../../security/LinkedFilter.html" title="interface in org.eclipse.emf.cdo.security">LinkedFilter</a></code>, <code><a href="../../expressions/LinkedObject.html" title="interface in org.eclipse.emf.cdo.expressions">LinkedObject</a></code>, <code><a href="../../expressions/ListConstruction.html" title="interface in org.eclipse.emf.cdo.expressions">ListConstruction</a></code>, <code><a href="../../expressions/LongValue.html" title="interface in org.eclipse.emf.cdo.expressions">LongValue</a></code>, <code><a href="../../expressions/MemberAccess.html" title="interface in org.eclipse.emf.cdo.expressions">MemberAccess</a></code>, <code><a href="../../expressions/MemberInvocation.html" title="interface in org.eclipse.emf.cdo.expressions">MemberInvocation</a></code>, <code><a href="../../etypes/ModelElement.html" title="interface in org.eclipse.emf.cdo.etypes">ModelElement</a></code>, <code><a href="../../security/NotFilter.html" title="interface in org.eclipse.emf.cdo.security">NotFilter</a></code>, <code><a href="../../security/ObjectFilter.html" title="interface in org.eclipse.emf.cdo.security">ObjectFilter</a></code>, <code><a href="../../security/ObjectPermission.html" title="interface in org.eclipse.emf.cdo.security">ObjectPermission</a></code>, <code><a href="../../security/OrFilter.html" title="interface in org.eclipse.emf.cdo.security">OrFilter</a></code>, <code><a href="../../security/PackageFilter.html" title="interface in org.eclipse.emf.cdo.security">PackageFilter</a></code>, <code><a href="../../security/PackagePermission.html" title="interface in org.eclipse.emf.cdo.security">PackagePermission</a></code>, <code><a href="../../security/Permission.html" title="interface in org.eclipse.emf.cdo.security">Permission</a></code>, <code><a href="../../security/PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security">PermissionFilter</a></code>, <code><a href="../../security/Realm.html" title="interface in org.eclipse.emf.cdo.security">Realm</a></code>, <code><a href="../../security/ResourceFilter.html" title="interface in org.eclipse.emf.cdo.security">ResourceFilter</a></code>, <code><a href="../../security/ResourcePermission.html" title="interface in org.eclipse.emf.cdo.security">ResourcePermission</a></code>, <code><a href="../../security/Role.html" title="interface in org.eclipse.emf.cdo.security">Role</a></code>, <code><a href="../../security/SecurityElement.html" title="interface in org.eclipse.emf.cdo.security">SecurityElement</a></code>, <code><a href="../../security/SecurityItem.html" title="interface in org.eclipse.emf.cdo.security">SecurityItem</a></code>, <code><a href="../../expressions/ShortValue.html" title="interface in org.eclipse.emf.cdo.expressions">ShortValue</a></code>, <code><a href="../../expressions/StaticAccess.html" title="interface in org.eclipse.emf.cdo.expressions">StaticAccess</a></code>, <code><a href="../../expressions/StringValue.html" title="interface in org.eclipse.emf.cdo.expressions">StringValue</a></code>, <code><a href="../../security/User.html" title="interface in org.eclipse.emf.cdo.security">User</a></code>, <code><a href="../../security/UserPassword.html" title="interface in org.eclipse.emf.cdo.security">UserPassword</a></code>, <code><a href="../../expressions/Value.html" title="interface in org.eclipse.emf.cdo.expressions">Value</a></code></dd>
 </dl>
 <dl>
 <dt>All Known Implementing Classes:</dt>
-<dd><a href="../../../../../../org/eclipse/emf/cdo/expressions/impl/AccessImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">AccessImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/impl/AndFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">AndFilterImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/etypes/impl/AnnotationImpl.html" title="class in org.eclipse.emf.cdo.etypes.impl">AnnotationImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/impl/AssigneeImpl.html" title="class in org.eclipse.emf.cdo.security.impl">AssigneeImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/expressions/impl/BooleanValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">BooleanValueImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/expressions/impl/ByteValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">ByteValueImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/eresource/impl/CDOBinaryResourceImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl">CDOBinaryResourceImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/eresource/impl/CDOFileResourceImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl">CDOFileResourceImpl</a>, <a href="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html" title="class in org.eclipse.emf.internal.cdo">CDOObjectImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/eresource/impl/CDOResourceFolderImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl">CDOResourceFolderImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/eresource/impl/CDOResourceImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl">CDOResourceImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/eresource/impl/CDOResourceLeafImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl">CDOResourceLeafImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/eresource/impl/CDOResourceNodeImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl">CDOResourceNodeImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/eresource/impl/CDOTextResourceImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl">CDOTextResourceImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/expressions/impl/CharValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">CharValueImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/impl/ClassFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ClassFilterImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/impl/ClassPermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ClassPermissionImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/impl/CombinedFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">CombinedFilterImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/expressions/impl/ContainedObjectImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">ContainedObjectImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/expressions/impl/ContextAccessImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">ContextAccessImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/impl/DirectoryImpl.html" title="class in org.eclipse.emf.cdo.security.impl">DirectoryImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/expressions/impl/DoubleValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">DoubleValueImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/impl/ExpressionFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ExpressionFilterImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/impl/FilterPermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">FilterPermissionImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/expressions/impl/FloatValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">FloatValueImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/expressions/impl/FunctionInvocationImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">FunctionInvocationImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/impl/GroupImpl.html" title="class in org.eclipse.emf.cdo.security.impl">GroupImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/expressions/impl/IntValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">IntValueImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/expressions/impl/InvocationImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">InvocationImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/expressions/impl/LinkedExpressionImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">LinkedExpressionImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/impl/LinkedFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">LinkedFilterImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/expressions/impl/LinkedObjectImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">LinkedObjectImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/expressions/impl/ListConstructionImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">ListConstructionImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/expressions/impl/LongValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">LongValueImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/expressions/impl/MemberAccessImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">MemberAccessImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/expressions/impl/MemberInvocationImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">MemberInvocationImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/etypes/impl/ModelElementImpl.html" title="class in org.eclipse.emf.cdo.etypes.impl">ModelElementImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/impl/NotFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">NotFilterImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/impl/ObjectFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ObjectFilterImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/impl/ObjectPermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ObjectPermissionImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/impl/OrFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">OrFilterImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/impl/PackageFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">PackageFilterImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/impl/PackagePermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">PackagePermissionImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/impl/PermissionFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">PermissionFilterImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/impl/PermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">PermissionImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/impl/RealmImpl.html" title="class in org.eclipse.emf.cdo.security.impl">RealmImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/impl/ResourceFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ResourceFilterImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/impl/ResourcePermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ResourcePermissionImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/impl/RoleImpl.html" title="class in org.eclipse.emf.cdo.security.impl">RoleImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/impl/SecurityElementImpl.html" title="class in org.eclipse.emf.cdo.security.impl">SecurityElementImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/impl/SecurityItemImpl.html" title="class in org.eclipse.emf.cdo.security.impl">SecurityItemImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/expressions/impl/ShortValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">ShortValueImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/expressions/impl/StaticAccessImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">StaticAccessImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/expressions/impl/StringValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">StringValueImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/impl/UserImpl.html" title="class in org.eclipse.emf.cdo.security.impl">UserImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/security/impl/UserPasswordImpl.html" title="class in org.eclipse.emf.cdo.security.impl">UserPasswordImpl</a>, <a href="../../../../../../org/eclipse/emf/cdo/expressions/impl/ValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">ValueImpl</a></dd>
+<dd><code><a href="../../expressions/impl/AccessImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">AccessImpl</a></code>, <code><a href="../../security/impl/AndFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">AndFilterImpl</a></code>, <code><a href="../../etypes/impl/AnnotationImpl.html" title="class in org.eclipse.emf.cdo.etypes.impl">AnnotationImpl</a></code>, <code><a href="../../security/impl/AssigneeImpl.html" title="class in org.eclipse.emf.cdo.security.impl">AssigneeImpl</a></code>, <code><a href="../../expressions/impl/BooleanValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">BooleanValueImpl</a></code>, <code><a href="../../expressions/impl/ByteValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">ByteValueImpl</a></code>, <code><a href="../../eresource/impl/CDOBinaryResourceImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl">CDOBinaryResourceImpl</a></code>, <code><a href="../../eresource/impl/CDOFileResourceImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl">CDOFileResourceImpl</a></code>, <code><a href="../../../internal/cdo/CDOObjectImpl.html" title="class in org.eclipse.emf.internal.cdo">CDOObjectImpl</a></code>, <code><a href="../../eresource/impl/CDOResourceFolderImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl">CDOResourceFolderImpl</a></code>, <code><a href="../../eresource/impl/CDOResourceImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl">CDOResourceImpl</a></code>, <code><a href="../../eresource/impl/CDOResourceLeafImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl">CDOResourceLeafImpl</a></code>, <code><a href="../../eresource/impl/CDOResourceNodeImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl">CDOResourceNodeImpl</a></code>, <code><a href="../../eresource/impl/CDOTextResourceImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl">CDOTextResourceImpl</a></code>, <code><a href="../../expressions/impl/CharValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">CharValueImpl</a></code>, <code><a href="../../security/impl/ClassFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ClassFilterImpl</a></code>, <code><a href="../../security/impl/ClassPermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ClassPermissionImpl</a></code>, <code><a href="../../security/impl/CombinedFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">CombinedFilterImpl</a></code>, <code><a href="../../expressions/impl/ContainedObjectImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">ContainedObjectImpl</a></code>, <code><a href="../../expressions/impl/ContextAccessImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">ContextAccessImpl</a></code>, <code><a href="../../security/impl/DirectoryImpl.html" title="class in org.eclipse.emf.cdo.security.impl">DirectoryImpl</a></code>, <code><a href="../../expressions/impl/DoubleValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">DoubleValueImpl</a></code>, <code><a href="../../security/impl/ExpressionFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ExpressionFilterImpl</a></code>, <code><a href="../../security/impl/FilterPermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">FilterPermissionImpl</a></code>, <code><a href="../../expressions/impl/FloatValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">FloatValueImpl</a></code>, <code><a href="../../expressions/impl/FunctionInvocationImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">FunctionInvocationImpl</a></code>, <code><a href="../../security/impl/GroupImpl.html" title="class in org.eclipse.emf.cdo.security.impl">GroupImpl</a></code>, <code><a href="../../expressions/impl/IntValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">IntValueImpl</a></code>, <code><a href="../../expressions/impl/InvocationImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">InvocationImpl</a></code>, <code><a href="../../expressions/impl/LinkedExpressionImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">LinkedExpressionImpl</a></code>, <code><a href="../../security/impl/LinkedFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">LinkedFilterImpl</a></code>, <code><a href="../../expressions/impl/LinkedObjectImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">LinkedObjectImpl</a></code>, <code><a href="../../expressions/impl/ListConstructionImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">ListConstructionImpl</a></code>, <code><a href="../../expressions/impl/LongValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">LongValueImpl</a></code>, <code><a href="../../expressions/impl/MemberAccessImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">MemberAccessImpl</a></code>, <code><a href="../../expressions/impl/MemberInvocationImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">MemberInvocationImpl</a></code>, <code><a href="../../etypes/impl/ModelElementImpl.html" title="class in org.eclipse.emf.cdo.etypes.impl">ModelElementImpl</a></code>, <code><a href="../../security/impl/NotFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">NotFilterImpl</a></code>, <code><a href="../../security/impl/ObjectFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ObjectFilterImpl</a></code>, <code><a href="../../security/impl/ObjectPermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ObjectPermissionImpl</a></code>, <code><a href="../../security/impl/OrFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">OrFilterImpl</a></code>, <code><a href="../../security/impl/PackageFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">PackageFilterImpl</a></code>, <code><a href="../../security/impl/PackagePermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">PackagePermissionImpl</a></code>, <code><a href="../../security/impl/PermissionFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">PermissionFilterImpl</a></code>, <code><a href="../../security/impl/PermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">PermissionImpl</a></code>, <code><a href="../../security/impl/RealmImpl.html" title="class in org.eclipse.emf.cdo.security.impl">RealmImpl</a></code>, <code><a href="../../security/impl/ResourceFilterImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ResourceFilterImpl</a></code>, <code><a href="../../security/impl/ResourcePermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ResourcePermissionImpl</a></code>, <code><a href="../../security/impl/RoleImpl.html" title="class in org.eclipse.emf.cdo.security.impl">RoleImpl</a></code>, <code><a href="../../security/impl/SecurityElementImpl.html" title="class in org.eclipse.emf.cdo.security.impl">SecurityElementImpl</a></code>, <code><a href="../../security/impl/SecurityItemImpl.html" title="class in org.eclipse.emf.cdo.security.impl">SecurityItemImpl</a></code>, <code><a href="../../expressions/impl/ShortValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">ShortValueImpl</a></code>, <code><a href="../../expressions/impl/StaticAccessImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">StaticAccessImpl</a></code>, <code><a href="../../expressions/impl/StringValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">StringValueImpl</a></code>, <code><a href="../../security/impl/UserImpl.html" title="class in org.eclipse.emf.cdo.security.impl">UserImpl</a></code>, <code><a href="../../security/impl/UserPasswordImpl.html" title="class in org.eclipse.emf.cdo.security.impl">UserPasswordImpl</a></code>, <code><a href="../../expressions/impl/ValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">ValueImpl</a></code></dd>
 </dl>
 <hr>
-<br>
 <pre>public interface <span class="typeNameLabel">CDOWithID</span></pre>
 <div class="block">An identifiable object.</div>
 <dl>
@@ -116,7 +140,7 @@ var activeTableTab = "activeTableTab";
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>Eike Stepper</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOIDUtil.html#getCDOID-java.lang.Object-"><code>CDOIDUtil.getCDOID(Object)</code></a></dd>
+<dd><a href="CDOIDUtil.html#getCDOID(java.lang.Object)"><code>CDOIDUtil.getCDOID(Object)</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -125,24 +149,28 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOWithID.html#cdoID--">cdoID</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#cdoID()">cdoID</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -150,37 +178,42 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="cdoID--">
+<a id="cdoID()">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>cdoID</h4>
-<pre><a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;cdoID()</pre>
+<pre class="methodSignature"><a href="CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;cdoID()</pre>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/CDOWithID.html">Use</a></li>
@@ -190,16 +223,8 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOReference.html" title="interface in org.eclipse.emf.cdo.common.id"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li>Next&nbsp;Class</li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/emf/cdo/common/id/CDOWithID.html" target="_top">Frames</a></li>
-<li><a href="CDOWithID.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -212,6 +237,9 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -228,10 +256,12 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

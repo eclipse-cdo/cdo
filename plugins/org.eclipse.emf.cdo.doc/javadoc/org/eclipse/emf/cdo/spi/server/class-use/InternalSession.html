@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>Uses of Interface org.eclipse.emf.cdo.spi.server.InternalSession (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,39 +28,43 @@
     catch(err) {
     }
 //-->
-</script>
+var pathtoroot = "../../../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../../index.html">Overview</a></li>
 <li><a href="../package-summary.html">Package</a></li>
-<li><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">Class</a></li>
+<li><a href="../InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">Class</a></li>
 <li class="navBarCell1Rev">Use</li>
+<li><a href="../package-tree.html">Tree</a></li>
 <li><a href="../../../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../../../help-doc.html">Help</a></li>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev</li>
-<li>Next</li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../../index.html?org/eclipse/emf/cdo/spi/server/class-use/InternalSession.html" target="_top">Frames</a></li>
-<li><a href="InternalSession.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -63,32 +77,44 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
+<main role="main">
 <div class="header">
 <h2 title="Uses of Interface org.eclipse.emf.cdo.spi.server.InternalSession" class="title">Uses of Interface<br>org.eclipse.emf.cdo.spi.server.InternalSession</h2>
 </div>
 <div class="classUseContainer">
 <ul class="blockList">
 <li class="blockList">
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing packages, and an explanation">
-<caption><span>Packages that use <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Packages that use <a href="../InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Package</th>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.server">org.eclipse.emf.cdo.server</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.server">org.eclipse.emf.cdo.server</a></th>
 <td class="colLast">
 <div class="block">Server concepts for dealing with repositories and stores.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.spi.server">org.eclipse.emf.cdo.spi.server</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.spi.server">org.eclipse.emf.cdo.spi.server</a></th>
 <td class="colLast">
 <div class="block">Server service provider interfaces and useful base implementations.</div>
 </td>
@@ -98,235 +124,274 @@
 </li>
 <li class="blockList">
 <ul class="blockList">
-<li class="blockList"><a name="org.eclipse.emf.cdo.server">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.emf.cdo.server">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a> in <a href="../../../../../../../org/eclipse/emf/cdo/server/package-summary.html">org.eclipse.emf.cdo.server</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../../org/eclipse/emf/cdo/server/package-summary.html">org.eclipse.emf.cdo.server</a> that return <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a> in <a href="../../../server/package-summary.html">org.eclipse.emf.cdo.server</a></h3>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../../server/package-summary.html">org.eclipse.emf.cdo.server</a> that return <a href="../InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a></code></td>
-<td class="colLast"><span class="typeNameLabel">IStoreAccessor.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#getSession--">getSession</a></span>()</code>
+<td class="colFirst"><code><a href="../InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">IStoreAccessor.</span><code><span class="memberNameLink"><a href="../../../server/IStoreAccessor.html#getSession()">getSession</a></span>()</code></th>
+<td class="colLast">
 <div class="block">Returns the session this accessor is associated with.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>static <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a></code></td>
-<td class="colLast"><span class="typeNameLabel">StoreThreadLocal.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/StoreThreadLocal.html#getSession--">getSession</a></span>()</code>
+<td class="colFirst"><code>static <a href="../InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">StoreThreadLocal.</span><code><span class="memberNameLink"><a href="../../../server/StoreThreadLocal.html#getSession()">getSession</a></span>()</code></th>
+<td class="colLast">
 <div class="block">Returns the session associated with the current thread.</div>
 </td>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../../org/eclipse/emf/cdo/server/package-summary.html">org.eclipse.emf.cdo.server</a> with parameters of type <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../../server/package-summary.html">org.eclipse.emf.cdo.server</a> with parameters of type <a href="../InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>static void</code></td>
-<td class="colLast"><span class="typeNameLabel">StoreThreadLocal.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/StoreThreadLocal.html#setSession-org.eclipse.emf.cdo.spi.server.InternalSession-">setSession</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;session)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">StoreThreadLocal.</span><code><span class="memberNameLink"><a href="../../../server/StoreThreadLocal.html#setSession(org.eclipse.emf.cdo.spi.server.InternalSession)">setSession</a></span>&#8203;(<a href="../InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;session)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.spi.server">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.emf.cdo.spi.server">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a> in <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/package-summary.html">org.eclipse.emf.cdo.spi.server</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/package-summary.html">org.eclipse.emf.cdo.spi.server</a> that return <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a> in <a href="../package-summary.html">org.eclipse.emf.cdo.spi.server</a></h3>
+<table class="useSummary">
+<caption><span>Methods in <a href="../package-summary.html">org.eclipse.emf.cdo.spi.server</a> that return <a href="../InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a></code></td>
-<td class="colLast"><span class="typeNameLabel">InternalSynchronizableRepository.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSynchronizableRepository.html#getReplicatorSession--">getReplicatorSession</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalSynchronizableRepository.</span><code><span class="memberNameLink"><a href="../InternalSynchronizableRepository.html#getReplicatorSession()">getReplicatorSession</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a></code></td>
-<td class="colLast"><span class="typeNameLabel">InternalView.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalView.html#getSession--">getSession</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalSessionManager.</span><code><span class="memberNameLink"><a href="../InternalSessionManager.html#getSession(int)">getSession</a></span>&#8203;(int&nbsp;sessionID)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a></code></td>
-<td class="colLast"><span class="typeNameLabel">StoreAccessorBase.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/StoreAccessorBase.html#getSession--">getSession</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalView.</span><code><span class="memberNameLink"><a href="../InternalView.html#getSession()">getSession</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a></code></td>
-<td class="colLast"><span class="typeNameLabel">InternalSessionManager.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSessionManager.html#getSession-int-">getSession</a></span>(int&nbsp;sessionID)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">StoreAccessorBase.</span><code><span class="memberNameLink"><a href="../StoreAccessorBase.html#getSession()">getSession</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>[]</code></td>
-<td class="colLast"><span class="typeNameLabel">InternalSessionManager.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSessionManager.html#getSessions--">getSessions</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>[]</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalSessionManager.</span><code><span class="memberNameLink"><a href="../InternalSessionManager.html#getSessions()">getSessions</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a></code></td>
-<td class="colLast"><span class="typeNameLabel">InternalSessionManager.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSessionManager.html#openSession-org.eclipse.emf.cdo.spi.server.ISessionProtocol-">openSession</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/ISessionProtocol.html" title="interface in org.eclipse.emf.cdo.spi.server">ISessionProtocol</a>&nbsp;sessionProtocol)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalSessionManager.</span><code><span class="memberNameLink"><a href="../InternalSessionManager.html#openSession(org.eclipse.emf.cdo.spi.server.ISessionProtocol)">openSession</a></span>&#8203;(<a href="../ISessionProtocol.html" title="interface in org.eclipse.emf.cdo.spi.server">ISessionProtocol</a>&nbsp;sessionProtocol)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/package-summary.html">org.eclipse.emf.cdo.spi.server</a> with parameters of type <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Methods in <a href="../package-summary.html">org.eclipse.emf.cdo.spi.server</a> with parameters of type <a href="../InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">InternalRepository.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html#notifyReadAccessHandlers-org.eclipse.emf.cdo.spi.server.InternalSession-org.eclipse.emf.cdo.common.revision.CDORevision:A-java.util.List-">notifyReadAccessHandlers</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;session,
-                        <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>[]&nbsp;revisions,
-                        java.util.List&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&nbsp;additionalRevisions)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalRepository.</span><code><span class="memberNameLink"><a href="../InternalRepository.html#notifyReadAccessHandlers(org.eclipse.emf.cdo.spi.server.InternalSession,org.eclipse.emf.cdo.common.revision.CDORevision%5B%5D,java.util.List)">notifyReadAccessHandlers</a></span>&#8203;(<a href="../InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;session,
+                        <a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>[]&nbsp;revisions,
+                        java.util.List&lt;<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&nbsp;additionalRevisions)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">InternalSessionManager.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSessionManager.html#openedOnClientSide-org.eclipse.emf.cdo.spi.server.InternalSession-">openedOnClientSide</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;session)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalSessionManager.</span><code><span class="memberNameLink"><a href="../InternalSessionManager.html#openedOnClientSide(org.eclipse.emf.cdo.spi.server.InternalSession)">openedOnClientSide</a></span>&#8203;(<a href="../InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;session)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>static <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalView.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalView</a></code></td>
-<td class="colLast"><span class="typeNameLabel">SyncingUtil.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/SyncingUtil.html#openViewWithLockArea-org.eclipse.emf.cdo.spi.server.InternalSession-org.eclipse.emf.cdo.spi.server.InternalLockManager-org.eclipse.emf.cdo.common.branch.CDOBranch-java.lang.String-">openViewWithLockArea</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;session,
-                    <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalLockManager.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalLockManager</a>&nbsp;lockManager,
-                    <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;viewedBranch,
-                    java.lang.String&nbsp;lockAreaID)</code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="../InternalView.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalView</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">SyncingUtil.</span><code><span class="memberNameLink"><a href="../SyncingUtil.html#openViewWithLockArea(org.eclipse.emf.cdo.spi.server.InternalSession,org.eclipse.emf.cdo.spi.server.InternalLockManager,org.eclipse.emf.cdo.common.branch.CDOBranch,java.lang.String)">openViewWithLockArea</a></span>&#8203;(<a href="../InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;session,
+                    <a href="../InternalLockManager.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalLockManager</a>&nbsp;lockManager,
+                    <a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;viewedBranch,
+                    java.lang.String&nbsp;lockAreaID)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">InternalSessionManager.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSessionManager.html#sendBranchNotification-org.eclipse.emf.cdo.spi.server.InternalSession-org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch-">sendBranchNotification</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
-                      <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranch.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranch</a>&nbsp;branch)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">As of 4.3 use <code>#sendBranchNotification(InternalSession, InternalCDOBranch, ChangeKind)</code>.</span></div>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalSessionManager.</span><code><span class="memberNameLink"><a href="../InternalSessionManager.html#sendBranchNotification(org.eclipse.emf.cdo.spi.server.InternalSession,org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch)">sendBranchNotification</a></span>&#8203;(<a href="../InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
+                      <a href="../../common/branch/InternalCDOBranch.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranch</a>&nbsp;branch)</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.3 use <a href="../InternalSessionManager.html#sendBranchNotification(org.eclipse.emf.cdo.spi.server.InternalSession,org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch,org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind)"><code>InternalSessionManager.sendBranchNotification(InternalSession, InternalCDOBranch, ChangeKind)</code></a>.</div>
 </div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">InternalSessionManager.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSessionManager.html#sendBranchNotification-org.eclipse.emf.cdo.spi.server.InternalSession-org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch-org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind-">sendBranchNotification</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
-                      <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranch.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranch</a>&nbsp;branch,
-                      <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchChangedEvent.ChangeKind.html" title="enum in org.eclipse.emf.cdo.common.branch">CDOBranchChangedEvent.ChangeKind</a>&nbsp;changeKind)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalSessionManager.</span><code><span class="memberNameLink"><a href="../InternalSessionManager.html#sendBranchNotification(org.eclipse.emf.cdo.spi.server.InternalSession,org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch,org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind)">sendBranchNotification</a></span>&#8203;(<a href="../InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
+                      <a href="../../common/branch/InternalCDOBranch.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranch</a>&nbsp;branch,
+                      <a href="../../../common/branch/CDOBranchChangedEvent.ChangeKind.html" title="enum in org.eclipse.emf.cdo.common.branch">CDOBranchChangedEvent.ChangeKind</a>&nbsp;changeKind)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">InternalRepository.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html#sendCommitNotification-org.eclipse.emf.cdo.spi.server.InternalSession-org.eclipse.emf.cdo.common.commit.CDOCommitInfo-">sendCommitNotification</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
-                      <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;commitInfo)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">As of 4.2 use <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html#sendCommitNotification-org.eclipse.emf.cdo.spi.server.InternalSession-org.eclipse.emf.cdo.common.commit.CDOCommitInfo-boolean-"><code>InternalRepository.sendCommitNotification(InternalSession, CDOCommitInfo, boolean)</code></a>.</span></div>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalRepository.</span><code><span class="memberNameLink"><a href="../InternalRepository.html#sendCommitNotification(org.eclipse.emf.cdo.spi.server.InternalSession,org.eclipse.emf.cdo.common.commit.CDOCommitInfo)">sendCommitNotification</a></span>&#8203;(<a href="../InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
+                      <a href="../../../common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;commitInfo)</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.2 use <a href="../InternalRepository.html#sendCommitNotification(org.eclipse.emf.cdo.spi.server.InternalSession,org.eclipse.emf.cdo.common.commit.CDOCommitInfo,boolean)"><code>InternalRepository.sendCommitNotification(InternalSession, CDOCommitInfo, boolean)</code></a>.</div>
 </div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">InternalSessionManager.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSessionManager.html#sendCommitNotification-org.eclipse.emf.cdo.spi.server.InternalSession-org.eclipse.emf.cdo.common.commit.CDOCommitInfo-">sendCommitNotification</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
-                      <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;commitInfo)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">As of 4.2 use <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSessionManager.html#sendCommitNotification-org.eclipse.emf.cdo.spi.server.InternalSession-org.eclipse.emf.cdo.common.commit.CDOCommitInfo-boolean-"><code>InternalSessionManager.sendCommitNotification(InternalSession, CDOCommitInfo, boolean)</code></a>.</span></div>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalRepository.</span><code><span class="memberNameLink"><a href="../InternalRepository.html#sendCommitNotification(org.eclipse.emf.cdo.spi.server.InternalSession,org.eclipse.emf.cdo.common.commit.CDOCommitInfo,boolean)">sendCommitNotification</a></span>&#8203;(<a href="../InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
+                      <a href="../../../common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;commitInfo,
+                      boolean&nbsp;clearResourcePathCache)</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.3 use <a href="../InternalRepository.html#sendCommitNotification(org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo)"><code>InternalRepository.sendCommitNotification(ISessionProtocol.CommitNotificationInfo)</code></a>.</div>
 </div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">InternalRepository.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html#sendCommitNotification-org.eclipse.emf.cdo.spi.server.InternalSession-org.eclipse.emf.cdo.common.commit.CDOCommitInfo-boolean-">sendCommitNotification</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
-                      <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;commitInfo,
-                      boolean&nbsp;clearResourcePathCache)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">As of 4.3 use <code>#sendCommitNotification(ISessionProtocol.CommitNotificationInfo)</code>.</span></div>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalSessionManager.</span><code><span class="memberNameLink"><a href="../InternalSessionManager.html#sendCommitNotification(org.eclipse.emf.cdo.spi.server.InternalSession,org.eclipse.emf.cdo.common.commit.CDOCommitInfo)">sendCommitNotification</a></span>&#8203;(<a href="../InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
+                      <a href="../../../common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;commitInfo)</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.2 use <a href="../InternalSessionManager.html#sendCommitNotification(org.eclipse.emf.cdo.spi.server.InternalSession,org.eclipse.emf.cdo.common.commit.CDOCommitInfo,boolean)"><code>InternalSessionManager.sendCommitNotification(InternalSession, CDOCommitInfo, boolean)</code></a>.</div>
 </div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">InternalSessionManager.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSessionManager.html#sendCommitNotification-org.eclipse.emf.cdo.spi.server.InternalSession-org.eclipse.emf.cdo.common.commit.CDOCommitInfo-boolean-">sendCommitNotification</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
-                      <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;commitInfo,
-                      boolean&nbsp;clearResourcePathCache)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">As of 4.3 use <code>#sendCommitNotification(ISessionProtocol.CommitNotificationInfo)</code>.</span></div>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalSessionManager.</span><code><span class="memberNameLink"><a href="../InternalSessionManager.html#sendCommitNotification(org.eclipse.emf.cdo.spi.server.InternalSession,org.eclipse.emf.cdo.common.commit.CDOCommitInfo,boolean)">sendCommitNotification</a></span>&#8203;(<a href="../InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
+                      <a href="../../../common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;commitInfo,
+                      boolean&nbsp;clearResourcePathCache)</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.3 use <a href="../InternalSessionManager.html#sendCommitNotification(org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo)"><code>InternalSessionManager.sendCommitNotification(ISessionProtocol.CommitNotificationInfo)</code></a>.</div>
 </div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">InternalSessionManager.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSessionManager.html#sendLockNotification-org.eclipse.emf.cdo.spi.server.InternalSession-org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo-">sendLockNotification</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
-                    <a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a>&nbsp;lockChangeInfo)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalSessionManager.</span><code><span class="memberNameLink"><a href="../InternalSessionManager.html#sendLockNotification(org.eclipse.emf.cdo.spi.server.InternalSession,org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo)">sendLockNotification</a></span>&#8203;(<a href="../InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
+                    <a href="../../../common/lock/CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a>&nbsp;lockChangeInfo)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">ISessionProtocol.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/ISessionProtocol.html#sendRemoteMessageNotification-org.eclipse.emf.cdo.spi.server.InternalSession-org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage-">sendRemoteMessageNotification</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
-                             <a href="../../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionMessage.html" title="class in org.eclipse.emf.cdo.session.remote">CDORemoteSessionMessage</a>&nbsp;message)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalSession.</span><code><span class="memberNameLink"><a href="../InternalSession.html#sendRemoteMessageNotification(org.eclipse.emf.cdo.spi.server.InternalSession,org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage)">sendRemoteMessageNotification</a></span>&#8203;(<a href="../InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
+                             <a href="../../../session/remote/CDORemoteSessionMessage.html" title="class in org.eclipse.emf.cdo.session.remote">CDORemoteSessionMessage</a>&nbsp;message)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">InternalSession.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html#sendRemoteMessageNotification-org.eclipse.emf.cdo.spi.server.InternalSession-org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage-">sendRemoteMessageNotification</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
-                             <a href="../../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionMessage.html" title="class in org.eclipse.emf.cdo.session.remote">CDORemoteSessionMessage</a>&nbsp;message)</code>&nbsp;</td>
-</tr>
-<tr class="altColor">
 <td class="colFirst"><code>java.util.List&lt;java.lang.Integer&gt;</code></td>
-<td class="colLast"><span class="typeNameLabel">InternalSessionManager.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSessionManager.html#sendRemoteMessageNotification-org.eclipse.emf.cdo.spi.server.InternalSession-org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage-int:A-">sendRemoteMessageNotification</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
-                             <a href="../../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionMessage.html" title="class in org.eclipse.emf.cdo.session.remote">CDORemoteSessionMessage</a>&nbsp;message,
-                             int[]&nbsp;recipients)</code>&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">ISessionProtocol.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/ISessionProtocol.html#sendRemoteSessionNotification-org.eclipse.emf.cdo.spi.server.InternalSession-byte-">sendRemoteSessionNotification</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
-                             byte&nbsp;opcode)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalSessionManager.</span><code><span class="memberNameLink"><a href="../InternalSessionManager.html#sendRemoteMessageNotification(org.eclipse.emf.cdo.spi.server.InternalSession,org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage,int%5B%5D)">sendRemoteMessageNotification</a></span>&#8203;(<a href="../InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
+                             <a href="../../../session/remote/CDORemoteSessionMessage.html" title="class in org.eclipse.emf.cdo.session.remote">CDORemoteSessionMessage</a>&nbsp;message,
+                             int[]&nbsp;recipients)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">InternalSession.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html#sendRemoteSessionNotification-org.eclipse.emf.cdo.spi.server.InternalSession-byte-">sendRemoteSessionNotification</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
-                             byte&nbsp;opcode)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">ISessionProtocol.</span><code><span class="memberNameLink"><a href="../ISessionProtocol.html#sendRemoteMessageNotification(org.eclipse.emf.cdo.spi.server.InternalSession,org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage)">sendRemoteMessageNotification</a></span>&#8203;(<a href="../InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
+                             <a href="../../../session/remote/CDORemoteSessionMessage.html" title="class in org.eclipse.emf.cdo.session.remote">CDORemoteSessionMessage</a>&nbsp;message)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">InternalSessionManager.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSessionManager.html#sendRemoteSessionNotification-org.eclipse.emf.cdo.spi.server.InternalSession-byte-">sendRemoteSessionNotification</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
-                             byte&nbsp;opcode)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalSession.</span><code><span class="memberNameLink"><a href="../InternalSession.html#sendRemoteSessionNotification(org.eclipse.emf.cdo.spi.server.InternalSession,byte)">sendRemoteSessionNotification</a></span>&#8203;(<a href="../InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
+                             byte&nbsp;opcode)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">InternalSessionManager.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSessionManager.html#sessionClosed-org.eclipse.emf.cdo.spi.server.InternalSession-">sessionClosed</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;session)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalSessionManager.</span><code><span class="memberNameLink"><a href="../InternalSessionManager.html#sendRemoteSessionNotification(org.eclipse.emf.cdo.spi.server.InternalSession,byte)">sendRemoteSessionNotification</a></span>&#8203;(<a href="../InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
+                             byte&nbsp;opcode)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">ISessionProtocol.</span><code><span class="memberNameLink"><a href="../ISessionProtocol.html#sendRemoteSessionNotification(org.eclipse.emf.cdo.spi.server.InternalSession,byte)">sendRemoteSessionNotification</a></span>&#8203;(<a href="../InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
+                             byte&nbsp;opcode)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalSessionManager.</span><code><span class="memberNameLink"><a href="../InternalSessionManager.html#sendTagNotification(org.eclipse.emf.cdo.spi.server.InternalSession,int,java.lang.String,java.lang.String,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">sendTagNotification</a></span>&#8203;(<a href="../InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
+                   int&nbsp;modCount,
+                   java.lang.String&nbsp;oldName,
+                   java.lang.String&nbsp;newName,
+                   <a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalSessionManager.</span><code><span class="memberNameLink"><a href="../InternalSessionManager.html#sessionClosed(org.eclipse.emf.cdo.spi.server.InternalSession)">sessionClosed</a></span>&#8203;(<a href="../InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;session)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
 </ul>
 </li>
 </ul>
 </div>
+</main>
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../../index.html">Overview</a></li>
 <li><a href="../package-summary.html">Package</a></li>
-<li><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">Class</a></li>
+<li><a href="../InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">Class</a></li>
 <li class="navBarCell1Rev">Use</li>
+<li><a href="../package-tree.html">Tree</a></li>
 <li><a href="../../../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../../../help-doc.html">Help</a></li>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev</li>
-<li>Next</li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../../index.html?org/eclipse/emf/cdo/spi/server/class-use/InternalSession.html" target="_top">Frames</a></li>
-<li><a href="InternalSession.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -339,11 +404,16 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>org.eclipse.emf.cdo.ui (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,20 +28,25 @@
     catch(err) {
     }
 //-->
-</script>
+var pathtoroot = "../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li class="navBarCell1Rev">Package</li>
 <li>Class</li>
 <li><a href="package-use.html">Use</a></li>
@@ -41,16 +56,14 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/emf/cdo/transfer/ui/swt/package-summary.html">Prev&nbsp;Package</a></li>
-<li><a href="../../../../../org/eclipse/emf/cdo/ui/compare/package-summary.html">Next&nbsp;Package</a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/emf/cdo/ui/package-summary.html" target="_top">Frames</a></li>
-<li><a href="package-summary.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -63,22 +76,35 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
+<main role="main">
 <div class="header">
 <h1 title="Package" class="title">Package&nbsp;org.eclipse.emf.cdo.ui</h1>
-<div class="docSummary">
-<div class="block">Reusable UI components specific to the CDO Model Repository.</div>
-</div>
-<p>See:&nbsp;<a href="#package.description">Description</a></p>
 </div>
 <div class="contentContainer">
+<section role="region"><a id="package.description">
+<!--   -->
+</a>
+<div class="block">Reusable UI components specific to the CDO Model Repository.</div>
+</section>
 <ul class="blockList">
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<table class="typeSummary">
 <caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Interface</th>
@@ -86,26 +112,32 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorInput.html" title="interface in org.eclipse.emf.cdo.ui">CDOEditorInput</a></td>
+<th class="colFirst" scope="row"><a href="CDOEditorInput.html" title="interface in org.eclipse.emf.cdo.ui">CDOEditorInput</a></th>
 <td class="colLast">
-<div class="block">A specialized <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IEditorInput.html?is-external=true" title="class or interface in org.eclipse.ui"><code>IEditorInput</code></a> for the CDO editor.</div>
+<div class="block">A specialized <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IEditorInput.html?is-external=true" title="class or interface in org.eclipse.ui" class="externalLink"><code>IEditorInput</code></a> for the CDO editor.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorInput2.html" title="interface in org.eclipse.emf.cdo.ui">CDOEditorInput2</a></td>
+<th class="colFirst" scope="row"><a href="CDOEditorInput2.html" title="interface in org.eclipse.emf.cdo.ui">CDOEditorInput2</a></th>
 <td class="colLast">
-<div class="block">An extension to <a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorInput.html" title="interface in org.eclipse.emf.cdo.ui"><code>CDOEditorInput</code></a> that provides input object information.</div>
+<div class="block">An extension to <a href="CDOEditorInput.html" title="interface in org.eclipse.emf.cdo.ui"><code>CDOEditorInput</code></a> that provides input object information.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.html" title="interface in org.eclipse.emf.cdo.ui">CDOEditorOpener</a></td>
+<th class="colFirst" scope="row"><a href="CDOEditorInput3.html" title="interface in org.eclipse.emf.cdo.ui">CDOEditorInput3</a></th>
+<td class="colLast">
+<div class="block">An extension to <a href="CDOEditorInput.html" title="interface in org.eclipse.emf.cdo.ui"><code>CDOEditorInput</code></a> that provides long-running <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOView</code></a> opening.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><a href="CDOEditorOpener.html" title="interface in org.eclipse.emf.cdo.ui">CDOEditorOpener</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
 </li>
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<table class="typeSummary">
 <caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Class</th>
@@ -113,107 +145,117 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.Default.html" title="class in org.eclipse.emf.cdo.ui">CDOEditorOpener.Default</a></td>
+<th class="colFirst" scope="row"><a href="CDOCommitCommentPrompter.html" title="class in org.eclipse.emf.cdo.ui">CDOCommitCommentPrompter</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.Registry.html" title="class in org.eclipse.emf.cdo.ui">CDOEditorOpener.Registry</a></td>
+<th class="colFirst" scope="row"><a href="CDOCommitCommentPrompter.CommentDialog.html" title="class in org.eclipse.emf.cdo.ui">CDOCommitCommentPrompter.CommentDialog</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.Registry.EditorOpenerDescriptor.html" title="class in org.eclipse.emf.cdo.ui">CDOEditorOpener.Registry.EditorOpenerDescriptor</a></td>
+<th class="colFirst" scope="row"><a href="CDOEditorOpener.Default.html" title="class in org.eclipse.emf.cdo.ui">CDOEditorOpener.Default</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorUtil.html" title="class in org.eclipse.emf.cdo.ui">CDOEditorUtil</a></td>
+<th class="colFirst" scope="row"><a href="CDOEditorOpener.Registry.html" title="class in org.eclipse.emf.cdo.ui">CDOEditorOpener.Registry</a></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="CDOEditorOpener.Registry.EditorOpenerDescriptor.html" title="class in org.eclipse.emf.cdo.ui">CDOEditorOpener.Registry.EditorOpenerDescriptor</a></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><a href="CDOEditorUtil.html" title="class in org.eclipse.emf.cdo.ui">CDOEditorUtil</a></th>
 <td class="colLast">
 <div class="block">Some utility methods to cope with CDOEditor and CDOEditorInput</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOEventHandler.html" title="class in org.eclipse.emf.cdo.ui">CDOEventHandler</a></td>
+<th class="colFirst" scope="row"><a href="CDOEventHandler.html" title="class in org.eclipse.emf.cdo.ui">CDOEventHandler</a></th>
 <td class="colLast">
-<div class="block">A class that handles <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event"><code>events</code></a> on
- <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/TreeViewer.html?is-external=true" title="class or interface in org.eclipse.jface.viewers"><code>TreeViewer</code></a>-based editors or views.</div>
+<div class="block">A class that handles <code>events</code> on
+ <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/TreeViewer.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink"><code>TreeViewer</code></a>-based editors or views.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOInteractiveExceptionHandler.html" title="class in org.eclipse.emf.cdo.ui">CDOInteractiveExceptionHandler</a></td>
+<th class="colFirst" scope="row"><a href="CDOInteractiveExceptionHandler.html" title="class in org.eclipse.emf.cdo.ui">CDOInteractiveExceptionHandler</a></th>
 <td class="colLast">
-<div class="block">A <code>CDOSession</code> <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.ExceptionHandler.html" title="interface in org.eclipse.emf.cdo.session"><code>ExceptionHandler</code></a>
- implementation that shows exception information on a UI <a href="../../../../../org/eclipse/emf/cdo/ui/CDOInteractiveExceptionHandler.ExceptionDialog.html" title="class in org.eclipse.emf.cdo.ui"><code>dialog</code></a></div>
+<div class="block">A <code>CDOSession</code> <a href="../session/CDOSession.ExceptionHandler.html" title="interface in org.eclipse.emf.cdo.session"><code>ExceptionHandler</code></a>
+ implementation that shows exception information on a UI <a href="CDOInteractiveExceptionHandler.ExceptionDialog.html" title="class in org.eclipse.emf.cdo.ui"><code>dialog</code></a></div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOInteractiveExceptionHandler.ExceptionDialog.html" title="class in org.eclipse.emf.cdo.ui">CDOInteractiveExceptionHandler.ExceptionDialog</a></td>
+<th class="colFirst" scope="row"><a href="CDOInteractiveExceptionHandler.ExceptionDialog.html" title="class in org.eclipse.emf.cdo.ui">CDOInteractiveExceptionHandler.ExceptionDialog</a></th>
 <td class="colLast">
 <div class="block">A dialog that shows CDO related exceptions in a convenient manner.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOInvalidRootAgent.html" title="class in org.eclipse.emf.cdo.ui">CDOInvalidRootAgent</a></td>
+<th class="colFirst" scope="row"><a href="CDOInvalidRootAgent.html" title="class in org.eclipse.emf.cdo.ui">CDOInvalidRootAgent</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html" title="class in org.eclipse.emf.cdo.ui">CDOItemProvider</a></td>
+<th class="colFirst" scope="row"><a href="CDOItemProvider.html" title="class in org.eclipse.emf.cdo.ui">CDOItemProvider</a></th>
 <td class="colLast">
 <div class="block">Implements multiple functionality related with UI representation of basic CDO concepts on
- <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/TreeViewer.html?is-external=true" title="class or interface in org.eclipse.jface.viewers"><code>TreeViewer</code></a>-based editors and views.</div>
+ <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/TreeViewer.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink"><code>TreeViewer</code></a>-based editors and views.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.EditorRegistryListener.html" title="class in org.eclipse.emf.cdo.ui">CDOItemProvider.EditorRegistryListener</a></td>
+<th class="colFirst" scope="row"><a href="CDOItemProvider.EditorRegistryListener.html" title="class in org.eclipse.emf.cdo.ui">CDOItemProvider.EditorRegistryListener</a></th>
 <td class="colLast">
-<div class="block">A <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IPropertyListener.html?is-external=true" title="class or interface in org.eclipse.ui"><code>listener</code></a> on the platform's <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IEditorRegistry.html?is-external=true" title="class or interface in org.eclipse.ui"><code>editor registry</code></a> that fires <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/LabelProviderChangedEvent.html?is-external=true" title="class or interface in org.eclipse.jface.viewers"><code>label events</code></a>
- from the associated <a href="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.EditorRegistryListener.html#getItemProvider--"><code>item provider</code></a> when <a href="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferElement.html" title="class in org.eclipse.emf.cdo.transfer"><code>element</code></a> labels need to be updated.</div>
+<div class="block">A <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IPropertyListener.html?is-external=true" title="class or interface in org.eclipse.ui" class="externalLink"><code>listener</code></a> on the platform's <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IEditorRegistry.html?is-external=true" title="class or interface in org.eclipse.ui" class="externalLink"><code>editor registry</code></a> that fires <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/LabelProviderChangedEvent.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink"><code>label events</code></a>
+ from the associated <a href="CDOItemProvider.EditorRegistryListener.html#getItemProvider()"><code>item provider</code></a> when <a href="../transfer/CDOTransferElement.html" title="class in org.eclipse.emf.cdo.transfer"><code>element</code></a> labels need to be updated.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOLabelDecorator.html" title="class in org.eclipse.emf.cdo.ui">CDOLabelDecorator</a></td>
+<th class="colFirst" scope="row"><a href="CDOLabelDecorator.html" title="class in org.eclipse.emf.cdo.ui">CDOLabelDecorator</a></th>
 <td class="colLast">
-<div class="block">Decorates labels of <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>CDO objects</code></a> according to a pattern.</div>
+<div class="block">Decorates labels of <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>CDO objects</code></a> according to a pattern.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOLabelProvider.html" title="class in org.eclipse.emf.cdo.ui">CDOLabelProvider</a></td>
+<th class="colFirst" scope="row"><a href="CDOLabelProvider.html" title="class in org.eclipse.emf.cdo.ui">CDOLabelProvider</a></th>
 <td class="colLast">
-<div class="block">A <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/ui/provider/AdapterFactoryLabelProvider.html?is-external=true" title="class or interface in org.eclipse.emf.edit.ui.provider"><code>AdapterFactoryLabelProvider</code></a> specialization
- that decorates <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a> with a color/font code according to their current
- <a href="../../../../../org/eclipse/emf/cdo/CDOState.html" title="enum in org.eclipse.emf.cdo"><code>state</code></a>.</div>
+<div class="block">A <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/ui/provider/AdapterFactoryLabelProvider.html?is-external=true" title="class or interface in org.eclipse.emf.edit.ui.provider" class="externalLink"><code>AdapterFactoryLabelProvider</code></a> specialization
+ that decorates <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a> with a color/font code according to their current
+ <a href="../CDOState.html" title="enum in org.eclipse.emf.cdo"><code>state</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOTreeExpansionAgent.html" title="class in org.eclipse.emf.cdo.ui">CDOTreeExpansionAgent</a></td>
+<th class="colFirst" scope="row"><a href="CDOTreeExpansionAgent.html" title="class in org.eclipse.emf.cdo.ui">CDOTreeExpansionAgent</a></th>
+<td class="colLast">
+<div class="block">Automatically preserves a <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/TreeViewer.html?is-external=true" title="class or interface in org.eclipse.jface.viewers" class="externalLink"><code>tree viewer's</code></a> item expansion states across
+ multiple <a href="../view/CDOView.html#setBranchPoint(org.eclipse.emf.cdo.common.branch.CDOBranch,long)"><code>target changes</code></a>
+ of the underlying <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><a href="OverlayImage.html" title="class in org.eclipse.emf.cdo.ui">OverlayImage</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/ui/OverlayImage.html" title="class in org.eclipse.emf.cdo.ui">OverlayImage</a></td>
-<td class="colLast">&nbsp;</td>
-</tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/ui/Support.html" title="class in org.eclipse.emf.cdo.ui">Support</a></td>
+<th class="colFirst" scope="row"><a href="Support.html" title="class in org.eclipse.emf.cdo.ui">Support</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
 </li>
 </ul>
-<a name="package.description">
-<!--   -->
-</a>
-<h2 title="Package org.eclipse.emf.cdo.ui Description">Package org.eclipse.emf.cdo.ui Description</h2>
-<div class="block">Reusable UI components specific to the CDO Model Repository.</div>
 </div>
+</main>
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li class="navBarCell1Rev">Package</li>
 <li>Class</li>
 <li><a href="package-use.html">Use</a></li>
@@ -223,16 +265,8 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/emf/cdo/transfer/ui/swt/package-summary.html">Prev&nbsp;Package</a></li>
-<li><a href="../../../../../org/eclipse/emf/cdo/ui/compare/package-summary.html">Next&nbsp;Package</a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/emf/cdo/ui/package-summary.html" target="_top">Frames</a></li>
-<li><a href="package-summary.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -245,11 +279,16 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

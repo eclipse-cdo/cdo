@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>Uses of Interface org.eclipse.emf.cdo.spi.server.InternalRepository (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,39 +28,43 @@
     catch(err) {
     }
 //-->
-</script>
+var pathtoroot = "../../../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../../index.html">Overview</a></li>
 <li><a href="../package-summary.html">Package</a></li>
-<li><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">Class</a></li>
+<li><a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">Class</a></li>
 <li class="navBarCell1Rev">Use</li>
+<li><a href="../package-tree.html">Tree</a></li>
 <li><a href="../../../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../../../help-doc.html">Help</a></li>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev</li>
-<li>Next</li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../../index.html?org/eclipse/emf/cdo/spi/server/class-use/InternalRepository.html" target="_top">Frames</a></li>
-<li><a href="InternalRepository.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -63,46 +77,58 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
+<main role="main">
 <div class="header">
 <h2 title="Uses of Interface org.eclipse.emf.cdo.spi.server.InternalRepository" class="title">Uses of Interface<br>org.eclipse.emf.cdo.spi.server.InternalRepository</h2>
 </div>
 <div class="classUseContainer">
 <ul class="blockList">
 <li class="blockList">
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing packages, and an explanation">
-<caption><span>Packages that use <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Packages that use <a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Package</th>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.server">org.eclipse.emf.cdo.server</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.server">org.eclipse.emf.cdo.server</a></th>
 <td class="colLast">
 <div class="block">Server concepts for dealing with repositories and stores.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.server.spi.security">org.eclipse.emf.cdo.server.spi.security</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.server.spi.security">org.eclipse.emf.cdo.server.spi.security</a></th>
 <td class="colLast">
-<div class="block">Server provider interfaces (SPI) for the server integration of the <a href="../../../../../../../org/eclipse/emf/cdo/security/Realm.html" title="interface in org.eclipse.emf.cdo.security"><code>Security</code></a> model.</div>
+<div class="block">Server provider interfaces (SPI) for the server integration of the <a href="../../../security/Realm.html" title="interface in org.eclipse.emf.cdo.security"><code>Security</code></a> model.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.spi.server">org.eclipse.emf.cdo.spi.server</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.spi.server">org.eclipse.emf.cdo.spi.server</a></th>
 <td class="colLast">
 <div class="block">Server service provider interfaces and useful base implementations.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.spi.workspace">org.eclipse.emf.cdo.spi.workspace</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.spi.workspace">org.eclipse.emf.cdo.spi.workspace</a></th>
 <td class="colLast">
-<div class="block">Server provider interfaces (SPI) for CDO <a href="../../../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspace.html" title="interface in org.eclipse.emf.cdo.workspace"><code>workspaces</code></a>.</div>
+<div class="block">Server provider interfaces (SPI) for CDO <a href="../../../workspace/CDOWorkspace.html" title="interface in org.eclipse.emf.cdo.workspace"><code>workspaces</code></a>.</div>
 </td>
 </tr>
 </tbody>
@@ -110,342 +136,440 @@
 </li>
 <li class="blockList">
 <ul class="blockList">
-<li class="blockList"><a name="org.eclipse.emf.cdo.server">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.emf.cdo.server">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a> in <a href="../../../../../../../org/eclipse/emf/cdo/server/package-summary.html">org.eclipse.emf.cdo.server</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../../org/eclipse/emf/cdo/server/package-summary.html">org.eclipse.emf.cdo.server</a> that return <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a> in <a href="../../../server/package-summary.html">org.eclipse.emf.cdo.server</a></h3>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../../server/package-summary.html">org.eclipse.emf.cdo.server</a> that return <a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code>protected <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></code></td>
-<td class="colLast"><span class="typeNameLabel">CDOServerImporter.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/CDOServerImporter.html#getRepository--">getRepository</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOServerBrowser.</span><code><span class="memberNameLink"><a href="../../../server/CDOServerBrowser.html#getRepository(java.lang.String)">getRepository</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>protected <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></code></td>
-<td class="colLast"><span class="typeNameLabel">CDOServerBrowser.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.html#getRepository-java.lang.String-">getRepository</a></span>(java.lang.String&nbsp;name)</code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOServerImporter.</span><code><span class="memberNameLink"><a href="../../../server/CDOServerImporter.html#getRepository()">getRepository</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../../org/eclipse/emf/cdo/server/package-summary.html">org.eclipse.emf.cdo.server</a> that return types with arguments of type <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../../server/package-summary.html">org.eclipse.emf.cdo.server</a> that return types with arguments of type <a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code>java.util.Map&lt;java.lang.String,<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&gt;</code></td>
-<td class="colLast"><span class="typeNameLabel">CDOServerBrowser.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.html#getRepositories--">getRepositories</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>java.util.Map&lt;java.lang.String,&#8203;<a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&gt;</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOServerBrowser.</span><code><span class="memberNameLink"><a href="../../../server/CDOServerBrowser.html#getRepositories()">getRepositories</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../../org/eclipse/emf/cdo/server/package-summary.html">org.eclipse.emf.cdo.server</a> with parameters of type <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../../server/package-summary.html">org.eclipse.emf.cdo.server</a> with parameters of type <a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><span class="typeNameLabel">CDOServerBrowser.Page.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.Page.html#canDisplay-org.eclipse.emf.cdo.spi.server.InternalRepository-">canDisplay</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOServerBrowser.HistoryPage.</span><code><span class="memberNameLink"><a href="../../../server/CDOServerBrowser.HistoryPage.html#canDisplay(org.eclipse.emf.cdo.spi.server.InternalRepository)">canDisplay</a></span>&#8203;(<a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><span class="typeNameLabel">CDOServerBrowser.PackagesPage.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.PackagesPage.html#canDisplay-org.eclipse.emf.cdo.spi.server.InternalRepository-">canDisplay</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOServerBrowser.LobsPage.</span><code><span class="memberNameLink"><a href="../../../server/CDOServerBrowser.LobsPage.html#canDisplay(org.eclipse.emf.cdo.spi.server.InternalRepository)">canDisplay</a></span>&#8203;(<a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><span class="typeNameLabel">CDOServerBrowser.LocksPage.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.LocksPage.html#canDisplay-org.eclipse.emf.cdo.spi.server.InternalRepository-">canDisplay</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOServerBrowser.LocksPage.</span><code><span class="memberNameLink"><a href="../../../server/CDOServerBrowser.LocksPage.html#canDisplay(org.eclipse.emf.cdo.spi.server.InternalRepository)">canDisplay</a></span>&#8203;(<a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><span class="typeNameLabel">CDOServerBrowser.RevisionsPage.FromCache.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.RevisionsPage.FromCache.html#canDisplay-org.eclipse.emf.cdo.spi.server.InternalRepository-">canDisplay</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOServerBrowser.PackagesPage.</span><code><span class="memberNameLink"><a href="../../../server/CDOServerBrowser.PackagesPage.html#canDisplay(org.eclipse.emf.cdo.spi.server.InternalRepository)">canDisplay</a></span>&#8203;(<a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><span class="typeNameLabel">CDOServerBrowser.RevisionsPage.FromStore.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.RevisionsPage.FromStore.html#canDisplay-org.eclipse.emf.cdo.spi.server.InternalRepository-">canDisplay</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOServerBrowser.Page.</span><code><span class="memberNameLink"><a href="../../../server/CDOServerBrowser.Page.html#canDisplay(org.eclipse.emf.cdo.spi.server.InternalRepository)">canDisplay</a></span>&#8203;(<a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><span class="typeNameLabel">CDOServerBrowser.LobsPage.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.LobsPage.html#canDisplay-org.eclipse.emf.cdo.spi.server.InternalRepository-">canDisplay</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOServerBrowser.RevisionsPage.FromCache.</span><code><span class="memberNameLink"><a href="../../../server/CDOServerBrowser.RevisionsPage.FromCache.html#canDisplay(org.eclipse.emf.cdo.spi.server.InternalRepository)">canDisplay</a></span>&#8203;(<a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><span class="typeNameLabel">CDOServerBrowser.HistoryPage.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.HistoryPage.html#canDisplay-org.eclipse.emf.cdo.spi.server.InternalRepository-">canDisplay</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOServerBrowser.RevisionsPage.FromStore.</span><code><span class="memberNameLink"><a href="../../../server/CDOServerBrowser.RevisionsPage.FromStore.html#canDisplay(org.eclipse.emf.cdo.spi.server.InternalRepository)">canDisplay</a></span>&#8203;(<a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">CDOServerBrowser.Page.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.Page.html#display-org.eclipse.emf.cdo.server.CDOServerBrowser-org.eclipse.emf.cdo.spi.server.InternalRepository-java.io.PrintStream-">display</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.html" title="class in org.eclipse.emf.cdo.server">CDOServerBrowser</a>&nbsp;browser,
-       <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository,
-       java.io.PrintStream&nbsp;out)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOServerBrowser.HistoryPage.</span><code><span class="memberNameLink"><a href="../../../server/CDOServerBrowser.HistoryPage.html#display(org.eclipse.emf.cdo.server.CDOServerBrowser,org.eclipse.emf.cdo.spi.server.InternalRepository,java.io.PrintStream)">display</a></span>&#8203;(<a href="../../../server/CDOServerBrowser.html" title="class in org.eclipse.emf.cdo.server">CDOServerBrowser</a>&nbsp;browser,
+       <a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository,
+       java.io.PrintStream&nbsp;out)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">CDOServerBrowser.PackagesPage.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.PackagesPage.html#display-org.eclipse.emf.cdo.server.CDOServerBrowser-org.eclipse.emf.cdo.spi.server.InternalRepository-java.io.PrintStream-">display</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.html" title="class in org.eclipse.emf.cdo.server">CDOServerBrowser</a>&nbsp;browser,
-       <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository,
-       java.io.PrintStream&nbsp;out)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOServerBrowser.LobsPage.</span><code><span class="memberNameLink"><a href="../../../server/CDOServerBrowser.LobsPage.html#display(org.eclipse.emf.cdo.server.CDOServerBrowser,org.eclipse.emf.cdo.spi.server.InternalRepository,java.io.PrintStream)">display</a></span>&#8203;(<a href="../../../server/CDOServerBrowser.html" title="class in org.eclipse.emf.cdo.server">CDOServerBrowser</a>&nbsp;browser,
+       <a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository,
+       java.io.PrintStream&nbsp;out)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">CDOServerBrowser.LocksPage.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.LocksPage.html#display-org.eclipse.emf.cdo.server.CDOServerBrowser-org.eclipse.emf.cdo.spi.server.InternalRepository-java.io.PrintStream-">display</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.html" title="class in org.eclipse.emf.cdo.server">CDOServerBrowser</a>&nbsp;browser,
-       <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository,
-       java.io.PrintStream&nbsp;out)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOServerBrowser.LocksPage.</span><code><span class="memberNameLink"><a href="../../../server/CDOServerBrowser.LocksPage.html#display(org.eclipse.emf.cdo.server.CDOServerBrowser,org.eclipse.emf.cdo.spi.server.InternalRepository,java.io.PrintStream)">display</a></span>&#8203;(<a href="../../../server/CDOServerBrowser.html" title="class in org.eclipse.emf.cdo.server">CDOServerBrowser</a>&nbsp;browser,
+       <a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository,
+       java.io.PrintStream&nbsp;out)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">CDOServerBrowser.RevisionsPage.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.RevisionsPage.html#display-org.eclipse.emf.cdo.server.CDOServerBrowser-org.eclipse.emf.cdo.spi.server.InternalRepository-java.io.PrintStream-">display</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.html" title="class in org.eclipse.emf.cdo.server">CDOServerBrowser</a>&nbsp;browser,
-       <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository,
-       java.io.PrintStream&nbsp;out)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOServerBrowser.PackagesPage.</span><code><span class="memberNameLink"><a href="../../../server/CDOServerBrowser.PackagesPage.html#display(org.eclipse.emf.cdo.server.CDOServerBrowser,org.eclipse.emf.cdo.spi.server.InternalRepository,java.io.PrintStream)">display</a></span>&#8203;(<a href="../../../server/CDOServerBrowser.html" title="class in org.eclipse.emf.cdo.server">CDOServerBrowser</a>&nbsp;browser,
+       <a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository,
+       java.io.PrintStream&nbsp;out)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">CDOServerBrowser.LobsPage.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.LobsPage.html#display-org.eclipse.emf.cdo.server.CDOServerBrowser-org.eclipse.emf.cdo.spi.server.InternalRepository-java.io.PrintStream-">display</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.html" title="class in org.eclipse.emf.cdo.server">CDOServerBrowser</a>&nbsp;browser,
-       <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository,
-       java.io.PrintStream&nbsp;out)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOServerBrowser.Page.</span><code><span class="memberNameLink"><a href="../../../server/CDOServerBrowser.Page.html#display(org.eclipse.emf.cdo.server.CDOServerBrowser,org.eclipse.emf.cdo.spi.server.InternalRepository,java.io.PrintStream)">display</a></span>&#8203;(<a href="../../../server/CDOServerBrowser.html" title="class in org.eclipse.emf.cdo.server">CDOServerBrowser</a>&nbsp;browser,
+       <a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository,
+       java.io.PrintStream&nbsp;out)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">CDOServerBrowser.HistoryPage.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.HistoryPage.html#display-org.eclipse.emf.cdo.server.CDOServerBrowser-org.eclipse.emf.cdo.spi.server.InternalRepository-java.io.PrintStream-">display</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.html" title="class in org.eclipse.emf.cdo.server">CDOServerBrowser</a>&nbsp;browser,
-       <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository,
-       java.io.PrintStream&nbsp;out)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOServerBrowser.RevisionsPage.</span><code><span class="memberNameLink"><a href="../../../server/CDOServerBrowser.RevisionsPage.html#display(org.eclipse.emf.cdo.server.CDOServerBrowser,org.eclipse.emf.cdo.spi.server.InternalRepository,java.io.PrintStream)">display</a></span>&#8203;(<a href="../../../server/CDOServerBrowser.html" title="class in org.eclipse.emf.cdo.server">CDOServerBrowser</a>&nbsp;browser,
+       <a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository,
+       java.io.PrintStream&nbsp;out)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>protected abstract java.util.Map&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>,java.util.List&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&gt;</code></td>
-<td class="colLast"><span class="typeNameLabel">CDOServerBrowser.RevisionsPage.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.RevisionsPage.html#getAllRevisions-org.eclipse.emf.cdo.spi.server.InternalRepository-">getAllRevisions</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository)</code>&nbsp;</td>
+<td class="colFirst"><code>protected java.util.Map&lt;<a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>,&#8203;java.util.List&lt;<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&gt;</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOServerBrowser.RevisionsPage.FromCache.</span><code><span class="memberNameLink"><a href="../../../server/CDOServerBrowser.RevisionsPage.FromCache.html#getAllRevisions(org.eclipse.emf.cdo.spi.server.InternalRepository)">getAllRevisions</a></span>&#8203;(<a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>protected java.util.Map&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>,java.util.List&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&gt;</code></td>
-<td class="colLast"><span class="typeNameLabel">CDOServerBrowser.RevisionsPage.FromCache.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.RevisionsPage.FromCache.html#getAllRevisions-org.eclipse.emf.cdo.spi.server.InternalRepository-">getAllRevisions</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository)</code>&nbsp;</td>
+<td class="colFirst"><code>protected java.util.Map&lt;<a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>,&#8203;java.util.List&lt;<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&gt;</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOServerBrowser.RevisionsPage.FromStore.</span><code><span class="memberNameLink"><a href="../../../server/CDOServerBrowser.RevisionsPage.FromStore.html#getAllRevisions(org.eclipse.emf.cdo.spi.server.InternalRepository)">getAllRevisions</a></span>&#8203;(<a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>protected java.util.Map&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>,java.util.List&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&gt;</code></td>
-<td class="colLast"><span class="typeNameLabel">CDOServerBrowser.RevisionsPage.FromStore.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.RevisionsPage.FromStore.html#getAllRevisions-org.eclipse.emf.cdo.spi.server.InternalRepository-">getAllRevisions</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository)</code>&nbsp;</td>
+<td class="colFirst"><code>protected abstract java.util.Map&lt;<a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>,&#8203;java.util.List&lt;<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&gt;</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOServerBrowser.RevisionsPage.</span><code><span class="memberNameLink"><a href="../../../server/CDOServerBrowser.RevisionsPage.html#getAllRevisions(org.eclipse.emf.cdo.spi.server.InternalRepository)">getAllRevisions</a></span>&#8203;(<a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><span class="typeNameLabel">CDOServerBrowser.RevisionsPage.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.RevisionsPage.html#showRevision-java.io.PrintStream-org.eclipse.emf.cdo.server.CDOServerBrowser-java.util.Map-java.util.Map-java.lang.String-org.eclipse.emf.cdo.spi.server.InternalRepository-">showRevision</a></span>(java.io.PrintStream&nbsp;pout,
-            <a href="../../../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.html" title="class in org.eclipse.emf.cdo.server">CDOServerBrowser</a>&nbsp;browser,
-            java.util.Map&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>,java.util.List&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&gt;&nbsp;allRevisions,
-            java.util.Map&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,java.util.List&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&gt;&nbsp;ids,
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOServerBrowser.RevisionsPage.</span><code><span class="memberNameLink"><a href="../../../server/CDOServerBrowser.RevisionsPage.html#showRevision(java.io.PrintStream,org.eclipse.emf.cdo.server.CDOServerBrowser,java.util.Map,java.util.Map,java.lang.String,org.eclipse.emf.cdo.spi.server.InternalRepository)">showRevision</a></span>&#8203;(java.io.PrintStream&nbsp;pout,
+            <a href="../../../server/CDOServerBrowser.html" title="class in org.eclipse.emf.cdo.server">CDOServerBrowser</a>&nbsp;browser,
+            java.util.Map&lt;<a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>,&#8203;java.util.List&lt;<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&gt;&nbsp;allRevisions,
+            java.util.Map&lt;<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,&#8203;java.util.List&lt;<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&gt;&nbsp;ids,
             java.lang.String&nbsp;key,
-            <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository)</code>&nbsp;</td>
+            <a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing constructors, and an explanation">
-<caption><span>Constructor parameters in <a href="../../../../../../../org/eclipse/emf/cdo/server/package-summary.html">org.eclipse.emf.cdo.server</a> with type arguments of type <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Constructor parameters in <a href="../../../server/package-summary.html">org.eclipse.emf.cdo.server</a> with type arguments of type <a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Constructor and Description</th>
+<th class="colFirst" scope="col">Constructor</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.html#CDOServerBrowser-java.util.Map-">CDOServerBrowser</a></span>(java.util.Map&lt;java.lang.String,<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&gt;&nbsp;repositories)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../server/CDOServerBrowser.html#%3Cinit%3E(java.util.Map)">CDOServerBrowser</a></span>&#8203;(java.util.Map&lt;java.lang.String,&#8203;<a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&gt;&nbsp;repositories)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.server.spi.security">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.emf.cdo.server.spi.security">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a> in <a href="../../../../../../../org/eclipse/emf/cdo/server/spi/security/package-summary.html">org.eclipse.emf.cdo.server.spi.security</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../../org/eclipse/emf/cdo/server/spi/security/package-summary.html">org.eclipse.emf.cdo.server.spi.security</a> with parameters of type <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a> in <a href="../../../server/spi/security/package-summary.html">org.eclipse.emf.cdo.server.spi.security</a></h3>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../../server/spi/security/package-summary.html">org.eclipse.emf.cdo.server.spi.security</a> that return <a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>[]</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalSecurityManager.</span><code><span class="memberNameLink"><a href="../../../server/spi/security/InternalSecurityManager.html#getSecondaryRepositories()">getSecondaryRepositories</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../../server/spi/security/package-summary.html">org.eclipse.emf.cdo.server.spi.security</a> with parameters of type <a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">InternalSecurityManager.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/spi/security/InternalSecurityManager.html#setRepository-org.eclipse.emf.cdo.spi.server.InternalRepository-">setRepository</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalSecurityManager.</span><code><span class="memberNameLink"><a href="../../../server/spi/security/InternalSecurityManager.html#addSecondaryRepository(org.eclipse.emf.cdo.spi.server.InternalRepository)">addSecondaryRepository</a></span>&#8203;(<a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalSecurityManager.</span><code><span class="memberNameLink"><a href="../../../server/spi/security/InternalSecurityManager.html#removeSecondaryRepository(org.eclipse.emf.cdo.spi.server.InternalRepository)">removeSecondaryRepository</a></span>&#8203;(<a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalSecurityManager.</span><code><span class="memberNameLink"><a href="../../../server/spi/security/InternalSecurityManager.html#setRepository(org.eclipse.emf.cdo.spi.server.InternalRepository)">setRepository</a></span>&#8203;(<a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.spi.server">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.emf.cdo.spi.server">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a> in <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/package-summary.html">org.eclipse.emf.cdo.spi.server</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing subinterfaces, and an explanation">
-<caption><span>Subinterfaces of <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a> in <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/package-summary.html">org.eclipse.emf.cdo.spi.server</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a> in <a href="../package-summary.html">org.eclipse.emf.cdo.spi.server</a></h3>
+<table class="useSummary">
+<caption><span>Subinterfaces of <a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a> in <a href="../package-summary.html">org.eclipse.emf.cdo.spi.server</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Interface and Description</th>
+<th class="colSecond" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalFailoverParticipant.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalFailoverParticipant</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../InternalFailoverParticipant.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalFailoverParticipant</a></span></code></th>
+<td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSynchronizableRepository</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../InternalSynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSynchronizableRepository</a></span></code></th>
+<td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/package-summary.html">org.eclipse.emf.cdo.spi.server</a> that return <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Methods in <a href="../package-summary.html">org.eclipse.emf.cdo.spi.server</a> that return <a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></code></td>
-<td class="colLast"><span class="typeNameLabel">InternalCommitManager.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitManager.html#getRepository--">getRepository</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalCommitManager.</span><code><span class="memberNameLink"><a href="../InternalCommitManager.html#getRepository()">getRepository</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></code></td>
-<td class="colLast"><span class="typeNameLabel">InternalLockManager.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalLockManager.html#getRepository--">getRepository</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalLockManager.</span><code><span class="memberNameLink"><a href="../InternalLockManager.html#getRepository()">getRepository</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></code></td>
-<td class="colLast"><span class="typeNameLabel">InternalQueryManager.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalQueryManager.html#getRepository--">getRepository</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalQueryManager.</span><code><span class="memberNameLink"><a href="../InternalQueryManager.html#getRepository()">getRepository</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></code></td>
-<td class="colLast"><span class="typeNameLabel">InternalSessionManager.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSessionManager.html#getRepository--">getRepository</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalSession.</span><code><span class="memberNameLink"><a href="../InternalSession.html#getRepository()">getRepository</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></code></td>
-<td class="colLast"><span class="typeNameLabel">InternalStore.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalStore.html#getRepository--">getRepository</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalSessionManager.</span><code><span class="memberNameLink"><a href="../InternalSessionManager.html#getRepository()">getRepository</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></code></td>
-<td class="colLast"><span class="typeNameLabel">InternalUnitManager.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalUnitManager.html#getRepository--">getRepository</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalStore.</span><code><span class="memberNameLink"><a href="../InternalStore.html#getRepository()">getRepository</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></code></td>
-<td class="colLast"><span class="typeNameLabel">InternalView.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalView.html#getRepository--">getRepository</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalUnitManager.</span><code><span class="memberNameLink"><a href="../InternalUnitManager.html#getRepository()">getRepository</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></code></td>
-<td class="colLast"><span class="typeNameLabel">Store.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/Store.html#getRepository--">getRepository</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalView.</span><code><span class="memberNameLink"><a href="../InternalView.html#getRepository()">getRepository</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></code></td>
-<td class="colLast"><span class="typeNameLabel">InternalRepository.PackagesInitializedEvent.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.PackagesInitializedEvent.html#getSource--">getSource</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">Store.</span><code><span class="memberNameLink"><a href="../Store.html#getRepository()">getRepository</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalRepository.PackagesInitializedEvent.</span><code><span class="memberNameLink"><a href="../InternalRepository.PackagesInitializedEvent.html#getSource()">getSource</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/package-summary.html">org.eclipse.emf.cdo.spi.server</a> with parameters of type <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Methods in <a href="../package-summary.html">org.eclipse.emf.cdo.spi.server</a> with parameters of type <a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code>abstract void</code></td>
-<td class="colLast"><span class="typeNameLabel">CDOCommand.WithAccessor.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/CDOCommand.WithAccessor.html#execute-org.eclipse.emf.cdo.spi.server.InternalRepository-org.eclipse.emf.cdo.server.IStoreAccessor-java.lang.String:A-">execute</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository,
-       <a href="../../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor</a>&nbsp;accessor,
-       java.lang.String[]&nbsp;args)</code>&nbsp;</td>
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOCommand.WithAccessor.</span><code><span class="memberNameLink"><a href="../CDOCommand.WithAccessor.html#execute(org.eclipse.emf.cdo.spi.server.InternalRepository,java.lang.String%5B%5D)">execute</a></span>&#8203;(<a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository,
+       java.lang.String[]&nbsp;args)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>abstract void</code></td>
-<td class="colLast"><span class="typeNameLabel">CDOCommand.WithRepository.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/CDOCommand.WithRepository.html#execute-org.eclipse.emf.cdo.spi.server.InternalRepository-java.lang.String:A-">execute</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository,
-       java.lang.String[]&nbsp;args)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOCommand.WithAccessor.</span><code><span class="memberNameLink"><a href="../CDOCommand.WithAccessor.html#execute(org.eclipse.emf.cdo.spi.server.InternalRepository,org.eclipse.emf.cdo.server.IStoreAccessor,java.lang.String%5B%5D)">execute</a></span>&#8203;(<a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository,
+       <a href="../../../server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor</a>&nbsp;accessor,
+       java.lang.String[]&nbsp;args)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">CDOCommand.WithAccessor.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/CDOCommand.WithAccessor.html#execute-org.eclipse.emf.cdo.spi.server.InternalRepository-java.lang.String:A-">execute</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository,
-       java.lang.String[]&nbsp;args)</code>&nbsp;</td>
+<td class="colFirst"><code>abstract void</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOCommand.WithRepository.</span><code><span class="memberNameLink"><a href="../CDOCommand.WithRepository.html#execute(org.eclipse.emf.cdo.spi.server.InternalRepository,java.lang.String%5B%5D)">execute</a></span>&#8203;(<a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository,
+       java.lang.String[]&nbsp;args)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><span class="typeNameLabel">RepositoryConfigurator.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#setActivityLog-org.eclipse.emf.cdo.spi.server.InternalRepository-org.w3c.dom.Element-">setActivityLog</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository,
-              org.w3c.dom.Element&nbsp;repositoryConfig)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">RepositoryConfigurator.</span><code><span class="memberNameLink"><a href="../RepositoryConfigurator.html#setActivityLog(org.eclipse.emf.cdo.spi.server.InternalRepository,org.w3c.dom.Element)">setActivityLog</a></span>&#8203;(<a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository,
+              org.w3c.dom.Element&nbsp;repositoryConfig)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><span class="typeNameLabel">RepositoryConfigurator.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#setAuthenticator-org.eclipse.emf.cdo.spi.server.InternalRepository-org.w3c.dom.Element-">setAuthenticator</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository,
-                org.w3c.dom.Element&nbsp;repositoryConfig)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">RepositoryConfigurator.</span><code><span class="memberNameLink"><a href="../RepositoryConfigurator.html#setAuthenticator(org.eclipse.emf.cdo.spi.server.InternalRepository,org.w3c.dom.Element)">setAuthenticator</a></span>&#8203;(<a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository,
+                org.w3c.dom.Element&nbsp;repositoryConfig)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">InternalCommitManager.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitManager.html#setRepository-org.eclipse.emf.cdo.spi.server.InternalRepository-">setRepository</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalCommitManager.</span><code><span class="memberNameLink"><a href="../InternalCommitManager.html#setRepository(org.eclipse.emf.cdo.spi.server.InternalRepository)">setRepository</a></span>&#8203;(<a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">InternalLockManager.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalLockManager.html#setRepository-org.eclipse.emf.cdo.spi.server.InternalRepository-">setRepository</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalLockManager.</span><code><span class="memberNameLink"><a href="../InternalLockManager.html#setRepository(org.eclipse.emf.cdo.spi.server.InternalRepository)">setRepository</a></span>&#8203;(<a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">InternalQueryManager.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalQueryManager.html#setRepository-org.eclipse.emf.cdo.spi.server.InternalRepository-">setRepository</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalQueryManager.</span><code><span class="memberNameLink"><a href="../InternalQueryManager.html#setRepository(org.eclipse.emf.cdo.spi.server.InternalRepository)">setRepository</a></span>&#8203;(<a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">InternalSessionManager.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSessionManager.html#setRepository-org.eclipse.emf.cdo.spi.server.InternalRepository-">setRepository</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalSessionManager.</span><code><span class="memberNameLink"><a href="../InternalSessionManager.html#setRepository(org.eclipse.emf.cdo.spi.server.InternalRepository)">setRepository</a></span>&#8203;(<a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><span class="typeNameLabel">RepositoryConfigurator.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#setUserManager-org.eclipse.emf.cdo.spi.server.InternalRepository-org.w3c.dom.Element-">setUserManager</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository,
-              org.w3c.dom.Element&nbsp;repositoryConfig)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">RepositoryConfigurator.</span><code><span class="memberNameLink"><a href="../RepositoryConfigurator.html#setUserManager(org.eclipse.emf.cdo.spi.server.InternalRepository,org.w3c.dom.Element)">setUserManager</a></span>&#8203;(<a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository,
+              org.w3c.dom.Element&nbsp;repositoryConfig)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected abstract void</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">AppExtension.</span><code><span class="memberNameLink"><a href="../AppExtension.html#start(org.eclipse.emf.cdo.spi.server.InternalRepository,org.w3c.dom.Element)">start</a></span>&#8203;(<a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository,
+     org.w3c.dom.Element&nbsp;repositoryConfig)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>protected abstract void</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">AppExtension.</span><code><span class="memberNameLink"><a href="../AppExtension.html#stop(org.eclipse.emf.cdo.spi.server.InternalRepository)">stop</a></span>&#8203;(<a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.spi.workspace">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.emf.cdo.spi.workspace">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a> in <a href="../../../../../../../org/eclipse/emf/cdo/spi/workspace/package-summary.html">org.eclipse.emf.cdo.spi.workspace</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../../org/eclipse/emf/cdo/spi/workspace/package-summary.html">org.eclipse.emf.cdo.spi.workspace</a> that return <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a> in <a href="../../workspace/package-summary.html">org.eclipse.emf.cdo.spi.workspace</a></h3>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../workspace/package-summary.html">org.eclipse.emf.cdo.spi.workspace</a> that return <a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></code></td>
-<td class="colLast"><span class="typeNameLabel">InternalCDOWorkspace.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/workspace/InternalCDOWorkspace.html#getLocalRepository--">getLocalRepository</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalCDOWorkspace.</span><code><span class="memberNameLink"><a href="../../workspace/InternalCDOWorkspace.html#getLocalRepository()">getLocalRepository</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
 </ul>
 </li>
 </ul>
 </div>
+</main>
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../../index.html">Overview</a></li>
 <li><a href="../package-summary.html">Package</a></li>
-<li><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">Class</a></li>
+<li><a href="../InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">Class</a></li>
 <li class="navBarCell1Rev">Use</li>
+<li><a href="../package-tree.html">Tree</a></li>
 <li><a href="../../../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../../../help-doc.html">Help</a></li>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev</li>
-<li>Next</li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../../index.html?org/eclipse/emf/cdo/spi/server/class-use/InternalRepository.html" target="_top">Frames</a></li>
-<li><a href="InternalRepository.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -458,11 +582,16 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

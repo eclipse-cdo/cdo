@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>EresourceSwitch (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/EresourceSwitch.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceAdapterFactory.html" title="class in org.eclipse.emf.cdo.eresource.util"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li>Next&nbsp;Class</li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/emf/cdo/eresource/util/EresourceSwitch.html" target="_top">Frames</a></li>
-<li><a href="EresourceSwitch.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,6 +82,9 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -85,13 +101,22 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.emf.cdo.eresource.util</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.cdo.eresource.util</a></div>
 <h2 title="Class EresourceSwitch" class="title">Class EresourceSwitch&lt;T&gt;</h2>
 </div>
 <div class="contentContainer">
@@ -107,16 +132,15 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<br>
 <pre>public class <span class="typeNameLabel">EresourceSwitch&lt;T&gt;</span>
 extends java.lang.Object</pre>
 <div class="block"><!-- begin-user-doc --> The <b>Switch</b> for the model's inheritance hierarchy. It supports the call
- <a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceSwitch.html#doSwitch-org.eclipse.emf.ecore.EObject-"><code>doSwitch(object)</code></a> to invoke the <code>caseXXX</code> method for each class of the model,
+ <a href="#doSwitch(org.eclipse.emf.ecore.EObject)"><code>doSwitch(object)</code></a> to invoke the <code>caseXXX</code> method for each class of the model,
  starting with the actual class of the object and proceeding up the inheritance hierarchy until a non-null result is
  returned, which is the result of the switch. <!-- end-user-doc --></div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../../org/eclipse/emf/cdo/eresource/EresourcePackage.html" title="interface in org.eclipse.emf.cdo.eresource"><code>EresourcePackage</code></a></dd>
+<dd><a href="../EresourcePackage.html" title="interface in org.eclipse.emf.cdo.eresource"><code>EresourcePackage</code></a></dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
@@ -126,20 +150,23 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <!-- =========== FIELD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.summary">
+<li class="blockList"><a id="field.summary">
 <!--   -->
 </a>
 <h3>Field Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Field Summary table, listing fields, and an explanation">
+<table class="memberSummary">
 <caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Field and Description</th>
+<th class="colSecond" scope="col">Field</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>protected static <a href="../../../../../../org/eclipse/emf/cdo/eresource/EresourcePackage.html" title="interface in org.eclipse.emf.cdo.eresource">EresourcePackage</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceSwitch.html#modelPackage">modelPackage</a></span></code>
+<td class="colFirst"><code>protected static <a href="../EresourcePackage.html" title="interface in org.eclipse.emf.cdo.eresource">EresourcePackage</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#modelPackage">modelPackage</a></span></code></th>
+<td class="colLast">
 <div class="block">The cached model package
  <!-- begin-user-doc --> <!-- end-user-doc --></div>
 </td>
@@ -147,108 +174,126 @@ extends java.lang.Object</pre>
 </table>
 </li>
 </ul>
+</section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.summary">
+<li class="blockList"><a id="constructor.summary">
 <!--   -->
 </a>
 <h3>Constructor Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
+<table class="memberSummary">
 <caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Constructor and Description</th>
+<th class="colFirst" scope="col">Constructor</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceSwitch.html#EresourceSwitch--">EresourceSwitch</a></span>()</code>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">EresourceSwitch</a></span>()</code></th>
+<td class="colLast">
 <div class="block">Creates an instance of the switch.</div>
 </td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceSwitch.html" title="type parameter in EresourceSwitch">T</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceSwitch.html#caseCDOBinaryResource-org.eclipse.emf.cdo.eresource.CDOBinaryResource-">caseCDOBinaryResource</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/eresource/CDOBinaryResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOBinaryResource</a>&nbsp;object)</code>
+<td class="colFirst"><code><a href="EresourceSwitch.html" title="type parameter in EresourceSwitch">T</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#caseCDOBinaryResource(org.eclipse.emf.cdo.eresource.CDOBinaryResource)">caseCDOBinaryResource</a></span>&#8203;(<a href="../CDOBinaryResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOBinaryResource</a>&nbsp;object)</code></th>
+<td class="colLast">
 <div class="block">Returns the result of interpreting the object as an instance of '<em>CDO Binary Resource</em>'.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>&lt;IO&gt;&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceSwitch.html" title="type parameter in EresourceSwitch">T</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceSwitch.html#caseCDOFileResource-org.eclipse.emf.cdo.eresource.CDOFileResource-">caseCDOFileResource</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/eresource/CDOFileResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOFileResource</a>&lt;IO&gt;&nbsp;object)</code>
+<td class="colFirst"><code>&lt;IO&gt;&nbsp;<a href="EresourceSwitch.html" title="type parameter in EresourceSwitch">T</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#caseCDOFileResource(org.eclipse.emf.cdo.eresource.CDOFileResource)">caseCDOFileResource</a></span>&#8203;(<a href="../CDOFileResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOFileResource</a>&lt;IO&gt;&nbsp;object)</code></th>
+<td class="colLast">
 <div class="block">Returns the result of interpreting the object as an instance of '<em>CDO File Resource</em>'.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceSwitch.html" title="type parameter in EresourceSwitch">T</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceSwitch.html#caseCDOResource-org.eclipse.emf.cdo.eresource.CDOResource-">caseCDOResource</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResource</a>&nbsp;object)</code>
+<td class="colFirst"><code><a href="EresourceSwitch.html" title="type parameter in EresourceSwitch">T</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#caseCDOResource(org.eclipse.emf.cdo.eresource.CDOResource)">caseCDOResource</a></span>&#8203;(<a href="../CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResource</a>&nbsp;object)</code></th>
+<td class="colLast">
 <div class="block">Returns the result of interpreting the object as an instance of '<em>CDO Resource</em>'.</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceSwitch.html" title="type parameter in EresourceSwitch">T</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceSwitch.html#caseCDOResourceFolder-org.eclipse.emf.cdo.eresource.CDOResourceFolder-">caseCDOResourceFolder</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/eresource/CDOResourceFolder.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceFolder</a>&nbsp;object)</code>
+<td class="colFirst"><code><a href="EresourceSwitch.html" title="type parameter in EresourceSwitch">T</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#caseCDOResourceFolder(org.eclipse.emf.cdo.eresource.CDOResourceFolder)">caseCDOResourceFolder</a></span>&#8203;(<a href="../CDOResourceFolder.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceFolder</a>&nbsp;object)</code></th>
+<td class="colLast">
 <div class="block">Returns the result of interpreting the object as an instance of '<em>CDO Resource Folder</em>'.</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceSwitch.html" title="type parameter in EresourceSwitch">T</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceSwitch.html#caseCDOResourceLeaf-org.eclipse.emf.cdo.eresource.CDOResourceLeaf-">caseCDOResourceLeaf</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/eresource/CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceLeaf</a>&nbsp;object)</code>
+<td class="colFirst"><code><a href="EresourceSwitch.html" title="type parameter in EresourceSwitch">T</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#caseCDOResourceLeaf(org.eclipse.emf.cdo.eresource.CDOResourceLeaf)">caseCDOResourceLeaf</a></span>&#8203;(<a href="../CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceLeaf</a>&nbsp;object)</code></th>
+<td class="colLast">
 <div class="block">Returns the result of interpreting the object as an instance of '<em>CDO Resource Leaf</em>'.</div>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceSwitch.html" title="type parameter in EresourceSwitch">T</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceSwitch.html#caseCDOResourceNode-org.eclipse.emf.cdo.eresource.CDOResourceNode-">caseCDOResourceNode</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceNode</a>&nbsp;object)</code>
+<td class="colFirst"><code><a href="EresourceSwitch.html" title="type parameter in EresourceSwitch">T</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#caseCDOResourceNode(org.eclipse.emf.cdo.eresource.CDOResourceNode)">caseCDOResourceNode</a></span>&#8203;(<a href="../CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceNode</a>&nbsp;object)</code></th>
+<td class="colLast">
 <div class="block">Returns the result of interpreting the object as an instance of '<em>CDO Resource Node</em>'.</div>
 </td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceSwitch.html" title="type parameter in EresourceSwitch">T</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceSwitch.html#caseCDOTextResource-org.eclipse.emf.cdo.eresource.CDOTextResource-">caseCDOTextResource</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/eresource/CDOTextResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOTextResource</a>&nbsp;object)</code>
+<td class="colFirst"><code><a href="EresourceSwitch.html" title="type parameter in EresourceSwitch">T</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#caseCDOTextResource(org.eclipse.emf.cdo.eresource.CDOTextResource)">caseCDOTextResource</a></span>&#8203;(<a href="../CDOTextResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOTextResource</a>&nbsp;object)</code></th>
+<td class="colLast">
 <div class="block">Returns the result of interpreting the object as an instance of '<em>CDO Text Resource</em>'.</div>
 </td>
 </tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceSwitch.html" title="type parameter in EresourceSwitch">T</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceSwitch.html#defaultCase-org.eclipse.emf.ecore.EObject-">defaultCase</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&nbsp;object)</code>
+<td class="colFirst"><code><a href="EresourceSwitch.html" title="type parameter in EresourceSwitch">T</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#defaultCase(org.eclipse.emf.ecore.EObject)">defaultCase</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&nbsp;object)</code></th>
+<td class="colLast">
 <div class="block">Returns the result of interpreting the object as an instance of '<em>EObject</em>'.</div>
 </td>
 </tr>
 <tr id="i8" class="altColor">
-<td class="colFirst"><code>protected <a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceSwitch.html" title="type parameter in EresourceSwitch">T</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceSwitch.html#doSwitch-org.eclipse.emf.ecore.EClass-org.eclipse.emf.ecore.EObject-">doSwitch</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;theEClass,
-        <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&nbsp;theEObject)</code>
+<td class="colFirst"><code>protected <a href="EresourceSwitch.html" title="type parameter in EresourceSwitch">T</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#doSwitch(int,org.eclipse.emf.ecore.EObject)">doSwitch</a></span>&#8203;(int&nbsp;classifierID,
+        <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&nbsp;theEObject)</code></th>
+<td class="colLast">
 <div class="block">Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.</div>
 </td>
 </tr>
 <tr id="i9" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceSwitch.html" title="type parameter in EresourceSwitch">T</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceSwitch.html#doSwitch-org.eclipse.emf.ecore.EObject-">doSwitch</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&nbsp;theEObject)</code>
+<td class="colFirst"><code>protected <a href="EresourceSwitch.html" title="type parameter in EresourceSwitch">T</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#doSwitch(org.eclipse.emf.ecore.EClass,org.eclipse.emf.ecore.EObject)">doSwitch</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;theEClass,
+        <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&nbsp;theEObject)</code></th>
+<td class="colLast">
 <div class="block">Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.</div>
 </td>
 </tr>
 <tr id="i10" class="altColor">
-<td class="colFirst"><code>protected <a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceSwitch.html" title="type parameter in EresourceSwitch">T</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceSwitch.html#doSwitch-int-org.eclipse.emf.ecore.EObject-">doSwitch</a></span>(int&nbsp;classifierID,
-        <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&nbsp;theEObject)</code>
+<td class="colFirst"><code><a href="EresourceSwitch.html" title="type parameter in EresourceSwitch">T</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#doSwitch(org.eclipse.emf.ecore.EObject)">doSwitch</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&nbsp;theEObject)</code></th>
+<td class="colLast">
 <div class="block">Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.</div>
 </td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
+<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
@@ -256,6 +301,7 @@ extends java.lang.Object</pre>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -263,18 +309,19 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <!-- ============ FIELD DETAIL =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.detail">
+<li class="blockList"><a id="field.detail">
 <!--   -->
 </a>
 <h3>Field Detail</h3>
-<a name="modelPackage">
+<a id="modelPackage">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>modelPackage</h4>
-<pre>protected static&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/eresource/EresourcePackage.html" title="interface in org.eclipse.emf.cdo.eresource">EresourcePackage</a> modelPackage</pre>
+<pre>protected static&nbsp;<a href="../EresourcePackage.html" title="interface in org.eclipse.emf.cdo.eresource">EresourcePackage</a> modelPackage</pre>
 <div class="block">The cached model package
  <!-- begin-user-doc --> <!-- end-user-doc --></div>
 <dl>
@@ -284,13 +331,15 @@ extends java.lang.Object</pre>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.detail">
+<li class="blockList"><a id="constructor.detail">
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="EresourceSwitch--">
+<a id="&lt;init&gt;()">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -306,19 +355,21 @@ extends java.lang.Object</pre>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="doSwitch-org.eclipse.emf.ecore.EObject-">
+<a id="doSwitch(org.eclipse.emf.ecore.EObject)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>doSwitch</h4>
-<pre>public&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceSwitch.html" title="type parameter in EresourceSwitch">T</a>&nbsp;doSwitch(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&nbsp;theEObject)</pre>
+<pre class="methodSignature">public&nbsp;<a href="EresourceSwitch.html" title="type parameter in EresourceSwitch">T</a>&nbsp;doSwitch&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&nbsp;theEObject)</pre>
 <div class="block">Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
  <!-- begin-user-doc --> <!-- end-user-doc --></div>
 <dl>
@@ -328,14 +379,14 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a name="doSwitch-org.eclipse.emf.ecore.EClass-org.eclipse.emf.ecore.EObject-">
+<a id="doSwitch(org.eclipse.emf.ecore.EClass,org.eclipse.emf.ecore.EObject)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>doSwitch</h4>
-<pre>protected&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceSwitch.html" title="type parameter in EresourceSwitch">T</a>&nbsp;doSwitch(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;theEClass,
-                     <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&nbsp;theEObject)</pre>
+<pre class="methodSignature">protected&nbsp;<a href="EresourceSwitch.html" title="type parameter in EresourceSwitch">T</a>&nbsp;doSwitch&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;theEClass,
+                     <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&nbsp;theEObject)</pre>
 <div class="block">Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
  <!-- begin-user-doc --> <!-- end-user-doc --></div>
 <dl>
@@ -345,14 +396,14 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a name="doSwitch-int-org.eclipse.emf.ecore.EObject-">
+<a id="doSwitch(int,org.eclipse.emf.ecore.EObject)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>doSwitch</h4>
-<pre>protected&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceSwitch.html" title="type parameter in EresourceSwitch">T</a>&nbsp;doSwitch(int&nbsp;classifierID,
-                     <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&nbsp;theEObject)</pre>
+<pre class="methodSignature">protected&nbsp;<a href="EresourceSwitch.html" title="type parameter in EresourceSwitch">T</a>&nbsp;doSwitch&#8203;(int&nbsp;classifierID,
+                     <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&nbsp;theEObject)</pre>
 <div class="block">Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
  <!-- begin-user-doc --> <!-- end-user-doc --></div>
 <dl>
@@ -362,13 +413,13 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a name="caseCDOResourceNode-org.eclipse.emf.cdo.eresource.CDOResourceNode-">
+<a id="caseCDOResourceNode(org.eclipse.emf.cdo.eresource.CDOResourceNode)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>caseCDOResourceNode</h4>
-<pre>public&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceSwitch.html" title="type parameter in EresourceSwitch">T</a>&nbsp;caseCDOResourceNode(<a href="../../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceNode</a>&nbsp;object)</pre>
+<pre class="methodSignature">public&nbsp;<a href="EresourceSwitch.html" title="type parameter in EresourceSwitch">T</a>&nbsp;caseCDOResourceNode&#8203;(<a href="../CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceNode</a>&nbsp;object)</pre>
 <div class="block">Returns the result of interpreting the object as an instance of '<em>CDO Resource Node</em>'.
  <!-- begin-user-doc
  --> This implementation returns null; returning a non-null result will terminate the switch.</div>
@@ -380,18 +431,18 @@ extends java.lang.Object</pre>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0<!-- end-user-doc --></dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceSwitch.html#doSwitch-org.eclipse.emf.ecore.EObject-"><code>doSwitch(EObject)</code></a></dd>
+<dd><a href="#doSwitch(org.eclipse.emf.ecore.EObject)"><code>doSwitch(EObject)</code></a></dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
 </ul>
-<a name="caseCDOResourceFolder-org.eclipse.emf.cdo.eresource.CDOResourceFolder-">
+<a id="caseCDOResourceFolder(org.eclipse.emf.cdo.eresource.CDOResourceFolder)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>caseCDOResourceFolder</h4>
-<pre>public&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceSwitch.html" title="type parameter in EresourceSwitch">T</a>&nbsp;caseCDOResourceFolder(<a href="../../../../../../org/eclipse/emf/cdo/eresource/CDOResourceFolder.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceFolder</a>&nbsp;object)</pre>
+<pre class="methodSignature">public&nbsp;<a href="EresourceSwitch.html" title="type parameter in EresourceSwitch">T</a>&nbsp;caseCDOResourceFolder&#8203;(<a href="../CDOResourceFolder.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceFolder</a>&nbsp;object)</pre>
 <div class="block">Returns the result of interpreting the object as an instance of '<em>CDO Resource Folder</em>'.
  <!-- begin-user-doc
  --> This implementation returns null; returning a non-null result will terminate the switch.</div>
@@ -403,18 +454,18 @@ extends java.lang.Object</pre>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0 <!-- end-user-doc --></dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceSwitch.html#doSwitch-org.eclipse.emf.ecore.EObject-"><code>doSwitch(EObject)</code></a></dd>
+<dd><a href="#doSwitch(org.eclipse.emf.ecore.EObject)"><code>doSwitch(EObject)</code></a></dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
 </ul>
-<a name="caseCDOResource-org.eclipse.emf.cdo.eresource.CDOResource-">
+<a id="caseCDOResource(org.eclipse.emf.cdo.eresource.CDOResource)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>caseCDOResource</h4>
-<pre>public&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceSwitch.html" title="type parameter in EresourceSwitch">T</a>&nbsp;caseCDOResource(<a href="../../../../../../org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResource</a>&nbsp;object)</pre>
+<pre class="methodSignature">public&nbsp;<a href="EresourceSwitch.html" title="type parameter in EresourceSwitch">T</a>&nbsp;caseCDOResource&#8203;(<a href="../CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResource</a>&nbsp;object)</pre>
 <div class="block">Returns the result of interpreting the object as an instance of '<em>CDO Resource</em>'.
  <!-- begin-user-doc -->
  This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc --></div>
@@ -424,18 +475,18 @@ extends java.lang.Object</pre>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the result of interpreting the object as an instance of '<em>CDO Resource</em>'.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceSwitch.html#doSwitch-org.eclipse.emf.ecore.EObject-"><code>doSwitch(EObject)</code></a></dd>
+<dd><a href="#doSwitch(org.eclipse.emf.ecore.EObject)"><code>doSwitch(EObject)</code></a></dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
 </ul>
-<a name="caseCDOResourceLeaf-org.eclipse.emf.cdo.eresource.CDOResourceLeaf-">
+<a id="caseCDOResourceLeaf(org.eclipse.emf.cdo.eresource.CDOResourceLeaf)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>caseCDOResourceLeaf</h4>
-<pre>public&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceSwitch.html" title="type parameter in EresourceSwitch">T</a>&nbsp;caseCDOResourceLeaf(<a href="../../../../../../org/eclipse/emf/cdo/eresource/CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceLeaf</a>&nbsp;object)</pre>
+<pre class="methodSignature">public&nbsp;<a href="EresourceSwitch.html" title="type parameter in EresourceSwitch">T</a>&nbsp;caseCDOResourceLeaf&#8203;(<a href="../CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceLeaf</a>&nbsp;object)</pre>
 <div class="block">Returns the result of interpreting the object as an instance of '<em>CDO Resource Leaf</em>'.
  <!-- begin-user-doc
  --> This implementation returns null; returning a non-null result will terminate the switch.</div>
@@ -447,18 +498,18 @@ extends java.lang.Object</pre>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.1 <!-- end-user-doc --></dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceSwitch.html#doSwitch-org.eclipse.emf.ecore.EObject-"><code>doSwitch(EObject)</code></a></dd>
+<dd><a href="#doSwitch(org.eclipse.emf.ecore.EObject)"><code>doSwitch(EObject)</code></a></dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
 </ul>
-<a name="caseCDOFileResource-org.eclipse.emf.cdo.eresource.CDOFileResource-">
+<a id="caseCDOFileResource(org.eclipse.emf.cdo.eresource.CDOFileResource)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>caseCDOFileResource</h4>
-<pre>public&nbsp;&lt;IO&gt;&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceSwitch.html" title="type parameter in EresourceSwitch">T</a>&nbsp;caseCDOFileResource(<a href="../../../../../../org/eclipse/emf/cdo/eresource/CDOFileResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOFileResource</a>&lt;IO&gt;&nbsp;object)</pre>
+<pre class="methodSignature">public&nbsp;&lt;IO&gt;&nbsp;<a href="EresourceSwitch.html" title="type parameter in EresourceSwitch">T</a>&nbsp;caseCDOFileResource&#8203;(<a href="../CDOFileResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOFileResource</a>&lt;IO&gt;&nbsp;object)</pre>
 <div class="block">Returns the result of interpreting the object as an instance of '<em>CDO File Resource</em>'.
  <!-- begin-user-doc -->
  This implementation returns null; returning a non-null result will terminate the switch.</div>
@@ -471,18 +522,18 @@ extends java.lang.Object</pre>
 <dd>4.1
  <!-- end-user-doc --></dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceSwitch.html#doSwitch-org.eclipse.emf.ecore.EObject-"><code>doSwitch(EObject)</code></a></dd>
+<dd><a href="#doSwitch(org.eclipse.emf.ecore.EObject)"><code>doSwitch(EObject)</code></a></dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
 </ul>
-<a name="caseCDOBinaryResource-org.eclipse.emf.cdo.eresource.CDOBinaryResource-">
+<a id="caseCDOBinaryResource(org.eclipse.emf.cdo.eresource.CDOBinaryResource)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>caseCDOBinaryResource</h4>
-<pre>public&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceSwitch.html" title="type parameter in EresourceSwitch">T</a>&nbsp;caseCDOBinaryResource(<a href="../../../../../../org/eclipse/emf/cdo/eresource/CDOBinaryResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOBinaryResource</a>&nbsp;object)</pre>
+<pre class="methodSignature">public&nbsp;<a href="EresourceSwitch.html" title="type parameter in EresourceSwitch">T</a>&nbsp;caseCDOBinaryResource&#8203;(<a href="../CDOBinaryResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOBinaryResource</a>&nbsp;object)</pre>
 <div class="block">Returns the result of interpreting the object as an instance of '<em>CDO Binary Resource</em>'.
  <!-- begin-user-doc
  --> This implementation returns null; returning a non-null result will terminate the switch.</div>
@@ -494,18 +545,18 @@ extends java.lang.Object</pre>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.1 <!-- end-user-doc --></dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceSwitch.html#doSwitch-org.eclipse.emf.ecore.EObject-"><code>doSwitch(EObject)</code></a></dd>
+<dd><a href="#doSwitch(org.eclipse.emf.ecore.EObject)"><code>doSwitch(EObject)</code></a></dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
 </ul>
-<a name="caseCDOTextResource-org.eclipse.emf.cdo.eresource.CDOTextResource-">
+<a id="caseCDOTextResource(org.eclipse.emf.cdo.eresource.CDOTextResource)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>caseCDOTextResource</h4>
-<pre>public&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceSwitch.html" title="type parameter in EresourceSwitch">T</a>&nbsp;caseCDOTextResource(<a href="../../../../../../org/eclipse/emf/cdo/eresource/CDOTextResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOTextResource</a>&nbsp;object)</pre>
+<pre class="methodSignature">public&nbsp;<a href="EresourceSwitch.html" title="type parameter in EresourceSwitch">T</a>&nbsp;caseCDOTextResource&#8203;(<a href="../CDOTextResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOTextResource</a>&nbsp;object)</pre>
 <div class="block">Returns the result of interpreting the object as an instance of '<em>CDO Text Resource</em>'.
  <!-- begin-user-doc
  --> This implementation returns null; returning a non-null result will terminate the switch.</div>
@@ -517,18 +568,18 @@ extends java.lang.Object</pre>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.1 <!-- end-user-doc --></dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceSwitch.html#doSwitch-org.eclipse.emf.ecore.EObject-"><code>doSwitch(EObject)</code></a></dd>
+<dd><a href="#doSwitch(org.eclipse.emf.ecore.EObject)"><code>doSwitch(EObject)</code></a></dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
 </ul>
-<a name="defaultCase-org.eclipse.emf.ecore.EObject-">
+<a id="defaultCase(org.eclipse.emf.ecore.EObject)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>defaultCase</h4>
-<pre>public&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceSwitch.html" title="type parameter in EresourceSwitch">T</a>&nbsp;defaultCase(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&nbsp;object)</pre>
+<pre class="methodSignature">public&nbsp;<a href="EresourceSwitch.html" title="type parameter in EresourceSwitch">T</a>&nbsp;defaultCase&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&nbsp;object)</pre>
 <div class="block">Returns the result of interpreting the object as an instance of '<em>EObject</em>'.
  <!-- begin-user-doc --> This
  implementation returns null; returning a non-null result will terminate the switch, but this is the last case
@@ -539,28 +590,32 @@ extends java.lang.Object</pre>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the result of interpreting the object as an instance of '<em>EObject</em>'.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceSwitch.html#doSwitch-org.eclipse.emf.ecore.EObject-"><code>doSwitch(org.eclipse.emf.ecore.EObject)</code></a></dd>
+<dd><a href="#doSwitch(org.eclipse.emf.ecore.EObject)"><code>doSwitch(org.eclipse.emf.ecore.EObject)</code></a></dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/EresourceSwitch.html">Use</a></li>
@@ -570,16 +625,8 @@ extends java.lang.Object</pre>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/emf/cdo/eresource/util/EresourceAdapterFactory.html" title="class in org.eclipse.emf.cdo.eresource.util"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li>Next&nbsp;Class</li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/emf/cdo/eresource/util/EresourceSwitch.html" target="_top">Frames</a></li>
-<li><a href="EresourceSwitch.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -592,6 +639,9 @@ extends java.lang.Object</pre>
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -608,10 +658,12 @@ extends java.lang.Object</pre>
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>ContainerItemProvider.AbstractContainerNode (Net4j Utilities Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/ContainerItemProvider.AbstractContainerNode.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html" title="class in org.eclipse.net4j.util.ui.views"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.AbstractNode.html" title="class in org.eclipse.net4j.util.ui.views"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/net4j/util/ui/views/ContainerItemProvider.AbstractContainerNode.html" target="_top">Frames</a></li>
-<li><a href="ContainerItemProvider.AbstractContainerNode.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,6 +82,9 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -85,13 +101,22 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.net4j.util.ui.views</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.net4j.util.ui.views</a></div>
 <h2 title="Class ContainerItemProvider.AbstractContainerNode" class="title">Class ContainerItemProvider.AbstractContainerNode</h2>
 </div>
 <div class="contentContainer">
@@ -99,7 +124,7 @@ var activeTableTab = "activeTableTab";
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.AbstractNode.html" title="class in org.eclipse.net4j.util.ui.views">org.eclipse.net4j.util.ui.views.ContainerItemProvider.AbstractNode</a></li>
+<li><a href="ContainerItemProvider.AbstractNode.html" title="class in org.eclipse.net4j.util.ui.views">org.eclipse.net4j.util.ui.views.ContainerItemProvider.AbstractNode</a></li>
 <li>
 <ul class="inheritance">
 <li>org.eclipse.net4j.util.ui.views.ContainerItemProvider.AbstractContainerNode</li>
@@ -113,20 +138,19 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a></dd>
+<dd><code><a href="ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a></code></dd>
 </dl>
 <dl>
 <dt>Direct Known Subclasses:</dt>
-<dd><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.ContainerNode.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider.ContainerNode</a></dd>
+<dd><code><a href="ContainerItemProvider.ContainerNode.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider.ContainerNode</a></code></dd>
 </dl>
 <dl>
 <dt>Enclosing class:</dt>
-<dd><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider</a>&lt;<a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html" title="type parameter in ContainerItemProvider">CONTAINER</a> extends <a href="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;&gt;</dd>
+<dd><a href="ContainerItemProvider.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider</a>&lt;<a href="ContainerItemProvider.html" title="type parameter in ContainerItemProvider">CONTAINER</a> extends <a href="../../container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;&gt;</dd>
 </dl>
 <hr>
-<br>
 <pre>public abstract class <span class="typeNameLabel">ContainerItemProvider.AbstractContainerNode</span>
-extends <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.AbstractNode.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider.AbstractNode</a></pre>
+extends <a href="ContainerItemProvider.AbstractNode.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider.AbstractNode</a></pre>
 <dl>
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>Eike Stepper</dd>
@@ -138,116 +162,143 @@ extends <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItem
 <ul class="blockList">
 <li class="blockList">
 <!-- =========== FIELD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.summary">
+<li class="blockList"><a id="field.summary">
 <!--   -->
 </a>
 <h3>Field Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Field Summary table, listing fields, and an explanation">
+<table class="memberSummary">
 <caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Field and Description</th>
+<th class="colSecond" scope="col">Field</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>protected <a href="../../../../../../org/eclipse/net4j/util/event/IListener.html" title="interface in org.eclipse.net4j.util.event">IListener</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.AbstractContainerNode.html#containerListener">containerListener</a></span></code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="../../event/IListener.html" title="interface in org.eclipse.net4j.util.event">IListener</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#containerListener">containerListener</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
+<ul class="blockList">
+<li class="blockList"><a id="fields.inherited.from.class.org.eclipse.net4j.util.ui.views.ContainerItemProvider.Node">
+<!--   -->
+</a>
+<h3>Fields inherited from interface&nbsp;org.eclipse.net4j.util.ui.views.<a href="ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a></h3>
+<code><a href="ContainerItemProvider.Node.html#NO_CHILDREN">NO_CHILDREN</a></code></li>
+</ul>
 </li>
 </ul>
+</section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.summary">
+<li class="blockList"><a id="constructor.summary">
 <!--   -->
 </a>
 <h3>Constructor Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
+<table class="memberSummary">
 <caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Constructor and Description</th>
+<th class="colFirst" scope="col">Constructor</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.AbstractContainerNode.html#AbstractContainerNode-org.eclipse.net4j.util.ui.views.ContainerItemProvider.Node-">AbstractContainerNode</a></span>(<a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a>&nbsp;parent)</code>&nbsp;</td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(org.eclipse.net4j.util.ui.views.ContainerItemProvider.Node)">AbstractContainerNode</a></span>&#8203;(<a href="ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a>&nbsp;parent)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>protected java.util.List&lt;<a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.AbstractContainerNode.html#createChildren--">createChildren</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>protected java.util.List&lt;<a href="ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createChildren()">createChildren</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.AbstractContainerNode.html#dispose--">dispose</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dispose()">dispose</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.AbstractContainerNode.html#disposeChildren--">disposeChildren</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#disposeChildren()">disposeChildren</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.AbstractContainerNode.html#fillChildren-java.util.List-org.eclipse.net4j.util.container.IContainer-">fillChildren</a></span>(java.util.List&lt;<a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a>&gt;&nbsp;children,
-            <a href="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;&nbsp;container)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#fillChildren(java.util.List,org.eclipse.net4j.util.container.IContainer)">fillChildren</a></span>&#8203;(java.util.List&lt;<a href="ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a>&gt;&nbsp;children,
+            <a href="../../container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;&nbsp;container)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>java.util.List&lt;<a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.AbstractContainerNode.html#getChildren--">getChildren</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>java.util.List&lt;<a href="ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getChildren()">getChildren</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.AbstractContainerNode.html#getContainer--">getContainer</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../../container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getContainer()">getContainer</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.AbstractContainerNode.html#hasChildren--">hasChildren</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hasChildren()">hasChildren</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.AbstractContainerNode.html#onAdded-org.eclipse.net4j.util.container.IContainer-java.lang.Object-">onAdded</a></span>(<a href="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;&nbsp;container,
-       java.lang.Object&nbsp;element)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onAdded(org.eclipse.net4j.util.container.IContainer,java.lang.Object)">onAdded</a></span>&#8203;(<a href="../../container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;&nbsp;container,
+       java.lang.Object&nbsp;element)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.AbstractContainerNode.html#onRemoved-org.eclipse.net4j.util.container.IContainer-java.lang.Object-">onRemoved</a></span>(<a href="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;&nbsp;container,
-         java.lang.Object&nbsp;element)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onRemoved(org.eclipse.net4j.util.container.IContainer,java.lang.Object)">onRemoved</a></span>&#8203;(<a href="../../container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;&nbsp;container,
+         java.lang.Object&nbsp;element)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.ui.views.ContainerItemProvider.AbstractNode">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.ui.views.ContainerItemProvider.AbstractNode">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.ui.views.<a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.AbstractNode.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider.AbstractNode</a></h3>
-<code><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.AbstractNode.html#addChild-java.util.Collection-java.lang.Object-">addChild</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.AbstractNode.html#checkNotDisposed--">checkNotDisposed</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.AbstractNode.html#getParent--">getParent</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.AbstractNode.html#getTreePath--">getTreePath</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.AbstractNode.html#isDisposed--">isDisposed</a>, <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.AbstractNode.html#toString--">toString</a></code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.ui.views.<a href="ContainerItemProvider.AbstractNode.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider.AbstractNode</a></h3>
+<code><a href="ContainerItemProvider.AbstractNode.html#addChild(java.util.Collection,java.lang.Object)">addChild</a>, <a href="ContainerItemProvider.AbstractNode.html#checkNotDisposed()">checkNotDisposed</a>, <a href="ContainerItemProvider.AbstractNode.html#getParent()">getParent</a>, <a href="ContainerItemProvider.AbstractNode.html#getTreePath()">getTreePath</a>, <a href="ContainerItemProvider.AbstractNode.html#isDisposed()">isDisposed</a>, <a href="ContainerItemProvider.AbstractNode.html#toString()">toString</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
+<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
 <code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, wait, wait, wait</code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.ui.views.ContainerItemProvider.Node">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.ui.views.ContainerItemProvider.Node">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.ui.views.<a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a></h3>
-<code><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html#getElement--">getElement</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.ui.views.<a href="ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a></h3>
+<code><a href="ContainerItemProvider.Node.html#getElement()">getElement</a></code></li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -255,170 +306,179 @@ extends <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItem
 <ul class="blockList">
 <li class="blockList">
 <!-- ============ FIELD DETAIL =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.detail">
+<li class="blockList"><a id="field.detail">
 <!--   -->
 </a>
 <h3>Field Detail</h3>
-<a name="containerListener">
+<a id="containerListener">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>containerListener</h4>
-<pre>protected&nbsp;<a href="../../../../../../org/eclipse/net4j/util/event/IListener.html" title="interface in org.eclipse.net4j.util.event">IListener</a> containerListener</pre>
+<pre>protected&nbsp;<a href="../../event/IListener.html" title="interface in org.eclipse.net4j.util.event">IListener</a> containerListener</pre>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.detail">
+<li class="blockList"><a id="constructor.detail">
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="AbstractContainerNode-org.eclipse.net4j.util.ui.views.ContainerItemProvider.Node-">
+<a id="&lt;init&gt;(org.eclipse.net4j.util.ui.views.ContainerItemProvider.Node)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>AbstractContainerNode</h4>
-<pre>public&nbsp;AbstractContainerNode(<a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a>&nbsp;parent)</pre>
+<pre>public&nbsp;AbstractContainerNode&#8203;(<a href="ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a>&nbsp;parent)</pre>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="dispose--">
+<a id="dispose()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>dispose</h4>
-<pre>public&nbsp;void&nbsp;dispose()</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;dispose()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html#dispose--">dispose</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a></code></dd>
+<dd><code><a href="ContainerItemProvider.Node.html#dispose()">dispose</a></code>&nbsp;in interface&nbsp;<code><a href="ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.AbstractNode.html#dispose--">dispose</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.AbstractNode.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider.AbstractNode</a></code></dd>
+<dd><code><a href="ContainerItemProvider.AbstractNode.html#dispose()">dispose</a></code>&nbsp;in class&nbsp;<code><a href="ContainerItemProvider.AbstractNode.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider.AbstractNode</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="disposeChildren--">
+<a id="disposeChildren()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>disposeChildren</h4>
-<pre>public&nbsp;void&nbsp;disposeChildren()</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;disposeChildren()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html#disposeChildren--">disposeChildren</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a></code></dd>
+<dd><code><a href="ContainerItemProvider.Node.html#disposeChildren()">disposeChildren</a></code>&nbsp;in interface&nbsp;<code><a href="ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.AbstractNode.html#disposeChildren--">disposeChildren</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.AbstractNode.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider.AbstractNode</a></code></dd>
+<dd><code><a href="ContainerItemProvider.AbstractNode.html#disposeChildren()">disposeChildren</a></code>&nbsp;in class&nbsp;<code><a href="ContainerItemProvider.AbstractNode.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider.AbstractNode</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="hasChildren--">
+<a id="hasChildren()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>hasChildren</h4>
-<pre>public&nbsp;boolean&nbsp;hasChildren()</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;hasChildren()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html#hasChildren--">hasChildren</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a></code></dd>
+<dd><code><a href="ContainerItemProvider.Node.html#hasChildren()">hasChildren</a></code>&nbsp;in interface&nbsp;<code><a href="ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.AbstractNode.html#hasChildren--">hasChildren</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.AbstractNode.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider.AbstractNode</a></code></dd>
+<dd><code><a href="ContainerItemProvider.AbstractNode.html#hasChildren()">hasChildren</a></code>&nbsp;in class&nbsp;<code><a href="ContainerItemProvider.AbstractNode.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider.AbstractNode</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.4</dd>
 </dl>
 </li>
 </ul>
-<a name="getChildren--">
+<a id="getChildren()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getChildren</h4>
-<pre>public final&nbsp;java.util.List&lt;<a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a>&gt;&nbsp;getChildren()</pre>
+<pre class="methodSignature">public final&nbsp;java.util.List&lt;<a href="ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a>&gt;&nbsp;getChildren()</pre>
 </li>
 </ul>
-<a name="getContainer--">
+<a id="getContainer()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getContainer</h4>
-<pre>public&nbsp;<a href="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;&nbsp;getContainer()</pre>
+<pre class="methodSignature">public&nbsp;<a href="../../container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;&nbsp;getContainer()</pre>
 </li>
 </ul>
-<a name="createChildren--">
+<a id="createChildren()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createChildren</h4>
-<pre>protected&nbsp;java.util.List&lt;<a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a>&gt;&nbsp;createChildren()</pre>
+<pre class="methodSignature">protected&nbsp;java.util.List&lt;<a href="ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a>&gt;&nbsp;createChildren()</pre>
 </li>
 </ul>
-<a name="fillChildren-java.util.List-org.eclipse.net4j.util.container.IContainer-">
+<a id="fillChildren(java.util.List,org.eclipse.net4j.util.container.IContainer)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>fillChildren</h4>
-<pre>protected&nbsp;void&nbsp;fillChildren(java.util.List&lt;<a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a>&gt;&nbsp;children,
-                            <a href="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;&nbsp;container)</pre>
+<pre class="methodSignature">protected&nbsp;void&nbsp;fillChildren&#8203;(java.util.List&lt;<a href="ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a>&gt;&nbsp;children,
+                            <a href="../../container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;&nbsp;container)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.1</dd>
 </dl>
 </li>
 </ul>
-<a name="onAdded-org.eclipse.net4j.util.container.IContainer-java.lang.Object-">
+<a id="onAdded(org.eclipse.net4j.util.container.IContainer,java.lang.Object)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>onAdded</h4>
-<pre>protected&nbsp;void&nbsp;onAdded(<a href="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;&nbsp;container,
+<pre class="methodSignature">protected&nbsp;void&nbsp;onAdded&#8203;(<a href="../../container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;&nbsp;container,
                        java.lang.Object&nbsp;element)</pre>
 </li>
 </ul>
-<a name="onRemoved-org.eclipse.net4j.util.container.IContainer-java.lang.Object-">
+<a id="onRemoved(org.eclipse.net4j.util.container.IContainer,java.lang.Object)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>onRemoved</h4>
-<pre>protected&nbsp;void&nbsp;onRemoved(<a href="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;&nbsp;container,
+<pre class="methodSignature">protected&nbsp;void&nbsp;onRemoved&#8203;(<a href="../../container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;java.lang.Object&gt;&nbsp;container,
                          java.lang.Object&nbsp;element)</pre>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/ContainerItemProvider.AbstractContainerNode.html">Use</a></li>
@@ -428,16 +488,8 @@ extends <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItem
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html" title="class in org.eclipse.net4j.util.ui.views"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.AbstractNode.html" title="class in org.eclipse.net4j.util.ui.views"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/net4j/util/ui/views/ContainerItemProvider.AbstractContainerNode.html" target="_top">Frames</a></li>
-<li><a href="ContainerItemProvider.AbstractContainerNode.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -450,6 +502,9 @@ extends <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItem
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -466,10 +521,12 @@ extends <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItem
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

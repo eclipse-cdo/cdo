@@ -14,6 +14,7 @@
     <packages name="org.eclipse.net4j.util.io"/>
     <packages name="org.eclipse.net4j.util.lifecycle"/>
     <packages name="org.eclipse.net4j.util.om"/>
+    <packages name="org.eclipse.net4j.util.om.job"/>
     <packages name="org.eclipse.net4j.util.om.log"/>
     <packages name="org.eclipse.net4j.util.om.monitor"/>
     <packages name="org.eclipse.net4j.util.om.pref"/>

@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>InternalCDOPackageRegistry (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":6,"i11":6,"i12":6,"i13":6,"i14":6,"i15":6,"i16":6,"i17":6,"i18":6,"i19":6};
+var data = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":6,"i11":6,"i12":6,"i13":6,"i14":6,"i15":6,"i16":6,"i17":6,"i18":6,"i19":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/InternalCDOPackageRegistry.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.spi.common.model"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.PackageLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.model"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../../index.html?org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.html" target="_top">Frames</a></li>
-<li><a href="InternalCDOPackageRegistry.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,12 +82,15 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
@@ -85,13 +101,22 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.emf.cdo.spi.common.model</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.cdo.spi.common.model</a></div>
 <h2 title="Interface InternalCDOPackageRegistry" class="title">Interface InternalCDOPackageRegistry</h2>
 </div>
 <div class="contentContainer">
@@ -100,16 +125,15 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.Registry.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage.Registry</a>, <a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/IDeactivateable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">IDeactivateable</a>, <a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a>, <a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</a>, java.util.Map&lt;java.lang.String,java.lang.Object&gt;</dd>
+<dd><code><a href="../../../common/model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a></code>, <code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.Registry.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage.Registry</a></code>, <code>org.eclipse.net4j.util.lifecycle.IDeactivateable</code>, <code>org.eclipse.net4j.util.lifecycle.ILifecycle</code>, <code>org.eclipse.net4j.util.event.INotifier</code>, <code>java.util.Map&lt;java.lang.String,&#8203;java.lang.Object&gt;</code></dd>
 </dl>
 <dl>
 <dt>All Known Implementing Classes:</dt>
-<dd><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/DelegatingCDOPackageRegistry.html" title="class in org.eclipse.emf.cdo.spi.common.model">DelegatingCDOPackageRegistry</a></dd>
+<dd><code><a href="DelegatingCDOPackageRegistry.html" title="class in org.eclipse.emf.cdo.spi.common.model">DelegatingCDOPackageRegistry</a></code></dd>
 </dl>
 <hr>
-<br>
 <pre>public interface <span class="typeNameLabel">InternalCDOPackageRegistry</span>
-extends <a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a>, <a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a></pre>
+extends <a href="../../../common/model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a>, org.eclipse.net4j.util.lifecycle.ILifecycle</pre>
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -128,200 +152,237 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackag
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="nested.class.summary">
+<li class="blockList"><a id="nested.class.summary">
 <!--   -->
 </a>
 <h3>Nested Class Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Nested Class Summary table, listing nested classes, and an explanation">
+<table class="memberSummary">
 <caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Interface and Description</th>
+<th class="colSecond" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.PackageLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageRegistry.PackageLoader</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="InternalCDOPackageRegistry.PackageLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageRegistry.PackageLoader</a></span></code></th>
+<td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.PackageProcessor.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageRegistry.PackageProcessor</a></span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="InternalCDOPackageRegistry.PackageProcessor.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageRegistry.PackageProcessor</a></span></code></th>
+<td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="nested.classes.inherited.from.class.java.util.Map">
+<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.net4j.util.lifecycle.ILifecycle">
+<!--   -->
+</a>
+<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.lifecycle.ILifecycle</h3>
+<code>org.eclipse.net4j.util.lifecycle.ILifecycle.DeferrableActivation</code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.net4j.util.event.INotifier">
+<!--   -->
+</a>
+<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.event.INotifier</h3>
+<code>org.eclipse.net4j.util.event.INotifier.INotifier2</code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a id="nested.classes.inherited.from.class.java.util.Map">
 <!--   -->
 </a>
 <h3>Nested classes/interfaces inherited from interface&nbsp;java.util.Map</h3>
-<code>java.util.Map.Entry&lt;K,V&gt;</code></li>
-</ul>
-<ul class="blockList">
-<li class="blockList"><a name="nested.classes.inherited.from.class.org.eclipse.net4j.util.lifecycle.ILifecycle">
-<!--   -->
-</a>
-<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.lifecycle.<a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a></h3>
-<code><a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.DeferrableActivation.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle.DeferrableActivation</a></code></li>
+<code>java.util.Map.Entry&lt;K extends java.lang.Object,&#8203;V extends java.lang.Object&gt;</code></li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- =========== FIELD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.summary">
+<li class="blockList"><a id="field.summary">
 <!--   -->
 </a>
 <h3>Field Summary</h3>
 <ul class="blockList">
-<li class="blockList"><a name="fields.inherited.from.class.org.eclipse.emf.ecore.EPackage.Registry">
+<li class="blockList"><a id="fields.inherited.from.class.org.eclipse.emf.ecore.EPackage.Registry">
 <!--   -->
 </a>
-<h3>Fields inherited from interface&nbsp;org.eclipse.emf.ecore.<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.Registry.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage.Registry</a></h3>
-<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.Registry.html?is-external=true#INSTANCE" title="class or interface in org.eclipse.emf.ecore">INSTANCE</a></code></li>
+<h3>Fields inherited from interface&nbsp;org.eclipse.emf.ecore.<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.Registry.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage.Registry</a></h3>
+<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.Registry.html?is-external=true#INSTANCE" title="class or interface in org.eclipse.emf.ecore" class="externalLink">INSTANCE</a></code></li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>java.lang.Object</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.html#basicPut-java.lang.String-java.lang.Object-">basicPut</a></span>(java.lang.String&nbsp;nsURI,
-        java.lang.Object&nbsp;value)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#basicPut(java.lang.String,java.lang.Object)">basicPut</a></span>&#8203;(java.lang.String&nbsp;nsURI,
+        java.lang.Object&nbsp;value)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.html#createPackageUnit--">createPackageUnit</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createPackageUnit()">createPackageUnit</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>java.util.Set&lt;java.lang.String&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.html#getAllKeys--">getAllKeys</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAllKeys()">getAllKeys</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</a>[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.html#getEPackages--">getEPackages</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage</a>[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getEPackages()">getEPackages</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageInfo</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.html#getPackageInfo-org.eclipse.emf.ecore.EPackage-">getPackageInfo</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</a>&nbsp;ePackage)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="InternalCDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageInfo</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPackageInfo(org.eclipse.emf.ecore.EPackage)">getPackageInfo</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage</a>&nbsp;ePackage)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageInfo</a>[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.html#getPackageInfos--">getPackageInfos</a></span>()</code>
+<td class="colFirst"><code><a href="InternalCDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageInfo</a>[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPackageInfos()">getPackageInfos</a></span>()</code></th>
+<td class="colLast">
 <div class="block">Returns all package infos that are registered in this package registry.</div>
 </td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.PackageLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageRegistry.PackageLoader</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.html#getPackageLoader--">getPackageLoader</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="InternalCDOPackageRegistry.PackageLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageRegistry.PackageLoader</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPackageLoader()">getPackageLoader</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.PackageProcessor.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageRegistry.PackageProcessor</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.html#getPackageProcessor--">getPackageProcessor</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="InternalCDOPackageRegistry.PackageProcessor.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageRegistry.PackageProcessor</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPackageProcessor()">getPackageProcessor</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.html#getPackageUnit-org.eclipse.emf.ecore.EPackage-">getPackageUnit</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</a>&nbsp;ePackage)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPackageUnit(java.lang.String)">getPackageUnit</a></span>&#8203;(java.lang.String&nbsp;id)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.html#getPackageUnit-java.lang.String-">getPackageUnit</a></span>(java.lang.String&nbsp;id)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPackageUnit(org.eclipse.emf.ecore.EPackage)">getPackageUnit</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage</a>&nbsp;ePackage)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.html#getPackageUnits--">getPackageUnits</a></span>()</code>
+<td class="colFirst"><code><a href="InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPackageUnits()">getPackageUnits</a></span>()</code></th>
+<td class="colLast">
 <div class="block">Returns all package units that are registered in this package registry.</div>
 </td>
 </tr>
 <tr id="i11" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.html#getPackageUnits-boolean-">getPackageUnits</a></span>(boolean&nbsp;withSystemPackages)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPackageUnits(boolean)">getPackageUnits</a></span>&#8203;(boolean&nbsp;withSystemPackages)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i12" class="altColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.html#getPackageUnits-long-long-">getPackageUnits</a></span>(long&nbsp;startTime,
-               long&nbsp;endTime)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPackageUnits(long,long)">getPackageUnits</a></span>&#8203;(long&nbsp;startTime,
+               long&nbsp;endTime)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code>java.lang.Object</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.html#getWithDelegation-java.lang.String-boolean-">getWithDelegation</a></span>(java.lang.String&nbsp;nsURI,
-                 boolean&nbsp;resolve)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getWithDelegation(java.lang.String,boolean)">getWithDelegation</a></span>&#8203;(java.lang.String&nbsp;nsURI,
+                 boolean&nbsp;resolve)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.html#putPackageUnit-org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit-">putPackageUnit</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>&nbsp;packageUnit)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#putPackageUnit(org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit)">putPackageUnit</a></span>&#8203;(<a href="InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>&nbsp;packageUnit)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i15" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.html#putPackageUnits-org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit:A-org.eclipse.emf.cdo.common.model.CDOPackageUnit.State-">putPackageUnits</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>[]&nbsp;packageUnits,
-               <a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.State.html" title="enum in org.eclipse.emf.cdo.common.model">CDOPackageUnit.State</a>&nbsp;state)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#putPackageUnits(org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit%5B%5D,org.eclipse.emf.cdo.common.model.CDOPackageUnit.State)">putPackageUnits</a></span>&#8203;(<a href="InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>[]&nbsp;packageUnits,
+               <a href="../../../common/model/CDOPackageUnit.State.html" title="enum in org.eclipse.emf.cdo.common.model">CDOPackageUnit.State</a>&nbsp;state)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i16" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.html#registerPackageInfo-org.eclipse.emf.ecore.EPackage-org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo-">registerPackageInfo</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</a>&nbsp;ePackage,
-                   <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageInfo</a>&nbsp;packageInfo)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#registerPackageInfo(org.eclipse.emf.ecore.EPackage,org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo)">registerPackageInfo</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage</a>&nbsp;ePackage,
+                   <a href="InternalCDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageInfo</a>&nbsp;packageInfo)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i17" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.html#setPackageLoader-org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.PackageLoader-">setPackageLoader</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.PackageLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageRegistry.PackageLoader</a>&nbsp;packageLoader)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPackageLoader(org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.PackageLoader)">setPackageLoader</a></span>&#8203;(<a href="InternalCDOPackageRegistry.PackageLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageRegistry.PackageLoader</a>&nbsp;packageLoader)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i18" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.html#setPackageProcessor-org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.PackageProcessor-">setPackageProcessor</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.PackageProcessor.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageRegistry.PackageProcessor</a>&nbsp;packageProcessor)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPackageProcessor(org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.PackageProcessor)">setPackageProcessor</a></span>&#8203;(<a href="InternalCDOPackageRegistry.PackageProcessor.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageRegistry.PackageProcessor</a>&nbsp;packageProcessor)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i19" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.html#setReplacingDescriptors-boolean-">setReplacingDescriptors</a></span>(boolean&nbsp;replacingDescriptors)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setReplacingDescriptors(boolean)">setReplacingDescriptors</a></span>&#8203;(boolean&nbsp;replacingDescriptors)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.emf.cdo.common.model.CDOPackageRegistry">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.cdo.common.model.CDOPackageRegistry">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.model.<a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a></h3>
-<code><a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageRegistry.html#getEnumLiteralFor-org.eclipse.emf.common.util.Enumerator-">getEnumLiteralFor</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageRegistry.html#getSubTypes--">getSubTypes</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageRegistry.html#isReplacingDescriptors--">isReplacingDescriptors</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageRegistry.html#putEPackage-org.eclipse.emf.ecore.EPackage-">putEPackage</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.model.<a href="../../../common/model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a></h3>
+<code><a href="../../../common/model/CDOPackageRegistry.html#getEnumLiteralFor(org.eclipse.emf.common.util.Enumerator)">getEnumLiteralFor</a>, <a href="../../../common/model/CDOPackageRegistry.html#getSubTypes()">getSubTypes</a>, <a href="../../../common/model/CDOPackageRegistry.html#isReplacingDescriptors()">isReplacingDescriptors</a>, <a href="../../../common/model/CDOPackageRegistry.html#putEPackage(org.eclipse.emf.ecore.EPackage)">putEPackage</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.emf.ecore.EPackage.Registry">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.ecore.EPackage.Registry">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.emf.ecore.<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.Registry.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage.Registry</a></h3>
-<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.Registry.html?is-external=true#getEFactory-java.lang.String-" title="class or interface in org.eclipse.emf.ecore">getEFactory</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.Registry.html?is-external=true#getEPackage-java.lang.String-" title="class or interface in org.eclipse.emf.ecore">getEPackage</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.emf.ecore.<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.Registry.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage.Registry</a></h3>
+<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.Registry.html?is-external=true#getEFactory(java.lang.String)" title="class or interface in org.eclipse.emf.ecore" class="externalLink">getEFactory</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.Registry.html?is-external=true#getEPackage(java.lang.String)" title="class or interface in org.eclipse.emf.ecore" class="externalLink">getEPackage</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.util.Map">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.lifecycle.ILifecycle">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.lifecycle.ILifecycle</h3>
+<code>activate, deactivate, getLifecycleState, isActive</code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.event.INotifier">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.event.INotifier</h3>
+<code>addListener, getListeners, hasListeners, removeListener</code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a id="methods.inherited.from.class.java.util.Map">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;java.util.Map</h3>
 <code>clear, compute, computeIfAbsent, computeIfPresent, containsKey, containsValue, entrySet, equals, forEach, get, getOrDefault, hashCode, isEmpty, keySet, merge, put, putAll, putIfAbsent, remove, remove, replace, replace, replaceAll, size, values</code></li>
 </ul>
-<ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.lifecycle.ILifecycle">
-<!--   -->
-</a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.lifecycle.<a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a></h3>
-<code><a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#activate--" title="class or interface in org.eclipse.net4j.util.lifecycle">activate</a>, <a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#deactivate--" title="class or interface in org.eclipse.net4j.util.lifecycle">deactivate</a>, <a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#getLifecycleState--" title="class or interface in org.eclipse.net4j.util.lifecycle">getLifecycleState</a>, <a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#isActive--" title="class or interface in org.eclipse.net4j.util.lifecycle">isActive</a></code></li>
-</ul>
-<ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.event.INotifier">
-<!--   -->
-</a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.event.<a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</a></h3>
-<code><a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#addListener-org.eclipse.net4j.util.event.IListener-" title="class or interface in org.eclipse.net4j.util.event">addListener</a>, <a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#getListeners--" title="class or interface in org.eclipse.net4j.util.event">getListeners</a>, <a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#hasListeners--" title="class or interface in org.eclipse.net4j.util.event">hasListeners</a>, <a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#removeListener-org.eclipse.net4j.util.event.IListener-" title="class or interface in org.eclipse.net4j.util.event">removeListener</a></code></li>
-</ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -329,245 +390,246 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackag
 <ul class="blockList">
 <li class="blockList">
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="setReplacingDescriptors-boolean-">
+<a id="setReplacingDescriptors(boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setReplacingDescriptors</h4>
-<pre>void&nbsp;setReplacingDescriptors(boolean&nbsp;replacingDescriptors)</pre>
+<pre class="methodSignature">void&nbsp;setReplacingDescriptors&#8203;(boolean&nbsp;replacingDescriptors)</pre>
 </li>
 </ul>
-<a name="getPackageProcessor--">
+<a id="getPackageProcessor()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getPackageProcessor</h4>
-<pre><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.PackageProcessor.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageRegistry.PackageProcessor</a>&nbsp;getPackageProcessor()</pre>
+<pre class="methodSignature"><a href="InternalCDOPackageRegistry.PackageProcessor.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageRegistry.PackageProcessor</a>&nbsp;getPackageProcessor()</pre>
 </li>
 </ul>
-<a name="setPackageProcessor-org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.PackageProcessor-">
+<a id="setPackageProcessor(org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.PackageProcessor)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setPackageProcessor</h4>
-<pre>void&nbsp;setPackageProcessor(<a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.PackageProcessor.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageRegistry.PackageProcessor</a>&nbsp;packageProcessor)</pre>
+<pre class="methodSignature">void&nbsp;setPackageProcessor&#8203;(<a href="InternalCDOPackageRegistry.PackageProcessor.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageRegistry.PackageProcessor</a>&nbsp;packageProcessor)</pre>
 </li>
 </ul>
-<a name="getPackageLoader--">
+<a id="getPackageLoader()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getPackageLoader</h4>
-<pre><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.PackageLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageRegistry.PackageLoader</a>&nbsp;getPackageLoader()</pre>
+<pre class="methodSignature"><a href="InternalCDOPackageRegistry.PackageLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageRegistry.PackageLoader</a>&nbsp;getPackageLoader()</pre>
 </li>
 </ul>
-<a name="setPackageLoader-org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.PackageLoader-">
+<a id="setPackageLoader(org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.PackageLoader)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setPackageLoader</h4>
-<pre>void&nbsp;setPackageLoader(<a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.PackageLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageRegistry.PackageLoader</a>&nbsp;packageLoader)</pre>
+<pre class="methodSignature">void&nbsp;setPackageLoader&#8203;(<a href="InternalCDOPackageRegistry.PackageLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageRegistry.PackageLoader</a>&nbsp;packageLoader)</pre>
 </li>
 </ul>
-<a name="basicPut-java.lang.String-java.lang.Object-">
+<a id="basicPut(java.lang.String,java.lang.Object)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>basicPut</h4>
-<pre>java.lang.Object&nbsp;basicPut(java.lang.String&nbsp;nsURI,
+<pre class="methodSignature">java.lang.Object&nbsp;basicPut&#8203;(java.lang.String&nbsp;nsURI,
                           java.lang.Object&nbsp;value)</pre>
 </li>
 </ul>
-<a name="registerPackageInfo-org.eclipse.emf.ecore.EPackage-org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo-">
+<a id="registerPackageInfo(org.eclipse.emf.ecore.EPackage,org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>registerPackageInfo</h4>
-<pre>void&nbsp;registerPackageInfo(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</a>&nbsp;ePackage,
-                         <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageInfo</a>&nbsp;packageInfo)</pre>
+<pre class="methodSignature">void&nbsp;registerPackageInfo&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage</a>&nbsp;ePackage,
+                         <a href="InternalCDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageInfo</a>&nbsp;packageInfo)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
 </li>
 </ul>
-<a name="putPackageUnit-org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit-">
+<a id="putPackageUnit(org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>putPackageUnit</h4>
-<pre>void&nbsp;putPackageUnit(<a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>&nbsp;packageUnit)</pre>
+<pre class="methodSignature">void&nbsp;putPackageUnit&#8203;(<a href="InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>&nbsp;packageUnit)</pre>
 </li>
 </ul>
-<a name="putPackageUnits-org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit:A-org.eclipse.emf.cdo.common.model.CDOPackageUnit.State-">
+<a id="putPackageUnits(org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit[],org.eclipse.emf.cdo.common.model.CDOPackageUnit.State)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>putPackageUnits</h4>
-<pre>void&nbsp;putPackageUnits(<a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>[]&nbsp;packageUnits,
-                     <a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.State.html" title="enum in org.eclipse.emf.cdo.common.model">CDOPackageUnit.State</a>&nbsp;state)</pre>
+<pre class="methodSignature">void&nbsp;putPackageUnits&#8203;(<a href="InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>[]&nbsp;packageUnits,
+                     <a href="../../../common/model/CDOPackageUnit.State.html" title="enum in org.eclipse.emf.cdo.common.model">CDOPackageUnit.State</a>&nbsp;state)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.0</dd>
 </dl>
 </li>
 </ul>
-<a name="createPackageUnit--">
+<a id="createPackageUnit()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createPackageUnit</h4>
-<pre><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>&nbsp;createPackageUnit()</pre>
+<pre class="methodSignature"><a href="InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>&nbsp;createPackageUnit()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.0</dd>
 </dl>
 </li>
 </ul>
-<a name="getPackageUnit-java.lang.String-">
+<a id="getPackageUnit(java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getPackageUnit</h4>
-<pre><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>&nbsp;getPackageUnit(java.lang.String&nbsp;id)</pre>
+<pre class="methodSignature"><a href="InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>&nbsp;getPackageUnit&#8203;(java.lang.String&nbsp;id)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageRegistry.html#getPackageUnit-java.lang.String-">getPackageUnit</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a></code></dd>
+<dd><code><a href="../../../common/model/CDOPackageRegistry.html#getPackageUnit(java.lang.String)">getPackageUnit</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
 </dl>
 </li>
 </ul>
-<a name="getPackageUnit-org.eclipse.emf.ecore.EPackage-">
+<a id="getPackageUnit(org.eclipse.emf.ecore.EPackage)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getPackageUnit</h4>
-<pre><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>&nbsp;getPackageUnit(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</a>&nbsp;ePackage)</pre>
+<pre class="methodSignature"><a href="InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>&nbsp;getPackageUnit&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage</a>&nbsp;ePackage)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageRegistry.html#getPackageUnit-org.eclipse.emf.ecore.EPackage-">getPackageUnit</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a></code></dd>
+<dd><code><a href="../../../common/model/CDOPackageRegistry.html#getPackageUnit(org.eclipse.emf.ecore.EPackage)">getPackageUnit</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="getPackageUnits--">
+<a id="getPackageUnits()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getPackageUnits</h4>
-<pre><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>[]&nbsp;getPackageUnits()</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageRegistry.html#getPackageUnits--">CDOPackageRegistry</a></code></span></div>
+<pre class="methodSignature"><a href="InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>[]&nbsp;getPackageUnits()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../common/model/CDOPackageRegistry.html#getPackageUnits()">CDOPackageRegistry</a></code></span></div>
 <div class="block">Returns all package units that are registered in this package registry.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageRegistry.html#getPackageUnits--">getPackageUnits</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a></code></dd>
+<dd><code><a href="../../../common/model/CDOPackageRegistry.html#getPackageUnits()">getPackageUnits</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="getPackageUnits-boolean-">
+<a id="getPackageUnits(boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getPackageUnits</h4>
-<pre><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>[]&nbsp;getPackageUnits(boolean&nbsp;withSystemPackages)</pre>
+<pre class="methodSignature"><a href="InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>[]&nbsp;getPackageUnits&#8203;(boolean&nbsp;withSystemPackages)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.0</dd>
 </dl>
 </li>
 </ul>
-<a name="getPackageUnits-long-long-">
+<a id="getPackageUnits(long,long)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getPackageUnits</h4>
-<pre><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>[]&nbsp;getPackageUnits(long&nbsp;startTime,
+<pre class="methodSignature"><a href="InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>[]&nbsp;getPackageUnits&#8203;(long&nbsp;startTime,
                                          long&nbsp;endTime)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageRegistry.html#getPackageUnits-long-long-">getPackageUnits</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a></code></dd>
+<dd><code><a href="../../../common/model/CDOPackageRegistry.html#getPackageUnits(long,long)">getPackageUnits</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
 </dl>
 </li>
 </ul>
-<a name="getPackageInfo-org.eclipse.emf.ecore.EPackage-">
+<a id="getPackageInfo(org.eclipse.emf.ecore.EPackage)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getPackageInfo</h4>
-<pre><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageInfo</a>&nbsp;getPackageInfo(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</a>&nbsp;ePackage)</pre>
+<pre class="methodSignature"><a href="InternalCDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageInfo</a>&nbsp;getPackageInfo&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage</a>&nbsp;ePackage)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageRegistry.html#getPackageInfo-org.eclipse.emf.ecore.EPackage-">getPackageInfo</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a></code></dd>
+<dd><code><a href="../../../common/model/CDOPackageRegistry.html#getPackageInfo(org.eclipse.emf.ecore.EPackage)">getPackageInfo</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="getPackageInfos--">
+<a id="getPackageInfos()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getPackageInfos</h4>
-<pre><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageInfo</a>[]&nbsp;getPackageInfos()</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageRegistry.html#getPackageInfos--">CDOPackageRegistry</a></code></span></div>
+<pre class="methodSignature"><a href="InternalCDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageInfo</a>[]&nbsp;getPackageInfos()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../common/model/CDOPackageRegistry.html#getPackageInfos()">CDOPackageRegistry</a></code></span></div>
 <div class="block">Returns all package infos that are registered in this package registry.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageRegistry.html#getPackageInfos--">getPackageInfos</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a></code></dd>
+<dd><code><a href="../../../common/model/CDOPackageRegistry.html#getPackageInfos()">getPackageInfos</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="getEPackages--">
+<a id="getEPackages()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getEPackages</h4>
-<pre><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</a>[]&nbsp;getEPackages()</pre>
+<pre class="methodSignature"><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage</a>[]&nbsp;getEPackages()</pre>
 </li>
 </ul>
-<a name="getAllKeys--">
+<a id="getAllKeys()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getAllKeys</h4>
-<pre>java.util.Set&lt;java.lang.String&gt;&nbsp;getAllKeys()</pre>
+<pre class="methodSignature">java.util.Set&lt;java.lang.String&gt;&nbsp;getAllKeys()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
 </dl>
 </li>
 </ul>
-<a name="getWithDelegation-java.lang.String-boolean-">
+<a id="getWithDelegation(java.lang.String,boolean)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getWithDelegation</h4>
-<pre>java.lang.Object&nbsp;getWithDelegation(java.lang.String&nbsp;nsURI,
+<pre class="methodSignature">java.lang.Object&nbsp;getWithDelegation&#8203;(java.lang.String&nbsp;nsURI,
                                    boolean&nbsp;resolve)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -577,21 +639,25 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackag
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/InternalCDOPackageRegistry.html">Use</a></li>
@@ -601,16 +667,8 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackag
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.spi.common.model"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.PackageLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.model"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../../index.html?org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.html" target="_top">Frames</a></li>
-<li><a href="InternalCDOPackageRegistry.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -623,12 +681,15 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackag
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
@@ -639,10 +700,12 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackag
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

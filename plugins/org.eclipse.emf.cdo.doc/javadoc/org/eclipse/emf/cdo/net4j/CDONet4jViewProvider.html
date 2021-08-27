@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>CDONet4jViewProvider (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":42,"i9":42,"i10":10,"i11":10,"i12":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":42,"i10":42,"i11":10,"i12":10,"i13":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/CDONet4jViewProvider.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jUtil.html" title="class in org.eclipse.emf.cdo.net4j"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.JVM.html" title="class in org.eclipse.emf.cdo.net4j"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.html" target="_top">Frames</a></li>
-<li><a href="CDONet4jViewProvider.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,6 +82,9 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -85,13 +101,22 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.emf.cdo.net4j</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.cdo.net4j</a></div>
 <h2 title="Class CDONet4jViewProvider" class="title">Class CDONet4jViewProvider</h2>
 </div>
 <div class="contentContainer">
@@ -99,7 +124,7 @@ var activeTableTab = "activeTableTab";
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li><a href="../../../../../org/eclipse/emf/cdo/view/AbstractCDOViewProvider.html" title="class in org.eclipse.emf.cdo.view">org.eclipse.emf.cdo.view.AbstractCDOViewProvider</a></li>
+<li><a href="../view/AbstractCDOViewProvider.html" title="class in org.eclipse.emf.cdo.view">org.eclipse.emf.cdo.view.AbstractCDOViewProvider</a></li>
 <li>
 <ul class="inheritance">
 <li>org.eclipse.emf.cdo.net4j.CDONet4jViewProvider</li>
@@ -113,17 +138,16 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.CDOViewProvider2.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider.CDOViewProvider2</a></dd>
+<dd><code><a href="../view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider</a></code>, <code><a href="../view/CDOViewProvider.CDOViewProvider2.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider.CDOViewProvider2</a></code></dd>
 </dl>
 <dl>
 <dt>Direct Known Subclasses:</dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.JVM.html" title="class in org.eclipse.emf.cdo.net4j">CDONet4jViewProvider.JVM</a>, <a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.SSL.html" title="class in org.eclipse.emf.cdo.net4j">CDONet4jViewProvider.SSL</a>, <a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.TCP.html" title="class in org.eclipse.emf.cdo.net4j">CDONet4jViewProvider.TCP</a>, <a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.WS.html" title="class in org.eclipse.emf.cdo.net4j">CDONet4jViewProvider.WS</a></dd>
+<dd><code><a href="CDONet4jViewProvider.JVM.html" title="class in org.eclipse.emf.cdo.net4j">CDONet4jViewProvider.JVM</a></code>, <code><a href="CDONet4jViewProvider.SSL.html" title="class in org.eclipse.emf.cdo.net4j">CDONet4jViewProvider.SSL</a></code>, <code><a href="CDONet4jViewProvider.TCP.html" title="class in org.eclipse.emf.cdo.net4j">CDONet4jViewProvider.TCP</a></code>, <code><a href="CDONet4jViewProvider.WS.html" title="class in org.eclipse.emf.cdo.net4j">CDONet4jViewProvider.WS</a></code></dd>
 </dl>
 <hr>
-<br>
 <pre>public abstract class <span class="typeNameLabel">CDONet4jViewProvider</span>
-extends <a href="../../../../../org/eclipse/emf/cdo/view/AbstractCDOViewProvider.html" title="class in org.eclipse.emf.cdo.view">AbstractCDOViewProvider</a></pre>
-<div class="block">A <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view"><code>view provider</code></a> that uses Net4j-specific CDO <a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSession.html" title="interface in org.eclipse.emf.cdo.net4j"><code>sessions</code></a> to open views.</div>
+extends <a href="../view/AbstractCDOViewProvider.html" title="class in org.eclipse.emf.cdo.view">AbstractCDOViewProvider</a></pre>
+<div class="block">A <a href="../view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view"><code>view provider</code></a> that uses Net4j-specific CDO <a href="CDONet4jSession.html" title="interface in org.eclipse.emf.cdo.net4j"><code>sessions</code></a> to open views.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.0</dd>
@@ -137,199 +161,240 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/AbstractCDOViewProvider
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="nested.class.summary">
+<li class="blockList"><a id="nested.class.summary">
 <!--   -->
 </a>
 <h3>Nested Class Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Nested Class Summary table, listing nested classes, and an explanation">
+<table class="memberSummary">
 <caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Class and Description</th>
+<th class="colSecond" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.JVM.html" title="class in org.eclipse.emf.cdo.net4j">CDONet4jViewProvider.JVM</a></span></code>
-<div class="block">A JVM-based <a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.html" title="class in org.eclipse.emf.cdo.net4j"><code>view provider</code></a>.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CDONet4jViewProvider.JVM.html" title="class in org.eclipse.emf.cdo.net4j">CDONet4jViewProvider.JVM</a></span></code></th>
+<td class="colLast">
+<div class="block">A JVM-based <a href="CDONet4jViewProvider.html" title="class in org.eclipse.emf.cdo.net4j"><code>view provider</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.SSL.html" title="class in org.eclipse.emf.cdo.net4j">CDONet4jViewProvider.SSL</a></span></code>
-<div class="block">An SSL-based <a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.html" title="class in org.eclipse.emf.cdo.net4j"><code>view provider</code></a>.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CDONet4jViewProvider.SSL.html" title="class in org.eclipse.emf.cdo.net4j">CDONet4jViewProvider.SSL</a></span></code></th>
+<td class="colLast">
+<div class="block">An SSL-based <a href="CDONet4jViewProvider.html" title="class in org.eclipse.emf.cdo.net4j"><code>view provider</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.TCP.html" title="class in org.eclipse.emf.cdo.net4j">CDONet4jViewProvider.TCP</a></span></code>
-<div class="block">A TCP-based <a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.html" title="class in org.eclipse.emf.cdo.net4j"><code>view provider</code></a>.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CDONet4jViewProvider.TCP.html" title="class in org.eclipse.emf.cdo.net4j">CDONet4jViewProvider.TCP</a></span></code></th>
+<td class="colLast">
+<div class="block">A TCP-based <a href="CDONet4jViewProvider.html" title="class in org.eclipse.emf.cdo.net4j"><code>view provider</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.WS.html" title="class in org.eclipse.emf.cdo.net4j">CDONet4jViewProvider.WS</a></span></code>
-<div class="block">A WS-based <a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.html" title="class in org.eclipse.emf.cdo.net4j"><code>view provider</code></a>.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CDONet4jViewProvider.WS.html" title="class in org.eclipse.emf.cdo.net4j">CDONet4jViewProvider.WS</a></span></code></th>
+<td class="colLast">
+<div class="block">A WS-based <a href="CDONet4jViewProvider.html" title="class in org.eclipse.emf.cdo.net4j"><code>view provider</code></a>.</div>
 </td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="nested.classes.inherited.from.class.org.eclipse.emf.cdo.view.CDOViewProvider">
+<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.emf.cdo.view.CDOViewProvider">
 <!--   -->
 </a>
-<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.emf.cdo.view.<a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider</a></h3>
-<code><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.CDOViewProvider2.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider.CDOViewProvider2</a></code></li>
+<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.emf.cdo.view.<a href="../view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider</a></h3>
+<code><a href="../view/CDOViewProvider.CDOViewProvider2.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider.CDOViewProvider2</a></code></li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- =========== FIELD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.summary">
+<li class="blockList"><a id="field.summary">
 <!--   -->
 </a>
 <h3>Field Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Field Summary table, listing fields, and an explanation">
+<table class="memberSummary">
 <caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Field and Description</th>
+<th class="colSecond" scope="col">Field</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.html#transport">transport</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#transport">transport</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="fields.inherited.from.class.org.eclipse.emf.cdo.view.CDOViewProvider">
+<li class="blockList"><a id="fields.inherited.from.class.org.eclipse.emf.cdo.view.CDOViewProvider">
 <!--   -->
 </a>
-<h3>Fields inherited from interface&nbsp;org.eclipse.emf.cdo.view.<a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider</a></h3>
-<code><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html#DEFAULT_PRIORITY">DEFAULT_PRIORITY</a></code></li>
+<h3>Fields inherited from interface&nbsp;org.eclipse.emf.cdo.view.<a href="../view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider</a></h3>
+<code><a href="../view/CDOViewProvider.html#DEFAULT_PRIORITY">DEFAULT_PRIORITY</a></code></li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.summary">
+<li class="blockList"><a id="constructor.summary">
 <!--   -->
 </a>
 <h3>Constructor Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
+<table class="memberSummary">
 <caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Constructor and Description</th>
+<th class="colFirst" scope="col">Constructor</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.html#CDONet4jViewProvider-java.lang.String-int-">CDONet4jViewProvider</a></span>(java.lang.String&nbsp;transport,
-                    int&nbsp;priority)</code>&nbsp;</td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String,int)">CDONet4jViewProvider</a></span>&#8203;(java.lang.String&nbsp;transport,
+                    int&nbsp;priority)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t6" class="tableTab"><span><a href="javascript:show(32);">Deprecated Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>protected <a href="../../../../../org/eclipse/emf/cdo/util/CDOURIData.html" title="class in org.eclipse.emf.cdo.util">CDOURIData</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.html#createURIData-org.eclipse.emf.common.util.URI-">createURIData</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;uri)</code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="../util/CDOURIData.html" title="class in org.eclipse.emf.cdo.util">CDOURIData</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createURIData(org.eclipse.emf.common.util.URI)">createURIData</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">URI</a>&nbsp;uri)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>protected <a href="../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/connector/IConnector.html?is-external=true" title="class or interface in org.eclipse.net4j.connector">IConnector</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.html#getConnector-java.lang.String-">getConnector</a></span>(java.lang.String&nbsp;authority)</code>&nbsp;</td>
+<td class="colFirst"><code>protected org.eclipse.net4j.connector.IConnector</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getConnector(java.lang.String)">getConnector</a></span>&#8203;(java.lang.String&nbsp;authority)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>protected java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.html#getConnectorDescription-java.lang.String-">getConnectorDescription</a></span>(java.lang.String&nbsp;authority)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getConnectorDescription(java.lang.String)">getConnectorDescription</a></span>&#8203;(java.lang.String&nbsp;authority)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>protected <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.html#getContainer--">getContainer</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>protected org.eclipse.net4j.util.container.IManagedContainer</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getContainer()">getContainer</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>protected <a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSession.html" title="interface in org.eclipse.emf.cdo.net4j">CDONet4jSession</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.html#getNet4jSession-org.eclipse.net4j.connector.IConnector-java.lang.String-java.lang.String-java.lang.String-">getNet4jSession</a></span>(<a href="../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/connector/IConnector.html?is-external=true" title="class or interface in org.eclipse.net4j.connector">IConnector</a>&nbsp;connector,
+<td class="colFirst"><code>protected <a href="CDONet4jSession.html" title="interface in org.eclipse.emf.cdo.net4j">CDONet4jSession</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNet4jSession(org.eclipse.net4j.connector.IConnector,java.lang.String,java.lang.String,java.lang.String)">getNet4jSession</a></span>&#8203;(org.eclipse.net4j.connector.IConnector&nbsp;connector,
                java.lang.String&nbsp;userName,
                java.lang.String&nbsp;passWord,
-               java.lang.String&nbsp;repositoryName)</code>&nbsp;</td>
+               java.lang.String&nbsp;repositoryName)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code>protected <a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">CDONet4jSessionConfiguration</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.html#getNet4jSessionConfiguration-org.eclipse.net4j.connector.IConnector-java.lang.String-java.lang.String-java.lang.String-">getNet4jSessionConfiguration</a></span>(<a href="../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/connector/IConnector.html?is-external=true" title="class or interface in org.eclipse.net4j.connector">IConnector</a>&nbsp;connector,
+<td class="colFirst"><code>protected <a href="CDONet4jSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">CDONet4jSessionConfiguration</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNet4jSessionConfiguration(org.eclipse.net4j.connector.IConnector,java.lang.String,java.lang.String,java.lang.String)">getNet4jSessionConfiguration</a></span>&#8203;(org.eclipse.net4j.connector.IConnector&nbsp;connector,
                             java.lang.String&nbsp;userName,
                             java.lang.String&nbsp;passWord,
-                            java.lang.String&nbsp;repositoryName)</code>&nbsp;</td>
+                            java.lang.String&nbsp;repositoryName)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.html#getPath-org.eclipse.emf.common.util.URI-">getPath</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;uri)</code>
-<div class="block">Should be overwritten for non-canonical URI formats!</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPath(org.eclipse.emf.common.util.URI)">getPath</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">URI</a>&nbsp;uri)</code></th>
+<td class="colLast">
+<div class="block">Should be overridden for non-canonical URI formats!</div>
 </td>
 </tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.html#getResourceURI-org.eclipse.emf.cdo.view.CDOView-java.lang.String-">getResourceURI</a></span>(<a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
-              java.lang.String&nbsp;path)</code>
-<div class="block">Must be overwritten for non-canonical URI formats!</div>
-</td>
+<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">URI</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getResourceURI(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,long,boolean)">getResourceURI</a></span>&#8203;(java.lang.String&nbsp;transport,
+              java.lang.String&nbsp;authority,
+              java.lang.String&nbsp;repositoryName,
+              java.lang.String&nbsp;resourcePath,
+              java.lang.String&nbsp;branchPath,
+              long&nbsp;timeStamp,
+              boolean&nbsp;readOnly)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
-<td class="colFirst"><code>protected <a href="../../../../../org/eclipse/emf/cdo/net4j/CDOSession.html" title="interface in org.eclipse.emf.cdo.net4j">CDOSession</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.html#getSession-org.eclipse.net4j.connector.IConnector-java.lang.String-java.lang.String-java.lang.String-">getSession</a></span>(<a href="../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/connector/IConnector.html?is-external=true" title="class or interface in org.eclipse.net4j.connector">IConnector</a>&nbsp;connector,
-          java.lang.String&nbsp;userName,
-          java.lang.String&nbsp;passWord,
-          java.lang.String&nbsp;repositoryName)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">Use <a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.html#getNet4jSession-org.eclipse.net4j.connector.IConnector-java.lang.String-java.lang.String-java.lang.String-"><code>getNet4jSession()</code></a>.</span></div>
-</div>
+<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">URI</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getResourceURI(org.eclipse.emf.cdo.view.CDOView,java.lang.String)">getResourceURI</a></span>&#8203;(<a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
+              java.lang.String&nbsp;path)</code></th>
+<td class="colLast">
+<div class="block">Must be overridden for non-canonical URI formats!</div>
 </td>
 </tr>
 <tr id="i9" class="rowColor">
-<td class="colFirst"><code>protected <a href="../../../../../org/eclipse/emf/cdo/net4j/CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">CDOSessionConfiguration</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.html#getSessionConfiguration-org.eclipse.net4j.connector.IConnector-java.lang.String-java.lang.String-java.lang.String-">getSessionConfiguration</a></span>(<a href="../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/connector/IConnector.html?is-external=true" title="class or interface in org.eclipse.net4j.connector">IConnector</a>&nbsp;connector,
-                       java.lang.String&nbsp;userName,
-                       java.lang.String&nbsp;passWord,
-                       java.lang.String&nbsp;repositoryName)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">Use <a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.html#getNet4jSessionConfiguration-org.eclipse.net4j.connector.IConnector-java.lang.String-java.lang.String-java.lang.String-"><code>getNet4jSessionConfiguration()</code></a>.</span></div>
+<td class="colFirst"><code>protected <a href="CDOSession.html" title="interface in org.eclipse.emf.cdo.net4j">CDOSession</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSession(org.eclipse.net4j.connector.IConnector,java.lang.String,java.lang.String,java.lang.String)">getSession</a></span>&#8203;(org.eclipse.net4j.connector.IConnector&nbsp;connector,
+          java.lang.String&nbsp;userName,
+          java.lang.String&nbsp;passWord,
+          java.lang.String&nbsp;repositoryName)</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">Use <a href="#getNet4jSession(org.eclipse.net4j.connector.IConnector,java.lang.String,java.lang.String,java.lang.String)"><code>getNet4jSession()</code></a>.</div>
 </div>
 </td>
 </tr>
 <tr id="i10" class="altColor">
-<td class="colFirst"><code>protected java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.html#getURIAuthority-org.eclipse.net4j.connector.IConnector-">getURIAuthority</a></span>(<a href="../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/connector/IConnector.html?is-external=true" title="class or interface in org.eclipse.net4j.connector">IConnector</a>&nbsp;connector)</code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">CDOSessionConfiguration</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSessionConfiguration(org.eclipse.net4j.connector.IConnector,java.lang.String,java.lang.String,java.lang.String)">getSessionConfiguration</a></span>&#8203;(org.eclipse.net4j.connector.IConnector&nbsp;connector,
+                       java.lang.String&nbsp;userName,
+                       java.lang.String&nbsp;passWord,
+                       java.lang.String&nbsp;repositoryName)</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">Use <a href="#getNet4jSessionConfiguration(org.eclipse.net4j.connector.IConnector,java.lang.String,java.lang.String,java.lang.String)"><code>getNet4jSessionConfiguration()</code></a>.</div>
+</div>
+</td>
 </tr>
 <tr id="i11" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.html#getView-org.eclipse.emf.common.util.URI-org.eclipse.emf.ecore.resource.ResourceSet-">getView</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;uri,
-       <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource">ResourceSet</a>&nbsp;resourceSet)</code>
+<td class="colFirst"><code>protected java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getURIAuthority(org.eclipse.net4j.connector.IConnector)">getURIAuthority</a></span>&#8203;(org.eclipse.net4j.connector.IConnector&nbsp;connector)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i12" class="altColor">
+<td class="colFirst"><code><a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getView(org.eclipse.emf.common.util.URI,org.eclipse.emf.ecore.resource.ResourceSet)">getView</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">URI</a>&nbsp;uri,
+       <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource" class="externalLink">ResourceSet</a>&nbsp;resourceSet)</code></th>
+<td class="colLast">
 <div class="block">Receives a URI and returns an opened <code>CDOView</code> against the repository.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.html#getViewURI-org.eclipse.emf.common.util.URI-">getViewURI</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;uri)</code>
-<div class="block">Should be overwritten for non-canonical URI formats!</div>
+<tr id="i13" class="rowColor">
+<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">URI</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getViewURI(org.eclipse.emf.common.util.URI)">getViewURI</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">URI</a>&nbsp;uri)</code></th>
+<td class="colLast">
+<div class="block">Should be overridden for non-canonical URI formats!</div>
 </td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.emf.cdo.view.AbstractCDOViewProvider">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.cdo.view.AbstractCDOViewProvider">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.emf.cdo.view.<a href="../../../../../org/eclipse/emf/cdo/view/AbstractCDOViewProvider.html" title="class in org.eclipse.emf.cdo.view">AbstractCDOViewProvider</a></h3>
-<code><a href="../../../../../org/eclipse/emf/cdo/view/AbstractCDOViewProvider.html#getPriority--">getPriority</a>, <a href="../../../../../org/eclipse/emf/cdo/view/AbstractCDOViewProvider.html#getRegex--">getRegex</a>, <a href="../../../../../org/eclipse/emf/cdo/view/AbstractCDOViewProvider.html#getViewURI-org.eclipse.emf.cdo.view.CDOView-">getViewURI</a>, <a href="../../../../../org/eclipse/emf/cdo/view/AbstractCDOViewProvider.html#matchesRegex-org.eclipse.emf.common.util.URI-">matchesRegex</a>, <a href="../../../../../org/eclipse/emf/cdo/view/AbstractCDOViewProvider.html#setPriority-int-">setPriority</a>, <a href="../../../../../org/eclipse/emf/cdo/view/AbstractCDOViewProvider.html#setRegex-java.lang.String-">setRegex</a>, <a href="../../../../../org/eclipse/emf/cdo/view/AbstractCDOViewProvider.html#toString--">toString</a></code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.emf.cdo.view.<a href="../view/AbstractCDOViewProvider.html" title="class in org.eclipse.emf.cdo.view">AbstractCDOViewProvider</a></h3>
+<code><a href="../view/AbstractCDOViewProvider.html#getActualName()">getActualName</a>, <a href="../view/AbstractCDOViewProvider.html#getDeclaredName()">getDeclaredName</a>, <a href="../view/AbstractCDOViewProvider.html#getPriority()">getPriority</a>, <a href="../view/AbstractCDOViewProvider.html#getRegex()">getRegex</a>, <a href="../view/AbstractCDOViewProvider.html#getViewURI(org.eclipse.emf.cdo.view.CDOView)">getViewURI</a>, <a href="../view/AbstractCDOViewProvider.html#matchesRegex(org.eclipse.emf.common.util.URI)">matchesRegex</a>, <a href="../view/AbstractCDOViewProvider.html#setPriority(int)">setPriority</a>, <a href="../view/AbstractCDOViewProvider.html#setRegex(java.lang.String)">setRegex</a>, <a href="../view/AbstractCDOViewProvider.html#toString()">toString</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
+<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
@@ -337,6 +402,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/AbstractCDOViewProvider
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -344,12 +410,13 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/AbstractCDOViewProvider
 <ul class="blockList">
 <li class="blockList">
 <!-- ============ FIELD DETAIL =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.detail">
+<li class="blockList"><a id="field.detail">
 <!--   -->
 </a>
 <h3>Field Detail</h3>
-<a name="transport">
+<a id="transport">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -364,128 +431,146 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/AbstractCDOViewProvider
 </ul>
 </li>
 </ul>
+</section>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.detail">
+<li class="blockList"><a id="constructor.detail">
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="CDONet4jViewProvider-java.lang.String-int-">
+<a id="&lt;init&gt;(java.lang.String,int)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>CDONet4jViewProvider</h4>
-<pre>public&nbsp;CDONet4jViewProvider(java.lang.String&nbsp;transport,
+<pre>public&nbsp;CDONet4jViewProvider&#8203;(java.lang.String&nbsp;transport,
                             int&nbsp;priority)</pre>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="getView-org.eclipse.emf.common.util.URI-org.eclipse.emf.ecore.resource.ResourceSet-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getView</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;getView(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;uri,
-                       <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource">ResourceSet</a>&nbsp;resourceSet)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html#getView-org.eclipse.emf.common.util.URI-org.eclipse.emf.ecore.resource.ResourceSet-">CDOViewProvider</a></code></span></div>
-<div class="block">Receives a URI and returns an opened <code>CDOView</code> against the repository. The implementer is responsible to
- do the UUID to physical host map in case necessary.</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>a wired-up and opened <code>CDOView</code></dd>
-</dl>
-</li>
-</ul>
-<a name="getPath-org.eclipse.emf.common.util.URI-">
+<a id="getPath(org.eclipse.emf.common.util.URI)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getPath</h4>
-<pre>public&nbsp;java.lang.String&nbsp;getPath(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;uri)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/view/AbstractCDOViewProvider.html#getPath-org.eclipse.emf.common.util.URI-">AbstractCDOViewProvider</a></code></span></div>
-<div class="block">Should be overwritten for non-canonical URI formats!</div>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getPath&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">URI</a>&nbsp;uri)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../view/AbstractCDOViewProvider.html#getPath(org.eclipse.emf.common.util.URI)">AbstractCDOViewProvider</a></code></span></div>
+<div class="block">Should be overridden for non-canonical URI formats!</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.CDOViewProvider2.html#getPath-org.eclipse.emf.common.util.URI-">getPath</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.CDOViewProvider2.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider.CDOViewProvider2</a></code></dd>
+<dd><code><a href="../view/CDOViewProvider.CDOViewProvider2.html#getPath(org.eclipse.emf.common.util.URI)">getPath</a></code>&nbsp;in interface&nbsp;<code><a href="../view/CDOViewProvider.CDOViewProvider2.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider.CDOViewProvider2</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/emf/cdo/view/AbstractCDOViewProvider.html#getPath-org.eclipse.emf.common.util.URI-">getPath</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/view/AbstractCDOViewProvider.html" title="class in org.eclipse.emf.cdo.view">AbstractCDOViewProvider</a></code></dd>
+<dd><code><a href="../view/AbstractCDOViewProvider.html#getPath(org.eclipse.emf.common.util.URI)">getPath</a></code>&nbsp;in class&nbsp;<code><a href="../view/AbstractCDOViewProvider.html" title="class in org.eclipse.emf.cdo.view">AbstractCDOViewProvider</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="getViewURI-org.eclipse.emf.common.util.URI-">
+<a id="getView(org.eclipse.emf.common.util.URI,org.eclipse.emf.ecore.resource.ResourceSet)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getView</h4>
+<pre class="methodSignature">public&nbsp;<a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;getView&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">URI</a>&nbsp;uri,
+                       <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource" class="externalLink">ResourceSet</a>&nbsp;resourceSet)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../view/CDOViewProvider.html#getView(org.eclipse.emf.common.util.URI,org.eclipse.emf.ecore.resource.ResourceSet)">CDOViewProvider</a></code></span></div>
+<div class="block">Receives a URI and returns an opened <code>CDOView</code> against the repository.</div>
+</li>
+</ul>
+<a id="getViewURI(org.eclipse.emf.common.util.URI)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getViewURI</h4>
-<pre>public&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;getViewURI(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;uri)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/view/AbstractCDOViewProvider.html#getViewURI-org.eclipse.emf.common.util.URI-">AbstractCDOViewProvider</a></code></span></div>
-<div class="block">Should be overwritten for non-canonical URI formats!</div>
+<pre class="methodSignature">public&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">URI</a>&nbsp;getViewURI&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">URI</a>&nbsp;uri)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../view/AbstractCDOViewProvider.html#getViewURI(org.eclipse.emf.common.util.URI)">AbstractCDOViewProvider</a></code></span></div>
+<div class="block">Should be overridden for non-canonical URI formats!</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.CDOViewProvider2.html#getViewURI-org.eclipse.emf.common.util.URI-">getViewURI</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.CDOViewProvider2.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider.CDOViewProvider2</a></code></dd>
+<dd><code><a href="../view/CDOViewProvider.CDOViewProvider2.html#getViewURI(org.eclipse.emf.common.util.URI)">getViewURI</a></code>&nbsp;in interface&nbsp;<code><a href="../view/CDOViewProvider.CDOViewProvider2.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider.CDOViewProvider2</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/emf/cdo/view/AbstractCDOViewProvider.html#getViewURI-org.eclipse.emf.common.util.URI-">getViewURI</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/view/AbstractCDOViewProvider.html" title="class in org.eclipse.emf.cdo.view">AbstractCDOViewProvider</a></code></dd>
+<dd><code><a href="../view/AbstractCDOViewProvider.html#getViewURI(org.eclipse.emf.common.util.URI)">getViewURI</a></code>&nbsp;in class&nbsp;<code><a href="../view/AbstractCDOViewProvider.html" title="class in org.eclipse.emf.cdo.view">AbstractCDOViewProvider</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="getResourceURI-org.eclipse.emf.cdo.view.CDOView-java.lang.String-">
+<a id="getResourceURI(org.eclipse.emf.cdo.view.CDOView,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getResourceURI</h4>
-<pre>public&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;getResourceURI(<a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
+<pre class="methodSignature">public&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">URI</a>&nbsp;getResourceURI&#8203;(<a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
                           java.lang.String&nbsp;path)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/view/AbstractCDOViewProvider.html#getResourceURI-org.eclipse.emf.cdo.view.CDOView-java.lang.String-">AbstractCDOViewProvider</a></code></span></div>
-<div class="block">Must be overwritten for non-canonical URI formats!</div>
+<div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../view/AbstractCDOViewProvider.html#getResourceURI(org.eclipse.emf.cdo.view.CDOView,java.lang.String)">AbstractCDOViewProvider</a></code></span></div>
+<div class="block">Must be overridden for non-canonical URI formats!</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html#getResourceURI-org.eclipse.emf.cdo.view.CDOView-java.lang.String-">getResourceURI</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider</a></code></dd>
+<dd><code><a href="../view/CDOViewProvider.html#getResourceURI(org.eclipse.emf.cdo.view.CDOView,java.lang.String)">getResourceURI</a></code>&nbsp;in interface&nbsp;<code><a href="../view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/emf/cdo/view/AbstractCDOViewProvider.html#getResourceURI-org.eclipse.emf.cdo.view.CDOView-java.lang.String-">getResourceURI</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/view/AbstractCDOViewProvider.html" title="class in org.eclipse.emf.cdo.view">AbstractCDOViewProvider</a></code></dd>
+<dd><code><a href="../view/AbstractCDOViewProvider.html#getResourceURI(org.eclipse.emf.cdo.view.CDOView,java.lang.String)">getResourceURI</a></code>&nbsp;in class&nbsp;<code><a href="../view/AbstractCDOViewProvider.html" title="class in org.eclipse.emf.cdo.view">AbstractCDOViewProvider</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="createURIData-org.eclipse.emf.common.util.URI-">
+<a id="getResourceURI(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,long,boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getResourceURI</h4>
+<pre class="methodSignature">public&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">URI</a>&nbsp;getResourceURI&#8203;(java.lang.String&nbsp;transport,
+                          java.lang.String&nbsp;authority,
+                          java.lang.String&nbsp;repositoryName,
+                          java.lang.String&nbsp;resourcePath,
+                          java.lang.String&nbsp;branchPath,
+                          long&nbsp;timeStamp,
+                          boolean&nbsp;readOnly)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.4</dd>
+</dl>
+</li>
+</ul>
+<a id="createURIData(org.eclipse.emf.common.util.URI)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createURIData</h4>
-<pre>protected&nbsp;<a href="../../../../../org/eclipse/emf/cdo/util/CDOURIData.html" title="class in org.eclipse.emf.cdo.util">CDOURIData</a>&nbsp;createURIData(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;uri)</pre>
+<pre class="methodSignature">protected&nbsp;<a href="../util/CDOURIData.html" title="class in org.eclipse.emf.cdo.util">CDOURIData</a>&nbsp;createURIData&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">URI</a>&nbsp;uri)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.3</dd>
 </dl>
 </li>
 </ul>
-<a name="getURIAuthority-org.eclipse.net4j.connector.IConnector-">
+<a id="getURIAuthority(org.eclipse.net4j.connector.IConnector)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getURIAuthority</h4>
-<pre>protected&nbsp;java.lang.String&nbsp;getURIAuthority(<a href="../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/connector/IConnector.html?is-external=true" title="class or interface in org.eclipse.net4j.connector">IConnector</a>&nbsp;connector)</pre>
+<pre class="methodSignature">protected&nbsp;java.lang.String&nbsp;getURIAuthority&#8203;(org.eclipse.net4j.connector.IConnector&nbsp;connector)</pre>
 </li>
 </ul>
-<a name="getNet4jSession-org.eclipse.net4j.connector.IConnector-java.lang.String-java.lang.String-java.lang.String-">
+<a id="getNet4jSession(org.eclipse.net4j.connector.IConnector,java.lang.String,java.lang.String,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getNet4jSession</h4>
-<pre>protected&nbsp;<a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSession.html" title="interface in org.eclipse.emf.cdo.net4j">CDONet4jSession</a>&nbsp;getNet4jSession(<a href="../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/connector/IConnector.html?is-external=true" title="class or interface in org.eclipse.net4j.connector">IConnector</a>&nbsp;connector,
+<pre class="methodSignature">protected&nbsp;<a href="CDONet4jSession.html" title="interface in org.eclipse.emf.cdo.net4j">CDONet4jSession</a>&nbsp;getNet4jSession&#8203;(org.eclipse.net4j.connector.IConnector&nbsp;connector,
                                           java.lang.String&nbsp;userName,
                                           java.lang.String&nbsp;passWord,
                                           java.lang.String&nbsp;repositoryName)</pre>
@@ -495,13 +580,13 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/AbstractCDOViewProvider
 </dl>
 </li>
 </ul>
-<a name="getNet4jSessionConfiguration-org.eclipse.net4j.connector.IConnector-java.lang.String-java.lang.String-java.lang.String-">
+<a id="getNet4jSessionConfiguration(org.eclipse.net4j.connector.IConnector,java.lang.String,java.lang.String,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getNet4jSessionConfiguration</h4>
-<pre>protected&nbsp;<a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">CDONet4jSessionConfiguration</a>&nbsp;getNet4jSessionConfiguration(<a href="../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/connector/IConnector.html?is-external=true" title="class or interface in org.eclipse.net4j.connector">IConnector</a>&nbsp;connector,
+<pre class="methodSignature">protected&nbsp;<a href="CDONet4jSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">CDONet4jSessionConfiguration</a>&nbsp;getNet4jSessionConfiguration&#8203;(org.eclipse.net4j.connector.IConnector&nbsp;connector,
                                                                     java.lang.String&nbsp;userName,
                                                                     java.lang.String&nbsp;passWord,
                                                                     java.lang.String&nbsp;repositoryName)</pre>
@@ -511,78 +596,86 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/AbstractCDOViewProvider
 </dl>
 </li>
 </ul>
-<a name="getSession-org.eclipse.net4j.connector.IConnector-java.lang.String-java.lang.String-java.lang.String-">
+<a id="getSession(org.eclipse.net4j.connector.IConnector,java.lang.String,java.lang.String,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getSession</h4>
-<pre>@Deprecated
-protected&nbsp;<a href="../../../../../org/eclipse/emf/cdo/net4j/CDOSession.html" title="interface in org.eclipse.emf.cdo.net4j">CDOSession</a>&nbsp;getSession(<a href="../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/connector/IConnector.html?is-external=true" title="class or interface in org.eclipse.net4j.connector">IConnector</a>&nbsp;connector,
-                                             java.lang.String&nbsp;userName,
-                                             java.lang.String&nbsp;passWord,
-                                             java.lang.String&nbsp;repositoryName)</pre>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">Use <a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.html#getNet4jSession-org.eclipse.net4j.connector.IConnector-java.lang.String-java.lang.String-java.lang.String-"><code>getNet4jSession()</code></a>.</span></div>
+<pre class="methodSignature">@Deprecated
+protected&nbsp;<a href="CDOSession.html" title="interface in org.eclipse.emf.cdo.net4j">CDOSession</a>&nbsp;getSession&#8203;(org.eclipse.net4j.connector.IConnector&nbsp;connector,
+                                java.lang.String&nbsp;userName,
+                                java.lang.String&nbsp;passWord,
+                                java.lang.String&nbsp;repositoryName)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">Use <a href="#getNet4jSession(org.eclipse.net4j.connector.IConnector,java.lang.String,java.lang.String,java.lang.String)"><code>getNet4jSession()</code></a>.</div>
+</div>
 </li>
 </ul>
-<a name="getSessionConfiguration-org.eclipse.net4j.connector.IConnector-java.lang.String-java.lang.String-java.lang.String-">
+<a id="getSessionConfiguration(org.eclipse.net4j.connector.IConnector,java.lang.String,java.lang.String,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getSessionConfiguration</h4>
-<pre>@Deprecated
-protected&nbsp;<a href="../../../../../org/eclipse/emf/cdo/net4j/CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">CDOSessionConfiguration</a>&nbsp;getSessionConfiguration(<a href="../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/connector/IConnector.html?is-external=true" title="class or interface in org.eclipse.net4j.connector">IConnector</a>&nbsp;connector,
-                                                                       java.lang.String&nbsp;userName,
-                                                                       java.lang.String&nbsp;passWord,
-                                                                       java.lang.String&nbsp;repositoryName)</pre>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">Use <a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.html#getNet4jSessionConfiguration-org.eclipse.net4j.connector.IConnector-java.lang.String-java.lang.String-java.lang.String-"><code>getNet4jSessionConfiguration()</code></a>.</span></div>
+<pre class="methodSignature">@Deprecated
+protected&nbsp;<a href="CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">CDOSessionConfiguration</a>&nbsp;getSessionConfiguration&#8203;(org.eclipse.net4j.connector.IConnector&nbsp;connector,
+                                                          java.lang.String&nbsp;userName,
+                                                          java.lang.String&nbsp;passWord,
+                                                          java.lang.String&nbsp;repositoryName)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">Use <a href="#getNet4jSessionConfiguration(org.eclipse.net4j.connector.IConnector,java.lang.String,java.lang.String,java.lang.String)"><code>getNet4jSessionConfiguration()</code></a>.</div>
+</div>
 </li>
 </ul>
-<a name="getContainer--">
+<a id="getContainer()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getContainer</h4>
-<pre>protected&nbsp;<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;getContainer()</pre>
+<pre class="methodSignature">protected&nbsp;org.eclipse.net4j.util.container.IManagedContainer&nbsp;getContainer()</pre>
 </li>
 </ul>
-<a name="getConnector-java.lang.String-">
+<a id="getConnector(java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getConnector</h4>
-<pre>protected&nbsp;<a href="../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/connector/IConnector.html?is-external=true" title="class or interface in org.eclipse.net4j.connector">IConnector</a>&nbsp;getConnector(java.lang.String&nbsp;authority)</pre>
+<pre class="methodSignature">protected&nbsp;org.eclipse.net4j.connector.IConnector&nbsp;getConnector&#8203;(java.lang.String&nbsp;authority)</pre>
 </li>
 </ul>
-<a name="getConnectorDescription-java.lang.String-">
+<a id="getConnectorDescription(java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getConnectorDescription</h4>
-<pre>protected&nbsp;java.lang.String&nbsp;getConnectorDescription(java.lang.String&nbsp;authority)</pre>
+<pre class="methodSignature">protected&nbsp;java.lang.String&nbsp;getConnectorDescription&#8203;(java.lang.String&nbsp;authority)</pre>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/CDONet4jViewProvider.html">Use</a></li>
@@ -592,16 +685,8 @@ protected&nbsp;<a href="../../../../../org/eclipse/emf/cdo/net4j/CDOSessionConfi
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jUtil.html" title="class in org.eclipse.emf.cdo.net4j"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.JVM.html" title="class in org.eclipse.emf.cdo.net4j"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.html" target="_top">Frames</a></li>
-<li><a href="CDONet4jViewProvider.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -614,6 +699,9 @@ protected&nbsp;<a href="../../../../../org/eclipse/emf/cdo/net4j/CDOSessionConfi
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -630,10 +718,12 @@ protected&nbsp;<a href="../../../../../org/eclipse/emf/cdo/net4j/CDOSessionConfi
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

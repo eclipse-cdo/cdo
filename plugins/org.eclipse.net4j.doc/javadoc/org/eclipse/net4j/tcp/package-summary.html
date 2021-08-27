@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>org.eclipse.net4j.tcp (Net4j Signalling Platform Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../script.js"></script>
+<script type="text/javascript" src="../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,20 +28,25 @@
     catch(err) {
     }
 //-->
-</script>
+var pathtoroot = "../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../index.html">Overview</a></li>
 <li class="navBarCell1Rev">Package</li>
 <li>Class</li>
 <li><a href="package-use.html">Use</a></li>
@@ -41,16 +56,14 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../org/eclipse/net4j/signal/wrapping/package-summary.html">Prev&nbsp;Package</a></li>
-<li><a href="../../../../org/eclipse/net4j/tcp/ssl/package-summary.html">Next&nbsp;Package</a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../index.html?org/eclipse/net4j/tcp/package-summary.html" target="_top">Frames</a></li>
-<li><a href="package-summary.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -63,22 +76,35 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
+<main role="main">
 <div class="header">
 <h1 title="Package" class="title">Package&nbsp;org.eclipse.net4j.tcp</h1>
-<div class="docSummary">
-<div class="block">Transport layer extension with support for TCP socket connections.</div>
-</div>
-<p>See:&nbsp;<a href="#package.description">Description</a></p>
 </div>
 <div class="contentContainer">
+<section role="region"><a id="package.description">
+<!--   -->
+</a>
+<div class="block">Transport layer extension with support for TCP socket connections.</div>
+</section>
 <ul class="blockList">
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<table class="typeSummary">
 <caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Interface</th>
@@ -86,50 +112,50 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../org/eclipse/net4j/tcp/ITCPAcceptor.html" title="interface in org.eclipse.net4j.tcp">ITCPAcceptor</a></td>
+<th class="colFirst" scope="row"><a href="ITCPAcceptor.html" title="interface in org.eclipse.net4j.tcp">ITCPAcceptor</a></th>
 <td class="colLast">
-<div class="block">An <a href="../../../../org/eclipse/net4j/acceptor/IAcceptor.html" title="interface in org.eclipse.net4j.acceptor"><code>acceptor</code></a> that implements non-blocking multiplexed TCP transport, optionally with <a href="../../../../org/eclipse/net4j/tcp/ssl/SSLUtil.html" title="class in org.eclipse.net4j.tcp.ssl"><code>SSL</code></a>.</div>
+<div class="block">An <a href="../acceptor/IAcceptor.html" title="interface in org.eclipse.net4j.acceptor"><code>acceptor</code></a> that implements non-blocking multiplexed TCP transport, optionally with <a href="ssl/SSLUtil.html" title="class in org.eclipse.net4j.tcp.ssl"><code>SSL</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../org/eclipse/net4j/tcp/ITCPActiveSelectorListener.html" title="interface in org.eclipse.net4j.tcp">ITCPActiveSelectorListener</a></td>
+<th class="colFirst" scope="row"><a href="ITCPActiveSelectorListener.html" title="interface in org.eclipse.net4j.tcp">ITCPActiveSelectorListener</a></th>
 <td class="colLast">
-<div class="block">Call-back that handles the possible calls from a <a href="../../../../org/eclipse/net4j/tcp/ITCPSelector.html" title="interface in org.eclipse.net4j.tcp"><code>selector</code></a> to an active consumer, usually a
- <a href="../../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector"><code>connector</code></a>.</div>
+<div class="block">Call-back that handles the possible calls from a <a href="ITCPSelector.html" title="interface in org.eclipse.net4j.tcp"><code>selector</code></a> to an active consumer, usually a
+ <a href="../connector/IConnector.html" title="interface in org.eclipse.net4j.connector"><code>connector</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../org/eclipse/net4j/tcp/ITCPConnector.html" title="interface in org.eclipse.net4j.tcp">ITCPConnector</a></td>
+<th class="colFirst" scope="row"><a href="ITCPConnector.html" title="interface in org.eclipse.net4j.tcp">ITCPConnector</a></th>
 <td class="colLast">
-<div class="block">A <a href="../../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector"><code>connector</code></a> that implements non-blocking multiplexed TCP transport, optionally with
- <a href="../../../../org/eclipse/net4j/tcp/ssl/SSLUtil.html" title="class in org.eclipse.net4j.tcp.ssl"><code>SSL</code></a>.</div>
+<div class="block">A <a href="../connector/IConnector.html" title="interface in org.eclipse.net4j.connector"><code>connector</code></a> that implements non-blocking multiplexed TCP transport, optionally with
+ <a href="ssl/SSLUtil.html" title="class in org.eclipse.net4j.tcp.ssl"><code>SSL</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../org/eclipse/net4j/tcp/ITCPNegotiationContext.html" title="interface in org.eclipse.net4j.tcp">ITCPNegotiationContext</a></td>
+<th class="colFirst" scope="row"><a href="ITCPNegotiationContext.html" title="interface in org.eclipse.net4j.tcp">ITCPNegotiationContext</a></th>
 <td class="colLast">
-<div class="block">A <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/INegotiationContext.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security"><code>negotiation context</code></a> that is used in TCP transport.</div>
+<div class="block">A <code>negotiation context</code> that is used in TCP transport.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../org/eclipse/net4j/tcp/ITCPPassiveSelectorListener.html" title="interface in org.eclipse.net4j.tcp">ITCPPassiveSelectorListener</a></td>
+<th class="colFirst" scope="row"><a href="ITCPPassiveSelectorListener.html" title="interface in org.eclipse.net4j.tcp">ITCPPassiveSelectorListener</a></th>
 <td class="colLast">
-<div class="block">Call-back that handles the possible calls from a <a href="../../../../org/eclipse/net4j/tcp/ITCPSelector.html" title="interface in org.eclipse.net4j.tcp"><code>selector</code></a> to a passive consumer, usually an
- <a href="../../../../org/eclipse/net4j/acceptor/IAcceptor.html" title="interface in org.eclipse.net4j.acceptor"><code>acceptor</code></a>.</div>
+<div class="block">Call-back that handles the possible calls from a <a href="ITCPSelector.html" title="interface in org.eclipse.net4j.tcp"><code>selector</code></a> to a passive consumer, usually an
+ <a href="../acceptor/IAcceptor.html" title="interface in org.eclipse.net4j.acceptor"><code>acceptor</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../org/eclipse/net4j/tcp/ITCPSelector.html" title="interface in org.eclipse.net4j.tcp">ITCPSelector</a></td>
+<th class="colFirst" scope="row"><a href="ITCPSelector.html" title="interface in org.eclipse.net4j.tcp">ITCPSelector</a></th>
 <td class="colLast">
-<div class="block">Encapsulates a Java <code>socket selector</code> and orchestrates a number of <a href="../../../../org/eclipse/net4j/tcp/ITCPActiveSelectorListener.html" title="interface in org.eclipse.net4j.tcp"><code>active</code></a> and <a href="../../../../org/eclipse/net4j/tcp/ITCPPassiveSelectorListener.html" title="interface in org.eclipse.net4j.tcp"><code>passive</code></a> consumers, usually <a href="../../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector"><code>connectors</code></a> and
- <a href="../../../../org/eclipse/net4j/acceptor/IAcceptor.html" title="interface in org.eclipse.net4j.acceptor"><code>acceptors</code></a> that compete for the socket selector's I/O time.</div>
+<div class="block">Encapsulates a Java <code>socket selector</code> and orchestrates a number of <a href="ITCPActiveSelectorListener.html" title="interface in org.eclipse.net4j.tcp"><code>active</code></a> and <a href="ITCPPassiveSelectorListener.html" title="interface in org.eclipse.net4j.tcp"><code>passive</code></a> consumers, usually <a href="../connector/IConnector.html" title="interface in org.eclipse.net4j.connector"><code>connectors</code></a> and
+ <a href="../acceptor/IAcceptor.html" title="interface in org.eclipse.net4j.acceptor"><code>acceptors</code></a> that compete for the socket selector's I/O time.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<table class="typeSummary">
 <caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Class</th>
@@ -137,43 +163,41 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../org/eclipse/net4j/tcp/TCPUtil.html" title="class in org.eclipse.net4j.tcp">TCPUtil</a></td>
+<th class="colFirst" scope="row"><a href="TCPUtil.html" title="class in org.eclipse.net4j.tcp">TCPUtil</a></th>
 <td class="colLast">
 <div class="block">A utility class with static convenience methods.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../org/eclipse/net4j/tcp/TCPUtil.AcceptorData.html" title="class in org.eclipse.net4j.tcp">TCPUtil.AcceptorData</a></td>
+<th class="colFirst" scope="row"><a href="TCPUtil.AcceptorData.html" title="class in org.eclipse.net4j.tcp">TCPUtil.AcceptorData</a></th>
 <td class="colLast">
-<div class="block">Encapsulates the data needed to configure a <a href="../../../../org/eclipse/net4j/tcp/ITCPAcceptor.html" title="interface in org.eclipse.net4j.tcp"><code>TCP acceptor</code></a>.</div>
+<div class="block">Encapsulates the data needed to configure a <a href="ITCPAcceptor.html" title="interface in org.eclipse.net4j.tcp"><code>TCP acceptor</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../org/eclipse/net4j/tcp/TCPUtil.ConnectorData.html" title="class in org.eclipse.net4j.tcp">TCPUtil.ConnectorData</a></td>
+<th class="colFirst" scope="row"><a href="TCPUtil.ConnectorData.html" title="class in org.eclipse.net4j.tcp">TCPUtil.ConnectorData</a></th>
 <td class="colLast">
-<div class="block">Encapsulates the data needed to configure a <a href="../../../../org/eclipse/net4j/tcp/ITCPConnector.html" title="interface in org.eclipse.net4j.tcp"><code>TCP connector</code></a>.</div>
+<div class="block">Encapsulates the data needed to configure a <a href="ITCPConnector.html" title="interface in org.eclipse.net4j.tcp"><code>TCP connector</code></a>.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
 </ul>
-<a name="package.description">
-<!--   -->
-</a>
-<h2 title="Package org.eclipse.net4j.tcp Description">Package org.eclipse.net4j.tcp Description</h2>
-<div class="block">Transport layer extension with support for TCP socket connections.</div>
 </div>
+</main>
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../index.html">Overview</a></li>
 <li class="navBarCell1Rev">Package</li>
 <li>Class</li>
 <li><a href="package-use.html">Use</a></li>
@@ -183,16 +207,8 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../org/eclipse/net4j/signal/wrapping/package-summary.html">Prev&nbsp;Package</a></li>
-<li><a href="../../../../org/eclipse/net4j/tcp/ssl/package-summary.html">Next&nbsp;Package</a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../index.html?org/eclipse/net4j/tcp/package-summary.html" target="_top">Frames</a></li>
-<li><a href="package-summary.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -205,11 +221,16 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

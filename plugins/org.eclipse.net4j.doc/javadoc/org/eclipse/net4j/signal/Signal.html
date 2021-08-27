@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>Signal (Net4j Signalling Platform Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../script.js"></script>
+<script type="text/javascript" src="../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":6,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":6,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/Signal.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../org/eclipse/net4j/signal/RequestWithMonitoring.html" title="class in org.eclipse.net4j.signal"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../org/eclipse/net4j/signal/SignalActor.html" title="class in org.eclipse.net4j.signal"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../index.html?org/eclipse/net4j/signal/Signal.html" target="_top">Frames</a></li>
-<li><a href="Signal.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,6 +82,9 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -85,13 +101,22 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.net4j.signal</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.net4j.signal</a></div>
 <h2 title="Class Signal" class="title">Class Signal</h2>
 </div>
 <div class="contentContainer">
@@ -108,18 +133,17 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd>java.lang.Runnable</dd>
+<dd><code>java.lang.Runnable</code></dd>
 </dl>
 <dl>
 <dt>Direct Known Subclasses:</dt>
-<dd><a href="../../../../org/eclipse/net4j/signal/SignalActor.html" title="class in org.eclipse.net4j.signal">SignalActor</a>, <a href="../../../../org/eclipse/net4j/signal/SignalReactor.html" title="class in org.eclipse.net4j.signal">SignalReactor</a></dd>
+<dd><code><a href="SignalActor.html" title="class in org.eclipse.net4j.signal">SignalActor</a></code>, <code><a href="SignalReactor.html" title="class in org.eclipse.net4j.signal">SignalReactor</a></code></dd>
 </dl>
 <hr>
-<br>
 <pre>public abstract class <span class="typeNameLabel">Signal</span>
 extends java.lang.Object
 implements java.lang.Runnable</pre>
-<div class="block">Represents a single communications use-case in the scope of a <a href="../../../../org/eclipse/net4j/signal/ISignalProtocol.html" title="interface in org.eclipse.net4j.signal"><code>signal protocol</code></a>.</div>
+<div class="block">Represents a single communications use-case in the scope of a <a href="ISignalProtocol.html" title="interface in org.eclipse.net4j.signal"><code>signal protocol</code></a>.</div>
 <dl>
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>Eike Stepper</dd>
@@ -131,152 +155,184 @@ implements java.lang.Runnable</pre>
 <ul class="blockList">
 <li class="blockList">
 <!-- =========== FIELD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.summary">
+<li class="blockList"><a id="field.summary">
 <!--   -->
 </a>
 <h3>Field Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Field Summary table, listing fields, and an explanation">
+<table class="memberSummary">
 <caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Field and Description</th>
+<th class="colSecond" scope="col">Field</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static long</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/Signal.html#NO_TIMEOUT">NO_TIMEOUT</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#NO_TIMEOUT">NO_TIMEOUT</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.summary">
+<li class="blockList"><a id="constructor.summary">
 <!--   -->
 </a>
 <h3>Constructor Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
+<table class="memberSummary">
 <caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Constructor and Description</th>
+<th class="colFirst" scope="col">Constructor</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/Signal.html#Signal-org.eclipse.net4j.signal.SignalProtocol-java.lang.Enum-">Signal</a></span>(<a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html" title="class in org.eclipse.net4j.signal">SignalProtocol</a>&lt;?&gt;&nbsp;protocol,
-      java.lang.Enum&lt;?&gt;&nbsp;literal)</code>&nbsp;</td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(org.eclipse.net4j.signal.SignalProtocol,short)">Signal</a></span>&#8203;(<a href="SignalProtocol.html" title="class in org.eclipse.net4j.signal">SignalProtocol</a>&lt;?&gt;&nbsp;protocol,
+      short&nbsp;id)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/Signal.html#Signal-org.eclipse.net4j.signal.SignalProtocol-short-">Signal</a></span>(<a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html" title="class in org.eclipse.net4j.signal">SignalProtocol</a>&lt;?&gt;&nbsp;protocol,
-      short&nbsp;id)</code>&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/Signal.html#Signal-org.eclipse.net4j.signal.SignalProtocol-short-java.lang.String-">Signal</a></span>(<a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html" title="class in org.eclipse.net4j.signal">SignalProtocol</a>&lt;?&gt;&nbsp;protocol,
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(org.eclipse.net4j.signal.SignalProtocol,short,java.lang.String)">Signal</a></span>&#8203;(<a href="SignalProtocol.html" title="class in org.eclipse.net4j.signal">SignalProtocol</a>&lt;?&gt;&nbsp;protocol,
       short&nbsp;id,
-      java.lang.String&nbsp;name)</code>
+      java.lang.String&nbsp;name)</code></th>
+<td class="colLast">
 <div class="block">Both implementation classes of a logical signal must have the same signalID.</div>
 </td>
+</tr>
+<tr class="altColor">
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(org.eclipse.net4j.signal.SignalProtocol,java.lang.Enum)">Signal</a></span>&#8203;(<a href="SignalProtocol.html" title="class in org.eclipse.net4j.signal">SignalProtocol</a>&lt;?&gt;&nbsp;protocol,
+      java.lang.Enum&lt;?&gt;&nbsp;literal)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>protected boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/Signal.html#closeChannelAfterMe--">closeChannelAfterMe</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#closeChannelAfterMe()">closeChannelAfterMe</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>protected boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/Signal.html#closeInputStreamAfterMe--">closeInputStreamAfterMe</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#closeInputStreamAfterMe()">closeInputStreamAfterMe</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>protected boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/Signal.html#closeOutputStreamAfterMe--">closeOutputStreamAfterMe</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#closeOutputStreamAfterMe()">closeOutputStreamAfterMe</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>protected abstract void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/Signal.html#execute-org.eclipse.net4j.buffer.BufferInputStream-org.eclipse.net4j.buffer.BufferOutputStream-">execute</a></span>(<a href="../../../../org/eclipse/net4j/buffer/BufferInputStream.html" title="class in org.eclipse.net4j.buffer">BufferInputStream</a>&nbsp;in,
-       <a href="../../../../org/eclipse/net4j/buffer/BufferOutputStream.html" title="class in org.eclipse.net4j.buffer">BufferOutputStream</a>&nbsp;out)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#execute(org.eclipse.net4j.buffer.BufferInputStream,org.eclipse.net4j.buffer.BufferOutputStream)">execute</a></span>&#8203;(<a href="../buffer/BufferInputStream.html" title="class in org.eclipse.net4j.buffer">BufferInputStream</a>&nbsp;in,
+       <a href="../buffer/BufferOutputStream.html" title="class in org.eclipse.net4j.buffer">BufferOutputStream</a>&nbsp;out)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/Signal.html#finishInputStream-java.io.InputStream-">finishInputStream</a></span>(java.io.InputStream&nbsp;in)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#finishInputStream(java.io.InputStream)">finishInputStream</a></span>&#8203;(java.io.InputStream&nbsp;in)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/Signal.html#finishOutputStream-java.io.OutputStream-">finishOutputStream</a></span>(java.io.OutputStream&nbsp;out)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#finishOutputStream(java.io.OutputStream)">finishOutputStream</a></span>&#8203;(java.io.OutputStream&nbsp;out)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/Signal.html#flush--">flush</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#flush()">flush</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>protected java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/Signal.html#getAdditionalInfo--">getAdditionalInfo</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAdditionalInfo()">getAdditionalInfo</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
-<td class="colFirst"><code>protected <a href="../../../../org/eclipse/net4j/buffer/BufferInputStream.html" title="class in org.eclipse.net4j.buffer">BufferInputStream</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/Signal.html#getBufferInputStream--">getBufferInputStream</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="../buffer/BufferInputStream.html" title="class in org.eclipse.net4j.buffer">BufferInputStream</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getBufferInputStream()">getBufferInputStream</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
-<td class="colFirst"><code>protected <a href="../../../../org/eclipse/net4j/buffer/BufferOutputStream.html" title="class in org.eclipse.net4j.buffer">BufferOutputStream</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/Signal.html#getBufferOutputStream--">getBufferOutputStream</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="../buffer/BufferOutputStream.html" title="class in org.eclipse.net4j.buffer">BufferOutputStream</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getBufferOutputStream()">getBufferOutputStream</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/Signal.html#getCorrelationID--">getCorrelationID</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCorrelationID()">getCorrelationID</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>protected java.io.InputStream</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/Signal.html#getCurrentInputStream--">getCurrentInputStream</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCurrentInputStream()">getCurrentInputStream</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code>protected java.io.OutputStream</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/Signal.html#getCurrentOutputStream--">getCurrentOutputStream</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCurrentOutputStream()">getCurrentOutputStream</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code>short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/Signal.html#getID--">getID</a></span>()</code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getID()">getID</a></span>()</code></th>
+<td class="colLast">
 <div class="block">Returns the short integer ID of this signal that is unique among all signals of the associated
- <a href="../../../../org/eclipse/net4j/signal/Signal.html#getProtocol--"><code>protocol</code></a>.</div>
+ <a href="#getProtocol()"><code>protocol</code></a>.</div>
 </td>
 </tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/Signal.html#getName--">getName</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getName()">getName</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i15" class="rowColor">
-<td class="colFirst"><code><a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html" title="class in org.eclipse.net4j.signal">SignalProtocol</a>&lt;?&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/Signal.html#getProtocol--">getProtocol</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="SignalProtocol.html" title="class in org.eclipse.net4j.signal">SignalProtocol</a>&lt;?&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getProtocol()">getProtocol</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i16" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/Signal.html#run--">run</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#run()">run</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i17" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/Signal.html#toString--">toString</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i18" class="altColor">
 <td class="colFirst"><code>protected java.io.InputStream</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/Signal.html#wrapInputStream-java.io.InputStream-">wrapInputStream</a></span>(java.io.InputStream&nbsp;in)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#wrapInputStream(java.io.InputStream)">wrapInputStream</a></span>&#8203;(java.io.InputStream&nbsp;in)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i19" class="rowColor">
 <td class="colFirst"><code>protected java.io.OutputStream</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/Signal.html#wrapOutputStream-java.io.OutputStream-">wrapOutputStream</a></span>(java.io.OutputStream&nbsp;out)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#wrapOutputStream(java.io.OutputStream)">wrapOutputStream</a></span>&#8203;(java.io.OutputStream&nbsp;out)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
+<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
@@ -284,6 +340,7 @@ implements java.lang.Runnable</pre>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -291,12 +348,13 @@ implements java.lang.Runnable</pre>
 <ul class="blockList">
 <li class="blockList">
 <!-- ============ FIELD DETAIL =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.detail">
+<li class="blockList"><a id="field.detail">
 <!--   -->
 </a>
 <h3>Field Detail</h3>
-<a name="NO_TIMEOUT">
+<a id="NO_TIMEOUT">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -313,19 +371,21 @@ implements java.lang.Runnable</pre>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.detail">
+<li class="blockList"><a id="constructor.detail">
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="Signal-org.eclipse.net4j.signal.SignalProtocol-short-java.lang.String-">
+<a id="&lt;init&gt;(org.eclipse.net4j.signal.SignalProtocol,short,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>Signal</h4>
-<pre>public&nbsp;Signal(<a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html" title="class in org.eclipse.net4j.signal">SignalProtocol</a>&lt;?&gt;&nbsp;protocol,
+<pre>public&nbsp;Signal&#8203;(<a href="SignalProtocol.html" title="class in org.eclipse.net4j.signal">SignalProtocol</a>&lt;?&gt;&nbsp;protocol,
               short&nbsp;id,
               java.lang.String&nbsp;name)</pre>
 <div class="block">Both implementation classes of a logical signal must have the same signalID. The signalID of a user signals must be
@@ -336,103 +396,105 @@ implements java.lang.Runnable</pre>
 </dl>
 </li>
 </ul>
-<a name="Signal-org.eclipse.net4j.signal.SignalProtocol-short-">
+<a id="&lt;init&gt;(org.eclipse.net4j.signal.SignalProtocol,short)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>Signal</h4>
-<pre>public&nbsp;Signal(<a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html" title="class in org.eclipse.net4j.signal">SignalProtocol</a>&lt;?&gt;&nbsp;protocol,
+<pre>public&nbsp;Signal&#8203;(<a href="SignalProtocol.html" title="class in org.eclipse.net4j.signal">SignalProtocol</a>&lt;?&gt;&nbsp;protocol,
               short&nbsp;id)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../org/eclipse/net4j/signal/Signal.html#Signal-org.eclipse.net4j.signal.SignalProtocol-short-java.lang.String-"><code>Signal(SignalProtocol, short, String)</code></a></dd>
+<dd><a href="#%3Cinit%3E(org.eclipse.net4j.signal.SignalProtocol,short,java.lang.String)"><code>Signal(SignalProtocol, short, String)</code></a></dd>
 </dl>
 </li>
 </ul>
-<a name="Signal-org.eclipse.net4j.signal.SignalProtocol-java.lang.Enum-">
+<a id="&lt;init&gt;(org.eclipse.net4j.signal.SignalProtocol,java.lang.Enum)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>Signal</h4>
-<pre>public&nbsp;Signal(<a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html" title="class in org.eclipse.net4j.signal">SignalProtocol</a>&lt;?&gt;&nbsp;protocol,
+<pre>public&nbsp;Signal&#8203;(<a href="SignalProtocol.html" title="class in org.eclipse.net4j.signal">SignalProtocol</a>&lt;?&gt;&nbsp;protocol,
               java.lang.Enum&lt;?&gt;&nbsp;literal)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../org/eclipse/net4j/signal/Signal.html#Signal-org.eclipse.net4j.signal.SignalProtocol-short-java.lang.String-"><code>Signal(SignalProtocol, short, String)</code></a></dd>
+<dd><a href="#%3Cinit%3E(org.eclipse.net4j.signal.SignalProtocol,short,java.lang.String)"><code>Signal(SignalProtocol, short, String)</code></a></dd>
 </dl>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="getProtocol--">
+<a id="getProtocol()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getProtocol</h4>
-<pre>public&nbsp;<a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html" title="class in org.eclipse.net4j.signal">SignalProtocol</a>&lt;?&gt;&nbsp;getProtocol()</pre>
+<pre class="methodSignature">public&nbsp;<a href="SignalProtocol.html" title="class in org.eclipse.net4j.signal">SignalProtocol</a>&lt;?&gt;&nbsp;getProtocol()</pre>
 </li>
 </ul>
-<a name="getID--">
+<a id="getID()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getID</h4>
-<pre>public final&nbsp;short&nbsp;getID()</pre>
+<pre class="methodSignature">public final&nbsp;short&nbsp;getID()</pre>
 <div class="block">Returns the short integer ID of this signal that is unique among all signals of the associated
- <a href="../../../../org/eclipse/net4j/signal/Signal.html#getProtocol--"><code>protocol</code></a>.</div>
+ <a href="#getProtocol()"><code>protocol</code></a>.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
 </dl>
 </li>
 </ul>
-<a name="getName--">
+<a id="getName()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getName</h4>
-<pre>public&nbsp;java.lang.String&nbsp;getName()</pre>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getName()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
 </dl>
 </li>
 </ul>
-<a name="getCorrelationID--">
+<a id="getCorrelationID()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getCorrelationID</h4>
-<pre>public final&nbsp;int&nbsp;getCorrelationID()</pre>
+<pre class="methodSignature">public final&nbsp;int&nbsp;getCorrelationID()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
 </dl>
 </li>
 </ul>
-<a name="toString--">
+<a id="toString()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>toString</h4>
-<pre>public&nbsp;java.lang.String&nbsp;toString()</pre>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;toString()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>toString</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
@@ -441,57 +503,57 @@ implements java.lang.Runnable</pre>
 </dl>
 </li>
 </ul>
-<a name="getAdditionalInfo--">
+<a id="getAdditionalInfo()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getAdditionalInfo</h4>
-<pre>protected&nbsp;java.lang.String&nbsp;getAdditionalInfo()</pre>
+<pre class="methodSignature">protected&nbsp;java.lang.String&nbsp;getAdditionalInfo()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.5</dd>
 </dl>
 </li>
 </ul>
-<a name="run--">
+<a id="run()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>run</h4>
-<pre>public final&nbsp;void&nbsp;run()</pre>
+<pre class="methodSignature">public final&nbsp;void&nbsp;run()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code>run</code>&nbsp;in interface&nbsp;<code>java.lang.Runnable</code></dd>
 </dl>
 </li>
 </ul>
-<a name="getBufferInputStream--">
+<a id="getBufferInputStream()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getBufferInputStream</h4>
-<pre>protected final&nbsp;<a href="../../../../org/eclipse/net4j/buffer/BufferInputStream.html" title="class in org.eclipse.net4j.buffer">BufferInputStream</a>&nbsp;getBufferInputStream()</pre>
+<pre class="methodSignature">protected final&nbsp;<a href="../buffer/BufferInputStream.html" title="class in org.eclipse.net4j.buffer">BufferInputStream</a>&nbsp;getBufferInputStream()</pre>
 </li>
 </ul>
-<a name="getBufferOutputStream--">
+<a id="getBufferOutputStream()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getBufferOutputStream</h4>
-<pre>protected final&nbsp;<a href="../../../../org/eclipse/net4j/buffer/BufferOutputStream.html" title="class in org.eclipse.net4j.buffer">BufferOutputStream</a>&nbsp;getBufferOutputStream()</pre>
+<pre class="methodSignature">protected final&nbsp;<a href="../buffer/BufferOutputStream.html" title="class in org.eclipse.net4j.buffer">BufferOutputStream</a>&nbsp;getBufferOutputStream()</pre>
 </li>
 </ul>
-<a name="flush--">
+<a id="flush()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>flush</h4>
-<pre>protected final&nbsp;void&nbsp;flush()
+<pre class="methodSignature">protected final&nbsp;void&nbsp;flush()
                     throws java.io.IOException</pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -501,78 +563,78 @@ implements java.lang.Runnable</pre>
 </dl>
 </li>
 </ul>
-<a name="closeChannelAfterMe--">
+<a id="closeChannelAfterMe()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>closeChannelAfterMe</h4>
-<pre>protected&nbsp;boolean&nbsp;closeChannelAfterMe()</pre>
+<pre class="methodSignature">protected&nbsp;boolean&nbsp;closeChannelAfterMe()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.4</dd>
 </dl>
 </li>
 </ul>
-<a name="closeInputStreamAfterMe--">
+<a id="closeInputStreamAfterMe()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>closeInputStreamAfterMe</h4>
-<pre>protected&nbsp;boolean&nbsp;closeInputStreamAfterMe()</pre>
+<pre class="methodSignature">protected&nbsp;boolean&nbsp;closeInputStreamAfterMe()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.5</dd>
 </dl>
 </li>
 </ul>
-<a name="closeOutputStreamAfterMe--">
+<a id="closeOutputStreamAfterMe()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>closeOutputStreamAfterMe</h4>
-<pre>protected&nbsp;boolean&nbsp;closeOutputStreamAfterMe()</pre>
+<pre class="methodSignature">protected&nbsp;boolean&nbsp;closeOutputStreamAfterMe()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.5</dd>
 </dl>
 </li>
 </ul>
-<a name="getCurrentInputStream--">
+<a id="getCurrentInputStream()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getCurrentInputStream</h4>
-<pre>protected&nbsp;java.io.InputStream&nbsp;getCurrentInputStream()</pre>
+<pre class="methodSignature">protected&nbsp;java.io.InputStream&nbsp;getCurrentInputStream()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
 </dl>
 </li>
 </ul>
-<a name="getCurrentOutputStream--">
+<a id="getCurrentOutputStream()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getCurrentOutputStream</h4>
-<pre>protected&nbsp;java.io.OutputStream&nbsp;getCurrentOutputStream()</pre>
+<pre class="methodSignature">protected&nbsp;java.io.OutputStream&nbsp;getCurrentOutputStream()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
 </dl>
 </li>
 </ul>
-<a name="wrapInputStream-java.io.InputStream-">
+<a id="wrapInputStream(java.io.InputStream)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>wrapInputStream</h4>
-<pre>protected&nbsp;java.io.InputStream&nbsp;wrapInputStream(java.io.InputStream&nbsp;in)
+<pre class="methodSignature">protected&nbsp;java.io.InputStream&nbsp;wrapInputStream&#8203;(java.io.InputStream&nbsp;in)
                                        throws java.io.IOException</pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -580,13 +642,13 @@ implements java.lang.Runnable</pre>
 </dl>
 </li>
 </ul>
-<a name="wrapOutputStream-java.io.OutputStream-">
+<a id="wrapOutputStream(java.io.OutputStream)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>wrapOutputStream</h4>
-<pre>protected&nbsp;java.io.OutputStream&nbsp;wrapOutputStream(java.io.OutputStream&nbsp;out)
+<pre class="methodSignature">protected&nbsp;java.io.OutputStream&nbsp;wrapOutputStream&#8203;(java.io.OutputStream&nbsp;out)
                                          throws java.io.IOException</pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -594,13 +656,13 @@ implements java.lang.Runnable</pre>
 </dl>
 </li>
 </ul>
-<a name="finishInputStream-java.io.InputStream-">
+<a id="finishInputStream(java.io.InputStream)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>finishInputStream</h4>
-<pre>protected&nbsp;void&nbsp;finishInputStream(java.io.InputStream&nbsp;in)
+<pre class="methodSignature">protected&nbsp;void&nbsp;finishInputStream&#8203;(java.io.InputStream&nbsp;in)
                           throws java.io.IOException</pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -608,13 +670,13 @@ implements java.lang.Runnable</pre>
 </dl>
 </li>
 </ul>
-<a name="finishOutputStream-java.io.OutputStream-">
+<a id="finishOutputStream(java.io.OutputStream)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>finishOutputStream</h4>
-<pre>protected&nbsp;void&nbsp;finishOutputStream(java.io.OutputStream&nbsp;out)
+<pre class="methodSignature">protected&nbsp;void&nbsp;finishOutputStream&#8203;(java.io.OutputStream&nbsp;out)
                            throws java.io.IOException</pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -622,14 +684,14 @@ implements java.lang.Runnable</pre>
 </dl>
 </li>
 </ul>
-<a name="execute-org.eclipse.net4j.buffer.BufferInputStream-org.eclipse.net4j.buffer.BufferOutputStream-">
+<a id="execute(org.eclipse.net4j.buffer.BufferInputStream,org.eclipse.net4j.buffer.BufferOutputStream)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>execute</h4>
-<pre>protected abstract&nbsp;void&nbsp;execute(<a href="../../../../org/eclipse/net4j/buffer/BufferInputStream.html" title="class in org.eclipse.net4j.buffer">BufferInputStream</a>&nbsp;in,
-                                <a href="../../../../org/eclipse/net4j/buffer/BufferOutputStream.html" title="class in org.eclipse.net4j.buffer">BufferOutputStream</a>&nbsp;out)
+<pre class="methodSignature">protected abstract&nbsp;void&nbsp;execute&#8203;(<a href="../buffer/BufferInputStream.html" title="class in org.eclipse.net4j.buffer">BufferInputStream</a>&nbsp;in,
+                                <a href="../buffer/BufferOutputStream.html" title="class in org.eclipse.net4j.buffer">BufferOutputStream</a>&nbsp;out)
                          throws java.lang.Exception</pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -639,21 +701,25 @@ implements java.lang.Runnable</pre>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/Signal.html">Use</a></li>
@@ -663,16 +729,8 @@ implements java.lang.Runnable</pre>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../org/eclipse/net4j/signal/RequestWithMonitoring.html" title="class in org.eclipse.net4j.signal"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../org/eclipse/net4j/signal/SignalActor.html" title="class in org.eclipse.net4j.signal"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../index.html?org/eclipse/net4j/signal/Signal.html" target="_top">Frames</a></li>
-<li><a href="Signal.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -685,6 +743,9 @@ implements java.lang.Runnable</pre>
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -701,10 +762,12 @@ implements java.lang.Runnable</pre>
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

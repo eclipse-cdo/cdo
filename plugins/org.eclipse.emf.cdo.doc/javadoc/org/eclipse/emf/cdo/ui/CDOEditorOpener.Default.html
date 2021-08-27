@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>CDOEditorOpener.Default (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10};
+var data = {"i0":6,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/CDOEditorOpener.Default.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.html" title="interface in org.eclipse.emf.cdo.ui"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.Registry.html" title="class in org.eclipse.emf.cdo.ui"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/emf/cdo/ui/CDOEditorOpener.Default.html" target="_top">Frames</a></li>
-<li><a href="CDOEditorOpener.Default.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,12 +82,15 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
@@ -85,13 +101,22 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.emf.cdo.ui</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.cdo.ui</a></div>
 <h2 title="Class CDOEditorOpener.Default" class="title">Class CDOEditorOpener.Default</h2>
 </div>
 <div class="contentContainer">
@@ -108,21 +133,20 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.html" title="interface in org.eclipse.emf.cdo.ui">CDOEditorOpener</a></dd>
+<dd><code><a href="CDOEditorOpener.html" title="interface in org.eclipse.emf.cdo.ui">CDOEditorOpener</a></code></dd>
 </dl>
 <dl>
 <dt>Direct Known Subclasses:</dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.Registry.EditorOpenerDescriptor.html" title="class in org.eclipse.emf.cdo.ui">CDOEditorOpener.Registry.EditorOpenerDescriptor</a></dd>
+<dd><code><a href="CDOEditorOpener.Registry.EditorOpenerDescriptor.html" title="class in org.eclipse.emf.cdo.ui">CDOEditorOpener.Registry.EditorOpenerDescriptor</a></code></dd>
 </dl>
 <dl>
 <dt>Enclosing interface:</dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.html" title="interface in org.eclipse.emf.cdo.ui">CDOEditorOpener</a></dd>
+<dd><a href="CDOEditorOpener.html" title="interface in org.eclipse.emf.cdo.ui">CDOEditorOpener</a></dd>
 </dl>
 <hr>
-<br>
 <pre>public abstract static class <span class="typeNameLabel">CDOEditorOpener.Default</span>
 extends java.lang.Object
-implements <a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.html" title="interface in org.eclipse.emf.cdo.ui">CDOEditorOpener</a></pre>
+implements <a href="CDOEditorOpener.html" title="interface in org.eclipse.emf.cdo.ui">CDOEditorOpener</a></pre>
 <dl>
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>Eike Stepper</dd>
@@ -134,118 +158,138 @@ implements <a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.html" 
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="nested.class.summary">
+<li class="blockList"><a id="nested.class.summary">
 <!--   -->
 </a>
 <h3>Nested Class Summary</h3>
 <ul class="blockList">
-<li class="blockList"><a name="nested.classes.inherited.from.class.org.eclipse.emf.cdo.ui.CDOEditorOpener">
+<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.emf.cdo.ui.CDOEditorOpener">
 <!--   -->
 </a>
-<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.emf.cdo.ui.<a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.html" title="interface in org.eclipse.emf.cdo.ui">CDOEditorOpener</a></h3>
-<code><a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.Default.html" title="class in org.eclipse.emf.cdo.ui">CDOEditorOpener.Default</a>, <a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.Registry.html" title="class in org.eclipse.emf.cdo.ui">CDOEditorOpener.Registry</a></code></li>
+<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.emf.cdo.ui.<a href="CDOEditorOpener.html" title="interface in org.eclipse.emf.cdo.ui">CDOEditorOpener</a></h3>
+<code><a href="CDOEditorOpener.Default.html" title="class in org.eclipse.emf.cdo.ui">CDOEditorOpener.Default</a>, <a href="CDOEditorOpener.Registry.html" title="class in org.eclipse.emf.cdo.ui">CDOEditorOpener.Registry</a></code></li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- =========== FIELD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.summary">
+<li class="blockList"><a id="field.summary">
 <!--   -->
 </a>
 <h3>Field Summary</h3>
 <ul class="blockList">
-<li class="blockList"><a name="fields.inherited.from.class.org.eclipse.emf.cdo.ui.CDOEditorOpener">
+<li class="blockList"><a id="fields.inherited.from.class.org.eclipse.emf.cdo.ui.CDOEditorOpener">
 <!--   -->
 </a>
-<h3>Fields inherited from interface&nbsp;org.eclipse.emf.cdo.ui.<a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.html" title="interface in org.eclipse.emf.cdo.ui">CDOEditorOpener</a></h3>
-<code><a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.html#DEFAULT_PRIORITY">DEFAULT_PRIORITY</a></code></li>
+<h3>Fields inherited from interface&nbsp;org.eclipse.emf.cdo.ui.<a href="CDOEditorOpener.html" title="interface in org.eclipse.emf.cdo.ui">CDOEditorOpener</a></h3>
+<code><a href="CDOEditorOpener.html#DEFAULT_PRIORITY">DEFAULT_PRIORITY</a></code></li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.summary">
+<li class="blockList"><a id="constructor.summary">
 <!--   -->
 </a>
 <h3>Constructor Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
+<table class="memberSummary">
 <caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Constructor and Description</th>
+<th class="colFirst" scope="col">Constructor</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.Default.html#Default--">Default</a></span>()</code>&nbsp;</td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">Default</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.Default.html#Default-java.lang.String-java.lang.String-org.eclipse.jface.resource.ImageDescriptor-java.lang.String-int-">Default</a></span>(java.lang.String&nbsp;id,
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String,java.lang.String,org.eclipse.jface.resource.ImageDescriptor,java.lang.String,int)">Default</a></span>&#8203;(java.lang.String&nbsp;id,
        java.lang.String&nbsp;name,
-       <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/resource/ImageDescriptor.html?is-external=true" title="class or interface in org.eclipse.jface.resource">ImageDescriptor</a>&nbsp;icon,
+       <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/resource/ImageDescriptor.html?is-external=true" title="class or interface in org.eclipse.jface.resource" class="externalLink">ImageDescriptor</a>&nbsp;icon,
        java.lang.String&nbsp;regex,
-       int&nbsp;priority)</code>&nbsp;</td>
+       int&nbsp;priority)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>protected abstract <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IEditorPart.html?is-external=true" title="class or interface in org.eclipse.ui">IEditorPart</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.Default.html#doOpenEditor-org.eclipse.ui.IWorkbenchPage-org.eclipse.emf.common.util.URI-">doOpenEditor</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPage.html?is-external=true" title="class or interface in org.eclipse.ui">IWorkbenchPage</a>&nbsp;page,
-            <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;uri)</code>&nbsp;</td>
+<td class="colFirst"><code>protected abstract <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IEditorPart.html?is-external=true" title="class or interface in org.eclipse.ui" class="externalLink">IEditorPart</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#doOpenEditor(org.eclipse.ui.IWorkbenchPage,org.eclipse.emf.common.util.URI)">doOpenEditor</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPage.html?is-external=true" title="class or interface in org.eclipse.ui" class="externalLink">IWorkbenchPage</a>&nbsp;page,
+            <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">URI</a>&nbsp;uri)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/resource/ImageDescriptor.html?is-external=true" title="class or interface in org.eclipse.jface.resource">ImageDescriptor</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.Default.html#getIcon--">getIcon</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/resource/ImageDescriptor.html?is-external=true" title="class or interface in org.eclipse.jface.resource" class="externalLink">ImageDescriptor</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIcon()">getIcon</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.Default.html#getID--">getID</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getID()">getID</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.Default.html#getName--">getName</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getName()">getName</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.Default.html#getPriority--">getPriority</a></span>()</code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPriority()">getPriority</a></span>()</code></th>
+<td class="colLast">
 <div class="block">Returns the priority of this editor opener.</div>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.Default.html#getRegex--">getRegex</a></span>()</code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRegex()">getRegex</a></span>()</code></th>
+<td class="colLast">
 <div class="block">Returns the regular expression that determines if the editor opener can open a certain URI.</div>
 </td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.Default.html#matchesRegex-org.eclipse.emf.common.util.URI-">matchesRegex</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;uri)</code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#matchesRegex(org.eclipse.emf.common.util.URI)">matchesRegex</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">URI</a>&nbsp;uri)</code></th>
+<td class="colLast">
 <div class="block">Checks if the URI matches the regular expression of this editor opener.</div>
 </td>
 </tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IEditorPart.html?is-external=true" title="class or interface in org.eclipse.ui">IEditorPart</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.Default.html#openEditor-org.eclipse.ui.IWorkbenchPage-org.eclipse.emf.common.util.URI-">openEditor</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPage.html?is-external=true" title="class or interface in org.eclipse.ui">IWorkbenchPage</a>&nbsp;page,
-          <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;uri)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IEditorPart.html?is-external=true" title="class or interface in org.eclipse.ui" class="externalLink">IEditorPart</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#openEditor(org.eclipse.ui.IWorkbenchPage,org.eclipse.emf.common.util.URI)">openEditor</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPage.html?is-external=true" title="class or interface in org.eclipse.ui" class="externalLink">IWorkbenchPage</a>&nbsp;page,
+          <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">URI</a>&nbsp;uri)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.Default.html#toString--">toString</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
+<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
@@ -253,6 +297,7 @@ implements <a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.html" 
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -260,12 +305,13 @@ implements <a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.html" 
 <ul class="blockList">
 <li class="blockList">
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.detail">
+<li class="blockList"><a id="constructor.detail">
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="Default--">
+<a id="&lt;init&gt;()">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -274,143 +320,145 @@ implements <a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.html" 
 <pre>public&nbsp;Default()</pre>
 </li>
 </ul>
-<a name="Default-java.lang.String-java.lang.String-org.eclipse.jface.resource.ImageDescriptor-java.lang.String-int-">
+<a id="&lt;init&gt;(java.lang.String,java.lang.String,org.eclipse.jface.resource.ImageDescriptor,java.lang.String,int)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>Default</h4>
-<pre>public&nbsp;Default(java.lang.String&nbsp;id,
+<pre>public&nbsp;Default&#8203;(java.lang.String&nbsp;id,
                java.lang.String&nbsp;name,
-               <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/resource/ImageDescriptor.html?is-external=true" title="class or interface in org.eclipse.jface.resource">ImageDescriptor</a>&nbsp;icon,
+               <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/resource/ImageDescriptor.html?is-external=true" title="class or interface in org.eclipse.jface.resource" class="externalLink">ImageDescriptor</a>&nbsp;icon,
                java.lang.String&nbsp;regex,
                int&nbsp;priority)</pre>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="getID--">
+<a id="getID()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getID</h4>
-<pre>public&nbsp;java.lang.String&nbsp;getID()</pre>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getID()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.html#getID--">getID</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.html" title="interface in org.eclipse.emf.cdo.ui">CDOEditorOpener</a></code></dd>
+<dd><code><a href="CDOEditorOpener.html#getID()">getID</a></code>&nbsp;in interface&nbsp;<code><a href="CDOEditorOpener.html" title="interface in org.eclipse.emf.cdo.ui">CDOEditorOpener</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="getName--">
+<a id="getName()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getName</h4>
-<pre>public&nbsp;java.lang.String&nbsp;getName()</pre>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getName()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.html#getName--">getName</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.html" title="interface in org.eclipse.emf.cdo.ui">CDOEditorOpener</a></code></dd>
+<dd><code><a href="CDOEditorOpener.html#getName()">getName</a></code>&nbsp;in interface&nbsp;<code><a href="CDOEditorOpener.html" title="interface in org.eclipse.emf.cdo.ui">CDOEditorOpener</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="getIcon--">
+<a id="getIcon()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getIcon</h4>
-<pre>public&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/resource/ImageDescriptor.html?is-external=true" title="class or interface in org.eclipse.jface.resource">ImageDescriptor</a>&nbsp;getIcon()</pre>
+<pre class="methodSignature">public&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/resource/ImageDescriptor.html?is-external=true" title="class or interface in org.eclipse.jface.resource" class="externalLink">ImageDescriptor</a>&nbsp;getIcon()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.html#getIcon--">getIcon</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.html" title="interface in org.eclipse.emf.cdo.ui">CDOEditorOpener</a></code></dd>
+<dd><code><a href="CDOEditorOpener.html#getIcon()">getIcon</a></code>&nbsp;in interface&nbsp;<code><a href="CDOEditorOpener.html" title="interface in org.eclipse.emf.cdo.ui">CDOEditorOpener</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="getPriority--">
+<a id="getPriority()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getPriority</h4>
-<pre>public final&nbsp;int&nbsp;getPriority()</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.html#getPriority--">CDOEditorOpener</a></code></span></div>
+<pre class="methodSignature">public final&nbsp;int&nbsp;getPriority()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="CDOEditorOpener.html#getPriority()">CDOEditorOpener</a></code></span></div>
 <div class="block">Returns the priority of this editor opener. Usually used to choose between several editor openers that
  match the same repository URI.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.html#getPriority--">getPriority</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.html" title="interface in org.eclipse.emf.cdo.ui">CDOEditorOpener</a></code></dd>
+<dd><code><a href="CDOEditorOpener.html#getPriority()">getPriority</a></code>&nbsp;in interface&nbsp;<code><a href="CDOEditorOpener.html" title="interface in org.eclipse.emf.cdo.ui">CDOEditorOpener</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="getRegex--">
+<a id="getRegex()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getRegex</h4>
-<pre>public final&nbsp;java.lang.String&nbsp;getRegex()</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.html#getRegex--">CDOEditorOpener</a></code></span></div>
+<pre class="methodSignature">public final&nbsp;java.lang.String&nbsp;getRegex()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="CDOEditorOpener.html#getRegex()">CDOEditorOpener</a></code></span></div>
 <div class="block">Returns the regular expression that determines if the editor opener can open a certain URI.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.html#getRegex--">getRegex</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.html" title="interface in org.eclipse.emf.cdo.ui">CDOEditorOpener</a></code></dd>
+<dd><code><a href="CDOEditorOpener.html#getRegex()">getRegex</a></code>&nbsp;in interface&nbsp;<code><a href="CDOEditorOpener.html" title="interface in org.eclipse.emf.cdo.ui">CDOEditorOpener</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="matchesRegex-org.eclipse.emf.common.util.URI-">
+<a id="matchesRegex(org.eclipse.emf.common.util.URI)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>matchesRegex</h4>
-<pre>public final&nbsp;boolean&nbsp;matchesRegex(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;uri)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.html#matchesRegex-org.eclipse.emf.common.util.URI-">CDOEditorOpener</a></code></span></div>
+<pre class="methodSignature">public final&nbsp;boolean&nbsp;matchesRegex&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">URI</a>&nbsp;uri)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="CDOEditorOpener.html#matchesRegex(org.eclipse.emf.common.util.URI)">CDOEditorOpener</a></code></span></div>
 <div class="block">Checks if the URI matches the regular expression of this editor opener.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.html#matchesRegex-org.eclipse.emf.common.util.URI-">matchesRegex</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.html" title="interface in org.eclipse.emf.cdo.ui">CDOEditorOpener</a></code></dd>
+<dd><code><a href="CDOEditorOpener.html#matchesRegex(org.eclipse.emf.common.util.URI)">matchesRegex</a></code>&nbsp;in interface&nbsp;<code><a href="CDOEditorOpener.html" title="interface in org.eclipse.emf.cdo.ui">CDOEditorOpener</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="openEditor-org.eclipse.ui.IWorkbenchPage-org.eclipse.emf.common.util.URI-">
+<a id="openEditor(org.eclipse.ui.IWorkbenchPage,org.eclipse.emf.common.util.URI)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>openEditor</h4>
-<pre>public&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IEditorPart.html?is-external=true" title="class or interface in org.eclipse.ui">IEditorPart</a>&nbsp;openEditor(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPage.html?is-external=true" title="class or interface in org.eclipse.ui">IWorkbenchPage</a>&nbsp;page,
-                              <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;uri)</pre>
+<pre class="methodSignature">public&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IEditorPart.html?is-external=true" title="class or interface in org.eclipse.ui" class="externalLink">IEditorPart</a>&nbsp;openEditor&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPage.html?is-external=true" title="class or interface in org.eclipse.ui" class="externalLink">IWorkbenchPage</a>&nbsp;page,
+                              <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">URI</a>&nbsp;uri)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.html#openEditor-org.eclipse.ui.IWorkbenchPage-org.eclipse.emf.common.util.URI-">openEditor</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.html" title="interface in org.eclipse.emf.cdo.ui">CDOEditorOpener</a></code></dd>
+<dd><code><a href="CDOEditorOpener.html#openEditor(org.eclipse.ui.IWorkbenchPage,org.eclipse.emf.common.util.URI)">openEditor</a></code>&nbsp;in interface&nbsp;<code><a href="CDOEditorOpener.html" title="interface in org.eclipse.emf.cdo.ui">CDOEditorOpener</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="doOpenEditor-org.eclipse.ui.IWorkbenchPage-org.eclipse.emf.common.util.URI-">
+<a id="doOpenEditor(org.eclipse.ui.IWorkbenchPage,org.eclipse.emf.common.util.URI)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>doOpenEditor</h4>
-<pre>protected abstract&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IEditorPart.html?is-external=true" title="class or interface in org.eclipse.ui">IEditorPart</a>&nbsp;doOpenEditor(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPage.html?is-external=true" title="class or interface in org.eclipse.ui">IWorkbenchPage</a>&nbsp;page,
-                                            <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;uri)</pre>
+<pre class="methodSignature">protected abstract&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IEditorPart.html?is-external=true" title="class or interface in org.eclipse.ui" class="externalLink">IEditorPart</a>&nbsp;doOpenEditor&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPage.html?is-external=true" title="class or interface in org.eclipse.ui" class="externalLink">IWorkbenchPage</a>&nbsp;page,
+                                            <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">URI</a>&nbsp;uri)</pre>
 </li>
 </ul>
-<a name="toString--">
+<a id="toString()">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>toString</h4>
-<pre>public&nbsp;java.lang.String&nbsp;toString()</pre>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;toString()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>toString</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
@@ -419,21 +467,25 @@ implements <a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.html" 
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/CDOEditorOpener.Default.html">Use</a></li>
@@ -443,16 +495,8 @@ implements <a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.html" 
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.html" title="interface in org.eclipse.emf.cdo.ui"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.Registry.html" title="class in org.eclipse.emf.cdo.ui"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/emf/cdo/ui/CDOEditorOpener.Default.html" target="_top">Frames</a></li>
-<li><a href="CDOEditorOpener.Default.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -465,12 +509,15 @@ implements <a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.html" 
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
@@ -481,10 +528,12 @@ implements <a href="../../../../../org/eclipse/emf/cdo/ui/CDOEditorOpener.html" 
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

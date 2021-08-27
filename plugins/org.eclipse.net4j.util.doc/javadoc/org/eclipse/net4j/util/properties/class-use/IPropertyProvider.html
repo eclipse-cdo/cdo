@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>Uses of Interface org.eclipse.net4j.util.properties.IPropertyProvider (Net4j Utilities Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,39 +28,43 @@
     catch(err) {
     }
 //-->
-</script>
+var pathtoroot = "../../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="../package-summary.html">Package</a></li>
-<li><a href="../../../../../../org/eclipse/net4j/util/properties/IPropertyProvider.html" title="interface in org.eclipse.net4j.util.properties">Class</a></li>
+<li><a href="../IPropertyProvider.html" title="interface in org.eclipse.net4j.util.properties">Class</a></li>
 <li class="navBarCell1Rev">Use</li>
+<li><a href="../package-tree.html">Tree</a></li>
 <li><a href="../../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../../help-doc.html">Help</a></li>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev</li>
-<li>Next</li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/net4j/util/properties/class-use/IPropertyProvider.html" target="_top">Frames</a></li>
-<li><a href="IPropertyProvider.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -63,34 +77,46 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
+<main role="main">
 <div class="header">
 <h2 title="Uses of Interface org.eclipse.net4j.util.properties.IPropertyProvider" class="title">Uses of Interface<br>org.eclipse.net4j.util.properties.IPropertyProvider</h2>
 </div>
 <div class="classUseContainer">
 <ul class="blockList">
 <li class="blockList">
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing packages, and an explanation">
-<caption><span>Packages that use <a href="../../../../../../org/eclipse/net4j/util/properties/IPropertyProvider.html" title="interface in org.eclipse.net4j.util.properties">IPropertyProvider</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Packages that use <a href="../IPropertyProvider.html" title="interface in org.eclipse.net4j.util.properties">IPropertyProvider</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Package</th>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.util.properties">org.eclipse.net4j.util.properties</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.util.properties">org.eclipse.net4j.util.properties</a></th>
 <td class="colLast">
 <div class="block">A framework to describe and access properties of POJOs and to support Eclipse
- <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/expressions/PropertyTester.html?is-external=true" title="class or interface in org.eclipse.core.expressions"><code>property testers</code></a> and
+ <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/expressions/PropertyTester.html?is-external=true" title="class or interface in org.eclipse.core.expressions" class="externalLink"><code>property testers</code></a> and
  <code>IPropertySources</code> in a uniform way.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.util.ui">org.eclipse.net4j.util.ui</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.util.ui">org.eclipse.net4j.util.ui</a></th>
 <td class="colLast">
 <div class="block">Reusable UI components.</div>
 </td>
@@ -100,118 +126,129 @@
 </li>
 <li class="blockList">
 <ul class="blockList">
-<li class="blockList"><a name="org.eclipse.net4j.util.properties">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.net4j.util.properties">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../org/eclipse/net4j/util/properties/IPropertyProvider.html" title="interface in org.eclipse.net4j.util.properties">IPropertyProvider</a> in <a href="../../../../../../org/eclipse/net4j/util/properties/package-summary.html">org.eclipse.net4j.util.properties</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing subinterfaces, and an explanation">
-<caption><span>Subinterfaces of <a href="../../../../../../org/eclipse/net4j/util/properties/IPropertyProvider.html" title="interface in org.eclipse.net4j.util.properties">IPropertyProvider</a> in <a href="../../../../../../org/eclipse/net4j/util/properties/package-summary.html">org.eclipse.net4j.util.properties</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../IPropertyProvider.html" title="interface in org.eclipse.net4j.util.properties">IPropertyProvider</a> in <a href="../package-summary.html">org.eclipse.net4j.util.properties</a></h3>
+<table class="useSummary">
+<caption><span>Subinterfaces of <a href="../IPropertyProvider.html" title="interface in org.eclipse.net4j.util.properties">IPropertyProvider</a> in <a href="../package-summary.html">org.eclipse.net4j.util.properties</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Interface and Description</th>
+<th class="colSecond" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/properties/IProperties.html" title="interface in org.eclipse.net4j.util.properties">IProperties</a>&lt;RECEIVER&gt;</span></code>
-<div class="block">Contains a list of <a href="../../../../../../org/eclipse/net4j/util/properties/Property.html" title="class in org.eclipse.net4j.util.properties"><code>properties</code></a>.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../IProperties.html" title="interface in org.eclipse.net4j.util.properties">IProperties</a>&lt;RECEIVER&gt;</span></code></th>
+<td class="colLast">
+<div class="block">Contains a list of <a href="../Property.html" title="class in org.eclipse.net4j.util.properties"><code>properties</code></a>.</div>
 </td>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../../org/eclipse/net4j/util/properties/package-summary.html">org.eclipse.net4j.util.properties</a> that implement <a href="../../../../../../org/eclipse/net4j/util/properties/IPropertyProvider.html" title="interface in org.eclipse.net4j.util.properties">IPropertyProvider</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="../package-summary.html">org.eclipse.net4j.util.properties</a> that implement <a href="../IPropertyProvider.html" title="interface in org.eclipse.net4j.util.properties">IPropertyProvider</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Class and Description</th>
+<th class="colSecond" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/properties/DefaultPropertyTester.html" title="class in org.eclipse.net4j.util.properties">DefaultPropertyTester</a>&lt;RECEIVER&gt;</span></code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../DefaultPropertyTester.html" title="class in org.eclipse.net4j.util.properties">DefaultPropertyTester</a>&lt;RECEIVER&gt;</span></code></th>
+<td class="colLast">
 <div class="block">Tests properties of receiver objects against expected values.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/properties/Properties.html" title="class in org.eclipse.net4j.util.properties">Properties</a>&lt;RECEIVER&gt;</span></code>
-<div class="block">Contains a list of <a href="../../../../../../org/eclipse/net4j/util/properties/Property.html" title="class in org.eclipse.net4j.util.properties"><code>properties</code></a>.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../Properties.html" title="class in org.eclipse.net4j.util.properties">Properties</a>&lt;RECEIVER&gt;</span></code></th>
+<td class="colLast">
+<div class="block">Contains a list of <a href="../Property.html" title="class in org.eclipse.net4j.util.properties"><code>properties</code></a>.</div>
 </td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.ui">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.net4j.util.ui">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../org/eclipse/net4j/util/properties/IPropertyProvider.html" title="interface in org.eclipse.net4j.util.properties">IPropertyProvider</a> in <a href="../../../../../../org/eclipse/net4j/util/ui/package-summary.html">org.eclipse.net4j.util.ui</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../org/eclipse/net4j/util/ui/package-summary.html">org.eclipse.net4j.util.ui</a> with parameters of type <a href="../../../../../../org/eclipse/net4j/util/properties/IPropertyProvider.html" title="interface in org.eclipse.net4j.util.properties">IPropertyProvider</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../IPropertyProvider.html" title="interface in org.eclipse.net4j.util.properties">IPropertyProvider</a> in <a href="../../ui/package-summary.html">org.eclipse.net4j.util.ui</a></h3>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../ui/package-summary.html">org.eclipse.net4j.util.ui</a> with parameters of type <a href="../IPropertyProvider.html" title="interface in org.eclipse.net4j.util.properties">IPropertyProvider</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">DefaultPropertySource.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/DefaultPropertySource.html#addDescriptors-org.eclipse.net4j.util.properties.IPropertyProvider-">addDescriptors</a></span>(<a href="../../../../../../org/eclipse/net4j/util/properties/IPropertyProvider.html" title="interface in org.eclipse.net4j.util.properties">IPropertyProvider</a>&lt;<a href="../../../../../../org/eclipse/net4j/util/ui/DefaultPropertySource.html" title="type parameter in DefaultPropertySource">RECEIVER</a>&gt;&nbsp;provider)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">DefaultPropertySource.</span><code><span class="memberNameLink"><a href="../../ui/DefaultPropertySource.html#addDescriptors(org.eclipse.net4j.util.properties.IPropertyProvider)">addDescriptors</a></span>&#8203;(<a href="../IPropertyProvider.html" title="interface in org.eclipse.net4j.util.properties">IPropertyProvider</a>&lt;<a href="../../ui/DefaultPropertySource.html" title="type parameter in DefaultPropertySource">RECEIVER</a>&gt;&nbsp;provider)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing constructors, and an explanation">
-<caption><span>Constructors in <a href="../../../../../../org/eclipse/net4j/util/ui/package-summary.html">org.eclipse.net4j.util.ui</a> with parameters of type <a href="../../../../../../org/eclipse/net4j/util/properties/IPropertyProvider.html" title="interface in org.eclipse.net4j.util.properties">IPropertyProvider</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Constructors in <a href="../../ui/package-summary.html">org.eclipse.net4j.util.ui</a> with parameters of type <a href="../IPropertyProvider.html" title="interface in org.eclipse.net4j.util.properties">IPropertyProvider</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Constructor and Description</th>
+<th class="colFirst" scope="col">Constructor</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/DefaultPropertySource.Augmented.html#Augmented-RECEIVER-org.eclipse.net4j.util.properties.IPropertyProvider-AUGMENTING_RECEIVER-">Augmented</a></span>(<a href="../../../../../../org/eclipse/net4j/util/ui/DefaultPropertySource.Augmented.html" title="type parameter in DefaultPropertySource.Augmented">RECEIVER</a>&nbsp;object,
-         <a href="../../../../../../org/eclipse/net4j/util/properties/IPropertyProvider.html" title="interface in org.eclipse.net4j.util.properties">IPropertyProvider</a>&lt;<a href="../../../../../../org/eclipse/net4j/util/ui/DefaultPropertySource.Augmented.html" title="type parameter in DefaultPropertySource.Augmented">RECEIVER</a>&gt;&nbsp;provider,
-         <a href="../../../../../../org/eclipse/net4j/util/ui/DefaultPropertySource.Augmented.html" title="type parameter in DefaultPropertySource.Augmented">AUGMENTING_RECEIVER</a>&nbsp;augmentingObject)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../ui/DefaultPropertySource.Augmented.html#%3Cinit%3E(RECEIVER,org.eclipse.net4j.util.properties.IPropertyProvider,AUGMENTING_RECEIVER)">Augmented</a></span>&#8203;(<a href="../../ui/DefaultPropertySource.Augmented.html" title="type parameter in DefaultPropertySource.Augmented">RECEIVER</a>&nbsp;object,
+         <a href="../IPropertyProvider.html" title="interface in org.eclipse.net4j.util.properties">IPropertyProvider</a>&lt;<a href="../../ui/DefaultPropertySource.Augmented.html" title="type parameter in DefaultPropertySource.Augmented">RECEIVER</a>&gt;&nbsp;provider,
+         <a href="../../ui/DefaultPropertySource.Augmented.html" title="type parameter in DefaultPropertySource.Augmented">AUGMENTING_RECEIVER</a>&nbsp;augmentingObject)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/DefaultActionFilter.html#DefaultActionFilter-org.eclipse.net4j.util.properties.IPropertyProvider-">DefaultActionFilter</a></span>(<a href="../../../../../../org/eclipse/net4j/util/properties/IPropertyProvider.html" title="interface in org.eclipse.net4j.util.properties">IPropertyProvider</a>&lt;<a href="../../../../../../org/eclipse/net4j/util/ui/DefaultActionFilter.html" title="type parameter in DefaultActionFilter">RECEIVER</a>&gt;&nbsp;provider)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../ui/DefaultActionFilter.html#%3Cinit%3E(org.eclipse.net4j.util.properties.IPropertyProvider)">DefaultActionFilter</a></span>&#8203;(<a href="../IPropertyProvider.html" title="interface in org.eclipse.net4j.util.properties">IPropertyProvider</a>&lt;<a href="../../ui/DefaultActionFilter.html" title="type parameter in DefaultActionFilter">RECEIVER</a>&gt;&nbsp;provider)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/DefaultPropertySource.html#DefaultPropertySource-RECEIVER-org.eclipse.net4j.util.properties.IPropertyProvider-">DefaultPropertySource</a></span>(<a href="../../../../../../org/eclipse/net4j/util/ui/DefaultPropertySource.html" title="type parameter in DefaultPropertySource">RECEIVER</a>&nbsp;object,
-                     <a href="../../../../../../org/eclipse/net4j/util/properties/IPropertyProvider.html" title="interface in org.eclipse.net4j.util.properties">IPropertyProvider</a>&lt;<a href="../../../../../../org/eclipse/net4j/util/ui/DefaultPropertySource.html" title="type parameter in DefaultPropertySource">RECEIVER</a>&gt;&nbsp;provider)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../ui/DefaultPropertySource.html#%3Cinit%3E(RECEIVER,org.eclipse.net4j.util.properties.IPropertyProvider)">DefaultPropertySource</a></span>&#8203;(<a href="../../ui/DefaultPropertySource.html" title="type parameter in DefaultPropertySource">RECEIVER</a>&nbsp;object,
+                     <a href="../IPropertyProvider.html" title="interface in org.eclipse.net4j.util.properties">IPropertyProvider</a>&lt;<a href="../../ui/DefaultPropertySource.html" title="type parameter in DefaultPropertySource">RECEIVER</a>&gt;&nbsp;provider)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
 </ul>
 </li>
 </ul>
 </div>
+</main>
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="../package-summary.html">Package</a></li>
-<li><a href="../../../../../../org/eclipse/net4j/util/properties/IPropertyProvider.html" title="interface in org.eclipse.net4j.util.properties">Class</a></li>
+<li><a href="../IPropertyProvider.html" title="interface in org.eclipse.net4j.util.properties">Class</a></li>
 <li class="navBarCell1Rev">Use</li>
+<li><a href="../package-tree.html">Tree</a></li>
 <li><a href="../../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../../help-doc.html">Help</a></li>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev</li>
-<li>Next</li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/net4j/util/properties/class-use/IPropertyProvider.html" target="_top">Frames</a></li>
-<li><a href="IPropertyProvider.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -224,11 +261,16 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

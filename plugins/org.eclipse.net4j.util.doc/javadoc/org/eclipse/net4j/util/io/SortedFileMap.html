@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>SortedFileMap (Net4j Utilities Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":6,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":6,"i13":10,"i14":6,"i15":6,"i16":10,"i17":6,"i18":6};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":6,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":6,"i13":10,"i14":6,"i15":6,"i16":10,"i17":6,"i18":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/SortedFileMap.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/net4j/util/io/NIOUtil.html" title="class in org.eclipse.net4j.util.io"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/net4j/util/io/StreamWrapperChain.html" title="class in org.eclipse.net4j.util.io"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/net4j/util/io/SortedFileMap.html" target="_top">Frames</a></li>
-<li><a href="SortedFileMap.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,6 +82,9 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -85,21 +101,30 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.net4j.util.io</div>
-<h2 title="Class SortedFileMap" class="title">Class SortedFileMap&lt;K extends java.lang.Comparable&lt;K&gt;,V&gt;</h2>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.net4j.util.io</a></div>
+<h2 title="Class SortedFileMap" class="title">Class SortedFileMap&lt;K extends java.lang.Comparable&lt;K&gt;,&#8203;V&gt;</h2>
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li>org.eclipse.net4j.util.io.SortedFileMap&lt;K,V&gt;</li>
+<li>org.eclipse.net4j.util.io.SortedFileMap&lt;K,&#8203;V&gt;</li>
 </ul>
 </li>
 </ul>
@@ -108,15 +133,14 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd>java.io.Closeable, java.lang.AutoCloseable</dd>
+<dd><code>java.io.Closeable</code>, <code>java.lang.AutoCloseable</code></dd>
 </dl>
 <dl>
 <dt>Direct Known Subclasses:</dt>
-<dd><a href="../../../../../org/eclipse/net4j/util/io/CachedFileMap.html" title="class in org.eclipse.net4j.util.io">CachedFileMap</a></dd>
+<dd><code><a href="CachedFileMap.html" title="class in org.eclipse.net4j.util.io">CachedFileMap</a></code></dd>
 </dl>
 <hr>
-<br>
-<pre>public abstract class <span class="typeNameLabel">SortedFileMap&lt;K extends java.lang.Comparable&lt;K&gt;,V&gt;</span>
+<pre>public abstract class <span class="typeNameLabel">SortedFileMap&lt;K extends java.lang.Comparable&lt;K&gt;,&#8203;V&gt;</span>
 extends java.lang.Object
 implements java.io.Closeable</pre>
 <dl>
@@ -130,117 +154,142 @@ implements java.io.Closeable</pre>
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.summary">
+<li class="blockList"><a id="constructor.summary">
 <!--   -->
 </a>
 <h3>Constructor Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
+<table class="memberSummary">
 <caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Constructor and Description</th>
+<th class="colFirst" scope="col">Constructor</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/SortedFileMap.html#SortedFileMap-java.io.File-java.lang.String-">SortedFileMap</a></span>(java.io.File&nbsp;file,
-             java.lang.String&nbsp;mode)</code>&nbsp;</td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.io.File,java.lang.String)">SortedFileMap</a></span>&#8203;(java.io.File&nbsp;file,
+             java.lang.String&nbsp;mode)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/SortedFileMap.html#close--">close</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#close()">close</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/io/SortedFileMap.html" title="type parameter in SortedFileMap">V</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/SortedFileMap.html#get-K-">get</a></span>(<a href="../../../../../org/eclipse/net4j/util/io/SortedFileMap.html" title="type parameter in SortedFileMap">K</a>&nbsp;key)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="SortedFileMap.html" title="type parameter in SortedFileMap">V</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#get(K)">get</a></span>&#8203;(<a href="SortedFileMap.html" title="type parameter in SortedFileMap">K</a>&nbsp;key)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>long</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/SortedFileMap.html#getEntryCount--">getEntryCount</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getEntryCount()">getEntryCount</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/SortedFileMap.html#getEntrySize--">getEntrySize</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getEntrySize()">getEntrySize</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>java.io.File</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/SortedFileMap.html#getFile--">getFile</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getFile()">getFile</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/io/SortedFileMap.html" title="type parameter in SortedFileMap">K</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/SortedFileMap.html#getKey-long-">getKey</a></span>(long&nbsp;index)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="SortedFileMap.html" title="type parameter in SortedFileMap">K</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getKey(long)">getKey</a></span>&#8203;(long&nbsp;index)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>abstract int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/SortedFileMap.html#getKeySize--">getKeySize</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getKeySize()">getKeySize</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/io/SortedFileMap.html" title="type parameter in SortedFileMap">K</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/SortedFileMap.html#getMaxKey--">getMaxKey</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="SortedFileMap.html" title="type parameter in SortedFileMap">K</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMaxKey()">getMaxKey</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>long</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/SortedFileMap.html#getPosition-long-">getPosition</a></span>(long&nbsp;index)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPosition(long)">getPosition</a></span>&#8203;(long&nbsp;index)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>java.io.RandomAccessFile</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/SortedFileMap.html#getRandomAccessFile--">getRandomAccessFile</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRandomAccessFile()">getRandomAccessFile</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/io/SortedFileMap.html" title="type parameter in SortedFileMap">V</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/SortedFileMap.html#getValue-long-">getValue</a></span>(long&nbsp;index)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="SortedFileMap.html" title="type parameter in SortedFileMap">V</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getValue(long)">getValue</a></span>&#8203;(long&nbsp;index)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>long</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/SortedFileMap.html#getValuePosition-long-">getValuePosition</a></span>(long&nbsp;index)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getValuePosition(long)">getValuePosition</a></span>&#8203;(long&nbsp;index)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code>abstract int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/SortedFileMap.html#getValueSize--">getValueSize</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getValueSize()">getValueSize</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i13" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/io/SortedFileMap.html" title="type parameter in SortedFileMap">V</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/SortedFileMap.html#put-K-V-">put</a></span>(<a href="../../../../../org/eclipse/net4j/util/io/SortedFileMap.html" title="type parameter in SortedFileMap">K</a>&nbsp;key,
-   <a href="../../../../../org/eclipse/net4j/util/io/SortedFileMap.html" title="type parameter in SortedFileMap">V</a>&nbsp;value)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="SortedFileMap.html" title="type parameter in SortedFileMap">V</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#put(K,V)">put</a></span>&#8203;(<a href="SortedFileMap.html" title="type parameter in SortedFileMap">K</a>&nbsp;key,
+   <a href="SortedFileMap.html" title="type parameter in SortedFileMap">V</a>&nbsp;value)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i14" class="altColor">
-<td class="colFirst"><code>protected abstract <a href="../../../../../org/eclipse/net4j/util/io/SortedFileMap.html" title="type parameter in SortedFileMap">K</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/SortedFileMap.html#readKey-org.eclipse.net4j.util.io.ExtendedDataInput-">readKey</a></span>(<a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a>&nbsp;in)</code>&nbsp;</td>
+<td class="colFirst"><code>protected abstract <a href="SortedFileMap.html" title="type parameter in SortedFileMap">K</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readKey(org.eclipse.net4j.util.io.ExtendedDataInput)">readKey</a></span>&#8203;(<a href="ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a>&nbsp;in)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i15" class="rowColor">
-<td class="colFirst"><code>protected abstract <a href="../../../../../org/eclipse/net4j/util/io/SortedFileMap.html" title="type parameter in SortedFileMap">V</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/SortedFileMap.html#readValue-org.eclipse.net4j.util.io.ExtendedDataInput-">readValue</a></span>(<a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a>&nbsp;in)</code>&nbsp;</td>
+<td class="colFirst"><code>protected abstract <a href="SortedFileMap.html" title="type parameter in SortedFileMap">V</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readValue(org.eclipse.net4j.util.io.ExtendedDataInput)">readValue</a></span>&#8203;(<a href="ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a>&nbsp;in)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i16" class="altColor">
 <td class="colFirst"><code>protected long</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/SortedFileMap.html#search-K-">search</a></span>(<a href="../../../../../org/eclipse/net4j/util/io/SortedFileMap.html" title="type parameter in SortedFileMap">K</a>&nbsp;key)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#search(K)">search</a></span>&#8203;(<a href="SortedFileMap.html" title="type parameter in SortedFileMap">K</a>&nbsp;key)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i17" class="rowColor">
 <td class="colFirst"><code>protected abstract void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/SortedFileMap.html#writeKey-org.eclipse.net4j.util.io.ExtendedDataOutput-K-">writeKey</a></span>(<a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a>&nbsp;out,
-        <a href="../../../../../org/eclipse/net4j/util/io/SortedFileMap.html" title="type parameter in SortedFileMap">K</a>&nbsp;key)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#writeKey(org.eclipse.net4j.util.io.ExtendedDataOutput,K)">writeKey</a></span>&#8203;(<a href="ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a>&nbsp;out,
+        <a href="SortedFileMap.html" title="type parameter in SortedFileMap">K</a>&nbsp;key)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i18" class="altColor">
 <td class="colFirst"><code>protected abstract void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/SortedFileMap.html#writeValue-org.eclipse.net4j.util.io.ExtendedDataOutput-V-">writeValue</a></span>(<a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a>&nbsp;out,
-          <a href="../../../../../org/eclipse/net4j/util/io/SortedFileMap.html" title="type parameter in SortedFileMap">V</a>&nbsp;value)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#writeValue(org.eclipse.net4j.util.io.ExtendedDataOutput,V)">writeValue</a></span>&#8203;(<a href="ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a>&nbsp;out,
+          <a href="SortedFileMap.html" title="type parameter in SortedFileMap">V</a>&nbsp;value)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
+<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
@@ -248,6 +297,7 @@ implements java.io.Closeable</pre>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -255,164 +305,167 @@ implements java.io.Closeable</pre>
 <ul class="blockList">
 <li class="blockList">
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.detail">
+<li class="blockList"><a id="constructor.detail">
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="SortedFileMap-java.io.File-java.lang.String-">
+<a id="&lt;init&gt;(java.io.File,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>SortedFileMap</h4>
-<pre>public&nbsp;SortedFileMap(java.io.File&nbsp;file,
+<pre>public&nbsp;SortedFileMap&#8203;(java.io.File&nbsp;file,
                      java.lang.String&nbsp;mode)</pre>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><code>RandomAccessFile.RandomAccessFile(File, String)</code></dd>
+<dd><code>RandomAccessFile(File, String)</code></dd>
 </dl>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="close--">
+<a id="close()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>close</h4>
-<pre>public&nbsp;void&nbsp;close()
+<pre class="methodSignature">public&nbsp;void&nbsp;close()
            throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>close</code>&nbsp;in interface&nbsp;<code>java.io.Closeable</code></dd>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code>close</code>&nbsp;in interface&nbsp;<code>java.lang.AutoCloseable</code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code>close</code>&nbsp;in interface&nbsp;<code>java.io.Closeable</code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.io.IOException</code></dd>
 </dl>
 </li>
 </ul>
-<a name="getFile--">
+<a id="getFile()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getFile</h4>
-<pre>public&nbsp;java.io.File&nbsp;getFile()</pre>
+<pre class="methodSignature">public&nbsp;java.io.File&nbsp;getFile()</pre>
 </li>
 </ul>
-<a name="getRandomAccessFile--">
+<a id="getRandomAccessFile()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getRandomAccessFile</h4>
-<pre>public&nbsp;java.io.RandomAccessFile&nbsp;getRandomAccessFile()</pre>
+<pre class="methodSignature">public&nbsp;java.io.RandomAccessFile&nbsp;getRandomAccessFile()</pre>
 </li>
 </ul>
-<a name="getEntryCount--">
+<a id="getEntryCount()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getEntryCount</h4>
-<pre>public&nbsp;long&nbsp;getEntryCount()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;getEntryCount()</pre>
 </li>
 </ul>
-<a name="getEntrySize--">
+<a id="getEntrySize()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getEntrySize</h4>
-<pre>public&nbsp;int&nbsp;getEntrySize()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;getEntrySize()</pre>
 </li>
 </ul>
-<a name="getPosition-long-">
+<a id="getPosition(long)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getPosition</h4>
-<pre>public&nbsp;long&nbsp;getPosition(long&nbsp;index)</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;getPosition&#8203;(long&nbsp;index)</pre>
 </li>
 </ul>
-<a name="getValuePosition-long-">
+<a id="getValuePosition(long)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getValuePosition</h4>
-<pre>public&nbsp;long&nbsp;getValuePosition(long&nbsp;index)</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;getValuePosition&#8203;(long&nbsp;index)</pre>
 </li>
 </ul>
-<a name="getMaxKey--">
+<a id="getMaxKey()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getMaxKey</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/io/SortedFileMap.html" title="type parameter in SortedFileMap">K</a>&nbsp;getMaxKey()</pre>
+<pre class="methodSignature">public&nbsp;<a href="SortedFileMap.html" title="type parameter in SortedFileMap">K</a>&nbsp;getMaxKey()</pre>
 </li>
 </ul>
-<a name="getKey-long-">
+<a id="getKey(long)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getKey</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/io/SortedFileMap.html" title="type parameter in SortedFileMap">K</a>&nbsp;getKey(long&nbsp;index)</pre>
+<pre class="methodSignature">public&nbsp;<a href="SortedFileMap.html" title="type parameter in SortedFileMap">K</a>&nbsp;getKey&#8203;(long&nbsp;index)</pre>
 </li>
 </ul>
-<a name="getValue-long-">
+<a id="getValue(long)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getValue</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/io/SortedFileMap.html" title="type parameter in SortedFileMap">V</a>&nbsp;getValue(long&nbsp;index)</pre>
+<pre class="methodSignature">public&nbsp;<a href="SortedFileMap.html" title="type parameter in SortedFileMap">V</a>&nbsp;getValue&#8203;(long&nbsp;index)</pre>
 </li>
 </ul>
-<a name="get-java.lang.Comparable-">
+<a id="get(java.lang.Comparable)">
 <!--   -->
-</a><a name="get-K-">
+</a><a id="get(K)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>get</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/io/SortedFileMap.html" title="type parameter in SortedFileMap">V</a>&nbsp;get(<a href="../../../../../org/eclipse/net4j/util/io/SortedFileMap.html" title="type parameter in SortedFileMap">K</a>&nbsp;key)</pre>
+<pre class="methodSignature">public&nbsp;<a href="SortedFileMap.html" title="type parameter in SortedFileMap">V</a>&nbsp;get&#8203;(<a href="SortedFileMap.html" title="type parameter in SortedFileMap">K</a>&nbsp;key)</pre>
 </li>
 </ul>
-<a name="put-java.lang.Comparable-java.lang.Object-">
+<a id="put(java.lang.Comparable,java.lang.Object)">
 <!--   -->
-</a><a name="put-K-V-">
+</a><a id="put(K,V)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>put</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/io/SortedFileMap.html" title="type parameter in SortedFileMap">V</a>&nbsp;put(<a href="../../../../../org/eclipse/net4j/util/io/SortedFileMap.html" title="type parameter in SortedFileMap">K</a>&nbsp;key,
-             <a href="../../../../../org/eclipse/net4j/util/io/SortedFileMap.html" title="type parameter in SortedFileMap">V</a>&nbsp;value)</pre>
+<pre class="methodSignature">public&nbsp;<a href="SortedFileMap.html" title="type parameter in SortedFileMap">V</a>&nbsp;put&#8203;(<a href="SortedFileMap.html" title="type parameter in SortedFileMap">K</a>&nbsp;key,
+             <a href="SortedFileMap.html" title="type parameter in SortedFileMap">V</a>&nbsp;value)</pre>
 </li>
 </ul>
-<a name="search-java.lang.Comparable-">
+<a id="search(java.lang.Comparable)">
 <!--   -->
-</a><a name="search-K-">
+</a><a id="search(K)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>search</h4>
-<pre>protected&nbsp;long&nbsp;search(<a href="../../../../../org/eclipse/net4j/util/io/SortedFileMap.html" title="type parameter in SortedFileMap">K</a>&nbsp;key)
+<pre class="methodSignature">protected&nbsp;long&nbsp;search&#8203;(<a href="SortedFileMap.html" title="type parameter in SortedFileMap">K</a>&nbsp;key)
                throws java.io.IOException</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -422,22 +475,22 @@ implements java.io.Closeable</pre>
 </dl>
 </li>
 </ul>
-<a name="getKeySize--">
+<a id="getKeySize()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getKeySize</h4>
-<pre>public abstract&nbsp;int&nbsp;getKeySize()</pre>
+<pre class="methodSignature">public abstract&nbsp;int&nbsp;getKeySize()</pre>
 </li>
 </ul>
-<a name="readKey-org.eclipse.net4j.util.io.ExtendedDataInput-">
+<a id="readKey(org.eclipse.net4j.util.io.ExtendedDataInput)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>readKey</h4>
-<pre>protected abstract&nbsp;<a href="../../../../../org/eclipse/net4j/util/io/SortedFileMap.html" title="type parameter in SortedFileMap">K</a>&nbsp;readKey(<a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a>&nbsp;in)
+<pre class="methodSignature">protected abstract&nbsp;<a href="SortedFileMap.html" title="type parameter in SortedFileMap">K</a>&nbsp;readKey&#8203;(<a href="ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a>&nbsp;in)
                       throws java.io.IOException</pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -445,16 +498,16 @@ implements java.io.Closeable</pre>
 </dl>
 </li>
 </ul>
-<a name="writeKey-org.eclipse.net4j.util.io.ExtendedDataOutput-java.lang.Comparable-">
+<a id="writeKey(org.eclipse.net4j.util.io.ExtendedDataOutput,java.lang.Comparable)">
 <!--   -->
-</a><a name="writeKey-org.eclipse.net4j.util.io.ExtendedDataOutput-K-">
+</a><a id="writeKey(org.eclipse.net4j.util.io.ExtendedDataOutput,K)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>writeKey</h4>
-<pre>protected abstract&nbsp;void&nbsp;writeKey(<a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a>&nbsp;out,
-                                 <a href="../../../../../org/eclipse/net4j/util/io/SortedFileMap.html" title="type parameter in SortedFileMap">K</a>&nbsp;key)
+<pre class="methodSignature">protected abstract&nbsp;void&nbsp;writeKey&#8203;(<a href="ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a>&nbsp;out,
+                                 <a href="SortedFileMap.html" title="type parameter in SortedFileMap">K</a>&nbsp;key)
                           throws java.io.IOException</pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -462,22 +515,22 @@ implements java.io.Closeable</pre>
 </dl>
 </li>
 </ul>
-<a name="getValueSize--">
+<a id="getValueSize()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getValueSize</h4>
-<pre>public abstract&nbsp;int&nbsp;getValueSize()</pre>
+<pre class="methodSignature">public abstract&nbsp;int&nbsp;getValueSize()</pre>
 </li>
 </ul>
-<a name="readValue-org.eclipse.net4j.util.io.ExtendedDataInput-">
+<a id="readValue(org.eclipse.net4j.util.io.ExtendedDataInput)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>readValue</h4>
-<pre>protected abstract&nbsp;<a href="../../../../../org/eclipse/net4j/util/io/SortedFileMap.html" title="type parameter in SortedFileMap">V</a>&nbsp;readValue(<a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a>&nbsp;in)
+<pre class="methodSignature">protected abstract&nbsp;<a href="SortedFileMap.html" title="type parameter in SortedFileMap">V</a>&nbsp;readValue&#8203;(<a href="ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a>&nbsp;in)
                         throws java.io.IOException</pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -485,16 +538,16 @@ implements java.io.Closeable</pre>
 </dl>
 </li>
 </ul>
-<a name="writeValue-org.eclipse.net4j.util.io.ExtendedDataOutput-java.lang.Object-">
+<a id="writeValue(org.eclipse.net4j.util.io.ExtendedDataOutput,java.lang.Object)">
 <!--   -->
-</a><a name="writeValue-org.eclipse.net4j.util.io.ExtendedDataOutput-V-">
+</a><a id="writeValue(org.eclipse.net4j.util.io.ExtendedDataOutput,V)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>writeValue</h4>
-<pre>protected abstract&nbsp;void&nbsp;writeValue(<a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a>&nbsp;out,
-                                   <a href="../../../../../org/eclipse/net4j/util/io/SortedFileMap.html" title="type parameter in SortedFileMap">V</a>&nbsp;value)
+<pre class="methodSignature">protected abstract&nbsp;void&nbsp;writeValue&#8203;(<a href="ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a>&nbsp;out,
+                                   <a href="SortedFileMap.html" title="type parameter in SortedFileMap">V</a>&nbsp;value)
                             throws java.io.IOException</pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -504,21 +557,25 @@ implements java.io.Closeable</pre>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/SortedFileMap.html">Use</a></li>
@@ -528,16 +585,8 @@ implements java.io.Closeable</pre>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/net4j/util/io/NIOUtil.html" title="class in org.eclipse.net4j.util.io"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/net4j/util/io/StreamWrapperChain.html" title="class in org.eclipse.net4j.util.io"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/net4j/util/io/SortedFileMap.html" target="_top">Frames</a></li>
-<li><a href="SortedFileMap.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -550,6 +599,9 @@ implements java.io.Closeable</pre>
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -566,10 +618,12 @@ implements java.io.Closeable</pre>
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

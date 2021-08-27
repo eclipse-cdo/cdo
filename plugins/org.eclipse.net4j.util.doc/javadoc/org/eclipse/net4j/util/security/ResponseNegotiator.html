@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>ResponseNegotiator (Net4j Utilities Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/ResponseNegotiator.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/net4j/util/security/RandomizerFactory.html" title="class in org.eclipse.net4j.util.security"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/net4j/util/security/ResponseNegotiatorFactory.html" title="class in org.eclipse.net4j.util.security"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/net4j/util/security/ResponseNegotiator.html" target="_top">Frames</a></li>
-<li><a href="ResponseNegotiator.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,12 +82,15 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li><a href="#nested.classes.inherited.from.class.org.eclipse.net4j.util.security.ChallengeResponseNegotiator">Nested</a>&nbsp;|&nbsp;</li>
-<li><a href="#fields.inherited.from.class.org.eclipse.net4j.util.fsm.FiniteStateMachine">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
@@ -85,13 +101,22 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.net4j.util.security</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.net4j.util.security</a></div>
 <h2 title="Class ResponseNegotiator" class="title">Class ResponseNegotiator</h2>
 </div>
 <div class="contentContainer">
@@ -99,19 +124,19 @@ var activeTableTab = "activeTableTab";
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li><a href="../../../../../org/eclipse/net4j/util/event/Notifier.html" title="class in org.eclipse.net4j.util.event">org.eclipse.net4j.util.event.Notifier</a></li>
+<li><a href="../event/Notifier.html" title="class in org.eclipse.net4j.util.event">org.eclipse.net4j.util.event.Notifier</a></li>
 <li>
 <ul class="inheritance">
-<li><a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">org.eclipse.net4j.util.lifecycle.Lifecycle</a></li>
+<li><a href="../lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">org.eclipse.net4j.util.lifecycle.Lifecycle</a></li>
 <li>
 <ul class="inheritance">
-<li><a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="class in org.eclipse.net4j.util.fsm">org.eclipse.net4j.util.fsm.FiniteStateMachine</a>&lt;STATE,EVENT,<a href="../../../../../org/eclipse/net4j/util/security/INegotiationContext.html" title="interface in org.eclipse.net4j.util.security">INegotiationContext</a>&gt;</li>
+<li><a href="../fsm/FiniteStateMachine.html" title="class in org.eclipse.net4j.util.fsm">org.eclipse.net4j.util.fsm.FiniteStateMachine</a>&lt;STATE,&#8203;EVENT,&#8203;<a href="INegotiationContext.html" title="interface in org.eclipse.net4j.util.security">INegotiationContext</a>&gt;</li>
 <li>
 <ul class="inheritance">
-<li><a href="../../../../../org/eclipse/net4j/util/security/Negotiator.html" title="class in org.eclipse.net4j.util.security">org.eclipse.net4j.util.security.Negotiator</a>&lt;<a href="../../../../../org/eclipse/net4j/util/security/IChallengeResponse.State.html" title="enum in org.eclipse.net4j.util.security">IChallengeResponse.State</a>,<a href="../../../../../org/eclipse/net4j/util/security/IChallengeResponse.Event.html" title="enum in org.eclipse.net4j.util.security">IChallengeResponse.Event</a>&gt;</li>
+<li><a href="Negotiator.html" title="class in org.eclipse.net4j.util.security">org.eclipse.net4j.util.security.Negotiator</a>&lt;<a href="IChallengeResponse.State.html" title="enum in org.eclipse.net4j.util.security">IChallengeResponse.State</a>,&#8203;<a href="IChallengeResponse.Event.html" title="enum in org.eclipse.net4j.util.security">IChallengeResponse.Event</a>&gt;</li>
 <li>
 <ul class="inheritance">
-<li><a href="../../../../../org/eclipse/net4j/util/security/ChallengeResponseNegotiator.html" title="class in org.eclipse.net4j.util.security">org.eclipse.net4j.util.security.ChallengeResponseNegotiator</a></li>
+<li><a href="ChallengeResponseNegotiator.html" title="class in org.eclipse.net4j.util.security">org.eclipse.net4j.util.security.ChallengeResponseNegotiator</a></li>
 <li>
 <ul class="inheritance">
 <li>org.eclipse.net4j.util.security.ResponseNegotiator</li>
@@ -133,12 +158,11 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="../../../../../org/eclipse/net4j/util/event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/IDeactivateable.html" title="interface in org.eclipse.net4j.util.lifecycle">IDeactivateable</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.DeferrableActivation.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle.DeferrableActivation</a>, <a href="../../../../../org/eclipse/net4j/util/security/IChallengeResponse.html" title="interface in org.eclipse.net4j.util.security">IChallengeResponse</a>, <a href="../../../../../org/eclipse/net4j/util/security/INegotiationContext.Receiver.html" title="interface in org.eclipse.net4j.util.security">INegotiationContext.Receiver</a>, <a href="../../../../../org/eclipse/net4j/util/security/INegotiator.html" title="interface in org.eclipse.net4j.util.security">INegotiator</a></dd>
+<dd><code><a href="../event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a></code>, <code><a href="../event/INotifier.INotifier2.html" title="interface in org.eclipse.net4j.util.event">INotifier.INotifier2</a></code>, <code><a href="../lifecycle/IDeactivateable.html" title="interface in org.eclipse.net4j.util.lifecycle">IDeactivateable</a></code>, <code><a href="../lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a></code>, <code><a href="../lifecycle/ILifecycle.DeferrableActivation.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle.DeferrableActivation</a></code>, <code><a href="IChallengeResponse.html" title="interface in org.eclipse.net4j.util.security">IChallengeResponse</a></code>, <code><a href="INegotiationContext.Receiver.html" title="interface in org.eclipse.net4j.util.security">INegotiationContext.Receiver</a></code>, <code><a href="INegotiator.html" title="interface in org.eclipse.net4j.util.security">INegotiator</a></code></dd>
 </dl>
 <hr>
-<br>
 <pre>public class <span class="typeNameLabel">ResponseNegotiator</span>
-extends <a href="../../../../../org/eclipse/net4j/util/security/ChallengeResponseNegotiator.html" title="class in org.eclipse.net4j.util.security">ChallengeResponseNegotiator</a></pre>
+extends <a href="ChallengeResponseNegotiator.html" title="class in org.eclipse.net4j.util.security">ChallengeResponseNegotiator</a></pre>
 <dl>
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>Eike Stepper</dd>
@@ -150,179 +174,203 @@ extends <a href="../../../../../org/eclipse/net4j/util/security/ChallengeRespons
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="nested.class.summary">
+<li class="blockList"><a id="nested.class.summary">
 <!--   -->
 </a>
 <h3>Nested Class Summary</h3>
 <ul class="blockList">
-<li class="blockList"><a name="nested.classes.inherited.from.class.org.eclipse.net4j.util.security.ChallengeResponseNegotiator">
+<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.net4j.util.security.ChallengeResponseNegotiator">
 <!--   -->
 </a>
-<h3>Nested classes/interfaces inherited from class&nbsp;org.eclipse.net4j.util.security.<a href="../../../../../org/eclipse/net4j/util/security/ChallengeResponseNegotiator.html" title="class in org.eclipse.net4j.util.security">ChallengeResponseNegotiator</a></h3>
-<code><a href="../../../../../org/eclipse/net4j/util/security/ChallengeResponseNegotiator.Transition.html" title="class in org.eclipse.net4j.util.security">ChallengeResponseNegotiator.Transition</a></code></li>
+<h3>Nested classes/interfaces inherited from class&nbsp;org.eclipse.net4j.util.security.<a href="ChallengeResponseNegotiator.html" title="class in org.eclipse.net4j.util.security">ChallengeResponseNegotiator</a></h3>
+<code><a href="ChallengeResponseNegotiator.Transition.html" title="class in org.eclipse.net4j.util.security">ChallengeResponseNegotiator.Transition</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="nested.classes.inherited.from.class.org.eclipse.net4j.util.fsm.FiniteStateMachine">
+<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.net4j.util.fsm.FiniteStateMachine">
 <!--   -->
 </a>
-<h3>Nested classes/interfaces inherited from class&nbsp;org.eclipse.net4j.util.fsm.<a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="class in org.eclipse.net4j.util.fsm">FiniteStateMachine</a></h3>
-<code><a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.ChangeStateTransition.html" title="class in org.eclipse.net4j.util.fsm">FiniteStateMachine.ChangeStateTransition</a>, <a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.FailTransition.html" title="class in org.eclipse.net4j.util.fsm">FiniteStateMachine.FailTransition</a>, <a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.IgnoreTransition.html" title="class in org.eclipse.net4j.util.fsm">FiniteStateMachine.IgnoreTransition</a>, <a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.StateChangedEvent.html" title="class in org.eclipse.net4j.util.fsm">FiniteStateMachine.StateChangedEvent</a></code></li>
+<h3>Nested classes/interfaces inherited from class&nbsp;org.eclipse.net4j.util.fsm.<a href="../fsm/FiniteStateMachine.html" title="class in org.eclipse.net4j.util.fsm">FiniteStateMachine</a></h3>
+<code><a href="../fsm/FiniteStateMachine.ChangeStateTransition.html" title="class in org.eclipse.net4j.util.fsm">FiniteStateMachine.ChangeStateTransition</a>, <a href="../fsm/FiniteStateMachine.FailTransition.html" title="class in org.eclipse.net4j.util.fsm">FiniteStateMachine.FailTransition</a>, <a href="../fsm/FiniteStateMachine.IgnoreTransition.html" title="class in org.eclipse.net4j.util.fsm">FiniteStateMachine.IgnoreTransition</a>, <a href="../fsm/FiniteStateMachine.StateChangedEvent.html" title="class in org.eclipse.net4j.util.fsm">FiniteStateMachine.StateChangedEvent</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="nested.classes.inherited.from.class.org.eclipse.net4j.util.security.IChallengeResponse">
+<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.net4j.util.security.IChallengeResponse">
 <!--   -->
 </a>
-<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.security.<a href="../../../../../org/eclipse/net4j/util/security/IChallengeResponse.html" title="interface in org.eclipse.net4j.util.security">IChallengeResponse</a></h3>
-<code><a href="../../../../../org/eclipse/net4j/util/security/IChallengeResponse.Event.html" title="enum in org.eclipse.net4j.util.security">IChallengeResponse.Event</a>, <a href="../../../../../org/eclipse/net4j/util/security/IChallengeResponse.State.html" title="enum in org.eclipse.net4j.util.security">IChallengeResponse.State</a></code></li>
+<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.security.<a href="IChallengeResponse.html" title="interface in org.eclipse.net4j.util.security">IChallengeResponse</a></h3>
+<code><a href="IChallengeResponse.Event.html" title="enum in org.eclipse.net4j.util.security">IChallengeResponse.Event</a>, <a href="IChallengeResponse.State.html" title="enum in org.eclipse.net4j.util.security">IChallengeResponse.State</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="nested.classes.inherited.from.class.org.eclipse.net4j.util.lifecycle.ILifecycle">
+<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.net4j.util.lifecycle.ILifecycle">
 <!--   -->
 </a>
-<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.lifecycle.<a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a></h3>
-<code><a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.DeferrableActivation.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle.DeferrableActivation</a></code></li>
+<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.lifecycle.<a href="../lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a></h3>
+<code><a href="../lifecycle/ILifecycle.DeferrableActivation.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle.DeferrableActivation</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.net4j.util.event.INotifier">
+<!--   -->
+</a>
+<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.event.<a href="../event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a></h3>
+<code><a href="../event/INotifier.INotifier2.html" title="interface in org.eclipse.net4j.util.event">INotifier.INotifier2</a></code></li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- =========== FIELD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.summary">
+<li class="blockList"><a id="field.summary">
 <!--   -->
 </a>
 <h3>Field Summary</h3>
 <ul class="blockList">
-<li class="blockList"><a name="fields.inherited.from.class.org.eclipse.net4j.util.fsm.FiniteStateMachine">
+<li class="blockList"><a id="fields.inherited.from.class.org.eclipse.net4j.util.fsm.FiniteStateMachine">
 <!--   -->
 </a>
-<h3>Fields inherited from class&nbsp;org.eclipse.net4j.util.fsm.<a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="class in org.eclipse.net4j.util.fsm">FiniteStateMachine</a></h3>
-<code><a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html#FAIL">FAIL</a>, <a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html#IGNORE">IGNORE</a></code></li>
+<h3>Fields inherited from class&nbsp;org.eclipse.net4j.util.fsm.<a href="../fsm/FiniteStateMachine.html" title="class in org.eclipse.net4j.util.fsm">FiniteStateMachine</a></h3>
+<code><a href="../fsm/FiniteStateMachine.html#FAIL">FAIL</a>, <a href="../fsm/FiniteStateMachine.html#IGNORE">IGNORE</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="fields.inherited.from.class.org.eclipse.net4j.util.lifecycle.Lifecycle">
+<li class="blockList"><a id="fields.inherited.from.class.org.eclipse.net4j.util.lifecycle.Lifecycle">
 <!--   -->
 </a>
-<h3>Fields inherited from class&nbsp;org.eclipse.net4j.util.lifecycle.<a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a></h3>
-<code><a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#USE_LABEL">USE_LABEL</a></code></li>
+<h3>Fields inherited from class&nbsp;org.eclipse.net4j.util.lifecycle.<a href="../lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a></h3>
+<code><a href="../lifecycle/Lifecycle.html#USE_LABEL">USE_LABEL</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="fields.inherited.from.class.org.eclipse.net4j.util.security.IChallengeResponse">
+<li class="blockList"><a id="fields.inherited.from.class.org.eclipse.net4j.util.security.IChallengeResponse">
 <!--   -->
 </a>
-<h3>Fields inherited from interface&nbsp;org.eclipse.net4j.util.security.<a href="../../../../../org/eclipse/net4j/util/security/IChallengeResponse.html" title="interface in org.eclipse.net4j.util.security">IChallengeResponse</a></h3>
-<code><a href="../../../../../org/eclipse/net4j/util/security/IChallengeResponse.html#ACKNOWLEDGE_FAILURE">ACKNOWLEDGE_FAILURE</a>, <a href="../../../../../org/eclipse/net4j/util/security/IChallengeResponse.html#ACKNOWLEDGE_SUCCESS">ACKNOWLEDGE_SUCCESS</a></code></li>
+<h3>Fields inherited from interface&nbsp;org.eclipse.net4j.util.security.<a href="IChallengeResponse.html" title="interface in org.eclipse.net4j.util.security">IChallengeResponse</a></h3>
+<code><a href="IChallengeResponse.html#ACKNOWLEDGE_FAILURE">ACKNOWLEDGE_FAILURE</a>, <a href="IChallengeResponse.html#ACKNOWLEDGE_SUCCESS">ACKNOWLEDGE_SUCCESS</a></code></li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.summary">
+<li class="blockList"><a id="constructor.summary">
 <!--   -->
 </a>
 <h3>Constructor Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
+<table class="memberSummary">
 <caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Constructor and Description</th>
+<th class="colFirst" scope="col">Constructor</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/ResponseNegotiator.html#ResponseNegotiator--">ResponseNegotiator</a></span>()</code>&nbsp;</td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">ResponseNegotiator</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/ResponseNegotiator.html#doBeforeActivate--">doBeforeActivate</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#doBeforeActivate()">doBeforeActivate</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>protected byte[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/ResponseNegotiator.html#encryptToken-char:A-byte:A-">encryptToken</a></span>(char[]&nbsp;password,
-            byte[]&nbsp;token)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#encryptToken(char%5B%5D,byte%5B%5D)">encryptToken</a></span>&#8203;(char[]&nbsp;password,
+            byte[]&nbsp;token)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/security/IPasswordCredentialsProvider.html" title="interface in org.eclipse.net4j.util.security">IPasswordCredentialsProvider</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/ResponseNegotiator.html#getCredentialsProvider--">getCredentialsProvider</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="IPasswordCredentialsProvider.html" title="interface in org.eclipse.net4j.util.security">IPasswordCredentialsProvider</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCredentialsProvider()">getCredentialsProvider</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/ResponseNegotiator.html#handleAcknowledgement-org.eclipse.net4j.util.security.INegotiationContext-boolean-">handleAcknowledgement</a></span>(<a href="../../../../../org/eclipse/net4j/util/security/INegotiationContext.html" title="interface in org.eclipse.net4j.util.security">INegotiationContext</a>&nbsp;context,
-                     boolean&nbsp;success)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#handleAcknowledgement(org.eclipse.net4j.util.security.INegotiationContext,boolean)">handleAcknowledgement</a></span>&#8203;(<a href="INegotiationContext.html" title="interface in org.eclipse.net4j.util.security">INegotiationContext</a>&nbsp;context,
+                     boolean&nbsp;success)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/ResponseNegotiator.html#handleChallenge-org.eclipse.net4j.util.security.INegotiationContext-java.nio.ByteBuffer-java.nio.ByteBuffer-">handleChallenge</a></span>(<a href="../../../../../org/eclipse/net4j/util/security/INegotiationContext.html" title="interface in org.eclipse.net4j.util.security">INegotiationContext</a>&nbsp;context,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#handleChallenge(org.eclipse.net4j.util.security.INegotiationContext,java.nio.ByteBuffer,java.nio.ByteBuffer)">handleChallenge</a></span>&#8203;(<a href="INegotiationContext.html" title="interface in org.eclipse.net4j.util.security">INegotiationContext</a>&nbsp;context,
                java.nio.ByteBuffer&nbsp;challenge,
-               java.nio.ByteBuffer&nbsp;response)</code>&nbsp;</td>
+               java.nio.ByteBuffer&nbsp;response)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/ResponseNegotiator.html#setCredentialsProvider-org.eclipse.net4j.util.security.IPasswordCredentialsProvider-">setCredentialsProvider</a></span>(<a href="../../../../../org/eclipse/net4j/util/security/IPasswordCredentialsProvider.html" title="interface in org.eclipse.net4j.util.security">IPasswordCredentialsProvider</a>&nbsp;credentialsProvider)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setCredentialsProvider(org.eclipse.net4j.util.security.IPasswordCredentialsProvider)">setCredentialsProvider</a></span>&#8203;(<a href="IPasswordCredentialsProvider.html" title="interface in org.eclipse.net4j.util.security">IPasswordCredentialsProvider</a>&nbsp;credentialsProvider)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.security.ChallengeResponseNegotiator">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.security.ChallengeResponseNegotiator">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.security.<a href="../../../../../org/eclipse/net4j/util/security/ChallengeResponseNegotiator.html" title="class in org.eclipse.net4j.util.security">ChallengeResponseNegotiator</a></h3>
-<code><a href="../../../../../org/eclipse/net4j/util/security/ChallengeResponseNegotiator.html#createChallenge-org.eclipse.net4j.util.security.INegotiationContext-java.nio.ByteBuffer-">createChallenge</a>, <a href="../../../../../org/eclipse/net4j/util/security/ChallengeResponseNegotiator.html#getEncryptionAlgorithmName--">getEncryptionAlgorithmName</a>, <a href="../../../../../org/eclipse/net4j/util/security/ChallengeResponseNegotiator.html#getEncryptionIterationCount--">getEncryptionIterationCount</a>, <a href="../../../../../org/eclipse/net4j/util/security/ChallengeResponseNegotiator.html#getEncryptionSaltBytes--">getEncryptionSaltBytes</a>, <a href="../../../../../org/eclipse/net4j/util/security/ChallengeResponseNegotiator.html#getState-org.eclipse.net4j.util.security.INegotiationContext-">getState</a>, <a href="../../../../../org/eclipse/net4j/util/security/ChallengeResponseNegotiator.html#handleResponse-org.eclipse.net4j.util.security.INegotiationContext-java.nio.ByteBuffer-">handleResponse</a>, <a href="../../../../../org/eclipse/net4j/util/security/ChallengeResponseNegotiator.html#setEncryptionAlgorithmName-java.lang.String-">setEncryptionAlgorithmName</a>, <a href="../../../../../org/eclipse/net4j/util/security/ChallengeResponseNegotiator.html#setEncryptionIterationCount-int-">setEncryptionIterationCount</a>, <a href="../../../../../org/eclipse/net4j/util/security/ChallengeResponseNegotiator.html#setEncryptionSaltBytes-byte:A-">setEncryptionSaltBytes</a>, <a href="../../../../../org/eclipse/net4j/util/security/ChallengeResponseNegotiator.html#setState-org.eclipse.net4j.util.security.INegotiationContext-org.eclipse.net4j.util.security.IChallengeResponse.State-">setState</a></code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.security.<a href="ChallengeResponseNegotiator.html" title="class in org.eclipse.net4j.util.security">ChallengeResponseNegotiator</a></h3>
+<code><a href="ChallengeResponseNegotiator.html#createChallenge(org.eclipse.net4j.util.security.INegotiationContext,java.nio.ByteBuffer)">createChallenge</a>, <a href="ChallengeResponseNegotiator.html#getEncryptionAlgorithmName()">getEncryptionAlgorithmName</a>, <a href="ChallengeResponseNegotiator.html#getEncryptionIterationCount()">getEncryptionIterationCount</a>, <a href="ChallengeResponseNegotiator.html#getEncryptionSaltBytes()">getEncryptionSaltBytes</a>, <a href="ChallengeResponseNegotiator.html#getState(org.eclipse.net4j.util.security.INegotiationContext)">getState</a>, <a href="ChallengeResponseNegotiator.html#handleResponse(org.eclipse.net4j.util.security.INegotiationContext,java.nio.ByteBuffer)">handleResponse</a>, <a href="ChallengeResponseNegotiator.html#setEncryptionAlgorithmName(java.lang.String)">setEncryptionAlgorithmName</a>, <a href="ChallengeResponseNegotiator.html#setEncryptionIterationCount(int)">setEncryptionIterationCount</a>, <a href="ChallengeResponseNegotiator.html#setEncryptionSaltBytes(byte%5B%5D)">setEncryptionSaltBytes</a>, <a href="ChallengeResponseNegotiator.html#setState(org.eclipse.net4j.util.security.INegotiationContext,org.eclipse.net4j.util.security.IChallengeResponse.State)">setState</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.security.Negotiator">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.security.Negotiator">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.security.<a href="../../../../../org/eclipse/net4j/util/security/Negotiator.html" title="class in org.eclipse.net4j.util.security">Negotiator</a></h3>
-<code><a href="../../../../../org/eclipse/net4j/util/security/Negotiator.html#getBufferEvent--">getBufferEvent</a>, <a href="../../../../../org/eclipse/net4j/util/security/Negotiator.html#getFailureState--">getFailureState</a>, <a href="../../../../../org/eclipse/net4j/util/security/Negotiator.html#getInitialState--">getInitialState</a>, <a href="../../../../../org/eclipse/net4j/util/security/Negotiator.html#getStartEvent--">getStartEvent</a>, <a href="../../../../../org/eclipse/net4j/util/security/Negotiator.html#getSuccessState--">getSuccessState</a>, <a href="../../../../../org/eclipse/net4j/util/security/Negotiator.html#handleFailure-org.eclipse.net4j.util.security.INegotiationContext-">handleFailure</a>, <a href="../../../../../org/eclipse/net4j/util/security/Negotiator.html#handleSuccess-org.eclipse.net4j.util.security.INegotiationContext-">handleSuccess</a>, <a href="../../../../../org/eclipse/net4j/util/security/Negotiator.html#isInitiator--">isInitiator</a>, <a href="../../../../../org/eclipse/net4j/util/security/Negotiator.html#negotiate-org.eclipse.net4j.util.security.INegotiationContext-">negotiate</a>, <a href="../../../../../org/eclipse/net4j/util/security/Negotiator.html#postProcess-org.eclipse.net4j.util.security.INegotiationContext-">postProcess</a>, <a href="../../../../../org/eclipse/net4j/util/security/Negotiator.html#receiveBuffer-org.eclipse.net4j.util.security.INegotiationContext-java.nio.ByteBuffer-">receiveBuffer</a></code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.security.<a href="Negotiator.html" title="class in org.eclipse.net4j.util.security">Negotiator</a></h3>
+<code><a href="Negotiator.html#getBufferEvent()">getBufferEvent</a>, <a href="Negotiator.html#getFailureState()">getFailureState</a>, <a href="Negotiator.html#getInitialState()">getInitialState</a>, <a href="Negotiator.html#getStartEvent()">getStartEvent</a>, <a href="Negotiator.html#getSuccessState()">getSuccessState</a>, <a href="Negotiator.html#handleFailure(org.eclipse.net4j.util.security.INegotiationContext)">handleFailure</a>, <a href="Negotiator.html#handleSuccess(org.eclipse.net4j.util.security.INegotiationContext)">handleSuccess</a>, <a href="Negotiator.html#isInitiator()">isInitiator</a>, <a href="Negotiator.html#negotiate(org.eclipse.net4j.util.security.INegotiationContext)">negotiate</a>, <a href="Negotiator.html#postProcess(org.eclipse.net4j.util.security.INegotiationContext)">postProcess</a>, <a href="Negotiator.html#receiveBuffer(org.eclipse.net4j.util.security.INegotiationContext,java.nio.ByteBuffer)">receiveBuffer</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.fsm.FiniteStateMachine">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.fsm.FiniteStateMachine">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.fsm.<a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="class in org.eclipse.net4j.util.fsm">FiniteStateMachine</a></h3>
-<code><a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html#changeState-SUBJECT-STATE-">changeState</a>, <a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html#createFailTransition-STATE-EVENT-">createFailTransition</a>, <a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html#createIgnoreTransition-STATE-EVENT-">createIgnoreTransition</a>, <a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html#formatFailMessage-SUBJECT-STATE-EVENT-java.lang.Object-">formatFailMessage</a>, <a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html#formatIgnoreMessage-SUBJECT-STATE-EVENT-java.lang.Object-">formatIgnoreMessage</a>, <a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html#formatProcessMessage-SUBJECT-STATE-EVENT-java.lang.Object-">formatProcessMessage</a>, <a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html#getEvents--">getEvents</a>, <a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html#getStates--">getStates</a>, <a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html#getTransition-STATE-EVENT-">getTransition</a>, <a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html#init-STATE-EVENT-org.eclipse.net4j.util.fsm.ITransition-">init</a>, <a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html#init-STATE-EVENT-STATE-">init</a>, <a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html#initAll-org.eclipse.net4j.util.fsm.ITransition-">initAll</a>, <a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html#initAll-STATE-">initAll</a>, <a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html#initEvents-STATE-org.eclipse.net4j.util.fsm.ITransition-">initEvents</a>, <a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html#initEvents-STATE-STATE-">initEvents</a>, <a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html#initStates-EVENT-org.eclipse.net4j.util.fsm.ITransition-">initStates</a>, <a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html#initStates-EVENT-STATE-">initStates</a>, <a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html#process-SUBJECT-EVENT-DATA-">process</a></code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.fsm.<a href="../fsm/FiniteStateMachine.html" title="class in org.eclipse.net4j.util.fsm">FiniteStateMachine</a></h3>
+<code><a href="../fsm/FiniteStateMachine.html#changeState(SUBJECT,STATE)">changeState</a>, <a href="../fsm/FiniteStateMachine.html#createFailTransition(STATE,EVENT)">createFailTransition</a>, <a href="../fsm/FiniteStateMachine.html#createIgnoreTransition(STATE,EVENT)">createIgnoreTransition</a>, <a href="../fsm/FiniteStateMachine.html#formatFailMessage(SUBJECT,STATE,EVENT,java.lang.Object)">formatFailMessage</a>, <a href="../fsm/FiniteStateMachine.html#formatIgnoreMessage(SUBJECT,STATE,EVENT,java.lang.Object)">formatIgnoreMessage</a>, <a href="../fsm/FiniteStateMachine.html#formatProcessMessage(SUBJECT,STATE,EVENT,java.lang.Object)">formatProcessMessage</a>, <a href="../fsm/FiniteStateMachine.html#getEvents()">getEvents</a>, <a href="../fsm/FiniteStateMachine.html#getStates()">getStates</a>, <a href="../fsm/FiniteStateMachine.html#getTransition(STATE,EVENT)">getTransition</a>, <a href="../fsm/FiniteStateMachine.html#init(STATE,EVENT,org.eclipse.net4j.util.fsm.ITransition)">init</a>, <a href="../fsm/FiniteStateMachine.html#init(STATE,EVENT,STATE)">init</a>, <a href="../fsm/FiniteStateMachine.html#initAll(org.eclipse.net4j.util.fsm.ITransition)">initAll</a>, <a href="../fsm/FiniteStateMachine.html#initAll(STATE)">initAll</a>, <a href="../fsm/FiniteStateMachine.html#initEvents(STATE,org.eclipse.net4j.util.fsm.ITransition)">initEvents</a>, <a href="../fsm/FiniteStateMachine.html#initEvents(STATE,STATE)">initEvents</a>, <a href="../fsm/FiniteStateMachine.html#initStates(EVENT,org.eclipse.net4j.util.fsm.ITransition)">initStates</a>, <a href="../fsm/FiniteStateMachine.html#initStates(EVENT,STATE)">initStates</a>, <a href="../fsm/FiniteStateMachine.html#process(SUBJECT,EVENT,DATA)">process</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.lifecycle.Lifecycle">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.lifecycle.Lifecycle">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.lifecycle.<a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a></h3>
-<code><a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#activate--">activate</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkActive--">checkActive</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkArg-boolean-java.lang.String-">checkArg</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkArg-java.lang.Object-java.lang.String-">checkArg</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkInactive--">checkInactive</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkNull-java.lang.Object-java.lang.String-">checkNull</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkState-boolean-java.lang.String-">checkState</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkState-java.lang.Object-java.lang.String-">checkState</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#deactivate--">deactivate</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#deferredActivate-boolean-">deferredActivate</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#doActivate--">doActivate</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#doAfterActivate--">doAfterActivate</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#doBeforeDeactivate--">doBeforeDeactivate</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#doDeactivate--">doDeactivate</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#dump--">dump</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#getLifecycleState--">getLifecycleState</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#isActive--">isActive</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#isDeferredActivation--">isDeferredActivation</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#toString--">toString</a></code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.lifecycle.<a href="../lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a></h3>
+<code><a href="../lifecycle/Lifecycle.html#activate()">activate</a>, <a href="../lifecycle/Lifecycle.html#checkActive()">checkActive</a>, <a href="../lifecycle/Lifecycle.html#checkArg(boolean,java.lang.String)">checkArg</a>, <a href="../lifecycle/Lifecycle.html#checkArg(java.lang.Object,java.lang.String)">checkArg</a>, <a href="../lifecycle/Lifecycle.html#checkInactive()">checkInactive</a>, <a href="../lifecycle/Lifecycle.html#checkNull(java.lang.Object,java.lang.String)">checkNull</a>, <a href="../lifecycle/Lifecycle.html#checkState(boolean,java.lang.String)">checkState</a>, <a href="../lifecycle/Lifecycle.html#checkState(java.lang.Object,java.lang.String)">checkState</a>, <a href="../lifecycle/Lifecycle.html#deactivate()">deactivate</a>, <a href="../lifecycle/Lifecycle.html#deferredActivate(boolean)">deferredActivate</a>, <a href="../lifecycle/Lifecycle.html#doActivate()">doActivate</a>, <a href="../lifecycle/Lifecycle.html#doAfterActivate()">doAfterActivate</a>, <a href="../lifecycle/Lifecycle.html#doBeforeDeactivate()">doBeforeDeactivate</a>, <a href="../lifecycle/Lifecycle.html#doDeactivate()">doDeactivate</a>, <a href="../lifecycle/Lifecycle.html#dump()">dump</a>, <a href="../lifecycle/Lifecycle.html#getLifecycleState()">getLifecycleState</a>, <a href="../lifecycle/Lifecycle.html#isActive()">isActive</a>, <a href="../lifecycle/Lifecycle.html#isDeferredActivation()">isDeferredActivation</a>, <a href="../lifecycle/Lifecycle.html#toString()">toString</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.event.Notifier">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.event.Notifier">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.event.<a href="../../../../../org/eclipse/net4j/util/event/Notifier.html" title="class in org.eclipse.net4j.util.event">Notifier</a></h3>
-<code><a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#addListener-org.eclipse.net4j.util.event.IListener-">addListener</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#fireEvent--">fireEvent</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#fireEvent-org.eclipse.net4j.util.event.IEvent-">fireEvent</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#fireEvent-org.eclipse.net4j.util.event.IEvent-org.eclipse.net4j.util.event.IListener:A-">fireEvent</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#fireThrowable-java.lang.Throwable-">fireThrowable</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#firstListenerAdded--">firstListenerAdded</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#getListeners--">getListeners</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#getNotificationService--">getNotificationService</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#hasListeners--">hasListeners</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#lastListenerRemoved--">lastListenerRemoved</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#removeListener-org.eclipse.net4j.util.event.IListener-">removeListener</a></code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.event.<a href="../event/Notifier.html" title="class in org.eclipse.net4j.util.event">Notifier</a></h3>
+<code><a href="../event/Notifier.html#addListener(org.eclipse.net4j.util.event.IListener)">addListener</a>, <a href="../event/Notifier.html#addUniqueListener(org.eclipse.net4j.util.event.IListener)">addUniqueListener</a>, <a href="../event/Notifier.html#fireEvent()">fireEvent</a>, <a href="../event/Notifier.html#fireEvent(org.eclipse.net4j.util.event.IEvent)">fireEvent</a>, <a href="../event/Notifier.html#fireEvent(org.eclipse.net4j.util.event.IEvent,org.eclipse.net4j.util.event.IListener%5B%5D)">fireEvent</a>, <a href="../event/Notifier.html#fireThrowable(java.lang.Throwable)">fireThrowable</a>, <a href="../event/Notifier.html#firstListenerAdded()">firstListenerAdded</a>, <a href="../event/Notifier.html#getListeners()">getListeners</a>, <a href="../event/Notifier.html#getNotificationService()">getNotificationService</a>, <a href="../event/Notifier.html#hasListener(org.eclipse.net4j.util.event.IListener)">hasListener</a>, <a href="../event/Notifier.html#hasListeners()">hasListeners</a>, <a href="../event/Notifier.html#lastListenerRemoved()">lastListenerRemoved</a>, <a href="../event/Notifier.html#listenerAdded(org.eclipse.net4j.util.event.IListener)">listenerAdded</a>, <a href="../event/Notifier.html#listenerRemoved(org.eclipse.net4j.util.event.IListener)">listenerRemoved</a>, <a href="../event/Notifier.html#removeListener(org.eclipse.net4j.util.event.IListener)">removeListener</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
+<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
 <code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, wait, wait, wait</code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.event.INotifier">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.event.INotifier">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.event.<a href="../../../../../org/eclipse/net4j/util/event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a></h3>
-<code><a href="../../../../../org/eclipse/net4j/util/event/INotifier.html#addListener-org.eclipse.net4j.util.event.IListener-">addListener</a>, <a href="../../../../../org/eclipse/net4j/util/event/INotifier.html#getListeners--">getListeners</a>, <a href="../../../../../org/eclipse/net4j/util/event/INotifier.html#hasListeners--">hasListeners</a>, <a href="../../../../../org/eclipse/net4j/util/event/INotifier.html#removeListener-org.eclipse.net4j.util.event.IListener-">removeListener</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.event.<a href="../event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a></h3>
+<code><a href="../event/INotifier.html#addListener(org.eclipse.net4j.util.event.IListener)">addListener</a>, <a href="../event/INotifier.html#getListeners()">getListeners</a>, <a href="../event/INotifier.html#hasListeners()">hasListeners</a>, <a href="../event/INotifier.html#removeListener(org.eclipse.net4j.util.event.IListener)">removeListener</a></code></li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -330,12 +378,13 @@ extends <a href="../../../../../org/eclipse/net4j/util/security/ChallengeRespons
 <ul class="blockList">
 <li class="blockList">
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.detail">
+<li class="blockList"><a id="constructor.detail">
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="ResponseNegotiator--">
+<a id="&lt;init&gt;()">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -346,104 +395,110 @@ extends <a href="../../../../../org/eclipse/net4j/util/security/ChallengeRespons
 </ul>
 </li>
 </ul>
+</section>
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="getCredentialsProvider--">
+<a id="getCredentialsProvider()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getCredentialsProvider</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/security/IPasswordCredentialsProvider.html" title="interface in org.eclipse.net4j.util.security">IPasswordCredentialsProvider</a>&nbsp;getCredentialsProvider()</pre>
+<pre class="methodSignature">public&nbsp;<a href="IPasswordCredentialsProvider.html" title="interface in org.eclipse.net4j.util.security">IPasswordCredentialsProvider</a>&nbsp;getCredentialsProvider()</pre>
 </li>
 </ul>
-<a name="setCredentialsProvider-org.eclipse.net4j.util.security.IPasswordCredentialsProvider-">
+<a id="setCredentialsProvider(org.eclipse.net4j.util.security.IPasswordCredentialsProvider)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setCredentialsProvider</h4>
-<pre>public&nbsp;void&nbsp;setCredentialsProvider(<a href="../../../../../org/eclipse/net4j/util/security/IPasswordCredentialsProvider.html" title="interface in org.eclipse.net4j.util.security">IPasswordCredentialsProvider</a>&nbsp;credentialsProvider)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setCredentialsProvider&#8203;(<a href="IPasswordCredentialsProvider.html" title="interface in org.eclipse.net4j.util.security">IPasswordCredentialsProvider</a>&nbsp;credentialsProvider)</pre>
 </li>
 </ul>
-<a name="doBeforeActivate--">
+<a id="doBeforeActivate()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>doBeforeActivate</h4>
-<pre>protected&nbsp;void&nbsp;doBeforeActivate()
+<pre class="methodSignature">protected&nbsp;void&nbsp;doBeforeActivate()
                          throws java.lang.Exception</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/security/ChallengeResponseNegotiator.html#doBeforeActivate--">doBeforeActivate</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/security/ChallengeResponseNegotiator.html" title="class in org.eclipse.net4j.util.security">ChallengeResponseNegotiator</a></code></dd>
+<dd><code><a href="ChallengeResponseNegotiator.html#doBeforeActivate()">doBeforeActivate</a></code>&nbsp;in class&nbsp;<code><a href="ChallengeResponseNegotiator.html" title="class in org.eclipse.net4j.util.security">ChallengeResponseNegotiator</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.lang.Exception</code></dd>
 </dl>
 </li>
 </ul>
-<a name="handleChallenge-org.eclipse.net4j.util.security.INegotiationContext-java.nio.ByteBuffer-java.nio.ByteBuffer-">
+<a id="handleChallenge(org.eclipse.net4j.util.security.INegotiationContext,java.nio.ByteBuffer,java.nio.ByteBuffer)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>handleChallenge</h4>
-<pre>protected&nbsp;void&nbsp;handleChallenge(<a href="../../../../../org/eclipse/net4j/util/security/INegotiationContext.html" title="interface in org.eclipse.net4j.util.security">INegotiationContext</a>&nbsp;context,
+<pre class="methodSignature">protected&nbsp;void&nbsp;handleChallenge&#8203;(<a href="INegotiationContext.html" title="interface in org.eclipse.net4j.util.security">INegotiationContext</a>&nbsp;context,
                                java.nio.ByteBuffer&nbsp;challenge,
                                java.nio.ByteBuffer&nbsp;response)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/security/ChallengeResponseNegotiator.html#handleChallenge-org.eclipse.net4j.util.security.INegotiationContext-java.nio.ByteBuffer-java.nio.ByteBuffer-">handleChallenge</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/security/ChallengeResponseNegotiator.html" title="class in org.eclipse.net4j.util.security">ChallengeResponseNegotiator</a></code></dd>
+<dd><code><a href="ChallengeResponseNegotiator.html#handleChallenge(org.eclipse.net4j.util.security.INegotiationContext,java.nio.ByteBuffer,java.nio.ByteBuffer)">handleChallenge</a></code>&nbsp;in class&nbsp;<code><a href="ChallengeResponseNegotiator.html" title="class in org.eclipse.net4j.util.security">ChallengeResponseNegotiator</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="handleAcknowledgement-org.eclipse.net4j.util.security.INegotiationContext-boolean-">
+<a id="handleAcknowledgement(org.eclipse.net4j.util.security.INegotiationContext,boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>handleAcknowledgement</h4>
-<pre>protected&nbsp;void&nbsp;handleAcknowledgement(<a href="../../../../../org/eclipse/net4j/util/security/INegotiationContext.html" title="interface in org.eclipse.net4j.util.security">INegotiationContext</a>&nbsp;context,
+<pre class="methodSignature">protected&nbsp;void&nbsp;handleAcknowledgement&#8203;(<a href="INegotiationContext.html" title="interface in org.eclipse.net4j.util.security">INegotiationContext</a>&nbsp;context,
                                      boolean&nbsp;success)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/security/ChallengeResponseNegotiator.html#handleAcknowledgement-org.eclipse.net4j.util.security.INegotiationContext-boolean-">handleAcknowledgement</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/security/ChallengeResponseNegotiator.html" title="class in org.eclipse.net4j.util.security">ChallengeResponseNegotiator</a></code></dd>
+<dd><code><a href="ChallengeResponseNegotiator.html#handleAcknowledgement(org.eclipse.net4j.util.security.INegotiationContext,boolean)">handleAcknowledgement</a></code>&nbsp;in class&nbsp;<code><a href="ChallengeResponseNegotiator.html" title="class in org.eclipse.net4j.util.security">ChallengeResponseNegotiator</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
 </dl>
 </li>
 </ul>
-<a name="encryptToken-char:A-byte:A-">
+<a id="encryptToken(char[],byte[])">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>encryptToken</h4>
-<pre>protected&nbsp;byte[]&nbsp;encryptToken(char[]&nbsp;password,
+<pre class="methodSignature">protected&nbsp;byte[]&nbsp;encryptToken&#8203;(char[]&nbsp;password,
                               byte[]&nbsp;token)</pre>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/ResponseNegotiator.html">Use</a></li>
@@ -453,16 +508,8 @@ extends <a href="../../../../../org/eclipse/net4j/util/security/ChallengeRespons
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../org/eclipse/net4j/util/security/RandomizerFactory.html" title="class in org.eclipse.net4j.util.security"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/net4j/util/security/ResponseNegotiatorFactory.html" title="class in org.eclipse.net4j.util.security"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../index.html?org/eclipse/net4j/util/security/ResponseNegotiator.html" target="_top">Frames</a></li>
-<li><a href="ResponseNegotiator.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -475,12 +522,15 @@ extends <a href="../../../../../org/eclipse/net4j/util/security/ChallengeRespons
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li><a href="#nested.classes.inherited.from.class.org.eclipse.net4j.util.security.ChallengeResponseNegotiator">Nested</a>&nbsp;|&nbsp;</li>
-<li><a href="#fields.inherited.from.class.org.eclipse.net4j.util.fsm.FiniteStateMachine">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
@@ -491,10 +541,12 @@ extends <a href="../../../../../org/eclipse/net4j/util/security/ChallengeRespons
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

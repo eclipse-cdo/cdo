@@ -3,39 +3,36 @@
 
 <toc label="Net4j DB Framework Documentation" topic="html/Overview.html">
   <topic label="Overview" href="html/Overview.html" />
-  <topic label="Reference" href="html/reference/index.html">
-    <topic label="API Reference" href="javadoc/overview-summary.html">
-      <topic label="Net4j DB Framework" href="javadoc/org/eclipse/net4j/db/package-summary.html" icon="plugin">
-        <topic label="org.eclipse.net4j.db" href="javadoc/org/eclipse/net4j/db/package-summary.html" icon="package" />
-        <topic label="org.eclipse.net4j.db.ddl" href="javadoc/org/eclipse/net4j/db/ddl/package-summary.html" icon="package" />
-        <topic label="org.eclipse.net4j.db.ddl.delta" href="javadoc/org/eclipse/net4j/db/ddl/delta/package-summary.html" icon="package" />
-        <topic label="org.eclipse.net4j.db.dml" href="javadoc/org/eclipse/net4j/db/dml/package-summary.html" icon="package" />
-        <topic label="org.eclipse.net4j.spi.db" href="javadoc/org/eclipse/net4j/spi/db/package-summary.html" icon="package" />
-        <topic label="org.eclipse.net4j.spi.db.ddl" href="javadoc/org/eclipse/net4j/spi/db/ddl/package-summary.html" icon="package" />
-      </topic>
-      <topic label="Net4j DB Framework Derby Adapter" href="javadoc/org/eclipse/net4j/db/derby/package-summary.html" icon="plugin">
-        <topic label="org.eclipse.net4j.db.derby" href="javadoc/org/eclipse/net4j/db/derby/package-summary.html" icon="package" />
-      </topic>
-      <topic label="Net4j DB Framework H2 Adapter" href="javadoc/org/eclipse/net4j/db/h2/package-summary.html" icon="plugin">
-        <topic label="org.eclipse.net4j.db.h2" href="javadoc/org/eclipse/net4j/db/h2/package-summary.html" icon="package" />
-      </topic>
-      <topic label="Net4j DB Framework HSQLDB Adapter" href="javadoc/org/eclipse/net4j/db/hsqldb/package-summary.html" icon="plugin">
-        <topic label="org.eclipse.net4j.db.hsqldb" href="javadoc/org/eclipse/net4j/db/hsqldb/package-summary.html" icon="package" />
-      </topic>
-      <topic label="Net4j DB Framework JDBC Support" href="javadoc/org/eclipse/net4j/db/jdbc/package-summary.html" icon="plugin">
-        <topic label="org.eclipse.net4j.db.jdbc" href="javadoc/org/eclipse/net4j/db/jdbc/package-summary.html" icon="package" />
-      </topic>
-      <topic label="Net4j DB Framework MYSQL Adapter" href="javadoc/org/eclipse/net4j/db/mysql/package-summary.html" icon="plugin">
-        <topic label="org.eclipse.net4j.db.mysql" href="javadoc/org/eclipse/net4j/db/mysql/package-summary.html" icon="package" />
-      </topic>
-      <topic label="Net4j DB Framework PostgreSQL Adapter" href="javadoc/org/eclipse/net4j/db/postgresql/package-summary.html" icon="plugin">
-        <topic label="org.eclipse.net4j.db.postgresql" href="javadoc/org/eclipse/net4j/db/postgresql/package-summary.html" icon="package" />
-      </topic>
+  <topic label="API Reference" href="javadoc/overview-summary.html">
+    <topic label="Net4j DB Framework" href="javadoc/org/eclipse/net4j/db/package-summary.html" icon="plugin">
+      <topic label="org.eclipse.net4j.db" href="javadoc/org/eclipse/net4j/db/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.db.ddl" href="javadoc/org/eclipse/net4j/db/ddl/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.db.ddl.delta" href="javadoc/org/eclipse/net4j/db/ddl/delta/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.spi.db" href="javadoc/org/eclipse/net4j/spi/db/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.spi.db.ddl" href="javadoc/org/eclipse/net4j/spi/db/ddl/package-summary.html" icon="package" />
     </topic>
-    <topic label="Extension Point Reference" href="html/reference/schema/index.html">
-      <topic label="Net4j DB Framework" href="schemadoc/org_eclipse_net4j_db_dbAdapters.html" icon="plugin">
-        <topic label="dbAdapters" href="schemadoc/org_eclipse_net4j_db_dbAdapters.html" icon="extpoint" />
-      </topic>
+    <topic label="Net4j DB Framework Derby Adapter" href="javadoc/org/eclipse/net4j/db/derby/package-summary.html" icon="plugin">
+      <topic label="org.eclipse.net4j.db.derby" href="javadoc/org/eclipse/net4j/db/derby/package-summary.html" icon="package" />
+    </topic>
+    <topic label="Net4j DB Framework H2 Adapter" href="javadoc/org/eclipse/net4j/db/h2/package-summary.html" icon="plugin">
+      <topic label="org.eclipse.net4j.db.h2" href="javadoc/org/eclipse/net4j/db/h2/package-summary.html" icon="package" />
+    </topic>
+    <topic label="Net4j DB Framework HSQLDB Adapter" href="javadoc/org/eclipse/net4j/db/hsqldb/package-summary.html" icon="plugin">
+      <topic label="org.eclipse.net4j.db.hsqldb" href="javadoc/org/eclipse/net4j/db/hsqldb/package-summary.html" icon="package" />
+    </topic>
+    <topic label="Net4j DB Framework JDBC Support" href="javadoc/org/eclipse/net4j/db/jdbc/package-summary.html" icon="plugin">
+      <topic label="org.eclipse.net4j.db.jdbc" href="javadoc/org/eclipse/net4j/db/jdbc/package-summary.html" icon="package" />
+    </topic>
+    <topic label="Net4j DB Framework MYSQL Adapter" href="javadoc/org/eclipse/net4j/db/mysql/package-summary.html" icon="plugin">
+      <topic label="org.eclipse.net4j.db.mysql" href="javadoc/org/eclipse/net4j/db/mysql/package-summary.html" icon="package" />
+    </topic>
+    <topic label="Net4j DB Framework PostgreSQL Adapter" href="javadoc/org/eclipse/net4j/db/postgresql/package-summary.html" icon="plugin">
+      <topic label="org.eclipse.net4j.db.postgresql" href="javadoc/org/eclipse/net4j/db/postgresql/package-summary.html" icon="package" />
+    </topic>
+  </topic>
+  <topic label="Extension Point Reference" href="html/schema/index.html">
+    <topic label="Net4j DB Framework" href="schemadoc/org_eclipse_net4j_db_dbAdapters.html" icon="plugin">
+      <topic label="dbAdapters" href="schemadoc/org_eclipse_net4j_db_dbAdapters.html" icon="extpoint" />
     </topic>
   </topic>
   <topic label="Online Docs" href="html/online/index.html">

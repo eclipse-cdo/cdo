@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>Uses of Interface org.eclipse.emf.cdo.common.commit.CDOChangeSetData (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,39 +28,43 @@
     catch(err) {
     }
 //-->
-</script>
+var pathtoroot = "../../../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../../index.html">Overview</a></li>
 <li><a href="../package-summary.html">Package</a></li>
-<li><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">Class</a></li>
+<li><a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">Class</a></li>
 <li class="navBarCell1Rev">Use</li>
+<li><a href="../package-tree.html">Tree</a></li>
 <li><a href="../../../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../../../help-doc.html">Help</a></li>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev</li>
-<li>Next</li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../../index.html?org/eclipse/emf/cdo/common/commit/class-use/CDOChangeSetData.html" target="_top">Frames</a></li>
-<li><a href="CDOChangeSetData.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -63,104 +77,122 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
+<main role="main">
 <div class="header">
 <h2 title="Uses of Interface org.eclipse.emf.cdo.common.commit.CDOChangeSetData" class="title">Uses of Interface<br>org.eclipse.emf.cdo.common.commit.CDOChangeSetData</h2>
 </div>
 <div class="classUseContainer">
 <ul class="blockList">
 <li class="blockList">
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing packages, and an explanation">
-<caption><span>Packages that use <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Packages that use <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Package</th>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.common.commit">org.eclipse.emf.cdo.common.commit</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.common.commit">org.eclipse.emf.cdo.common.commit</a></th>
 <td class="colLast">
 <div class="block">Common concepts for dealing with commits and change sets.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.common.protocol">org.eclipse.emf.cdo.common.protocol</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.common.protocol">org.eclipse.emf.cdo.common.protocol</a></th>
 <td class="colLast">
 <div class="block">Common concepts for dealing with protocols and CDO-specific I/O.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.common.revision">org.eclipse.emf.cdo.common.revision</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.common.revision">org.eclipse.emf.cdo.common.revision</a></th>
 <td class="colLast">
 <div class="block">Common concepts for dealing with revisions and revision lists.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.common.util">org.eclipse.emf.cdo.common.util</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.common.util">org.eclipse.emf.cdo.common.util</a></th>
 <td class="colLast">
 <div class="block">Common utility classes, some common interfaces and exceptions.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.server.ocl">org.eclipse.emf.cdo.server.ocl</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.server">org.eclipse.emf.cdo.server</a></th>
+<td class="colLast">
+<div class="block">Server concepts for dealing with repositories and stores.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.server.ocl">org.eclipse.emf.cdo.server.ocl</a></th>
 <td class="colLast">
 <div class="block">Server implementation of a generic OCL query handler.</div>
 </td>
 </tr>
-<tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.session">org.eclipse.emf.cdo.session</a></td>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.session">org.eclipse.emf.cdo.session</a></th>
 <td class="colLast">
 <div class="block">Client concepts for dealing with sessions to CDO repositories.</div>
 </td>
 </tr>
-<tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.spi.common.commit">org.eclipse.emf.cdo.spi.common.commit</a></td>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.spi.common.commit">org.eclipse.emf.cdo.spi.common.commit</a></th>
 <td class="colLast">
 <div class="block">Common service provider interfaces and useful base implementations for dealing with commits and change sets.</div>
 </td>
 </tr>
-<tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.spi.common.protocol">org.eclipse.emf.cdo.spi.common.protocol</a></td>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.spi.common.protocol">org.eclipse.emf.cdo.spi.common.protocol</a></th>
 <td class="colLast">
 <div class="block">Common base implementations for dealing with I/O of CDO data structures.</div>
 </td>
 </tr>
-<tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.spi.server">org.eclipse.emf.cdo.spi.server</a></td>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.spi.server">org.eclipse.emf.cdo.spi.server</a></th>
 <td class="colLast">
 <div class="block">Server service provider interfaces and useful base implementations.</div>
 </td>
 </tr>
-<tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.spi.workspace">org.eclipse.emf.cdo.spi.workspace</a></td>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.spi.workspace">org.eclipse.emf.cdo.spi.workspace</a></th>
 <td class="colLast">
-<div class="block">Server provider interfaces (SPI) for CDO <a href="../../../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspace.html" title="interface in org.eclipse.emf.cdo.workspace"><code>workspaces</code></a>.</div>
+<div class="block">Server provider interfaces (SPI) for CDO <a href="../../../workspace/CDOWorkspace.html" title="interface in org.eclipse.emf.cdo.workspace"><code>workspaces</code></a>.</div>
 </td>
 </tr>
-<tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.transaction">org.eclipse.emf.cdo.transaction</a></td>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.transaction">org.eclipse.emf.cdo.transaction</a></th>
 <td class="colLast">
 <div class="block">Client concepts for dealing with transactions, distributed transactions and their save points.</div>
 </td>
 </tr>
-<tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.view">org.eclipse.emf.cdo.view</a></td>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.view">org.eclipse.emf.cdo.view</a></th>
 <td class="colLast">
 <div class="block">Client concepts for dealing with views, view sets, queries, CDO objects and EMF resource sets.</div>
 </td>
 </tr>
-<tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.workspace">org.eclipse.emf.cdo.workspace</a></td>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.workspace">org.eclipse.emf.cdo.workspace</a></th>
 <td class="colLast">
-<div class="block">Concepts to checkout, open and further operate CDO <a href="../../../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspace.html" title="interface in org.eclipse.emf.cdo.workspace"><code>workspaces</code></a>.</div>
+<div class="block">Concepts to checkout, open and further operate CDO <a href="../../../workspace/CDOWorkspace.html" title="interface in org.eclipse.emf.cdo.workspace"><code>workspaces</code></a>.</div>
 </td>
 </tr>
-<tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.emf.spi.cdo">org.eclipse.emf.spi.cdo</a></td>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.spi.cdo">org.eclipse.emf.spi.cdo</a></th>
 <td class="colLast">
 <div class="block">Client service provider interfaces and useful base implementations.</div>
 </td>
@@ -170,732 +202,872 @@
 </li>
 <li class="blockList">
 <ul class="blockList">
-<li class="blockList"><a name="org.eclipse.emf.cdo.common.commit">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.emf.cdo.common.commit">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a> in <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/package-summary.html">org.eclipse.emf.cdo.common.commit</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing subinterfaces, and an explanation">
-<caption><span>Subinterfaces of <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a> in <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/package-summary.html">org.eclipse.emf.cdo.common.commit</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a> in <a href="../package-summary.html">org.eclipse.emf.cdo.common.commit</a></h3>
+<table class="useSummary">
+<caption><span>Subinterfaces of <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a> in <a href="../package-summary.html">org.eclipse.emf.cdo.common.commit</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Interface and Description</th>
+<th class="colSecond" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</a></span></code>
-<div class="block">The <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>change set data</code></a> between two <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPointRange.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch points</code></a> with a common
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</a></span></code></th>
+<td class="colLast">
+<div class="block">The <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>change set data</code></a> between two <a href="../../branch/CDOBranchPointRange.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch points</code></a> with a common
  ancestor.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitData</a></span></code>
-<div class="block"><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>Change set data</code></a> with detailed information about new <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitData.html#getNewPackageUnits--"><code>package
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitData</a></span></code></th>
+<td class="colLast">
+<div class="block"><a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>Change set data</code></a> with detailed information about new <a href="../CDOCommitData.html#getNewPackageUnits()"><code>package
  units</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.TriggerLoadElement.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitHistory.TriggerLoadElement</a></span></code>
-<div class="block">A virtual <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>history</code></a> element that can be returned from <a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true#getElements--" title="class or interface in org.eclipse.net4j.util.container"><code>IContainer.getElements()</code></a>
- if <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.html#isAppendingTriggerLoadElement--"><code>CDOCommitHistory.isAppendingTriggerLoadElement()</code></a> is <code>true</code> to indicate that
- the history is not <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.html#isFull--"><code>fully</code></a> loaded, yet.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../CDOCommitHistory.TriggerLoadElement.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitHistory.TriggerLoadElement</a></span></code></th>
+<td class="colLast">
+<div class="block">A virtual <a href="../CDOCommitHistory.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>history</code></a> element that can be returned from <code>IContainer.getElements()</code>
+ if <a href="../CDOCommitHistory.html#isAppendingTriggerLoadElement()"><code>CDOCommitHistory.isAppendingTriggerLoadElement()</code></a> is <code>true</code> to indicate that
+ the history is not <a href="../CDOCommitHistory.html#isFull()"><code>fully</code></a> loaded, yet.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></span></code>
-<div class="block"><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>Commit data</code></a> in the context of a <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>commit info manager</code></a> with
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></span></code></th>
+<td class="colLast">
+<div class="block"><a href="../CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>Commit data</code></a> in the context of a <a href="../CDOCommitInfoManager.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>commit info manager</code></a> with
  additional commit informations.</div>
 </td>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/package-summary.html">org.eclipse.emf.cdo.common.commit</a> that return <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Methods in <a href="../package-summary.html">org.eclipse.emf.cdo.common.commit</a> that return <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
-<td class="colLast"><span class="typeNameLabel">CDOChangeSetData.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#copy--">copy</a></span>()</code>
+<td class="colFirst"><code><a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOChangeSetData.</span><code><span class="memberNameLink"><a href="../CDOChangeSetData.html#copy()">copy</a></span>()</code></th>
+<td class="colLast">
 <div class="block">Returns a deep copy of this change set data.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
-<td class="colLast"><span class="typeNameLabel">CDOChangeSetDataProvider.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetDataProvider.html#getChangeSetData--">getChangeSetData</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOChangeSetDataProvider.</span><code><span class="memberNameLink"><a href="../CDOChangeSetDataProvider.html#getChangeSetData()">getChangeSetData</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/package-summary.html">org.eclipse.emf.cdo.common.commit</a> with parameters of type <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Methods in <a href="../package-summary.html">org.eclipse.emf.cdo.common.commit</a> with parameters of type <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">CDOChangeSetData.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#merge-org.eclipse.emf.cdo.common.commit.CDOChangeSetData-">merge</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;changeSetData)</code>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOChangeSetData.</span><code><span class="memberNameLink"><a href="../CDOChangeSetData.html#merge(org.eclipse.emf.cdo.common.commit.CDOChangeSetData)">merge</a></span>&#8203;(<a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;changeSetData)</code></th>
+<td class="colLast">
 <div class="block">Changes the internal state of this change set data by adding the changes of the given change set data.</div>
 </td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.common.protocol">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.emf.cdo.common.protocol">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a> in <a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/package-summary.html">org.eclipse.emf.cdo.common.protocol</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/package-summary.html">org.eclipse.emf.cdo.common.protocol</a> that return <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a> in <a href="../../protocol/package-summary.html">org.eclipse.emf.cdo.common.protocol</a></h3>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../protocol/package-summary.html">org.eclipse.emf.cdo.common.protocol</a> that return <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
-<td class="colLast"><span class="typeNameLabel">CDODataInput.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataInput.html#readCDOChangeSetData--">readCDOChangeSetData</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDODataInput.</span><code><span class="memberNameLink"><a href="../../protocol/CDODataInput.html#readCDOChangeSetData()">readCDOChangeSetData</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/package-summary.html">org.eclipse.emf.cdo.common.protocol</a> with parameters of type <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../protocol/package-summary.html">org.eclipse.emf.cdo.common.protocol</a> with parameters of type <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">CDODataOutput.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataOutput.html#writeCDOChangeSetData-org.eclipse.emf.cdo.common.commit.CDOChangeSetData-">writeCDOChangeSetData</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;changeSetData)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDODataOutput.</span><code><span class="memberNameLink"><a href="../../protocol/CDODataOutput.html#writeCDOChangeSetData(org.eclipse.emf.cdo.common.commit.CDOChangeSetData)">writeCDOChangeSetData</a></span>&#8203;(<a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;changeSetData)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.common.revision">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.emf.cdo.common.revision">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a> in <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/package-summary.html">org.eclipse.emf.cdo.common.revision</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/package-summary.html">org.eclipse.emf.cdo.common.revision</a> that return <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a> in <a href="../../revision/package-summary.html">org.eclipse.emf.cdo.common.revision</a></h3>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../revision/package-summary.html">org.eclipse.emf.cdo.common.revision</a> that return <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code>static <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
-<td class="colLast"><span class="typeNameLabel">CDORevisionUtil.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.html#createChangeSetData-java.util.List-java.util.List-java.util.List-">createChangeSetData</a></span>(java.util.List&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDOIDAndVersion.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndVersion</a>&gt;&nbsp;newObjects,
-                   java.util.List&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionKey.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionKey</a>&gt;&nbsp;changedObjects,
-                   java.util.List&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDOIDAndVersion.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndVersion</a>&gt;&nbsp;detachedObjects)</code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDORevisionUtil.</span><code><span class="memberNameLink"><a href="../../revision/CDORevisionUtil.html#createChangeSetData(java.util.List,java.util.List,java.util.List)">createChangeSetData</a></span>&#8203;(java.util.List&lt;<a href="../../revision/CDOIDAndVersion.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndVersion</a>&gt;&nbsp;newObjects,
+                   java.util.List&lt;<a href="../../revision/CDORevisionKey.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionKey</a>&gt;&nbsp;changedObjects,
+                   java.util.List&lt;<a href="../../revision/CDOIDAndVersion.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndVersion</a>&gt;&nbsp;detachedObjects)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>static <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
-<td class="colLast"><span class="typeNameLabel">CDORevisionUtil.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.html#createChangeSetData-java.util.Set-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.common.revision.CDORevisionManager-">createChangeSetData</a></span>(java.util.Set&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
-                   <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;startPoint,
-                   <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;endPoint,
-                   <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionManager</a>&nbsp;revisionManager)</code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDORevisionUtil.</span><code><span class="memberNameLink"><a href="../../revision/CDORevisionUtil.html#createChangeSetData(java.util.Set,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionManager)">createChangeSetData</a></span>&#8203;(java.util.Set&lt;<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
+                   <a href="../../branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;startPoint,
+                   <a href="../../branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;endPoint,
+                   <a href="../../revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionManager</a>&nbsp;revisionManager)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>static <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
-<td class="colLast"><span class="typeNameLabel">CDORevisionUtil.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.html#createChangeSetData-java.util.Set-org.eclipse.emf.cdo.common.revision.CDORevisionProvider-org.eclipse.emf.cdo.common.revision.CDORevisionProvider-">createChangeSetData</a></span>(java.util.Set&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
-                   <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;startProvider,
-                   <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;endProvider)</code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDORevisionUtil.</span><code><span class="memberNameLink"><a href="../../revision/CDORevisionUtil.html#createChangeSetData(java.util.Set,org.eclipse.emf.cdo.common.revision.CDORevisionProvider,org.eclipse.emf.cdo.common.revision.CDORevisionProvider)">createChangeSetData</a></span>&#8203;(java.util.Set&lt;<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
+                   <a href="../../revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;startProvider,
+                   <a href="../../revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;endProvider)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>static <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
-<td class="colLast"><span class="typeNameLabel">CDORevisionUtil.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.html#createChangeSetData-java.util.Set-org.eclipse.emf.cdo.common.revision.CDORevisionProvider-org.eclipse.emf.cdo.common.revision.CDORevisionProvider-boolean-">createChangeSetData</a></span>(java.util.Set&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
-                   <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;startProvider,
-                   <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;endProvider,
-                   boolean&nbsp;useStartVersions)</code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDORevisionUtil.</span><code><span class="memberNameLink"><a href="../../revision/CDORevisionUtil.html#createChangeSetData(java.util.Set,org.eclipse.emf.cdo.common.revision.CDORevisionProvider,org.eclipse.emf.cdo.common.revision.CDORevisionProvider,boolean)">createChangeSetData</a></span>&#8203;(java.util.Set&lt;<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
+                   <a href="../../revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;startProvider,
+                   <a href="../../revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;endProvider,
+                   boolean&nbsp;useStartVersions)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/package-summary.html">org.eclipse.emf.cdo.common.revision</a> with parameters of type <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../revision/package-summary.html">org.eclipse.emf.cdo.common.revision</a> with parameters of type <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code>static <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</a></code></td>
-<td class="colLast"><span class="typeNameLabel">CDORevisionUtil.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.html#createChangeSet-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.common.commit.CDOChangeSetData-">createChangeSet</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;startPoint,
-               <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;endPoint,
-               <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;data)</code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="../CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDORevisionUtil.</span><code><span class="memberNameLink"><a href="../../revision/CDORevisionUtil.html#createChangeSet(org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.commit.CDOChangeSetData)">createChangeSet</a></span>&#8203;(<a href="../../branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;startPoint,
+               <a href="../../branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;endPoint,
+               <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;data)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.common.util">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.emf.cdo.common.util">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a> in <a href="../../../../../../../org/eclipse/emf/cdo/common/util/package-summary.html">org.eclipse.emf.cdo.common.util</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../../org/eclipse/emf/cdo/common/util/package-summary.html">org.eclipse.emf.cdo.common.util</a> that return <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a> in <a href="../../util/package-summary.html">org.eclipse.emf.cdo.common.util</a></h3>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../util/package-summary.html">org.eclipse.emf.cdo.common.util</a> that return <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
-<td class="colLast"><span class="typeNameLabel">CDOQueryInfo.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.html#getChangeSetData--">getChangeSetData</a></span>()</code>
-<div class="block">Returns the <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>change set</code></a> to be considered if this query has been created by a dirty
+<td class="colFirst"><code><a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOQueryInfo.</span><code><span class="memberNameLink"><a href="../../util/CDOQueryInfo.html#getChangeSetData()">getChangeSetData</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Returns the <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>change set</code></a> to be considered if this query has been created by a dirty
  transaction, <code>null</code> otherwise.</div>
 </td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.server.ocl">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.emf.cdo.server">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a> in <a href="../../../../../../../org/eclipse/emf/cdo/server/ocl/package-summary.html">org.eclipse.emf.cdo.server.ocl</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../../org/eclipse/emf/cdo/server/ocl/package-summary.html">org.eclipse.emf.cdo.server.ocl</a> that return <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a> in <a href="../../../server/package-summary.html">org.eclipse.emf.cdo.server</a></h3>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../../server/package-summary.html">org.eclipse.emf.cdo.server</a> that return <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
-<td class="colLast"><span class="typeNameLabel">CDOExtentCreator.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/ocl/CDOExtentCreator.html#getChangeSetData--">getChangeSetData</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">IStoreAccessor.CommitContext.ModificationContext.</span><code><span class="memberNameLink"><a href="../../../server/IStoreAccessor.CommitContext.ModificationContext.html#getChangeSetData()">getChangeSetData</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../../org/eclipse/emf/cdo/server/ocl/package-summary.html">org.eclipse.emf.cdo.server.ocl</a> with parameters of type <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
+</section>
+</li>
+<li class="blockList">
+<section role="region"><a id="org.eclipse.emf.cdo.server.ocl">
+<!--   -->
+</a>
+<h3>Uses of <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a> in <a href="../../../server/ocl/package-summary.html">org.eclipse.emf.cdo.server.ocl</a></h3>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../../server/ocl/package-summary.html">org.eclipse.emf.cdo.server.ocl</a> that return <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code>protected <a href="../../../../../../../org/eclipse/emf/cdo/server/ocl/CDOExtentMap.html" title="class in org.eclipse.emf.cdo.server.ocl">CDOExtentMap</a></code></td>
-<td class="colLast"><span class="typeNameLabel">OCLQueryHandler.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/ocl/OCLQueryHandler.html#createExtentMap-org.eclipse.emf.cdo.view.CDOView-org.eclipse.emf.cdo.common.commit.CDOChangeSetData-org.eclipse.emf.cdo.server.IQueryContext-">createExtentMap</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
-               <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;changeSetData,
-               <a href="../../../../../../../org/eclipse/emf/cdo/server/IQueryContext.html" title="interface in org.eclipse.emf.cdo.server">IQueryContext</a>&nbsp;context)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOExtentCreator.</span><code><span class="memberNameLink"><a href="../../../server/ocl/CDOExtentCreator.html#getChangeSetData()">getChangeSetData</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../../server/ocl/package-summary.html">org.eclipse.emf.cdo.server.ocl</a> with parameters of type <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>protected <a href="../../../server/ocl/CDOExtentMap.html" title="class in org.eclipse.emf.cdo.server.ocl">CDOExtentMap</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">OCLQueryHandler.</span><code><span class="memberNameLink"><a href="../../../server/ocl/OCLQueryHandler.html#createExtentMap(org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.common.commit.CDOChangeSetData,org.eclipse.emf.cdo.server.IQueryContext)">createExtentMap</a></span>&#8203;(<a href="../../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
+               <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;changeSetData,
+               <a href="../../../server/IQueryContext.html" title="interface in org.eclipse.emf.cdo.server">IQueryContext</a>&nbsp;context)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">CDOExtentCreator.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/ocl/CDOExtentCreator.html#setChangeSetData-org.eclipse.emf.cdo.common.commit.CDOChangeSetData-">setChangeSetData</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;changeSetData)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOExtentCreator.</span><code><span class="memberNameLink"><a href="../../../server/ocl/CDOExtentCreator.html#setChangeSetData(org.eclipse.emf.cdo.common.commit.CDOChangeSetData)">setChangeSetData</a></span>&#8203;(<a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;changeSetData)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.session">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.emf.cdo.session">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a> in <a href="../../../../../../../org/eclipse/emf/cdo/session/package-summary.html">org.eclipse.emf.cdo.session</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing subinterfaces, and an explanation">
-<caption><span>Subinterfaces of <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a> in <a href="../../../../../../../org/eclipse/emf/cdo/session/package-summary.html">org.eclipse.emf.cdo.session</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a> in <a href="../../../session/package-summary.html">org.eclipse.emf.cdo.session</a></h3>
+<table class="useSummary">
+<caption><span>Subinterfaces of <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a> in <a href="../../../session/package-summary.html">org.eclipse.emf.cdo.session</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Interface and Description</th>
+<th class="colSecond" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/session/CDOSessionInvalidationEvent.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionInvalidationEvent</a></span></code>
-<div class="block">A <a href="../../../../../../../org/eclipse/emf/cdo/session/CDOSessionEvent.html" title="interface in org.eclipse.emf.cdo.session"><code>session event</code></a> fired when passive updates (commit notifications) are being received from a
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../session/CDOSessionInvalidationEvent.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionInvalidationEvent</a></span></code></th>
+<td class="colLast">
+<div class="block">A <a href="../../../session/CDOSessionEvent.html" title="interface in org.eclipse.emf.cdo.session"><code>session event</code></a> fired when passive updates (commit notifications) are being received from a
  remote repository.</div>
 </td>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../../org/eclipse/emf/cdo/session/package-summary.html">org.eclipse.emf.cdo.session</a> that return <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../../session/package-summary.html">org.eclipse.emf.cdo.session</a> that return <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
-<td class="colLast"><span class="typeNameLabel">CDOSession.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/session/CDOSession.html#compareRevisions-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-">compareRevisions</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source,
-                <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;target)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOSession.</span><code><span class="memberNameLink"><a href="../../../session/CDOSession.html#compareRevisions(org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">compareRevisions</a></span>&#8203;(<a href="../../branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source,
+                <a href="../../branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;target)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.spi.common.commit">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.emf.cdo.spi.common.commit">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a> in <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/package-summary.html">org.eclipse.emf.cdo.spi.common.commit</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/package-summary.html">org.eclipse.emf.cdo.spi.common.commit</a> that return <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a> in <a href="../../../spi/common/commit/package-summary.html">org.eclipse.emf.cdo.spi.common.commit</a></h3>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../../spi/common/commit/package-summary.html">org.eclipse.emf.cdo.spi.common.commit</a> that return <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
-<td class="colLast"><span class="typeNameLabel">CDOChangeSetDataRevisionProvider.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetDataRevisionProvider.html#getChangeSetData--">getChangeSetData</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOChangeSetDataRevisionProvider.</span><code><span class="memberNameLink"><a href="../../../spi/common/commit/CDOChangeSetDataRevisionProvider.html#getChangeSetData()">getChangeSetData</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/package-summary.html">org.eclipse.emf.cdo.spi.common.commit</a> with parameters of type <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../../spi/common/commit/package-summary.html">org.eclipse.emf.cdo.spi.common.commit</a> with parameters of type <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>static void</code></td>
-<td class="colLast"><span class="typeNameLabel">CDOCommitInfoUtil.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOCommitInfoUtil.html#dump-java.io.PrintStream-org.eclipse.emf.cdo.common.commit.CDOChangeSetData-">dump</a></span>(java.io.PrintStream&nbsp;out,
-    <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;changeSetData)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOCommitInfoUtil.</span><code><span class="memberNameLink"><a href="../../../spi/common/commit/CDOCommitInfoUtil.html#dump(java.io.PrintStream,org.eclipse.emf.cdo.common.commit.CDOChangeSetData)">dump</a></span>&#8203;(java.io.PrintStream&nbsp;out,
+    <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;changeSetData)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing constructors, and an explanation">
-<caption><span>Constructors in <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/package-summary.html">org.eclipse.emf.cdo.spi.common.commit</a> with parameters of type <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Constructors in <a href="../../../spi/common/commit/package-summary.html">org.eclipse.emf.cdo.spi.common.commit</a> with parameters of type <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Constructor and Description</th>
+<th class="colFirst" scope="col">Constructor</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeKindCache.html#CDOChangeKindCache-org.eclipse.emf.cdo.common.commit.CDOChangeSetData-">CDOChangeKindCache</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;changeSetData)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../spi/common/commit/CDOChangeKindCache.html#%3Cinit%3E(org.eclipse.emf.cdo.common.commit.CDOChangeSetData)">CDOChangeKindCache</a></span>&#8203;(<a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;changeSetData)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetDataRevisionProvider.html#CDOChangeSetDataRevisionProvider-org.eclipse.emf.cdo.common.revision.CDORevisionProvider-org.eclipse.emf.cdo.common.commit.CDOChangeSetData-">CDOChangeSetDataRevisionProvider</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;delegate,
-                                <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;changeSetData)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../spi/common/commit/CDOChangeSetDataRevisionProvider.html#%3Cinit%3E(org.eclipse.emf.cdo.common.revision.CDORevisionProvider,org.eclipse.emf.cdo.common.commit.CDOChangeSetData)">CDOChangeSetDataRevisionProvider</a></span>&#8203;(<a href="../../revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;delegate,
+                                <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;changeSetData)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetDataRevisionProvider.html#CDOChangeSetDataRevisionProvider-org.eclipse.emf.cdo.common.revision.CDORevisionProvider-org.eclipse.emf.cdo.common.commit.CDOChangeSetData-org.eclipse.emf.cdo.common.revision.CDORevisionProvider-org.eclipse.emf.cdo.common.revision.delta.CDORevisionDeltaProvider-">CDOChangeSetDataRevisionProvider</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;delegate,
-                                <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;changeSetData,
-                                <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;revisionCallback,
-                                <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDeltaProvider.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDeltaProvider</a>&nbsp;revisionDeltaCallback)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../spi/common/commit/CDOChangeSetDataRevisionProvider.html#%3Cinit%3E(org.eclipse.emf.cdo.common.revision.CDORevisionProvider,org.eclipse.emf.cdo.common.commit.CDOChangeSetData,org.eclipse.emf.cdo.common.revision.CDORevisionProvider,org.eclipse.emf.cdo.common.revision.delta.CDORevisionDeltaProvider)">CDOChangeSetDataRevisionProvider</a></span>&#8203;(<a href="../../revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;delegate,
+                                <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;changeSetData,
+                                <a href="../../revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;revisionCallback,
+                                <a href="../../revision/delta/CDORevisionDeltaProvider.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDeltaProvider</a>&nbsp;revisionDeltaCallback)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.spi.common.protocol">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.emf.cdo.spi.common.protocol">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a> in <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/protocol/package-summary.html">org.eclipse.emf.cdo.spi.common.protocol</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/protocol/package-summary.html">org.eclipse.emf.cdo.spi.common.protocol</a> that return <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a> in <a href="../../../spi/common/protocol/package-summary.html">org.eclipse.emf.cdo.spi.common.protocol</a></h3>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../../spi/common/protocol/package-summary.html">org.eclipse.emf.cdo.spi.common.protocol</a> that return <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
-<td class="colLast"><span class="typeNameLabel">CDODataInputImpl.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/protocol/CDODataInputImpl.html#readCDOChangeSetData--">readCDOChangeSetData</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDODataInputImpl.</span><code><span class="memberNameLink"><a href="../../../spi/common/protocol/CDODataInputImpl.html#readCDOChangeSetData()">readCDOChangeSetData</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/protocol/package-summary.html">org.eclipse.emf.cdo.spi.common.protocol</a> with parameters of type <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../../spi/common/protocol/package-summary.html">org.eclipse.emf.cdo.spi.common.protocol</a> with parameters of type <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">CDODataOutputImpl.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/protocol/CDODataOutputImpl.html#writeCDOChangeSetData-org.eclipse.emf.cdo.common.commit.CDOChangeSetData-">writeCDOChangeSetData</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;changeSetData)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDODataOutputImpl.</span><code><span class="memberNameLink"><a href="../../../spi/common/protocol/CDODataOutputImpl.html#writeCDOChangeSetData(org.eclipse.emf.cdo.common.commit.CDOChangeSetData)">writeCDOChangeSetData</a></span>&#8203;(<a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;changeSetData)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.spi.server">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.emf.cdo.spi.server">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a> in <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/package-summary.html">org.eclipse.emf.cdo.spi.server</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/package-summary.html">org.eclipse.emf.cdo.spi.server</a> that return <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a> in <a href="../../../spi/server/package-summary.html">org.eclipse.emf.cdo.spi.server</a></h3>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../../spi/server/package-summary.html">org.eclipse.emf.cdo.spi.server</a> that return <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
-<td class="colLast"><span class="typeNameLabel">InternalRepository.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html#getChangeSet-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-">getChangeSet</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;startPoint,
-            <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;endPoint)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalRepository.</span><code><span class="memberNameLink"><a href="../../../spi/server/InternalRepository.html#getChangeSet(org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">getChangeSet</a></span>&#8203;(<a href="../../branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;startPoint,
+            <a href="../../branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;endPoint)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
-<td class="colLast"><span class="typeNameLabel">ICommitConflictResolver.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/ICommitConflictResolver.html#resolveConflicts-org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext-java.util.List-">resolveConflicts</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.CommitContext</a>&nbsp;commitContext,
-                java.util.List&lt;<a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a>&gt;&nbsp;conflicts)</code>
-<div class="block">When this method is called, the <a href="../../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getOldRevisions--"><code>IStoreAccessor.CommitContext.getOldRevisions()</code></a> map is filled with the latest valid revisions, chunks ensured.</div>
+<td class="colFirst"><code><a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">ICommitConflictResolver.Merging.</span><code><span class="memberNameLink"><a href="../../../spi/server/ICommitConflictResolver.Merging.html#resolveConflicts(org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext,java.util.List)">resolveConflicts</a></span>&#8203;(<a href="../../../server/IStoreAccessor.CommitContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.CommitContext</a>&nbsp;commitContext,
+                java.util.List&lt;<a href="../../../spi/common/revision/InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a>&gt;&nbsp;conflicts)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">ICommitConflictResolver.</span><code><span class="memberNameLink"><a href="../../../spi/server/ICommitConflictResolver.html#resolveConflicts(org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext,java.util.List)">resolveConflicts</a></span>&#8203;(<a href="../../../server/IStoreAccessor.CommitContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.CommitContext</a>&nbsp;commitContext,
+                java.util.List&lt;<a href="../../../spi/common/revision/InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a>&gt;&nbsp;conflicts)</code></th>
+<td class="colLast">
+<div class="block">When this method is called, the <a href="../../../server/IStoreAccessor.CommitContext.html#getOldRevisions()"><code>IStoreAccessor.CommitContext.getOldRevisions()</code></a> map is filled with the latest valid revisions, chunks ensured.</div>
 </td>
 </tr>
-<tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
-<td class="colLast"><span class="typeNameLabel">ICommitConflictResolver.Merging.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/ICommitConflictResolver.Merging.html#resolveConflicts-org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext-java.util.List-">resolveConflicts</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.CommitContext</a>&nbsp;commitContext,
-                java.util.List&lt;<a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a>&gt;&nbsp;conflicts)</code>&nbsp;</td>
-</tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.spi.workspace">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.emf.cdo.spi.workspace">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a> in <a href="../../../../../../../org/eclipse/emf/cdo/spi/workspace/package-summary.html">org.eclipse.emf.cdo.spi.workspace</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../../org/eclipse/emf/cdo/spi/workspace/package-summary.html">org.eclipse.emf.cdo.spi.workspace</a> that return <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a> in <a href="../../../spi/workspace/package-summary.html">org.eclipse.emf.cdo.spi.workspace</a></h3>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../../spi/workspace/package-summary.html">org.eclipse.emf.cdo.spi.workspace</a> that return <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
-<td class="colLast"><span class="typeNameLabel">InternalCDOWorkspace.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/workspace/InternalCDOWorkspace.html#getLocalChanges-boolean-">getLocalChanges</a></span>(boolean&nbsp;forward)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalCDOWorkspace.</span><code><span class="memberNameLink"><a href="../../../spi/workspace/InternalCDOWorkspace.html#getLocalChanges(boolean)">getLocalChanges</a></span>&#8203;(boolean&nbsp;forward)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../../org/eclipse/emf/cdo/spi/workspace/package-summary.html">org.eclipse.emf.cdo.spi.workspace</a> with parameters of type <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../../spi/workspace/package-summary.html">org.eclipse.emf.cdo.spi.workspace</a> with parameters of type <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">InternalCDOWorkspace.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/workspace/InternalCDOWorkspace.html#replace-java.lang.String-long-org.eclipse.emf.cdo.common.commit.CDOChangeSetData-">replace</a></span>(java.lang.String&nbsp;branchPath,
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalCDOWorkspace.</span><code><span class="memberNameLink"><a href="../../../spi/workspace/InternalCDOWorkspace.html#replace(java.lang.String,long,org.eclipse.emf.cdo.common.commit.CDOChangeSetData)">replace</a></span>&#8203;(java.lang.String&nbsp;branchPath,
        long&nbsp;timeStamp,
-       <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;revertData)</code>&nbsp;</td>
+       <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;revertData)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">InternalCDOWorkspace.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/workspace/InternalCDOWorkspace.html#revert-org.eclipse.emf.cdo.common.commit.CDOChangeSetData-">revert</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;revertData)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalCDOWorkspace.</span><code><span class="memberNameLink"><a href="../../../spi/workspace/InternalCDOWorkspace.html#revert(org.eclipse.emf.cdo.common.commit.CDOChangeSetData)">revert</a></span>&#8203;(<a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;revertData)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.transaction">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.emf.cdo.transaction">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a> in <a href="../../../../../../../org/eclipse/emf/cdo/transaction/package-summary.html">org.eclipse.emf.cdo.transaction</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../../org/eclipse/emf/cdo/transaction/package-summary.html">org.eclipse.emf.cdo.transaction</a> that return <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a> in <a href="../../../transaction/package-summary.html">org.eclipse.emf.cdo.transaction</a></h3>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../../transaction/package-summary.html">org.eclipse.emf.cdo.transaction</a> that return <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
-<td class="colLast"><span class="typeNameLabel">CDOPushTransaction.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#compareRevisions-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-">compareRevisions</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOPushTransaction.</span><code><span class="memberNameLink"><a href="../../../transaction/CDOPushTransaction.html#compareRevisions(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">compareRevisions</a></span>&#8203;(<a href="../../branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
-<td class="colLast"><span class="typeNameLabel">CDOSavepoint.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/transaction/CDOSavepoint.html#getAllChangeSetData--">getAllChangeSetData</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOSavepoint.</span><code><span class="memberNameLink"><a href="../../../transaction/CDOSavepoint.html#getAllChangeSetData()">getAllChangeSetData</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
-<td class="colLast"><span class="typeNameLabel">CDOPushTransaction.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#getChangeSetData--">getChangeSetData</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOPushTransaction.</span><code><span class="memberNameLink"><a href="../../../transaction/CDOPushTransaction.html#getChangeSetData()">getChangeSetData</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
-<td class="colLast"><span class="typeNameLabel">CDOMerger.ConflictException.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.ConflictException.html#getResult--">getResult</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOMerger.ConflictException.</span><code><span class="memberNameLink"><a href="../../../transaction/CDOMerger.ConflictException.html#getResult()">getResult</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
-<td class="colLast"><span class="typeNameLabel">CDOPushTransaction.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#merge-org.eclipse.emf.cdo.common.branch.CDOBranch-org.eclipse.emf.cdo.transaction.CDOMerger-">merge</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;source,
-     <a href="../../../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger)</code>&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
-<td class="colLast"><span class="typeNameLabel">CDOTransaction.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html#merge-org.eclipse.emf.cdo.common.branch.CDOBranch-org.eclipse.emf.cdo.transaction.CDOMerger-">merge</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;source,
-     <a href="../../../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger)</code>
-<div class="block">Merges the changes from the given source branch into this transaction and possibly considers previous merges
- from that branch by inspecting the <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html#getMergeSource--"><code>merge source</code></a>
- information of the <a href="../../../../../../../org/eclipse/emf/cdo/session/CDOSession.html#getCommitInfoManager--"><code>commit history</code></a>.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
-<td class="colLast"><span class="typeNameLabel">CDOPushTransaction.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#merge-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.transaction.CDOMerger-">merge</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source,
-     <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;sourceBase,
-     <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;targetBase,
-     <a href="../../../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger)</code>&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
-<td class="colLast"><span class="typeNameLabel">CDOTransaction.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html#merge-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.transaction.CDOMerger-">merge</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source,
-     <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;sourceBase,
-     <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;targetBase,
-     <a href="../../../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger)</code>
-<div class="block">Merges the changes between the given source base point and the given source point into this transaction.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
-<td class="colLast"><span class="typeNameLabel">CDOPushTransaction.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#merge-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.transaction.CDOMerger-">merge</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source,
-     <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;sourceBase,
-     <a href="../../../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger)</code>&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
-<td class="colLast"><span class="typeNameLabel">CDOTransaction.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html#merge-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.transaction.CDOMerger-">merge</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source,
-     <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;sourceBase,
-     <a href="../../../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger)</code>
-<div class="block">Merges the changes between the given source base point and the given source point into this transaction.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
-<td class="colLast"><span class="typeNameLabel">CDOPushTransaction.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#merge-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.transaction.CDOMerger-">merge</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source,
-     <a href="../../../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger)</code>&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
-<td class="colLast"><span class="typeNameLabel">CDOTransaction.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html#merge-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.transaction.CDOMerger-">merge</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source,
-     <a href="../../../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger)</code>
-<div class="block">Merges the changes from the given source point into this transaction and possibly considers previous merges
- from that <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch--"><code>branch</code></a> by inspecting the <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html#getMergeSource--"><code>merge source</code></a>
- information of the <a href="../../../../../../../org/eclipse/emf/cdo/session/CDOSession.html#getCommitInfoManager--"><code>commit history</code></a>.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
-<td class="colLast"><span class="typeNameLabel">CDOMerger.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.html#merge-org.eclipse.emf.cdo.common.commit.CDOChangeSet-org.eclipse.emf.cdo.common.commit.CDOChangeSet-">merge</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</a>&nbsp;target,
-     <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</a>&nbsp;source)</code>
-<div class="block">Calculates the changes between a source <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>change set</code></a> and a target <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>change
+<td class="colFirst"><code><a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOMerger.</span><code><span class="memberNameLink"><a href="../../../transaction/CDOMerger.html#merge(org.eclipse.emf.cdo.common.commit.CDOChangeSet,org.eclipse.emf.cdo.common.commit.CDOChangeSet)">merge</a></span>&#8203;(<a href="../CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</a>&nbsp;target,
+     <a href="../CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</a>&nbsp;source)</code></th>
+<td class="colLast">
+<div class="block">Calculates the changes between a source <a href="../CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>change set</code></a> and a target <a href="../CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>change
  set</code></a> and returns the result relative to their common ancestor.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
-<td class="colLast"><span class="typeNameLabel">CDOMerger2.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/transaction/CDOMerger2.html#merge-org.eclipse.emf.cdo.common.commit.CDOChangeSet-org.eclipse.emf.cdo.common.commit.CDOChangeSet-">merge</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</a>&nbsp;target,
-     <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</a>&nbsp;source)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<td class="colFirst"><code><a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOMerger2.</span><code><span class="memberNameLink"><a href="../../../transaction/CDOMerger2.html#merge(org.eclipse.emf.cdo.common.commit.CDOChangeSet,org.eclipse.emf.cdo.common.commit.CDOChangeSet)">merge</a></span>&#8203;(<a href="../CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</a>&nbsp;target,
+     <a href="../CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</a>&nbsp;source)</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOPushTransaction.</span><code><span class="memberNameLink"><a href="../../../transaction/CDOPushTransaction.html#merge(org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.transaction.CDOMerger)">merge</a></span>&#8203;(<a href="../../branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source,
+     <a href="../../branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;sourceBase,
+     <a href="../../branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;targetBase,
+     <a href="../../../transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOPushTransaction.</span><code><span class="memberNameLink"><a href="../../../transaction/CDOPushTransaction.html#merge(org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.transaction.CDOMerger)">merge</a></span>&#8203;(<a href="../../branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source,
+     <a href="../../branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;sourceBase,
+     <a href="../../../transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOPushTransaction.</span><code><span class="memberNameLink"><a href="../../../transaction/CDOPushTransaction.html#merge(org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.transaction.CDOMerger)">merge</a></span>&#8203;(<a href="../../branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source,
+     <a href="../../../transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOPushTransaction.</span><code><span class="memberNameLink"><a href="../../../transaction/CDOPushTransaction.html#merge(org.eclipse.emf.cdo.common.branch.CDOBranch,org.eclipse.emf.cdo.transaction.CDOMerger)">merge</a></span>&#8203;(<a href="../../branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;source,
+     <a href="../../../transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOTransaction.</span><code><span class="memberNameLink"><a href="../../../transaction/CDOTransaction.html#merge(org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.transaction.CDOMerger)">merge</a></span>&#8203;(<a href="../../branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source,
+     <a href="../../branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;sourceBase,
+     <a href="../../branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;targetBase,
+     <a href="../../../transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger)</code></th>
+<td class="colLast">
+<div class="block">Merges the changes between the given source base point and the given source point into this transaction.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOTransaction.</span><code><span class="memberNameLink"><a href="../../../transaction/CDOTransaction.html#merge(org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.transaction.CDOMerger)">merge</a></span>&#8203;(<a href="../../branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source,
+     <a href="../../branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;sourceBase,
+     <a href="../../../transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger)</code></th>
+<td class="colLast">
+<div class="block">Merges the changes between the given source base point and the given source point into this transaction.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOTransaction.</span><code><span class="memberNameLink"><a href="../../../transaction/CDOTransaction.html#merge(org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.transaction.CDOMerger)">merge</a></span>&#8203;(<a href="../../branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source,
+     <a href="../../../transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger)</code></th>
+<td class="colLast">
+<div class="block">Merges the changes from the given source point into this transaction and possibly considers previous merges
+ from that <a href="../../branch/CDOBranchPoint.html#getBranch()"><code>branch</code></a> by inspecting the <a href="../CDOCommitInfo.html#getMergeSource()"><code>merge source</code></a>
+ information of the <a href="../../../session/CDOSession.html#getCommitInfoManager()"><code>commit history</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOTransaction.</span><code><span class="memberNameLink"><a href="../../../transaction/CDOTransaction.html#merge(org.eclipse.emf.cdo.common.branch.CDOBranch,org.eclipse.emf.cdo.transaction.CDOMerger)">merge</a></span>&#8203;(<a href="../../branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;source,
+     <a href="../../../transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger)</code></th>
+<td class="colLast">
+<div class="block">Merges the changes from the given source branch into this transaction and possibly considers previous merges
+ from that branch by inspecting the <a href="../CDOCommitInfo.html#getMergeSource()"><code>merge source</code></a>
+ information of the <a href="../../../session/CDOSession.html#getCommitInfoManager()"><code>commit history</code></a>.</div>
 </td>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing constructors, and an explanation">
-<caption><span>Constructors in <a href="../../../../../../../org/eclipse/emf/cdo/transaction/package-summary.html">org.eclipse.emf.cdo.transaction</a> with parameters of type <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Constructors in <a href="../../../transaction/package-summary.html">org.eclipse.emf.cdo.transaction</a> with parameters of type <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Constructor and Description</th>
+<th class="colFirst" scope="col">Constructor</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.ConflictException.html#ConflictException-java.lang.String-org.eclipse.emf.cdo.transaction.CDOMerger-org.eclipse.emf.cdo.common.commit.CDOChangeSetData-">ConflictException</a></span>(java.lang.String&nbsp;message,
-                 <a href="../../../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger,
-                 <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;result)</code>&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.ConflictException.html#ConflictException-java.lang.String-java.lang.Throwable-org.eclipse.emf.cdo.transaction.CDOMerger-org.eclipse.emf.cdo.common.commit.CDOChangeSetData-">ConflictException</a></span>(java.lang.String&nbsp;message,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../transaction/CDOMerger.ConflictException.html#%3Cinit%3E(java.lang.String,java.lang.Throwable,org.eclipse.emf.cdo.transaction.CDOMerger,org.eclipse.emf.cdo.common.commit.CDOChangeSetData)">ConflictException</a></span>&#8203;(java.lang.String&nbsp;message,
                  java.lang.Throwable&nbsp;cause,
-                 <a href="../../../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger,
-                 <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;result)</code>&nbsp;</td>
-</tr>
-</tbody>
-</table>
-</li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.view">
-<!--   -->
-</a>
-<h3>Uses of <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a> in <a href="../../../../../../../org/eclipse/emf/cdo/view/package-summary.html">org.eclipse.emf.cdo.view</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../../org/eclipse/emf/cdo/view/package-summary.html">org.eclipse.emf.cdo.view</a> that return <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
-</tr>
-<tbody>
-<tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
-<td class="colLast"><span class="typeNameLabel">CDOView.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/view/CDOView.html#compareRevisions-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-">compareRevisions</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source)</code>&nbsp;</td>
-</tr>
-</tbody>
-</table>
-</li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.workspace">
-<!--   -->
-</a>
-<h3>Uses of <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a> in <a href="../../../../../../../org/eclipse/emf/cdo/workspace/package-summary.html">org.eclipse.emf.cdo.workspace</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../../org/eclipse/emf/cdo/workspace/package-summary.html">org.eclipse.emf.cdo.workspace</a> that return <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
-</tr>
-<tbody>
-<tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
-<td class="colLast"><span class="typeNameLabel">CDOWorkspace.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspace.html#compare-java.lang.String-">compare</a></span>(java.lang.String&nbsp;branchPath)</code>&nbsp;</td>
+                 <a href="../../../transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger,
+                 <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;result)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
-<td class="colLast"><span class="typeNameLabel">CDOWorkspace.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspace.html#compare-java.lang.String-long-">compare</a></span>(java.lang.String&nbsp;branchPath,
-       long&nbsp;timeStamp)</code>&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
-<td class="colLast"><span class="typeNameLabel">CDOWorkspace.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspace.html#getLocalChanges--">getLocalChanges</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../transaction/CDOMerger.ConflictException.html#%3Cinit%3E(java.lang.String,org.eclipse.emf.cdo.transaction.CDOMerger,org.eclipse.emf.cdo.common.commit.CDOChangeSetData)">ConflictException</a></span>&#8203;(java.lang.String&nbsp;message,
+                 <a href="../../../transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger,
+                 <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;result)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.spi.cdo">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.emf.cdo.view">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a> in <a href="../../../../../../../org/eclipse/emf/spi/cdo/package-summary.html">org.eclipse.emf.spi.cdo</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing subinterfaces, and an explanation">
-<caption><span>Subinterfaces of <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a> in <a href="../../../../../../../org/eclipse/emf/spi/cdo/package-summary.html">org.eclipse.emf.spi.cdo</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a> in <a href="../../../view/package-summary.html">org.eclipse.emf.cdo.view</a></h3>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../../view/package-summary.html">org.eclipse.emf.cdo.view</a> that return <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Interface and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOView.</span><code><span class="memberNameLink"><a href="../../../view/CDOView.html#compareRevisions(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">compareRevisions</a></span>&#8203;(<a href="../../branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</section>
+</li>
+<li class="blockList">
+<section role="region"><a id="org.eclipse.emf.cdo.workspace">
+<!--   -->
+</a>
+<h3>Uses of <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a> in <a href="../../../workspace/package-summary.html">org.eclipse.emf.cdo.workspace</a></h3>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../../workspace/package-summary.html">org.eclipse.emf.cdo.workspace</a> that return <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOWorkspace.</span><code><span class="memberNameLink"><a href="../../../workspace/CDOWorkspace.html#compare(java.lang.String)">compare</a></span>&#8203;(java.lang.String&nbsp;branchPath)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOWorkspace.</span><code><span class="memberNameLink"><a href="../../../workspace/CDOWorkspace.html#compare(java.lang.String,long)">compare</a></span>&#8203;(java.lang.String&nbsp;branchPath,
+       long&nbsp;timeStamp)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOWorkspace.</span><code><span class="memberNameLink"><a href="../../../workspace/CDOWorkspace.html#getLocalChanges()">getLocalChanges</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</section>
+</li>
+<li class="blockList">
+<section role="region"><a id="org.eclipse.emf.spi.cdo">
+<!--   -->
+</a>
+<h3>Uses of <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a> in <a href="../../../../spi/cdo/package-summary.html">org.eclipse.emf.spi.cdo</a></h3>
+<table class="useSummary">
+<caption><span>Subinterfaces of <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a> in <a href="../../../../spi/cdo/package-summary.html">org.eclipse.emf.spi.cdo</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/spi/cdo/InternalCDOSessionInvalidationEvent.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOSessionInvalidationEvent</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../../spi/cdo/InternalCDOSessionInvalidationEvent.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOSessionInvalidationEvent</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../../org/eclipse/emf/spi/cdo/package-summary.html">org.eclipse.emf.spi.cdo</a> that return <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../../../spi/cdo/package-summary.html">org.eclipse.emf.spi.cdo</a> that return <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
-<td class="colLast"><span class="typeNameLabel">CDOSessionInvalidationEventQueue.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/spi/cdo/CDOSessionInvalidationEventQueue.html#getChangeSetData--">getChangeSetData</a></span>()</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">As of 4.3 use <a href="../../../../../../../org/eclipse/emf/spi/cdo/CDOSessionInvalidationEventQueue.html#poll--"><code>CDOSessionInvalidationEventQueue.poll()</code></a>.</span></div>
+<td class="colFirst"><code><a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOSessionInvalidationEventQueue.</span><code><span class="memberNameLink"><a href="../../../../spi/cdo/CDOSessionInvalidationEventQueue.html#getChangeSetData()">getChangeSetData</a></span>()</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.3 use <a href="../../../../spi/cdo/CDOSessionInvalidationEventQueue.html#poll()"><code>CDOSessionInvalidationEventQueue.poll()</code></a>.</div>
 </div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
-<td class="colLast"><span class="typeNameLabel">InternalCDOTransaction.ApplyChangeSetResult.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.ApplyChangeSetResult.html#getChangeSetData--">getChangeSetData</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalCDOTransaction.ApplyChangeSetResult.</span><code><span class="memberNameLink"><a href="../../../../spi/cdo/InternalCDOTransaction.ApplyChangeSetResult.html#getChangeSetData()">getChangeSetData</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
-<td class="colLast"><span class="typeNameLabel">AbstractChangeSetsConflictResolver.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/spi/cdo/AbstractChangeSetsConflictResolver.html#getLocalChangeSetData--">getLocalChangeSetData</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">AbstractChangeSetsConflictResolver.</span><code><span class="memberNameLink"><a href="../../../../spi/cdo/AbstractChangeSetsConflictResolver.html#getLocalChangeSetData()">getLocalChangeSetData</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
-<td class="colLast"><span class="typeNameLabel">AbstractChangeSetsConflictResolver.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/spi/cdo/AbstractChangeSetsConflictResolver.html#getRemoteChangeSetData--">getRemoteChangeSetData</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">AbstractChangeSetsConflictResolver.</span><code><span class="memberNameLink"><a href="../../../../spi/cdo/AbstractChangeSetsConflictResolver.html#getRemoteChangeSetData()">getRemoteChangeSetData</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
-<td class="colLast"><span class="typeNameLabel">DefaultCDOMerger.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.html#getResult--">getResult</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">DefaultCDOMerger.</span><code><span class="memberNameLink"><a href="../../../../spi/cdo/DefaultCDOMerger.html#getResult()">getResult</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>protected <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
-<td class="colLast"><span class="typeNameLabel">CDOMergingConflictResolver.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/spi/cdo/CDOMergingConflictResolver.html#handleConflict-org.eclipse.emf.cdo.common.commit.CDOChangeSetData-">handleConflict</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;result)</code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOMergingConflictResolver.</span><code><span class="memberNameLink"><a href="../../../../spi/cdo/CDOMergingConflictResolver.html#handleConflict(org.eclipse.emf.cdo.common.commit.CDOChangeSetData)">handleConflict</a></span>&#8203;(<a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;result)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>[]</code></td>
-<td class="colLast"><span class="typeNameLabel">CDOSessionProtocol.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#loadChangeSets-org.eclipse.emf.cdo.common.branch.CDOBranchPointRange...-">loadChangeSets</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPointRange.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPointRange</a>...&nbsp;ranges)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>[]</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOSessionProtocol.</span><code><span class="memberNameLink"><a href="../../../../spi/cdo/CDOSessionProtocol.html#loadChangeSets(org.eclipse.emf.cdo.common.branch.CDOBranchPointRange...)">loadChangeSets</a></span>&#8203;(<a href="../../branch/CDOBranchPointRange.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPointRange</a>...&nbsp;ranges)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
-<td class="colLast"><span class="typeNameLabel">DefaultCDOMerger.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.html#merge-org.eclipse.emf.cdo.common.commit.CDOChangeSet-org.eclipse.emf.cdo.common.commit.CDOChangeSet-">merge</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</a>&nbsp;target,
-     <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</a>&nbsp;source)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">DefaultCDOMerger.</span><code><span class="memberNameLink"><a href="../../../../spi/cdo/DefaultCDOMerger.html#merge(org.eclipse.emf.cdo.common.commit.CDOChangeSet,org.eclipse.emf.cdo.common.commit.CDOChangeSet)">merge</a></span>&#8203;(<a href="../CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</a>&nbsp;target,
+     <a href="../CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</a>&nbsp;source)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../../org/eclipse/emf/spi/cdo/package-summary.html">org.eclipse.emf.spi.cdo</a> that return types with arguments of type <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../../../spi/cdo/package-summary.html">org.eclipse.emf.spi.cdo</a> that return types with arguments of type <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Pair.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Pair</a>&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>,<a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Pair.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Pair</a>&lt;java.util.Map&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;,java.util.List&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&gt;&gt;</code></td>
-<td class="colLast"><span class="typeNameLabel">InternalCDOTransaction.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html#applyChangeSetData-org.eclipse.emf.cdo.common.commit.CDOChangeSetData-org.eclipse.emf.cdo.common.revision.CDORevisionProvider-org.eclipse.emf.cdo.common.revision.CDORevisionProvider-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-">applyChangeSetData</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;changeSetData,
-                  <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;targetBaseProvider,
-                  <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;targetProvider,
-                  <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">Use
-             <a href="../../../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html#applyChangeSet-org.eclipse.emf.cdo.common.commit.CDOChangeSetData-org.eclipse.emf.cdo.common.revision.CDORevisionProvider-org.eclipse.emf.cdo.common.revision.CDORevisionProvider-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-boolean-"><code>InternalCDOTransaction.applyChangeSet(CDOChangeSetData, CDORevisionProvider, CDORevisionProvider, CDOBranchPoint, boolean)</code></a></span></div>
+<td class="colFirst"><code>org.eclipse.net4j.util.collection.Pair&lt;<a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>,&#8203;org.eclipse.net4j.util.collection.Pair&lt;java.util.Map&lt;<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,&#8203;<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;,&#8203;java.util.List&lt;<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&gt;&gt;</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalCDOTransaction.</span><code><span class="memberNameLink"><a href="../../../../spi/cdo/InternalCDOTransaction.html#applyChangeSetData(org.eclipse.emf.cdo.common.commit.CDOChangeSetData,org.eclipse.emf.cdo.common.revision.CDORevisionProvider,org.eclipse.emf.cdo.common.revision.CDORevisionProvider,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">applyChangeSetData</a></span>&#8203;(<a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;changeSetData,
+                  <a href="../../revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;targetBaseProvider,
+                  <a href="../../revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;targetProvider,
+                  <a href="../../branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source)</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">Use
+             <a href="../../../../spi/cdo/InternalCDOTransaction.html#applyChangeSet(org.eclipse.emf.cdo.common.commit.CDOChangeSetData,org.eclipse.emf.cdo.common.revision.CDORevisionProvider,org.eclipse.emf.cdo.common.revision.CDORevisionProvider,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,boolean)"><code>InternalCDOTransaction.applyChangeSet(CDOChangeSetData, CDORevisionProvider, CDORevisionProvider, CDOBranchPoint, boolean)</code></a></div>
 </div>
 </td>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../../org/eclipse/emf/spi/cdo/package-summary.html">org.eclipse.emf.spi.cdo</a> with parameters of type <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../../../spi/cdo/package-summary.html">org.eclipse.emf.spi.cdo</a> with parameters of type <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.ApplyChangeSetResult.html" title="class in org.eclipse.emf.spi.cdo">InternalCDOTransaction.ApplyChangeSetResult</a></code></td>
-<td class="colLast"><span class="typeNameLabel">InternalCDOTransaction.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html#applyChangeSet-org.eclipse.emf.cdo.common.commit.CDOChangeSetData-org.eclipse.emf.cdo.common.revision.CDORevisionProvider-org.eclipse.emf.cdo.common.revision.CDORevisionProvider-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-boolean-">applyChangeSet</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;changeSetData,
-              <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;targetBaseProvider,
-              <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;targetProvider,
-              <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source,
-              boolean&nbsp;keepVersions)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../../../../spi/cdo/InternalCDOTransaction.ApplyChangeSetResult.html" title="class in org.eclipse.emf.spi.cdo">InternalCDOTransaction.ApplyChangeSetResult</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalCDOTransaction.</span><code><span class="memberNameLink"><a href="../../../../spi/cdo/InternalCDOTransaction.html#applyChangeSet(org.eclipse.emf.cdo.common.commit.CDOChangeSetData,org.eclipse.emf.cdo.common.revision.CDORevisionProvider,org.eclipse.emf.cdo.common.revision.CDORevisionProvider,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,boolean)">applyChangeSet</a></span>&#8203;(<a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;changeSetData,
+              <a href="../../revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;targetBaseProvider,
+              <a href="../../revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;targetProvider,
+              <a href="../../branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source,
+              boolean&nbsp;keepVersions)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Pair.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Pair</a>&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>,<a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Pair.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Pair</a>&lt;java.util.Map&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;,java.util.List&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&gt;&gt;</code></td>
-<td class="colLast"><span class="typeNameLabel">InternalCDOTransaction.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html#applyChangeSetData-org.eclipse.emf.cdo.common.commit.CDOChangeSetData-org.eclipse.emf.cdo.common.revision.CDORevisionProvider-org.eclipse.emf.cdo.common.revision.CDORevisionProvider-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-">applyChangeSetData</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;changeSetData,
-                  <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;targetBaseProvider,
-                  <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;targetProvider,
-                  <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">Use
-             <a href="../../../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html#applyChangeSet-org.eclipse.emf.cdo.common.commit.CDOChangeSetData-org.eclipse.emf.cdo.common.revision.CDORevisionProvider-org.eclipse.emf.cdo.common.revision.CDORevisionProvider-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-boolean-"><code>InternalCDOTransaction.applyChangeSet(CDOChangeSetData, CDORevisionProvider, CDORevisionProvider, CDOBranchPoint, boolean)</code></a></span></div>
+<td class="colFirst"><code>org.eclipse.net4j.util.collection.Pair&lt;<a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>,&#8203;org.eclipse.net4j.util.collection.Pair&lt;java.util.Map&lt;<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,&#8203;<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;,&#8203;java.util.List&lt;<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&gt;&gt;</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalCDOTransaction.</span><code><span class="memberNameLink"><a href="../../../../spi/cdo/InternalCDOTransaction.html#applyChangeSetData(org.eclipse.emf.cdo.common.commit.CDOChangeSetData,org.eclipse.emf.cdo.common.revision.CDORevisionProvider,org.eclipse.emf.cdo.common.revision.CDORevisionProvider,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">applyChangeSetData</a></span>&#8203;(<a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;changeSetData,
+                  <a href="../../revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;targetBaseProvider,
+                  <a href="../../revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;targetProvider,
+                  <a href="../../branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source)</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">Use
+             <a href="../../../../spi/cdo/InternalCDOTransaction.html#applyChangeSet(org.eclipse.emf.cdo.common.commit.CDOChangeSetData,org.eclipse.emf.cdo.common.revision.CDORevisionProvider,org.eclipse.emf.cdo.common.revision.CDORevisionProvider,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,boolean)"><code>InternalCDOTransaction.applyChangeSet(CDOChangeSetData, CDORevisionProvider, CDORevisionProvider, CDOBranchPoint, boolean)</code></a></div>
 </div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>protected <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
-<td class="colLast"><span class="typeNameLabel">CDOMergingConflictResolver.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/spi/cdo/CDOMergingConflictResolver.html#handleConflict-org.eclipse.emf.cdo.common.commit.CDOChangeSetData-">handleConflict</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;result)</code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOMergingConflictResolver.</span><code><span class="memberNameLink"><a href="../../../../spi/cdo/CDOMergingConflictResolver.html#handleConflict(org.eclipse.emf.cdo.common.commit.CDOChangeSetData)">handleConflict</a></span>&#8203;(<a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;result)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
 </ul>
 </li>
 </ul>
 </div>
+</main>
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../../index.html">Overview</a></li>
 <li><a href="../package-summary.html">Package</a></li>
-<li><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">Class</a></li>
+<li><a href="../CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">Class</a></li>
 <li class="navBarCell1Rev">Use</li>
+<li><a href="../package-tree.html">Tree</a></li>
 <li><a href="../../../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../../../help-doc.html">Help</a></li>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev</li>
-<li>Next</li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../../index.html?org/eclipse/emf/cdo/common/commit/class-use/CDOChangeSetData.html" target="_top">Frames</a></li>
-<li><a href="CDOChangeSetData.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -908,11 +1080,16 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>ConfirmationDialog (Net4j Utilities Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":9};
+var data = {"i0":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/ConfirmationDialog.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev&nbsp;Class</li>
-<li><a href="../../../../../../org/eclipse/net4j/util/ui/confirmation/InteractiveConfirmationProvider.html" title="class in org.eclipse.net4j.util.ui.confirmation"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/net4j/util/ui/confirmation/ConfirmationDialog.html" target="_top">Frames</a></li>
-<li><a href="ConfirmationDialog.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,12 +82,15 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li><a href="#nested.classes.inherited.from.class.org.eclipse.jface.window.Window">Nested</a>&nbsp;|&nbsp;</li>
-<li><a href="#fields.inherited.from.class.org.eclipse.jface.dialogs.MessageDialog">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
@@ -85,13 +101,22 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.net4j.util.ui.confirmation</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.net4j.util.ui.confirmation</a></div>
 <h2 title="Class ConfirmationDialog" class="title">Class ConfirmationDialog</h2>
 </div>
 <div class="contentContainer">
@@ -99,16 +124,16 @@ var activeTableTab = "activeTableTab";
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true" title="class or interface in org.eclipse.jface.window">org.eclipse.jface.window.Window</a></li>
+<li><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true" title="class or interface in org.eclipse.jface.window" class="externalLink">org.eclipse.jface.window.Window</a></li>
 <li>
 <ul class="inheritance">
-<li><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true" title="class or interface in org.eclipse.jface.dialogs">org.eclipse.jface.dialogs.Dialog</a></li>
+<li><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">org.eclipse.jface.dialogs.Dialog</a></li>
 <li>
 <ul class="inheritance">
-<li><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IconAndMessageDialog.html?is-external=true" title="class or interface in org.eclipse.jface.dialogs">org.eclipse.jface.dialogs.IconAndMessageDialog</a></li>
+<li><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IconAndMessageDialog.html?is-external=true" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">org.eclipse.jface.dialogs.IconAndMessageDialog</a></li>
 <li>
 <ul class="inheritance">
-<li><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true" title="class or interface in org.eclipse.jface.dialogs">org.eclipse.jface.dialogs.MessageDialog</a></li>
+<li><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">org.eclipse.jface.dialogs.MessageDialog</a></li>
 <li>
 <ul class="inheritance">
 <li>org.eclipse.net4j.util.ui.confirmation.ConfirmationDialog</li>
@@ -128,12 +153,11 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/IShellProvider.html?is-external=true" title="class or interface in org.eclipse.jface.window">IShellProvider</a></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/IShellProvider.html?is-external=true" title="class or interface in org.eclipse.jface.window" class="externalLink">IShellProvider</a></code></dd>
 </dl>
 <hr>
-<br>
 <pre>public class <span class="typeNameLabel">ConfirmationDialog</span>
-extends <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true" title="class or interface in org.eclipse.jface.dialogs">MessageDialog</a></pre>
+extends <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">MessageDialog</a></pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.4</dd>
@@ -147,128 +171,139 @@ extends <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/ref
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="nested.class.summary">
+<li class="blockList"><a id="nested.class.summary">
 <!--   -->
 </a>
 <h3>Nested Class Summary</h3>
 <ul class="blockList">
-<li class="blockList"><a name="nested.classes.inherited.from.class.org.eclipse.jface.window.Window">
+<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.jface.window.Window">
 <!--   -->
 </a>
-<h3>Nested classes/interfaces inherited from class&nbsp;org.eclipse.jface.window.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true" title="class or interface in org.eclipse.jface.window">Window</a></h3>
-<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.IExceptionHandler.html?is-external=true" title="class or interface in org.eclipse.jface.window">Window.IExceptionHandler</a></code></li>
+<h3>Nested classes/interfaces inherited from class&nbsp;org.eclipse.jface.window.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true" title="class or interface in org.eclipse.jface.window" class="externalLink">Window</a></h3>
+<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.IExceptionHandler.html?is-external=true" title="class or interface in org.eclipse.jface.window" class="externalLink">Window.IExceptionHandler</a></code></li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- =========== FIELD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.summary">
+<li class="blockList"><a id="field.summary">
 <!--   -->
 </a>
 <h3>Field Summary</h3>
 <ul class="blockList">
-<li class="blockList"><a name="fields.inherited.from.class.org.eclipse.jface.dialogs.MessageDialog">
+<li class="blockList"><a id="fields.inherited.from.class.org.eclipse.jface.dialogs.MessageDialog">
 <!--   -->
 </a>
-<h3>Fields inherited from class&nbsp;org.eclipse.jface.dialogs.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true" title="class or interface in org.eclipse.jface.dialogs">MessageDialog</a></h3>
-<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#CONFIRM" title="class or interface in org.eclipse.jface.dialogs">CONFIRM</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#ERROR" title="class or interface in org.eclipse.jface.dialogs">ERROR</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#INFORMATION" title="class or interface in org.eclipse.jface.dialogs">INFORMATION</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#NONE" title="class or interface in org.eclipse.jface.dialogs">NONE</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#QUESTION" title="class or interface in org.eclipse.jface.dialogs">QUESTION</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#QUESTION_WITH_CANCEL" title="class or interface in org.eclipse.jface.dialogs">QUESTION_WITH_CANCEL</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#WARNING" title="class or interface in org.eclipse.jface.dialogs">WARNING</a></code></li>
+<h3>Fields inherited from class&nbsp;org.eclipse.jface.dialogs.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">MessageDialog</a></h3>
+<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#CONFIRM" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">CONFIRM</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#ERROR" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">ERROR</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#INFORMATION" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">INFORMATION</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#NONE" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">NONE</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#QUESTION" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">QUESTION</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#QUESTION_WITH_CANCEL" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">QUESTION_WITH_CANCEL</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#WARNING" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">WARNING</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="fields.inherited.from.class.org.eclipse.jface.dialogs.IconAndMessageDialog">
+<li class="blockList"><a id="fields.inherited.from.class.org.eclipse.jface.dialogs.IconAndMessageDialog">
 <!--   -->
 </a>
-<h3>Fields inherited from class&nbsp;org.eclipse.jface.dialogs.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IconAndMessageDialog.html?is-external=true" title="class or interface in org.eclipse.jface.dialogs">IconAndMessageDialog</a></h3>
-<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IconAndMessageDialog.html?is-external=true#imageLabel" title="class or interface in org.eclipse.jface.dialogs">imageLabel</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IconAndMessageDialog.html?is-external=true#message" title="class or interface in org.eclipse.jface.dialogs">message</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IconAndMessageDialog.html?is-external=true#messageLabel" title="class or interface in org.eclipse.jface.dialogs">messageLabel</a></code></li>
+<h3>Fields inherited from class&nbsp;org.eclipse.jface.dialogs.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IconAndMessageDialog.html?is-external=true" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">IconAndMessageDialog</a></h3>
+<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IconAndMessageDialog.html?is-external=true#imageLabel" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">imageLabel</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IconAndMessageDialog.html?is-external=true#message" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">message</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IconAndMessageDialog.html?is-external=true#messageLabel" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">messageLabel</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="fields.inherited.from.class.org.eclipse.jface.dialogs.Dialog">
+<li class="blockList"><a id="fields.inherited.from.class.org.eclipse.jface.dialogs.Dialog">
 <!--   -->
 </a>
-<h3>Fields inherited from class&nbsp;org.eclipse.jface.dialogs.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true" title="class or interface in org.eclipse.jface.dialogs">Dialog</a></h3>
-<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#blockedHandler" title="class or interface in org.eclipse.jface.dialogs">blockedHandler</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#buttonBar" title="class or interface in org.eclipse.jface.dialogs">buttonBar</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#DIALOG_DEFAULT_BOUNDS" title="class or interface in org.eclipse.jface.dialogs">DIALOG_DEFAULT_BOUNDS</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#DIALOG_PERSISTLOCATION" title="class or interface in org.eclipse.jface.dialogs">DIALOG_PERSISTLOCATION</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#DIALOG_PERSISTSIZE" title="class or interface in org.eclipse.jface.dialogs">DIALOG_PERSISTSIZE</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#dialogArea" title="class or interface in org.eclipse.jface.dialogs">dialogArea</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#DLG_IMG_ERROR" title="class or interface in org.eclipse.jface.dialogs">DLG_IMG_ERROR</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#DLG_IMG_HELP" title="class or interface in org.eclipse.jface.dialogs">DLG_IMG_HELP</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#DLG_IMG_INFO" title="class or interface in org.eclipse.jface.dialogs">DLG_IMG_INFO</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#DLG_IMG_MESSAGE_ERROR" title="class or interface in org.eclipse.jface.dialogs">DLG_IMG_MESSAGE_ERROR</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#DLG_IMG_MESSAGE_INFO" title="class or interface in org.eclipse.jface.dialogs">DLG_IMG_MESSAGE_INFO</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#DLG_IMG_MESSAGE_WARNING" title="class or interface in org.eclipse.jface.dialogs">DLG_IMG_MESSAGE_WARNING</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#DLG_IMG_QUESTION" title="class or interface in org.eclipse.jface.dialogs">DLG_IMG_QUESTION</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#DLG_IMG_WARNING" title="class or interface in org.eclipse.jface.dialogs">DLG_IMG_WARNING</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#ELLIPSIS" title="class or interface in org.eclipse.jface.dialogs">ELLIPSIS</a></code></li>
+<h3>Fields inherited from class&nbsp;org.eclipse.jface.dialogs.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">Dialog</a></h3>
+<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#blockedHandler" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">blockedHandler</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#buttonBar" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">buttonBar</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#DIALOG_DEFAULT_BOUNDS" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">DIALOG_DEFAULT_BOUNDS</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#DIALOG_PERSISTLOCATION" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">DIALOG_PERSISTLOCATION</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#DIALOG_PERSISTSIZE" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">DIALOG_PERSISTSIZE</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#dialogArea" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">dialogArea</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#DLG_IMG_ERROR" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">DLG_IMG_ERROR</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#DLG_IMG_HELP" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">DLG_IMG_HELP</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#DLG_IMG_INFO" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">DLG_IMG_INFO</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#DLG_IMG_MESSAGE_ERROR" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">DLG_IMG_MESSAGE_ERROR</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#DLG_IMG_MESSAGE_INFO" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">DLG_IMG_MESSAGE_INFO</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#DLG_IMG_MESSAGE_WARNING" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">DLG_IMG_MESSAGE_WARNING</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#DLG_IMG_QUESTION" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">DLG_IMG_QUESTION</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#DLG_IMG_WARNING" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">DLG_IMG_WARNING</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#ELLIPSIS" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">ELLIPSIS</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="fields.inherited.from.class.org.eclipse.jface.window.Window">
+<li class="blockList"><a id="fields.inherited.from.class.org.eclipse.jface.window.Window">
 <!--   -->
 </a>
-<h3>Fields inherited from class&nbsp;org.eclipse.jface.window.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true" title="class or interface in org.eclipse.jface.window">Window</a></h3>
-<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#CANCEL" title="class or interface in org.eclipse.jface.window">CANCEL</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#OK" title="class or interface in org.eclipse.jface.window">OK</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#resizeHasOccurred" title="class or interface in org.eclipse.jface.window">resizeHasOccurred</a></code></li>
+<h3>Fields inherited from class&nbsp;org.eclipse.jface.window.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true" title="class or interface in org.eclipse.jface.window" class="externalLink">Window</a></h3>
+<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#CANCEL" title="class or interface in org.eclipse.jface.window" class="externalLink">CANCEL</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#OK" title="class or interface in org.eclipse.jface.window" class="externalLink">OK</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#resizeHasOccurred" title="class or interface in org.eclipse.jface.window" class="externalLink">resizeHasOccurred</a></code></li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.summary">
+<li class="blockList"><a id="constructor.summary">
 <!--   -->
 </a>
 <h3>Constructor Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
+<table class="memberSummary">
 <caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Constructor and Description</th>
+<th class="colFirst" scope="col">Constructor</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/confirmation/ConfirmationDialog.html#ConfirmationDialog-org.eclipse.swt.widgets.Shell-java.lang.String-java.lang.String-java.util.Set-org.eclipse.net4j.util.confirmation.Confirmation-">ConfirmationDialog</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Shell.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Shell</a>&nbsp;shell,
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(org.eclipse.swt.widgets.Shell,java.lang.String,java.lang.String,java.util.Set,org.eclipse.net4j.util.confirmation.Confirmation)">ConfirmationDialog</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Shell.html?is-external=true" title="class or interface in org.eclipse.swt.widgets" class="externalLink">Shell</a>&nbsp;shell,
                   java.lang.String&nbsp;title,
                   java.lang.String&nbsp;message,
-                  java.util.Set&lt;<a href="../../../../../../org/eclipse/net4j/util/confirmation/Confirmation.html" title="enum in org.eclipse.net4j.util.confirmation">Confirmation</a>&gt;&nbsp;acceptableResponses,
-                  <a href="../../../../../../org/eclipse/net4j/util/confirmation/Confirmation.html" title="enum in org.eclipse.net4j.util.confirmation">Confirmation</a>&nbsp;suggestedResponse)</code>&nbsp;</td>
+                  java.util.Set&lt;<a href="../../confirmation/Confirmation.html" title="enum in org.eclipse.net4j.util.confirmation">Confirmation</a>&gt;&nbsp;acceptableResponses,
+                  <a href="../../confirmation/Confirmation.html" title="enum in org.eclipse.net4j.util.confirmation">Confirmation</a>&nbsp;suggestedResponse)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/net4j/util/confirmation/Confirmation.html" title="enum in org.eclipse.net4j.util.confirmation">Confirmation</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/confirmation/ConfirmationDialog.html#openConfirm-org.eclipse.swt.widgets.Shell-java.lang.String-java.lang.String-java.util.Set-org.eclipse.net4j.util.confirmation.Confirmation-">openConfirm</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Shell.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Shell</a>&nbsp;shell,
+<td class="colFirst"><code>static <a href="../../confirmation/Confirmation.html" title="enum in org.eclipse.net4j.util.confirmation">Confirmation</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#openConfirm(org.eclipse.swt.widgets.Shell,java.lang.String,java.lang.String,java.util.Set,org.eclipse.net4j.util.confirmation.Confirmation)">openConfirm</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Shell.html?is-external=true" title="class or interface in org.eclipse.swt.widgets" class="externalLink">Shell</a>&nbsp;shell,
            java.lang.String&nbsp;title,
            java.lang.String&nbsp;message,
-           java.util.Set&lt;<a href="../../../../../../org/eclipse/net4j/util/confirmation/Confirmation.html" title="enum in org.eclipse.net4j.util.confirmation">Confirmation</a>&gt;&nbsp;acceptableResponses,
-           <a href="../../../../../../org/eclipse/net4j/util/confirmation/Confirmation.html" title="enum in org.eclipse.net4j.util.confirmation">Confirmation</a>&nbsp;suggestedResponse)</code>&nbsp;</td>
+           java.util.Set&lt;<a href="../../confirmation/Confirmation.html" title="enum in org.eclipse.net4j.util.confirmation">Confirmation</a>&gt;&nbsp;acceptableResponses,
+           <a href="../../confirmation/Confirmation.html" title="enum in org.eclipse.net4j.util.confirmation">Confirmation</a>&nbsp;suggestedResponse)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.jface.dialogs.MessageDialog">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.jface.dialogs.MessageDialog">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.jface.dialogs.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true" title="class or interface in org.eclipse.jface.dialogs">MessageDialog</a></h3>
-<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#buttonPressed-int-" title="class or interface in org.eclipse.jface.dialogs">buttonPressed</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#configureShell-org.eclipse.swt.widgets.Shell-" title="class or interface in org.eclipse.jface.dialogs">configureShell</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#createButton-org.eclipse.swt.widgets.Composite-int-java.lang.String-boolean-" title="class or interface in org.eclipse.jface.dialogs">createButton</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#createButtonsForButtonBar-org.eclipse.swt.widgets.Composite-" title="class or interface in org.eclipse.jface.dialogs">createButtonsForButtonBar</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#createCustomArea-org.eclipse.swt.widgets.Composite-" title="class or interface in org.eclipse.jface.dialogs">createCustomArea</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#createDialogArea-org.eclipse.swt.widgets.Composite-" title="class or interface in org.eclipse.jface.dialogs">createDialogArea</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#customShouldTakeFocus--" title="class or interface in org.eclipse.jface.dialogs">customShouldTakeFocus</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#getButton-int-" title="class or interface in org.eclipse.jface.dialogs">getButton</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#getButtonLabels--" title="class or interface in org.eclipse.jface.dialogs">getButtonLabels</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#getDefaultButtonIndex--" title="class or interface in org.eclipse.jface.dialogs">getDefaultButtonIndex</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#getImage--" title="class or interface in org.eclipse.jface.dialogs">getImage</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#getMinimumMessageWidth--" title="class or interface in org.eclipse.jface.dialogs">getMinimumMessageWidth</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#handleShellCloseEvent--" title="class or interface in org.eclipse.jface.dialogs">handleShellCloseEvent</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#open-int-org.eclipse.swt.widgets.Shell-java.lang.String-java.lang.String-int-" title="class or interface in org.eclipse.jface.dialogs">open</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#open-int-org.eclipse.swt.widgets.Shell-java.lang.String-java.lang.String-int-java.lang.String...-" title="class or interface in org.eclipse.jface.dialogs">open</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#openConfirm-org.eclipse.swt.widgets.Shell-java.lang.String-java.lang.String-" title="class or interface in org.eclipse.jface.dialogs">openConfirm</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#openError-org.eclipse.swt.widgets.Shell-java.lang.String-java.lang.String-" title="class or interface in org.eclipse.jface.dialogs">openError</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#openInformation-org.eclipse.swt.widgets.Shell-java.lang.String-java.lang.String-" title="class or interface in org.eclipse.jface.dialogs">openInformation</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#openQuestion-org.eclipse.swt.widgets.Shell-java.lang.String-java.lang.String-" title="class or interface in org.eclipse.jface.dialogs">openQuestion</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#openWarning-org.eclipse.swt.widgets.Shell-java.lang.String-java.lang.String-" title="class or interface in org.eclipse.jface.dialogs">openWarning</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#setButtonLabels-java.lang.String...-" title="class or interface in org.eclipse.jface.dialogs">setButtonLabels</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#setButtons-org.eclipse.swt.widgets.Button...-" title="class or interface in org.eclipse.jface.dialogs">setButtons</a></code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.jface.dialogs.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">MessageDialog</a></h3>
+<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#buttonPressed(int)" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">buttonPressed</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#configureShell(org.eclipse.swt.widgets.Shell)" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">configureShell</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#createButton(org.eclipse.swt.widgets.Composite,int,java.lang.String,boolean)" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">createButton</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#createButtonsForButtonBar(org.eclipse.swt.widgets.Composite)" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">createButtonsForButtonBar</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#createCustomArea(org.eclipse.swt.widgets.Composite)" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">createCustomArea</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#createDialogArea(org.eclipse.swt.widgets.Composite)" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">createDialogArea</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#customShouldTakeFocus()" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">customShouldTakeFocus</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#getButton(int)" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">getButton</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#getButtonLabels()" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">getButtonLabels</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#getDefaultButtonIndex()" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">getDefaultButtonIndex</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#getImage()" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">getImage</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#getMinimumMessageWidth()" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">getMinimumMessageWidth</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#handleShellCloseEvent()" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">handleShellCloseEvent</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#open(int,org.eclipse.swt.widgets.Shell,java.lang.String,java.lang.String,int)" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">open</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#open(int,org.eclipse.swt.widgets.Shell,java.lang.String,java.lang.String,int,java.lang.String...)" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">open</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#openConfirm(org.eclipse.swt.widgets.Shell,java.lang.String,java.lang.String)" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">openConfirm</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#openError(org.eclipse.swt.widgets.Shell,java.lang.String,java.lang.String)" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">openError</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#openInformation(org.eclipse.swt.widgets.Shell,java.lang.String,java.lang.String)" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">openInformation</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#openQuestion(org.eclipse.swt.widgets.Shell,java.lang.String,java.lang.String)" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">openQuestion</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#openWarning(org.eclipse.swt.widgets.Shell,java.lang.String,java.lang.String)" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">openWarning</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#setButtonLabels(java.lang.String...)" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">setButtonLabels</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/MessageDialog.html?is-external=true#setButtons(org.eclipse.swt.widgets.Button...)" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">setButtons</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.jface.dialogs.IconAndMessageDialog">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.jface.dialogs.IconAndMessageDialog">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.jface.dialogs.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IconAndMessageDialog.html?is-external=true" title="class or interface in org.eclipse.jface.dialogs">IconAndMessageDialog</a></h3>
-<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IconAndMessageDialog.html?is-external=true#createButtonBar-org.eclipse.swt.widgets.Composite-" title="class or interface in org.eclipse.jface.dialogs">createButtonBar</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IconAndMessageDialog.html?is-external=true#createContents-org.eclipse.swt.widgets.Composite-" title="class or interface in org.eclipse.jface.dialogs">createContents</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IconAndMessageDialog.html?is-external=true#createDialogAndButtonArea-org.eclipse.swt.widgets.Composite-" title="class or interface in org.eclipse.jface.dialogs">createDialogAndButtonArea</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IconAndMessageDialog.html?is-external=true#createMessageArea-org.eclipse.swt.widgets.Composite-" title="class or interface in org.eclipse.jface.dialogs">createMessageArea</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IconAndMessageDialog.html?is-external=true#getErrorImage--" title="class or interface in org.eclipse.jface.dialogs">getErrorImage</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IconAndMessageDialog.html?is-external=true#getInfoImage--" title="class or interface in org.eclipse.jface.dialogs">getInfoImage</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IconAndMessageDialog.html?is-external=true#getMessageLabelStyle--" title="class or interface in org.eclipse.jface.dialogs">getMessageLabelStyle</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IconAndMessageDialog.html?is-external=true#getQuestionImage--" title="class or interface in org.eclipse.jface.dialogs">getQuestionImage</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IconAndMessageDialog.html?is-external=true#getWarningImage--" title="class or interface in org.eclipse.jface.dialogs">getWarningImage</a></code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.jface.dialogs.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IconAndMessageDialog.html?is-external=true" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">IconAndMessageDialog</a></h3>
+<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IconAndMessageDialog.html?is-external=true#createButtonBar(org.eclipse.swt.widgets.Composite)" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">createButtonBar</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IconAndMessageDialog.html?is-external=true#createContents(org.eclipse.swt.widgets.Composite)" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">createContents</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IconAndMessageDialog.html?is-external=true#createDialogAndButtonArea(org.eclipse.swt.widgets.Composite)" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">createDialogAndButtonArea</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IconAndMessageDialog.html?is-external=true#createMessageArea(org.eclipse.swt.widgets.Composite)" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">createMessageArea</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IconAndMessageDialog.html?is-external=true#getColumnCount()" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">getColumnCount</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IconAndMessageDialog.html?is-external=true#getErrorImage()" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">getErrorImage</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IconAndMessageDialog.html?is-external=true#getInfoImage()" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">getInfoImage</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IconAndMessageDialog.html?is-external=true#getMessageLabelStyle()" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">getMessageLabelStyle</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IconAndMessageDialog.html?is-external=true#getQuestionImage()" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">getQuestionImage</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IconAndMessageDialog.html?is-external=true#getWarningImage()" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">getWarningImage</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.jface.dialogs.Dialog">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.jface.dialogs.Dialog">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.jface.dialogs.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true" title="class or interface in org.eclipse.jface.dialogs">Dialog</a></h3>
-<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#applyDialogFont-org.eclipse.swt.widgets.Control-" title="class or interface in org.eclipse.jface.dialogs">applyDialogFont</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#cancelPressed--" title="class or interface in org.eclipse.jface.dialogs">cancelPressed</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#close--" title="class or interface in org.eclipse.jface.dialogs">close</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#convertHeightInCharsToPixels-org.eclipse.swt.graphics.FontMetrics-int-" title="class or interface in org.eclipse.jface.dialogs">convertHeightInCharsToPixels</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#convertHeightInCharsToPixels-int-" title="class or interface in org.eclipse.jface.dialogs">convertHeightInCharsToPixels</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#convertHorizontalDLUsToPixels-org.eclipse.swt.graphics.FontMetrics-int-" title="class or interface in org.eclipse.jface.dialogs">convertHorizontalDLUsToPixels</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#convertHorizontalDLUsToPixels-int-" title="class or interface in org.eclipse.jface.dialogs">convertHorizontalDLUsToPixels</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#convertVerticalDLUsToPixels-org.eclipse.swt.graphics.FontMetrics-int-" title="class or interface in org.eclipse.jface.dialogs">convertVerticalDLUsToPixels</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#convertVerticalDLUsToPixels-int-" title="class or interface in org.eclipse.jface.dialogs">convertVerticalDLUsToPixels</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#convertWidthInCharsToPixels-org.eclipse.swt.graphics.FontMetrics-int-" title="class or interface in org.eclipse.jface.dialogs">convertWidthInCharsToPixels</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#convertWidthInCharsToPixels-int-" title="class or interface in org.eclipse.jface.dialogs">convertWidthInCharsToPixels</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#create--" title="class or interface in org.eclipse.jface.dialogs">create</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#dialogFontIsDefault--" title="class or interface in org.eclipse.jface.dialogs">dialogFontIsDefault</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#getBlockedHandler--" title="class or interface in org.eclipse.jface.dialogs">getBlockedHandler</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#getButtonBar--" title="class or interface in org.eclipse.jface.dialogs">getButtonBar</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#getCancelButton--" title="class or interface in org.eclipse.jface.dialogs">getCancelButton</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#getDialogArea--" title="class or interface in org.eclipse.jface.dialogs">getDialogArea</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#getDialogBoundsSettings--" title="class or interface in org.eclipse.jface.dialogs">getDialogBoundsSettings</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#getDialogBoundsStrategy--" title="class or interface in org.eclipse.jface.dialogs">getDialogBoundsStrategy</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#getImage-java.lang.String-" title="class or interface in org.eclipse.jface.dialogs">getImage</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#getInitialLocation-org.eclipse.swt.graphics.Point-" title="class or interface in org.eclipse.jface.dialogs">getInitialLocation</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#getInitialSize--" title="class or interface in org.eclipse.jface.dialogs">getInitialSize</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#getOKButton--" title="class or interface in org.eclipse.jface.dialogs">getOKButton</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#initializeBounds--" title="class or interface in org.eclipse.jface.dialogs">initializeBounds</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#initializeDialogUnits-org.eclipse.swt.widgets.Control-" title="class or interface in org.eclipse.jface.dialogs">initializeDialogUnits</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#isResizable--" title="class or interface in org.eclipse.jface.dialogs">isResizable</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#okPressed--" title="class or interface in org.eclipse.jface.dialogs">okPressed</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#setBlockedHandler-org.eclipse.jface.dialogs.IDialogBlockedHandler-" title="class or interface in org.eclipse.jface.dialogs">setBlockedHandler</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#setButtonLayoutData-org.eclipse.swt.widgets.Button-" title="class or interface in org.eclipse.jface.dialogs">setButtonLayoutData</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#setButtonLayoutFormData-org.eclipse.swt.widgets.Button-" title="class or interface in org.eclipse.jface.dialogs">setButtonLayoutFormData</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#shortenText-java.lang.String-org.eclipse.swt.widgets.Control-" title="class or interface in org.eclipse.jface.dialogs">shortenText</a></code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.jface.dialogs.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">Dialog</a></h3>
+<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#applyDialogFont(org.eclipse.swt.widgets.Control)" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">applyDialogFont</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#cancelPressed()" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">cancelPressed</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#close()" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">close</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#convertHeightInCharsToPixels(int)" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">convertHeightInCharsToPixels</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#convertHeightInCharsToPixels(org.eclipse.swt.graphics.FontMetrics,int)" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">convertHeightInCharsToPixels</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#convertHorizontalDLUsToPixels(int)" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">convertHorizontalDLUsToPixels</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#convertHorizontalDLUsToPixels(org.eclipse.swt.graphics.FontMetrics,int)" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">convertHorizontalDLUsToPixels</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#convertVerticalDLUsToPixels(int)" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">convertVerticalDLUsToPixels</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#convertVerticalDLUsToPixels(org.eclipse.swt.graphics.FontMetrics,int)" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">convertVerticalDLUsToPixels</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#convertWidthInCharsToPixels(int)" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">convertWidthInCharsToPixels</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#convertWidthInCharsToPixels(org.eclipse.swt.graphics.FontMetrics,int)" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">convertWidthInCharsToPixels</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#create()" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">create</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#dialogFontIsDefault()" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">dialogFontIsDefault</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#getBlockedHandler()" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">getBlockedHandler</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#getButtonBar()" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">getButtonBar</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#getCancelButton()" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">getCancelButton</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#getDialogArea()" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">getDialogArea</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#getDialogBoundsSettings()" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">getDialogBoundsSettings</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#getDialogBoundsStrategy()" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">getDialogBoundsStrategy</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#getImage(java.lang.String)" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">getImage</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#getInitialLocation(org.eclipse.swt.graphics.Point)" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">getInitialLocation</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#getInitialSize()" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">getInitialSize</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#getOKButton()" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">getOKButton</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#initializeBounds()" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">initializeBounds</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#initializeDialogUnits(org.eclipse.swt.widgets.Control)" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">initializeDialogUnits</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#isResizable()" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">isResizable</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#okPressed()" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">okPressed</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#setBlockedHandler(org.eclipse.jface.dialogs.IDialogBlockedHandler)" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">setBlockedHandler</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#setButtonLayoutData(org.eclipse.swt.widgets.Button)" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">setButtonLayoutData</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#setButtonLayoutFormData(org.eclipse.swt.widgets.Button)" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">setButtonLayoutFormData</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#shortenText(java.lang.String,org.eclipse.swt.widgets.Control)" title="class or interface in org.eclipse.jface.dialogs" class="externalLink">shortenText</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.jface.window.Window">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.jface.window.Window">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.jface.window.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true" title="class or interface in org.eclipse.jface.window">Window</a></h3>
-<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#canHandleShellCloseEvent--" title="class or interface in org.eclipse.jface.window">canHandleShellCloseEvent</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#constrainShellSize--" title="class or interface in org.eclipse.jface.window">constrainShellSize</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#createShell--" title="class or interface in org.eclipse.jface.window">createShell</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#getConstrainedShellBounds-org.eclipse.swt.graphics.Rectangle-" title="class or interface in org.eclipse.jface.window">getConstrainedShellBounds</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#getContents--" title="class or interface in org.eclipse.jface.window">getContents</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#getDefaultImage--" title="class or interface in org.eclipse.jface.window">getDefaultImage</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#getDefaultImages--" title="class or interface in org.eclipse.jface.window">getDefaultImages</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#getDefaultOrientation--" title="class or interface in org.eclipse.jface.window">getDefaultOrientation</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#getLayout--" title="class or interface in org.eclipse.jface.window">getLayout</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#getParentShell--" title="class or interface in org.eclipse.jface.window">getParentShell</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#getReturnCode--" title="class or interface in org.eclipse.jface.window">getReturnCode</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#getShell--" title="class or interface in org.eclipse.jface.window">getShell</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#getShellListener--" title="class or interface in org.eclipse.jface.window">getShellListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#getShellStyle--" title="class or interface in org.eclipse.jface.window">getShellStyle</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#getWindowManager--" title="class or interface in org.eclipse.jface.window">getWindowManager</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#handleFontChange-org.eclipse.jface.util.PropertyChangeEvent-" title="class or interface in org.eclipse.jface.window">handleFontChange</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#open--" title="class or interface in org.eclipse.jface.window">open</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#setBlockOnOpen-boolean-" title="class or interface in org.eclipse.jface.window">setBlockOnOpen</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#setDefaultImage-org.eclipse.swt.graphics.Image-" title="class or interface in org.eclipse.jface.window">setDefaultImage</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#setDefaultImages-org.eclipse.swt.graphics.Image:A-" title="class or interface in org.eclipse.jface.window">setDefaultImages</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#setDefaultModalParent-org.eclipse.jface.window.IShellProvider-" title="class or interface in org.eclipse.jface.window">setDefaultModalParent</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#setDefaultOrientation-int-" title="class or interface in org.eclipse.jface.window">setDefaultOrientation</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#setExceptionHandler-org.eclipse.jface.window.Window.IExceptionHandler-" title="class or interface in org.eclipse.jface.window">setExceptionHandler</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#setParentShell-org.eclipse.swt.widgets.Shell-" title="class or interface in org.eclipse.jface.window">setParentShell</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#setReturnCode-int-" title="class or interface in org.eclipse.jface.window">setReturnCode</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#setShellStyle-int-" title="class or interface in org.eclipse.jface.window">setShellStyle</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#setWindowManager-org.eclipse.jface.window.WindowManager-" title="class or interface in org.eclipse.jface.window">setWindowManager</a></code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.jface.window.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true" title="class or interface in org.eclipse.jface.window" class="externalLink">Window</a></h3>
+<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#canHandleShellCloseEvent()" title="class or interface in org.eclipse.jface.window" class="externalLink">canHandleShellCloseEvent</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#constrainShellSize()" title="class or interface in org.eclipse.jface.window" class="externalLink">constrainShellSize</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#createShell()" title="class or interface in org.eclipse.jface.window" class="externalLink">createShell</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#getConstrainedShellBounds(org.eclipse.swt.graphics.Rectangle)" title="class or interface in org.eclipse.jface.window" class="externalLink">getConstrainedShellBounds</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#getContents()" title="class or interface in org.eclipse.jface.window" class="externalLink">getContents</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#getDefaultImage()" title="class or interface in org.eclipse.jface.window" class="externalLink">getDefaultImage</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#getDefaultImages()" title="class or interface in org.eclipse.jface.window" class="externalLink">getDefaultImages</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#getDefaultOrientation()" title="class or interface in org.eclipse.jface.window" class="externalLink">getDefaultOrientation</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#getLayout()" title="class or interface in org.eclipse.jface.window" class="externalLink">getLayout</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#getParentShell()" title="class or interface in org.eclipse.jface.window" class="externalLink">getParentShell</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#getReturnCode()" title="class or interface in org.eclipse.jface.window" class="externalLink">getReturnCode</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#getShell()" title="class or interface in org.eclipse.jface.window" class="externalLink">getShell</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#getShellListener()" title="class or interface in org.eclipse.jface.window" class="externalLink">getShellListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#getShellStyle()" title="class or interface in org.eclipse.jface.window" class="externalLink">getShellStyle</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#getWindowManager()" title="class or interface in org.eclipse.jface.window" class="externalLink">getWindowManager</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#handleFontChange(org.eclipse.jface.util.PropertyChangeEvent)" title="class or interface in org.eclipse.jface.window" class="externalLink">handleFontChange</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#open()" title="class or interface in org.eclipse.jface.window" class="externalLink">open</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#setBlockOnOpen(boolean)" title="class or interface in org.eclipse.jface.window" class="externalLink">setBlockOnOpen</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#setDefaultImage(org.eclipse.swt.graphics.Image)" title="class or interface in org.eclipse.jface.window" class="externalLink">setDefaultImage</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#setDefaultImages(org.eclipse.swt.graphics.Image%5B%5D)" title="class or interface in org.eclipse.jface.window" class="externalLink">setDefaultImages</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#setDefaultModalParent(org.eclipse.jface.window.IShellProvider)" title="class or interface in org.eclipse.jface.window" class="externalLink">setDefaultModalParent</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#setDefaultOrientation(int)" title="class or interface in org.eclipse.jface.window" class="externalLink">setDefaultOrientation</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#setExceptionHandler(org.eclipse.jface.window.Window.IExceptionHandler)" title="class or interface in org.eclipse.jface.window" class="externalLink">setExceptionHandler</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#setParentShell(org.eclipse.swt.widgets.Shell)" title="class or interface in org.eclipse.jface.window" class="externalLink">setParentShell</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#setReturnCode(int)" title="class or interface in org.eclipse.jface.window" class="externalLink">setReturnCode</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#setShellStyle(int)" title="class or interface in org.eclipse.jface.window" class="externalLink">setShellStyle</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#setWindowManager(org.eclipse.jface.window.WindowManager)" title="class or interface in org.eclipse.jface.window" class="externalLink">setWindowManager</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
+<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
@@ -276,6 +311,7 @@ extends <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/ref
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -283,62 +319,69 @@ extends <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/ref
 <ul class="blockList">
 <li class="blockList">
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.detail">
+<li class="blockList"><a id="constructor.detail">
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="ConfirmationDialog-org.eclipse.swt.widgets.Shell-java.lang.String-java.lang.String-java.util.Set-org.eclipse.net4j.util.confirmation.Confirmation-">
+<a id="&lt;init&gt;(org.eclipse.swt.widgets.Shell,java.lang.String,java.lang.String,java.util.Set,org.eclipse.net4j.util.confirmation.Confirmation)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>ConfirmationDialog</h4>
-<pre>public&nbsp;ConfirmationDialog(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Shell.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Shell</a>&nbsp;shell,
+<pre>public&nbsp;ConfirmationDialog&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Shell.html?is-external=true" title="class or interface in org.eclipse.swt.widgets" class="externalLink">Shell</a>&nbsp;shell,
                           java.lang.String&nbsp;title,
                           java.lang.String&nbsp;message,
-                          java.util.Set&lt;<a href="../../../../../../org/eclipse/net4j/util/confirmation/Confirmation.html" title="enum in org.eclipse.net4j.util.confirmation">Confirmation</a>&gt;&nbsp;acceptableResponses,
-                          <a href="../../../../../../org/eclipse/net4j/util/confirmation/Confirmation.html" title="enum in org.eclipse.net4j.util.confirmation">Confirmation</a>&nbsp;suggestedResponse)</pre>
+                          java.util.Set&lt;<a href="../../confirmation/Confirmation.html" title="enum in org.eclipse.net4j.util.confirmation">Confirmation</a>&gt;&nbsp;acceptableResponses,
+                          <a href="../../confirmation/Confirmation.html" title="enum in org.eclipse.net4j.util.confirmation">Confirmation</a>&nbsp;suggestedResponse)</pre>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="openConfirm-org.eclipse.swt.widgets.Shell-java.lang.String-java.lang.String-java.util.Set-org.eclipse.net4j.util.confirmation.Confirmation-">
+<a id="openConfirm(org.eclipse.swt.widgets.Shell,java.lang.String,java.lang.String,java.util.Set,org.eclipse.net4j.util.confirmation.Confirmation)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>openConfirm</h4>
-<pre>public static&nbsp;<a href="../../../../../../org/eclipse/net4j/util/confirmation/Confirmation.html" title="enum in org.eclipse.net4j.util.confirmation">Confirmation</a>&nbsp;openConfirm(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Shell.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Shell</a>&nbsp;shell,
+<pre class="methodSignature">public static&nbsp;<a href="../../confirmation/Confirmation.html" title="enum in org.eclipse.net4j.util.confirmation">Confirmation</a>&nbsp;openConfirm&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Shell.html?is-external=true" title="class or interface in org.eclipse.swt.widgets" class="externalLink">Shell</a>&nbsp;shell,
                                        java.lang.String&nbsp;title,
                                        java.lang.String&nbsp;message,
-                                       java.util.Set&lt;<a href="../../../../../../org/eclipse/net4j/util/confirmation/Confirmation.html" title="enum in org.eclipse.net4j.util.confirmation">Confirmation</a>&gt;&nbsp;acceptableResponses,
-                                       <a href="../../../../../../org/eclipse/net4j/util/confirmation/Confirmation.html" title="enum in org.eclipse.net4j.util.confirmation">Confirmation</a>&nbsp;suggestedResponse)</pre>
+                                       java.util.Set&lt;<a href="../../confirmation/Confirmation.html" title="enum in org.eclipse.net4j.util.confirmation">Confirmation</a>&gt;&nbsp;acceptableResponses,
+                                       <a href="../../confirmation/Confirmation.html" title="enum in org.eclipse.net4j.util.confirmation">Confirmation</a>&nbsp;suggestedResponse)</pre>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/ConfirmationDialog.html">Use</a></li>
@@ -348,16 +391,8 @@ extends <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/ref
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev&nbsp;Class</li>
-<li><a href="../../../../../../org/eclipse/net4j/util/ui/confirmation/InteractiveConfirmationProvider.html" title="class in org.eclipse.net4j.util.ui.confirmation"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/net4j/util/ui/confirmation/ConfirmationDialog.html" target="_top">Frames</a></li>
-<li><a href="ConfirmationDialog.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -370,12 +405,15 @@ extends <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/ref
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li><a href="#nested.classes.inherited.from.class.org.eclipse.jface.window.Window">Nested</a>&nbsp;|&nbsp;</li>
-<li><a href="#fields.inherited.from.class.org.eclipse.jface.dialogs.MessageDialog">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
@@ -386,10 +424,12 @@ extends <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/ref
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

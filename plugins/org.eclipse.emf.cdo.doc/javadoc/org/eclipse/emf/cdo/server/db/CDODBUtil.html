@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>CDODBUtil (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":41,"i6":41,"i7":9,"i8":9,"i9":9};
+var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":41,"i6":41,"i7":9,"i8":9,"i9":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/CDODBUtil.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev&nbsp;Class</li>
-<li><a href="../../../../../../org/eclipse/emf/cdo/server/db/IDBStore.html" title="interface in org.eclipse.emf.cdo.server.db"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/emf/cdo/server/db/CDODBUtil.html" target="_top">Frames</a></li>
-<li><a href="CDODBUtil.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,6 +82,9 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -85,13 +101,22 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.emf.cdo.server.db</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.cdo.server.db</a></div>
 <h2 title="Class CDODBUtil" class="title">Class CDODBUtil</h2>
 </div>
 <div class="contentContainer">
@@ -107,10 +132,9 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<br>
 <pre>public final class <span class="typeNameLabel">CDODBUtil</span>
 extends java.lang.Object</pre>
-<div class="block">Various static methods that may help in setting up and dealing with <a href="../../../../../../org/eclipse/emf/cdo/server/db/IDBStore.html" title="interface in org.eclipse.emf.cdo.server.db"><code>DB stores</code></a>.</div>
+<div class="block">Various static methods that may help in setting up and dealing with <a href="IDBStore.html" title="interface in org.eclipse.emf.cdo.server.db"><code>DB stores</code></a>.</div>
 <dl>
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>Eike Stepper</dd>
@@ -122,116 +146,136 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <!-- =========== FIELD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.summary">
+<li class="blockList"><a id="field.summary">
 <!--   -->
 </a>
 <h3>Field Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Field Summary table, listing fields, and an explanation">
+<table class="memberSummary">
 <caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Field and Description</th>
+<th class="colSecond" scope="col">Field</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/db/CDODBUtil.html#DEFAULT_STATEMENT_CACHE_CAPACITY">DEFAULT_STATEMENT_CACHE_CAPACITY</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#DEFAULT_STATEMENT_CACHE_CAPACITY">DEFAULT_STATEMENT_CACHE_CAPACITY</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/db/CDODBUtil.html#EXT_POINT_MAPPING_STRATEGIES">EXT_POINT_MAPPING_STRATEGIES</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#EXT_POINT_MAPPING_STRATEGIES">EXT_POINT_MAPPING_STRATEGIES</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/db/CDODBUtil.html#PROP_COPY_ON_BRANCH">PROP_COPY_ON_BRANCH</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#PROP_COPY_ON_BRANCH">PROP_COPY_ON_BRANCH</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/db/CDODBUtil.html#PROP_WITH_RANGES">PROP_WITH_RANGES</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#PROP_WITH_RANGES">PROP_WITH_RANGES</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/db/CDODBUtil.html#PROP_ZEROBASED_INDEX">PROP_ZEROBASED_INDEX</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#PROP_ZEROBASED_INDEX">PROP_ZEROBASED_INDEX</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t6" class="tableTab"><span><a href="javascript:show(32);">Deprecated Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/db/CDODBUtil.html#createHorizontalMappingStrategy--">createHorizontalMappingStrategy</a></span>()</code>
-<div class="block">Creates a horizontal <a href="../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping"><code>mapping strategy</code></a> that supports all valid combinations of auditing and
+<td class="colFirst"><code>static <a href="mapping/IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createHorizontalMappingStrategy()">createHorizontalMappingStrategy</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Creates a horizontal <a href="mapping/IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping"><code>mapping strategy</code></a> that supports all valid combinations of auditing and
  branching.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/db/CDODBUtil.html#createHorizontalMappingStrategy-boolean-">createHorizontalMappingStrategy</a></span>(boolean&nbsp;auditing)</code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="mapping/IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createHorizontalMappingStrategy(boolean)">createHorizontalMappingStrategy</a></span>&#8203;(boolean&nbsp;auditing)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/db/CDODBUtil.html#createHorizontalMappingStrategy-boolean-boolean-">createHorizontalMappingStrategy</a></span>(boolean&nbsp;auditing,
-                               boolean&nbsp;branching)</code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="mapping/IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createHorizontalMappingStrategy(boolean,boolean)">createHorizontalMappingStrategy</a></span>&#8203;(boolean&nbsp;auditing,
+                               boolean&nbsp;branching)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/db/CDODBUtil.html#createHorizontalMappingStrategy-boolean-boolean-boolean-">createHorizontalMappingStrategy</a></span>(boolean&nbsp;auditing,
+<td class="colFirst"><code>static <a href="mapping/IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createHorizontalMappingStrategy(boolean,boolean,boolean)">createHorizontalMappingStrategy</a></span>&#8203;(boolean&nbsp;auditing,
                                boolean&nbsp;branching,
-                               boolean&nbsp;withRanges)</code>&nbsp;</td>
+                               boolean&nbsp;withRanges)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/db/CDODBUtil.html#createMappingStrategy-java.lang.String-">createMappingStrategy</a></span>(java.lang.String&nbsp;type)</code>
+<td class="colFirst"><code>static <a href="mapping/IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createMappingStrategy(java.lang.String)">createMappingStrategy</a></span>&#8203;(java.lang.String&nbsp;type)</code></th>
+<td class="colLast">
 <div class="block">Can only be used when Eclipse is running.</div>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/server/db/IPreparedStatementCache.html" title="interface in org.eclipse.emf.cdo.server.db">IPreparedStatementCache</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/db/CDODBUtil.html#createStatementCache--">createStatementCache</a></span>()</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">As of 4.2 use <a href="../../../../../../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/IDBConnection.html?is-external=true#prepareStatement-java.lang.String-org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability-" title="class or interface in org.eclipse.net4j.db"><code>IDBConnection.prepareStatement(String, org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)</code></a>.</span></div>
+<td class="colFirst"><code>static <a href="IPreparedStatementCache.html" title="interface in org.eclipse.emf.cdo.server.db">IPreparedStatementCache</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createStatementCache()">createStatementCache</a></span>()</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.2 use <code>IDBConnection.prepareStatement(String, org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)</code>.</div>
 </div>
 </td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/server/db/IPreparedStatementCache.html" title="interface in org.eclipse.emf.cdo.server.db">IPreparedStatementCache</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/db/CDODBUtil.html#createStatementCache-int-">createStatementCache</a></span>(int&nbsp;capacity)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">As of 4.2 use <a href="../../../../../../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/IDBConnection.html?is-external=true#prepareStatement-java.lang.String-org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability-" title="class or interface in org.eclipse.net4j.db"><code>IDBConnection.prepareStatement(String, org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)</code></a>.</span></div>
+<td class="colFirst"><code>static <a href="IPreparedStatementCache.html" title="interface in org.eclipse.emf.cdo.server.db">IPreparedStatementCache</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createStatementCache(int)">createStatementCache</a></span>&#8203;(int&nbsp;capacity)</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.2 use <code>IDBConnection.prepareStatement(String, org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)</code>.</div>
 </div>
 </td>
 </tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/server/db/IDBStore.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStore</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/db/CDODBUtil.html#createStore-org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy-org.eclipse.net4j.db.IDBAdapter-org.eclipse.net4j.db.IDBConnectionProvider-">createStore</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a>&nbsp;mappingStrategy,
-           <a href="../../../../../../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/IDBAdapter.html?is-external=true" title="class or interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;dbAdapter,
-           <a href="../../../../../../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/IDBConnectionProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.db">IDBConnectionProvider</a>&nbsp;dbConnectionProvider)</code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="IDBStore.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStore</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createStore(org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy,org.eclipse.net4j.db.IDBAdapter,org.eclipse.net4j.db.IDBConnectionProvider)">createStore</a></span>&#8203;(<a href="mapping/IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a>&nbsp;mappingStrategy,
+           org.eclipse.net4j.db.IDBAdapter&nbsp;dbAdapter,
+           org.eclipse.net4j.db.IDBConnectionProvider&nbsp;dbConnectionProvider)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/server/db/IDBStore.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStore</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/db/CDODBUtil.html#createStore-org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy-org.eclipse.net4j.db.IDBAdapter-org.eclipse.net4j.db.IDBConnectionProvider-java.util.Map-">createStore</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a>&nbsp;mappingStrategy,
-           <a href="../../../../../../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/IDBAdapter.html?is-external=true" title="class or interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;dbAdapter,
-           <a href="../../../../../../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/IDBConnectionProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.db">IDBConnectionProvider</a>&nbsp;dbConnectionProvider,
-           java.util.Map&lt;java.lang.String,java.lang.String&gt;&nbsp;properties)</code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="IDBStore.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStore</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createStore(org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy,org.eclipse.net4j.db.IDBAdapter,org.eclipse.net4j.db.IDBConnectionProvider,java.util.Map)">createStore</a></span>&#8203;(<a href="mapping/IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a>&nbsp;mappingStrategy,
+           org.eclipse.net4j.db.IDBAdapter&nbsp;dbAdapter,
+           org.eclipse.net4j.db.IDBConnectionProvider&nbsp;dbConnectionProvider,
+           java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;properties)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/db/CDODBUtil.html#prepareContainer-org.eclipse.net4j.util.container.IManagedContainer-">prepareContainer</a></span>(<a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#prepareContainer(org.eclipse.net4j.util.container.IManagedContainer)">prepareContainer</a></span>&#8203;(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
+<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
@@ -239,6 +283,7 @@ extends java.lang.Object</pre>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -246,12 +291,13 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <!-- ============ FIELD DETAIL =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.detail">
+<li class="blockList"><a id="field.detail">
 <!--   -->
 </a>
 <h3>Field Detail</h3>
-<a name="DEFAULT_STATEMENT_CACHE_CAPACITY">
+<a id="DEFAULT_STATEMENT_CACHE_CAPACITY">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -266,7 +312,7 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a name="EXT_POINT_MAPPING_STRATEGIES">
+<a id="EXT_POINT_MAPPING_STRATEGIES">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -281,7 +327,7 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a name="PROP_WITH_RANGES">
+<a id="PROP_WITH_RANGES">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -296,7 +342,7 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a name="PROP_COPY_ON_BRANCH">
+<a id="PROP_COPY_ON_BRANCH">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -311,7 +357,7 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a name="PROP_ZEROBASED_INDEX">
+<a id="PROP_ZEROBASED_INDEX">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -328,76 +374,78 @@ extends java.lang.Object</pre>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="prepareContainer-org.eclipse.net4j.util.container.IManagedContainer-">
+<a id="prepareContainer(org.eclipse.net4j.util.container.IManagedContainer)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>prepareContainer</h4>
-<pre>public static&nbsp;void&nbsp;prepareContainer(<a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container)</pre>
+<pre class="methodSignature">public static&nbsp;void&nbsp;prepareContainer&#8203;(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.0</dd>
 </dl>
 </li>
 </ul>
-<a name="createStore-org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy-org.eclipse.net4j.db.IDBAdapter-org.eclipse.net4j.db.IDBConnectionProvider-">
+<a id="createStore(org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy,org.eclipse.net4j.db.IDBAdapter,org.eclipse.net4j.db.IDBConnectionProvider)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createStore</h4>
-<pre>public static&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/server/db/IDBStore.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStore</a>&nbsp;createStore(<a href="../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a>&nbsp;mappingStrategy,
-                                   <a href="../../../../../../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/IDBAdapter.html?is-external=true" title="class or interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;dbAdapter,
-                                   <a href="../../../../../../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/IDBConnectionProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.db">IDBConnectionProvider</a>&nbsp;dbConnectionProvider)</pre>
+<pre class="methodSignature">public static&nbsp;<a href="IDBStore.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStore</a>&nbsp;createStore&#8203;(<a href="mapping/IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a>&nbsp;mappingStrategy,
+                                   org.eclipse.net4j.db.IDBAdapter&nbsp;dbAdapter,
+                                   org.eclipse.net4j.db.IDBConnectionProvider&nbsp;dbConnectionProvider)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
 </dl>
 </li>
 </ul>
-<a name="createStore-org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy-org.eclipse.net4j.db.IDBAdapter-org.eclipse.net4j.db.IDBConnectionProvider-java.util.Map-">
+<a id="createStore(org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy,org.eclipse.net4j.db.IDBAdapter,org.eclipse.net4j.db.IDBConnectionProvider,java.util.Map)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createStore</h4>
-<pre>public static&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/server/db/IDBStore.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStore</a>&nbsp;createStore(<a href="../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a>&nbsp;mappingStrategy,
-                                   <a href="../../../../../../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/IDBAdapter.html?is-external=true" title="class or interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;dbAdapter,
-                                   <a href="../../../../../../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/IDBConnectionProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.db">IDBConnectionProvider</a>&nbsp;dbConnectionProvider,
-                                   java.util.Map&lt;java.lang.String,java.lang.String&gt;&nbsp;properties)</pre>
+<pre class="methodSignature">public static&nbsp;<a href="IDBStore.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStore</a>&nbsp;createStore&#8203;(<a href="mapping/IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a>&nbsp;mappingStrategy,
+                                   org.eclipse.net4j.db.IDBAdapter&nbsp;dbAdapter,
+                                   org.eclipse.net4j.db.IDBConnectionProvider&nbsp;dbConnectionProvider,
+                                   java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;properties)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
 </li>
 </ul>
-<a name="createHorizontalMappingStrategy-boolean-">
+<a id="createHorizontalMappingStrategy(boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createHorizontalMappingStrategy</h4>
-<pre>public static&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a>&nbsp;createHorizontalMappingStrategy(boolean&nbsp;auditing)</pre>
+<pre class="methodSignature">public static&nbsp;<a href="mapping/IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a>&nbsp;createHorizontalMappingStrategy&#8203;(boolean&nbsp;auditing)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
 </dl>
 </li>
 </ul>
-<a name="createHorizontalMappingStrategy-boolean-boolean-">
+<a id="createHorizontalMappingStrategy(boolean,boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createHorizontalMappingStrategy</h4>
-<pre>public static&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a>&nbsp;createHorizontalMappingStrategy(boolean&nbsp;auditing,
+<pre class="methodSignature">public static&nbsp;<a href="mapping/IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a>&nbsp;createHorizontalMappingStrategy&#8203;(boolean&nbsp;auditing,
                                                                boolean&nbsp;branching)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -405,13 +453,13 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a name="createHorizontalMappingStrategy-boolean-boolean-boolean-">
+<a id="createHorizontalMappingStrategy(boolean,boolean,boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createHorizontalMappingStrategy</h4>
-<pre>public static&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a>&nbsp;createHorizontalMappingStrategy(boolean&nbsp;auditing,
+<pre class="methodSignature">public static&nbsp;<a href="mapping/IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a>&nbsp;createHorizontalMappingStrategy&#8203;(boolean&nbsp;auditing,
                                                                boolean&nbsp;branching,
                                                                boolean&nbsp;withRanges)</pre>
 <dl>
@@ -420,14 +468,14 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a name="createHorizontalMappingStrategy--">
+<a id="createHorizontalMappingStrategy()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createHorizontalMappingStrategy</h4>
-<pre>public static&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a>&nbsp;createHorizontalMappingStrategy()</pre>
-<div class="block">Creates a horizontal <a href="../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping"><code>mapping strategy</code></a> that supports all valid combinations of auditing and
+<pre class="methodSignature">public static&nbsp;<a href="mapping/IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a>&nbsp;createHorizontalMappingStrategy()</pre>
+<div class="block">Creates a horizontal <a href="mapping/IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping"><code>mapping strategy</code></a> that supports all valid combinations of auditing and
  branching.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -435,48 +483,52 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a name="createMappingStrategy-java.lang.String-">
+<a id="createMappingStrategy(java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createMappingStrategy</h4>
-<pre>public static&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a>&nbsp;createMappingStrategy(java.lang.String&nbsp;type)</pre>
+<pre class="methodSignature">public static&nbsp;<a href="mapping/IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a>&nbsp;createMappingStrategy&#8203;(java.lang.String&nbsp;type)</pre>
 <div class="block">Can only be used when Eclipse is running. In standalone scenarios create the mapping strategy instance by directly
  calling the constructor of the mapping strategy class.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../../org/eclipse/emf/cdo/server/db/CDODBUtil.html#createHorizontalMappingStrategy-boolean-"><code>createHorizontalMappingStrategy(boolean)</code></a>, 
-<a href="../../../../../../org/eclipse/emf/cdo/server/db/CDODBUtil.html#createHorizontalMappingStrategy-boolean-boolean-"><code>createHorizontalMappingStrategy(boolean, boolean)</code></a></dd>
+<dd><a href="#createHorizontalMappingStrategy(boolean)"><code>createHorizontalMappingStrategy(boolean)</code></a>, 
+<a href="#createHorizontalMappingStrategy(boolean,boolean)"><code>createHorizontalMappingStrategy(boolean, boolean)</code></a></dd>
 </dl>
 </li>
 </ul>
-<a name="createStatementCache--">
+<a id="createStatementCache()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createStatementCache</h4>
-<pre>@Deprecated
-public static&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/server/db/IPreparedStatementCache.html" title="interface in org.eclipse.emf.cdo.server.db">IPreparedStatementCache</a>&nbsp;createStatementCache()</pre>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">As of 4.2 use <a href="../../../../../../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/IDBConnection.html?is-external=true#prepareStatement-java.lang.String-org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability-" title="class or interface in org.eclipse.net4j.db"><code>IDBConnection.prepareStatement(String, org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)</code></a>.</span></div>
+<pre class="methodSignature">@Deprecated
+public static&nbsp;<a href="IPreparedStatementCache.html" title="interface in org.eclipse.emf.cdo.server.db">IPreparedStatementCache</a>&nbsp;createStatementCache()</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.2 use <code>IDBConnection.prepareStatement(String, org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)</code>.</div>
+</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
 </dl>
 </li>
 </ul>
-<a name="createStatementCache-int-">
+<a id="createStatementCache(int)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>createStatementCache</h4>
-<pre>@Deprecated
-public static&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/server/db/IPreparedStatementCache.html" title="interface in org.eclipse.emf.cdo.server.db">IPreparedStatementCache</a>&nbsp;createStatementCache(int&nbsp;capacity)</pre>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">As of 4.2 use <a href="../../../../../../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/IDBConnection.html?is-external=true#prepareStatement-java.lang.String-org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability-" title="class or interface in org.eclipse.net4j.db"><code>IDBConnection.prepareStatement(String, org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)</code></a>.</span></div>
+<pre class="methodSignature">@Deprecated
+public static&nbsp;<a href="IPreparedStatementCache.html" title="interface in org.eclipse.emf.cdo.server.db">IPreparedStatementCache</a>&nbsp;createStatementCache&#8203;(int&nbsp;capacity)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.2 use <code>IDBConnection.prepareStatement(String, org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)</code>.</div>
+</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
@@ -485,21 +537,25 @@ public static&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/server/db/IPre
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/CDODBUtil.html">Use</a></li>
@@ -509,16 +565,8 @@ public static&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/server/db/IPre
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev&nbsp;Class</li>
-<li><a href="../../../../../../org/eclipse/emf/cdo/server/db/IDBStore.html" title="interface in org.eclipse.emf.cdo.server.db"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/emf/cdo/server/db/CDODBUtil.html" target="_top">Frames</a></li>
-<li><a href="CDODBUtil.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -531,6 +579,9 @@ public static&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/server/db/IPre
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -547,10 +598,12 @@ public static&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/server/db/IPre
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

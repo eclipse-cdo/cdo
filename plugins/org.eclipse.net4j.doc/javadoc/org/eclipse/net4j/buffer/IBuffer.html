@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>IBuffer (Net4j Signalling Platform Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../script.js"></script>
+<script type="text/javascript" src="../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":6,"i11":6,"i12":6,"i13":6,"i14":6,"i15":6,"i16":6,"i17":6,"i18":6,"i19":6,"i20":6,"i21":6,"i22":6,"i23":6,"i24":6,"i25":6,"i26":6,"i27":6,"i28":6,"i29":6,"i30":6,"i31":6};
+var data = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":6,"i11":6,"i12":6,"i13":6,"i14":6,"i15":6,"i16":6,"i17":6,"i18":6,"i19":6,"i20":6,"i21":6,"i22":6,"i23":6,"i24":6,"i25":6,"i26":6,"i27":6,"i28":6,"i29":6,"i30":6,"i31":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/IBuffer.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../org/eclipse/net4j/buffer/BufferState.html" title="enum in org.eclipse.net4j.buffer"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../org/eclipse/net4j/buffer/IBufferHandler.html" title="interface in org.eclipse.net4j.buffer"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../index.html?org/eclipse/net4j/buffer/IBuffer.html" target="_top">Frames</a></li>
-<li><a href="IBuffer.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,6 +82,9 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -85,13 +101,22 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.net4j.buffer</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.net4j.buffer</a></div>
 <h2 title="Interface IBuffer" class="title">Interface IBuffer</h2>
 </div>
 <div class="contentContainer">
@@ -100,22 +125,21 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Known Subinterfaces:</dt>
-<dd><a href="../../../../org/eclipse/spi/net4j/InternalBuffer.html" title="interface in org.eclipse.spi.net4j">InternalBuffer</a></dd>
+<dd><code><a href="../../spi/net4j/InternalBuffer.html" title="interface in org.eclipse.spi.net4j">InternalBuffer</a></code></dd>
 </dl>
 <hr>
-<br>
 <pre>public interface <span class="typeNameLabel">IBuffer</span></pre>
 <div class="block">Basic <b>unit of transport</b> in Net4j.
  <p>
- A buffer is well prepared for the usage with asynchronous <a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel"><code>IChannel</code></a>s but can also be used with pure
+ A buffer is well prepared for the usage with asynchronous <a href="../channel/IChannel.html" title="interface in org.eclipse.net4j.channel"><code>IChannel</code></a>s but can also be used with pure
  <code>SocketChannel</code>s. All methods of <code>IBuffer</code> are non-blocking.
  <p>
- Usually buffers are obtained from a <a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer"><code>IBufferProvider</code></a>. Buffers can be accessed, passed around and finally
- <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#release--"><code>released</code></a> to their original provider. The capacity of a buffer is determined by its provider.
+ Usually buffers are obtained from a <a href="IBufferProvider.html" title="interface in org.eclipse.net4j.buffer"><code>IBufferProvider</code></a>. Buffers can be accessed, passed around and finally
+ <a href="#release()"><code>released</code></a> to their original provider. The capacity of a buffer is determined by its provider.
  <p>
  In addition to its payload data each buffer contains an internal header of four bytes, two of them representing a
  channel identifier the other two of them denoting the length of the payload data. The payload data may be accessed
- through a <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#getByteBuffer--"><code>ByteBuffer</code></a>.
+ through a <a href="#getByteBuffer()"><code>ByteBuffer</code></a>.
  <p>
  This interface is <b>not</b> intended to be implemented by clients.
  <p>
@@ -151,10 +175,10 @@ var activeTableTab = "activeTableTab";
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>Eike Stepper</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer"><code>IBufferProvider</code></a>, 
-<a href="../../../../org/eclipse/net4j/channel/IChannel.html#sendBuffer-org.eclipse.net4j.buffer.IBuffer-"><code>IChannel.sendBuffer(IBuffer)</code></a>, 
-<a href="../../../../org/eclipse/net4j/channel/IChannel.html#setReceiveHandler-org.eclipse.net4j.buffer.IBufferHandler-"><code>IChannel.setReceiveHandler(IBufferHandler)</code></a>, 
-<a href="../../../../org/eclipse/net4j/buffer/IBufferHandler.html#handleBuffer-org.eclipse.net4j.buffer.IBuffer-"><code>IBufferHandler.handleBuffer(IBuffer)</code></a></dd>
+<dd><a href="IBufferProvider.html" title="interface in org.eclipse.net4j.buffer"><code>IBufferProvider</code></a>, 
+<a href="../channel/IChannel.html#sendBuffer(org.eclipse.net4j.buffer.IBuffer)"><code>IChannel.sendBuffer(IBuffer)</code></a>, 
+<a href="../channel/IChannel.html#setReceiveHandler(org.eclipse.net4j.buffer.IBufferHandler)"><code>IChannel.setReceiveHandler(IBufferHandler)</code></a>, 
+<a href="IBufferHandler.html#handleBuffer(org.eclipse.net4j.buffer.IBuffer)"><code>IBufferHandler.handleBuffer(IBuffer)</code></a></dd>
 <dt><span class="simpleTagLabel">No Implement</span></dt>
 <dd>This interface is not intended to be implemented by clients.</dd>
 <dt><span class="simpleTagLabel">No Extend</span></dt>
@@ -167,231 +191,277 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <!-- =========== FIELD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.summary">
+<li class="blockList"><a id="field.summary">
 <!--   -->
 </a>
 <h3>Field Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Field Summary table, listing fields, and an explanation">
+<table class="memberSummary">
 <caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Field and Description</th>
+<th class="colSecond" scope="col">Field</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#CHANNEL_ID_BYTES">CHANNEL_ID_BYTES</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#CHANNEL_ID_BYTES">CHANNEL_ID_BYTES</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#CHANNEL_ID_POS">CHANNEL_ID_POS</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#CHANNEL_ID_POS">CHANNEL_ID_POS</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#HEADER_SIZE">HEADER_SIZE</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#HEADER_SIZE">HEADER_SIZE</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#MAX_CHANNEL">MAX_CHANNEL</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#MAX_CHANNEL">MAX_CHANNEL</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#MIN_CHANNEL">MIN_CHANNEL</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#MIN_CHANNEL">MIN_CHANNEL</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#NO_CHANNEL">NO_CHANNEL</a></span></code>
-<div class="block">Possible argument value of <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#startPutting-short-"><code>startPutting(short)</code></a> and possible return value of <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#getChannelID--"><code>getChannelID()</code></a> that
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#NO_CHANNEL">NO_CHANNEL</a></span></code></th>
+<td class="colLast">
+<div class="block">Possible argument value of <a href="#startPutting(short)"><code>startPutting(short)</code></a> and possible return value of <a href="#getChannelID()"><code>getChannelID()</code></a> that
  indicates that this buffer is not intended to be passed to a <code>SocketChannel</code>.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#PAYLOAD_SIZE_BYTES">PAYLOAD_SIZE_BYTES</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#PAYLOAD_SIZE_BYTES">PAYLOAD_SIZE_BYTES</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#PAYLOAD_SIZE_POS">PAYLOAD_SIZE_POS</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#PAYLOAD_SIZE_POS">PAYLOAD_SIZE_POS</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#clear--">clear</a></span>()</code>
-<div class="block">Turns the state of this buffer from any state into <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#INITIAL"><code>INITIAL</code></a>.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clear()">clear</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Turns the state of this buffer from any state into <a href="BufferState.html#INITIAL"><code>INITIAL</code></a>.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#compact--">compact</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#compact()">compact</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#flip--">flip</a></span>()</code>
-<div class="block">Turns the state of this buffer from <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#PUTTING"><code>PUTTING</code></a> into <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#GETTING"><code>GETTING</code></a>.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#flip()">flip</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Turns the state of this buffer from <a href="BufferState.html#PUTTING"><code>PUTTING</code></a> into <a href="BufferState.html#GETTING"><code>GETTING</code></a>.</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#formatContent-boolean-">formatContent</a></span>(boolean&nbsp;showHeader)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#formatContent(boolean)">formatContent</a></span>&#8203;(boolean&nbsp;showHeader)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>byte</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#get--">get</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#get()">get</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#get-byte:A-">get</a></span>(byte[]&nbsp;dst)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#get(byte%5B%5D)">get</a></span>&#8203;(byte[]&nbsp;dst)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code><a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#getBufferProvider--">getBufferProvider</a></span>()</code>
-<div class="block">Returns the <a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer"><code>IBufferProvider</code></a> that has provided this buffer and that this buffer will be returned to when its
- <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#release--"><code>release()</code></a> method is called.</div>
+<td class="colFirst"><code><a href="IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getBufferProvider()">getBufferProvider</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Returns the <a href="IBufferProvider.html" title="interface in org.eclipse.net4j.buffer"><code>IBufferProvider</code></a> that has provided this buffer and that this buffer will be returned to when its
+ <a href="#release()"><code>release()</code></a> method is called.</div>
 </td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>java.nio.ByteBuffer</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#getByteBuffer--">getByteBuffer</a></span>()</code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getByteBuffer()">getByteBuffer</a></span>()</code></th>
+<td class="colLast">
 <div class="block">Returns the <code>ByteBuffer</code> that can be used for putting or getting data.</div>
 </td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#getCapacity--">getCapacity</a></span>()</code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCapacity()">getCapacity</a></span>()</code></th>
+<td class="colLast">
 <div class="block">Returns the capacity of this buffer.</div>
 </td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#getChannelID--">getChannelID</a></span>()</code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getChannelID()">getChannelID</a></span>()</code></th>
+<td class="colLast">
 <div class="block">Returns the channel index value stored in the header of this buffer.</div>
 </td>
 </tr>
 <tr id="i10" class="altColor">
-<td class="colFirst"><code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/IErrorHandler.html?is-external=true" title="class or interface in org.eclipse.net4j.util">IErrorHandler</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#getErrorHandler--">getErrorHandler</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>org.eclipse.net4j.util.IErrorHandler</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getErrorHandler()">getErrorHandler</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#getInt--">getInt</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInt()">getInt</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#getLimit--">getLimit</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLimit()">getLimit</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#getPosition--">getPosition</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPosition()">getPosition</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code>short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#getShort--">getShort</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getShort()">getShort</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i15" class="rowColor">
-<td class="colFirst"><code><a href="../../../../org/eclipse/net4j/buffer/BufferState.html" title="enum in org.eclipse.net4j.buffer">BufferState</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#getState--">getState</a></span>()</code>
+<td class="colFirst"><code><a href="BufferState.html" title="enum in org.eclipse.net4j.buffer">BufferState</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getState()">getState</a></span>()</code></th>
+<td class="colLast">
 <div class="block">Returns the internal state of this buffer.</div>
 </td>
 </tr>
 <tr id="i16" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#getString--">getString</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getString()">getString</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i17" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#hasRemaining--">hasRemaining</a></span>()</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hasRemaining()">hasRemaining</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i18" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#isCCAM--">isCCAM</a></span>()</code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isCCAM()">isCCAM</a></span>()</code></th>
+<td class="colLast">
 <div class="block">Returns the <em>Close Channel After Me</em> flag.</div>
 </td>
 </tr>
 <tr id="i19" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#isEOS--">isEOS</a></span>()</code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isEOS()">isEOS</a></span>()</code></th>
+<td class="colLast">
 <div class="block">Returns the <em>End Of Stream</em> flag to indicate whether this buffer is the last buffer in a stream (typically a signal) of buffers.</div>
 </td>
 </tr>
 <tr id="i20" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#put-byte-">put</a></span>(byte&nbsp;b)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#put(byte)">put</a></span>&#8203;(byte&nbsp;b)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i21" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#put-byte:A-int-int-">put</a></span>(byte[]&nbsp;src,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#put(byte%5B%5D,int,int)">put</a></span>&#8203;(byte[]&nbsp;src,
    int&nbsp;offset,
-   int&nbsp;length)</code>&nbsp;</td>
+   int&nbsp;length)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i22" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#putShort-short-">putShort</a></span>(short&nbsp;value)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#putShort(short)">putShort</a></span>&#8203;(short&nbsp;value)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i23" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#release--">release</a></span>()</code>
-<div class="block">Releases this buffer to its original <a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer"><code>IBufferProvider</code></a>.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#release()">release</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Releases this buffer to its original <a href="IBufferProvider.html" title="interface in org.eclipse.net4j.buffer"><code>IBufferProvider</code></a>.</div>
 </td>
 </tr>
 <tr id="i24" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#setCCAM-boolean-">setCCAM</a></span>(boolean&nbsp;ccam)</code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setCCAM(boolean)">setCCAM</a></span>&#8203;(boolean&nbsp;ccam)</code></th>
+<td class="colLast">
 <div class="block">Sets the <em>Close Channel After Me</em> flag.</div>
 </td>
 </tr>
 <tr id="i25" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#setEOS-boolean-">setEOS</a></span>(boolean&nbsp;eos)</code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setEOS(boolean)">setEOS</a></span>&#8203;(boolean&nbsp;eos)</code></th>
+<td class="colLast">
 <div class="block">Sets the <em>End Of Stream</em> flag to indicate whether this buffer is the last buffer in a stream (typically a signal) of buffers.</div>
 </td>
 </tr>
 <tr id="i26" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#setErrorHandler-org.eclipse.net4j.util.IErrorHandler-">setErrorHandler</a></span>(<a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/IErrorHandler.html?is-external=true" title="class or interface in org.eclipse.net4j.util">IErrorHandler</a>&nbsp;errorHandler)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setErrorHandler(org.eclipse.net4j.util.IErrorHandler)">setErrorHandler</a></span>&#8203;(org.eclipse.net4j.util.IErrorHandler&nbsp;errorHandler)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i27" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#setLimit-int-">setLimit</a></span>(int&nbsp;limit)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setLimit(int)">setLimit</a></span>&#8203;(int&nbsp;limit)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i28" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#setPosition-int-">setPosition</a></span>(int&nbsp;position)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPosition(int)">setPosition</a></span>&#8203;(int&nbsp;position)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i29" class="rowColor">
 <td class="colFirst"><code>java.nio.ByteBuffer</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#startGetting-java.nio.channels.SocketChannel-">startGetting</a></span>(java.nio.channels.SocketChannel&nbsp;socketChannel)</code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#startGetting(java.nio.channels.SocketChannel)">startGetting</a></span>&#8203;(java.nio.channels.SocketChannel&nbsp;socketChannel)</code></th>
+<td class="colLast">
 <div class="block">Tries to read a <code>ByteBuffer</code> from a <code>SocketChannel</code> that can be used for getting data.</div>
 </td>
 </tr>
 <tr id="i30" class="altColor">
 <td class="colFirst"><code>java.nio.ByteBuffer</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#startPutting-short-">startPutting</a></span>(short&nbsp;channelID)</code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#startPutting(short)">startPutting</a></span>&#8203;(short&nbsp;channelID)</code></th>
+<td class="colLast">
 <div class="block">Returns a <code>ByteBuffer</code> that can be used for putting data.</div>
 </td>
 </tr>
 <tr id="i31" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#write-java.nio.channels.SocketChannel-">write</a></span>(java.nio.channels.SocketChannel&nbsp;socketChannel)</code>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#write(java.nio.channels.SocketChannel)">write</a></span>&#8203;(java.nio.channels.SocketChannel&nbsp;socketChannel)</code></th>
+<td class="colLast">
 <div class="block">Tries to write the data of this buffer to a <code>SocketChannel</code>.</div>
 </td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -399,19 +469,20 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <!-- ============ FIELD DETAIL =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.detail">
+<li class="blockList"><a id="field.detail">
 <!--   -->
 </a>
 <h3>Field Detail</h3>
-<a name="NO_CHANNEL">
+<a id="NO_CHANNEL">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>NO_CHANNEL</h4>
 <pre>static final&nbsp;short NO_CHANNEL</pre>
-<div class="block">Possible argument value of <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#startPutting-short-"><code>startPutting(short)</code></a> and possible return value of <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#getChannelID--"><code>getChannelID()</code></a> that
+<div class="block">Possible argument value of <a href="#startPutting(short)"><code>startPutting(short)</code></a> and possible return value of <a href="#getChannelID()"><code>getChannelID()</code></a> that
  indicates that this buffer is not intended to be passed to a <code>SocketChannel</code>.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
@@ -419,7 +490,7 @@ var activeTableTab = "activeTableTab";
 </dl>
 </li>
 </ul>
-<a name="MIN_CHANNEL">
+<a id="MIN_CHANNEL">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -434,7 +505,7 @@ var activeTableTab = "activeTableTab";
 </dl>
 </li>
 </ul>
-<a name="MAX_CHANNEL">
+<a id="MAX_CHANNEL">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -449,7 +520,7 @@ var activeTableTab = "activeTableTab";
 </dl>
 </li>
 </ul>
-<a name="CHANNEL_ID_BYTES">
+<a id="CHANNEL_ID_BYTES">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -464,7 +535,7 @@ var activeTableTab = "activeTableTab";
 </dl>
 </li>
 </ul>
-<a name="PAYLOAD_SIZE_BYTES">
+<a id="PAYLOAD_SIZE_BYTES">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -479,7 +550,7 @@ var activeTableTab = "activeTableTab";
 </dl>
 </li>
 </ul>
-<a name="HEADER_SIZE">
+<a id="HEADER_SIZE">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -492,7 +563,7 @@ var activeTableTab = "activeTableTab";
 </dl>
 </li>
 </ul>
-<a name="CHANNEL_ID_POS">
+<a id="CHANNEL_ID_POS">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -507,7 +578,7 @@ var activeTableTab = "activeTableTab";
 </dl>
 </li>
 </ul>
-<a name="PAYLOAD_SIZE_POS">
+<a id="PAYLOAD_SIZE_POS">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -524,30 +595,32 @@ var activeTableTab = "activeTableTab";
 </ul>
 </li>
 </ul>
+</section>
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="getBufferProvider--">
+<a id="getBufferProvider()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getBufferProvider</h4>
-<pre><a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a>&nbsp;getBufferProvider()</pre>
-<div class="block">Returns the <a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer"><code>IBufferProvider</code></a> that has provided this buffer and that this buffer will be returned to when its
- <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#release--"><code>release()</code></a> method is called.</div>
+<pre class="methodSignature"><a href="IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a>&nbsp;getBufferProvider()</pre>
+<div class="block">Returns the <a href="IBufferProvider.html" title="interface in org.eclipse.net4j.buffer"><code>IBufferProvider</code></a> that has provided this buffer and that this buffer will be returned to when its
+ <a href="#release()"><code>release()</code></a> method is called.</div>
 </li>
 </ul>
-<a name="getChannelID--">
+<a id="getChannelID()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getChannelID</h4>
-<pre>short&nbsp;getChannelID()</pre>
+<pre class="methodSignature">short&nbsp;getChannelID()</pre>
 <div class="block">Returns the channel index value stored in the header of this buffer.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -555,45 +628,45 @@ var activeTableTab = "activeTableTab";
 </dl>
 </li>
 </ul>
-<a name="getCapacity--">
+<a id="getCapacity()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getCapacity</h4>
-<pre>short&nbsp;getCapacity()</pre>
+<pre class="methodSignature">short&nbsp;getCapacity()</pre>
 <div class="block">Returns the capacity of this buffer.
  <p>
- The capacity of this buffer is equal to the <a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html#getBufferCapacity--"><code>capacity</code></a> of the
- <a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer"><code>IBufferProvider</code></a> that has provided this buffer.</div>
+ The capacity of this buffer is equal to the <a href="IBufferProvider.html#getBufferCapacity()"><code>capacity</code></a> of the
+ <a href="IBufferProvider.html" title="interface in org.eclipse.net4j.buffer"><code>IBufferProvider</code></a> that has provided this buffer.</div>
 </li>
 </ul>
-<a name="getState--">
+<a id="getState()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getState</h4>
-<pre><a href="../../../../org/eclipse/net4j/buffer/BufferState.html" title="enum in org.eclipse.net4j.buffer">BufferState</a>&nbsp;getState()</pre>
+<pre class="methodSignature"><a href="BufferState.html" title="enum in org.eclipse.net4j.buffer">BufferState</a>&nbsp;getState()</pre>
 <div class="block">Returns the internal state of this buffer.</div>
 </li>
 </ul>
-<a name="startGetting-java.nio.channels.SocketChannel-">
+<a id="startGetting(java.nio.channels.SocketChannel)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>startGetting</h4>
-<pre>java.nio.ByteBuffer&nbsp;startGetting(java.nio.channels.SocketChannel&nbsp;socketChannel)
+<pre class="methodSignature">java.nio.ByteBuffer&nbsp;startGetting&#8203;(java.nio.channels.SocketChannel&nbsp;socketChannel)
                           throws java.lang.IllegalStateException,
                                  java.io.IOException</pre>
 <div class="block">Tries to read a <code>ByteBuffer</code> from a <code>SocketChannel</code> that can be used for getting data.
  <p>
  This method is non-blocking and it can be necessary to repeatedly call it. If it was not possible to read a
  complete header from the <code>SocketChannel</code> <code>null</code> is returned and the state of this buffer is
- <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#READING_HEADER"><code>READING_HEADER</code></a>. If it was not possible to read a complete body from the
+ <a href="BufferState.html#READING_HEADER"><code>READING_HEADER</code></a>. If it was not possible to read a complete body from the
  <code>SocketChannel</code> <code>null</code> is returned and the state of this buffer is
- <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#READING_BODY"><code>READING_BODY</code></a>.
+ <a href="BufferState.html#READING_BODY"><code>READING_BODY</code></a>.
  <p>
  If a <code>ByteBuffer</code> is returned it <b>may only</b> be used for getting data. It is left to the
  responsibility of the caller that only the following methods of that <code>ByteBuffer</code> are used:
@@ -624,23 +697,23 @@ var activeTableTab = "activeTableTab";
 <dd>A <code>ByteBuffer</code> that can be used for getting data if it was possible to completely read the data from
          the given <code>SocketChannel</code>, <code>null</code> otherwise.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.IllegalStateException</code> - If the state of this buffer is not <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#INITIAL"><code>INITIAL</code></a>,
-           <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#READING_HEADER"><code>READING_HEADER</code></a> or <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#READING_BODY"><code>READING_BODY</code></a>.</dd>
+<dd><code>java.lang.IllegalStateException</code> - If the state of this buffer is not <a href="BufferState.html#INITIAL"><code>INITIAL</code></a>,
+           <a href="BufferState.html#READING_HEADER"><code>READING_HEADER</code></a> or <a href="BufferState.html#READING_BODY"><code>READING_BODY</code></a>.</dd>
 <dd><code>java.io.IOException</code> - If the <code>SocketChannel</code> has been closed or discovers other I/O problems.</dd>
 </dl>
 </li>
 </ul>
-<a name="startPutting-short-">
+<a id="startPutting(short)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>startPutting</h4>
-<pre>java.nio.ByteBuffer&nbsp;startPutting(short&nbsp;channelID)
+<pre class="methodSignature">java.nio.ByteBuffer&nbsp;startPutting&#8203;(short&nbsp;channelID)
                           throws java.lang.IllegalStateException</pre>
 <div class="block">Returns a <code>ByteBuffer</code> that can be used for putting data.
  <p>
- Turns the <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#getState--"><code>state</code></a> of this buffer into <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#PUTTING"><code>PUTTING</code></a>.
+ Turns the <a href="#getState()"><code>state</code></a> of this buffer into <a href="BufferState.html#PUTTING"><code>PUTTING</code></a>.
  <p>
  The returned <code>ByteBuffer</code> <b>may only</b> be used for putting data. It is left to the responsibility of
  the caller that only the following methods of that <code>ByteBuffer</code> are used:
@@ -667,30 +740,30 @@ var activeTableTab = "activeTableTab";
  </ul></div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>channelID</code> - The index of an <a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel"><code>IChannel</code></a> that this buffer is intended to be passed to later or <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#NO_CHANNEL"><code>NO_CHANNEL</code></a>
+<dd><code>channelID</code> - The index of an <a href="../channel/IChannel.html" title="interface in org.eclipse.net4j.channel"><code>IChannel</code></a> that this buffer is intended to be passed to later or <a href="#NO_CHANNEL"><code>NO_CHANNEL</code></a>
           .</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>A <code>ByteBuffer</code> that can be used for putting data.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.IllegalStateException</code> - If the state of this buffer is not <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#INITIAL"><code>INITIAL</code></a> (<a href="../../../../org/eclipse/net4j/buffer/BufferState.html#PUTTING"><code>PUTTING</code></a> is allowed but meaningless if and only if the given <code>channelID</code> is equal to the
+<dd><code>java.lang.IllegalStateException</code> - If the state of this buffer is not <a href="BufferState.html#INITIAL"><code>INITIAL</code></a> (<a href="BufferState.html#PUTTING"><code>PUTTING</code></a> is allowed but meaningless if and only if the given <code>channelID</code> is equal to the
            existing <code>channelID</code> of this buffer).</dd>
 </dl>
 </li>
 </ul>
-<a name="write-java.nio.channels.SocketChannel-">
+<a id="write(java.nio.channels.SocketChannel)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>write</h4>
-<pre>boolean&nbsp;write(java.nio.channels.SocketChannel&nbsp;socketChannel)
+<pre class="methodSignature">boolean&nbsp;write&#8203;(java.nio.channels.SocketChannel&nbsp;socketChannel)
        throws java.lang.IllegalStateException,
               java.io.IOException</pre>
 <div class="block">Tries to write the data of this buffer to a <code>SocketChannel</code>.
  <p>
  This method is non-blocking and it can be necessary to repeatedly call it. If it was not possible to completely
  write the data to the <code>SocketChannel</code> <code>false</code> is returned and the state of this buffer
- remains <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#WRITING"><code>WRITING</code></a>.</div>
+ remains <a href="BufferState.html#WRITING"><code>WRITING</code></a>.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>socketChannel</code> - The <code>socketChannel</code> to write the data to.</dd>
@@ -698,68 +771,68 @@ var activeTableTab = "activeTableTab";
 <dd><code>true</code> if it was possible to completely write the data to the <code>SocketChannel</code>,
          <code>false</code> otherwise.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.IllegalStateException</code> - If the state of this buffer is not <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#PUTTING"><code>PUTTING</code></a> or <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#WRITING"><code>WRITING</code></a>.</dd>
+<dd><code>java.lang.IllegalStateException</code> - If the state of this buffer is not <a href="BufferState.html#PUTTING"><code>PUTTING</code></a> or <a href="BufferState.html#WRITING"><code>WRITING</code></a>.</dd>
 <dd><code>java.io.IOException</code> - If the <code>SocketChannel</code> has been closed or discovers other I/O problems.</dd>
 </dl>
 </li>
 </ul>
-<a name="flip--">
+<a id="flip()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>flip</h4>
-<pre>void&nbsp;flip()
+<pre class="methodSignature">void&nbsp;flip()
    throws java.lang.IllegalStateException</pre>
-<div class="block">Turns the state of this buffer from <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#PUTTING"><code>PUTTING</code></a> into <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#GETTING"><code>GETTING</code></a>.</div>
+<div class="block">Turns the state of this buffer from <a href="BufferState.html#PUTTING"><code>PUTTING</code></a> into <a href="BufferState.html#GETTING"><code>GETTING</code></a>.</div>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.IllegalStateException</code> - If the state of this buffer is not <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#PUTTING"><code>PUTTING</code></a>.</dd>
+<dd><code>java.lang.IllegalStateException</code> - If the state of this buffer is not <a href="BufferState.html#PUTTING"><code>PUTTING</code></a>.</dd>
 </dl>
 </li>
 </ul>
-<a name="getByteBuffer--">
+<a id="getByteBuffer()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getByteBuffer</h4>
-<pre>java.nio.ByteBuffer&nbsp;getByteBuffer()
+<pre class="methodSignature">java.nio.ByteBuffer&nbsp;getByteBuffer()
                            throws java.lang.IllegalStateException</pre>
 <div class="block">Returns the <code>ByteBuffer</code> that can be used for putting or getting data.</div>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.IllegalStateException</code> - If the state of this buffer is not <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#PUTTING"><code>PUTTING</code></a> or <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#GETTING"><code>GETTING</code></a>.</dd>
+<dd><code>java.lang.IllegalStateException</code> - If the state of this buffer is not <a href="BufferState.html#PUTTING"><code>PUTTING</code></a> or <a href="BufferState.html#GETTING"><code>GETTING</code></a>.</dd>
 </dl>
 </li>
 </ul>
-<a name="isEOS--">
+<a id="isEOS()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>isEOS</h4>
-<pre>boolean&nbsp;isEOS()</pre>
+<pre class="methodSignature">boolean&nbsp;isEOS()</pre>
 <div class="block">Returns the <em>End Of Stream</em> flag to indicate whether this buffer is the last buffer in a stream (typically a signal) of buffers.</div>
 </li>
 </ul>
-<a name="setEOS-boolean-">
+<a id="setEOS(boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setEOS</h4>
-<pre>void&nbsp;setEOS(boolean&nbsp;eos)</pre>
+<pre class="methodSignature">void&nbsp;setEOS&#8203;(boolean&nbsp;eos)</pre>
 <div class="block">Sets the <em>End Of Stream</em> flag to indicate whether this buffer is the last buffer in a stream (typically a signal) of buffers.</div>
 </li>
 </ul>
-<a name="isCCAM--">
+<a id="isCCAM()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>isCCAM</h4>
-<pre>boolean&nbsp;isCCAM()</pre>
+<pre class="methodSignature">boolean&nbsp;isCCAM()</pre>
 <div class="block">Returns the <em>Close Channel After Me</em> flag.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -767,13 +840,13 @@ var activeTableTab = "activeTableTab";
 </dl>
 </li>
 </ul>
-<a name="setCCAM-boolean-">
+<a id="setCCAM(boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setCCAM</h4>
-<pre>void&nbsp;setCCAM(boolean&nbsp;ccam)</pre>
+<pre class="methodSignature">void&nbsp;setCCAM&#8203;(boolean&nbsp;ccam)</pre>
 <div class="block">Sets the <em>Close Channel After Me</em> flag.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -781,224 +854,224 @@ var activeTableTab = "activeTableTab";
 </dl>
 </li>
 </ul>
-<a name="release--">
+<a id="release()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>release</h4>
-<pre>void&nbsp;release()</pre>
-<div class="block">Releases this buffer to its original <a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer"><code>IBufferProvider</code></a>.</div>
+<pre class="methodSignature">void&nbsp;release()</pre>
+<div class="block">Releases this buffer to its original <a href="IBufferProvider.html" title="interface in org.eclipse.net4j.buffer"><code>IBufferProvider</code></a>.</div>
 </li>
 </ul>
-<a name="clear--">
+<a id="clear()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>clear</h4>
-<pre>void&nbsp;clear()</pre>
-<div class="block">Turns the state of this buffer from any state into <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#INITIAL"><code>INITIAL</code></a>.</div>
+<pre class="methodSignature">void&nbsp;clear()</pre>
+<div class="block">Turns the state of this buffer from any state into <a href="BufferState.html#INITIAL"><code>INITIAL</code></a>.</div>
 </li>
 </ul>
-<a name="formatContent-boolean-">
+<a id="formatContent(boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>formatContent</h4>
-<pre>java.lang.String&nbsp;formatContent(boolean&nbsp;showHeader)</pre>
+<pre class="methodSignature">java.lang.String&nbsp;formatContent&#8203;(boolean&nbsp;showHeader)</pre>
 </li>
 </ul>
-<a name="getErrorHandler--">
+<a id="getErrorHandler()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getErrorHandler</h4>
-<pre><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/IErrorHandler.html?is-external=true" title="class or interface in org.eclipse.net4j.util">IErrorHandler</a>&nbsp;getErrorHandler()</pre>
+<pre class="methodSignature">org.eclipse.net4j.util.IErrorHandler&nbsp;getErrorHandler()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
 </dl>
 </li>
 </ul>
-<a name="setErrorHandler-org.eclipse.net4j.util.IErrorHandler-">
+<a id="setErrorHandler(org.eclipse.net4j.util.IErrorHandler)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setErrorHandler</h4>
-<pre>void&nbsp;setErrorHandler(<a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/IErrorHandler.html?is-external=true" title="class or interface in org.eclipse.net4j.util">IErrorHandler</a>&nbsp;errorHandler)</pre>
+<pre class="methodSignature">void&nbsp;setErrorHandler&#8203;(org.eclipse.net4j.util.IErrorHandler&nbsp;errorHandler)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
 </dl>
 </li>
 </ul>
-<a name="compact--">
+<a id="compact()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>compact</h4>
-<pre>void&nbsp;compact()</pre>
+<pre class="methodSignature">void&nbsp;compact()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.7</dd>
 </dl>
 </li>
 </ul>
-<a name="getPosition--">
+<a id="getPosition()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getPosition</h4>
-<pre>int&nbsp;getPosition()</pre>
+<pre class="methodSignature">int&nbsp;getPosition()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.7</dd>
 </dl>
 </li>
 </ul>
-<a name="setPosition-int-">
+<a id="setPosition(int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setPosition</h4>
-<pre>void&nbsp;setPosition(int&nbsp;position)</pre>
+<pre class="methodSignature">void&nbsp;setPosition&#8203;(int&nbsp;position)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.7</dd>
 </dl>
 </li>
 </ul>
-<a name="getLimit--">
+<a id="getLimit()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getLimit</h4>
-<pre>int&nbsp;getLimit()</pre>
+<pre class="methodSignature">int&nbsp;getLimit()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.7</dd>
 </dl>
 </li>
 </ul>
-<a name="setLimit-int-">
+<a id="setLimit(int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setLimit</h4>
-<pre>void&nbsp;setLimit(int&nbsp;limit)</pre>
+<pre class="methodSignature">void&nbsp;setLimit&#8203;(int&nbsp;limit)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.7</dd>
 </dl>
 </li>
 </ul>
-<a name="hasRemaining--">
+<a id="hasRemaining()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>hasRemaining</h4>
-<pre>boolean&nbsp;hasRemaining()</pre>
+<pre class="methodSignature">boolean&nbsp;hasRemaining()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.7</dd>
 </dl>
 </li>
 </ul>
-<a name="get--">
+<a id="get()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>get</h4>
-<pre>byte&nbsp;get()</pre>
+<pre class="methodSignature">byte&nbsp;get()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.7</dd>
 </dl>
 </li>
 </ul>
-<a name="get-byte:A-">
+<a id="get(byte[])">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>get</h4>
-<pre>void&nbsp;get(byte[]&nbsp;dst)</pre>
+<pre class="methodSignature">void&nbsp;get&#8203;(byte[]&nbsp;dst)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.7</dd>
 </dl>
 </li>
 </ul>
-<a name="getShort--">
+<a id="getShort()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getShort</h4>
-<pre>short&nbsp;getShort()</pre>
+<pre class="methodSignature">short&nbsp;getShort()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.7</dd>
 </dl>
 </li>
 </ul>
-<a name="getInt--">
+<a id="getInt()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getInt</h4>
-<pre>int&nbsp;getInt()</pre>
+<pre class="methodSignature">int&nbsp;getInt()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.7</dd>
 </dl>
 </li>
 </ul>
-<a name="getString--">
+<a id="getString()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getString</h4>
-<pre>java.lang.String&nbsp;getString()</pre>
+<pre class="methodSignature">java.lang.String&nbsp;getString()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.7</dd>
 </dl>
 </li>
 </ul>
-<a name="put-byte-">
+<a id="put(byte)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>put</h4>
-<pre>void&nbsp;put(byte&nbsp;b)</pre>
+<pre class="methodSignature">void&nbsp;put&#8203;(byte&nbsp;b)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.7</dd>
 </dl>
 </li>
 </ul>
-<a name="put-byte:A-int-int-">
+<a id="put(byte[],int,int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>put</h4>
-<pre>void&nbsp;put(byte[]&nbsp;src,
+<pre class="methodSignature">void&nbsp;put&#8203;(byte[]&nbsp;src,
          int&nbsp;offset,
          int&nbsp;length)</pre>
 <dl>
@@ -1007,13 +1080,13 @@ var activeTableTab = "activeTableTab";
 </dl>
 </li>
 </ul>
-<a name="putShort-short-">
+<a id="putShort(short)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>putShort</h4>
-<pre>void&nbsp;putShort(short&nbsp;value)</pre>
+<pre class="methodSignature">void&nbsp;putShort&#8203;(short&nbsp;value)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.7</dd>
@@ -1022,21 +1095,25 @@ var activeTableTab = "activeTableTab";
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/IBuffer.html">Use</a></li>
@@ -1046,16 +1123,8 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../org/eclipse/net4j/buffer/BufferState.html" title="enum in org.eclipse.net4j.buffer"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../org/eclipse/net4j/buffer/IBufferHandler.html" title="interface in org.eclipse.net4j.buffer"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../index.html?org/eclipse/net4j/buffer/IBuffer.html" target="_top">Frames</a></li>
-<li><a href="IBuffer.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -1068,6 +1137,9 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
@@ -1084,10 +1156,12 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

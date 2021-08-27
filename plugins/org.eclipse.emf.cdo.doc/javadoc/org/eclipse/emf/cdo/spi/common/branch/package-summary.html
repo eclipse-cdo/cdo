@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>org.eclipse.emf.cdo.spi.common.branch (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,20 +28,25 @@
     catch(err) {
     }
 //-->
-</script>
+var pathtoroot = "../../../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../../index.html">Overview</a></li>
 <li class="navBarCell1Rev">Package</li>
 <li>Class</li>
 <li><a href="package-use.html">Use</a></li>
@@ -41,16 +56,14 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/admin/package-summary.html">Prev&nbsp;Package</a></li>
-<li><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/package-summary.html">Next&nbsp;Package</a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../../index.html?org/eclipse/emf/cdo/spi/common/branch/package-summary.html" target="_top">Frames</a></li>
-<li><a href="package-summary.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -63,22 +76,35 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
+<main role="main">
 <div class="header">
 <h1 title="Package" class="title">Package&nbsp;org.eclipse.emf.cdo.spi.common.branch</h1>
-<div class="docSummary">
-<div class="block">Common service provider interfaces and useful base implementations for dealing with branches.</div>
-</div>
-<p>See:&nbsp;<a href="#package.description">Description</a></p>
 </div>
 <div class="contentContainer">
+<section role="region"><a id="package.description">
+<!--   -->
+</a>
+<div class="block">Common service provider interfaces and useful base implementations for dealing with branches.</div>
+</section>
 <ul class="blockList">
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<table class="typeSummary">
 <caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Interface</th>
@@ -86,35 +112,41 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/CDOBranchAdjustable.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">CDOBranchAdjustable</a></td>
+<th class="colFirst" scope="row"><a href="CDOBranchAdjustable.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">CDOBranchAdjustable</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranch.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranch</a></td>
+<th class="colFirst" scope="row"><a href="InternalCDOBranch.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranch</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager</a></td>
+<th class="colFirst" scope="row"><a href="InternalCDOBranchManager.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager.BranchLoader</a></td>
+<th class="colFirst" scope="row"><a href="InternalCDOBranchManager.BranchLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager.BranchLoader</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader2.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager.BranchLoader2</a></td>
+<th class="colFirst" scope="row"><a href="InternalCDOBranchManager.BranchLoader2.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager.BranchLoader2</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader3.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager.BranchLoader3</a></td>
+<th class="colFirst" scope="row"><a href="InternalCDOBranchManager.BranchLoader3.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager.BranchLoader3</a></th>
+<td class="colLast">
+<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="InternalCDOBranchManager.BranchLoader4.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager.BranchLoader4</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
@@ -123,7 +155,7 @@
 </table>
 </li>
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<table class="typeSummary">
 <caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Class</th>
@@ -131,19 +163,19 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/CDOBranchUtil.html" title="class in org.eclipse.emf.cdo.spi.common.branch">CDOBranchUtil</a></td>
+<th class="colFirst" scope="row"><a href="CDOBranchUtil.html" title="class in org.eclipse.emf.cdo.spi.common.branch">CDOBranchUtil</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader.BranchInfo.html" title="class in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager.BranchLoader.BranchInfo</a></td>
+<th class="colFirst" scope="row"><a href="InternalCDOBranchManager.BranchLoader.BranchInfo.html" title="class in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager.BranchLoader.BranchInfo</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader.SubBranchInfo.html" title="class in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager.BranchLoader.SubBranchInfo</a></td>
+<th class="colFirst" scope="row"><a href="InternalCDOBranchManager.BranchLoader.SubBranchInfo.html" title="class in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager.BranchLoader.SubBranchInfo</a></th>
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
@@ -151,23 +183,36 @@
 </tbody>
 </table>
 </li>
+<li class="blockList">
+<table class="typeSummary">
+<caption><span>Enum Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Enum</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="InternalCDOBranchManager.TagChangeKind.html" title="enum in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager.TagChangeKind</a></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</li>
 </ul>
-<a name="package.description">
-<!--   -->
-</a>
-<h2 title="Package org.eclipse.emf.cdo.spi.common.branch Description">Package org.eclipse.emf.cdo.spi.common.branch Description</h2>
-<div class="block">Common service provider interfaces and useful base implementations for dealing with branches.</div>
 </div>
+</main>
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../../index.html">Overview</a></li>
 <li class="navBarCell1Rev">Package</li>
 <li>Class</li>
 <li><a href="package-use.html">Use</a></li>
@@ -177,16 +222,8 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/admin/package-summary.html">Prev&nbsp;Package</a></li>
-<li><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/package-summary.html">Next&nbsp;Package</a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../../index.html?org/eclipse/emf/cdo/spi/common/branch/package-summary.html" target="_top">Frames</a></li>
-<li><a href="package-summary.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -199,11 +236,16 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

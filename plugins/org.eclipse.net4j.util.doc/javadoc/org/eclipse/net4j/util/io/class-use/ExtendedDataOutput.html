@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>Uses of Interface org.eclipse.net4j.util.io.ExtendedDataOutput (Net4j Utilities Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,39 +28,43 @@
     catch(err) {
     }
 //-->
-</script>
+var pathtoroot = "../../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="../package-summary.html">Package</a></li>
-<li><a href="../../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">Class</a></li>
+<li><a href="../ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">Class</a></li>
 <li class="navBarCell1Rev">Use</li>
+<li><a href="../package-tree.html">Tree</a></li>
 <li><a href="../../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../../help-doc.html">Help</a></li>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev</li>
-<li>Next</li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/net4j/util/io/class-use/ExtendedDataOutput.html" target="_top">Frames</a></li>
-<li><a href="ExtendedDataOutput.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -63,32 +77,44 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
+<main role="main">
 <div class="header">
 <h2 title="Uses of Interface org.eclipse.net4j.util.io.ExtendedDataOutput" class="title">Uses of Interface<br>org.eclipse.net4j.util.io.ExtendedDataOutput</h2>
 </div>
 <div class="classUseContainer">
 <ul class="blockList">
 <li class="blockList">
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing packages, and an explanation">
-<caption><span>Packages that use <a href="../../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Packages that use <a href="../ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Package</th>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.util.io">org.eclipse.net4j.util.io</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.util.io">org.eclipse.net4j.util.io</a></th>
 <td class="colLast">
 <div class="block">Interfaces and classes for I/O.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.util.security">org.eclipse.net4j.util.security</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.util.security">org.eclipse.net4j.util.security</a></th>
 <td class="colLast">
 <div class="block">Interfaces and classes for security, negotiation, authentication, authorization and cryptography.</div>
 </td>
@@ -98,162 +124,183 @@
 </li>
 <li class="blockList">
 <ul class="blockList">
-<li class="blockList"><a name="org.eclipse.net4j.util.io">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.net4j.util.io">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a> in <a href="../../../../../../org/eclipse/net4j/util/io/package-summary.html">org.eclipse.net4j.util.io</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../../org/eclipse/net4j/util/io/package-summary.html">org.eclipse.net4j.util.io</a> that implement <a href="../../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a> in <a href="../package-summary.html">org.eclipse.net4j.util.io</a></h3>
+<table class="useSummary">
+<caption><span>Classes in <a href="../package-summary.html">org.eclipse.net4j.util.io</a> that implement <a href="../ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Class and Description</th>
+<th class="colSecond" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/io/DataOutputExtender.html" title="class in org.eclipse.net4j.util.io">DataOutputExtender</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../DataOutputExtender.html" title="class in org.eclipse.net4j.util.io">DataOutputExtender</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.Delegating.html" title="class in org.eclipse.net4j.util.io">ExtendedDataOutput.Delegating</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../ExtendedDataOutput.Delegating.html" title="class in org.eclipse.net4j.util.io">ExtendedDataOutput.Delegating</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/io/ExtendedDataOutputStream.html" title="class in org.eclipse.net4j.util.io">ExtendedDataOutputStream</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../ExtendedDataOutputStream.html" title="class in org.eclipse.net4j.util.io">ExtendedDataOutputStream</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../org/eclipse/net4j/util/io/package-summary.html">org.eclipse.net4j.util.io</a> that return <a href="../../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Methods in <a href="../package-summary.html">org.eclipse.net4j.util.io</a> that return <a href="../ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a></code></td>
-<td class="colLast"><span class="typeNameLabel">ExtendedDataOutput.Delegating.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.Delegating.html#getDelegate--">getDelegate</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">ExtendedDataOutput.Delegating.</span><code><span class="memberNameLink"><a href="../ExtendedDataOutput.Delegating.html#getDelegate()">getDelegate</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a></code></td>
-<td class="colLast"><span class="typeNameLabel">ExtendedDataOutput.Stream.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.Stream.html#getDelegate--">getDelegate</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">ExtendedDataOutput.Stream.</span><code><span class="memberNameLink"><a href="../ExtendedDataOutput.Stream.html#getDelegate()">getDelegate</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../org/eclipse/net4j/util/io/package-summary.html">org.eclipse.net4j.util.io</a> with parameters of type <a href="../../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Methods in <a href="../package-summary.html">org.eclipse.net4j.util.io</a> with parameters of type <a href="../ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">StringCompressor.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/io/StringCompressor.html#write-org.eclipse.net4j.util.io.ExtendedDataOutput-java.lang.String-">write</a></span>(<a href="../../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a>&nbsp;out,
-     java.lang.String&nbsp;string)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">StringCompressor.</span><code><span class="memberNameLink"><a href="../StringCompressor.html#write(org.eclipse.net4j.util.io.ExtendedDataOutput,java.lang.String)">write</a></span>&#8203;(<a href="../ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a>&nbsp;out,
+     java.lang.String&nbsp;string)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">StringIO.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/io/StringIO.html#write-org.eclipse.net4j.util.io.ExtendedDataOutput-java.lang.String-">write</a></span>(<a href="../../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a>&nbsp;out,
-     java.lang.String&nbsp;string)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">StringIO.</span><code><span class="memberNameLink"><a href="../StringIO.html#write(org.eclipse.net4j.util.io.ExtendedDataOutput,java.lang.String)">write</a></span>&#8203;(<a href="../ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a>&nbsp;out,
+     java.lang.String&nbsp;string)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">StringCompressor.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/io/StringCompressor.html#writeAcknowledgements-org.eclipse.net4j.util.io.ExtendedDataOutput-java.util.Collection-">writeAcknowledgements</a></span>(<a href="../../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a>&nbsp;out,
-                     java.util.Collection&lt;java.lang.Integer&gt;&nbsp;acknowledgements)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">StringCompressor.</span><code><span class="memberNameLink"><a href="../StringCompressor.html#writeAcknowledgements(org.eclipse.net4j.util.io.ExtendedDataOutput,java.util.Collection)">writeAcknowledgements</a></span>&#8203;(<a href="../ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a>&nbsp;out,
+                     java.util.Collection&lt;java.lang.Integer&gt;&nbsp;acknowledgements)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected abstract void</code></td>
-<td class="colLast"><span class="typeNameLabel">SortedFileMap.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/io/SortedFileMap.html#writeKey-org.eclipse.net4j.util.io.ExtendedDataOutput-K-">writeKey</a></span>(<a href="../../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a>&nbsp;out,
-        <a href="../../../../../../org/eclipse/net4j/util/io/SortedFileMap.html" title="type parameter in SortedFileMap">K</a>&nbsp;key)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">SortedFileMap.</span><code><span class="memberNameLink"><a href="../SortedFileMap.html#writeKey(org.eclipse.net4j.util.io.ExtendedDataOutput,K)">writeKey</a></span>&#8203;(<a href="../ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a>&nbsp;out,
+        <a href="../SortedFileMap.html" title="type parameter in SortedFileMap">K</a>&nbsp;key)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><span class="typeNameLabel">StringCompressor.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/io/StringCompressor.html#writeString-org.eclipse.net4j.util.io.ExtendedDataOutput-java.lang.String-">writeString</a></span>(<a href="../../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a>&nbsp;out,
-           java.lang.String&nbsp;value)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">StringCompressor.Counting.</span><code><span class="memberNameLink"><a href="../StringCompressor.Counting.html#writeString(org.eclipse.net4j.util.io.ExtendedDataOutput,java.lang.String)">writeString</a></span>&#8203;(<a href="../ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a>&nbsp;out,
+           java.lang.String&nbsp;value)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><span class="typeNameLabel">StringCompressor.Counting.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/io/StringCompressor.Counting.html#writeString-org.eclipse.net4j.util.io.ExtendedDataOutput-java.lang.String-">writeString</a></span>(<a href="../../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a>&nbsp;out,
-           java.lang.String&nbsp;value)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">StringCompressor.</span><code><span class="memberNameLink"><a href="../StringCompressor.html#writeString(org.eclipse.net4j.util.io.ExtendedDataOutput,java.lang.String)">writeString</a></span>&#8203;(<a href="../ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a>&nbsp;out,
+           java.lang.String&nbsp;value)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected abstract void</code></td>
-<td class="colLast"><span class="typeNameLabel">SortedFileMap.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/io/SortedFileMap.html#writeValue-org.eclipse.net4j.util.io.ExtendedDataOutput-V-">writeValue</a></span>(<a href="../../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a>&nbsp;out,
-          <a href="../../../../../../org/eclipse/net4j/util/io/SortedFileMap.html" title="type parameter in SortedFileMap">V</a>&nbsp;value)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">SortedFileMap.</span><code><span class="memberNameLink"><a href="../SortedFileMap.html#writeValue(org.eclipse.net4j.util.io.ExtendedDataOutput,V)">writeValue</a></span>&#8203;(<a href="../ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a>&nbsp;out,
+          <a href="../SortedFileMap.html" title="type parameter in SortedFileMap">V</a>&nbsp;value)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing constructors, and an explanation">
-<caption><span>Constructors in <a href="../../../../../../org/eclipse/net4j/util/io/package-summary.html">org.eclipse.net4j.util.io</a> with parameters of type <a href="../../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Constructors in <a href="../package-summary.html">org.eclipse.net4j.util.io</a> with parameters of type <a href="../ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Constructor and Description</th>
+<th class="colFirst" scope="col">Constructor</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.Delegating.html#Delegating-org.eclipse.net4j.util.io.ExtendedDataOutput-">Delegating</a></span>(<a href="../../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a>&nbsp;delegate)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../ExtendedDataOutput.Delegating.html#%3Cinit%3E(org.eclipse.net4j.util.io.ExtendedDataOutput)">Delegating</a></span>&#8203;(<a href="../ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a>&nbsp;delegate)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.Stream.html#Stream-org.eclipse.net4j.util.io.ExtendedDataOutput-">Stream</a></span>(<a href="../../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a>&nbsp;delegate)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../ExtendedDataOutput.Stream.html#%3Cinit%3E(org.eclipse.net4j.util.io.ExtendedDataOutput)">Stream</a></span>&#8203;(<a href="../ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a>&nbsp;delegate)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.security">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.net4j.util.security">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a> in <a href="../../../../../../org/eclipse/net4j/util/security/package-summary.html">org.eclipse.net4j.util.security</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../org/eclipse/net4j/util/security/package-summary.html">org.eclipse.net4j.util.security</a> with parameters of type <a href="../../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a> in <a href="../../security/package-summary.html">org.eclipse.net4j.util.security</a></h3>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../security/package-summary.html">org.eclipse.net4j.util.security</a> with parameters of type <a href="../ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">DiffieHellman.Server.Challenge.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/security/DiffieHellman.Server.Challenge.html#write-org.eclipse.net4j.util.io.ExtendedDataOutput-">write</a></span>(<a href="../../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a>&nbsp;out)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">DiffieHellman.Client.Response.</span><code><span class="memberNameLink"><a href="../../security/DiffieHellman.Client.Response.html#write(org.eclipse.net4j.util.io.ExtendedDataOutput)">write</a></span>&#8203;(<a href="../ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a>&nbsp;out)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">DiffieHellman.Client.Response.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/security/DiffieHellman.Client.Response.html#write-org.eclipse.net4j.util.io.ExtendedDataOutput-">write</a></span>(<a href="../../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a>&nbsp;out)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">DiffieHellman.Server.Challenge.</span><code><span class="memberNameLink"><a href="../../security/DiffieHellman.Server.Challenge.html#write(org.eclipse.net4j.util.io.ExtendedDataOutput)">write</a></span>&#8203;(<a href="../ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a>&nbsp;out)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
 </ul>
 </li>
 </ul>
 </div>
+</main>
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="../package-summary.html">Package</a></li>
-<li><a href="../../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">Class</a></li>
+<li><a href="../ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">Class</a></li>
 <li class="navBarCell1Rev">Use</li>
+<li><a href="../package-tree.html">Tree</a></li>
 <li><a href="../../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../../help-doc.html">Help</a></li>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev</li>
-<li>Next</li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/net4j/util/io/class-use/ExtendedDataOutput.html" target="_top">Frames</a></li>
-<li><a href="ExtendedDataOutput.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -266,11 +313,16 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

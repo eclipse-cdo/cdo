@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>SashLayoutAction.LayoutMenu (Net4j Utilities Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,26 +28,31 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10};
+var data = {"i0":10,"i1":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
 var activeTableTab = "activeTableTab";
-</script>
+var pathtoroot = "../../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/SashLayoutAction.LayoutMenu.html">Use</a></li>
@@ -47,16 +62,14 @@ var activeTableTab = "activeTableTab";
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/net4j/util/ui/actions/SashLayoutAction.Horizontal.html" title="class in org.eclipse.net4j.util.ui.actions"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../../org/eclipse/net4j/util/ui/actions/SashLayoutAction.Vertical.html" title="class in org.eclipse.net4j.util.ui.actions"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/net4j/util/ui/actions/SashLayoutAction.LayoutMenu.html" target="_top">Frames</a></li>
-<li><a href="SashLayoutAction.LayoutMenu.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -69,12 +82,15 @@ var activeTableTab = "activeTableTab";
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li><a href="#fields.inherited.from.class.org.eclipse.jface.action.MenuManager">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
@@ -85,13 +101,22 @@ var activeTableTab = "activeTableTab";
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
 <!-- ======== START OF CLASS DATA ======== -->
+<main role="main">
 <div class="header">
-<div class="subTitle">org.eclipse.net4j.util.ui.actions</div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.net4j.util.ui.actions</a></div>
 <h2 title="Class SashLayoutAction.LayoutMenu" class="title">Class SashLayoutAction.LayoutMenu</h2>
 </div>
 <div class="contentContainer">
@@ -99,10 +124,10 @@ var activeTableTab = "activeTableTab";
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">org.eclipse.jface.action.ContributionManager</a></li>
+<li><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">org.eclipse.jface.action.ContributionManager</a></li>
 <li>
 <ul class="inheritance">
-<li><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">org.eclipse.jface.action.MenuManager</a></li>
+<li><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">org.eclipse.jface.action.MenuManager</a></li>
 <li>
 <ul class="inheritance">
 <li>org.eclipse.net4j.util.ui.actions.SashLayoutAction.LayoutMenu</li>
@@ -118,16 +143,15 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionItem.html?is-external=true" title="class or interface in org.eclipse.jface.action">IContributionItem</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IContributionManager</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IMenuManager</a></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionItem.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">IContributionItem</a></code>, <code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">IContributionManager</a></code>, <code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">IMenuManager</a></code></dd>
 </dl>
 <dl>
 <dt>Enclosing class:</dt>
-<dd><a href="../../../../../../org/eclipse/net4j/util/ui/actions/SashLayoutAction.html" title="class in org.eclipse.net4j.util.ui.actions">SashLayoutAction</a></dd>
+<dd><a href="SashLayoutAction.html" title="class in org.eclipse.net4j.util.ui.actions">SashLayoutAction</a></dd>
 </dl>
 <hr>
-<br>
 <pre>public static class <span class="typeNameLabel">SashLayoutAction.LayoutMenu</span>
-extends <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">MenuManager</a></pre>
+extends <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">MenuManager</a></pre>
 <dl>
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>Eike Stepper</dd>
@@ -139,95 +163,106 @@ extends <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/ref
 <ul class="blockList">
 <li class="blockList">
 <!-- =========== FIELD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="field.summary">
+<li class="blockList"><a id="field.summary">
 <!--   -->
 </a>
 <h3>Field Summary</h3>
 <ul class="blockList">
-<li class="blockList"><a name="fields.inherited.from.class.org.eclipse.jface.action.MenuManager">
+<li class="blockList"><a id="fields.inherited.from.class.org.eclipse.jface.action.MenuManager">
 <!--   -->
 </a>
-<h3>Fields inherited from class&nbsp;org.eclipse.jface.action.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">MenuManager</a></h3>
-<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#MANAGER_KEY" title="class or interface in org.eclipse.jface.action">MANAGER_KEY</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#visible" title="class or interface in org.eclipse.jface.action">visible</a></code></li>
+<h3>Fields inherited from class&nbsp;org.eclipse.jface.action.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">MenuManager</a></h3>
+<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#MANAGER_KEY" title="class or interface in org.eclipse.jface.action" class="externalLink">MANAGER_KEY</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#visible" title="class or interface in org.eclipse.jface.action" class="externalLink">visible</a></code></li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.summary">
+<li class="blockList"><a id="constructor.summary">
 <!--   -->
 </a>
 <h3>Constructor Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
+<table class="memberSummary">
 <caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Constructor and Description</th>
+<th class="colFirst" scope="col">Constructor</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/actions/SashLayoutAction.LayoutMenu.html#LayoutMenu-org.eclipse.net4j.util.ui.widgets.SashComposite-">LayoutMenu</a></span>(<a href="../../../../../../org/eclipse/net4j/util/ui/widgets/SashComposite.html" title="class in org.eclipse.net4j.util.ui.widgets">SashComposite</a>&nbsp;sashComposite)</code>&nbsp;</td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(org.eclipse.net4j.util.ui.widgets.SashComposite)">LayoutMenu</a></span>&#8203;(<a href="../widgets/SashComposite.html" title="class in org.eclipse.net4j.util.ui.widgets">SashComposite</a>&nbsp;sashComposite)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.summary">
+<li class="blockList"><a id="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<table class="memberSummary">
 <caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code><a href="../../../../../../org/eclipse/net4j/util/ui/actions/SafeAction.html" title="class in org.eclipse.net4j.util.ui.actions">SafeAction</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/actions/SashLayoutAction.LayoutMenu.html#getHorizontalAction--">getHorizontalAction</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="SafeAction.html" title="class in org.eclipse.net4j.util.ui.actions">SafeAction</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getHorizontalAction()">getHorizontalAction</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../org/eclipse/net4j/util/ui/actions/SafeAction.html" title="class in org.eclipse.net4j.util.ui.actions">SafeAction</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/actions/SashLayoutAction.LayoutMenu.html#getVerticalAction--">getVerticalAction</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="SafeAction.html" title="class in org.eclipse.net4j.util.ui.actions">SafeAction</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getVerticalAction()">getVerticalAction</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.jface.action.MenuManager">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.jface.action.MenuManager">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.jface.action.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">MenuManager</a></h3>
-<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#addMenuListener-org.eclipse.jface.action.IMenuListener-" title="class or interface in org.eclipse.jface.action">addMenuListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#createContextMenu-org.eclipse.swt.widgets.Control-" title="class or interface in org.eclipse.jface.action">createContextMenu</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#createMenuBar-org.eclipse.swt.widgets.Decorations-" title="class or interface in org.eclipse.jface.action">createMenuBar</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#createMenuBar-org.eclipse.swt.widgets.Shell-" title="class or interface in org.eclipse.jface.action">createMenuBar</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#dispose--" title="class or interface in org.eclipse.jface.action">dispose</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#doItemFill-org.eclipse.jface.action.IContributionItem-int-" title="class or interface in org.eclipse.jface.action">doItemFill</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#fill-org.eclipse.swt.widgets.Composite-" title="class or interface in org.eclipse.jface.action">fill</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#fill-org.eclipse.swt.widgets.CoolBar-int-" title="class or interface in org.eclipse.jface.action">fill</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#fill-org.eclipse.swt.widgets.Menu-int-" title="class or interface in org.eclipse.jface.action">fill</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#fill-org.eclipse.swt.widgets.ToolBar-int-" title="class or interface in org.eclipse.jface.action">fill</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#findMenuUsingPath-java.lang.String-" title="class or interface in org.eclipse.jface.action">findMenuUsingPath</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#findUsingPath-java.lang.String-" title="class or interface in org.eclipse.jface.action">findUsingPath</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#getId--" title="class or interface in org.eclipse.jface.action">getId</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#getImageDescriptor--" title="class or interface in org.eclipse.jface.action">getImageDescriptor</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#getMenu--" title="class or interface in org.eclipse.jface.action">getMenu</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#getMenuItem-int-" title="class or interface in org.eclipse.jface.action">getMenuItem</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#getMenuItemCount--" title="class or interface in org.eclipse.jface.action">getMenuItemCount</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#getMenuItems--" title="class or interface in org.eclipse.jface.action">getMenuItems</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#getMenuText--" title="class or interface in org.eclipse.jface.action">getMenuText</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#getOverrides--" title="class or interface in org.eclipse.jface.action">getOverrides</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#getParent--" title="class or interface in org.eclipse.jface.action">getParent</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#getRemoveAllWhenShown--" title="class or interface in org.eclipse.jface.action">getRemoveAllWhenShown</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#isDynamic--" title="class or interface in org.eclipse.jface.action">isDynamic</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#isEnabled--" title="class or interface in org.eclipse.jface.action">isEnabled</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#isGroupMarker--" title="class or interface in org.eclipse.jface.action">isGroupMarker</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#isSeparator--" title="class or interface in org.eclipse.jface.action">isSeparator</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#isSubstituteFor-org.eclipse.jface.action.IContributionItem-" title="class or interface in org.eclipse.jface.action">isSubstituteFor</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#isVisible--" title="class or interface in org.eclipse.jface.action">isVisible</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#markDirty--" title="class or interface in org.eclipse.jface.action">markDirty</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#menuExist--" title="class or interface in org.eclipse.jface.action">menuExist</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#removeMenuListener-org.eclipse.jface.action.IMenuListener-" title="class or interface in org.eclipse.jface.action">removeMenuListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#saveWidgetState--" title="class or interface in org.eclipse.jface.action">saveWidgetState</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#setActionDefinitionId-java.lang.String-" title="class or interface in org.eclipse.jface.action">setActionDefinitionId</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#setImageDescriptor-org.eclipse.jface.resource.ImageDescriptor-" title="class or interface in org.eclipse.jface.action">setImageDescriptor</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#setMenuText-java.lang.String-" title="class or interface in org.eclipse.jface.action">setMenuText</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#setOverrides-org.eclipse.jface.action.IContributionManagerOverrides-" title="class or interface in org.eclipse.jface.action">setOverrides</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#setParent-org.eclipse.jface.action.IContributionManager-" title="class or interface in org.eclipse.jface.action">setParent</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#setRemoveAllWhenShown-boolean-" title="class or interface in org.eclipse.jface.action">setRemoveAllWhenShown</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#setVisible-boolean-" title="class or interface in org.eclipse.jface.action">setVisible</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#toString--" title="class or interface in org.eclipse.jface.action">toString</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#update--" title="class or interface in org.eclipse.jface.action">update</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#update-boolean-" title="class or interface in org.eclipse.jface.action">update</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#update-boolean-boolean-" title="class or interface in org.eclipse.jface.action">update</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#update-java.lang.String-" title="class or interface in org.eclipse.jface.action">update</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#updateAll-boolean-" title="class or interface in org.eclipse.jface.action">updateAll</a></code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.jface.action.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">MenuManager</a></h3>
+<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#addMenuListener(org.eclipse.jface.action.IMenuListener)" title="class or interface in org.eclipse.jface.action" class="externalLink">addMenuListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#createContextMenu(org.eclipse.swt.widgets.Control)" title="class or interface in org.eclipse.jface.action" class="externalLink">createContextMenu</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#createMenuBar(org.eclipse.swt.widgets.Decorations)" title="class or interface in org.eclipse.jface.action" class="externalLink">createMenuBar</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#createMenuBar(org.eclipse.swt.widgets.Shell)" title="class or interface in org.eclipse.jface.action" class="externalLink">createMenuBar</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#dispose()" title="class or interface in org.eclipse.jface.action" class="externalLink">dispose</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#doItemFill(org.eclipse.jface.action.IContributionItem,int)" title="class or interface in org.eclipse.jface.action" class="externalLink">doItemFill</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#fill(org.eclipse.swt.widgets.Composite)" title="class or interface in org.eclipse.jface.action" class="externalLink">fill</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#fill(org.eclipse.swt.widgets.CoolBar,int)" title="class or interface in org.eclipse.jface.action" class="externalLink">fill</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#fill(org.eclipse.swt.widgets.Menu,int)" title="class or interface in org.eclipse.jface.action" class="externalLink">fill</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#fill(org.eclipse.swt.widgets.ToolBar,int)" title="class or interface in org.eclipse.jface.action" class="externalLink">fill</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#findMenuUsingPath(java.lang.String)" title="class or interface in org.eclipse.jface.action" class="externalLink">findMenuUsingPath</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#findUsingPath(java.lang.String)" title="class or interface in org.eclipse.jface.action" class="externalLink">findUsingPath</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#getId()" title="class or interface in org.eclipse.jface.action" class="externalLink">getId</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#getImageDescriptor()" title="class or interface in org.eclipse.jface.action" class="externalLink">getImageDescriptor</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#getMenu()" title="class or interface in org.eclipse.jface.action" class="externalLink">getMenu</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#getMenuItem(int)" title="class or interface in org.eclipse.jface.action" class="externalLink">getMenuItem</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#getMenuItemCount()" title="class or interface in org.eclipse.jface.action" class="externalLink">getMenuItemCount</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#getMenuItems()" title="class or interface in org.eclipse.jface.action" class="externalLink">getMenuItems</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#getMenuText()" title="class or interface in org.eclipse.jface.action" class="externalLink">getMenuText</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#getOverrides()" title="class or interface in org.eclipse.jface.action" class="externalLink">getOverrides</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#getParent()" title="class or interface in org.eclipse.jface.action" class="externalLink">getParent</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#getRemoveAllWhenShown()" title="class or interface in org.eclipse.jface.action" class="externalLink">getRemoveAllWhenShown</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#isDynamic()" title="class or interface in org.eclipse.jface.action" class="externalLink">isDynamic</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#isEnabled()" title="class or interface in org.eclipse.jface.action" class="externalLink">isEnabled</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#isGroupMarker()" title="class or interface in org.eclipse.jface.action" class="externalLink">isGroupMarker</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#isSeparator()" title="class or interface in org.eclipse.jface.action" class="externalLink">isSeparator</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#isSubstituteFor(org.eclipse.jface.action.IContributionItem)" title="class or interface in org.eclipse.jface.action" class="externalLink">isSubstituteFor</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#isVisible()" title="class or interface in org.eclipse.jface.action" class="externalLink">isVisible</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#markDirty()" title="class or interface in org.eclipse.jface.action" class="externalLink">markDirty</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#menuExist()" title="class or interface in org.eclipse.jface.action" class="externalLink">menuExist</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#removeMenuListener(org.eclipse.jface.action.IMenuListener)" title="class or interface in org.eclipse.jface.action" class="externalLink">removeMenuListener</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#saveWidgetState()" title="class or interface in org.eclipse.jface.action" class="externalLink">saveWidgetState</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#setActionDefinitionId(java.lang.String)" title="class or interface in org.eclipse.jface.action" class="externalLink">setActionDefinitionId</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#setImageDescriptor(org.eclipse.jface.resource.ImageDescriptor)" title="class or interface in org.eclipse.jface.action" class="externalLink">setImageDescriptor</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#setMenuText(java.lang.String)" title="class or interface in org.eclipse.jface.action" class="externalLink">setMenuText</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#setOverrides(org.eclipse.jface.action.IContributionManagerOverrides)" title="class or interface in org.eclipse.jface.action" class="externalLink">setOverrides</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#setParent(org.eclipse.jface.action.IContributionManager)" title="class or interface in org.eclipse.jface.action" class="externalLink">setParent</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#setRemoveAllWhenShown(boolean)" title="class or interface in org.eclipse.jface.action" class="externalLink">setRemoveAllWhenShown</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#setVisible(boolean)" title="class or interface in org.eclipse.jface.action" class="externalLink">setVisible</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#toString()" title="class or interface in org.eclipse.jface.action" class="externalLink">toString</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#update()" title="class or interface in org.eclipse.jface.action" class="externalLink">update</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#update(boolean)" title="class or interface in org.eclipse.jface.action" class="externalLink">update</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#update(boolean,boolean)" title="class or interface in org.eclipse.jface.action" class="externalLink">update</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#update(java.lang.String)" title="class or interface in org.eclipse.jface.action" class="externalLink">update</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true#updateAll(boolean)" title="class or interface in org.eclipse.jface.action" class="externalLink">updateAll</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.jface.action.ContributionManager">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.jface.action.ContributionManager">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.jface.action.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">ContributionManager</a></h3>
-<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#add-org.eclipse.jface.action.IAction-" title="class or interface in org.eclipse.jface.action">add</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#add-org.eclipse.jface.action.IContributionItem-" title="class or interface in org.eclipse.jface.action">add</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#allowItem-org.eclipse.jface.action.IContributionItem-" title="class or interface in org.eclipse.jface.action">allowItem</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#appendToGroup-java.lang.String-org.eclipse.jface.action.IAction-" title="class or interface in org.eclipse.jface.action">appendToGroup</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#appendToGroup-java.lang.String-org.eclipse.jface.action.IContributionItem-" title="class or interface in org.eclipse.jface.action">appendToGroup</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#dumpStatistics--" title="class or interface in org.eclipse.jface.action">dumpStatistics</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#find-java.lang.String-" title="class or interface in org.eclipse.jface.action">find</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#getItems--" title="class or interface in org.eclipse.jface.action">getItems</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#getSize--" title="class or interface in org.eclipse.jface.action">getSize</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#hasDynamicItems--" title="class or interface in org.eclipse.jface.action">hasDynamicItems</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#indexOf-org.eclipse.jface.action.IContributionItem-" title="class or interface in org.eclipse.jface.action">indexOf</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#indexOf-java.lang.String-" title="class or interface in org.eclipse.jface.action">indexOf</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#insert-int-org.eclipse.jface.action.IContributionItem-" title="class or interface in org.eclipse.jface.action">insert</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#insertAfter-java.lang.String-org.eclipse.jface.action.IAction-" title="class or interface in org.eclipse.jface.action">insertAfter</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#insertAfter-java.lang.String-org.eclipse.jface.action.IContributionItem-" title="class or interface in org.eclipse.jface.action">insertAfter</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#insertBefore-java.lang.String-org.eclipse.jface.action.IAction-" title="class or interface in org.eclipse.jface.action">insertBefore</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#insertBefore-java.lang.String-org.eclipse.jface.action.IContributionItem-" title="class or interface in org.eclipse.jface.action">insertBefore</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#internalSetItems-org.eclipse.jface.action.IContributionItem:A-" title="class or interface in org.eclipse.jface.action">internalSetItems</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#isDirty--" title="class or interface in org.eclipse.jface.action">isDirty</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#isEmpty--" title="class or interface in org.eclipse.jface.action">isEmpty</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#itemAdded-org.eclipse.jface.action.IContributionItem-" title="class or interface in org.eclipse.jface.action">itemAdded</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#itemRemoved-org.eclipse.jface.action.IContributionItem-" title="class or interface in org.eclipse.jface.action">itemRemoved</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#prependToGroup-java.lang.String-org.eclipse.jface.action.IAction-" title="class or interface in org.eclipse.jface.action">prependToGroup</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#prependToGroup-java.lang.String-org.eclipse.jface.action.IContributionItem-" title="class or interface in org.eclipse.jface.action">prependToGroup</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#remove-org.eclipse.jface.action.IContributionItem-" title="class or interface in org.eclipse.jface.action">remove</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#remove-java.lang.String-" title="class or interface in org.eclipse.jface.action">remove</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#removeAll--" title="class or interface in org.eclipse.jface.action">removeAll</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#replaceItem-java.lang.String-org.eclipse.jface.action.IContributionItem-" title="class or interface in org.eclipse.jface.action">replaceItem</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#setDirty-boolean-" title="class or interface in org.eclipse.jface.action">setDirty</a></code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.jface.action.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">ContributionManager</a></h3>
+<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#add(org.eclipse.jface.action.IAction)" title="class or interface in org.eclipse.jface.action" class="externalLink">add</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#add(org.eclipse.jface.action.IContributionItem)" title="class or interface in org.eclipse.jface.action" class="externalLink">add</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#allowItem(org.eclipse.jface.action.IContributionItem)" title="class or interface in org.eclipse.jface.action" class="externalLink">allowItem</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#appendToGroup(java.lang.String,org.eclipse.jface.action.IAction)" title="class or interface in org.eclipse.jface.action" class="externalLink">appendToGroup</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#appendToGroup(java.lang.String,org.eclipse.jface.action.IContributionItem)" title="class or interface in org.eclipse.jface.action" class="externalLink">appendToGroup</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#dumpStatistics()" title="class or interface in org.eclipse.jface.action" class="externalLink">dumpStatistics</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#find(java.lang.String)" title="class or interface in org.eclipse.jface.action" class="externalLink">find</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#getItems()" title="class or interface in org.eclipse.jface.action" class="externalLink">getItems</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#getSize()" title="class or interface in org.eclipse.jface.action" class="externalLink">getSize</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#hasDynamicItems()" title="class or interface in org.eclipse.jface.action" class="externalLink">hasDynamicItems</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#indexOf(java.lang.String)" title="class or interface in org.eclipse.jface.action" class="externalLink">indexOf</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#indexOf(org.eclipse.jface.action.IContributionItem)" title="class or interface in org.eclipse.jface.action" class="externalLink">indexOf</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#insert(int,org.eclipse.jface.action.IContributionItem)" title="class or interface in org.eclipse.jface.action" class="externalLink">insert</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#insertAfter(java.lang.String,org.eclipse.jface.action.IAction)" title="class or interface in org.eclipse.jface.action" class="externalLink">insertAfter</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#insertAfter(java.lang.String,org.eclipse.jface.action.IContributionItem)" title="class or interface in org.eclipse.jface.action" class="externalLink">insertAfter</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#insertBefore(java.lang.String,org.eclipse.jface.action.IAction)" title="class or interface in org.eclipse.jface.action" class="externalLink">insertBefore</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#insertBefore(java.lang.String,org.eclipse.jface.action.IContributionItem)" title="class or interface in org.eclipse.jface.action" class="externalLink">insertBefore</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#internalSetItems(org.eclipse.jface.action.IContributionItem%5B%5D)" title="class or interface in org.eclipse.jface.action" class="externalLink">internalSetItems</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#isDirty()" title="class or interface in org.eclipse.jface.action" class="externalLink">isDirty</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#isEmpty()" title="class or interface in org.eclipse.jface.action" class="externalLink">isEmpty</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#itemAdded(org.eclipse.jface.action.IContributionItem)" title="class or interface in org.eclipse.jface.action" class="externalLink">itemAdded</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#itemRemoved(org.eclipse.jface.action.IContributionItem)" title="class or interface in org.eclipse.jface.action" class="externalLink">itemRemoved</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#prependToGroup(java.lang.String,org.eclipse.jface.action.IAction)" title="class or interface in org.eclipse.jface.action" class="externalLink">prependToGroup</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#prependToGroup(java.lang.String,org.eclipse.jface.action.IContributionItem)" title="class or interface in org.eclipse.jface.action" class="externalLink">prependToGroup</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#remove(java.lang.String)" title="class or interface in org.eclipse.jface.action" class="externalLink">remove</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#remove(org.eclipse.jface.action.IContributionItem)" title="class or interface in org.eclipse.jface.action" class="externalLink">remove</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#removeAll()" title="class or interface in org.eclipse.jface.action" class="externalLink">removeAll</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#replaceItem(java.lang.String,org.eclipse.jface.action.IContributionItem)" title="class or interface in org.eclipse.jface.action" class="externalLink">replaceItem</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/ContributionManager.html?is-external=true#setDirty(boolean)" title="class or interface in org.eclipse.jface.action" class="externalLink">setDirty</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
+<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
 <code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, wait, wait, wait</code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.jface.action.IContributionManager">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.jface.action.IContributionItem">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.jface.action.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IContributionManager</a></h3>
-<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true#add-org.eclipse.jface.action.IAction-" title="class or interface in org.eclipse.jface.action">add</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true#add-org.eclipse.jface.action.IContributionItem-" title="class or interface in org.eclipse.jface.action">add</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true#appendToGroup-java.lang.String-org.eclipse.jface.action.IAction-" title="class or interface in org.eclipse.jface.action">appendToGroup</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true#appendToGroup-java.lang.String-org.eclipse.jface.action.IContributionItem-" title="class or interface in org.eclipse.jface.action">appendToGroup</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true#find-java.lang.String-" title="class or interface in org.eclipse.jface.action">find</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true#getItems--" title="class or interface in org.eclipse.jface.action">getItems</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true#insertAfter-java.lang.String-org.eclipse.jface.action.IAction-" title="class or interface in org.eclipse.jface.action">insertAfter</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true#insertAfter-java.lang.String-org.eclipse.jface.action.IContributionItem-" title="class or interface in org.eclipse.jface.action">insertAfter</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true#insertBefore-java.lang.String-org.eclipse.jface.action.IAction-" title="class or interface in org.eclipse.jface.action">insertBefore</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true#insertBefore-java.lang.String-org.eclipse.jface.action.IContributionItem-" title="class or interface in org.eclipse.jface.action">insertBefore</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true#isDirty--" title="class or interface in org.eclipse.jface.action">isDirty</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true#isEmpty--" title="class or interface in org.eclipse.jface.action">isEmpty</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true#prependToGroup-java.lang.String-org.eclipse.jface.action.IAction-" title="class or interface in org.eclipse.jface.action">prependToGroup</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true#prependToGroup-java.lang.String-org.eclipse.jface.action.IContributionItem-" title="class or interface in org.eclipse.jface.action">prependToGroup</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true#remove-org.eclipse.jface.action.IContributionItem-" title="class or interface in org.eclipse.jface.action">remove</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true#remove-java.lang.String-" title="class or interface in org.eclipse.jface.action">remove</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true#removeAll--" title="class or interface in org.eclipse.jface.action">removeAll</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.jface.action.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionItem.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">IContributionItem</a></h3>
+<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionItem.html?is-external=true#isDirty()" title="class or interface in org.eclipse.jface.action" class="externalLink">isDirty</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.jface.action.IContributionItem">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.jface.action.IContributionManager">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.jface.action.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionItem.html?is-external=true" title="class or interface in org.eclipse.jface.action">IContributionItem</a></h3>
-<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionItem.html?is-external=true#isDirty--" title="class or interface in org.eclipse.jface.action">isDirty</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.jface.action.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true" title="class or interface in org.eclipse.jface.action" class="externalLink">IContributionManager</a></h3>
+<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true#add(org.eclipse.jface.action.IAction)" title="class or interface in org.eclipse.jface.action" class="externalLink">add</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true#add(org.eclipse.jface.action.IContributionItem)" title="class or interface in org.eclipse.jface.action" class="externalLink">add</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true#appendToGroup(java.lang.String,org.eclipse.jface.action.IAction)" title="class or interface in org.eclipse.jface.action" class="externalLink">appendToGroup</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true#appendToGroup(java.lang.String,org.eclipse.jface.action.IContributionItem)" title="class or interface in org.eclipse.jface.action" class="externalLink">appendToGroup</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true#find(java.lang.String)" title="class or interface in org.eclipse.jface.action" class="externalLink">find</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true#getItems()" title="class or interface in org.eclipse.jface.action" class="externalLink">getItems</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true#insertAfter(java.lang.String,org.eclipse.jface.action.IAction)" title="class or interface in org.eclipse.jface.action" class="externalLink">insertAfter</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true#insertAfter(java.lang.String,org.eclipse.jface.action.IContributionItem)" title="class or interface in org.eclipse.jface.action" class="externalLink">insertAfter</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true#insertBefore(java.lang.String,org.eclipse.jface.action.IAction)" title="class or interface in org.eclipse.jface.action" class="externalLink">insertBefore</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true#insertBefore(java.lang.String,org.eclipse.jface.action.IContributionItem)" title="class or interface in org.eclipse.jface.action" class="externalLink">insertBefore</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true#isDirty()" title="class or interface in org.eclipse.jface.action" class="externalLink">isDirty</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true#isEmpty()" title="class or interface in org.eclipse.jface.action" class="externalLink">isEmpty</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true#prependToGroup(java.lang.String,org.eclipse.jface.action.IAction)" title="class or interface in org.eclipse.jface.action" class="externalLink">prependToGroup</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true#prependToGroup(java.lang.String,org.eclipse.jface.action.IContributionItem)" title="class or interface in org.eclipse.jface.action" class="externalLink">prependToGroup</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true#remove(java.lang.String)" title="class or interface in org.eclipse.jface.action" class="externalLink">remove</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true#remove(org.eclipse.jface.action.IContributionItem)" title="class or interface in org.eclipse.jface.action" class="externalLink">remove</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IContributionManager.html?is-external=true#removeAll()" title="class or interface in org.eclipse.jface.action" class="externalLink">removeAll</a></code></li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
@@ -235,63 +270,70 @@ extends <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/ref
 <ul class="blockList">
 <li class="blockList">
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="constructor.detail">
+<li class="blockList"><a id="constructor.detail">
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="LayoutMenu-org.eclipse.net4j.util.ui.widgets.SashComposite-">
+<a id="&lt;init&gt;(org.eclipse.net4j.util.ui.widgets.SashComposite)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>LayoutMenu</h4>
-<pre>public&nbsp;LayoutMenu(<a href="../../../../../../org/eclipse/net4j/util/ui/widgets/SashComposite.html" title="class in org.eclipse.net4j.util.ui.widgets">SashComposite</a>&nbsp;sashComposite)</pre>
+<pre>public&nbsp;LayoutMenu&#8203;(<a href="../widgets/SashComposite.html" title="class in org.eclipse.net4j.util.ui.widgets">SashComposite</a>&nbsp;sashComposite)</pre>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 <!-- ============ METHOD DETAIL ========== -->
+<section role="region">
 <ul class="blockList">
-<li class="blockList"><a name="method.detail">
+<li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="getVerticalAction--">
+<a id="getVerticalAction()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getVerticalAction</h4>
-<pre>public&nbsp;<a href="../../../../../../org/eclipse/net4j/util/ui/actions/SafeAction.html" title="class in org.eclipse.net4j.util.ui.actions">SafeAction</a>&nbsp;getVerticalAction()</pre>
+<pre class="methodSignature">public&nbsp;<a href="SafeAction.html" title="class in org.eclipse.net4j.util.ui.actions">SafeAction</a>&nbsp;getVerticalAction()</pre>
 </li>
 </ul>
-<a name="getHorizontalAction--">
+<a id="getHorizontalAction()">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getHorizontalAction</h4>
-<pre>public&nbsp;<a href="../../../../../../org/eclipse/net4j/util/ui/actions/SafeAction.html" title="class in org.eclipse.net4j.util.ui.actions">SafeAction</a>&nbsp;getHorizontalAction()</pre>
+<pre class="methodSignature">public&nbsp;<a href="SafeAction.html" title="class in org.eclipse.net4j.util.ui.actions">SafeAction</a>&nbsp;getHorizontalAction()</pre>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 </li>
 </ul>
 </div>
 </div>
+</main>
 <!-- ========= END OF CLASS DATA ========= -->
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/SashLayoutAction.LayoutMenu.html">Use</a></li>
@@ -301,16 +343,8 @@ extends <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/ref
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li><a href="../../../../../../org/eclipse/net4j/util/ui/actions/SashLayoutAction.Horizontal.html" title="class in org.eclipse.net4j.util.ui.actions"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../../org/eclipse/net4j/util/ui/actions/SashLayoutAction.Vertical.html" title="class in org.eclipse.net4j.util.ui.actions"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/net4j/util/ui/actions/SashLayoutAction.LayoutMenu.html" target="_top">Frames</a></li>
-<li><a href="SashLayoutAction.LayoutMenu.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -323,12 +357,15 @@ extends <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/ref
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li><a href="#fields.inherited.from.class.org.eclipse.jface.action.MenuManager">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
@@ -339,10 +376,12 @@ extends <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/ref
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

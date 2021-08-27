@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>Uses of Interface org.eclipse.net4j.util.event.IEvent (Net4j Utilities Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,39 +28,43 @@
     catch(err) {
     }
 //-->
-</script>
+var pathtoroot = "../../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="../package-summary.html">Package</a></li>
-<li><a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">Class</a></li>
+<li><a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">Class</a></li>
 <li class="navBarCell1Rev">Use</li>
+<li><a href="../package-tree.html">Tree</a></li>
 <li><a href="../../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../../help-doc.html">Help</a></li>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev</li>
-<li>Next</li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/net4j/util/event/class-use/IEvent.html" target="_top">Frames</a></li>
-<li><a href="IEvent.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -63,110 +77,122 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
+<main role="main">
 <div class="header">
 <h2 title="Uses of Interface org.eclipse.net4j.util.event.IEvent" class="title">Uses of Interface<br>org.eclipse.net4j.util.event.IEvent</h2>
 </div>
 <div class="classUseContainer">
 <ul class="blockList">
 <li class="blockList">
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing packages, and an explanation">
-<caption><span>Packages that use <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Packages that use <a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Package</th>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.util.cache">org.eclipse.net4j.util.cache</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.util.cache">org.eclipse.net4j.util.cache</a></th>
 <td class="colLast">
 <div class="block">A generic caching and memory monitoring framework.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.util.collection">org.eclipse.net4j.util.collection</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.util.collection">org.eclipse.net4j.util.collection</a></th>
 <td class="colLast">
 <div class="block">Additional collection-like interfaces and classes.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.util.container">org.eclipse.net4j.util.container</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.util.container">org.eclipse.net4j.util.container</a></th>
 <td class="colLast">
 <div class="block">A framework of notifying collections and wiring containers.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.util.event">org.eclipse.net4j.util.event</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.util.event">org.eclipse.net4j.util.event</a></th>
 <td class="colLast">
 <div class="block">A framework for sending of and listening to events.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.util.fsm">org.eclipse.net4j.util.fsm</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.util.fsm">org.eclipse.net4j.util.fsm</a></th>
 <td class="colLast">
 <div class="block">A framework for <a href="http://en.wikipedia.org/wiki/Finite-state_machine">finite state machines</a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.util.lifecycle">org.eclipse.net4j.util.lifecycle</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.util.lifecycle">org.eclipse.net4j.util.lifecycle</a></th>
 <td class="colLast">
 <div class="block">A framework for components with a simple lifecycle.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.util.om.log">org.eclipse.net4j.util.om.log</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.util.om.log">org.eclipse.net4j.util.om.log</a></th>
 <td class="colLast">
 <div class="block">Interfaces and classes for platform-independent logging.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.util.om.monitor">org.eclipse.net4j.util.om.monitor</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.util.om.monitor">org.eclipse.net4j.util.om.monitor</a></th>
 <td class="colLast">
 <div class="block">Interfaces and classes for platform-independent progress monitoring.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.util.om.pref">org.eclipse.net4j.util.om.pref</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.util.om.pref">org.eclipse.net4j.util.om.pref</a></th>
 <td class="colLast">
 <div class="block">Interfaces and classes for platform-independent preference management.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.util.options">org.eclipse.net4j.util.options</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.util.options">org.eclipse.net4j.util.options</a></th>
 <td class="colLast">
 <div class="block">A framework for option containers that fire change events.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.util.ui">org.eclipse.net4j.util.ui</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.util.ui">org.eclipse.net4j.util.ui</a></th>
 <td class="colLast">
 <div class="block">Reusable UI components.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.util.ui.actions">org.eclipse.net4j.util.ui.actions</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.util.ui.actions">org.eclipse.net4j.util.ui.actions</a></th>
 <td class="colLast">
 <div class="block">Reusable actions and action delegates.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.util.ui.container">org.eclipse.net4j.util.ui.container</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.util.ui.container">org.eclipse.net4j.util.ui.container</a></th>
 <td class="colLast">
 <div class="block">An element wizard framework for managed containers.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.util.ui.views">org.eclipse.net4j.util.ui.views</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.util.ui.views">org.eclipse.net4j.util.ui.views</a></th>
 <td class="colLast">
 <div class="block">Helpers for Eclipse view parts.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.net4j.util.ui.widgets">org.eclipse.net4j.util.ui.widgets</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.net4j.util.ui.widgets">org.eclipse.net4j.util.ui.widgets</a></th>
 <td class="colLast">
 <div class="block">A library with reusable widgets.</div>
 </td>
@@ -176,519 +202,639 @@
 </li>
 <li class="blockList">
 <ul class="blockList">
-<li class="blockList"><a name="org.eclipse.net4j.util.cache">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.net4j.util.cache">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a> in <a href="../../../../../../org/eclipse/net4j/util/cache/package-summary.html">org.eclipse.net4j.util.cache</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing subinterfaces, and an explanation">
-<caption><span>Subinterfaces of <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a> in <a href="../../../../../../org/eclipse/net4j/util/cache/package-summary.html">org.eclipse.net4j.util.cache</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a> in <a href="../../cache/package-summary.html">org.eclipse.net4j.util.cache</a></h3>
+<table class="useSummary">
+<caption><span>Subinterfaces of <a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a> in <a href="../../cache/package-summary.html">org.eclipse.net4j.util.cache</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Interface and Description</th>
+<th class="colSecond" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/cache/ICacheMonitorEvent.html" title="interface in org.eclipse.net4j.util.cache">ICacheMonitorEvent</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../cache/ICacheMonitorEvent.html" title="interface in org.eclipse.net4j.util.cache">ICacheMonitorEvent</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.collection">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.net4j.util.collection">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a> in <a href="../../../../../../org/eclipse/net4j/util/collection/package-summary.html">org.eclipse.net4j.util.collection</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing subinterfaces, and an explanation">
-<caption><span>Subinterfaces of <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a> in <a href="../../../../../../org/eclipse/net4j/util/collection/package-summary.html">org.eclipse.net4j.util.collection</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a> in <a href="../../collection/package-summary.html">org.eclipse.net4j.util.collection</a></h3>
+<table class="useSummary">
+<caption><span>Subinterfaces of <a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a> in <a href="../../collection/package-summary.html">org.eclipse.net4j.util.collection</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Interface and Description</th>
+<th class="colSecond" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/collection/IHistoryChangeEvent.html" title="interface in org.eclipse.net4j.util.collection">IHistoryChangeEvent</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../collection/IHistoryChangeEvent.html" title="interface in org.eclipse.net4j.util.collection">IHistoryChangeEvent</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.container">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.net4j.util.container">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a> in <a href="../../../../../../org/eclipse/net4j/util/container/package-summary.html">org.eclipse.net4j.util.container</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing subinterfaces, and an explanation">
-<caption><span>Subinterfaces of <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a> in <a href="../../../../../../org/eclipse/net4j/util/container/package-summary.html">org.eclipse.net4j.util.container</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a> in <a href="../../container/package-summary.html">org.eclipse.net4j.util.container</a></h3>
+<table class="useSummary">
+<caption><span>Subinterfaces of <a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a> in <a href="../../container/package-summary.html">org.eclipse.net4j.util.container</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Interface and Description</th>
+<th class="colSecond" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/container/IContainerEvent.html" title="interface in org.eclipse.net4j.util.container">IContainerEvent</a>&lt;E&gt;</span></code>
-<div class="block">An <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event"><code>event</code></a> fired from a <a href="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container"><code>container</code></a> when its elements have changed.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../container/IContainerEvent.html" title="interface in org.eclipse.net4j.util.container">IContainerEvent</a>&lt;E&gt;</span></code></th>
+<td class="colLast">
+<div class="block">An <a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event"><code>event</code></a> fired from a <a href="../../container/IContainer.html" title="interface in org.eclipse.net4j.util.container"><code>container</code></a> when its elements have changed.</div>
 </td>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../../org/eclipse/net4j/util/container/package-summary.html">org.eclipse.net4j.util.container</a> that implement <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="../../container/package-summary.html">org.eclipse.net4j.util.container</a> that implement <a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Class and Description</th>
+<th class="colSecond" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/container/ContainerEvent.html" title="class in org.eclipse.net4j.util.container">ContainerEvent</a>&lt;E&gt;</span></code>
-<div class="block">A default <a href="../../../../../../org/eclipse/net4j/util/container/IContainerEvent.html" title="interface in org.eclipse.net4j.util.container"><code>container event</code></a> implementation.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../container/ContainerEvent.html" title="class in org.eclipse.net4j.util.container">ContainerEvent</a>&lt;E&gt;</span></code></th>
+<td class="colLast">
+<div class="block">A default <a href="../../container/IContainerEvent.html" title="interface in org.eclipse.net4j.util.container"><code>container event</code></a> implementation.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/container/SingleDeltaContainerEvent.html" title="class in org.eclipse.net4j.util.container">SingleDeltaContainerEvent</a>&lt;E&gt;</span></code>
-<div class="block">A <a href="../../../../../../org/eclipse/net4j/util/container/IContainerEvent.html" title="interface in org.eclipse.net4j.util.container"><code>container event</code></a> with a single element <a href="../../../../../../org/eclipse/net4j/util/container/IContainerDelta.html" title="interface in org.eclipse.net4j.util.container"><code>delta</code></a>.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../container/SingleDeltaContainerEvent.html" title="class in org.eclipse.net4j.util.container">SingleDeltaContainerEvent</a>&lt;E&gt;</span></code></th>
+<td class="colLast">
+<div class="block">A <a href="../../container/IContainerEvent.html" title="interface in org.eclipse.net4j.util.container"><code>container event</code></a> with a single element <a href="../../container/IContainerDelta.html" title="interface in org.eclipse.net4j.util.container"><code>delta</code></a>.</div>
 </td>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../org/eclipse/net4j/util/container/package-summary.html">org.eclipse.net4j.util.container</a> with parameters of type <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../container/package-summary.html">org.eclipse.net4j.util.container</a> with parameters of type <a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">Container.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/container/Container.html#fireEvent-org.eclipse.net4j.util.event.IEvent-">fireEvent</a></span>(<a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">Container.</span><code><span class="memberNameLink"><a href="../../container/Container.html#fireEvent(org.eclipse.net4j.util.event.IEvent)">fireEvent</a></span>&#8203;(<a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">ManagedContainer.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#fireEvent-org.eclipse.net4j.util.event.IEvent-">fireEvent</a></span>(<a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">ManagedContainer.</span><code><span class="memberNameLink"><a href="../../container/ManagedContainer.html#fireEvent(org.eclipse.net4j.util.event.IEvent)">fireEvent</a></span>&#8203;(<a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">ContainerEventAdapter.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/container/ContainerEventAdapter.html#notifyEvent-org.eclipse.net4j.util.event.IEvent-">notifyEvent</a></span>(<a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">ContainerEventAdapter.</span><code><span class="memberNameLink"><a href="../../container/ContainerEventAdapter.html#notifyEvent(org.eclipse.net4j.util.event.IEvent)">notifyEvent</a></span>&#8203;(<a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">LifecycleEventConverter.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/container/LifecycleEventConverter.html#notifyEvent-org.eclipse.net4j.util.event.IEvent-">notifyEvent</a></span>(<a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">LifecycleEventConverter.</span><code><span class="memberNameLink"><a href="../../container/LifecycleEventConverter.html#notifyEvent(org.eclipse.net4j.util.event.IEvent)">notifyEvent</a></span>&#8203;(<a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">SelfAttachingContainerListener.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/container/SelfAttachingContainerListener.html#notifyEvent-org.eclipse.net4j.util.event.IEvent-">notifyEvent</a></span>(<a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">SelfAttachingContainerListener.</span><code><span class="memberNameLink"><a href="../../container/SelfAttachingContainerListener.html#notifyEvent(org.eclipse.net4j.util.event.IEvent)">notifyEvent</a></span>&#8203;(<a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><span class="typeNameLabel">ContainerEventAdapter.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/container/ContainerEventAdapter.html#notifyOtherEvent-org.eclipse.net4j.util.event.IEvent-">notifyOtherEvent</a></span>(<a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">ContainerEventAdapter.</span><code><span class="memberNameLink"><a href="../../container/ContainerEventAdapter.html#notifyOtherEvent(org.eclipse.net4j.util.event.IEvent)">notifyOtherEvent</a></span>&#8203;(<a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><span class="typeNameLabel">SelfAttachingContainerListener.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/container/SelfAttachingContainerListener.html#notifyOtherEvent-org.eclipse.net4j.util.event.IEvent-">notifyOtherEvent</a></span>(<a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">SelfAttachingContainerListener.Delegating.</span><code><span class="memberNameLink"><a href="../../container/SelfAttachingContainerListener.Delegating.html#notifyOtherEvent(org.eclipse.net4j.util.event.IEvent)">notifyOtherEvent</a></span>&#8203;(<a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><span class="typeNameLabel">SelfAttachingContainerListener.Delegating.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/container/SelfAttachingContainerListener.Delegating.html#notifyOtherEvent-org.eclipse.net4j.util.event.IEvent-">notifyOtherEvent</a></span>(<a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">SelfAttachingContainerListener.</span><code><span class="memberNameLink"><a href="../../container/SelfAttachingContainerListener.html#notifyOtherEvent(org.eclipse.net4j.util.event.IEvent)">notifyOtherEvent</a></span>&#8203;(<a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.event">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.net4j.util.event">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a> in <a href="../../../../../../org/eclipse/net4j/util/event/package-summary.html">org.eclipse.net4j.util.event</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../../org/eclipse/net4j/util/event/package-summary.html">org.eclipse.net4j.util.event</a> that implement <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a> in <a href="../package-summary.html">org.eclipse.net4j.util.event</a></h3>
+<table class="useSummary">
+<caption><span>Classes in <a href="../package-summary.html">org.eclipse.net4j.util.event</a> that implement <a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Class and Description</th>
+<th class="colSecond" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/event/Event.html" title="class in org.eclipse.net4j.util.event">Event</a></span></code>
-<div class="block">A default implementation of an <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event"><code>event</code></a>.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../Event.html" title="class in org.eclipse.net4j.util.event">Event</a></span></code></th>
+<td class="colLast">
+<div class="block">A default implementation of an <a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event"><code>event</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/event/FinishedEvent.html" title="class in org.eclipse.net4j.util.event">FinishedEvent</a></span></code>
-<div class="block">An <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event"><code>IEvent</code></a> that is fired after a method has called a handler multiple times.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../FinishedEvent.html" title="class in org.eclipse.net4j.util.event">FinishedEvent</a></span></code></th>
+<td class="colLast">
+<div class="block">An <a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event"><code>IEvent</code></a> that is fired after a method has called a handler multiple times.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/event/ThrowableEvent.html" title="class in org.eclipse.net4j.util.event">ThrowableEvent</a></span></code>
-<div class="block">An <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event"><code>IEvent</code></a> typically fired from <a href="../../../../../../org/eclipse/net4j/util/event/INotifier.html" title="interface in org.eclipse.net4j.util.event"><code>notifiers</code></a> that execute operations in the background.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../ThrowableEvent.html" title="class in org.eclipse.net4j.util.event">ThrowableEvent</a></span></code></th>
+<td class="colLast">
+<div class="block">An <a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event"><code>IEvent</code></a> typically fired from <a href="../INotifier.html" title="interface in org.eclipse.net4j.util.event"><code>notifiers</code></a> that execute operations in the background.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/event/ValueEvent.html" title="class in org.eclipse.net4j.util.event">ValueEvent</a>&lt;VALUE&gt;</span></code>
-<div class="block">An <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event"><code>IEvent</code></a> fired from <a href="../../../../../../org/eclipse/net4j/util/event/ValueNotifier.html" title="class in org.eclipse.net4j.util.event"><code>value notifiers</code></a> after value changes.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../ValueEvent.html" title="class in org.eclipse.net4j.util.event">ValueEvent</a>&lt;VALUE&gt;</span></code></th>
+<td class="colLast">
+<div class="block">An <a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event"><code>IEvent</code></a> fired from <a href="../ValueNotifier.html" title="class in org.eclipse.net4j.util.event"><code>value notifiers</code></a> after value changes.</div>
 </td>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing fields, and an explanation">
-<caption><span>Fields in <a href="../../../../../../org/eclipse/net4j/util/event/package-summary.html">org.eclipse.net4j.util.event</a> declared as <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Fields in <a href="../package-summary.html">org.eclipse.net4j.util.event</a> declared as <a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Field and Description</th>
+<th class="colSecond" scope="col">Field</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code>static <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a></code></td>
-<td class="colLast"><span class="typeNameLabel">FinishedEvent.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/event/FinishedEvent.html#INSTANCE">INSTANCE</a></span></code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">FinishedEvent.</span><code><span class="memberNameLink"><a href="../FinishedEvent.html#INSTANCE">INSTANCE</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../org/eclipse/net4j/util/event/package-summary.html">org.eclipse.net4j.util.event</a> with parameters of type <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Methods in <a href="../package-summary.html">org.eclipse.net4j.util.event</a> with type parameters of type <a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>static &lt;E extends <a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&gt;<br>java.lang.AutoCloseable</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">EventUtil.</span><code><span class="memberNameLink"><a href="../EventUtil.html#addListener(java.lang.Object,java.lang.Class,java.util.function.Consumer)">addListener</a></span>&#8203;(java.lang.Object&nbsp;notifier,
+           java.lang.Class&lt;E&gt;&nbsp;eventType,
+           java.util.function.Consumer&lt;E&gt;&nbsp;eventConsumer)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<table class="useSummary">
+<caption><span>Methods in <a href="../package-summary.html">org.eclipse.net4j.util.event</a> with parameters of type <a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">Notifier.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/event/Notifier.html#fireEvent-org.eclipse.net4j.util.event.IEvent-">fireEvent</a></span>(<a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">Notifier.</span><code><span class="memberNameLink"><a href="../Notifier.html#fireEvent(org.eclipse.net4j.util.event.IEvent)">fireEvent</a></span>&#8203;(<a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">Notifier.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/event/Notifier.html#fireEvent-org.eclipse.net4j.util.event.IEvent-org.eclipse.net4j.util.event.IListener:A-">fireEvent</a></span>(<a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event,
-         <a href="../../../../../../org/eclipse/net4j/util/event/IListener.html" title="interface in org.eclipse.net4j.util.event">IListener</a>[]&nbsp;listeners)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">Notifier.</span><code><span class="memberNameLink"><a href="../Notifier.html#fireEvent(org.eclipse.net4j.util.event.IEvent,org.eclipse.net4j.util.event.IListener%5B%5D)">fireEvent</a></span>&#8203;(<a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event,
+         <a href="../IListener.html" title="interface in org.eclipse.net4j.util.event">IListener</a>[]&nbsp;listeners)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">EventPrinter.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/event/EventPrinter.html#notifyEvent-org.eclipse.net4j.util.event.IEvent-">notifyEvent</a></span>(<a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">EventPrinter.</span><code><span class="memberNameLink"><a href="../EventPrinter.html#notifyEvent(org.eclipse.net4j.util.event.IEvent)">notifyEvent</a></span>&#8203;(<a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">IListener.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/event/IListener.html#notifyEvent-org.eclipse.net4j.util.event.IEvent-">notifyEvent</a></span>(<a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">IListener.</span><code><span class="memberNameLink"><a href="../IListener.html#notifyEvent(org.eclipse.net4j.util.event.IEvent)">notifyEvent</a></span>&#8203;(<a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">ThrowableEventAdapter.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/event/ThrowableEventAdapter.html#notifyEvent-org.eclipse.net4j.util.event.IEvent-">notifyEvent</a></span>(<a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">ThrowableEventAdapter.</span><code><span class="memberNameLink"><a href="../ThrowableEventAdapter.html#notifyEvent(org.eclipse.net4j.util.event.IEvent)">notifyEvent</a></span>&#8203;(<a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><span class="typeNameLabel">ThrowableEventAdapter.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/event/ThrowableEventAdapter.html#notifyOtherEvent-org.eclipse.net4j.util.event.IEvent-">notifyOtherEvent</a></span>(<a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">ThrowableEventAdapter.</span><code><span class="memberNameLink"><a href="../ThrowableEventAdapter.html#notifyOtherEvent(org.eclipse.net4j.util.event.IEvent)">notifyOtherEvent</a></span>&#8203;(<a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.fsm">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.net4j.util.fsm">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a> in <a href="../../../../../../org/eclipse/net4j/util/fsm/package-summary.html">org.eclipse.net4j.util.fsm</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../../org/eclipse/net4j/util/fsm/package-summary.html">org.eclipse.net4j.util.fsm</a> that implement <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a> in <a href="../../fsm/package-summary.html">org.eclipse.net4j.util.fsm</a></h3>
+<table class="useSummary">
+<caption><span>Classes in <a href="../../fsm/package-summary.html">org.eclipse.net4j.util.fsm</a> that implement <a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Class and Description</th>
+<th class="colSecond" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.StateChangedEvent.html" title="class in org.eclipse.net4j.util.fsm">FiniteStateMachine.StateChangedEvent</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../fsm/FiniteStateMachine.StateChangedEvent.html" title="class in org.eclipse.net4j.util.fsm">FiniteStateMachine.StateChangedEvent</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.lifecycle">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.net4j.util.lifecycle">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a> in <a href="../../../../../../org/eclipse/net4j/util/lifecycle/package-summary.html">org.eclipse.net4j.util.lifecycle</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing subinterfaces, and an explanation">
-<caption><span>Subinterfaces of <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a> in <a href="../../../../../../org/eclipse/net4j/util/lifecycle/package-summary.html">org.eclipse.net4j.util.lifecycle</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a> in <a href="../../lifecycle/package-summary.html">org.eclipse.net4j.util.lifecycle</a></h3>
+<table class="useSummary">
+<caption><span>Subinterfaces of <a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a> in <a href="../../lifecycle/package-summary.html">org.eclipse.net4j.util.lifecycle</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Interface and Description</th>
+<th class="colSecond" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/lifecycle/ILifecycleEvent.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycleEvent</a></span></code>
-<div class="block">An <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event"><code>event</code></a> fired from an entity with a <a href="../../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle"><code>lifecycle</code></a> when its lifecycle <a href="../../../../../../org/eclipse/net4j/util/lifecycle/ILifecycleEvent.Kind.html" title="enum in org.eclipse.net4j.util.lifecycle"><code>state</code></a> has changed.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../lifecycle/ILifecycleEvent.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycleEvent</a></span></code></th>
+<td class="colLast">
+<div class="block">An <a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event"><code>event</code></a> fired from an entity with a <a href="../../lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle"><code>lifecycle</code></a> when its lifecycle <a href="../../lifecycle/ILifecycleEvent.Kind.html" title="enum in org.eclipse.net4j.util.lifecycle"><code>state</code></a> has changed.</div>
 </td>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../../org/eclipse/net4j/util/lifecycle/package-summary.html">org.eclipse.net4j.util.lifecycle</a> that implement <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="../../lifecycle/package-summary.html">org.eclipse.net4j.util.lifecycle</a> that implement <a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Class and Description</th>
+<th class="colSecond" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/lifecycle/LifecycleEvent.html" title="class in org.eclipse.net4j.util.lifecycle">LifecycleEvent</a></span></code>
-<div class="block">A default implementation of a lifecycle <a href="../../../../../../org/eclipse/net4j/util/lifecycle/ILifecycleEvent.html" title="interface in org.eclipse.net4j.util.lifecycle"><code>event</code></a>.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../lifecycle/LifecycleEvent.html" title="class in org.eclipse.net4j.util.lifecycle">LifecycleEvent</a></span></code></th>
+<td class="colLast">
+<div class="block">A default implementation of a lifecycle <a href="../../lifecycle/ILifecycleEvent.html" title="interface in org.eclipse.net4j.util.lifecycle"><code>event</code></a>.</div>
 </td>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../org/eclipse/net4j/util/lifecycle/package-summary.html">org.eclipse.net4j.util.lifecycle</a> with parameters of type <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../lifecycle/package-summary.html">org.eclipse.net4j.util.lifecycle</a> with parameters of type <a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><span class="typeNameLabel">LifecycleHook.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/lifecycle/LifecycleHook.html#delegateEvent-T-org.eclipse.net4j.util.event.IEvent-">delegateEvent</a></span>(<a href="../../../../../../org/eclipse/net4j/util/lifecycle/LifecycleHook.html" title="type parameter in LifecycleHook">T</a>&nbsp;delegate,
-             <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">LifecycleHook.</span><code><span class="memberNameLink"><a href="../../lifecycle/LifecycleHook.html#delegateEvent(T,org.eclipse.net4j.util.event.IEvent)">delegateEvent</a></span>&#8203;(<a href="../../lifecycle/LifecycleHook.html" title="type parameter in LifecycleHook">T</a>&nbsp;delegate,
+             <a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">LifecycleEventAdapter.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/lifecycle/LifecycleEventAdapter.html#notifyEvent-org.eclipse.net4j.util.event.IEvent-">notifyEvent</a></span>(<a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">LifecycleEventAdapter.</span><code><span class="memberNameLink"><a href="../../lifecycle/LifecycleEventAdapter.html#notifyEvent(org.eclipse.net4j.util.event.IEvent)">notifyEvent</a></span>&#8203;(<a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><span class="typeNameLabel">LifecycleEventAdapter.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/lifecycle/LifecycleEventAdapter.html#notifyOtherEvent-org.eclipse.net4j.util.event.IEvent-">notifyOtherEvent</a></span>(<a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">LifecycleEventAdapter.</span><code><span class="memberNameLink"><a href="../../lifecycle/LifecycleEventAdapter.html#notifyOtherEvent(org.eclipse.net4j.util.event.IEvent)">notifyOtherEvent</a></span>&#8203;(<a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.om.log">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.net4j.util.om.log">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a> in <a href="../../../../../../org/eclipse/net4j/util/om/log/package-summary.html">org.eclipse.net4j.util.om.log</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../../org/eclipse/net4j/util/om/log/package-summary.html">org.eclipse.net4j.util.om.log</a> that implement <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a> in <a href="../../om/log/package-summary.html">org.eclipse.net4j.util.om.log</a></h3>
+<table class="useSummary">
+<caption><span>Classes in <a href="../../om/log/package-summary.html">org.eclipse.net4j.util.om.log</a> that implement <a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Class and Description</th>
+<th class="colSecond" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.PropertiesEvent.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.PropertiesEvent</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../om/log/RollingLog.PropertiesEvent.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.PropertiesEvent</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.RecoveryEvent.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.RecoveryEvent</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../om/log/RollingLog.RecoveryEvent.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.RecoveryEvent</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.RollingLogEvent.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.RollingLogEvent</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../om/log/RollingLog.RollingLogEvent.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.RollingLogEvent</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.SplitEvent.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.SplitEvent</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../om/log/RollingLog.SplitEvent.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.SplitEvent</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.om.monitor">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.net4j.util.om.monitor">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a> in <a href="../../../../../../org/eclipse/net4j/util/om/monitor/package-summary.html">org.eclipse.net4j.util.om.monitor</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../../org/eclipse/net4j/util/om/monitor/package-summary.html">org.eclipse.net4j.util.om.monitor</a> that implement <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a> in <a href="../../om/monitor/package-summary.html">org.eclipse.net4j.util.om.monitor</a></h3>
+<table class="useSummary">
+<caption><span>Classes in <a href="../../om/monitor/package-summary.html">org.eclipse.net4j.util.om.monitor</a> that implement <a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Class and Description</th>
+<th class="colSecond" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/monitor/NotifyingMonitor.ProgressEvent.html" title="class in org.eclipse.net4j.util.om.monitor">NotifyingMonitor.ProgressEvent</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../om/monitor/NotifyingMonitor.ProgressEvent.html" title="class in org.eclipse.net4j.util.om.monitor">NotifyingMonitor.ProgressEvent</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.om.pref">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.net4j.util.om.pref">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a> in <a href="../../../../../../org/eclipse/net4j/util/om/pref/package-summary.html">org.eclipse.net4j.util.om.pref</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing subinterfaces, and an explanation">
-<caption><span>Subinterfaces of <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a> in <a href="../../../../../../org/eclipse/net4j/util/om/pref/package-summary.html">org.eclipse.net4j.util.om.pref</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a> in <a href="../../om/pref/package-summary.html">org.eclipse.net4j.util.om.pref</a></h3>
+<table class="useSummary">
+<caption><span>Subinterfaces of <a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a> in <a href="../../om/pref/package-summary.html">org.eclipse.net4j.util.om.pref</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Interface and Description</th>
+<th class="colSecond" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/pref/OMPreferencesChangeEvent.html" title="interface in org.eclipse.net4j.util.om.pref">OMPreferencesChangeEvent</a>&lt;T&gt;</span></code>
-<div class="block">An <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event"><code>event</code></a> fired from a <a href="../../../../../../org/eclipse/net4j/util/om/pref/OMPreferences.html" title="interface in org.eclipse.net4j.util.om.pref"><code>preferences</code></a> object when a <a href="../../../../../../org/eclipse/net4j/util/om/pref/OMPreference.html" title="interface in org.eclipse.net4j.util.om.pref"><code>preference</code></a>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../om/pref/OMPreferencesChangeEvent.html" title="interface in org.eclipse.net4j.util.om.pref">OMPreferencesChangeEvent</a>&lt;T&gt;</span></code></th>
+<td class="colLast">
+<div class="block">An <a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event"><code>event</code></a> fired from a <a href="../../om/pref/OMPreferences.html" title="interface in org.eclipse.net4j.util.om.pref"><code>preferences</code></a> object when a <a href="../../om/pref/OMPreference.html" title="interface in org.eclipse.net4j.util.om.pref"><code>preference</code></a>
  value has changed.</div>
 </td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.options">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.net4j.util.options">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a> in <a href="../../../../../../org/eclipse/net4j/util/options/package-summary.html">org.eclipse.net4j.util.options</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing subinterfaces, and an explanation">
-<caption><span>Subinterfaces of <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a> in <a href="../../../../../../org/eclipse/net4j/util/options/package-summary.html">org.eclipse.net4j.util.options</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a> in <a href="../../options/package-summary.html">org.eclipse.net4j.util.options</a></h3>
+<table class="useSummary">
+<caption><span>Subinterfaces of <a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a> in <a href="../../options/package-summary.html">org.eclipse.net4j.util.options</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Interface and Description</th>
+<th class="colSecond" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/options/IOptionsEvent.html" title="interface in org.eclipse.net4j.util.options">IOptionsEvent</a></span></code>
-<div class="block">A generic <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event"><code>event</code></a> fired from an <a href="../../../../../../org/eclipse/net4j/util/options/IOptions.html" title="interface in org.eclipse.net4j.util.options"><code>options</code></a> object when an option has changed.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../options/IOptionsEvent.html" title="interface in org.eclipse.net4j.util.options">IOptionsEvent</a></span></code></th>
+<td class="colLast">
+<div class="block">A generic <a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event"><code>event</code></a> fired from an <a href="../../options/IOptions.html" title="interface in org.eclipse.net4j.util.options"><code>options</code></a> object when an option has changed.</div>
 </td>
 </tr>
 </tbody>
 </table>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../../org/eclipse/net4j/util/options/package-summary.html">org.eclipse.net4j.util.options</a> that implement <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="../../options/package-summary.html">org.eclipse.net4j.util.options</a> that implement <a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Class and Description</th>
+<th class="colSecond" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/options/OptionsEvent.html" title="class in org.eclipse.net4j.util.options">OptionsEvent</a></span></code>
-<div class="block">The default implementation of an <a href="../../../../../../org/eclipse/net4j/util/options/IOptionsEvent.html" title="interface in org.eclipse.net4j.util.options"><code>options event</code></a>.</div>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../options/OptionsEvent.html" title="class in org.eclipse.net4j.util.options">OptionsEvent</a></span></code></th>
+<td class="colLast">
+<div class="block">The default implementation of an <a href="../../options/IOptionsEvent.html" title="interface in org.eclipse.net4j.util.options"><code>options event</code></a>.</div>
 </td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.ui">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.net4j.util.ui">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a> in <a href="../../../../../../org/eclipse/net4j/util/ui/package-summary.html">org.eclipse.net4j.util.ui</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../org/eclipse/net4j/util/ui/package-summary.html">org.eclipse.net4j.util.ui</a> with parameters of type <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a> in <a href="../../ui/package-summary.html">org.eclipse.net4j.util.ui</a></h3>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../ui/package-summary.html">org.eclipse.net4j.util.ui</a> with parameters of type <a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">StructuredContentProvider.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html#notifyEvent-org.eclipse.net4j.util.event.IEvent-">notifyEvent</a></span>(<a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">StructuredContentProvider.</span><code><span class="memberNameLink"><a href="../../ui/StructuredContentProvider.html#notifyEvent(org.eclipse.net4j.util.event.IEvent)">notifyEvent</a></span>&#8203;(<a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.ui.actions">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.net4j.util.ui.actions">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a> in <a href="../../../../../../org/eclipse/net4j/util/ui/actions/package-summary.html">org.eclipse.net4j.util.ui.actions</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../org/eclipse/net4j/util/ui/actions/package-summary.html">org.eclipse.net4j.util.ui.actions</a> with parameters of type <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a> in <a href="../../ui/actions/package-summary.html">org.eclipse.net4j.util.ui.actions</a></h3>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../ui/actions/package-summary.html">org.eclipse.net4j.util.ui.actions</a> with parameters of type <a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">SashLayoutAction.Vertical.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/actions/SashLayoutAction.Vertical.html#notifyEvent-org.eclipse.net4j.util.event.IEvent-">notifyEvent</a></span>(<a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">SashLayoutAction.Horizontal.</span><code><span class="memberNameLink"><a href="../../ui/actions/SashLayoutAction.Horizontal.html#notifyEvent(org.eclipse.net4j.util.event.IEvent)">notifyEvent</a></span>&#8203;(<a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">SashLayoutAction.Horizontal.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/actions/SashLayoutAction.Horizontal.html#notifyEvent-org.eclipse.net4j.util.event.IEvent-">notifyEvent</a></span>(<a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">SashLayoutAction.Vertical.</span><code><span class="memberNameLink"><a href="../../ui/actions/SashLayoutAction.Vertical.html#notifyEvent(org.eclipse.net4j.util.event.IEvent)">notifyEvent</a></span>&#8203;(<a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.ui.container">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.net4j.util.ui.container">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a> in <a href="../../../../../../org/eclipse/net4j/util/ui/container/package-summary.html">org.eclipse.net4j.util.ui.container</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../org/eclipse/net4j/util/ui/container/package-summary.html">org.eclipse.net4j.util.ui.container</a> with parameters of type <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a> in <a href="../../ui/container/package-summary.html">org.eclipse.net4j.util.ui.container</a></h3>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../ui/container/package-summary.html">org.eclipse.net4j.util.ui.container</a> with parameters of type <a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">ElementWizardComposite.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/container/ElementWizardComposite.html#notifyEvent-org.eclipse.net4j.util.event.IEvent-">notifyEvent</a></span>(<a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">ElementWizardComposite.</span><code><span class="memberNameLink"><a href="../../ui/container/ElementWizardComposite.html#notifyEvent(org.eclipse.net4j.util.event.IEvent)">notifyEvent</a></span>&#8203;(<a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.ui.views">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.net4j.util.ui.views">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a> in <a href="../../../../../../org/eclipse/net4j/util/ui/views/package-summary.html">org.eclipse.net4j.util.ui.views</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../../org/eclipse/net4j/util/ui/views/package-summary.html">org.eclipse.net4j.util.ui.views</a> with parameters of type <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a> in <a href="../../ui/views/package-summary.html">org.eclipse.net4j.util.ui.views</a></h3>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../ui/views/package-summary.html">org.eclipse.net4j.util.ui.views</a> with parameters of type <a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><span class="typeNameLabel">ContainerItemProvider.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#handleElementEvent-org.eclipse.net4j.util.event.IEvent-">handleElementEvent</a></span>(<a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">ContainerItemProvider.</span><code><span class="memberNameLink"><a href="../../ui/views/ContainerItemProvider.html#handleElementEvent(org.eclipse.net4j.util.event.IEvent)">handleElementEvent</a></span>&#8203;(<a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>protected void</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">ContainerView.ContainerViewItemProvider.</span><code><span class="memberNameLink"><a href="../../ui/views/ContainerView.ContainerViewItemProvider.html#handleElementEvent(org.eclipse.net4j.util.event.IEvent)">handleElementEvent</a></span>&#8203;(<a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected void</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">ContainerView.</span><code><span class="memberNameLink"><a href="../../ui/views/ContainerView.html#handleElementEvent(org.eclipse.net4j.util.event.IEvent)">handleElementEvent</a></span>&#8203;(<a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">ContainerItemProvider.LeafNode.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.LeafNode.html#notifyEvent-org.eclipse.net4j.util.event.IEvent-">notifyEvent</a></span>(<a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code>&nbsp;</td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">ContainerItemProvider.LeafNode.</span><code><span class="memberNameLink"><a href="../../ui/views/ContainerItemProvider.LeafNode.html#notifyEvent(org.eclipse.net4j.util.event.IEvent)">notifyEvent</a></span>&#8203;(<a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
-<li class="blockList"><a name="org.eclipse.net4j.util.ui.widgets">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.net4j.util.ui.widgets">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a> in <a href="../../../../../../org/eclipse/net4j/util/ui/widgets/package-summary.html">org.eclipse.net4j.util.ui.widgets</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../../org/eclipse/net4j/util/ui/widgets/package-summary.html">org.eclipse.net4j.util.ui.widgets</a> that implement <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a></span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Uses of <a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a> in <a href="../../ui/widgets/package-summary.html">org.eclipse.net4j.util.ui.widgets</a></h3>
+<table class="useSummary">
+<caption><span>Classes in <a href="../../ui/widgets/package-summary.html">org.eclipse.net4j.util.ui.widgets</a> that implement <a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Class and Description</th>
+<th class="colSecond" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/ui/widgets/SashComposite.OrientationChangedEvent.html" title="class in org.eclipse.net4j.util.ui.widgets">SashComposite.OrientationChangedEvent</a></span></code>&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../ui/widgets/SashComposite.OrientationChangedEvent.html" title="class in org.eclipse.net4j.util.ui.widgets">SashComposite.OrientationChangedEvent</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
+</section>
 </li>
 </ul>
 </li>
 </ul>
 </div>
+</main>
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="../package-summary.html">Package</a></li>
-<li><a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">Class</a></li>
+<li><a href="../IEvent.html" title="interface in org.eclipse.net4j.util.event">Class</a></li>
 <li class="navBarCell1Rev">Use</li>
+<li><a href="../package-tree.html">Tree</a></li>
 <li><a href="../../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../../help-doc.html">Help</a></li>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev</li>
-<li>Next</li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/net4j/util/event/class-use/IEvent.html" target="_top">Frames</a></li>
-<li><a href="IEvent.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -701,11 +847,16 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

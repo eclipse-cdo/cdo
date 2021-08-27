@@ -3,52 +3,51 @@
 
 <toc label="Net4j Utilities Documentation" topic="html/Overview.html">
   <topic label="Overview" href="html/Overview.html" />
-  <topic label="Reference" href="html/reference/index.html">
-    <topic label="API Reference" href="javadoc/overview-summary.html">
-      <topic label="Net4j Utilities" href="javadoc/org/eclipse/net4j/util/package-summary.html" icon="plugin">
-        <topic label="org.eclipse.net4j.util" href="javadoc/org/eclipse/net4j/util/package-summary.html" icon="package" />
-        <topic label="org.eclipse.net4j.util.cache" href="javadoc/org/eclipse/net4j/util/cache/package-summary.html" icon="package" />
-        <topic label="org.eclipse.net4j.util.collection" href="javadoc/org/eclipse/net4j/util/collection/package-summary.html" icon="package" />
-        <topic label="org.eclipse.net4j.util.concurrent" href="javadoc/org/eclipse/net4j/util/concurrent/package-summary.html" icon="package" />
-        <topic label="org.eclipse.net4j.util.confirmation" href="javadoc/org/eclipse/net4j/util/confirmation/package-summary.html" icon="package" />
-        <topic label="org.eclipse.net4j.util.container" href="javadoc/org/eclipse/net4j/util/container/package-summary.html" icon="package" />
-        <topic label="org.eclipse.net4j.util.container.delegate" href="javadoc/org/eclipse/net4j/util/container/delegate/package-summary.html" icon="package" />
-        <topic label="org.eclipse.net4j.util.event" href="javadoc/org/eclipse/net4j/util/event/package-summary.html" icon="package" />
-        <topic label="org.eclipse.net4j.util.factory" href="javadoc/org/eclipse/net4j/util/factory/package-summary.html" icon="package" />
-        <topic label="org.eclipse.net4j.util.fsm" href="javadoc/org/eclipse/net4j/util/fsm/package-summary.html" icon="package" />
-        <topic label="org.eclipse.net4j.util.io" href="javadoc/org/eclipse/net4j/util/io/package-summary.html" icon="package" />
-        <topic label="org.eclipse.net4j.util.lifecycle" href="javadoc/org/eclipse/net4j/util/lifecycle/package-summary.html" icon="package" />
-        <topic label="org.eclipse.net4j.util.om" href="javadoc/org/eclipse/net4j/util/om/package-summary.html" icon="package" />
-        <topic label="org.eclipse.net4j.util.om.log" href="javadoc/org/eclipse/net4j/util/om/log/package-summary.html" icon="package" />
-        <topic label="org.eclipse.net4j.util.om.monitor" href="javadoc/org/eclipse/net4j/util/om/monitor/package-summary.html" icon="package" />
-        <topic label="org.eclipse.net4j.util.om.pref" href="javadoc/org/eclipse/net4j/util/om/pref/package-summary.html" icon="package" />
-        <topic label="org.eclipse.net4j.util.om.trace" href="javadoc/org/eclipse/net4j/util/om/trace/package-summary.html" icon="package" />
-        <topic label="org.eclipse.net4j.util.options" href="javadoc/org/eclipse/net4j/util/options/package-summary.html" icon="package" />
-        <topic label="org.eclipse.net4j.util.properties" href="javadoc/org/eclipse/net4j/util/properties/package-summary.html" icon="package" />
-        <topic label="org.eclipse.net4j.util.ref" href="javadoc/org/eclipse/net4j/util/ref/package-summary.html" icon="package" />
-        <topic label="org.eclipse.net4j.util.registry" href="javadoc/org/eclipse/net4j/util/registry/package-summary.html" icon="package" />
-        <topic label="org.eclipse.net4j.util.security" href="javadoc/org/eclipse/net4j/util/security/package-summary.html" icon="package" />
-        <topic label="org.eclipse.net4j.util.transaction" href="javadoc/org/eclipse/net4j/util/transaction/package-summary.html" icon="package" />
-      </topic>
-      <topic label="Net4j Utilities UI" href="javadoc/org/eclipse/net4j/util/ui/package-summary.html" icon="plugin">
-        <topic label="org.eclipse.net4j.util.ui" href="javadoc/org/eclipse/net4j/util/ui/package-summary.html" icon="package" />
-        <topic label="org.eclipse.net4j.util.ui.actions" href="javadoc/org/eclipse/net4j/util/ui/actions/package-summary.html" icon="package" />
-        <topic label="org.eclipse.net4j.util.ui.confirmation" href="javadoc/org/eclipse/net4j/util/ui/confirmation/package-summary.html" icon="package" />
-        <topic label="org.eclipse.net4j.util.ui.container" href="javadoc/org/eclipse/net4j/util/ui/container/package-summary.html" icon="package" />
-        <topic label="org.eclipse.net4j.util.ui.dnd" href="javadoc/org/eclipse/net4j/util/ui/dnd/package-summary.html" icon="package" />
-        <topic label="org.eclipse.net4j.util.ui.handlers" href="javadoc/org/eclipse/net4j/util/ui/handlers/package-summary.html" icon="package" />
-        <topic label="org.eclipse.net4j.util.ui.prefs" href="javadoc/org/eclipse/net4j/util/ui/prefs/package-summary.html" icon="package" />
-        <topic label="org.eclipse.net4j.util.ui.proposals" href="javadoc/org/eclipse/net4j/util/ui/proposals/package-summary.html" icon="package" />
-        <topic label="org.eclipse.net4j.util.ui.security" href="javadoc/org/eclipse/net4j/util/ui/security/package-summary.html" icon="package" />
-        <topic label="org.eclipse.net4j.util.ui.views" href="javadoc/org/eclipse/net4j/util/ui/views/package-summary.html" icon="package" />
-        <topic label="org.eclipse.net4j.util.ui.widgets" href="javadoc/org/eclipse/net4j/util/ui/widgets/package-summary.html" icon="package" />
-      </topic>
+  <topic label="API Reference" href="javadoc/overview-summary.html">
+    <topic label="Net4j Utilities" href="javadoc/org/eclipse/net4j/util/package-summary.html" icon="plugin">
+      <topic label="org.eclipse.net4j.util" href="javadoc/org/eclipse/net4j/util/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.util.cache" href="javadoc/org/eclipse/net4j/util/cache/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.util.collection" href="javadoc/org/eclipse/net4j/util/collection/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.util.concurrent" href="javadoc/org/eclipse/net4j/util/concurrent/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.util.confirmation" href="javadoc/org/eclipse/net4j/util/confirmation/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.util.container" href="javadoc/org/eclipse/net4j/util/container/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.util.container.delegate" href="javadoc/org/eclipse/net4j/util/container/delegate/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.util.event" href="javadoc/org/eclipse/net4j/util/event/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.util.factory" href="javadoc/org/eclipse/net4j/util/factory/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.util.fsm" href="javadoc/org/eclipse/net4j/util/fsm/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.util.io" href="javadoc/org/eclipse/net4j/util/io/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.util.lifecycle" href="javadoc/org/eclipse/net4j/util/lifecycle/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.util.om" href="javadoc/org/eclipse/net4j/util/om/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.util.om.job" href="javadoc/org/eclipse/net4j/util/om/job/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.util.om.log" href="javadoc/org/eclipse/net4j/util/om/log/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.util.om.monitor" href="javadoc/org/eclipse/net4j/util/om/monitor/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.util.om.pref" href="javadoc/org/eclipse/net4j/util/om/pref/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.util.om.trace" href="javadoc/org/eclipse/net4j/util/om/trace/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.util.options" href="javadoc/org/eclipse/net4j/util/options/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.util.properties" href="javadoc/org/eclipse/net4j/util/properties/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.util.ref" href="javadoc/org/eclipse/net4j/util/ref/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.util.registry" href="javadoc/org/eclipse/net4j/util/registry/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.util.security" href="javadoc/org/eclipse/net4j/util/security/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.util.transaction" href="javadoc/org/eclipse/net4j/util/transaction/package-summary.html" icon="package" />
     </topic>
-    <topic label="Extension Point Reference" href="html/reference/schema/index.html">
-      <topic label="Net4j Utilities" href="schemadoc/org_eclipse_net4j_util_elementProcessors.html" icon="plugin">
-        <topic label="elementProcessors" href="schemadoc/org_eclipse_net4j_util_elementProcessors.html" icon="extpoint" />
-        <topic label="factories" href="schemadoc/org_eclipse_net4j_util_factories.html" icon="extpoint" />
-      </topic>
+    <topic label="Net4j Utilities UI" href="javadoc/org/eclipse/net4j/util/ui/package-summary.html" icon="plugin">
+      <topic label="org.eclipse.net4j.util.ui" href="javadoc/org/eclipse/net4j/util/ui/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.util.ui.actions" href="javadoc/org/eclipse/net4j/util/ui/actions/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.util.ui.confirmation" href="javadoc/org/eclipse/net4j/util/ui/confirmation/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.util.ui.container" href="javadoc/org/eclipse/net4j/util/ui/container/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.util.ui.dnd" href="javadoc/org/eclipse/net4j/util/ui/dnd/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.util.ui.handlers" href="javadoc/org/eclipse/net4j/util/ui/handlers/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.util.ui.prefs" href="javadoc/org/eclipse/net4j/util/ui/prefs/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.util.ui.proposals" href="javadoc/org/eclipse/net4j/util/ui/proposals/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.util.ui.security" href="javadoc/org/eclipse/net4j/util/ui/security/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.util.ui.views" href="javadoc/org/eclipse/net4j/util/ui/views/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.util.ui.widgets" href="javadoc/org/eclipse/net4j/util/ui/widgets/package-summary.html" icon="package" />
+    </topic>
+  </topic>
+  <topic label="Extension Point Reference" href="html/schema/index.html">
+    <topic label="Net4j Utilities" href="schemadoc/org_eclipse_net4j_util_elementProcessors.html" icon="plugin">
+      <topic label="elementProcessors" href="schemadoc/org_eclipse_net4j_util_elementProcessors.html" icon="extpoint" />
+      <topic label="factories" href="schemadoc/org_eclipse_net4j_util_factories.html" icon="extpoint" />
     </topic>
   </topic>
   <topic label="Online Docs" href="html/online/index.html">

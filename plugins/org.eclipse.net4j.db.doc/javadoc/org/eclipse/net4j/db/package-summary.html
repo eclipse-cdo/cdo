@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>org.eclipse.net4j.db (Net4j DB Framework Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../script.js"></script>
+<script type="text/javascript" src="../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,20 +28,25 @@
     catch(err) {
     }
 //-->
-</script>
+var pathtoroot = "../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../index.html">Overview</a></li>
 <li class="navBarCell1Rev">Package</li>
 <li>Class</li>
 <li><a href="package-use.html">Use</a></li>
@@ -41,16 +56,14 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev&nbsp;Package</li>
-<li><a href="../../../../org/eclipse/net4j/db/ddl/package-summary.html">Next&nbsp;Package</a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../index.html?org/eclipse/net4j/db/package-summary.html" target="_top">Frames</a></li>
-<li><a href="package-summary.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -63,22 +76,35 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
+<main role="main">
 <div class="header">
 <h1 title="Package" class="title">Package&nbsp;org.eclipse.net4j.db</h1>
-<div class="docSummary">
-<div class="block">The Net4j DB framework.</div>
-</div>
-<p>See:&nbsp;<a href="#package.description">Description</a></p>
 </div>
 <div class="contentContainer">
+<section role="region"><a id="package.description">
+<!--   -->
+</a>
+<div class="block">The Net4j DB framework.</div>
+</section>
 <ul class="blockList">
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<table class="typeSummary">
 <caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Interface</th>
@@ -86,91 +112,91 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../org/eclipse/net4j/db/BatchedStatement.html" title="interface in org.eclipse.net4j.db">BatchedStatement</a></td>
+<th class="colFirst" scope="row"><a href="BatchedStatement.html" title="interface in org.eclipse.net4j.db">BatchedStatement</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../org/eclipse/net4j/db/DBUtil.DeserializeRowHandler.html" title="interface in org.eclipse.net4j.db">DBUtil.DeserializeRowHandler</a></td>
+<th class="colFirst" scope="row"><a href="DBUtil.DeserializeRowHandler.html" title="interface in org.eclipse.net4j.db">DBUtil.DeserializeRowHandler</a></th>
 <td class="colLast">
-<div class="block">A <a href="../../../../org/eclipse/net4j/db/DBUtil.RowHandler.html" title="interface in org.eclipse.net4j.db"><code>row handler</code></a> with a <a href="../../../../org/eclipse/net4j/db/DBUtil.DeserializeRowHandler.html#handleRow-org.eclipse.net4j.util.io.ExtendedDataInput-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBField:A-java.lang.Object:A-"><code>method</code></a>
- that is called once per row deserialized within <a href="../../../../org/eclipse/net4j/db/DBUtil.html#deserializeTable-org.eclipse.net4j.util.io.ExtendedDataInput-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBTable-org.eclipse.net4j.util.om.monitor.OMMonitor-org.eclipse.net4j.db.DBUtil.DeserializeRowHandler-"><code>DBUtil.deserializeTable()</code></a>.</div>
+<div class="block">A <a href="DBUtil.RowHandler.html" title="interface in org.eclipse.net4j.db"><code>row handler</code></a> with a <a href="DBUtil.DeserializeRowHandler.html#handleRow(org.eclipse.net4j.util.io.ExtendedDataInput,java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField%5B%5D,java.lang.Object%5B%5D)"><code>method</code></a>
+ that is called once per row deserialized within <a href="DBUtil.html#deserializeTable(org.eclipse.net4j.util.io.ExtendedDataInput,java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable,org.eclipse.net4j.util.om.monitor.OMMonitor,org.eclipse.net4j.db.DBUtil.DeserializeRowHandler)"><code>DBUtil.deserializeTable()</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../org/eclipse/net4j/db/DBUtil.RowHandler.html" title="interface in org.eclipse.net4j.db">DBUtil.RowHandler</a></td>
+<th class="colFirst" scope="row"><a href="DBUtil.RowHandler.html" title="interface in org.eclipse.net4j.db">DBUtil.RowHandler</a></th>
 <td class="colLast">
-<div class="block">Call-back interface with a <a href="../../../../org/eclipse/net4j/db/DBUtil.RowHandler.html#done-boolean-"><code>method</code></a> that is called <i>after</i>
+<div class="block">Call-back interface with a <a href="DBUtil.RowHandler.html#done(boolean)"><code>method</code></a> that is called <i>after</i>
  a number of table rows have been handled by one of the subtypes of this interface.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../org/eclipse/net4j/db/DBUtil.RunnableWithConnection.html" title="interface in org.eclipse.net4j.db">DBUtil.RunnableWithConnection</a>&lt;T&gt;</td>
+<th class="colFirst" scope="row"><a href="DBUtil.RunnableWithConnection.html" title="interface in org.eclipse.net4j.db">DBUtil.RunnableWithConnection</a>&lt;T&gt;</th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../org/eclipse/net4j/db/DBUtil.SerializeRowHandler.html" title="interface in org.eclipse.net4j.db">DBUtil.SerializeRowHandler</a></td>
+<th class="colFirst" scope="row"><a href="DBUtil.SerializeRowHandler.html" title="interface in org.eclipse.net4j.db">DBUtil.SerializeRowHandler</a></th>
 <td class="colLast">
-<div class="block">A <a href="../../../../org/eclipse/net4j/db/DBUtil.RowHandler.html" title="interface in org.eclipse.net4j.db"><code>row handler</code></a> with a <a href="../../../../org/eclipse/net4j/db/DBUtil.SerializeRowHandler.html#handleRow-org.eclipse.net4j.util.io.ExtendedDataOutput-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBField:A-java.lang.Object:A-"><code>method</code></a>
- that is called once per row serialized within <a href="../../../../org/eclipse/net4j/db/DBUtil.html#serializeTable-org.eclipse.net4j.util.io.ExtendedDataOutput-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBTable-java.lang.String-java.lang.String-org.eclipse.net4j.db.DBUtil.SerializeRowHandler-"><code>DBUtil.serializeTable()</code></a>.</div>
+<div class="block">A <a href="DBUtil.RowHandler.html" title="interface in org.eclipse.net4j.db"><code>row handler</code></a> with a <a href="DBUtil.SerializeRowHandler.html#handleRow(org.eclipse.net4j.util.io.ExtendedDataOutput,java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField%5B%5D,java.lang.Object%5B%5D)"><code>method</code></a>
+ that is called once per row serialized within <a href="DBUtil.html#serializeTable(org.eclipse.net4j.util.io.ExtendedDataOutput,java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable,java.lang.String,java.lang.String,org.eclipse.net4j.db.DBUtil.SerializeRowHandler)"><code>DBUtil.serializeTable()</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></td>
+<th class="colFirst" scope="row"><a href="IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></th>
 <td class="colLast">
 <div class="block">Abstracts all aspects of a database that are vendor-specific.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../org/eclipse/net4j/db/IDBConnection.html" title="interface in org.eclipse.net4j.db">IDBConnection</a></td>
+<th class="colFirst" scope="row"><a href="IDBConnection.html" title="interface in org.eclipse.net4j.db">IDBConnection</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../org/eclipse/net4j/db/IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</a></td>
+<th class="colFirst" scope="row"><a href="IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</a></th>
 <td class="colLast">
 <div class="block">Provides a database <code>connection</code>, roughly comparable with a <code>data source</code>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../org/eclipse/net4j/db/IDBConnectionProvider2.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider2</a></td>
+<th class="colFirst" scope="row"><a href="IDBConnectionProvider2.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider2</a></th>
 <td class="colLast">
 <div class="block">Provides a database <code>connection</code>, roughly comparable with a <code>data source</code>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../org/eclipse/net4j/db/IDBDatabase.html" title="interface in org.eclipse.net4j.db">IDBDatabase</a></td>
+<th class="colFirst" scope="row"><a href="IDBDatabase.html" title="interface in org.eclipse.net4j.db">IDBDatabase</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../org/eclipse/net4j/db/IDBDatabase.RunnableWithSchema.html" title="interface in org.eclipse.net4j.db">IDBDatabase.RunnableWithSchema</a></td>
+<th class="colFirst" scope="row"><a href="IDBDatabase.RunnableWithSchema.html" title="interface in org.eclipse.net4j.db">IDBDatabase.RunnableWithSchema</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../org/eclipse/net4j/db/IDBDatabase.SchemaChangedEvent.html" title="interface in org.eclipse.net4j.db">IDBDatabase.SchemaChangedEvent</a></td>
+<th class="colFirst" scope="row"><a href="IDBDatabase.SchemaChangedEvent.html" title="interface in org.eclipse.net4j.db">IDBDatabase.SchemaChangedEvent</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../org/eclipse/net4j/db/IDBPreparedStatement.html" title="interface in org.eclipse.net4j.db">IDBPreparedStatement</a></td>
+<th class="colFirst" scope="row"><a href="IDBPreparedStatement.html" title="interface in org.eclipse.net4j.db">IDBPreparedStatement</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../org/eclipse/net4j/db/IDBResultSet.html" title="interface in org.eclipse.net4j.db">IDBResultSet</a></td>
+<th class="colFirst" scope="row"><a href="IDBResultSet.html" title="interface in org.eclipse.net4j.db">IDBResultSet</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../org/eclipse/net4j/db/IDBRowHandler.html" title="interface in org.eclipse.net4j.db">IDBRowHandler</a></td>
+<th class="colFirst" scope="row"><a href="IDBRowHandler.html" title="interface in org.eclipse.net4j.db">IDBRowHandler</a></th>
 <td class="colLast">
 <div class="block">Call-back that handles the values of, for example, a row in a database table.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../org/eclipse/net4j/db/IDBSchemaTransaction.html" title="interface in org.eclipse.net4j.db">IDBSchemaTransaction</a></td>
+<th class="colFirst" scope="row"><a href="IDBSchemaTransaction.html" title="interface in org.eclipse.net4j.db">IDBSchemaTransaction</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
 </li>
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<table class="typeSummary">
 <caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Class</th>
@@ -178,7 +204,7 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../org/eclipse/net4j/db/DBUtil.html" title="class in org.eclipse.net4j.db">DBUtil</a></td>
+<th class="colFirst" scope="row"><a href="DBUtil.html" title="class in org.eclipse.net4j.db">DBUtil</a></th>
 <td class="colLast">
 <div class="block">A utility class with various static factory and convenience methods.</div>
 </td>
@@ -187,7 +213,7 @@
 </table>
 </li>
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Enum Summary table, listing enums, and an explanation">
+<table class="typeSummary">
 <caption><span>Enum Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Enum</th>
@@ -195,13 +221,13 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../org/eclipse/net4j/db/DBType.html" title="enum in org.eclipse.net4j.db">DBType</a></td>
+<th class="colFirst" scope="row"><a href="DBType.html" title="enum in org.eclipse.net4j.db">DBType</a></th>
 <td class="colLast">
 <div class="block">Enumerates the SQL data types that are compatible with the DB framework.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../org/eclipse/net4j/db/IDBPreparedStatement.ReuseProbability.html" title="enum in org.eclipse.net4j.db">IDBPreparedStatement.ReuseProbability</a></td>
+<th class="colFirst" scope="row"><a href="IDBPreparedStatement.ReuseProbability.html" title="enum in org.eclipse.net4j.db">IDBPreparedStatement.ReuseProbability</a></th>
 <td class="colLast">
 <div class="block">An enum for the degree of probability to which a prepared statement is reused later on.</div>
 </td>
@@ -210,7 +236,7 @@
 </table>
 </li>
 <li class="blockList">
-<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Exception Summary table, listing exceptions, and an explanation">
+<table class="typeSummary">
 <caption><span>Exception Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Exception</th>
@@ -218,7 +244,7 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../org/eclipse/net4j/db/DBException.html" title="class in org.eclipse.net4j.db">DBException</a></td>
+<th class="colFirst" scope="row"><a href="DBException.html" title="class in org.eclipse.net4j.db">DBException</a></th>
 <td class="colLast">
 <div class="block">A <code>runtime exception</code> thrown to indicate problems with a database, frequently used to wrap
  checked <code>SQL exceptions</code>.</div>
@@ -228,22 +254,20 @@
 </table>
 </li>
 </ul>
-<a name="package.description">
-<!--   -->
-</a>
-<h2 title="Package org.eclipse.net4j.db Description">Package org.eclipse.net4j.db Description</h2>
-<div class="block">The Net4j DB framework.</div>
 </div>
+</main>
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../index.html">Overview</a></li>
 <li class="navBarCell1Rev">Package</li>
 <li>Class</li>
 <li><a href="package-use.html">Use</a></li>
@@ -253,16 +277,8 @@
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev&nbsp;Package</li>
-<li><a href="../../../../org/eclipse/net4j/db/ddl/package-summary.html">Next&nbsp;Package</a></li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../index.html?org/eclipse/net4j/db/package-summary.html" target="_top">Frames</a></li>
-<li><a href="package-summary.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -275,11 +291,16 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

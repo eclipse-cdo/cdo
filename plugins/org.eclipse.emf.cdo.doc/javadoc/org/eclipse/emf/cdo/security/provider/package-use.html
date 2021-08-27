@@ -1,12 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>Uses of Package org.eclipse.emf.cdo.security.provider (CDO Model Repository Documentation)</title>
-<meta name="date" content="">
+<meta http-equiv="Content-Type" content="">
+<meta name="dc.created" content="2021-08-27">
 <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../../script.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip/dist/jszip.min.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../../../../../jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -18,39 +28,43 @@
     catch(err) {
     }
 //-->
-</script>
+var pathtoroot = "../../../../../../";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
+<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li>Class</li>
 <li class="navBarCell1Rev">Use</li>
+<li><a href="package-tree.html">Tree</a></li>
 <li><a href="../../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../../help-doc.html">Help</a></li>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev</li>
-<li>Next</li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/emf/cdo/security/provider/package-use.html" target="_top">Frames</a></li>
-<li><a href="package-use.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -63,26 +77,38 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
+</div>
+<div class="navPadding">&nbsp;</div>
+<script type="text/javascript"><!--
+$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+//-->
+</script>
+</nav>
+</header>
+<main role="main">
 <div class="header">
 <h1 title="Uses of Package org.eclipse.emf.cdo.security.provider" class="title">Uses of Package<br>org.eclipse.emf.cdo.security.provider</h1>
 </div>
 <div class="contentContainer">
 <ul class="blockList">
 <li class="blockList">
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing packages, and an explanation">
-<caption><span>Packages that use <a href="../../../../../../org/eclipse/emf/cdo/security/provider/package-summary.html">org.eclipse.emf.cdo.security.provider</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Packages that use <a href="package-summary.html">org.eclipse.emf.cdo.security.provider</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Package</th>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.security.provider">org.eclipse.emf.cdo.security.provider</a></td>
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.security.provider">org.eclipse.emf.cdo.security.provider</a></th>
 <td class="colLast">
 <div class="block">The generated EMF edit support of the CDO security model.</div>
 </td>
@@ -90,148 +116,176 @@
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.security.provider">
+<li class="blockList"><a id="org.eclipse.emf.cdo.security.provider">
 <!--   -->
 </a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../../org/eclipse/emf/cdo/security/provider/package-summary.html">org.eclipse.emf.cdo.security.provider</a> used by <a href="../../../../../../org/eclipse/emf/cdo/security/provider/package-summary.html">org.eclipse.emf.cdo.security.provider</a></span><span class="tabEnd">&nbsp;</span></caption>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.emf.cdo.security.provider</a> used by <a href="package-summary.html">org.eclipse.emf.cdo.security.provider</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Class and Description</th>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/security/provider/class-use/AndFilterItemProvider.html#org.eclipse.emf.cdo.security.provider">AndFilterItemProvider</a>
-<div class="block">This is the item provider adapter for a <a href="../../../../../../org/eclipse/emf/cdo/security/AndFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>AndFilter</code></a> object.</div>
+<th class="colFirst" scope="row"><a href="class-use/AndFilterItemProvider.html#org.eclipse.emf.cdo.security.provider">AndFilterItemProvider</a></th>
+<td class="colLast">
+<div class="block">This is the item provider adapter for a <a href="../AndFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>AndFilter</code></a> object.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/security/provider/class-use/AssigneeItemProvider.html#org.eclipse.emf.cdo.security.provider">AssigneeItemProvider</a>
-<div class="block">This is the item provider adapter for a <a href="../../../../../../org/eclipse/emf/cdo/security/Assignee.html" title="interface in org.eclipse.emf.cdo.security"><code>Assignee</code></a> object.</div>
+<th class="colFirst" scope="row"><a href="class-use/AssigneeItemProvider.html#org.eclipse.emf.cdo.security.provider">AssigneeItemProvider</a></th>
+<td class="colLast">
+<div class="block">This is the item provider adapter for a <a href="../Assignee.html" title="interface in org.eclipse.emf.cdo.security"><code>Assignee</code></a> object.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/security/provider/class-use/ClassFilterItemProvider.html#org.eclipse.emf.cdo.security.provider">ClassFilterItemProvider</a>
-<div class="block">This is the item provider adapter for a <a href="../../../../../../org/eclipse/emf/cdo/security/ClassFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>ClassFilter</code></a> object.</div>
+<th class="colFirst" scope="row"><a href="class-use/ClassFilterItemProvider.html#org.eclipse.emf.cdo.security.provider">ClassFilterItemProvider</a></th>
+<td class="colLast">
+<div class="block">This is the item provider adapter for a <a href="../ClassFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>ClassFilter</code></a> object.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/security/provider/class-use/ClassPermissionItemProvider.html#org.eclipse.emf.cdo.security.provider">ClassPermissionItemProvider</a>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<th class="colFirst" scope="row"><a href="class-use/ClassPermissionItemProvider.html#org.eclipse.emf.cdo.security.provider">ClassPermissionItemProvider</a></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/security/provider/class-use/CombinedFilterItemProvider.html#org.eclipse.emf.cdo.security.provider">CombinedFilterItemProvider</a>
-<div class="block">This is the item provider adapter for a <a href="../../../../../../org/eclipse/emf/cdo/security/CombinedFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>CombinedFilter</code></a> object.</div>
+<th class="colFirst" scope="row"><a href="class-use/CombinedFilterItemProvider.html#org.eclipse.emf.cdo.security.provider">CombinedFilterItemProvider</a></th>
+<td class="colLast">
+<div class="block">This is the item provider adapter for a <a href="../CombinedFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>CombinedFilter</code></a> object.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/security/provider/class-use/DirectoryItemProvider.html#org.eclipse.emf.cdo.security.provider">DirectoryItemProvider</a>
-<div class="block">This is the item provider adapter for a <a href="../../../../../../org/eclipse/emf/cdo/security/Directory.html" title="interface in org.eclipse.emf.cdo.security"><code>Directory</code></a> object.</div>
+<th class="colFirst" scope="row"><a href="class-use/DirectoryItemProvider.html#org.eclipse.emf.cdo.security.provider">DirectoryItemProvider</a></th>
+<td class="colLast">
+<div class="block">This is the item provider adapter for a <a href="../Directory.html" title="interface in org.eclipse.emf.cdo.security"><code>Directory</code></a> object.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/security/provider/class-use/ExpressionFilterItemProvider.html#org.eclipse.emf.cdo.security.provider">ExpressionFilterItemProvider</a>
-<div class="block">This is the item provider adapter for a <a href="../../../../../../org/eclipse/emf/cdo/security/ExpressionFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>ExpressionFilter</code></a> object.</div>
+<th class="colFirst" scope="row"><a href="class-use/ExpressionFilterItemProvider.html#org.eclipse.emf.cdo.security.provider">ExpressionFilterItemProvider</a></th>
+<td class="colLast">
+<div class="block">This is the item provider adapter for a <a href="../ExpressionFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>ExpressionFilter</code></a> object.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/security/provider/class-use/FilterPermissionItemProvider.html#org.eclipse.emf.cdo.security.provider">FilterPermissionItemProvider</a>
-<div class="block">This is the item provider adapter for a <a href="../../../../../../org/eclipse/emf/cdo/security/FilterPermission.html" title="interface in org.eclipse.emf.cdo.security"><code>FilterPermission</code></a> object.</div>
+<th class="colFirst" scope="row"><a href="class-use/FilterPermissionItemProvider.html#org.eclipse.emf.cdo.security.provider">FilterPermissionItemProvider</a></th>
+<td class="colLast">
+<div class="block">This is the item provider adapter for a <a href="../FilterPermission.html" title="interface in org.eclipse.emf.cdo.security"><code>FilterPermission</code></a> object.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/security/provider/class-use/GroupItemProvider.html#org.eclipse.emf.cdo.security.provider">GroupItemProvider</a>
-<div class="block">This is the item provider adapter for a <a href="../../../../../../org/eclipse/emf/cdo/security/Group.html" title="interface in org.eclipse.emf.cdo.security"><code>Group</code></a> object.</div>
+<th class="colFirst" scope="row"><a href="class-use/GroupItemProvider.html#org.eclipse.emf.cdo.security.provider">GroupItemProvider</a></th>
+<td class="colLast">
+<div class="block">This is the item provider adapter for a <a href="../Group.html" title="interface in org.eclipse.emf.cdo.security"><code>Group</code></a> object.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/security/provider/class-use/LinkedFilterItemProvider.html#org.eclipse.emf.cdo.security.provider">LinkedFilterItemProvider</a>
-<div class="block">This is the item provider adapter for a <a href="../../../../../../org/eclipse/emf/cdo/security/LinkedFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>LinkedFilter</code></a> object.</div>
+<th class="colFirst" scope="row"><a href="class-use/LinkedFilterItemProvider.html#org.eclipse.emf.cdo.security.provider">LinkedFilterItemProvider</a></th>
+<td class="colLast">
+<div class="block">This is the item provider adapter for a <a href="../LinkedFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>LinkedFilter</code></a> object.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/security/provider/class-use/NotFilterItemProvider.html#org.eclipse.emf.cdo.security.provider">NotFilterItemProvider</a>
-<div class="block">This is the item provider adapter for a <a href="../../../../../../org/eclipse/emf/cdo/security/NotFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>NotFilter</code></a> object.</div>
+<th class="colFirst" scope="row"><a href="class-use/NotFilterItemProvider.html#org.eclipse.emf.cdo.security.provider">NotFilterItemProvider</a></th>
+<td class="colLast">
+<div class="block">This is the item provider adapter for a <a href="../NotFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>NotFilter</code></a> object.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/security/provider/class-use/ObjectFilterItemProvider.html#org.eclipse.emf.cdo.security.provider">ObjectFilterItemProvider</a>
-<div class="block">This is the item provider adapter for a <a href="../../../../../../org/eclipse/emf/cdo/security/ObjectFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>ObjectFilter</code></a> object.</div>
+<th class="colFirst" scope="row"><a href="class-use/ObjectFilterItemProvider.html#org.eclipse.emf.cdo.security.provider">ObjectFilterItemProvider</a></th>
+<td class="colLast">
+<div class="block">This is the item provider adapter for a <a href="../ObjectFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>ObjectFilter</code></a> object.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/security/provider/class-use/OrFilterItemProvider.html#org.eclipse.emf.cdo.security.provider">OrFilterItemProvider</a>
-<div class="block">This is the item provider adapter for a <a href="../../../../../../org/eclipse/emf/cdo/security/OrFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>OrFilter</code></a> object.</div>
+<th class="colFirst" scope="row"><a href="class-use/OrFilterItemProvider.html#org.eclipse.emf.cdo.security.provider">OrFilterItemProvider</a></th>
+<td class="colLast">
+<div class="block">This is the item provider adapter for a <a href="../OrFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>OrFilter</code></a> object.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/security/provider/class-use/PackageFilterItemProvider.html#org.eclipse.emf.cdo.security.provider">PackageFilterItemProvider</a>
-<div class="block">This is the item provider adapter for a <a href="../../../../../../org/eclipse/emf/cdo/security/PackageFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>PackageFilter</code></a> object.</div>
+<th class="colFirst" scope="row"><a href="class-use/PackageFilterItemProvider.html#org.eclipse.emf.cdo.security.provider">PackageFilterItemProvider</a></th>
+<td class="colLast">
+<div class="block">This is the item provider adapter for a <a href="../PackageFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>PackageFilter</code></a> object.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/security/provider/class-use/PackagePermissionItemProvider.html#org.eclipse.emf.cdo.security.provider">PackagePermissionItemProvider</a>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<th class="colFirst" scope="row"><a href="class-use/PackagePermissionItemProvider.html#org.eclipse.emf.cdo.security.provider">PackagePermissionItemProvider</a></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/security/provider/class-use/PermissionFilterItemProvider.html#org.eclipse.emf.cdo.security.provider">PermissionFilterItemProvider</a>
-<div class="block">This is the item provider adapter for a <a href="../../../../../../org/eclipse/emf/cdo/security/PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>PermissionFilter</code></a> object.</div>
+<th class="colFirst" scope="row"><a href="class-use/PermissionFilterItemProvider.html#org.eclipse.emf.cdo.security.provider">PermissionFilterItemProvider</a></th>
+<td class="colLast">
+<div class="block">This is the item provider adapter for a <a href="../PermissionFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>PermissionFilter</code></a> object.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/security/provider/class-use/PermissionItemProvider.html#org.eclipse.emf.cdo.security.provider">PermissionItemProvider</a>
-<div class="block">This is the item provider adapter for a <a href="../../../../../../org/eclipse/emf/cdo/security/Permission.html" title="interface in org.eclipse.emf.cdo.security"><code>Permission</code></a> object.</div>
+<th class="colFirst" scope="row"><a href="class-use/PermissionItemProvider.html#org.eclipse.emf.cdo.security.provider">PermissionItemProvider</a></th>
+<td class="colLast">
+<div class="block">This is the item provider adapter for a <a href="../Permission.html" title="interface in org.eclipse.emf.cdo.security"><code>Permission</code></a> object.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/security/provider/class-use/RealmItemProvider.html#org.eclipse.emf.cdo.security.provider">RealmItemProvider</a>
-<div class="block">This is the item provider adapter for a <a href="../../../../../../org/eclipse/emf/cdo/security/Realm.html" title="interface in org.eclipse.emf.cdo.security"><code>Realm</code></a> object.</div>
+<th class="colFirst" scope="row"><a href="class-use/RealmItemProvider.html#org.eclipse.emf.cdo.security.provider">RealmItemProvider</a></th>
+<td class="colLast">
+<div class="block">This is the item provider adapter for a <a href="../Realm.html" title="interface in org.eclipse.emf.cdo.security"><code>Realm</code></a> object.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/security/provider/class-use/ResourceFilterItemProvider.html#org.eclipse.emf.cdo.security.provider">ResourceFilterItemProvider</a>
-<div class="block">This is the item provider adapter for a <a href="../../../../../../org/eclipse/emf/cdo/security/ResourceFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>ResourceFilter</code></a> object.</div>
+<th class="colFirst" scope="row"><a href="class-use/ResourceFilterItemProvider.html#org.eclipse.emf.cdo.security.provider">ResourceFilterItemProvider</a></th>
+<td class="colLast">
+<div class="block">This is the item provider adapter for a <a href="../ResourceFilter.html" title="interface in org.eclipse.emf.cdo.security"><code>ResourceFilter</code></a> object.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/security/provider/class-use/ResourcePermissionItemProvider.html#org.eclipse.emf.cdo.security.provider">ResourcePermissionItemProvider</a>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<th class="colFirst" scope="row"><a href="class-use/ResourcePermissionItemProvider.html#org.eclipse.emf.cdo.security.provider">ResourcePermissionItemProvider</a></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/security/provider/class-use/RoleItemProvider.html#org.eclipse.emf.cdo.security.provider">RoleItemProvider</a>
-<div class="block">This is the item provider adapter for a <a href="../../../../../../org/eclipse/emf/cdo/security/Role.html" title="interface in org.eclipse.emf.cdo.security"><code>Role</code></a> object.</div>
+<th class="colFirst" scope="row"><a href="class-use/RoleItemProvider.html#org.eclipse.emf.cdo.security.provider">RoleItemProvider</a></th>
+<td class="colLast">
+<div class="block">This is the item provider adapter for a <a href="../Role.html" title="interface in org.eclipse.emf.cdo.security"><code>Role</code></a> object.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/security/provider/class-use/SecurityEditPlugin.html#org.eclipse.emf.cdo.security.provider">SecurityEditPlugin</a>
+<th class="colFirst" scope="row"><a href="class-use/SecurityEditPlugin.html#org.eclipse.emf.cdo.security.provider">SecurityEditPlugin</a></th>
+<td class="colLast">
 <div class="block">This is the central singleton for the Security edit plugin.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/security/provider/class-use/SecurityEditPlugin.Implementation.html#org.eclipse.emf.cdo.security.provider">SecurityEditPlugin.Implementation</a>
+<th class="colFirst" scope="row"><a href="class-use/SecurityEditPlugin.Implementation.html#org.eclipse.emf.cdo.security.provider">SecurityEditPlugin.Implementation</a></th>
+<td class="colLast">
 <div class="block">The actual implementation of the Eclipse <b>Plugin</b>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/security/provider/class-use/SecurityElementItemProvider.html#org.eclipse.emf.cdo.security.provider">SecurityElementItemProvider</a>
-<div class="block">This is the item provider adapter for a <a href="../../../../../../org/eclipse/emf/cdo/security/SecurityElement.html" title="interface in org.eclipse.emf.cdo.security"><code>SecurityElement</code></a> object.</div>
+<th class="colFirst" scope="row"><a href="class-use/SecurityElementItemProvider.html#org.eclipse.emf.cdo.security.provider">SecurityElementItemProvider</a></th>
+<td class="colLast">
+<div class="block">This is the item provider adapter for a <a href="../SecurityElement.html" title="interface in org.eclipse.emf.cdo.security"><code>SecurityElement</code></a> object.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/security/provider/class-use/SecurityItemItemProvider.html#org.eclipse.emf.cdo.security.provider">SecurityItemItemProvider</a>
-<div class="block">This is the item provider adapter for a <a href="../../../../../../org/eclipse/emf/cdo/security/SecurityItem.html" title="interface in org.eclipse.emf.cdo.security"><code>SecurityItem</code></a> object.</div>
+<th class="colFirst" scope="row"><a href="class-use/SecurityItemItemProvider.html#org.eclipse.emf.cdo.security.provider">SecurityItemItemProvider</a></th>
+<td class="colLast">
+<div class="block">This is the item provider adapter for a <a href="../SecurityItem.html" title="interface in org.eclipse.emf.cdo.security"><code>SecurityItem</code></a> object.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/security/provider/class-use/UserItemProvider.html#org.eclipse.emf.cdo.security.provider">UserItemProvider</a>
-<div class="block">This is the item provider adapter for a <a href="../../../../../../org/eclipse/emf/cdo/security/User.html" title="interface in org.eclipse.emf.cdo.security"><code>User</code></a> object.</div>
+<th class="colFirst" scope="row"><a href="class-use/UserItemProvider.html#org.eclipse.emf.cdo.security.provider">UserItemProvider</a></th>
+<td class="colLast">
+<div class="block">This is the item provider adapter for a <a href="../User.html" title="interface in org.eclipse.emf.cdo.security"><code>User</code></a> object.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/security/provider/class-use/UserPasswordItemProvider.html#org.eclipse.emf.cdo.security.provider">UserPasswordItemProvider</a>
-<div class="block">This is the item provider adapter for a <a href="../../../../../../org/eclipse/emf/cdo/security/UserPassword.html" title="interface in org.eclipse.emf.cdo.security"><code>UserPassword</code></a> object.</div>
+<th class="colFirst" scope="row"><a href="class-use/UserPasswordItemProvider.html#org.eclipse.emf.cdo.security.provider">UserPasswordItemProvider</a></th>
+<td class="colLast">
+<div class="block">This is the item provider adapter for a <a href="../UserPassword.html" title="interface in org.eclipse.emf.cdo.security"><code>UserPassword</code></a> object.</div>
 </td>
 </tr>
 </tbody>
@@ -239,35 +293,31 @@
 </li>
 </ul>
 </div>
+</main>
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li>Class</li>
 <li class="navBarCell1Rev">Use</li>
+<li><a href="package-tree.html">Tree</a></li>
 <li><a href="../../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../../help-doc.html">Help</a></li>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev</li>
-<li>Next</li>
-</ul>
-<ul class="navList">
-<li><a href="../../../../../../index.html?org/eclipse/emf/cdo/security/provider/package-use.html" target="_top">Frames</a></li>
-<li><a href="package-use.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -280,11 +330,16 @@
   }
   //-->
 </script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</nav>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2020 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+</footer>
 </body>
 </html>

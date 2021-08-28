@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.net4j;singleton:=true
-Bundle-Version: 4.12.0.qualifier
+Bundle-Version: 4.12.1.qualifier
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -11,7 +11,7 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ClassPath: .
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)";resolution:=optional,
  org.eclipse.net4j.util;bundle-version="[3.0.0,4.0.0)";visibility:=reexport
-Export-Package: org.eclipse.internal.net4j;version="4.12.0";
+Export-Package: org.eclipse.internal.net4j;version="4.12.1";
   x-friends:="org.eclipse.net4j.http.server,
    org.eclipse.net4j.jvm,
    org.eclipse.net4j.tcp,
@@ -21,7 +21,7 @@ Export-Package: org.eclipse.internal.net4j;version="4.12.0";
    org.eclipse.net4j.http.tests,
    org.eclipse.net4j.tests,
    org.eclipse.net4j.trace",
- org.eclipse.internal.net4j.buffer;version="4.12.0";
+ org.eclipse.internal.net4j.buffer;version="4.12.1";
   x-friends:="org.eclipse.net4j.http.server,
    org.eclipse.net4j.jvm,
    org.eclipse.net4j.tcp,
@@ -31,18 +31,18 @@ Export-Package: org.eclipse.internal.net4j;version="4.12.0";
    org.eclipse.net4j.http.tests,
    org.eclipse.net4j.tests,
    org.eclipse.net4j.trace",
- org.eclipse.internal.net4j.bundle;version="4.12.0";x-internal:=true,
- org.eclipse.net4j;version="4.12.0",
- org.eclipse.net4j.acceptor;version="4.12.0",
- org.eclipse.net4j.buffer;version="4.12.0",
- org.eclipse.net4j.channel;version="4.12.0",
- org.eclipse.net4j.connector;version="4.12.0",
- org.eclipse.net4j.protocol;version="4.12.0",
- org.eclipse.net4j.signal;version="4.12.0",
- org.eclipse.net4j.signal.confirmation;version="4.12.0",
- org.eclipse.net4j.signal.heartbeat;version="4.12.0",
- org.eclipse.net4j.signal.security;version="4.12.0",
- org.eclipse.net4j.signal.wrapping;version="4.12.0",
- org.eclipse.spi.net4j;version="4.12.0"
+ org.eclipse.internal.net4j.bundle;version="4.12.1";x-internal:=true,
+ org.eclipse.net4j;version="4.12.1",
+ org.eclipse.net4j.acceptor;version="4.12.1",
+ org.eclipse.net4j.buffer;version="4.12.1",
+ org.eclipse.net4j.channel;version="4.12.1",
+ org.eclipse.net4j.connector;version="4.12.1",
+ org.eclipse.net4j.protocol;version="4.12.1",
+ org.eclipse.net4j.signal;version="4.12.1",
+ org.eclipse.net4j.signal.confirmation;version="4.12.1",
+ org.eclipse.net4j.signal.heartbeat;version="4.12.1",
+ org.eclipse.net4j.signal.security;version="4.12.1",
+ org.eclipse.net4j.signal.wrapping;version="4.12.1",
+ org.eclipse.spi.net4j;version="4.12.1"
 Eclipse-BuddyPolicy: registered
 Automatic-Module-Name: org.eclipse.net4j

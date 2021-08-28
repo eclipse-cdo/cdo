@@ -1,19 +1,19 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.emf.cdo.security.ui;singleton:=true
-Bundle-Version: 4.5.1.qualifier
+Bundle-Version: 4.5.2.qualifier
 Bundle-Localization: plugin
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-ClassPath: .
 Bundle-RequiredExecutionEnvironment: JavaSE-11
-Export-Package: org.eclipse.emf.cdo.security.internal.ui.bundle;version="4.5.1";x-internal:=true,
- org.eclipse.emf.cdo.security.internal.ui.dialogs;version="4.5.1";x-internal:=true,
- org.eclipse.emf.cdo.security.internal.ui.editor;version="4.5.1";x-internal:=true,
- org.eclipse.emf.cdo.security.internal.ui.handlers;version="4.5.1";x-internal:=true,
- org.eclipse.emf.cdo.security.internal.ui.messages;version="4.5.1";x-internal:=true,
- org.eclipse.emf.cdo.security.internal.ui.util;version="4.5.1";x-internal:=true,
- org.eclipse.emf.cdo.security.ui;version="4.5.1"
+Export-Package: org.eclipse.emf.cdo.security.internal.ui.bundle;version="4.5.2";x-internal:=true,
+ org.eclipse.emf.cdo.security.internal.ui.dialogs;version="4.5.2";x-internal:=true,
+ org.eclipse.emf.cdo.security.internal.ui.editor;version="4.5.2";x-internal:=true,
+ org.eclipse.emf.cdo.security.internal.ui.handlers;version="4.5.2";x-internal:=true,
+ org.eclipse.emf.cdo.security.internal.ui.messages;version="4.5.2";x-internal:=true,
+ org.eclipse.emf.cdo.security.internal.ui.util;version="4.5.2";x-internal:=true,
+ org.eclipse.emf.cdo.security.ui;version="4.5.2"
 Require-Bundle: org.eclipse.emf.cdo.security;bundle-version="[4.3.0,5.0.0)",
  org.eclipse.emf.cdo.security.edit;bundle-version="[4.1.0,5.0.0)",
  org.eclipse.emf.cdo.ui;bundle-version="[4.3.0,5.0.0)",

@@ -21,6 +21,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 
 import java.io.BufferedInputStream;
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -64,15 +65,23 @@ public class LegacyPlatform extends AbstractPlatform
     {
       debugOptionsPath = new File(System.getProperty("user.dir"), OPTIONS).toString();
     }
-  
+    else
+    {
+      File debugOptionsFile = new File(debugOptionsPath);
+      if (debugOptionsFile.isDirectory())
+      {
+        debugOptionsPath = new File(debugOptionsFile, OPTIONS).toString();
+      }
+    }
+
     InputStream inputStream = null;
     Properties properties = new Properties();
-  
+
     try
     {
       inputStream = new BufferedInputStream(new FileInputStream(debugOptionsPath));
       properties.load(inputStream);
-  
+
       for (Entry<Object, Object> entry : properties.entrySet())
       {
         try
@@ -91,7 +100,28 @@ public class LegacyPlatform extends AbstractPlatform
     }
     finally
     {
-      IOUtil.closeSilent(inputStream);
+      closeSilent(inputStream);
+    }
+  }
+
+  /**
+   * This method is indirectly called from the constructor of this class.
+   * The similar method in {@link IOUtil} must not be used because
+   * {@link IOUtil} assumes a fully initialized OMPlatform.INSTANCE.
+   */
+  private static void closeSilent(Closeable closeable)
+  {
+    try
+    {
+      if (closeable != null)
+      {
+        closeable.close();
+      }
+    }
+    catch (Exception ex)
+    {
+      // Don't use OM.LOG here!
+      ex.printStackTrace();
     }
   }
 

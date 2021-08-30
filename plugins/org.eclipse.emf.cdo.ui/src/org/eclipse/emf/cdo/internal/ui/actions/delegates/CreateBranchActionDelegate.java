@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2015, 2021 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,6 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Victor Roldan Betancort - maintenance
+ *    Maxime Porhel - bug 573483
  */
 package org.eclipse.emf.cdo.internal.ui.actions.delegates;
 
@@ -15,10 +16,13 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.internal.ui.dialogs.CreateBranchDialog;
 import org.eclipse.emf.cdo.internal.ui.handlers.CreateBranchHandler;
+import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.util.ui.actions.LongRunningActionDelegate;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 
@@ -75,6 +79,31 @@ public class CreateBranchActionDelegate extends LongRunningActionDelegate
     {
       base = null;
       name = null;
+    }
+  }
+
+  /**
+   * This method is overridden so that the action can be disabled if the branching is not supported.
+   */
+  @Override
+  public void selectionChanged(IAction action, ISelection selection)
+  {
+    super.selectionChanged(action, selection);
+
+    if (selection instanceof IStructuredSelection)
+    {
+      IStructuredSelection ssel = (IStructuredSelection)selection;
+      if (ssel.size() == 1)
+      {
+        Object element = ssel.getFirstElement();
+
+        CDOSession session = CDOUtil.getSession(element);
+        if (session != null)
+        {
+          boolean supportingBranches = session.getRepositoryInfo().isSupportingBranches();
+          action.setEnabled(supportingBranches);
+        }
+      }
     }
   }
 }

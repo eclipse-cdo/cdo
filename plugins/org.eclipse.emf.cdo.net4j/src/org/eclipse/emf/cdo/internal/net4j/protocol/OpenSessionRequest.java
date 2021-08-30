@@ -34,6 +34,8 @@ public class OpenSessionRequest extends CDOClientRequestWithMonitoring<OpenSessi
 
   private String repositoryName;
 
+  private int sessionID;
+
   private String userID;
 
   private boolean passiveUpdateEnabled;
@@ -42,15 +44,19 @@ public class OpenSessionRequest extends CDOClientRequestWithMonitoring<OpenSessi
 
   private LockNotificationMode lockNotificationMode;
 
-  public OpenSessionRequest(CDOClientProtocol protocol, String repositoryName, String userID, boolean passiveUpdateEnabled, PassiveUpdateMode passiveUpdateMode,
-      LockNotificationMode lockNotificationMode)
+  private boolean subscribed;
+
+  public OpenSessionRequest(CDOClientProtocol protocol, String repositoryName, int sessionID, String userID, boolean passiveUpdateEnabled,
+      PassiveUpdateMode passiveUpdateMode, LockNotificationMode lockNotificationMode, boolean subscribed)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_OPEN_SESSION);
     this.repositoryName = repositoryName;
+    this.sessionID = sessionID;
     this.userID = userID;
     this.passiveUpdateEnabled = passiveUpdateEnabled;
     this.passiveUpdateMode = passiveUpdateMode;
     this.lockNotificationMode = lockNotificationMode;
+    this.subscribed = subscribed;
   }
 
   @Override
@@ -62,6 +68,13 @@ public class OpenSessionRequest extends CDOClientRequestWithMonitoring<OpenSessi
     }
 
     out.writeString(repositoryName);
+
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Writing sessionID: {0}", sessionID); //$NON-NLS-1$
+    }
+
+    out.writeXInt(sessionID);
 
     if (TRACER.isEnabled())
     {
@@ -90,6 +103,13 @@ public class OpenSessionRequest extends CDOClientRequestWithMonitoring<OpenSessi
     }
 
     out.writeEnum(lockNotificationMode);
+
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Writing subscribed: {0}", subscribed); //$NON-NLS-1$
+    }
+
+    out.writeBoolean(subscribed);
   }
 
   @Override

@@ -48,6 +48,7 @@ import org.eclipse.net4j.util.io.IStreamWrapper;
 
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult;
+import org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -188,8 +189,12 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
       PassiveUpdateMode passiveUpdateMode = options().getPassiveUpdateMode();
       LockNotificationMode lockNotificationMode = options().getLockNotificationMode();
 
+      InternalCDORemoteSessionManager remoteSessionManager = getRemoteSessionManager();
+      boolean subscribed = remoteSessionManager != null ? remoteSessionManager.isSubscribed() : false;
+
       // TODO (CD) The next call is on the CDOClientProtocol; shouldn't it be on the DelegatingSessionProtocol instead?
-      OpenSessionResult result = protocol.openSession(repositoryName, userID, passiveUpdateEnabled, passiveUpdateMode, lockNotificationMode);
+      OpenSessionResult result = protocol.openSession(repositoryName, getSessionID(), userID, passiveUpdateEnabled, passiveUpdateMode, lockNotificationMode,
+          subscribed);
 
       if (result == null)
       {

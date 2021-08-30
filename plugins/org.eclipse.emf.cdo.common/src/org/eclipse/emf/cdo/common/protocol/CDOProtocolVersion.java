@@ -19,8 +19,9 @@ class CDOProtocolVersion
 
   static
   {
-    VALUE = 40; // Prevent protocol version constant inlining
+    VALUE = 41; // ReconnectionSession mechanism does not update some items after a reconnection
 
+    // VALUE = 40; // Prevent protocol version constant inlining
     // VALUE = 39; // CDOLockOwner.isDurableView becomes derived
     // VALUE = 38; // CDOBranchTag support
     // VALUE = 37; // SIGNAL_ACKNOWLEDGE_COMPRESSED_STRINGS

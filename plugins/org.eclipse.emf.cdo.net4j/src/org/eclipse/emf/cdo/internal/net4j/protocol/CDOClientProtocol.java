@@ -120,10 +120,17 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
     return packageURICompressor;
   }
 
-  public OpenSessionResult openSession(String repositoryName, String userID, boolean passiveUpdateEnabled, PassiveUpdateMode passiveUpdateMode,
-      LockNotificationMode lockNotificationMode)
+  public OpenSessionResult openSession(String repositoryName, int sessionID, String userID, boolean passiveUpdateEnabled, PassiveUpdateMode passiveUpdateMode,
+      LockNotificationMode lockNotificationMode, boolean subscribed)
   {
-    return send(new OpenSessionRequest(this, repositoryName, userID, passiveUpdateEnabled, passiveUpdateMode, lockNotificationMode), new Monitor());
+    return send(new OpenSessionRequest(this, repositoryName, sessionID, userID, passiveUpdateEnabled, passiveUpdateMode, lockNotificationMode, subscribed),
+        new Monitor());
+  }
+
+  @Override
+  public void openedSession()
+  {
+    send(new OpenedSessionRequest(this));
   }
 
   @Override
@@ -142,12 +149,6 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
   public RepositoryTimeResult getRepositoryTime()
   {
     return send(new RepositoryTimeRequest(this));
-  }
-
-  @Override
-  public void openedSession()
-  {
-    send(new OpenedSessionRequest(this));
   }
 
   @Override

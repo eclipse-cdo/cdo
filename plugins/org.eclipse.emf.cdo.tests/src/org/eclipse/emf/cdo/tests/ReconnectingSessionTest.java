@@ -17,6 +17,9 @@ import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.net4j.CDOSessionRecoveryEvent;
 import org.eclipse.emf.cdo.net4j.ReconnectingCDOSessionConfiguration;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
+import org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager;
+import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.ISessionConfig;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
@@ -38,6 +41,9 @@ import org.eclipse.net4j.util.tests.TestListener;
 
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -67,7 +73,7 @@ public class ReconnectingSessionTest extends AbstractCDOTest
 
     ITCPAcceptor acceptor = null;
     CDONet4jSession reconnectingSession = null;
-
+    CDOTransaction durableTransaction = null;
     try
     {
       IManagedContainer serverContainer = getServerContainer();
@@ -84,6 +90,7 @@ public class ReconnectingSessionTest extends AbstractCDOTest
       configuration.setHeartBeatEnabled(true);
 
       reconnectingSession = (CDONet4jSession)openSession(configuration);
+
       dumpEvents(reconnectingSession);
 
       final CountDownLatch recoveryStarted = new CountDownLatch(1);
@@ -109,6 +116,9 @@ public class ReconnectingSessionTest extends AbstractCDOTest
         }
       });
 
+      RemoteMessageListener remoteMessageListener = new RemoteMessageListener();
+      reconnectingSession.getRemoteSessionManager().addListener(remoteMessageListener);
+
       CDOView viewWithLockNotifications = reconnectingSession.openView();
       viewWithLockNotifications.options().setLockNotificationEnabled(true);
 
@@ -125,6 +135,16 @@ public class ReconnectingSessionTest extends AbstractCDOTest
       resource1.getContents().add(getModel1Factory().createCategory());
       commitAndSync(transaction, view);
       assertEquals(2, resource2.getContents().size());
+
+      sendMessageToAllSessions("message1", session1);
+      remoteMessageListener.assertReceivedMessages(Arrays.asList("message1"));
+
+      durableTransaction = reconnectingSession.openTransaction();
+      durableTransaction.enableDurableLocking();
+      durableTransaction.options().setAutoReleaseLocksEnabled(false);
+      CDOResource lockRes = durableTransaction.createResource(getResourcePath("durableLockTest"));
+      durableTransaction.commit();
+      lockRes.cdoWriteLock().lock(1000);
 
       IOUtil.OUT().println();
       IOUtil.OUT().println("Deactivating acceptor...");
@@ -144,12 +164,66 @@ public class ReconnectingSessionTest extends AbstractCDOTest
       assertEquals(3, resource2.getContents().size());
 
       checkLockNotifications(resource1, resReconn);
+
+      sendMessageToAllSessions("message2", session1);
+      remoteMessageListener.assertReceivedMessages(Arrays.asList("message1", "message2"));
+
+      durableTransaction.refreshLockStates(null);
+      assertFalse(lockRes.cdoWriteLock().isLockedByOthers());
+      assertTrue(lockRes.cdoWriteLock().isLocked());
     }
     finally
-
     {
+      if (durableTransaction != null)
+      {
+        durableTransaction.disableDurableLocking(true);
+      }
+
       LifecycleUtil.deactivate(reconnectingSession);
       LifecycleUtil.deactivate(acceptor);
+    }
+  }
+
+  private void sendMessageToAllSessions(String type, CDOSession session) throws InterruptedException
+  {
+    CDORemoteSession[] remoteSessions = session.getRemoteSessionManager().getRemoteSessions();
+    for (CDORemoteSession remoteSession : remoteSessions)
+    {
+      remoteSession.sendMessage(new CDORemoteSessionMessage(type));
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class RemoteMessageListener extends CDORemoteSessionManager.EventAdapter
+  {
+    private List<String> received = new ArrayList<>();
+
+    public RemoteMessageListener()
+    {
+    }
+
+    @Override
+    protected void onMessageReceived(final CDORemoteSession remoteSession, final CDORemoteSessionMessage message)
+    {
+      received.add(message.getType());
+    }
+
+    public void assertReceivedMessages(final List<String> expected) throws InterruptedException
+    {
+      long timeout = System.currentTimeMillis() + 2000;
+      while (System.currentTimeMillis() < timeout)
+      {
+        if (expected.equals(received))
+        {
+          break;
+        }
+
+        Thread.sleep(20);
+      }
+
+      assertEquals(expected, received);
     }
   }
 

@@ -258,10 +258,34 @@ public class SessionManager extends Container<ISession> implements InternalSessi
   @Override
   public InternalSession openSession(ISessionProtocol sessionProtocol)
   {
-    int id = lastSessionID.incrementAndGet();
-    if (TRACER.isEnabled())
+    return openSession(sessionProtocol, 0);
+  }
+
+  /**
+   * @since 2.0
+   */
+  @Override
+  public InternalSession openSession(ISessionProtocol sessionProtocol, int sessionID)
+  {
+    int id;
+
+    if (sessionID == 0)
     {
-      TRACER.trace("Opening session " + id); //$NON-NLS-1$
+      id = lastSessionID.incrementAndGet();
+
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace("Opening session " + id); //$NON-NLS-1$
+      }
+    }
+    else
+    {
+      id = sessionID;
+
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace("Reopening session " + id); //$NON-NLS-1$
+      }
     }
 
     String userID = authenticateUser(sessionProtocol);

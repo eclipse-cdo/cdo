@@ -42,6 +42,8 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
 
   private String repositoryName;
 
+  private int sessionID;
+
   private String userID;
 
   private boolean passiveUpdateEnabled;
@@ -49,6 +51,8 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
   private PassiveUpdateMode passiveUpdateMode;
 
   private LockNotificationMode lockNotificationMode;
+
+  private boolean subscribed;
 
   private InternalRepository repository;
 
@@ -92,6 +96,12 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
       TRACER.format("Read repositoryName: {0}", repositoryName); //$NON-NLS-1$
     }
 
+    sessionID = in.readXInt();
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Read sessionID: {0}", sessionID); //$NON-NLS-1$
+    }
+
     userID = in.readString();
     if (TRACER.isEnabled())
     {
@@ -115,6 +125,13 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
     {
       TRACER.format("Read lockNotificationMode: {0}", lockNotificationMode); //$NON-NLS-1$
     }
+
+    subscribed = in.readBoolean();
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Read subscribed: {0}", subscribed); //$NON-NLS-1$
+    }
+
   }
 
   @Override
@@ -137,7 +154,7 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
       try
       {
         InternalSessionManager sessionManager = repository.getSessionManager();
-        session = sessionManager.openSession(protocol);
+        session = sessionManager.openSession(protocol, sessionID);
       }
       catch (NotAuthenticatedException ex)
       {
@@ -166,6 +183,7 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
       session.setPassiveUpdateEnabled(passiveUpdateEnabled);
       session.setPassiveUpdateMode(passiveUpdateMode);
       session.setLockNotificationMode(lockNotificationMode);
+      session.setSubscribed(subscribed);
 
       protocol.setInfraStructure(session);
       if (TRACER.isEnabled())

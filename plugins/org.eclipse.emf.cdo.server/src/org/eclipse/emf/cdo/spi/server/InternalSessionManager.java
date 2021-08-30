@@ -119,6 +119,12 @@ public interface InternalSessionManager extends ISessionManager, IExecutorServic
    */
   public InternalSession openSession(ISessionProtocol sessionProtocol);
 
+  /**
+   * @return Never <code>null</code>
+   * @since 4.14
+   */
+  public InternalSession openSession(ISessionProtocol protocol, int sessionID);
+
   public void sessionClosed(InternalSession session);
 
   /**

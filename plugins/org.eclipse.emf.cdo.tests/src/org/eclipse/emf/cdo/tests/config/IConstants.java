@@ -29,7 +29,7 @@ public interface IConstants
 
   public static final RepositoryConfig MEM_BRANCHES = new MEMConfig().supportingBranches(true);
 
-  public static final RepositoryConfig MEM_BRANCHES_UUIDS = new MEMConfig().idGenerationLocation(IDGenerationLocation.CLIENT);
+  public static final RepositoryConfig MEM_BRANCHES_UUIDS = new MEMConfig().supportingBranches(true).idGenerationLocation(IDGenerationLocation.CLIENT);
 
   public static final RepositoryConfig MEM_OFFLINE = new MEMOfflineConfig().idGenerationLocation(IDGenerationLocation.CLIENT);
 

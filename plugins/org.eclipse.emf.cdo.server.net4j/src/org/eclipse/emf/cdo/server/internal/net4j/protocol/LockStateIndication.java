@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2012, 2014-2017, 2019 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011, 2012, 2014-2017, 2019, 2021 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,11 +7,11 @@
  *
  * Contributors:
  *    Caspar De Groot - initial API and implementation
+ *    Maxime Porhel (Obeo) - bug 574275
  */
 package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 import org.eclipse.emf.cdo.common.model.CDOClassInfo;
@@ -93,6 +93,10 @@ public class LockStateIndication extends CDOServerReadIndication
       --depth;
 
       InternalCDORevision revision = (InternalCDORevision)view.getRevision(id);
+      if (revision == null)
+      {
+        return;
+      }
 
       CDOClassInfo classInfo = revision.getClassInfo();
       for (EStructuralFeature feature : classInfo.getAllPersistentFeatures())
@@ -129,18 +133,10 @@ public class LockStateIndication extends CDOServerReadIndication
 
   private void addLockState(CDOID id, InternalView view)
   {
-    Object key;
+    InternalLockManager lockManager = getRepository().getLockingManager();
+    Object key = lockManager.getLockKey(id, view.getBranch());
 
-    if (getRepository().isSupportingBranches())
-    {
-      key = CDOIDUtil.createIDAndBranch(id, view.getBranch());
-    }
-    else
-    {
-      key = id;
-    }
-
-    LockState<Object, IView> lockState = getRepository().getLockingManager().getLockState(key);
+    LockState<Object, IView> lockState = lockManager.getLockState(key);
     if (lockState != null)
     {
       existingLockStates.add(CDOLockUtil.createLockState(lockState));

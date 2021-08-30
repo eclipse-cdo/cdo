@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
-<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
-<listEntry value="/org.eclipse.net4j.examples/src/org/eclipse/net4j/examples/echo/server/EchoSSLServer.java"/>
-</listAttribute>
-<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
-<listEntry value="1"/>
-</listAttribute>
-<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.eclipse.net4j.examples.echo.server.EchoSSLServer"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="org.eclipse.net4j.examples"/>
-<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dorg.eclipse.net4j.tcp.ssl.passphrase=ab987c -Dorg.eclipse.net4j.tcp.ssl.trust=file:///${workspace_loc:org.eclipse.net4j.examples}/sslKey/testTrust -Dorg.eclipse.net4j.tcp.ssl.key=file:///${workspace_loc:org.eclipse.net4j.examples}/sslKey/testKeys"/>
+    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+        <listEntry value="/org.eclipse.net4j.examples/src/org/eclipse/net4j/examples/echo/server/EchoSSLServer.java"/>
+    </listAttribute>
+    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+        <listEntry value="1"/>
+    </listAttribute>
+    <booleanAttribute key="org.eclipse.jdt.launching.ATTR_ATTR_USE_ARGFILE" value="false"/>
+    <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_CLASSPATH_ONLY_JAR" value="false"/>
+    <stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-11"/>
+    <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.eclipse.net4j.examples.echo.server.EchoSSLServer"/>
+    <stringAttribute key="org.eclipse.jdt.launching.MODULE_NAME" value="org.eclipse.net4j.examples"/>
+    <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="org.eclipse.net4j.examples"/>
+    <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dorg.eclipse.net4j.tcp.ssl.passphrase=ab987c&#13;&#10;-Dorg.eclipse.net4j.tcp.ssl.trust=file:///${workspace_loc:org.eclipse.net4j.examples}/sslKey/testTrust&#13;&#10;-Dorg.eclipse.net4j.tcp.ssl.key=file:///${workspace_loc:org.eclipse.net4j.examples}/sslKey/testKeys&#13;&#10;-Ddebug.options=C:\develop\cdo-master\git\cdo\plugins\org.eclipse.net4j"/>
 </launchConfiguration>

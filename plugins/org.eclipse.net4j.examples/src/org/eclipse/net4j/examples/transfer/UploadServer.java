@@ -65,7 +65,7 @@ public class UploadServer implements UploadProtocol
       new File(FOLDER_NAME).mkdirs();
       OM.LOG.info("Upload folder: " + FOLDER_NAME); //$NON-NLS-1$
 
-      System.out.println("Press any key to shutdown"); //$NON-NLS-1$
+      System.out.println("Press Enter to shutdown"); //$NON-NLS-1$
       while (System.in.read() == -1)
       {
         Thread.sleep(200);

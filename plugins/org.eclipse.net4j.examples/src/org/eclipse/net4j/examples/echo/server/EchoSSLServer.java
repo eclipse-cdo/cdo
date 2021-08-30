@@ -48,7 +48,7 @@ public class EchoSSLServer
       IAcceptor acceptor = (IAcceptor)container.getElement("org.eclipse.net4j.acceptors", "ssl", "0.0.0.0:2036"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
       OM.LOG.info("Accepting connections: " + acceptor); //$NON-NLS-1$
 
-      System.out.println("Press any key to shutdown"); //$NON-NLS-1$
+      System.out.println("Press Enter to shutdown"); //$NON-NLS-1$
       while (IOUtil.IN().read() == -1)
       {
         Thread.sleep(200);

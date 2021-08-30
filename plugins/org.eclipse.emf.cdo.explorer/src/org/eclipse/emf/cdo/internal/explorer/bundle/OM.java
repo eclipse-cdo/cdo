@@ -22,6 +22,8 @@ import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.trace.OMTracer;
 
 import java.io.File;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 /**
  * The <em>Operations & Maintenance</em> class of this bundle.
@@ -42,6 +44,8 @@ public abstract class OM
 
   private static String stateLocation;
 
+  private static String securePath;
+
   private static CDORepositoryManagerImpl repositoryManager;
 
   private static CDOCheckoutManagerImpl checkoutManager;
@@ -49,6 +53,11 @@ public abstract class OM
   public static String getStateLocation()
   {
     return stateLocation;
+  }
+
+  public static final String getSecurePath()
+  {
+    return securePath;
   }
 
   public static void initializeManagers(File stateLocation)
@@ -128,6 +137,25 @@ public abstract class OM
 
       stateLocation = STATE_LOCATION != null ? STATE_LOCATION : BUNDLE.getStateLocation();
       initializeManagers(new File(stateLocation));
+
+      StringBuilder builder = new StringBuilder();
+      securePath = "CDO/" + stateLocation.replace('/', '\\');
+
+      // The path must only contain ASCII characters between 32 and 126.
+      for (int i = 0; i < securePath.length(); ++i)
+      {
+        char c = securePath.charAt(i);
+        if (c <= 31 || c >= 127)
+        {
+          builder.append(URLEncoder.encode(String.valueOf(c), StandardCharsets.UTF_8.name()));
+        }
+        else
+        {
+          builder.append(c);
+        }
+      }
+
+      securePath = builder.toString();
     }
 
     @Override

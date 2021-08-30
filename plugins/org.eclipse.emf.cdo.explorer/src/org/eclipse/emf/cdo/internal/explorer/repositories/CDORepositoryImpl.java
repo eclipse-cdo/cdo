@@ -815,7 +815,7 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
       ISecurePreferences securePreferences = getSecurePreferences();
       if (securePreferences != null)
       {
-        String path = getSecurePath(securePreferences);
+        String path = OM.getSecurePath() + "/" + getID().replace('/', '_');
         if (createOnDemand || securePreferences.nodeExists(path))
         {
           ISecurePreferences node = securePreferences.node(path);
@@ -827,14 +827,6 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
     {
       OM.LOG.error(ex);
     }
-  }
-
-  private String getSecurePath(ISecurePreferences securePreferences)
-  {
-    String stateLocation = OM.getStateLocation().replace('/', '\\');
-    String id = getID().replace('/', '_');
-
-    return "CDO/" + stateLocation + "/" + id;
   }
 
   private static ISecurePreferences getSecurePreferences() throws IOException

@@ -98,6 +98,8 @@ public class Bugzilla_485489_Test extends AbstractCDOTest
 
       if (!expected)
       {
+        // This sleep() call is here to work around bug 575831.
+        // It can be removed when that problem is fixed.
         sleep(100);
       }
     }

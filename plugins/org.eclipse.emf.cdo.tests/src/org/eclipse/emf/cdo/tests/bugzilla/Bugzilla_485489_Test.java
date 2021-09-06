@@ -46,7 +46,7 @@ public class Bugzilla_485489_Test extends AbstractCDOTest
     transaction.addTransactionHandler(new CDOAutoLocker());
 
     company.setName("Company2"); // Acquire write lock.
-    company.setStreet("Street2"); // Increase write lock count to 2.
+    company.setStreet("Street2"); // Increase write lock count to 2 on the server.
     assertWriteLock(true, company);
 
     transaction.commit();
@@ -70,14 +70,14 @@ public class Bugzilla_485489_Test extends AbstractCDOTest
     transaction.addTransactionHandler(new CDOAutoLocker());
 
     company.setName("Company2"); // Acquire write lock.
-    company.setStreet("Street2"); // Increase write lock count to 2.
+    company.setStreet("Street2"); // Increase write lock count to 2 on the server.
     assertWriteLock(true, company);
 
     transaction.close();
     assertWriteLock(false, company);
   }
 
-  private void assertWriteLock(boolean expected, EObject object) throws InterruptedException
+  private static void assertWriteLock(boolean expected, EObject object) throws InterruptedException
   {
     CDOObject cdoObject = CDOUtil.getCDOObject(object);
     CDOView view = cdoObject.cdoView();
@@ -86,13 +86,20 @@ public class Bugzilla_485489_Test extends AbstractCDOTest
     try
     {
       CDOObject txObject = transaction.getObject(cdoObject);
+      int timeout = expected ? 500 : 5000;
 
-      boolean actual = !txObject.cdoWriteLock().tryLock(500);
+      boolean otherCanLock = txObject.cdoWriteLock().tryLock(timeout);
+      boolean actual = !otherCanLock;
       assertEquals(expected, actual);
     }
     finally
     {
       transaction.close();
+
+      if (!expected)
+      {
+        sleep(100);
+      }
     }
   }
 }

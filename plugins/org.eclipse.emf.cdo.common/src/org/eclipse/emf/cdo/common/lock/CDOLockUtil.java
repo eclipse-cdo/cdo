@@ -146,9 +146,9 @@ public final class CDOLockUtil
   }
 
   public static CDOLockChangeInfo createLockChangeInfo(long timestamp, CDOLockOwner lockOwner, CDOBranch branch, Operation op, LockType lockType,
-      CDOLockState[] cdoLockStates)
+      CDOLockState[] newLockStates)
   {
-    return new CDOLockChangeInfoImpl(branch.getPoint(timestamp), lockOwner, cdoLockStates, op, lockType);
+    return new CDOLockChangeInfoImpl(branch.getPoint(timestamp), lockOwner, newLockStates, op, lockType);
   }
 
   public static CDOLockChangeInfo createLockChangeInfo()
@@ -157,10 +157,10 @@ public final class CDOLockUtil
   }
 
   public static CDOLockChangeInfo createLockChangeInfo(long timestamp, CDOCommonView view, CDOBranch viewedBranch, Operation op, LockType lockType,
-      CDOLockState[] cdoLockStates)
+      CDOLockState[] newLockStates)
   {
     CDOLockOwner lockOwner = createLockOwner(view);
-    return createLockChangeInfo(timestamp, lockOwner, viewedBranch, op, lockType, cdoLockStates);
+    return createLockChangeInfo(timestamp, lockOwner, viewedBranch, op, lockType, newLockStates);
   }
 
   public static LockArea createLockArea(String durableLockingID, String userID, CDOBranchPoint branchPoint, boolean readOnly, Map<CDOID, LockGrade> locks)

@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
+import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
@@ -39,6 +40,8 @@ import org.eclipse.net4j.util.concurrent.RWOLockManager.LockState;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.io.IOUtil;
+
+import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -1363,6 +1366,75 @@ public class LockingManagerTest extends AbstractLockingTest
     transaction.commit();
     assertEquals(false, writeLock.isLocked()); // Explicit lock released because of AutoReleaseLocks=true
     assertEquals(false, CDOUtil.getCDOObject(category2).cdoWriteLock().isLocked()); // Implicit locks always released
+  }
+
+  public void testAutoReleaseReadLockWithLockedByOthers() throws Exception
+  {
+    Category category1 = getModel1Factory().createCategory();
+
+    CDOSession session1 = openSession();
+    CDOTransaction transaction1 = session1.openTransaction();
+    transaction1.options().setLockNotificationEnabled(true);
+
+    CDOResource resource1 = transaction1.createResource(getResourcePath("/res1"));
+    resource1.getContents().add(category1);
+    transaction1.commit();
+
+    CDOSession session2 = openSession();
+    CDOTransaction transaction2 = session2.openTransaction();
+    Category category2 = (Category)transaction2.getResource(getResourcePath("/res1")).getContents().get(0);
+
+    readLock(category2);
+    CDOLock readLock1 = readLock(category1);
+
+    new PollingTimeOuter()
+    {
+      @Override
+      protected boolean successful()
+      {
+        return readLock1.isLockedByOthers();
+      }
+    }.assertNoTimeOut();
+
+    resource1.getContents().add(getModel1Factory().createProduct1());
+    transaction1.commit();
+    assertEquals(true, readLock1.isLockedByOthers());
+  }
+
+  public void testAutoReleaseWriteLockWithLockedByOthers() throws Exception
+  {
+    Category category1 = getModel1Factory().createCategory();
+    Product1 product1 = getModel1Factory().createProduct1();
+
+    CDOSession session1 = openSession();
+    CDOTransaction transaction1 = session1.openTransaction();
+    transaction1.options().setLockNotificationEnabled(true);
+
+    CDOResource resource1 = transaction1.createResource(getResourcePath("/res1"));
+    resource1.getContents().add(category1);
+    resource1.getContents().add(product1);
+    transaction1.commit();
+
+    CDOSession session2 = openSession();
+    InternalCDOTransaction transaction2 = (InternalCDOTransaction)session2.openTransaction();
+    Category category2 = (Category)transaction2.getResource(getResourcePath("/res1")).getContents().get(0);
+
+    writeLock(product1);
+    writeLock(category2);
+    CDOLock otherWriteLock1 = CDOUtil.getCDOObject(category1).cdoWriteLock();
+
+    new PollingTimeOuter()
+    {
+      @Override
+      protected boolean successful()
+      {
+        return otherWriteLock1.isLockedByOthers();
+      }
+    }.assertNoTimeOut();
+
+    product1.setName("NewName");
+    transaction1.commit();
+    assertEquals(true, otherWriteLock1.isLockedByOthers());
   }
 
   public void testAutoReleaseExplicitLocks() throws Exception

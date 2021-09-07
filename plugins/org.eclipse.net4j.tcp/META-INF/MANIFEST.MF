@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.net4j.tcp;singleton:=true
-Bundle-Version: 4.3.0.qualifier
+Bundle-Version: 4.3.1.qualifier
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -12,13 +12,13 @@ Bundle-ClassPath: .
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)";resolution:=optional,
  org.eclipse.net4j;bundle-version="[4.0.0,5.0.0)";visibility:=reexport
 Import-Package: org.osgi.framework;version="[1.3.0,2.0.0)";resolution:=optional
-Export-Package: org.eclipse.net4j.internal.tcp;version="4.3.0";
+Export-Package: org.eclipse.net4j.internal.tcp;version="4.3.1";
   x-friends:="org.eclipse.net4j.tests,
    org.eclipse.emf.cdo.examples,
    org.eclipse.net4j.ui",
- org.eclipse.net4j.internal.tcp.bundle;version="4.3.0";x-internal:=true,
- org.eclipse.net4j.internal.tcp.messages;version="4.3.0";x-internal:=true,
- org.eclipse.net4j.internal.tcp.ssl;version="4.3.0";x-friends:="org.eclipse.net4j.tests,org.eclipse.emf.cdo.examples",
- org.eclipse.net4j.tcp;version="4.3.0",
- org.eclipse.net4j.tcp.ssl;version="4.3.0"
+ org.eclipse.net4j.internal.tcp.bundle;version="4.3.1";x-internal:=true,
+ org.eclipse.net4j.internal.tcp.messages;version="4.3.1";x-internal:=true,
+ org.eclipse.net4j.internal.tcp.ssl;version="4.3.1";x-friends:="org.eclipse.net4j.tests,org.eclipse.emf.cdo.examples",
+ org.eclipse.net4j.tcp;version="4.3.1",
+ org.eclipse.net4j.tcp.ssl;version="4.3.1"
 Automatic-Module-Name: org.eclipse.net4j.tcp

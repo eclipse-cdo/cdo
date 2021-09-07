@@ -8,6 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Caspar De Groot - maintenance
+ *    Maxime Porhel (Obeo) - Re-throw CloseChannelException in handleRead to avoid infinite loop in SSLConnector::handleRead
  */
 package org.eclipse.net4j.internal.tcp;
 
@@ -213,6 +214,19 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
   {
     try
     {
+      handleReadRethrowClosedChannelException(selector, socketChannel);
+    }
+    catch (ClosedChannelException ex)
+    {
+      // Nothing to do here, deactivateAsync() has already been called in
+      // handleReadWithClosedChannelExceptionRethrow().
+    }
+  }
+
+  protected void handleReadRethrowClosedChannelException(ITCPSelector selector, SocketChannel socketChannel) throws ClosedChannelException
+  {
+    try
+    {
       if (inputBuffer == null)
       {
         inputBuffer = provideBuffer();
@@ -254,6 +268,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
       }
 
       deactivateAsync();
+      throw ex;
     }
     catch (Exception ex)
     {

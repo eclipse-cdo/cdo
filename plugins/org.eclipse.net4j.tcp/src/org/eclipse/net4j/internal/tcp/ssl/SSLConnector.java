@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011, 2012, 2015, 2019, 2020 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,6 +8,7 @@
  * Contributors:
  *    Teerawat Chaiyakijpichet (No Magic Asia Ltd.) - initial API and implementation
  *    Caspar De Groot (No Magic Asia Ltd.) - initial API and implementation
+ *    Maxime Porhel (Obeo) - Re-throw CloseChannelException in handleRead to avoid infinite loop in SSLConnector::handleRead
  */
 package org.eclipse.net4j.internal.tcp.ssl;
 
@@ -18,6 +19,7 @@ import org.eclipse.net4j.tcp.ssl.SSLUtil;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
+import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
 
@@ -67,13 +69,35 @@ public class SSLConnector extends TCPConnector
   public void handleRead(ITCPSelector selector, SocketChannel socketChannel)
   {
     waitForHandShakeFinish();
-    super.handleRead(selector, socketChannel);
+
+    try
+    {
+      handleReadRethrowClosedChannelException(selector, socketChannel);
+    }
+    catch (ClosedChannelException ex)
+    {
+      // deactivateAsync() has already been called in handleReadWithClosedChannelExceptionRethrow()
+      // the connector will be disabled asynchronously, do not pursue nor enter the loop below.
+      return;
+    }
+
     checkRehandShake(socketChannel);
 
     // Handle the left data from reading multiple data at once time.
     while (sslEngineManager.getPacketRecvBuf().position() > 0)
     {
-      super.handleRead(selector, socketChannel);
+      try
+      {
+        handleReadRethrowClosedChannelException(selector, socketChannel);
+      }
+      catch (ClosedChannelException ex)
+      {
+        // deactivateAsync() has already been called in handleReadWithClosedChannelExceptionRethrow()
+        // the connector will be disabled asynchronously, break the loop to avoid infinite iteration as the condition on
+        // the while loop will continue to be true.
+        return;
+      }
+
       checkRehandShake(socketChannel);
     }
   }
@@ -100,6 +124,7 @@ public class SSLConnector extends TCPConnector
       // Set the buffer provider of the config instance in order to replace
       // BufferFactory instance with SSLBufferFactory instance.
       getConfig().setBufferProvider(new SSLBufferFactory(sslEngineManager));
+
     }
     catch (Exception ex)
     {

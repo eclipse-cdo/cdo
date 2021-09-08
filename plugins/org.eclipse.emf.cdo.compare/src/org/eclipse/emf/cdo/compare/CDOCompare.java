@@ -525,8 +525,11 @@ public class CDOCompare
   }
 
   /**
+   * A {@link IDiffEngine diff engine} that {@link #createFeatureFilter() creates} and uses CDO-specific {@link FeatureFilter feature filters}.
+   *
    * @author Eike Stepper
    * @since 4.5
+   * @see CDOFeatureFilter
    */
   public static class CDODiffEngine extends DefaultDiffEngine
   {
@@ -547,6 +550,9 @@ public class CDOCompare
   }
 
   /**
+   * A CDO-specific {@link FeatureFilter feature filter} that uses {@link EMFUtil#isPersistent(EStructuralFeature) EMFUtil.isPersistent()}
+   * to determine whether a {@link EStructuralFeature feature} is {@link #isTransient(EStructuralFeature) transient}, or not.
+   *
    * @author Eike Stepper
    * @since 4.5
    */

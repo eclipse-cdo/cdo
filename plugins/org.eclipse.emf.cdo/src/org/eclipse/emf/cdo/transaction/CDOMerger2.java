@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.transaction;
 
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSet;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -18,6 +19,10 @@ import org.eclipse.emf.cdo.view.CDOView;
 import java.util.Set;
 
 /**
+ * Merges the changes between a local {@link CDOTransaction transaction} and a remote {@link CDOView view}
+ * into the local transaction. Only the changes of a set of affected {@link CDOObject objects},
+ * specified by the set of their {@link CDOID ids}, is considered.
+ *
  * @author Eike Stepper
  * @since 4.5
  */

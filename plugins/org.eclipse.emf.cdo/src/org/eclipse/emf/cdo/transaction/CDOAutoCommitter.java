@@ -17,6 +17,9 @@ import org.eclipse.emf.cdo.util.ConcurrentAccessException;
 import org.eclipse.emf.common.notify.Notification;
 
 /**
+ * A {@link CDOPostEventTransactionHandler transaction handler} that automatically {@link CDOTransaction#commit() commits} the
+ * {@link CDOTransaction transaction} after an {@link CDOObject object} was modified.
+ *
  * @author Eike Stepper
  * @since 4.8
  */

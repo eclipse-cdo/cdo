@@ -13,6 +13,17 @@ package org.eclipse.emf.cdo.view;
 import org.eclipse.emf.ecore.EObject;
 
 /**
+ * A disjunct {@link EObject} subtree of a model repository with the following additional characteristics:
+ * <ul>
+ * <li> All {@link #getRoot() root} / subtree element relations of a unit are physically stored and managed in the model repository.
+ * <li> All elements of a unit are loaded very quickly in a single server request when the unit is {@link CDOUnitManager#openUnit(EObject, boolean, org.eclipse.core.runtime.IProgressMonitor) opened}.
+ * <li> All elements of an open unit stay loaded until the unit is {@link #close() closed}.
+ * <li> While a unit is open all its elements receive change notifications from the server without the need for a
+ *      {@link CDOView.Options#addChangeSubscriptionPolicy(CDOAdapterPolicy) change subscription policy}.
+ * <li> Units can not overlap, that is, their element subtrees are disjunct.
+ * <li> Units are locally managed by the {@link #getManager() unit manager} of the {@link CDOUnitManager#getView() view}.
+ * </ul>
+ *
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  * @author Eike Stepper

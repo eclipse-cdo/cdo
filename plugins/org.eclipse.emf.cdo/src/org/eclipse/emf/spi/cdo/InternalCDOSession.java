@@ -343,6 +343,8 @@ public interface InternalCDOSession
   public MergeData getMergeData(CDOBranchPoint target, CDOBranchPoint source, CDOBranchPoint targetBase, CDOBranchPoint sourceBase, boolean computeChangeSets);
 
   /**
+   * A token that is maintained during local commits of transactions.
+   *
    * @author Eike Stepper
    * @since 4.5
    */

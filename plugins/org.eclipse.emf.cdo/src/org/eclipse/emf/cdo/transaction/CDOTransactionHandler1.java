@@ -115,6 +115,9 @@ public interface CDOTransactionHandler1 extends CDOTransactionHandlerBase
   public void modifyingObject(CDOTransaction transaction, CDOObject object, CDOFeatureDelta featureDelta);
 
   /**
+   * A call-back interface that is called by a {@link CDOTransaction transaction} before {@link CDOObject objects} are
+   * attached, modified, undone or detached.
+   *
    * @author Eike Stepper
    * @since 4.6
    */

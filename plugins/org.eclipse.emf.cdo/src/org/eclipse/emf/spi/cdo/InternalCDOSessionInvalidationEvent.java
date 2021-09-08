@@ -14,6 +14,8 @@ import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
 
 /**
+ * A {@link CDOSessionInvalidationEvent session invalidation event} with {@link #getSecurityImpact() security impact information}.
+ *
  * @author Eike Stepper
  * @since 4.3
  * @noextend This interface is not intended to be extended by clients.

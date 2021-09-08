@@ -40,6 +40,8 @@ public interface CDORegistrationHandler
   public void objectCollected(CDOView view, CDOID id);
 
   /**
+   * A concrete default implementation of {@link CDORegistrationHandler}.
+   *
    * @author Eike Stepper
    */
   public static class Default implements CDORegistrationHandler

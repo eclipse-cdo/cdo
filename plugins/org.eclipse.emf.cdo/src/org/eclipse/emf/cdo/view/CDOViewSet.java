@@ -62,6 +62,8 @@ public interface CDOViewSet extends Notifier
   public void setDefaultClearAdapterPolicy(CDOAdapterPolicy defaultClearAdapterPolicy);
 
   /**
+   * An unchecked {@link CDOException exception} being thrown from {@link CDOViewSet view sets}.
+   *
    * @author Eike Stepper
    * @since 4.12
    */

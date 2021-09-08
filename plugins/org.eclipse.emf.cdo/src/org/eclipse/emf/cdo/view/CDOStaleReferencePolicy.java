@@ -87,6 +87,9 @@ public interface CDOStaleReferencePolicy
   public Object processStaleReference(EObject source, EStructuralFeature feature, int index, CDOID target);
 
   /**
+   * A {@link CDOStaleReferencePolicy stale reference policy} that provides {@link Proxy#newProxyInstance Java dynamic proxies}
+   * when stale references are aceessed.
+   *
    * @author Eike Stepper
    * @since 4.4
    */
@@ -268,6 +271,7 @@ public interface CDOStaleReferencePolicy
         {
           instanceClass = InternalEObject.class;
         }
+
         interfaces = new Class<?>[] { InternalEObject.class, CDOStaleObject.class };
       }
 
@@ -302,6 +306,9 @@ public interface CDOStaleReferencePolicy
     }
 
     /**
+     * A {@link DynamicProxy dynamic proxy stale reference policy} with advanced {@link #getType(EObject, EStructuralFeature, int, CDOID) type}
+     * computation and caching.
+     *
      * @author Eike Stepper
      */
     public static class Enhanced extends DynamicProxy implements CDOObjectHandler

@@ -35,6 +35,9 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
+ * An {@link Adapter adapter} for {@link EObject EObjects} that is able to
+ * impose an alternative contents tree structure.
+ *
  * @author Eike Stepper
  * @since 4.4
  */
@@ -227,6 +230,8 @@ public class CDOElement extends AdapterImpl implements IAdaptable
   }
 
   /**
+   * Provides the consumer with the {@link CDOState states} of objects such as {@link CDOObject CDOObjects}.
+   *
    * @author Eike Stepper
    * @since 4.4
    */

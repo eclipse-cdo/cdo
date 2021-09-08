@@ -989,6 +989,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   }
 
   /**
+   * If the meaning of this type isn't clear, there really should be more of a description here...
+   *
    * @author Eike Stepper
    * @since 4.6
    */

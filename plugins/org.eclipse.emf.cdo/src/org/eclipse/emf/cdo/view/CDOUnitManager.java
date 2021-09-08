@@ -19,6 +19,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
+ * Locally manages the open {@link CDOUnit units} of a {@link #getView() view}.
+ *
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  * @author Eike Stepper
@@ -43,6 +45,11 @@ public interface CDOUnitManager extends IContainer<CDOUnit>
   public void setAutoResourceUnitsEnabled(boolean enabled);
 
   /**
+   * An unchecked {@link CDOException} being thrown from
+   * {@link CDOUnitManager#createUnit(EObject, boolean, IProgressMonitor) CDOUnitManager.createUnit()}
+   * to indicate that the given root object already is the {@link CDOUnit#getRoot() root}
+   * of an existing {@link CDOUnit unit}.
+   *
    * @author Eike Stepper
    */
   public static final class UnitExistsException extends CDOException
@@ -51,6 +58,10 @@ public interface CDOUnitManager extends IContainer<CDOUnit>
   }
 
   /**
+   * An unchecked {@link CDOException} being thrown from
+   * {@link CDOUnitManager#openUnit(EObject, boolean, IProgressMonitor) CDOUnitManager.openUnit()}
+   * to indicate that no {@link CDOUnit unit} exists for the given root object.
+   *
    * @author Eike Stepper
    */
   public static final class UnitNotFoundException extends CDOException

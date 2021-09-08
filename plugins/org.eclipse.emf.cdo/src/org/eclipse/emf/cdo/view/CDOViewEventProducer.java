@@ -17,12 +17,18 @@ import org.eclipse.emf.cdo.transaction.CDOCommitContext;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransactionHandler1;
 import org.eclipse.emf.cdo.transaction.CDOTransactionHandler2;
+import org.eclipse.emf.cdo.transaction.CDOTransactionHandlerBase;
 
 import org.eclipse.net4j.util.container.SelfAttachingContainerListener;
 import org.eclipse.net4j.util.event.Event;
+import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 
 /**
+ * Produces {@link IEvent events} for calls to various {@link CDOObjectHandler view object handler}
+ * and {@link CDOTransactionHandlerBase transaction handler} methods and delivers these events to a
+ * {@link org.eclipse.net4j.util.container.SelfAttachingContainerListener.Delegating delegate} {@link IListener listener}.
+ *
  * @author Eike Stepper
  * @since 4.5
  */
@@ -163,6 +169,10 @@ public class CDOViewEventProducer extends SelfAttachingContainerListener.Delegat
   }
 
   /**
+   * An {@link CDOViewEvent event} fired from a {@link CDOViewEventProducer view event producer} when
+   * {@link CDOObjectHandler#objectStateChanged(CDOView, CDOObject, CDOState, CDOState) CDOObjectHandler.objectStateChanged()}
+   * was called.
+   *
    * @author Eike Stepper
    */
   public static final class CDOObjectStateChangedEvent extends Event implements CDOViewEvent
@@ -212,6 +222,10 @@ public class CDOViewEventProducer extends SelfAttachingContainerListener.Delegat
   }
 
   /**
+   * An {@link CDOViewEvent event} fired from a {@link CDOViewEventProducer view event producer} when
+   * {@link CDOTransactionHandler1#attachingObject(CDOTransaction, CDOObject) CDOTransactionHandler1.attachingObject()}
+   * was called.
+   *
    * @author Eike Stepper
    */
   public static final class CDOAttachingObjectEvent extends Event implements CDOViewEvent
@@ -245,6 +259,10 @@ public class CDOViewEventProducer extends SelfAttachingContainerListener.Delegat
   }
 
   /**
+   * An {@link CDOViewEvent event} fired from a {@link CDOViewEventProducer view event producer} when
+   * {@link CDOTransactionHandler1#detachingObject(CDOTransaction, CDOObject) CDOTransactionHandler1.detachingObject()}
+   * was called.
+   *
    * @author Eike Stepper
    */
   public static final class CDODetachingObjectEvent extends Event implements CDOViewEvent
@@ -278,6 +296,10 @@ public class CDOViewEventProducer extends SelfAttachingContainerListener.Delegat
   }
 
   /**
+   * An {@link CDOViewEvent event} fired from a {@link CDOViewEventProducer view event producer} when
+   * {@link CDOTransactionHandler1#modifyingObject(CDOTransaction, CDOObject, CDOFeatureDelta) CDOTransactionHandler1.modifyingObject()}
+   * was called.
+   *
    * @author Eike Stepper
    */
   public static final class CDOModifyingObjectEvent extends Event implements CDOViewEvent
@@ -319,6 +341,10 @@ public class CDOViewEventProducer extends SelfAttachingContainerListener.Delegat
   }
 
   /**
+   * An {@link CDOViewEvent event} fired from a {@link CDOViewEventProducer view event producer} when
+   * {@link CDOTransactionHandler2#committingTransaction(CDOTransaction, CDOCommitContext) CDOTransactionHandler2.committingTransaction()}
+   * was called.
+   *
    * @author Eike Stepper
    */
   public static final class CDOCommittingTransactionEvent extends Event implements CDOViewEvent
@@ -352,6 +378,10 @@ public class CDOViewEventProducer extends SelfAttachingContainerListener.Delegat
   }
 
   /**
+   * An {@link CDOViewEvent event} fired from a {@link CDOViewEventProducer view event producer} when
+   * {@link CDOTransactionHandler2#committedTransaction(CDOTransaction, CDOCommitContext) CDOTransactionHandler2.committedTransaction()}
+   * was called.
+   *
    * @author Eike Stepper
    */
   public static final class CDOCommittedTransactionEvent extends Event implements CDOViewEvent
@@ -385,6 +415,10 @@ public class CDOViewEventProducer extends SelfAttachingContainerListener.Delegat
   }
 
   /**
+   * An {@link CDOViewEvent event} fired from a {@link CDOViewEventProducer view event producer} when
+   * {@link CDOTransactionHandler2#rolledBackTransaction(CDOTransaction) CDOTransactionHandler2.rolledBackTransaction()}
+   * was called.
+   *
    * @author Eike Stepper
    */
   public static final class CDORolledBackTransactionEvent extends Event implements CDOViewEvent

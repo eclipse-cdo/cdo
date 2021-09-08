@@ -10,11 +10,16 @@
  */
 package org.eclipse.emf.cdo.view;
 
+import org.eclipse.emf.cdo.util.CDOUtil;
+
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
 /**
+ * Can be contributed through a {@link CDOViewConfigurator.Factory factory} and {@link CDOUtil#configureView(CDOView) configures} {@link CDOView views}.
+ *
  * @author Eike Stepper
  * @since 4.14
+ * @see CDOUtil#configureView(CDOView)
  */
 @FunctionalInterface
 public interface CDOViewConfigurator
@@ -22,6 +27,8 @@ public interface CDOViewConfigurator
   public void configureView(CDOView view);
 
   /**
+   * A factory for {@link CDOViewConfigurator view configurators}.
+   *
    * @author Eike Stepper
    */
   public static abstract class Factory extends org.eclipse.net4j.util.factory.Factory

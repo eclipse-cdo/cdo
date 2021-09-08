@@ -5,7 +5,7 @@
 
 <title>CDOUnit (CDO Model Repository Documentation)</title>
 <meta http-equiv="Content-Type" content="">
-<meta name="dc.created" content="2021-08-27">
+<meta name="dc.created" content="2021-09-08">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
@@ -125,6 +125,16 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <hr>
 <pre>public interface <span class="typeNameLabel">CDOUnit</span></pre>
+<div class="block">A disjunct <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>EObject</code></a> subtree of a model repository with the following additional characteristics:
+ <ul>
+ <li> All <a href="#getRoot()"><code>root</code></a> / subtree element relations of a unit are physically stored and managed in the model repository.
+ <li> All elements of a unit are loaded very quickly in a single server request when the unit is <a href="CDOUnitManager.html#openUnit(org.eclipse.emf.ecore.EObject,boolean,org.eclipse.core.runtime.IProgressMonitor)"><code>opened</code></a>.
+ <li> All elements of an open unit stay loaded until the unit is <a href="#close()"><code>closed</code></a>.
+ <li> While a unit is open all its elements receive change notifications from the server without the need for a
+      <a href="CDOView.Options.html#addChangeSubscriptionPolicy(org.eclipse.emf.cdo.view.CDOAdapterPolicy)"><code>change subscription policy</code></a>.
+ <li> Units can not overlap, that is, their element subtrees are disjunct.
+ <li> Units are locally managed by the <a href="#getManager()"><code>unit manager</code></a> of the <a href="CDOUnitManager.html#getView()"><code>view</code></a>.
+ </ul></div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.5</dd>

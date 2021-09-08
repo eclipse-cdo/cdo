@@ -5,7 +5,7 @@
 
 <title>CDOTransaction.CommitResult (CDO Model Repository Documentation)</title>
 <meta http-equiv="Content-Type" content="">
-<meta name="dc.created" content="2021-08-27">
+<meta name="dc.created" content="2021-09-08">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
@@ -138,11 +138,17 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <hr>
 <pre>public static final class <span class="typeNameLabel">CDOTransaction.CommitResult&lt;T&gt;</span>
 extends java.lang.Object</pre>
+<div class="block">A value type that combines the result of a <i>persistable computation</i> and the <a href="../common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>commit info</code></a>
+ of the final <a href="CDOUserTransaction.html#commit()"><code>transaction commit</code></a>. A persistable computation is a <code>Callable</code> that
+ operates on and possibly modifies the <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a> of a <a href="CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a>.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.8</dd>
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>Eike Stepper</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="CDOTransaction.html#commit(java.util.concurrent.Callable,int,org.eclipse.core.runtime.IProgressMonitor)"><code>CDOTransaction.commit(Callable, int, IProgressMonitor)</code></a>, 
+<a href="CDOTransaction.html#commit(java.util.concurrent.Callable,java.util.function.Predicate,org.eclipse.core.runtime.IProgressMonitor)"><code>CDOTransaction.commit(Callable, java.util.function.Predicate, IProgressMonitor)</code></a></dd>
 </dl>
 </li>
 </ul>

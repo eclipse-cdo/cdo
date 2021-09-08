@@ -5,7 +5,7 @@
 
 <title>InternalSessionManager (CDO Model Repository Documentation)</title>
 <meta http-equiv="Content-Type" content="">
-<meta name="dc.created" content="2021-08-27">
+<meta name="dc.created" content="2021-09-08">
 <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../../script.js"></script>
@@ -28,7 +28,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":38,"i8":6,"i9":6,"i10":6,"i11":38,"i12":6,"i13":6,"i14":38,"i15":38,"i16":6,"i17":6,"i18":6,"i19":38,"i20":6,"i21":6,"i22":6,"i23":6,"i24":6,"i25":6,"i26":6,"i27":38};
+var data = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":38,"i8":6,"i9":6,"i10":6,"i11":6,"i12":38,"i13":6,"i14":6,"i15":38,"i16":38,"i17":6,"i18":6,"i19":6,"i20":38,"i21":6,"i22":6,"i23":6,"i24":6,"i25":6,"i26":6,"i27":6,"i28":38};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -246,6 +246,12 @@ extends <a href="../../server/ISessionManager.html" title="interface in org.ecli
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
+<td class="colFirst"><code><a href="InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#openSession(org.eclipse.emf.cdo.spi.server.ISessionProtocol,int)">openSession</a></span>&#8203;(<a href="ISessionProtocol.html" title="interface in org.eclipse.emf.cdo.spi.server">ISessionProtocol</a>&nbsp;protocol,
+           int&nbsp;sessionID)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#resetUserCredentials(org.eclipse.emf.cdo.spi.server.IAuthenticationProtocol,java.lang.String)">resetUserCredentials</a></span>&#8203;(<a href="IAuthenticationProtocol.html" title="interface in org.eclipse.emf.cdo.spi.server">IAuthenticationProtocol</a>&nbsp;sessionProtocol,
                     java.lang.String&nbsp;userID)</code></th>
@@ -254,7 +260,7 @@ extends <a href="../../server/ISessionManager.html" title="interface in org.ecli
  processes the client response to reset the specified <code>userID</code>'s credentials.</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sendBranchNotification(org.eclipse.emf.cdo.spi.server.InternalSession,org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch)">sendBranchNotification</a></span>&#8203;(<a href="InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
                       <a href="../common/branch/InternalCDOBranch.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranch</a>&nbsp;branch)</code></th>
@@ -264,19 +270,19 @@ extends <a href="../../server/ISessionManager.html" title="interface in org.ecli
 </div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sendBranchNotification(org.eclipse.emf.cdo.spi.server.InternalSession,org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch,org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind)">sendBranchNotification</a></span>&#8203;(<a href="InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
                       <a href="../common/branch/InternalCDOBranch.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranch</a>&nbsp;branch,
                       <a href="../../common/branch/CDOBranchChangedEvent.ChangeKind.html" title="enum in org.eclipse.emf.cdo.common.branch">CDOBranchChangedEvent.ChangeKind</a>&nbsp;changeKind)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sendCommitNotification(org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo)">sendCommitNotification</a></span>&#8203;(<a href="../../common/protocol/CDOProtocol.CommitNotificationInfo.html" title="class in org.eclipse.emf.cdo.common.protocol">CDOProtocol.CommitNotificationInfo</a>&nbsp;info)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sendCommitNotification(org.eclipse.emf.cdo.spi.server.InternalSession,org.eclipse.emf.cdo.common.commit.CDOCommitInfo)">sendCommitNotification</a></span>&#8203;(<a href="InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
                       <a href="../../common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;commitInfo)</code></th>
@@ -286,7 +292,7 @@ extends <a href="../../server/ISessionManager.html" title="interface in org.ecli
 </div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sendCommitNotification(org.eclipse.emf.cdo.spi.server.InternalSession,org.eclipse.emf.cdo.common.commit.CDOCommitInfo,boolean)">sendCommitNotification</a></span>&#8203;(<a href="InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
                       <a href="../../common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;commitInfo,
@@ -297,26 +303,26 @@ extends <a href="../../server/ISessionManager.html" title="interface in org.ecli
 </div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sendLockNotification(org.eclipse.emf.cdo.spi.server.InternalSession,org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo)">sendLockNotification</a></span>&#8203;(<a href="InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
                     <a href="../../common/lock/CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a>&nbsp;lockChangeInfo)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code>java.util.List&lt;java.lang.Integer&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sendRemoteMessageNotification(org.eclipse.emf.cdo.spi.server.InternalSession,org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage,int%5B%5D)">sendRemoteMessageNotification</a></span>&#8203;(<a href="InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
                              <a href="../../session/remote/CDORemoteSessionMessage.html" title="class in org.eclipse.emf.cdo.session.remote">CDORemoteSessionMessage</a>&nbsp;message,
                              int[]&nbsp;recipients)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sendRemoteSessionNotification(org.eclipse.emf.cdo.spi.server.InternalSession,byte)">sendRemoteSessionNotification</a></span>&#8203;(<a href="InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
                              byte&nbsp;opcode)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i19" class="rowColor">
+<tr id="i20" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sendRepositoryStateNotification(org.eclipse.emf.cdo.common.CDOCommonRepository.State,org.eclipse.emf.cdo.common.CDOCommonRepository.State)">sendRepositoryStateNotification</a></span>&#8203;(<a href="../../common/CDOCommonRepository.State.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.State</a>&nbsp;oldState,
                                <a href="../../common/CDOCommonRepository.State.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.State</a>&nbsp;newState)</code></th>
@@ -328,20 +334,20 @@ extends <a href="../../server/ISessionManager.html" title="interface in org.ecli
 </div>
 </td>
 </tr>
-<tr id="i20" class="altColor">
+<tr id="i21" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sendRepositoryStateNotification(org.eclipse.emf.cdo.common.CDOCommonRepository.State,org.eclipse.emf.cdo.common.CDOCommonRepository.State,org.eclipse.emf.cdo.common.id.CDOID)">sendRepositoryStateNotification</a></span>&#8203;(<a href="../../common/CDOCommonRepository.State.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.State</a>&nbsp;oldState,
                                <a href="../../common/CDOCommonRepository.State.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.State</a>&nbsp;newState,
                                <a href="../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;rootResourceID)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i21" class="rowColor">
+<tr id="i22" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sendRepositoryTypeNotification(org.eclipse.emf.cdo.common.CDOCommonRepository.Type,org.eclipse.emf.cdo.common.CDOCommonRepository.Type)">sendRepositoryTypeNotification</a></span>&#8203;(<a href="../../common/CDOCommonRepository.Type.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.Type</a>&nbsp;oldType,
                               <a href="../../common/CDOCommonRepository.Type.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.Type</a>&nbsp;newType)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i22" class="altColor">
+<tr id="i23" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sendTagNotification(org.eclipse.emf.cdo.spi.server.InternalSession,int,java.lang.String,java.lang.String,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">sendTagNotification</a></span>&#8203;(<a href="InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
                    int&nbsp;modCount,
@@ -350,27 +356,27 @@ extends <a href="../../server/ISessionManager.html" title="interface in org.ecli
                    <a href="../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i23" class="rowColor">
+<tr id="i24" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sessionClosed(org.eclipse.emf.cdo.spi.server.InternalSession)">sessionClosed</a></span>&#8203;(<a href="InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;session)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i24" class="altColor">
+<tr id="i25" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAuthenticationServer(org.eclipse.net4j.util.security.DiffieHellman.Server)">setAuthenticationServer</a></span>&#8203;(org.eclipse.net4j.util.security.DiffieHellman.Server&nbsp;authenticationServer)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i25" class="rowColor">
+<tr id="i26" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPermissionManager(org.eclipse.emf.cdo.server.IPermissionManager)">setPermissionManager</a></span>&#8203;(<a href="../../server/IPermissionManager.html" title="interface in org.eclipse.emf.cdo.server">IPermissionManager</a>&nbsp;permissionManager)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i26" class="altColor">
+<tr id="i27" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRepository(org.eclipse.emf.cdo.spi.server.InternalRepository)">setRepository</a></span>&#8203;(<a href="InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i27" class="rowColor">
+<tr id="i28" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setUserManager(org.eclipse.net4j.util.security.IUserManager)">setUserManager</a></span>&#8203;(org.eclipse.net4j.util.security.IUserManager&nbsp;userManager)</code></th>
 <td class="colLast">
@@ -618,6 +624,22 @@ void&nbsp;setUserManager&#8203;(org.eclipse.net4j.util.security.IUserManager&nbs
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>Never <code>null</code></dd>
+</dl>
+</li>
+</ul>
+<a id="openSession(org.eclipse.emf.cdo.spi.server.ISessionProtocol,int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>openSession</h4>
+<pre class="methodSignature"><a href="InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;openSession&#8203;(<a href="ISessionProtocol.html" title="interface in org.eclipse.emf.cdo.spi.server">ISessionProtocol</a>&nbsp;protocol,
+                            int&nbsp;sessionID)</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Never <code>null</code></dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.14</dd>
 </dl>
 </li>
 </ul>

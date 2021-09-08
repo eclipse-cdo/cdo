@@ -5,7 +5,7 @@
 
 <title>CDOViewCommitInfoListener (CDO Model Repository Documentation)</title>
 <meta http-equiv="Content-Type" content="">
-<meta name="dc.created" content="2021-08-27">
+<meta name="dc.created" content="2021-09-08">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
@@ -130,6 +130,15 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <hr>
 <pre>public interface <span class="typeNameLabel">CDOViewCommitInfoListener</span>
 extends <a href="../common/commit/CDOCommitInfoHandler.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoHandler</a>, org.eclipse.net4j.util.event.IListener</pre>
+<div class="block">A <code>listener</code> that, when added to a <a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a>, <a href="#notifyCommitInfo(org.eclipse.emf.cdo.common.commit.CDOCommitInfo)"><code>notifies</code></a>
+ about <a href="../common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>commits</code></a> to the view's <a href="../common/branch/CDOBranchPoint.html#getBranch()"><code>branch</code></a>.
+ <p>
+ This is an alternative approach to listening for <a href="CDOViewInvalidationEvent.html" title="interface in org.eclipse.emf.cdo.view"><code>view invalidation events</code></a>,
+ which impose a few usage challenges:
+ <ol>
+ <li> They're fired while the view is holding the view lock, which can lead to deadlock in a listener.
+ <li> They report only changes about objects that are actually loaded in the view, not all objects in the original commit.
+ </ol></div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.12</dd>

@@ -5,7 +5,7 @@
 
 <title>Uses of Package org.eclipse.emf.cdo.view (CDO Model Repository Documentation)</title>
 <meta http-equiv="Content-Type" content="">
-<meta name="dc.created" content="2021-08-27">
+<meta name="dc.created" content="2021-09-08">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
@@ -371,7 +371,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><a href="class-use/CDOViewProvider.CDOViewProvider2.html#org.eclipse.emf.cdo.net4j">CDOViewProvider.CDOViewProvider2</a></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">A <a href="CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view"><code>view provider</code></a> with advanced <a href="CDOViewProvider.CDOViewProvider2.html#getViewURI(org.eclipse.emf.cdo.view.CDOView)"><code>view URI</code></a>
+ and <a href="CDOViewProvider.CDOViewProvider2.html#getPath(org.eclipse.emf.common.util.URI)"><code>path</code></a> information methods.</div>
+</td>
 </tr>
 </tbody>
 </table>
@@ -568,7 +571,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><a href="class-use/CDOUnitManager.html#org.eclipse.emf.cdo.transaction">CDOUnitManager</a></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Locally manages the open <a href="CDOUnit.html" title="interface in org.eclipse.emf.cdo.view"><code>units</code></a> of a <a href="CDOUnitManager.html#getView()"><code>view</code></a>.</div>
+</td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><a href="class-use/CDOView.html#org.eclipse.emf.cdo.transaction">CDOView</a></th>
@@ -816,23 +821,41 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><a href="class-use/CDOStaleReferencePolicy.DynamicProxy.html#org.eclipse.emf.cdo.view">CDOStaleReferencePolicy.DynamicProxy</a></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">A <a href="CDOStaleReferencePolicy.html" title="interface in org.eclipse.emf.cdo.view"><code>stale reference policy</code></a> that provides <code>Java dynamic proxies</code>
+ when stale references are aceessed.</div>
+</td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><a href="class-use/CDOUnit.html#org.eclipse.emf.cdo.view">CDOUnit</a></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">A disjunct <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>EObject</code></a> subtree of a model repository with the following additional characteristics:
+ 
+  All <a href="CDOUnit.html#getRoot()"><code>root</code></a> / subtree element relations of a unit are physically stored and managed in the model repository.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><a href="class-use/CDOUnitManager.html#org.eclipse.emf.cdo.view">CDOUnitManager</a></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Locally manages the open <a href="CDOUnit.html" title="interface in org.eclipse.emf.cdo.view"><code>units</code></a> of a <a href="CDOUnitManager.html#getView()"><code>view</code></a>.</div>
+</td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><a href="class-use/CDOUnitManager.UnitExistsException.html#org.eclipse.emf.cdo.view">CDOUnitManager.UnitExistsException</a></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">An unchecked <a href="../common/util/CDOException.html" title="class in org.eclipse.emf.cdo.common.util"><code>CDOException</code></a> being thrown from
+ <a href="CDOUnitManager.html#createUnit(org.eclipse.emf.ecore.EObject,boolean,org.eclipse.core.runtime.IProgressMonitor)"><code>CDOUnitManager.createUnit()</code></a>
+ to indicate that the given root object already is the <a href="CDOUnit.html#getRoot()"><code>root</code></a>
+ of an existing <a href="CDOUnit.html" title="interface in org.eclipse.emf.cdo.view"><code>unit</code></a>.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><a href="class-use/CDOUnitManager.UnitNotFoundException.html#org.eclipse.emf.cdo.view">CDOUnitManager.UnitNotFoundException</a></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">An unchecked <a href="../common/util/CDOException.html" title="class in org.eclipse.emf.cdo.common.util"><code>CDOException</code></a> being thrown from
+ <a href="CDOUnitManager.html#openUnit(org.eclipse.emf.ecore.EObject,boolean,org.eclipse.core.runtime.IProgressMonitor)"><code>CDOUnitManager.openUnit()</code></a>
+ to indicate that no <a href="CDOUnit.html" title="interface in org.eclipse.emf.cdo.view"><code>unit</code></a> exists for the given root object.</div>
+</td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><a href="class-use/CDOView.html#org.eclipse.emf.cdo.view">CDOView</a></th>
@@ -856,7 +879,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><a href="class-use/CDOViewConfigurator.html#org.eclipse.emf.cdo.view">CDOViewConfigurator</a></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Can be contributed through a <a href="CDOViewConfigurator.Factory.html" title="class in org.eclipse.emf.cdo.view"><code>factory</code></a> and <a href="../util/CDOUtil.html#configureView(org.eclipse.emf.cdo.view.CDOView)"><code>configures</code></a> <a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a>.</div>
+</td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><a href="class-use/CDOViewEvent.html#org.eclipse.emf.cdo.view">CDOViewEvent</a></th>
@@ -878,7 +903,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><a href="class-use/CDOViewProvider.CDOViewProvider2.html#org.eclipse.emf.cdo.view">CDOViewProvider.CDOViewProvider2</a></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">A <a href="CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view"><code>view provider</code></a> with advanced <a href="CDOViewProvider.CDOViewProvider2.html#getViewURI(org.eclipse.emf.cdo.view.CDOView)"><code>view URI</code></a>
+ and <a href="CDOViewProvider.CDOViewProvider2.html#getPath(org.eclipse.emf.common.util.URI)"><code>path</code></a> information methods.</div>
+</td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><a href="class-use/CDOViewProviderRegistry.html#org.eclipse.emf.cdo.view">CDOViewProviderRegistry</a></th>

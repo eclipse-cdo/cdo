@@ -5,7 +5,7 @@
 
 <title>All Classes (CDO Model Repository Documentation)</title>
 <meta http-equiv="Content-Type" content="">
-<meta name="dc.created" content="2021-08-27">
+<meta name="dc.created" content="2021-09-08">
 <link rel="stylesheet" type="text/css" href="stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="script.js"></script>
@@ -510,7 +510,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tr id="i65" class="rowColor">
 <td class="colFirst"><a href="org/eclipse/emf/cdo/transaction/CDOAutoCommitter.html" title="class in org.eclipse.emf.cdo.transaction">CDOAutoCommitter</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<th class="colLast" scope="row">
+<div class="block">A <a href="org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.html" title="class in org.eclipse.emf.cdo.transaction"><code>transaction handler</code></a> that automatically <a href="org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit()"><code>commits</code></a> the
+ <a href="org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> after an <a href="org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>object</code></a> was modified.</div>
+</th>
 </tr>
 <tr id="i66" class="altColor">
 <td class="colFirst"><a href="org/eclipse/emf/cdo/transaction/CDOAutoLocker.html" title="class in org.eclipse.emf.cdo.transaction">CDOAutoLocker</a></td>
@@ -1059,11 +1062,16 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tr id="i161" class="rowColor">
 <td class="colFirst"><a href="org/eclipse/emf/cdo/compare/CDOCompare.CDODiffEngine.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare.CDODiffEngine</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<th class="colLast" scope="row">
+<div class="block">A <code>diff engine</code> that <a href="org/eclipse/emf/cdo/compare/CDOCompare.CDODiffEngine.html#createFeatureFilter()"><code>creates</code></a> and uses CDO-specific <code>feature filters</code>.</div>
+</th>
 </tr>
 <tr id="i162" class="altColor">
 <td class="colFirst"><a href="org/eclipse/emf/cdo/compare/CDOCompare.CDOFeatureFilter.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare.CDOFeatureFilter</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<th class="colLast" scope="row">
+<div class="block">A CDO-specific <code>feature filter</code> that uses <a href="org/eclipse/emf/cdo/common/model/EMFUtil.html#isPersistent(org.eclipse.emf.ecore.EStructuralFeature)"><code>EMFUtil.isPersistent()</code></a>
+ to determine whether a <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>feature</code></a> is <a href="org/eclipse/emf/cdo/compare/CDOCompare.CDOFeatureFilter.html#isTransient(org.eclipse.emf.ecore.EStructuralFeature)"><code>transient</code></a>, or not.</div>
+</th>
 </tr>
 <tr id="i163" class="rowColor">
 <td class="colFirst"><a href="org/eclipse/emf/cdo/compare/CDOCompare.CDOIDFunction.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare.CDOIDFunction</a></td>
@@ -1304,11 +1312,16 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tr id="i204" class="altColor">
 <td class="colFirst"><a href="org/eclipse/emf/cdo/CDOElement.html" title="class in org.eclipse.emf.cdo">CDOElement</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<th class="colLast" scope="row">
+<div class="block">An <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink"><code>adapter</code></a> for <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>EObjects</code></a> that is able to
+ impose an alternative contents tree structure.</div>
+</th>
 </tr>
 <tr id="i205" class="rowColor">
 <td class="colFirst"><a href="org/eclipse/emf/cdo/CDOElement.StateProvider.html" title="interface in org.eclipse.emf.cdo">CDOElement.StateProvider</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<th class="colLast" scope="row">
+<div class="block">Provides the consumer with the <a href="org/eclipse/emf/cdo/CDOState.html" title="enum in org.eclipse.emf.cdo"><code>states</code></a> of objects such as <a href="org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>CDOObjects</code></a>.</div>
+</th>
 </tr>
 <tr id="i206" class="altColor">
 <td class="colFirst"><a href="org/eclipse/emf/cdo/common/revision/CDOElementProxy.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOElementProxy</a></td>
@@ -1837,7 +1850,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tr id="i293" class="rowColor">
 <td class="colFirst"><a href="org/eclipse/emf/cdo/transaction/CDOMerger2.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger2</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<th class="colLast" scope="row">
+<div class="block">Merges the changes between a local <a href="org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> and a remote <a href="org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a>
+ into the local transaction.</div>
+</th>
 </tr>
 <tr id="i294" class="altColor">
 <td class="colFirst"><a href="org/eclipse/emf/spi/cdo/CDOMergingConflictResolver.html" title="class in org.eclipse.emf.spi.cdo">CDOMergingConflictResolver</a></td>
@@ -2173,7 +2189,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tr id="i348" class="altColor">
 <td class="colFirst"><a href="org/eclipse/emf/cdo/view/CDORegistrationHandler.Default.html" title="class in org.eclipse.emf.cdo.view">CDORegistrationHandler.Default</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<th class="colLast" scope="row">
+<div class="block">A concrete default implementation of <a href="org/eclipse/emf/cdo/view/CDORegistrationHandler.html" title="interface in org.eclipse.emf.cdo.view"><code>CDORegistrationHandler</code></a>.</div>
+</th>
 </tr>
 <tr id="i349" class="rowColor">
 <td class="colFirst"><a href="org/eclipse/emf/cdo/session/remote/CDORemoteSession.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteSession</a></td>
@@ -2892,7 +2910,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tr id="i464" class="altColor">
 <td class="colFirst"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.MergeDataResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.MergeDataResult</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<th class="colLast" scope="row">
+<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+</th>
 </tr>
 <tr id="i465" class="rowColor">
 <td class="colFirst"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.OpenSessionResult</a></td>
@@ -2975,11 +2995,17 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tr id="i478" class="altColor">
 <td class="colFirst"><a href="org/eclipse/emf/cdo/view/CDOStaleReferencePolicy.DynamicProxy.html" title="class in org.eclipse.emf.cdo.view">CDOStaleReferencePolicy.DynamicProxy</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<th class="colLast" scope="row">
+<div class="block">A <a href="org/eclipse/emf/cdo/view/CDOStaleReferencePolicy.html" title="interface in org.eclipse.emf.cdo.view"><code>stale reference policy</code></a> that provides <code>Java dynamic proxies</code>
+ when stale references are aceessed.</div>
+</th>
 </tr>
 <tr id="i479" class="rowColor">
 <td class="colFirst"><a href="org/eclipse/emf/cdo/view/CDOStaleReferencePolicy.DynamicProxy.Enhanced.html" title="class in org.eclipse.emf.cdo.view">CDOStaleReferencePolicy.DynamicProxy.Enhanced</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<th class="colLast" scope="row">
+<div class="block">A <a href="org/eclipse/emf/cdo/view/CDOStaleReferencePolicy.DynamicProxy.html" title="class in org.eclipse.emf.cdo.view"><code>dynamic proxy stale reference policy</code></a> with advanced <a href="org/eclipse/emf/cdo/view/CDOStaleReferencePolicy.DynamicProxy.Enhanced.html#getType(org.eclipse.emf.ecore.EObject,org.eclipse.emf.ecore.EStructuralFeature,int,org.eclipse.emf.cdo.common.id.CDOID)"><code>type</code></a>
+ computation and caching.</div>
+</th>
 </tr>
 <tr id="i480" class="altColor">
 <td class="colFirst"><a href="org/eclipse/emf/cdo/CDOState.html" title="enum in org.eclipse.emf.cdo">CDOState</a></td>
@@ -3025,7 +3051,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tr id="i487" class="rowColor">
 <td class="colFirst"><a href="org/eclipse/emf/cdo/transaction/CDOTransaction.CommitResult.html" title="class in org.eclipse.emf.cdo.transaction">CDOTransaction.CommitResult</a>&lt;<a href="org/eclipse/emf/cdo/transaction/CDOTransaction.CommitResult.html" title="type parameter in CDOTransaction.CommitResult">T</a>&gt;</td>
-<th class="colLast" scope="row">&nbsp;</th>
+<th class="colLast" scope="row">
+<div class="block">A value type that combines the result of a <i>persistable computation</i> and the <a href="org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>commit info</code></a>
+ of the final <a href="org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit()"><code>transaction commit</code></a>.</div>
+</th>
 </tr>
 <tr id="i488" class="altColor">
 <td class="colFirst"><a href="org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction.Options</a></td>
@@ -3145,7 +3174,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tr id="i505" class="rowColor">
 <td class="colFirst"><a href="org/eclipse/emf/cdo/transaction/CDOTransactionHandler1.WithUndo.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionHandler1.WithUndo</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<th class="colLast" scope="row">
+<div class="block">A call-back interface that is called by a <a href="org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> before <a href="org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a> are
+ attached, modified, undone or detached.</div>
+</th>
 </tr>
 <tr id="i506" class="altColor">
 <td class="colFirst"><a href="org/eclipse/emf/cdo/transaction/CDOTransactionHandler2.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionHandler2</a></td>
@@ -3329,19 +3361,34 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tr id="i534" class="altColor">
 <td class="colFirst"><a href="org/eclipse/emf/cdo/view/CDOUnit.html" title="interface in org.eclipse.emf.cdo.view">CDOUnit</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<th class="colLast" scope="row">
+<div class="block">A disjunct <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>EObject</code></a> subtree of a model repository with the following additional characteristics:
+ 
+  All <a href="org/eclipse/emf/cdo/view/CDOUnit.html#getRoot()"><code>root</code></a> / subtree element relations of a unit are physically stored and managed in the model repository.</div>
+</th>
 </tr>
 <tr id="i535" class="rowColor">
 <td class="colFirst"><a href="org/eclipse/emf/cdo/view/CDOUnitManager.html" title="interface in org.eclipse.emf.cdo.view">CDOUnitManager</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<th class="colLast" scope="row">
+<div class="block">Locally manages the open <a href="org/eclipse/emf/cdo/view/CDOUnit.html" title="interface in org.eclipse.emf.cdo.view"><code>units</code></a> of a <a href="org/eclipse/emf/cdo/view/CDOUnitManager.html#getView()"><code>view</code></a>.</div>
+</th>
 </tr>
 <tr id="i536" class="altColor">
 <td class="colFirst"><a href="org/eclipse/emf/cdo/view/CDOUnitManager.UnitExistsException.html" title="class in org.eclipse.emf.cdo.view">CDOUnitManager.UnitExistsException</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<th class="colLast" scope="row">
+<div class="block">An unchecked <a href="org/eclipse/emf/cdo/common/util/CDOException.html" title="class in org.eclipse.emf.cdo.common.util"><code>CDOException</code></a> being thrown from
+ <a href="org/eclipse/emf/cdo/view/CDOUnitManager.html#createUnit(org.eclipse.emf.ecore.EObject,boolean,org.eclipse.core.runtime.IProgressMonitor)"><code>CDOUnitManager.createUnit()</code></a>
+ to indicate that the given root object already is the <a href="org/eclipse/emf/cdo/view/CDOUnit.html#getRoot()"><code>root</code></a>
+ of an existing <a href="org/eclipse/emf/cdo/view/CDOUnit.html" title="interface in org.eclipse.emf.cdo.view"><code>unit</code></a>.</div>
+</th>
 </tr>
 <tr id="i537" class="rowColor">
 <td class="colFirst"><a href="org/eclipse/emf/cdo/view/CDOUnitManager.UnitNotFoundException.html" title="class in org.eclipse.emf.cdo.view">CDOUnitManager.UnitNotFoundException</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<th class="colLast" scope="row">
+<div class="block">An unchecked <a href="org/eclipse/emf/cdo/common/util/CDOException.html" title="class in org.eclipse.emf.cdo.common.util"><code>CDOException</code></a> being thrown from
+ <a href="org/eclipse/emf/cdo/view/CDOUnitManager.html#openUnit(org.eclipse.emf.ecore.EObject,boolean,org.eclipse.core.runtime.IProgressMonitor)"><code>CDOUnitManager.openUnit()</code></a>
+ to indicate that no <a href="org/eclipse/emf/cdo/view/CDOUnit.html" title="interface in org.eclipse.emf.cdo.view"><code>unit</code></a> exists for the given root object.</div>
+</th>
 </tr>
 <tr id="i538" class="altColor">
 <td class="colFirst"><a href="org/eclipse/emf/cdo/common/revision/delta/CDOUnsetFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOUnsetFeatureDelta</a></td>
@@ -3500,15 +3547,22 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tr id="i561" class="rowColor">
 <td class="colFirst"><a href="org/eclipse/emf/cdo/view/CDOViewCommitInfoListener.html" title="interface in org.eclipse.emf.cdo.view">CDOViewCommitInfoListener</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<th class="colLast" scope="row">
+<div class="block">A <code>listener</code> that, when added to a <a href="org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a>, <a href="org/eclipse/emf/cdo/view/CDOViewCommitInfoListener.html#notifyCommitInfo(org.eclipse.emf.cdo.common.commit.CDOCommitInfo)"><code>notifies</code></a>
+ about <a href="org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>commits</code></a> to the view's <a href="org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch()"><code>branch</code></a>.</div>
+</th>
 </tr>
 <tr id="i562" class="altColor">
 <td class="colFirst"><a href="org/eclipse/emf/cdo/view/CDOViewConfigurator.html" title="interface in org.eclipse.emf.cdo.view">CDOViewConfigurator</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<th class="colLast" scope="row">
+<div class="block">Can be contributed through a <a href="org/eclipse/emf/cdo/view/CDOViewConfigurator.Factory.html" title="class in org.eclipse.emf.cdo.view"><code>factory</code></a> and <a href="org/eclipse/emf/cdo/util/CDOUtil.html#configureView(org.eclipse.emf.cdo.view.CDOView)"><code>configures</code></a> <a href="org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a>.</div>
+</th>
 </tr>
 <tr id="i563" class="rowColor">
 <td class="colFirst"><a href="org/eclipse/emf/cdo/view/CDOViewConfigurator.Factory.html" title="class in org.eclipse.emf.cdo.view">CDOViewConfigurator.Factory</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<th class="colLast" scope="row">
+<div class="block">A factory for <a href="org/eclipse/emf/cdo/view/CDOViewConfigurator.html" title="interface in org.eclipse.emf.cdo.view"><code>view configurators</code></a>.</div>
+</th>
 </tr>
 <tr id="i564" class="altColor">
 <td class="colFirst"><a href="org/eclipse/emf/cdo/view/CDOViewContainer.html" title="interface in org.eclipse.emf.cdo.view">CDOViewContainer</a></td>
@@ -3531,35 +3585,67 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tr id="i567" class="rowColor">
 <td class="colFirst"><a href="org/eclipse/emf/cdo/view/CDOViewEventProducer.html" title="class in org.eclipse.emf.cdo.view">CDOViewEventProducer</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<th class="colLast" scope="row">
+<div class="block">Produces <code>events</code> for calls to various <a href="org/eclipse/emf/cdo/view/CDOObjectHandler.html" title="interface in org.eclipse.emf.cdo.view"><code>view object handler</code></a>
+ and <a href="org/eclipse/emf/cdo/transaction/CDOTransactionHandlerBase.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction handler</code></a> methods and delivers these events to a
+ <code>delegate</code> <code>listener</code>.</div>
+</th>
 </tr>
 <tr id="i568" class="altColor">
 <td class="colFirst"><a href="org/eclipse/emf/cdo/view/CDOViewEventProducer.CDOAttachingObjectEvent.html" title="class in org.eclipse.emf.cdo.view">CDOViewEventProducer.CDOAttachingObjectEvent</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<th class="colLast" scope="row">
+<div class="block">An <a href="org/eclipse/emf/cdo/view/CDOViewEvent.html" title="interface in org.eclipse.emf.cdo.view"><code>event</code></a> fired from a <a href="org/eclipse/emf/cdo/view/CDOViewEventProducer.html" title="class in org.eclipse.emf.cdo.view"><code>view event producer</code></a> when
+ <a href="org/eclipse/emf/cdo/transaction/CDOTransactionHandler1.html#attachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction,org.eclipse.emf.cdo.CDOObject)"><code>CDOTransactionHandler1.attachingObject()</code></a>
+ was called.</div>
+</th>
 </tr>
 <tr id="i569" class="rowColor">
 <td class="colFirst"><a href="org/eclipse/emf/cdo/view/CDOViewEventProducer.CDOCommittedTransactionEvent.html" title="class in org.eclipse.emf.cdo.view">CDOViewEventProducer.CDOCommittedTransactionEvent</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<th class="colLast" scope="row">
+<div class="block">An <a href="org/eclipse/emf/cdo/view/CDOViewEvent.html" title="interface in org.eclipse.emf.cdo.view"><code>event</code></a> fired from a <a href="org/eclipse/emf/cdo/view/CDOViewEventProducer.html" title="class in org.eclipse.emf.cdo.view"><code>view event producer</code></a> when
+ <a href="org/eclipse/emf/cdo/transaction/CDOTransactionHandler2.html#committedTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction,org.eclipse.emf.cdo.transaction.CDOCommitContext)"><code>CDOTransactionHandler2.committedTransaction()</code></a>
+ was called.</div>
+</th>
 </tr>
 <tr id="i570" class="altColor">
 <td class="colFirst"><a href="org/eclipse/emf/cdo/view/CDOViewEventProducer.CDOCommittingTransactionEvent.html" title="class in org.eclipse.emf.cdo.view">CDOViewEventProducer.CDOCommittingTransactionEvent</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<th class="colLast" scope="row">
+<div class="block">An <a href="org/eclipse/emf/cdo/view/CDOViewEvent.html" title="interface in org.eclipse.emf.cdo.view"><code>event</code></a> fired from a <a href="org/eclipse/emf/cdo/view/CDOViewEventProducer.html" title="class in org.eclipse.emf.cdo.view"><code>view event producer</code></a> when
+ <a href="org/eclipse/emf/cdo/transaction/CDOTransactionHandler2.html#committingTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction,org.eclipse.emf.cdo.transaction.CDOCommitContext)"><code>CDOTransactionHandler2.committingTransaction()</code></a>
+ was called.</div>
+</th>
 </tr>
 <tr id="i571" class="rowColor">
 <td class="colFirst"><a href="org/eclipse/emf/cdo/view/CDOViewEventProducer.CDODetachingObjectEvent.html" title="class in org.eclipse.emf.cdo.view">CDOViewEventProducer.CDODetachingObjectEvent</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<th class="colLast" scope="row">
+<div class="block">An <a href="org/eclipse/emf/cdo/view/CDOViewEvent.html" title="interface in org.eclipse.emf.cdo.view"><code>event</code></a> fired from a <a href="org/eclipse/emf/cdo/view/CDOViewEventProducer.html" title="class in org.eclipse.emf.cdo.view"><code>view event producer</code></a> when
+ <a href="org/eclipse/emf/cdo/transaction/CDOTransactionHandler1.html#detachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction,org.eclipse.emf.cdo.CDOObject)"><code>CDOTransactionHandler1.detachingObject()</code></a>
+ was called.</div>
+</th>
 </tr>
 <tr id="i572" class="altColor">
 <td class="colFirst"><a href="org/eclipse/emf/cdo/view/CDOViewEventProducer.CDOModifyingObjectEvent.html" title="class in org.eclipse.emf.cdo.view">CDOViewEventProducer.CDOModifyingObjectEvent</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<th class="colLast" scope="row">
+<div class="block">An <a href="org/eclipse/emf/cdo/view/CDOViewEvent.html" title="interface in org.eclipse.emf.cdo.view"><code>event</code></a> fired from a <a href="org/eclipse/emf/cdo/view/CDOViewEventProducer.html" title="class in org.eclipse.emf.cdo.view"><code>view event producer</code></a> when
+ <a href="org/eclipse/emf/cdo/transaction/CDOTransactionHandler1.html#modifyingObject(org.eclipse.emf.cdo.transaction.CDOTransaction,org.eclipse.emf.cdo.CDOObject,org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)"><code>CDOTransactionHandler1.modifyingObject()</code></a>
+ was called.</div>
+</th>
 </tr>
 <tr id="i573" class="rowColor">
 <td class="colFirst"><a href="org/eclipse/emf/cdo/view/CDOViewEventProducer.CDOObjectStateChangedEvent.html" title="class in org.eclipse.emf.cdo.view">CDOViewEventProducer.CDOObjectStateChangedEvent</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<th class="colLast" scope="row">
+<div class="block">An <a href="org/eclipse/emf/cdo/view/CDOViewEvent.html" title="interface in org.eclipse.emf.cdo.view"><code>event</code></a> fired from a <a href="org/eclipse/emf/cdo/view/CDOViewEventProducer.html" title="class in org.eclipse.emf.cdo.view"><code>view event producer</code></a> when
+ <a href="org/eclipse/emf/cdo/view/CDOObjectHandler.html#objectStateChanged(org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.CDOObject,org.eclipse.emf.cdo.CDOState,org.eclipse.emf.cdo.CDOState)"><code>CDOObjectHandler.objectStateChanged()</code></a>
+ was called.</div>
+</th>
 </tr>
 <tr id="i574" class="altColor">
 <td class="colFirst"><a href="org/eclipse/emf/cdo/view/CDOViewEventProducer.CDORolledBackTransactionEvent.html" title="class in org.eclipse.emf.cdo.view">CDOViewEventProducer.CDORolledBackTransactionEvent</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<th class="colLast" scope="row">
+<div class="block">An <a href="org/eclipse/emf/cdo/view/CDOViewEvent.html" title="interface in org.eclipse.emf.cdo.view"><code>event</code></a> fired from a <a href="org/eclipse/emf/cdo/view/CDOViewEventProducer.html" title="class in org.eclipse.emf.cdo.view"><code>view event producer</code></a> when
+ <a href="org/eclipse/emf/cdo/transaction/CDOTransactionHandler2.html#rolledBackTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)"><code>CDOTransactionHandler2.rolledBackTransaction()</code></a>
+ was called.</div>
+</th>
 </tr>
 <tr id="i575" class="rowColor">
 <td class="colFirst"><a href="org/eclipse/emf/cdo/view/CDOViewInvalidationEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOViewInvalidationEvent</a></td>
@@ -3589,7 +3675,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tr id="i579" class="rowColor">
 <td class="colFirst"><a href="org/eclipse/emf/cdo/view/CDOViewProvider.CDOViewProvider2.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider.CDOViewProvider2</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<th class="colLast" scope="row">
+<div class="block">A <a href="org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view"><code>view provider</code></a> with advanced <a href="org/eclipse/emf/cdo/view/CDOViewProvider.CDOViewProvider2.html#getViewURI(org.eclipse.emf.cdo.view.CDOView)"><code>view URI</code></a>
+ and <a href="org/eclipse/emf/cdo/view/CDOViewProvider.CDOViewProvider2.html#getPath(org.eclipse.emf.common.util.URI)"><code>path</code></a> information methods.</div>
+</th>
 </tr>
 <tr id="i580" class="altColor">
 <td class="colFirst"><a href="org/eclipse/emf/cdo/view/CDOViewProviderRegistry.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProviderRegistry</a></td>
@@ -3617,7 +3706,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tr id="i584" class="altColor">
 <td class="colFirst"><a href="org/eclipse/emf/cdo/view/CDOViewSet.CDOViewSetException.html" title="class in org.eclipse.emf.cdo.view">CDOViewSet.CDOViewSetException</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<th class="colLast" scope="row">
+<div class="block">An unchecked <a href="org/eclipse/emf/cdo/common/util/CDOException.html" title="class in org.eclipse.emf.cdo.common.util"><code>exception</code></a> being thrown from <a href="org/eclipse/emf/cdo/view/CDOViewSet.html" title="interface in org.eclipse.emf.cdo.view"><code>view sets</code></a>.</div>
+</th>
 </tr>
 <tr id="i585" class="rowColor">
 <td class="colFirst"><a href="org/eclipse/emf/cdo/view/CDOViewTargetChangedEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOViewTargetChangedEvent</a></td>
@@ -4978,7 +5069,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tr id="i809" class="rowColor">
 <td class="colFirst"><a href="org/eclipse/emf/spi/cdo/InternalCDOSession.CommitToken.html" title="class in org.eclipse.emf.spi.cdo">InternalCDOSession.CommitToken</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<th class="colLast" scope="row">
+<div class="block">A token that is maintained during local commits of transactions.</div>
+</th>
 </tr>
 <tr id="i810" class="altColor">
 <td class="colFirst"><a href="org/eclipse/emf/spi/cdo/InternalCDOSession.InvalidationData.html" title="class in org.eclipse.emf.spi.cdo">InternalCDOSession.InvalidationData</a></td>
@@ -5000,7 +5093,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tr id="i813" class="rowColor">
 <td class="colFirst"><a href="org/eclipse/emf/spi/cdo/InternalCDOSessionInvalidationEvent.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOSessionInvalidationEvent</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<th class="colLast" scope="row">
+<div class="block">A <a href="org/eclipse/emf/cdo/session/CDOSessionInvalidationEvent.html" title="interface in org.eclipse.emf.cdo.session"><code>session invalidation event</code></a> with <a href="org/eclipse/emf/spi/cdo/InternalCDOSessionInvalidationEvent.html#getSecurityImpact()"><code>security impact information</code></a>.</div>
+</th>
 </tr>
 <tr id="i814" class="altColor">
 <td class="colFirst"><a href="org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a></td>

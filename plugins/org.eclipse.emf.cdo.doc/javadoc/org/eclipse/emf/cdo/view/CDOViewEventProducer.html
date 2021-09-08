@@ -5,7 +5,7 @@
 
 <title>CDOViewEventProducer (CDO Model Repository Documentation)</title>
 <meta http-equiv="Content-Type" content="">
-<meta name="dc.created" content="2021-08-27">
+<meta name="dc.created" content="2021-09-08">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
@@ -148,6 +148,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <hr>
 <pre>public class <span class="typeNameLabel">CDOViewEventProducer</span>
 extends org.eclipse.net4j.util.container.SelfAttachingContainerListener.Delegating</pre>
+<div class="block">Produces <code>events</code> for calls to various <a href="CDOObjectHandler.html" title="interface in org.eclipse.emf.cdo.view"><code>view object handler</code></a>
+ and <a href="../transaction/CDOTransactionHandlerBase.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction handler</code></a> methods and delivers these events to a
+ <code>delegate</code> <code>listener</code>.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.5</dd>
@@ -177,37 +180,65 @@ extends org.eclipse.net4j.util.container.SelfAttachingContainerListener.Delegati
 <tr class="altColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CDOViewEventProducer.CDOAttachingObjectEvent.html" title="class in org.eclipse.emf.cdo.view">CDOViewEventProducer.CDOAttachingObjectEvent</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">An <a href="CDOViewEvent.html" title="interface in org.eclipse.emf.cdo.view"><code>event</code></a> fired from a <a href="CDOViewEventProducer.html" title="class in org.eclipse.emf.cdo.view"><code>view event producer</code></a> when
+ <a href="../transaction/CDOTransactionHandler1.html#attachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction,org.eclipse.emf.cdo.CDOObject)"><code>CDOTransactionHandler1.attachingObject()</code></a>
+ was called.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CDOViewEventProducer.CDOCommittedTransactionEvent.html" title="class in org.eclipse.emf.cdo.view">CDOViewEventProducer.CDOCommittedTransactionEvent</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">An <a href="CDOViewEvent.html" title="interface in org.eclipse.emf.cdo.view"><code>event</code></a> fired from a <a href="CDOViewEventProducer.html" title="class in org.eclipse.emf.cdo.view"><code>view event producer</code></a> when
+ <a href="../transaction/CDOTransactionHandler2.html#committedTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction,org.eclipse.emf.cdo.transaction.CDOCommitContext)"><code>CDOTransactionHandler2.committedTransaction()</code></a>
+ was called.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CDOViewEventProducer.CDOCommittingTransactionEvent.html" title="class in org.eclipse.emf.cdo.view">CDOViewEventProducer.CDOCommittingTransactionEvent</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">An <a href="CDOViewEvent.html" title="interface in org.eclipse.emf.cdo.view"><code>event</code></a> fired from a <a href="CDOViewEventProducer.html" title="class in org.eclipse.emf.cdo.view"><code>view event producer</code></a> when
+ <a href="../transaction/CDOTransactionHandler2.html#committingTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction,org.eclipse.emf.cdo.transaction.CDOCommitContext)"><code>CDOTransactionHandler2.committingTransaction()</code></a>
+ was called.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CDOViewEventProducer.CDODetachingObjectEvent.html" title="class in org.eclipse.emf.cdo.view">CDOViewEventProducer.CDODetachingObjectEvent</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">An <a href="CDOViewEvent.html" title="interface in org.eclipse.emf.cdo.view"><code>event</code></a> fired from a <a href="CDOViewEventProducer.html" title="class in org.eclipse.emf.cdo.view"><code>view event producer</code></a> when
+ <a href="../transaction/CDOTransactionHandler1.html#detachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction,org.eclipse.emf.cdo.CDOObject)"><code>CDOTransactionHandler1.detachingObject()</code></a>
+ was called.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CDOViewEventProducer.CDOModifyingObjectEvent.html" title="class in org.eclipse.emf.cdo.view">CDOViewEventProducer.CDOModifyingObjectEvent</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">An <a href="CDOViewEvent.html" title="interface in org.eclipse.emf.cdo.view"><code>event</code></a> fired from a <a href="CDOViewEventProducer.html" title="class in org.eclipse.emf.cdo.view"><code>view event producer</code></a> when
+ <a href="../transaction/CDOTransactionHandler1.html#modifyingObject(org.eclipse.emf.cdo.transaction.CDOTransaction,org.eclipse.emf.cdo.CDOObject,org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)"><code>CDOTransactionHandler1.modifyingObject()</code></a>
+ was called.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CDOViewEventProducer.CDOObjectStateChangedEvent.html" title="class in org.eclipse.emf.cdo.view">CDOViewEventProducer.CDOObjectStateChangedEvent</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">An <a href="CDOViewEvent.html" title="interface in org.eclipse.emf.cdo.view"><code>event</code></a> fired from a <a href="CDOViewEventProducer.html" title="class in org.eclipse.emf.cdo.view"><code>view event producer</code></a> when
+ <a href="CDOObjectHandler.html#objectStateChanged(org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.CDOObject,org.eclipse.emf.cdo.CDOState,org.eclipse.emf.cdo.CDOState)"><code>CDOObjectHandler.objectStateChanged()</code></a>
+ was called.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CDOViewEventProducer.CDORolledBackTransactionEvent.html" title="class in org.eclipse.emf.cdo.view">CDOViewEventProducer.CDORolledBackTransactionEvent</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">An <a href="CDOViewEvent.html" title="interface in org.eclipse.emf.cdo.view"><code>event</code></a> fired from a <a href="CDOViewEventProducer.html" title="class in org.eclipse.emf.cdo.view"><code>view event producer</code></a> when
+ <a href="../transaction/CDOTransactionHandler2.html#rolledBackTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)"><code>CDOTransactionHandler2.rolledBackTransaction()</code></a>
+ was called.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">

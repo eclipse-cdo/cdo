@@ -5,7 +5,7 @@
 
 <title>CDOMerger2 (CDO Model Repository Documentation)</title>
 <meta http-equiv="Content-Type" content="">
-<meta name="dc.created" content="2021-08-27">
+<meta name="dc.created" content="2021-09-08">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
@@ -130,6 +130,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <hr>
 <pre>public interface <span class="typeNameLabel">CDOMerger2</span>
 extends <a href="CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a></pre>
+<div class="block">Merges the changes between a local <a href="CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> and a remote <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a>
+ into the local transaction. Only the changes of a set of affected <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a>,
+ specified by the set of their <a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>ids</code></a>, is considered.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.5</dd>

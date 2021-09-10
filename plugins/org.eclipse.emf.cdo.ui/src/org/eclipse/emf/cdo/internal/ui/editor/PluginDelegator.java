@@ -46,6 +46,30 @@ public final class PluginDelegator extends EMFPlugin
     super(new ResourceLocator[] {});
   }
 
+  @Override
+  public String getString(String key)
+  {
+    return OM.BUNDLE.getTranslationSupport().getString(key);
+  }
+
+  @Override
+  public String getString(String key, boolean translate)
+  {
+    return OM.BUNDLE.getTranslationSupport().getString(key, translate);
+  }
+
+  @Override
+  public String getString(String key, Object[] substitutions)
+  {
+    return OM.BUNDLE.getTranslationSupport().getString(key, substitutions);
+  }
+
+  @Override
+  public String getString(String key, Object[] substitutions, boolean translate)
+  {
+    return OM.BUNDLE.getTranslationSupport().getString(key, substitutions, translate);
+  }
+
   /**
    * @ADDED
    */

@@ -64,13 +64,13 @@
         name="org.eclipse.emf.cdo.releng.apireports"
         optional="true"/>
     <repository
-        url="http://download.eclipse.org/mylyn/snapshots/weekly"/>
+        url="http://download.eclipse.org/mylyn/snapshots/weekly/"/>
     <repository
-        url="http://download.eclipse.org/egit/updates-stable-nightly"/>
+        url="http://download.eclipse.org/egit/updates-stable-nightly/"/>
     <repository
-        url="http://download.eclipse.org/oomph/updates"/>
+        url="http://download.eclipse.org/oomph/updates/latest/"/>
     <repository
-        url="http://download.eclipse.org/modeling/emf/cdo/updates/integration"/>
+        url="http://download.eclipse.org/modeling/emf/cdo/updates/integration/latest"/>
   </setupTask>
   <setupTask
       xsi:type="setup:EclipseIniTask"
@@ -247,11 +247,30 @@
       <sourceLocator
           rootFolder="${cdo.git.clone.location}"/>
       <repositoryList
-          name="2021-09">
+          name="2021-12">
         <repository
             url="http://download.eclipse.org/releases/2021-09"/>
         <repository
             url="http://download.eclipse.org/eclipse/updates/latest"/>
+        <repository
+            url="http://download.eclipse.org/tools/orbit/downloads/latest-I"/>
+        <repository
+            url="http://download.eclipse.org/nebula/snapshot"/>
+        <repository
+            url="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
+        <repository
+            url="http://download.eclipse.org/jetty/updates/jetty-bundles-9.x/development"/>
+        <repository
+            url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
+        <repository
+            url="http://www.springsite.com/eclipse/2.1.0/update"/>
+        <repository
+            url="${aspectj.repository}"/>
+      </repositoryList>
+      <repositoryList
+          name="2021-09">
+        <repository
+            url="http://download.eclipse.org/releases/2021-09"/>
         <repository
             url="http://download.eclipse.org/tools/orbit/downloads/latest-I"/>
         <repository
@@ -507,6 +526,23 @@
           name="org.eclipse.pde.feature.group"/>
       <requirement
           name="org.eclipse.equinox.executable.feature.group"/>
+      <repositoryList
+          name="4.15">
+        <repository
+            url="http://download.eclipse.org/modeling/emf/cdo/drops/R20210908-0655"/>
+        <repository
+            url="https://download.eclipse.org/releases/2021-09/202109151000"/>
+        <repository
+            url="http://download.eclipse.org/nebula/releases/2.5.0"/>
+        <repository
+            url="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
+        <repository
+            url="http://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.4.42.v20210604"/>
+        <repository
+            url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
+        <repository
+            url="http://www.springsite.com/eclipse/2.1.0/update"/>
+      </repositoryList>
       <repositoryList
           name="4.14">
         <repository
@@ -985,11 +1021,11 @@
     <setupTask
         xsi:type="setup:VariableTask"
         name="cdo.bugzilla.version"
-        value="4.15"/>
+        value="4.16"/>
     <setupTask
         xsi:type="setup:VariableTask"
         name="cdo.baseline.version"
-        value="4.14"/>
+        value="4.15"/>
     <setupTask
         xsi:type="jdt:JRETask"
         version="JavaSE-11"

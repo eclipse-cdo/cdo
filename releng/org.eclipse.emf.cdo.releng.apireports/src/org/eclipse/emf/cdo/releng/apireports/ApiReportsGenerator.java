@@ -416,13 +416,20 @@ public final class ApiReportsGenerator
     }
   }
 
-  private static void sortDelta(IDelta delta) throws Exception
+  private static void sortDelta(IDelta delta)
   {
-    Field f = delta.getClass().getField("children");
-    f.setAccessible(true);
+    try
+    {
+      Field f = delta.getClass().getField("children");
+      f.setAccessible(true);
 
-    IDelta[] children = (IDelta[])f.get(delta);
-    Arrays.sort(children, Comparator.comparing(IDelta::getMessage));
+      IDelta[] children = (IDelta[])f.get(delta);
+      Arrays.sort(children, Comparator.comparing(IDelta::getMessage));
+    }
+    catch (Throwable e)
+    {
+      Activator.log(e);
+    }
   }
 
   private static void updateMonitor(IProgressMonitor monitor, int work) throws OperationCanceledException

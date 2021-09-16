@@ -183,10 +183,10 @@ public final class ApiReportsGenerator
     {
       String[] split = exclusionPatterns.split(",");
       patterns = new Pattern[split.length];
+
       for (int i = 0; i < split.length; i++)
       {
-        Pattern pattern = Pattern.compile(split[i]);
-        patterns[i] = pattern;
+        patterns[i] = Pattern.compile(split[i].trim());
       }
     }
 
@@ -202,6 +202,7 @@ public final class ApiReportsGenerator
           if (javaProject != null)
           {
             result.add(javaProject);
+            Activator.log(Status.info("API report project: " + javaProject));
           }
         }
       }
@@ -224,7 +225,7 @@ public final class ApiReportsGenerator
     return false;
   }
 
-  private static ApiScope walkStructureSelection(List<Object> projects, IProgressMonitor monitor)
+  private static IApiScope walkStructureSelection(List<Object> projects, IProgressMonitor monitor)
   {
     ApiScope scope = new ApiScope();
     IApiBaseline workspaceBaseline = ApiBaselineManager.getManager().getWorkspaceBaseline();

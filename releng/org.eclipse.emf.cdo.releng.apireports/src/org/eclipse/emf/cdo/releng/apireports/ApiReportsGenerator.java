@@ -28,6 +28,7 @@ import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.pde.api.tools.internal.ApiBaselineManager;
+import org.eclipse.pde.api.tools.internal.comparator.Delta;
 import org.eclipse.pde.api.tools.internal.comparator.DeltaXmlVisitor;
 import org.eclipse.pde.api.tools.internal.provisional.Factory;
 import org.eclipse.pde.api.tools.internal.provisional.IApiAnnotations;
@@ -420,7 +421,7 @@ public final class ApiReportsGenerator
   {
     try
     {
-      Field f = delta.getClass().getField("children");
+      Field f = Delta.class.getDeclaredField("children");
       f.setAccessible(true);
 
       IDelta[] children = (IDelta[])f.get(delta);

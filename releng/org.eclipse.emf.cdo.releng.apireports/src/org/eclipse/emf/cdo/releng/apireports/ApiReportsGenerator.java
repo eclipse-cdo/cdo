@@ -202,7 +202,7 @@ public final class ApiReportsGenerator
           if (javaProject != null)
           {
             result.add(javaProject);
-            Activator.log(Status.info("API report project: " + javaProject));
+            Activator.log(Status.info("API report project: " + project.getName()));
           }
         }
       }

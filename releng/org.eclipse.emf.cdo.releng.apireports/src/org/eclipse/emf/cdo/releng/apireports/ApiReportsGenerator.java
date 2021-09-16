@@ -45,7 +45,9 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -125,6 +127,8 @@ public final class ApiReportsGenerator
           IDelta delta = ApiComparator.compare(scope, baseline, VisibilityModifiers.API, false, true, monitor);
           if (delta != null)
           {
+            sortDelta(delta);
+
             progress.worked(25);
             updateMonitor(progress);
 
@@ -410,6 +414,15 @@ public final class ApiReportsGenerator
         Activator.log(e);
       }
     }
+  }
+
+  private static void sortDelta(IDelta delta) throws Exception
+  {
+    Field f = delta.getClass().getField("children");
+    f.setAccessible(true);
+
+    IDelta[] children = (IDelta[])f.get(delta);
+    Arrays.sort(children, Comparator.comparing(IDelta::getMessage));
   }
 
   private static void updateMonitor(IProgressMonitor monitor, int work) throws OperationCanceledException

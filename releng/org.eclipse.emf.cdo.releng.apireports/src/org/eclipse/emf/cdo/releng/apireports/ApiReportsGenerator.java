@@ -201,8 +201,12 @@ public final class ApiReportsGenerator
           IJavaProject javaProject = JavaCore.create(project);
           if (javaProject != null)
           {
-            result.add(javaProject);
-            Activator.log(Status.info("API report project: " + project.getName()));
+            javaProject = javaProject.getJavaProject();
+            if (javaProject != null)
+            {
+              result.add(javaProject);
+              Activator.log(Status.info("API report project: " + project.getName()));
+            }
           }
         }
       }

@@ -199,14 +199,10 @@ public final class ApiReportsGenerator
         if (!isExcluded(patterns, name))
         {
           IJavaProject javaProject = JavaCore.create(project);
-          if (javaProject != null)
+          if (javaProject != null && javaProject.isOpen())
           {
-            javaProject = javaProject.getJavaProject();
-            if (javaProject != null)
-            {
-              result.add(javaProject);
-              Activator.log(Status.info("API report project: " + project.getName()));
-            }
+            result.add(javaProject);
+            Activator.log(Status.info("API report project: " + project.getName()));
           }
         }
       }

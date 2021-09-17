@@ -1,74 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <deltas>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.internal.lang.reflect.InterTypeMethodDeclarationImpl" kind="ADDED" message="The re-exported type org.aspectj.internal.lang.reflect.InterTypeMethodDeclarationImpl has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.internal.lang.reflect.InterTypeMethodDeclarationImpl">
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.internal.lang.annotation.ajcDeclareAnnotation" kind="ADDED" message="The re-exported type org.aspectj.internal.lang.annotation.ajcDeclareAnnotation has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="9729" oldModifiers="0" restrictions="0" type_name="org.aspectj.internal.lang.annotation.ajcDeclareAnnotation">
         <message_arguments>
-            <message_argument value="org.aspectj.internal.lang.reflect.InterTypeMethodDeclarationImpl"/>
+            <message_argument value="org.aspectj.internal.lang.annotation.ajcDeclareAnnotation"/>
             <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.runtime.internal.CFlowCounter" kind="ADDED" message="The re-exported type org.aspectj.runtime.internal.CFlowCounter has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.runtime.internal.CFlowCounter">
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.internal.lang.annotation.ajcDeclareEoW" kind="ADDED" message="The re-exported type org.aspectj.internal.lang.annotation.ajcDeclareEoW has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="9729" oldModifiers="0" restrictions="0" type_name="org.aspectj.internal.lang.annotation.ajcDeclareEoW">
         <message_arguments>
-            <message_argument value="org.aspectj.runtime.internal.CFlowCounter"/>
+            <message_argument value="org.aspectj.internal.lang.annotation.ajcDeclareEoW"/>
             <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.annotation.SuppressAjWarnings" kind="ADDED" message="The re-exported type org.aspectj.lang.annotation.SuppressAjWarnings has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="9729" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.annotation.SuppressAjWarnings">
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.internal.lang.annotation.ajcDeclareParents" kind="ADDED" message="The re-exported type org.aspectj.internal.lang.annotation.ajcDeclareParents has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="9729" oldModifiers="0" restrictions="0" type_name="org.aspectj.internal.lang.annotation.ajcDeclareParents">
         <message_arguments>
-            <message_argument value="org.aspectj.lang.annotation.SuppressAjWarnings"/>
+            <message_argument value="org.aspectj.internal.lang.annotation.ajcDeclareParents"/>
             <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.NoSuchPointcutException" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.NoSuchPointcutException has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.NoSuchPointcutException">
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.internal.lang.annotation.ajcDeclarePrecedence" kind="ADDED" message="The re-exported type org.aspectj.internal.lang.annotation.ajcDeclarePrecedence has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="9729" oldModifiers="0" restrictions="0" type_name="org.aspectj.internal.lang.annotation.ajcDeclarePrecedence">
         <message_arguments>
-            <message_argument value="org.aspectj.lang.reflect.NoSuchPointcutException"/>
+            <message_argument value="org.aspectj.internal.lang.annotation.ajcDeclarePrecedence"/>
             <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.runtime.internal.cflowstack.ThreadStackFactoryImpl" kind="ADDED" message="The re-exported type org.aspectj.runtime.internal.cflowstack.ThreadStackFactoryImpl has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.runtime.internal.cflowstack.ThreadStackFactoryImpl">
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.internal.lang.annotation.ajcDeclareSoft" kind="ADDED" message="The re-exported type org.aspectj.internal.lang.annotation.ajcDeclareSoft has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="9729" oldModifiers="0" restrictions="0" type_name="org.aspectj.internal.lang.annotation.ajcDeclareSoft">
         <message_arguments>
-            <message_argument value="org.aspectj.runtime.internal.cflowstack.ThreadStackFactoryImpl"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.annotation.Before" kind="ADDED" message="The re-exported type org.aspectj.lang.annotation.Before has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="9729" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.annotation.Before">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.annotation.Before"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.runtime.internal.AroundClosure" kind="ADDED" message="The re-exported type org.aspectj.runtime.internal.AroundClosure has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.aspectj.runtime.internal.AroundClosure">
-        <message_arguments>
-            <message_argument value="org.aspectj.runtime.internal.AroundClosure"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.DeclareSoft" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.DeclareSoft has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.DeclareSoft">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.reflect.DeclareSoft"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.annotation.DeclareError" kind="ADDED" message="The re-exported type org.aspectj.lang.annotation.DeclareError has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="9729" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.annotation.DeclareError">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.annotation.DeclareError"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.annotation.DeclareParents" kind="ADDED" message="The re-exported type org.aspectj.lang.annotation.DeclareParents has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="9729" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.annotation.DeclareParents">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.annotation.DeclareParents"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.InterTypeFieldDeclaration" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.InterTypeFieldDeclaration has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.InterTypeFieldDeclaration">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.reflect.InterTypeFieldDeclaration"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.annotation.Around" kind="ADDED" message="The re-exported type org.aspectj.lang.annotation.Around has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="9729" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.annotation.Around">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.annotation.Around"/>
+            <message_argument value="org.aspectj.internal.lang.annotation.ajcDeclareSoft"/>
             <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
         </message_arguments>
     </delta>
@@ -84,51 +42,9 @@
             <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.ProceedingJoinPoint" kind="ADDED" message="The re-exported type org.aspectj.lang.ProceedingJoinPoint has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.ProceedingJoinPoint">
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.internal.lang.reflect.AdviceImpl" kind="ADDED" message="The re-exported type org.aspectj.internal.lang.reflect.AdviceImpl has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.internal.lang.reflect.AdviceImpl">
         <message_arguments>
-            <message_argument value="org.aspectj.lang.ProceedingJoinPoint"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.internal.lang.annotation.ajcDeclarePrecedence" kind="ADDED" message="The re-exported type org.aspectj.internal.lang.annotation.ajcDeclarePrecedence has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="9729" oldModifiers="0" restrictions="0" type_name="org.aspectj.internal.lang.annotation.ajcDeclarePrecedence">
-        <message_arguments>
-            <message_argument value="org.aspectj.internal.lang.annotation.ajcDeclarePrecedence"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.CodeSignature" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.CodeSignature has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.CodeSignature">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.reflect.CodeSignature"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.PerClauseKind" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.PerClauseKind has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="16433" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.PerClauseKind">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.reflect.PerClauseKind"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.CatchClauseSignature" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.CatchClauseSignature has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.CatchClauseSignature">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.reflect.CatchClauseSignature"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.runtime.internal.cflowstack.ThreadStackFactoryImpl11" kind="ADDED" message="The re-exported type org.aspectj.runtime.internal.cflowstack.ThreadStackFactoryImpl11 has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.runtime.internal.cflowstack.ThreadStackFactoryImpl11">
-        <message_arguments>
-            <message_argument value="org.aspectj.runtime.internal.cflowstack.ThreadStackFactoryImpl11"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.internal.lang.annotation.ajcDeclareEoW" kind="ADDED" message="The re-exported type org.aspectj.internal.lang.annotation.ajcDeclareEoW has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="9729" oldModifiers="0" restrictions="0" type_name="org.aspectj.internal.lang.annotation.ajcDeclareEoW">
-        <message_arguments>
-            <message_argument value="org.aspectj.internal.lang.annotation.ajcDeclareEoW"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.runtime.CFlow" kind="ADDED" message="The re-exported type org.aspectj.runtime.CFlow has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.runtime.CFlow">
-        <message_arguments>
-            <message_argument value="org.aspectj.runtime.CFlow"/>
+            <message_argument value="org.aspectj.internal.lang.reflect.AdviceImpl"/>
             <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
         </message_arguments>
     </delta>
@@ -138,58 +54,21 @@
             <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.internal.lang.reflect.PointcutImpl" kind="ADDED" message="The re-exported type org.aspectj.internal.lang.reflect.PointcutImpl has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.internal.lang.reflect.PointcutImpl">
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.internal.lang.reflect.DeclareAnnotationImpl" kind="ADDED" message="The re-exported type org.aspectj.internal.lang.reflect.DeclareAnnotationImpl has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.internal.lang.reflect.DeclareAnnotationImpl">
         <message_arguments>
-            <message_argument value="org.aspectj.internal.lang.reflect.PointcutImpl"/>
+            <message_argument value="org.aspectj.internal.lang.reflect.DeclareAnnotationImpl"/>
             <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.15.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="60" key="org.eclipse.emf.cdo" kind="CHANGED" message="The minor version has been changed for the api component org.eclipse.emf.cdo (from version 4.14.1 to 4.15.0)" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.internal.lang.reflect.DeclareErrorOrWarningImpl" kind="ADDED" message="The re-exported type org.aspectj.internal.lang.reflect.DeclareErrorOrWarningImpl has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.internal.lang.reflect.DeclareErrorOrWarningImpl">
         <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo"/>
-            <message_argument value="4.14.1"/>
-            <message_argument value="4.15.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.annotation.DeclarePrecedence" kind="ADDED" message="The re-exported type org.aspectj.lang.annotation.DeclarePrecedence has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="9729" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.annotation.DeclarePrecedence">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.annotation.DeclarePrecedence"/>
+            <message_argument value="org.aspectj.internal.lang.reflect.DeclareErrorOrWarningImpl"/>
             <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.TypePattern" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.TypePattern has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.TypePattern">
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.internal.lang.reflect.DeclareParentsImpl" kind="ADDED" message="The re-exported type org.aspectj.internal.lang.reflect.DeclareParentsImpl has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.internal.lang.reflect.DeclareParentsImpl">
         <message_arguments>
-            <message_argument value="org.aspectj.lang.reflect.TypePattern"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.runtime.internal.CFlowPlusState" kind="ADDED" message="The re-exported type org.aspectj.runtime.internal.CFlowPlusState has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.runtime.internal.CFlowPlusState">
-        <message_arguments>
-            <message_argument value="org.aspectj.runtime.internal.CFlowPlusState"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.annotation.AfterReturning" kind="ADDED" message="The re-exported type org.aspectj.lang.annotation.AfterReturning has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="9729" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.annotation.AfterReturning">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.annotation.AfterReturning"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.PointcutBasedPerClause" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.PointcutBasedPerClause has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.PointcutBasedPerClause">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.reflect.PointcutBasedPerClause"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.annotation.DeclareWarning" kind="ADDED" message="The re-exported type org.aspectj.lang.annotation.DeclareWarning has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="9729" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.annotation.DeclareWarning">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.annotation.DeclareWarning"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.internal.lang.reflect.TypePatternImpl" kind="ADDED" message="The re-exported type org.aspectj.internal.lang.reflect.TypePatternImpl has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.internal.lang.reflect.TypePatternImpl">
-        <message_arguments>
-            <message_argument value="org.aspectj.internal.lang.reflect.TypePatternImpl"/>
+            <message_argument value="org.aspectj.internal.lang.reflect.DeclareParentsImpl"/>
             <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
         </message_arguments>
     </delta>
@@ -199,9 +78,345 @@
             <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
         </message_arguments>
     </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.internal.lang.reflect.DeclareSoftImpl" kind="ADDED" message="The re-exported type org.aspectj.internal.lang.reflect.DeclareSoftImpl has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.internal.lang.reflect.DeclareSoftImpl">
+        <message_arguments>
+            <message_argument value="org.aspectj.internal.lang.reflect.DeclareSoftImpl"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.internal.lang.reflect.InterTypeConstructorDeclarationImpl" kind="ADDED" message="The re-exported type org.aspectj.internal.lang.reflect.InterTypeConstructorDeclarationImpl has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.internal.lang.reflect.InterTypeConstructorDeclarationImpl">
         <message_arguments>
             <message_argument value="org.aspectj.internal.lang.reflect.InterTypeConstructorDeclarationImpl"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.internal.lang.reflect.InterTypeDeclarationImpl" kind="ADDED" message="The re-exported type org.aspectj.internal.lang.reflect.InterTypeDeclarationImpl has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.internal.lang.reflect.InterTypeDeclarationImpl">
+        <message_arguments>
+            <message_argument value="org.aspectj.internal.lang.reflect.InterTypeDeclarationImpl"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.internal.lang.reflect.InterTypeFieldDeclarationImpl" kind="ADDED" message="The re-exported type org.aspectj.internal.lang.reflect.InterTypeFieldDeclarationImpl has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.internal.lang.reflect.InterTypeFieldDeclarationImpl">
+        <message_arguments>
+            <message_argument value="org.aspectj.internal.lang.reflect.InterTypeFieldDeclarationImpl"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.internal.lang.reflect.InterTypeMethodDeclarationImpl" kind="ADDED" message="The re-exported type org.aspectj.internal.lang.reflect.InterTypeMethodDeclarationImpl has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.internal.lang.reflect.InterTypeMethodDeclarationImpl">
+        <message_arguments>
+            <message_argument value="org.aspectj.internal.lang.reflect.InterTypeMethodDeclarationImpl"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.internal.lang.reflect.PerClauseImpl" kind="ADDED" message="The re-exported type org.aspectj.internal.lang.reflect.PerClauseImpl has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.internal.lang.reflect.PerClauseImpl">
+        <message_arguments>
+            <message_argument value="org.aspectj.internal.lang.reflect.PerClauseImpl"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.internal.lang.reflect.PointcutBasedPerClauseImpl" kind="ADDED" message="The re-exported type org.aspectj.internal.lang.reflect.PointcutBasedPerClauseImpl has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.internal.lang.reflect.PointcutBasedPerClauseImpl">
+        <message_arguments>
+            <message_argument value="org.aspectj.internal.lang.reflect.PointcutBasedPerClauseImpl"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.internal.lang.reflect.PointcutExpressionImpl" kind="ADDED" message="The re-exported type org.aspectj.internal.lang.reflect.PointcutExpressionImpl has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.internal.lang.reflect.PointcutExpressionImpl">
+        <message_arguments>
+            <message_argument value="org.aspectj.internal.lang.reflect.PointcutExpressionImpl"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.internal.lang.reflect.PointcutImpl" kind="ADDED" message="The re-exported type org.aspectj.internal.lang.reflect.PointcutImpl has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.internal.lang.reflect.PointcutImpl">
+        <message_arguments>
+            <message_argument value="org.aspectj.internal.lang.reflect.PointcutImpl"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.internal.lang.reflect.SignaturePatternImpl" kind="ADDED" message="The re-exported type org.aspectj.internal.lang.reflect.SignaturePatternImpl has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.internal.lang.reflect.SignaturePatternImpl">
+        <message_arguments>
+            <message_argument value="org.aspectj.internal.lang.reflect.SignaturePatternImpl"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.internal.lang.reflect.StringToType" kind="ADDED" message="The re-exported type org.aspectj.internal.lang.reflect.StringToType has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.internal.lang.reflect.StringToType">
+        <message_arguments>
+            <message_argument value="org.aspectj.internal.lang.reflect.StringToType"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.internal.lang.reflect.TypePatternBasedPerClauseImpl" kind="ADDED" message="The re-exported type org.aspectj.internal.lang.reflect.TypePatternBasedPerClauseImpl has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.internal.lang.reflect.TypePatternBasedPerClauseImpl">
+        <message_arguments>
+            <message_argument value="org.aspectj.internal.lang.reflect.TypePatternBasedPerClauseImpl"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.internal.lang.reflect.TypePatternImpl" kind="ADDED" message="The re-exported type org.aspectj.internal.lang.reflect.TypePatternImpl has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.internal.lang.reflect.TypePatternImpl">
+        <message_arguments>
+            <message_argument value="org.aspectj.internal.lang.reflect.TypePatternImpl"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.Aspects" kind="ADDED" message="The re-exported type org.aspectj.lang.Aspects has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.Aspects">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.Aspects"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.Aspects14" kind="ADDED" message="The re-exported type org.aspectj.lang.Aspects14 has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.Aspects14">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.Aspects14"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.JoinPoint" kind="ADDED" message="The re-exported type org.aspectj.lang.JoinPoint has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.JoinPoint">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.JoinPoint"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.NoAspectBoundException" kind="ADDED" message="The re-exported type org.aspectj.lang.NoAspectBoundException has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.NoAspectBoundException">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.NoAspectBoundException"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.ProceedingJoinPoint" kind="ADDED" message="The re-exported type org.aspectj.lang.ProceedingJoinPoint has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.ProceedingJoinPoint">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.ProceedingJoinPoint"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.Signature" kind="ADDED" message="The re-exported type org.aspectj.lang.Signature has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.Signature">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.Signature"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.SoftException" kind="ADDED" message="The re-exported type org.aspectj.lang.SoftException has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.SoftException">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.SoftException"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.annotation.AdviceName" kind="ADDED" message="The re-exported type org.aspectj.lang.annotation.AdviceName has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="9729" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.annotation.AdviceName">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.annotation.AdviceName"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.annotation.After" kind="ADDED" message="The re-exported type org.aspectj.lang.annotation.After has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="9729" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.annotation.After">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.annotation.After"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.annotation.AfterReturning" kind="ADDED" message="The re-exported type org.aspectj.lang.annotation.AfterReturning has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="9729" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.annotation.AfterReturning">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.annotation.AfterReturning"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.annotation.AfterThrowing" kind="ADDED" message="The re-exported type org.aspectj.lang.annotation.AfterThrowing has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="9729" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.annotation.AfterThrowing">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.annotation.AfterThrowing"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.annotation.Around" kind="ADDED" message="The re-exported type org.aspectj.lang.annotation.Around has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="9729" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.annotation.Around">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.annotation.Around"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.annotation.Aspect" kind="ADDED" message="The re-exported type org.aspectj.lang.annotation.Aspect has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="9729" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.annotation.Aspect">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.annotation.Aspect"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.annotation.Before" kind="ADDED" message="The re-exported type org.aspectj.lang.annotation.Before has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="9729" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.annotation.Before">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.annotation.Before"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.annotation.DeclareAnnotation" kind="ADDED" message="The re-exported type org.aspectj.lang.annotation.DeclareAnnotation has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="9729" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.annotation.DeclareAnnotation">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.annotation.DeclareAnnotation"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.annotation.DeclareError" kind="ADDED" message="The re-exported type org.aspectj.lang.annotation.DeclareError has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="9729" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.annotation.DeclareError">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.annotation.DeclareError"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.annotation.DeclareMixin" kind="ADDED" message="The re-exported type org.aspectj.lang.annotation.DeclareMixin has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="9729" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.annotation.DeclareMixin">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.annotation.DeclareMixin"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.annotation.DeclareParents" kind="ADDED" message="The re-exported type org.aspectj.lang.annotation.DeclareParents has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="9729" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.annotation.DeclareParents">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.annotation.DeclareParents"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.annotation.DeclarePrecedence" kind="ADDED" message="The re-exported type org.aspectj.lang.annotation.DeclarePrecedence has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="9729" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.annotation.DeclarePrecedence">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.annotation.DeclarePrecedence"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.annotation.DeclareWarning" kind="ADDED" message="The re-exported type org.aspectj.lang.annotation.DeclareWarning has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="9729" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.annotation.DeclareWarning">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.annotation.DeclareWarning"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.annotation.Pointcut" kind="ADDED" message="The re-exported type org.aspectj.lang.annotation.Pointcut has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="9729" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.annotation.Pointcut">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.annotation.Pointcut"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.annotation.RequiredTypes" kind="ADDED" message="The re-exported type org.aspectj.lang.annotation.RequiredTypes has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="9729" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.annotation.RequiredTypes">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.annotation.RequiredTypes"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.annotation.SuppressAjWarnings" kind="ADDED" message="The re-exported type org.aspectj.lang.annotation.SuppressAjWarnings has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="9729" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.annotation.SuppressAjWarnings">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.annotation.SuppressAjWarnings"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.Advice" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.Advice has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.Advice">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.reflect.Advice"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.AdviceKind" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.AdviceKind has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="16433" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.AdviceKind">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.reflect.AdviceKind"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.AdviceSignature" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.AdviceSignature has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.AdviceSignature">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.reflect.AdviceSignature"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.AjType" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.AjType has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.AjType">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.reflect.AjType"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.AjTypeSystem" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.AjTypeSystem has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.AjTypeSystem">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.reflect.AjTypeSystem"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.CatchClauseSignature" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.CatchClauseSignature has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.CatchClauseSignature">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.reflect.CatchClauseSignature"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.CodeSignature" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.CodeSignature has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.CodeSignature">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.reflect.CodeSignature"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.ConstructorSignature" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.ConstructorSignature has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.ConstructorSignature">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.reflect.ConstructorSignature"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.DeclareAnnotation" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.DeclareAnnotation has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.DeclareAnnotation">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.reflect.DeclareAnnotation"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.DeclareErrorOrWarning" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.DeclareErrorOrWarning has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.DeclareErrorOrWarning">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.reflect.DeclareErrorOrWarning"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.DeclareParents" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.DeclareParents has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.DeclareParents">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.reflect.DeclareParents"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.DeclarePrecedence" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.DeclarePrecedence has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.DeclarePrecedence">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.reflect.DeclarePrecedence"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.DeclareSoft" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.DeclareSoft has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.DeclareSoft">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.reflect.DeclareSoft"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.FieldSignature" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.FieldSignature has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.FieldSignature">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.reflect.FieldSignature"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.InitializerSignature" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.InitializerSignature has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.InitializerSignature">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.reflect.InitializerSignature"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.InterTypeConstructorDeclaration" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.InterTypeConstructorDeclaration has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.InterTypeConstructorDeclaration">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.reflect.InterTypeConstructorDeclaration"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.InterTypeDeclaration" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.InterTypeDeclaration has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.InterTypeDeclaration">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.reflect.InterTypeDeclaration"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.InterTypeFieldDeclaration" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.InterTypeFieldDeclaration has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.InterTypeFieldDeclaration">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.reflect.InterTypeFieldDeclaration"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.InterTypeMethodDeclaration" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.InterTypeMethodDeclaration has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.InterTypeMethodDeclaration">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.reflect.InterTypeMethodDeclaration"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.LockSignature" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.LockSignature has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.LockSignature">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.reflect.LockSignature"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.MemberSignature" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.MemberSignature has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.MemberSignature">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.reflect.MemberSignature"/>
             <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
         </message_arguments>
     </delta>
@@ -211,9 +426,153 @@
             <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.SoftException" kind="ADDED" message="The re-exported type org.aspectj.lang.SoftException has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.SoftException">
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.NoSuchAdviceException" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.NoSuchAdviceException has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.NoSuchAdviceException">
         <message_arguments>
-            <message_argument value="org.aspectj.lang.SoftException"/>
+            <message_argument value="org.aspectj.lang.reflect.NoSuchAdviceException"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.NoSuchPointcutException" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.NoSuchPointcutException has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.NoSuchPointcutException">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.reflect.NoSuchPointcutException"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.PerClause" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.PerClause has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.PerClause">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.reflect.PerClause"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.PerClauseKind" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.PerClauseKind has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="16433" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.PerClauseKind">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.reflect.PerClauseKind"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.Pointcut" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.Pointcut has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.Pointcut">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.reflect.Pointcut"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.PointcutBasedPerClause" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.PointcutBasedPerClause has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.PointcutBasedPerClause">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.reflect.PointcutBasedPerClause"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.PointcutExpression" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.PointcutExpression has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.PointcutExpression">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.reflect.PointcutExpression"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.SignaturePattern" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.SignaturePattern has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.SignaturePattern">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.reflect.SignaturePattern"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.SourceLocation" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.SourceLocation has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.SourceLocation">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.reflect.SourceLocation"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.TypePattern" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.TypePattern has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.TypePattern">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.reflect.TypePattern"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.TypePatternBasedPerClause" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.TypePatternBasedPerClause has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.TypePatternBasedPerClause">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.reflect.TypePatternBasedPerClause"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.UnlockSignature" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.UnlockSignature has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.UnlockSignature">
+        <message_arguments>
+            <message_argument value="org.aspectj.lang.reflect.UnlockSignature"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.runtime.CFlow" kind="ADDED" message="The re-exported type org.aspectj.runtime.CFlow has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.runtime.CFlow">
+        <message_arguments>
+            <message_argument value="org.aspectj.runtime.CFlow"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.runtime.internal.AroundClosure" kind="ADDED" message="The re-exported type org.aspectj.runtime.internal.AroundClosure has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.aspectj.runtime.internal.AroundClosure">
+        <message_arguments>
+            <message_argument value="org.aspectj.runtime.internal.AroundClosure"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.runtime.internal.CFlowCounter" kind="ADDED" message="The re-exported type org.aspectj.runtime.internal.CFlowCounter has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.runtime.internal.CFlowCounter">
+        <message_arguments>
+            <message_argument value="org.aspectj.runtime.internal.CFlowCounter"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.runtime.internal.CFlowPlusState" kind="ADDED" message="The re-exported type org.aspectj.runtime.internal.CFlowPlusState has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.runtime.internal.CFlowPlusState">
+        <message_arguments>
+            <message_argument value="org.aspectj.runtime.internal.CFlowPlusState"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.runtime.internal.CFlowStack" kind="ADDED" message="The re-exported type org.aspectj.runtime.internal.CFlowStack has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.runtime.internal.CFlowStack">
+        <message_arguments>
+            <message_argument value="org.aspectj.runtime.internal.CFlowStack"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.runtime.internal.Conversions" kind="ADDED" message="The re-exported type org.aspectj.runtime.internal.Conversions has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.aspectj.runtime.internal.Conversions">
+        <message_arguments>
+            <message_argument value="org.aspectj.runtime.internal.Conversions"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.runtime.internal.PerObjectMap" kind="ADDED" message="The re-exported type org.aspectj.runtime.internal.PerObjectMap has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.runtime.internal.PerObjectMap">
+        <message_arguments>
+            <message_argument value="org.aspectj.runtime.internal.PerObjectMap"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.runtime.internal.cflowstack.ThreadCounter" kind="ADDED" message="The re-exported type org.aspectj.runtime.internal.cflowstack.ThreadCounter has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.runtime.internal.cflowstack.ThreadCounter">
+        <message_arguments>
+            <message_argument value="org.aspectj.runtime.internal.cflowstack.ThreadCounter"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.runtime.internal.cflowstack.ThreadCounterImpl11" kind="ADDED" message="The re-exported type org.aspectj.runtime.internal.cflowstack.ThreadCounterImpl11 has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.runtime.internal.cflowstack.ThreadCounterImpl11">
+        <message_arguments>
+            <message_argument value="org.aspectj.runtime.internal.cflowstack.ThreadCounterImpl11"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.runtime.internal.cflowstack.ThreadStack" kind="ADDED" message="The re-exported type org.aspectj.runtime.internal.cflowstack.ThreadStack has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.runtime.internal.cflowstack.ThreadStack">
+        <message_arguments>
+            <message_argument value="org.aspectj.runtime.internal.cflowstack.ThreadStack"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.runtime.internal.cflowstack.ThreadStackFactory" kind="ADDED" message="The re-exported type org.aspectj.runtime.internal.cflowstack.ThreadStackFactory has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.runtime.internal.cflowstack.ThreadStackFactory">
+        <message_arguments>
+            <message_argument value="org.aspectj.runtime.internal.cflowstack.ThreadStackFactory"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.runtime.internal.cflowstack.ThreadStackFactoryImpl" kind="ADDED" message="The re-exported type org.aspectj.runtime.internal.cflowstack.ThreadStackFactoryImpl has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.runtime.internal.cflowstack.ThreadStackFactoryImpl">
+        <message_arguments>
+            <message_argument value="org.aspectj.runtime.internal.cflowstack.ThreadStackFactoryImpl"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.runtime.internal.cflowstack.ThreadStackFactoryImpl11" kind="ADDED" message="The re-exported type org.aspectj.runtime.internal.cflowstack.ThreadStackFactoryImpl11 has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.runtime.internal.cflowstack.ThreadStackFactoryImpl11">
+        <message_arguments>
+            <message_argument value="org.aspectj.runtime.internal.cflowstack.ThreadStackFactoryImpl11"/>
             <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
         </message_arguments>
     </delta>
@@ -229,381 +588,9 @@
             <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.internal.lang.reflect.DeclareParentsImpl" kind="ADDED" message="The re-exported type org.aspectj.internal.lang.reflect.DeclareParentsImpl has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.internal.lang.reflect.DeclareParentsImpl">
-        <message_arguments>
-            <message_argument value="org.aspectj.internal.lang.reflect.DeclareParentsImpl"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.FieldSignature" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.FieldSignature has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.FieldSignature">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.reflect.FieldSignature"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="test()V" kind="ADDED" message="The method org.eclipse.emf.cdo.session.CDOSession.test() has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.session.CDOSession">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.session.CDOSession"/>
-            <message_argument value="test()"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.SignaturePattern" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.SignaturePattern has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.SignaturePattern">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.reflect.SignaturePattern"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.AdviceSignature" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.AdviceSignature has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.AdviceSignature">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.reflect.AdviceSignature"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.runtime.internal.cflowstack.ThreadCounterImpl11" kind="ADDED" message="The re-exported type org.aspectj.runtime.internal.cflowstack.ThreadCounterImpl11 has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.runtime.internal.cflowstack.ThreadCounterImpl11">
-        <message_arguments>
-            <message_argument value="org.aspectj.runtime.internal.cflowstack.ThreadCounterImpl11"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.internal.lang.reflect.PerClauseImpl" kind="ADDED" message="The re-exported type org.aspectj.internal.lang.reflect.PerClauseImpl has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.internal.lang.reflect.PerClauseImpl">
-        <message_arguments>
-            <message_argument value="org.aspectj.internal.lang.reflect.PerClauseImpl"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.internal.lang.annotation.ajcDeclareParents" kind="ADDED" message="The re-exported type org.aspectj.internal.lang.annotation.ajcDeclareParents has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="9729" oldModifiers="0" restrictions="0" type_name="org.aspectj.internal.lang.annotation.ajcDeclareParents">
-        <message_arguments>
-            <message_argument value="org.aspectj.internal.lang.annotation.ajcDeclareParents"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.Aspects" kind="ADDED" message="The re-exported type org.aspectj.lang.Aspects has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.Aspects">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.Aspects"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.Signature" kind="ADDED" message="The re-exported type org.aspectj.lang.Signature has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.Signature">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.Signature"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.runtime.internal.cflowstack.ThreadStackFactory" kind="ADDED" message="The re-exported type org.aspectj.runtime.internal.cflowstack.ThreadStackFactory has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.runtime.internal.cflowstack.ThreadStackFactory">
-        <message_arguments>
-            <message_argument value="org.aspectj.runtime.internal.cflowstack.ThreadStackFactory"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.Advice" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.Advice has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.Advice">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.reflect.Advice"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.NoAspectBoundException" kind="ADDED" message="The re-exported type org.aspectj.lang.NoAspectBoundException has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.NoAspectBoundException">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.NoAspectBoundException"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.Pointcut" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.Pointcut has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.Pointcut">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.reflect.Pointcut"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.internal.lang.reflect.InterTypeFieldDeclarationImpl" kind="ADDED" message="The re-exported type org.aspectj.internal.lang.reflect.InterTypeFieldDeclarationImpl has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.internal.lang.reflect.InterTypeFieldDeclarationImpl">
-        <message_arguments>
-            <message_argument value="org.aspectj.internal.lang.reflect.InterTypeFieldDeclarationImpl"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.PointcutExpression" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.PointcutExpression has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.PointcutExpression">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.reflect.PointcutExpression"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.internal.lang.reflect.InterTypeDeclarationImpl" kind="ADDED" message="The re-exported type org.aspectj.internal.lang.reflect.InterTypeDeclarationImpl has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.internal.lang.reflect.InterTypeDeclarationImpl">
-        <message_arguments>
-            <message_argument value="org.aspectj.internal.lang.reflect.InterTypeDeclarationImpl"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.internal.lang.reflect.DeclareErrorOrWarningImpl" kind="ADDED" message="The re-exported type org.aspectj.internal.lang.reflect.DeclareErrorOrWarningImpl has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.internal.lang.reflect.DeclareErrorOrWarningImpl">
-        <message_arguments>
-            <message_argument value="org.aspectj.internal.lang.reflect.DeclareErrorOrWarningImpl"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.JoinPoint" kind="ADDED" message="The re-exported type org.aspectj.lang.JoinPoint has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.JoinPoint">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.JoinPoint"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.internal.lang.reflect.DeclareSoftImpl" kind="ADDED" message="The re-exported type org.aspectj.internal.lang.reflect.DeclareSoftImpl has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.internal.lang.reflect.DeclareSoftImpl">
-        <message_arguments>
-            <message_argument value="org.aspectj.internal.lang.reflect.DeclareSoftImpl"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.annotation.DeclareAnnotation" kind="ADDED" message="The re-exported type org.aspectj.lang.annotation.DeclareAnnotation has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="9729" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.annotation.DeclareAnnotation">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.annotation.DeclareAnnotation"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.ConstructorSignature" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.ConstructorSignature has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.ConstructorSignature">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.reflect.ConstructorSignature"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.annotation.Aspect" kind="ADDED" message="The re-exported type org.aspectj.lang.annotation.Aspect has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="9729" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.annotation.Aspect">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.annotation.Aspect"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.InterTypeMethodDeclaration" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.InterTypeMethodDeclaration has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.InterTypeMethodDeclaration">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.reflect.InterTypeMethodDeclaration"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.internal.lang.reflect.AdviceImpl" kind="ADDED" message="The re-exported type org.aspectj.internal.lang.reflect.AdviceImpl has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.internal.lang.reflect.AdviceImpl">
-        <message_arguments>
-            <message_argument value="org.aspectj.internal.lang.reflect.AdviceImpl"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.annotation.AdviceName" kind="ADDED" message="The re-exported type org.aspectj.lang.annotation.AdviceName has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="9729" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.annotation.AdviceName">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.annotation.AdviceName"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.DeclarePrecedence" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.DeclarePrecedence has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.DeclarePrecedence">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.reflect.DeclarePrecedence"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.internal.lang.reflect.StringToType" kind="ADDED" message="The re-exported type org.aspectj.internal.lang.reflect.StringToType has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.internal.lang.reflect.StringToType">
-        <message_arguments>
-            <message_argument value="org.aspectj.internal.lang.reflect.StringToType"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.annotation.AfterThrowing" kind="ADDED" message="The re-exported type org.aspectj.lang.annotation.AfterThrowing has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="9729" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.annotation.AfterThrowing">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.annotation.AfterThrowing"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.SourceLocation" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.SourceLocation has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.SourceLocation">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.reflect.SourceLocation"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.runtime.internal.CFlowStack" kind="ADDED" message="The re-exported type org.aspectj.runtime.internal.CFlowStack has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.runtime.internal.CFlowStack">
-        <message_arguments>
-            <message_argument value="org.aspectj.runtime.internal.CFlowStack"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.annotation.Pointcut" kind="ADDED" message="The re-exported type org.aspectj.lang.annotation.Pointcut has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="9729" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.annotation.Pointcut">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.annotation.Pointcut"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.LockSignature" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.LockSignature has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.LockSignature">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.reflect.LockSignature"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.internal.lang.reflect.PointcutExpressionImpl" kind="ADDED" message="The re-exported type org.aspectj.internal.lang.reflect.PointcutExpressionImpl has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.internal.lang.reflect.PointcutExpressionImpl">
-        <message_arguments>
-            <message_argument value="org.aspectj.internal.lang.reflect.PointcutExpressionImpl"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.runtime.internal.PerObjectMap" kind="ADDED" message="The re-exported type org.aspectj.runtime.internal.PerObjectMap has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.runtime.internal.PerObjectMap">
-        <message_arguments>
-            <message_argument value="org.aspectj.runtime.internal.PerObjectMap"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.AjType" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.AjType has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.AjType">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.reflect.AjType"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.internal.lang.annotation.ajcDeclareSoft" kind="ADDED" message="The re-exported type org.aspectj.internal.lang.annotation.ajcDeclareSoft has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="9729" oldModifiers="0" restrictions="0" type_name="org.aspectj.internal.lang.annotation.ajcDeclareSoft">
-        <message_arguments>
-            <message_argument value="org.aspectj.internal.lang.annotation.ajcDeclareSoft"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.InterTypeDeclaration" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.InterTypeDeclaration has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.InterTypeDeclaration">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.reflect.InterTypeDeclaration"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.annotation.DeclareMixin" kind="ADDED" message="The re-exported type org.aspectj.lang.annotation.DeclareMixin has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="9729" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.annotation.DeclareMixin">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.annotation.DeclareMixin"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.DeclareErrorOrWarning" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.DeclareErrorOrWarning has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.DeclareErrorOrWarning">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.reflect.DeclareErrorOrWarning"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.DeclareAnnotation" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.DeclareAnnotation has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.DeclareAnnotation">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.reflect.DeclareAnnotation"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
     <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.runtime.reflect.FieldSignatureImpl" kind="ADDED" message="The re-exported type org.aspectj.runtime.reflect.FieldSignatureImpl has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.runtime.reflect.FieldSignatureImpl">
         <message_arguments>
             <message_argument value="org.aspectj.runtime.reflect.FieldSignatureImpl"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.annotation.After" kind="ADDED" message="The re-exported type org.aspectj.lang.annotation.After has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="9729" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.annotation.After">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.annotation.After"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.runtime.internal.Conversions" kind="ADDED" message="The re-exported type org.aspectj.runtime.internal.Conversions has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.aspectj.runtime.internal.Conversions">
-        <message_arguments>
-            <message_argument value="org.aspectj.runtime.internal.Conversions"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.MemberSignature" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.MemberSignature has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.MemberSignature">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.reflect.MemberSignature"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.Aspects14" kind="ADDED" message="The re-exported type org.aspectj.lang.Aspects14 has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.Aspects14">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.Aspects14"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.PerClause" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.PerClause has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.PerClause">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.reflect.PerClause"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.DeclareParents" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.DeclareParents has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.DeclareParents">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.reflect.DeclareParents"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.UnlockSignature" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.UnlockSignature has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.UnlockSignature">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.reflect.UnlockSignature"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.internal.lang.reflect.PointcutBasedPerClauseImpl" kind="ADDED" message="The re-exported type org.aspectj.internal.lang.reflect.PointcutBasedPerClauseImpl has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.internal.lang.reflect.PointcutBasedPerClauseImpl">
-        <message_arguments>
-            <message_argument value="org.aspectj.internal.lang.reflect.PointcutBasedPerClauseImpl"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.internal.lang.reflect.TypePatternBasedPerClauseImpl" kind="ADDED" message="The re-exported type org.aspectj.internal.lang.reflect.TypePatternBasedPerClauseImpl has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.internal.lang.reflect.TypePatternBasedPerClauseImpl">
-        <message_arguments>
-            <message_argument value="org.aspectj.internal.lang.reflect.TypePatternBasedPerClauseImpl"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.AjTypeSystem" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.AjTypeSystem has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.AjTypeSystem">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.reflect.AjTypeSystem"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.TypePatternBasedPerClause" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.TypePatternBasedPerClause has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.TypePatternBasedPerClause">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.reflect.TypePatternBasedPerClause"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.internal.lang.reflect.DeclareAnnotationImpl" kind="ADDED" message="The re-exported type org.aspectj.internal.lang.reflect.DeclareAnnotationImpl has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.internal.lang.reflect.DeclareAnnotationImpl">
-        <message_arguments>
-            <message_argument value="org.aspectj.internal.lang.reflect.DeclareAnnotationImpl"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.AdviceKind" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.AdviceKind has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="16433" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.AdviceKind">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.reflect.AdviceKind"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.runtime.internal.cflowstack.ThreadCounter" kind="ADDED" message="The re-exported type org.aspectj.runtime.internal.cflowstack.ThreadCounter has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.runtime.internal.cflowstack.ThreadCounter">
-        <message_arguments>
-            <message_argument value="org.aspectj.runtime.internal.cflowstack.ThreadCounter"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.internal.lang.annotation.ajcDeclareAnnotation" kind="ADDED" message="The re-exported type org.aspectj.internal.lang.annotation.ajcDeclareAnnotation has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="9729" oldModifiers="0" restrictions="0" type_name="org.aspectj.internal.lang.annotation.ajcDeclareAnnotation">
-        <message_arguments>
-            <message_argument value="org.aspectj.internal.lang.annotation.ajcDeclareAnnotation"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.NoSuchAdviceException" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.NoSuchAdviceException has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.NoSuchAdviceException">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.reflect.NoSuchAdviceException"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.InitializerSignature" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.InitializerSignature has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.InitializerSignature">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.reflect.InitializerSignature"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.annotation.RequiredTypes" kind="ADDED" message="The re-exported type org.aspectj.lang.annotation.RequiredTypes has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="9729" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.annotation.RequiredTypes">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.annotation.RequiredTypes"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.internal.lang.reflect.SignaturePatternImpl" kind="ADDED" message="The re-exported type org.aspectj.internal.lang.reflect.SignaturePatternImpl has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.aspectj.internal.lang.reflect.SignaturePatternImpl">
-        <message_arguments>
-            <message_argument value="org.aspectj.internal.lang.reflect.SignaturePatternImpl"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.lang.reflect.InterTypeConstructorDeclaration" kind="ADDED" message="The re-exported type org.aspectj.lang.reflect.InterTypeConstructorDeclaration has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.lang.reflect.InterTypeConstructorDeclaration">
-        <message_arguments>
-            <message_argument value="org.aspectj.lang.reflect.InterTypeConstructorDeclaration"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.aspectj.runtime.internal.cflowstack.ThreadStack" kind="ADDED" message="The re-exported type org.aspectj.runtime.internal.cflowstack.ThreadStack has been added to org.eclipse.net4j.trace_1.1.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.aspectj.runtime.internal.cflowstack.ThreadStack">
-        <message_arguments>
-            <message_argument value="org.aspectj.runtime.internal.cflowstack.ThreadStack"/>
             <message_argument value="org.eclipse.net4j.trace_1.1.0"/>
         </message_arguments>
     </delta>

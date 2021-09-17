@@ -198,22 +198,34 @@ public final class ApiReportsGenerator
     List<Object> result = new ArrayList<>();
     for (IProject project : ResourcesPlugin.getWorkspace().getRoot().getProjects())
     {
-      if (project.isAccessible())
+      if (project.isAccessible() && isAPI(project))
       {
         String name = project.getName();
         if (!isExcluded(patterns, name))
         {
           IJavaProject javaProject = JavaCore.create(project);
-          if (javaProject != null && javaProject.isOpen())
+          if (javaProject != null)
           {
             result.add(javaProject);
-            Activator.log(Status.info("API report project: " + project.getName()));
+            Activator.log(Status.info("API report project: " + name));
           }
         }
       }
     }
 
     return result;
+  }
+
+  private static boolean isAPI(IProject project)
+  {
+    try
+    {
+      return project.hasNature("org.eclipse.pde.api.tools.apiAnalysisNature");
+    }
+    catch (CoreException ex)
+    {
+      return false;
+    }
   }
 
   private static boolean isExcluded(Pattern[] patterns, String name)

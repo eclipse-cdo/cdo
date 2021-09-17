@@ -421,16 +421,25 @@ public final class ApiReportsGenerator
   {
     try
     {
-      Field f = Delta.class.getDeclaredField("children");
-      f.setAccessible(true);
-
-      IDelta[] children = (IDelta[])f.get(delta);
-      Arrays.sort(children, Comparator.comparing(IDelta::getMessage));
+      int deltasCounter = reflect(delta, "deltasCounter");
+      if (deltasCounter > 0)
+      {
+        IDelta[] children = reflect(delta, "children");
+        Arrays.sort(children, 0, deltasCounter, Comparator.comparing(IDelta::getMessage));
+      }
     }
     catch (Throwable e)
     {
       Activator.log(e);
     }
+  }
+
+  private static <T> T reflect(IDelta delta, String fieldName) throws Exception
+  {
+    Field f = Delta.class.getDeclaredField(fieldName);
+    f.setAccessible(true);
+
+    return (T)f.get(delta);
   }
 
   private static void updateMonitor(IProgressMonitor monitor, int work) throws OperationCanceledException

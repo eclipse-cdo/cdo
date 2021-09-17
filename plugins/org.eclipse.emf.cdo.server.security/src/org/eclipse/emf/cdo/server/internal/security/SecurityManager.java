@@ -124,6 +124,8 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 {
   private static final Map<IRepository, InternalSecurityManager> SECURITY_MANAGERS = Collections.synchronizedMap(new HashMap<>());
 
+  private static final long REALM_UPDATE_TIMEOUT = OMPlatform.INSTANCE.getProperty("org.eclipse.emf.cdo.server.security.REALM_UPDATE_TIMEOUT", 8000L);
+
   private static final boolean DISABLE_DETACH_CHECKS = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.server.security.DISABLE_DETACH_CHECKS");
 
   private static final boolean ALLOW_EMPTY_PASSWORDS = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.server.security.ALLOW_EMPTY_PASSWORDS");
@@ -467,7 +469,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
       if (waitUntilReadable)
       {
-        if (!realmView.waitForUpdate(info.getTimeStamp(), 10000))
+        if (!realmView.waitForUpdate(info.getTimeStamp(), REALM_UPDATE_TIMEOUT))
         {
           throw new TimeoutRuntimeException();
         }
@@ -1107,7 +1109,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
         long contextTime = securityContext.getTimeStamp();
         if (contextTime == CDOBranchPoint.UNSPECIFIED_DATE || contextTime < updateTime)
         {
-          if (!realmView.waitForUpdate(updateTime, 10000L))
+          if (!realmView.waitForUpdate(updateTime, REALM_UPDATE_TIMEOUT))
           {
             throw new TimeoutRuntimeException();
           }

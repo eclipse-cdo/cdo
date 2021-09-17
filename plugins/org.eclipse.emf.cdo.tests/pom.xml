@@ -25,7 +25,7 @@
 
   <groupId>org.eclipse.emf.cdo</groupId>
   <artifactId>org.eclipse.emf.cdo.tests</artifactId>
-  <version>4.1.6-SNAPSHOT</version>
+  <version>4.1.7-SNAPSHOT</version>
   <packaging>eclipse-test-plugin</packaging>
 
 </project>

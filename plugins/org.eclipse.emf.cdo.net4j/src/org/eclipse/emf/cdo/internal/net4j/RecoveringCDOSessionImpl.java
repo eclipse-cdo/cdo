@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.internal.net4j;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.util.TransportException;
+import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.net4j.CDOSessionRecoveryEvent;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionEvent;
@@ -115,13 +116,20 @@ public abstract class RecoveringCDOSessionImpl extends CDONet4jSessionImpl
   @Override
   protected void sessionProtocolDeactivated()
   {
+    recover(1, null);
+  }
+
+  protected void recover(int attempt, TransportException exception)
+  {
+    OM.LOG.info("Transport exception (" + attempt + ". attempt to recover)", exception);
+
+    fireEvent(createRecoveryStartedEvent(attempt, exception));
     recover();
+    fireEvent(createRecoveryFinishedEvent(attempt, exception));
   }
 
   protected void recover()
   {
-    fireEvent(createRecoveryStartedEvent());
-
     CDOSessionProtocol oldSessionProtocol = getSessionProtocol();
     unhookSessionProtocol();
     List<AfterRecoveryRunnable> runnables = recoverSession();
@@ -141,9 +149,6 @@ public abstract class RecoveringCDOSessionImpl extends CDONet4jSessionImpl
 
     boolean passiveUpdateEnabled = options().isPassiveUpdateEnabled();
     refresh(passiveUpdateEnabled);
-
-    CDOSessionEvent event = createRecoveryFinishedEvent();
-    fireEvent(event);
   }
 
   protected void handleProtocolChange(CDOSessionProtocol oldProtocol, CDOSessionProtocol newProtocol)
@@ -167,14 +172,32 @@ public abstract class RecoveringCDOSessionImpl extends CDONet4jSessionImpl
     commitInfoManager.activate();
   }
 
+  /**
+   * @deprecated As of 4.16 use {@link #createRecoveryStartedEvent(int, TransportException)}.
+   */
+  @Deprecated
   protected CDOSessionEvent createRecoveryStartedEvent()
   {
-    return new CDOSessionRecoveryEventImpl(this, CDOSessionRecoveryEvent.Type.STARTED);
+    return createRecoveryStartedEvent(0, null);
   }
 
+  protected CDOSessionEvent createRecoveryStartedEvent(int attempt, TransportException exception)
+  {
+    return new CDOSessionRecoveryEventImpl(this, CDOSessionRecoveryEvent.Type.STARTED, attempt, exception);
+  }
+
+  /**
+   * @deprecated As of 4.16 use {@link #createRecoveryFinishedEvent(int, TransportException)}.
+   */
+  @Deprecated
   protected CDOSessionEvent createRecoveryFinishedEvent()
   {
-    return new CDOSessionRecoveryEventImpl(this, CDOSessionRecoveryEvent.Type.FINISHED);
+    return createRecoveryFinishedEvent(0, null);
+  }
+
+  protected CDOSessionEvent createRecoveryFinishedEvent(int attempt, TransportException exception)
+  {
+    return new CDOSessionRecoveryEventImpl(this, CDOSessionRecoveryEvent.Type.FINISHED, attempt, exception);
   }
 
   protected IConnector createTCPConnector(boolean heartBeat)
@@ -277,7 +300,7 @@ public abstract class RecoveringCDOSessionImpl extends CDONet4jSessionImpl
     {
       if (exception instanceof TransportException)
       {
-        recover();
+        recover(attempt, (TransportException)exception);
       }
       else
       {

@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.net4j;
 
+import org.eclipse.emf.cdo.common.util.TransportException;
 import org.eclipse.emf.cdo.session.CDOSessionEvent;
 
 /**
@@ -25,6 +26,16 @@ import org.eclipse.emf.cdo.session.CDOSessionEvent;
 public interface CDOSessionRecoveryEvent extends CDOSessionEvent
 {
   public Type getType();
+
+  /**
+   * @since 4.5
+   */
+  public int getAttempt();
+
+  /**
+   * @since 4.5
+   */
+  public TransportException getException();
 
   /**
    * Enumerates the possible types of {@link CDOSessionRecoveryEvent session recovery events}.

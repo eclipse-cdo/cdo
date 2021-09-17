@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.internal.net4j;
 
+import org.eclipse.emf.cdo.common.util.TransportException;
 import org.eclipse.emf.cdo.net4j.CDOSessionRecoveryEvent;
 import org.eclipse.emf.cdo.session.CDOSession;
 
@@ -18,16 +19,22 @@ import org.eclipse.net4j.util.event.Event;
 /**
  * @author Caspar De Groot
  */
-public class CDOSessionRecoveryEventImpl extends Event implements CDOSessionRecoveryEvent
+public final class CDOSessionRecoveryEventImpl extends Event implements CDOSessionRecoveryEvent
 {
   private static final long serialVersionUID = 1L;
 
-  private Type type;
+  private final Type type;
 
-  public CDOSessionRecoveryEventImpl(CDOSession source, Type type)
+  private final int attempt;
+
+  private final TransportException exception;
+
+  public CDOSessionRecoveryEventImpl(CDOSession source, Type type, int attempt, TransportException exception)
   {
     super(source);
     this.type = type;
+    this.attempt = attempt;
+    this.exception = exception;
   }
 
   @Override
@@ -43,8 +50,27 @@ public class CDOSessionRecoveryEventImpl extends Event implements CDOSessionReco
   }
 
   @Override
+  public int getAttempt()
+  {
+    return attempt;
+  }
+
+  @Override
+  public TransportException getException()
+  {
+    return exception;
+  }
+
+  @Override
   protected String formatAdditionalParameters()
   {
-    return "type=" + type;
+    String params = "type=" + type + ", attempt=" + attempt;
+
+    if (exception != null)
+    {
+      params += ", exception=" + exception.getMessage();
+    }
+
+    return params;
   }
 }

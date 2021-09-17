@@ -74,6 +74,7 @@ public class ReconnectingSessionTest extends AbstractCDOTest
     ITCPAcceptor acceptor = null;
     CDONet4jSession reconnectingSession = null;
     CDOTransaction durableTransaction = null;
+
     try
     {
       IManagedContainer serverContainer = getServerContainer();
@@ -176,7 +177,14 @@ public class ReconnectingSessionTest extends AbstractCDOTest
     {
       if (durableTransaction != null)
       {
-        durableTransaction.disableDurableLocking(true);
+        try
+        {
+          durableTransaction.disableDurableLocking(true);
+        }
+        catch (Exception ignore)
+        {
+          // Do nothing.
+        }
       }
 
       LifecycleUtil.deactivate(reconnectingSession);

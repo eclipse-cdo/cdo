@@ -17,7 +17,7 @@ import org.eclipse.emf.cdo.common.revision.CDOListResolver;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 
 /**
- * A strategy that specifies which list elememts must be present (loaded) in a {@link CDOID} list of a
+ * A strategy that specifies which list elements must be present (loaded) in a {@link CDOID} list of a
  * {@link CDORevision revision} when a certain list index is accessed. Implementations of this interface can control the
  * exact characteristics of a certain <em>partial collection loading</em> strategy.
  *
@@ -39,7 +39,7 @@ public interface CDOCollectionLoadingPolicy extends CDOListResolver
   /**
    * Returns the maximum number of CDOIDs to be loaded for collections when the owning object is loaded initially, i.e.
    * <b>before</b> any of the collection elements is actually accessed. The remaining elements will be initialized as
-   * {@link CDOElementProxy proxys}.
+   * {@link CDOElementProxy proxies}.
    */
   public int getInitialChunkSize();
 

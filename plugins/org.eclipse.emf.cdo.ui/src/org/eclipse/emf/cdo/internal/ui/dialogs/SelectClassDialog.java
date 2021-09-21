@@ -216,11 +216,14 @@ public class SelectClassDialog extends TitleAreaDialog
       @Override
       public void doubleClick(DoubleClickEvent event)
       {
-        okPressed();
+        if (selectedClass != null)
+        {
+          okPressed();
+        }
       }
     });
 
-    sashForm.setWeights(new int[] { 2, 1 });
+    sashForm.setWeights(2, 1);
     return composite;
   }
 

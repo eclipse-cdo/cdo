@@ -12,6 +12,8 @@ package org.eclipse.emf.cdo.internal.ui.editor;
 
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 
+import org.eclipse.net4j.util.om.OMBundle.TranslationSupport;
+
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.ui.EclipseUIPlugin;
 import org.eclipse.emf.common.util.ResourceLocator;
@@ -22,6 +24,8 @@ import org.eclipse.emf.common.util.ResourceLocator;
  */
 public final class PluginDelegator extends EMFPlugin
 {
+  private static final TranslationSupport TRANSLATION_SUPPORT = OM.BUNDLE.getTranslationSupport();
+
   /**
    * Keep track of the singleton.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -49,25 +53,25 @@ public final class PluginDelegator extends EMFPlugin
   @Override
   public String getString(String key)
   {
-    return OM.BUNDLE.getTranslationSupport().getString(key);
+    return TRANSLATION_SUPPORT.getString(key);
   }
 
   @Override
   public String getString(String key, boolean translate)
   {
-    return OM.BUNDLE.getTranslationSupport().getString(key, translate);
+    return TRANSLATION_SUPPORT.getString(key, translate);
   }
 
   @Override
   public String getString(String key, Object[] substitutions)
   {
-    return OM.BUNDLE.getTranslationSupport().getString(key, substitutions);
+    return TRANSLATION_SUPPORT.getString(key, substitutions);
   }
 
   @Override
   public String getString(String key, Object[] substitutions, boolean translate)
   {
-    return OM.BUNDLE.getTranslationSupport().getString(key, substitutions, translate);
+    return TRANSLATION_SUPPORT.getString(key, substitutions, translate);
   }
 
   /**

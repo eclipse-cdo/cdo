@@ -249,7 +249,7 @@
       <repositoryList
           name="2021-12">
         <repository
-            url="http://download.eclipse.org/releases/2021-09"/>
+            url="http://download.eclipse.org/releases/2021-12"/>
         <repository
             url="http://download.eclipse.org/eclipse/updates/latest"/>
         <repository
@@ -1017,7 +1017,7 @@
     <setupTask
         xsi:type="setup:VariableTask"
         name="cdo.target.platform"
-        value="2021-09"/>
+        value="2021-12"/>
     <setupTask
         xsi:type="setup:VariableTask"
         name="cdo.bugzilla.version"

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde version="3.8"?>
-<target name="Generated from CDO" sequenceNumber="57">
+<target name="Generated from CDO" sequenceNumber="58">
   <locations>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
       <unit id="com.google.guava" version="0.0.0"/>
@@ -48,7 +48,8 @@
       <unit id="org.hsqldb" version="0.0.0"/>
       <unit id="org.postgresql" version="0.0.0"/>
       <unit id="org.slf4j.api" version="0.0.0"/>
-      <repository location="http://download.eclipse.org/releases/2021-09"/>
+      <repository location="http://download.eclipse.org/releases/2021-12"/>
+      <repository location="http://download.eclipse.org/eclipse/updates/latest"/>
       <repository location="http://download.eclipse.org/tools/orbit/downloads/latest-I"/>
       <repository location="http://download.eclipse.org/nebula/snapshot"/>
       <repository location="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
@@ -56,7 +57,7 @@
       <repository location="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
       <repository location="http://www.springsite.com/eclipse/2.1.0/update"/>
       <repository location="http://download.eclipse.org/tools/ajdt/48/dev/update"/>
-      <repository location="http://download.eclipse.org/eclipse/updates/4.21/R-4.21-202109060500"/>
+      <repository location="http://download.eclipse.org/eclipse/updates/4.22-I-builds"/>
     </location>
   </locations>
 </target>

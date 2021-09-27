@@ -517,13 +517,10 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
     return (EList<EObject>)eGet(EresourcePackage.Literals.CDO_RESOURCE__CONTENTS, true);
   }
 
-  /**
-   * @since 2.0
-   */
   @Override
-  public void cdoInternalPostDetach(boolean remote)
+  public void cdoInternalPostDetach(boolean remote, boolean top)
   {
-    super.cdoInternalPostDetach(remote);
+    super.cdoInternalPostDetach(remote, top);
     if (remote)
     {
       existing = false;

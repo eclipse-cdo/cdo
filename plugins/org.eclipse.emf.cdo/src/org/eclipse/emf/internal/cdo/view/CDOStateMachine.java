@@ -314,7 +314,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
         for (InternalCDOObject content : objectsToDetach)
         {
           CDOState oldState = setStateQuietely(content, CDOState.TRANSIENT);
-          content.cdoInternalPostDetach(false);
+          content.cdoInternalPostDetach(false, content == object);
           setStateQuietely(content, oldState);
         }
 
@@ -1175,7 +1175,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
         // postDetach() requires the object to be TRANSIENT, but listeners must not be notified at this point!
         CDOState oldState = setStateQuietely(object, CDOState.TRANSIENT);
-        object.cdoInternalPostDetach(false);
+        object.cdoInternalPostDetach(false, false);
         setStateQuietely(object, oldState);
 
         changeState(object, CDOState.TRANSIENT);
@@ -1371,7 +1371,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
       InternalCDOView view = object.cdoView();
       view.deregisterObject(object);
-      object.cdoInternalPostDetach(true);
+      object.cdoInternalPostDetach(true, false);
     }
   }
 

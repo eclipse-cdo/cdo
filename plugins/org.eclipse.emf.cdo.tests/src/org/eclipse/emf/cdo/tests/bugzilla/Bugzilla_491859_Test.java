@@ -71,6 +71,12 @@ public class Bugzilla_491859_Test extends AbstractCDOTest
     Element child1 = BaseFactory.eINSTANCE.createElement();
     element.getSubelements().add(child1);
 
+    Element subChild1 = BaseFactory.eINSTANCE.createElement();
+    child1.getSubelements().add(subChild1);
+
+    Element subChild2 = BaseFactory.eINSTANCE.createElement();
+    child1.getSubelements().add(subChild2);
+
     Element child2 = BaseFactory.eINSTANCE.createElement();
     element.getSubelements().add(child2);
 
@@ -85,7 +91,17 @@ public class Bugzilla_491859_Test extends AbstractCDOTest
     transaction.commit();
 
     // Now replace element by element_new
-    replace(element);
+    Element newElement = replace(element);
+    transaction.commit();
+
+    assertTrue(newElement.getSubelements().contains(child1));
+    assertTrue(newElement.getSubelements().contains(child2));
+
+    // Now replace element by yet another element_new
+    Element yetAnotherNewElement = replace(newElement);
+
+    assertTrue(yetAnotherNewElement.getSubelements().contains(child1));
+    assertTrue(yetAnotherNewElement.getSubelements().contains(child2));
     transaction.commit();
   }
 

@@ -541,7 +541,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
    * @since 2.0
    */
   @Override
-  public void cdoInternalPostDetach(boolean remote)
+  public void cdoInternalPostDetach(boolean remote, boolean top)
   {
     if (remote)
     {
@@ -583,13 +583,19 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
       }
     }
 
+    EStructuralFeature containerFeature = container != null && top ? eClass().getEStructuralFeature(eContainerFeatureID()) : null;
+
     InternalCDORevision revision = cdoRevision();
     EStructuralFeature[] allPersistentFeatures = classInfo.getAllPersistentFeatures();
     for (EStructuralFeature eFeature : allPersistentFeatures)
     {
       try
       {
-        revisionToInstanceFeature(this, revision, eFeature);
+        // Bug 491859: Do not store container value for root objects of the detached subtrees.
+        if (eFeature != containerFeature)
+        {
+          revisionToInstanceFeature(this, revision, eFeature);
+        }
       }
       catch (NoPermissionException ex)
       {
@@ -640,6 +646,13 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   @Override
   @Deprecated
   public final EStructuralFeature cdoInternalDynamicFeature(int dynamicFeatureID)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void cdoInternalPostDetach(boolean remote)
   {
     throw new UnsupportedOperationException();
   }

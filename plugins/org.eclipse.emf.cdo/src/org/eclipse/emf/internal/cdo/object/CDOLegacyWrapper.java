@@ -290,7 +290,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
   }
 
   @Override
-  public void cdoInternalPostDetach(boolean remote)
+  public void cdoInternalPostDetach(boolean remote, boolean top)
   {
     if (remote)
     {
@@ -327,6 +327,13 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
         }
       }
     }
+  }
+
+  @Override
+  @Deprecated
+  public void cdoInternalPostDetach(boolean remote)
+  {
+    throw new UnsupportedOperationException();
   }
 
   /**

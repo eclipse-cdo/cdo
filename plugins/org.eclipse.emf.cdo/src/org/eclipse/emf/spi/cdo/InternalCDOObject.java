@@ -20,6 +20,8 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOClassInfo;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.emf.internal.cdo.view.CDOStateMachine;
+
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 
@@ -57,7 +59,10 @@ public interface InternalCDOObject extends CDOObject, InternalEObject, InternalC
 
   public void cdoInternalPostAttach();
 
-  public void cdoInternalPostDetach(boolean remote);
+  /**
+   * @since 4.15
+   */
+  public void cdoInternalPostDetach(boolean remote, boolean top);
 
   public void cdoInternalPostInvalidate();
 
@@ -83,4 +88,10 @@ public interface InternalCDOObject extends CDOObject, InternalEObject, InternalC
    */
   @Deprecated
   public EStructuralFeature cdoInternalDynamicFeature(int dynamicFeatureID);
+
+  /**
+   * @deprecated As of 4.16 {@link #cdoInternalPostDetach(boolean, boolean)} is called by the {@link CDOStateMachine}.
+   */
+  @Deprecated
+  public void cdoInternalPostDetach(boolean remote);
 }

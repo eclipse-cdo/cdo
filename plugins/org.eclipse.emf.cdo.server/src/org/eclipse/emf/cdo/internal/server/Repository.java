@@ -107,6 +107,7 @@ import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.collection.CollectionUtil;
 import org.eclipse.net4j.util.collection.MoveableList;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
@@ -150,6 +151,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 /**
  * @author Eike Stepper
@@ -177,6 +179,8 @@ public class Repository extends Container<Object> implements InternalRepository
   private Type type = Type.MASTER;
 
   private State state = State.INITIAL;
+
+  private Object[] elements = {};
 
   private Map<String, String> properties;
 
@@ -1519,8 +1523,6 @@ public class Repository extends Container<Object> implements InternalRepository
   @Override
   public Object[] getElements()
   {
-    final Object[] elements = { packageRegistry, branchManager, revisionManager, sessionManager, queryManager, commitManager, commitInfoManager,
-        getLockingManager(), store };
     return elements;
   }
 
@@ -2747,6 +2749,50 @@ public class Repository extends Container<Object> implements InternalRepository
       if (REPOSITORIES.putIfAbsent(uuid, this) != null)
       {
         OM.LOG.warn("Attempt to register repository with duplicate UUID: " + uuid);
+      }
+    }
+  }
+
+  @Override
+  protected void doAfterActivate() throws Exception
+  {
+    super.doAfterActivate();
+
+    List<Object> elements = new ArrayList<>();
+    CollectionUtil.addNotNull(elements, packageRegistry);
+    CollectionUtil.addNotNull(elements, branchManager);
+    CollectionUtil.addNotNull(elements, revisionManager);
+    CollectionUtil.addNotNull(elements, sessionManager);
+    CollectionUtil.addNotNull(elements, queryManager);
+    CollectionUtil.addNotNull(elements, commitManager);
+    CollectionUtil.addNotNull(elements, commitConflictResolver);
+    CollectionUtil.addNotNull(elements, commitInfoManager);
+    CollectionUtil.addNotNull(elements, lockingManager);
+    CollectionUtil.addNotNull(elements, unitManager);
+    CollectionUtil.addNotNull(elements, store);
+    this.elements = elements.toArray();
+
+    List<PostActivateable> postActivateables = elements.stream() //
+        .filter(PostActivateable.class::isInstance)//
+        .map(PostActivateable.class::cast)//
+        .collect(Collectors.toList());
+
+    if (!postActivateables.isEmpty())
+    {
+      InternalSession session = getSessionManager().openSession(null);
+
+      try
+      {
+        StoreThreadLocal.wrap(session, () -> {
+          for (PostActivateable postActivateable : postActivateables)
+          {
+            postActivateable.doPostActivate(session);
+          }
+        }).run();
+      }
+      finally
+      {
+        session.close();
       }
     }
   }

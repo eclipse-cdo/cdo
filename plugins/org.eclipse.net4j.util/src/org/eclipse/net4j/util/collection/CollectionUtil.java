@@ -11,6 +11,7 @@
 package org.eclipse.net4j.util.collection;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -36,5 +37,18 @@ public final class CollectionUtil
 
     System.out.println(list);
     return list.iterator();
+  }
+
+  /**
+   * @since 3.16
+   */
+  public static <T> boolean addNotNull(Collection<? super T> c, T e)
+  {
+    if (e != null)
+    {
+      return c.add(e);
+    }
+
+    return false;
   }
 }

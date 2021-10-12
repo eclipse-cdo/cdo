@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
 import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
 import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.spi.common.CDOReplicationContext;
@@ -44,6 +45,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.Revisi
 
 import org.eclipse.net4j.util.concurrent.IExecutorServiceProvider;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
+import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IManagedContainerProvider;
 import org.eclipse.net4j.util.event.IEvent;
@@ -361,5 +363,24 @@ public interface InternalRepository extends IRepository, //
      * @since 4.7
      */
     public List<InternalCDOPackageUnit> getPackageUnits();
+  }
+
+  /**
+   * A mix-in interface for {@link IContainer#getElements() elements} of a {@link IRepository repository}
+   * that need to be notified when the repository is fully activated and {@link ISession sessions} can
+   * be opened.
+   *
+   * @author Eike Stepper
+   * @since 4.15
+   */
+  public interface PostActivateable
+  {
+    /**
+     * Called by a {@link IRepository repository} when it is fully activated.
+     *
+     * @param session a session that can be used by the implementor of this method.
+     *                This session <b>must not</b> be closed by the implementor.
+     */
+    public void doPostActivate(InternalSession session);
   }
 }

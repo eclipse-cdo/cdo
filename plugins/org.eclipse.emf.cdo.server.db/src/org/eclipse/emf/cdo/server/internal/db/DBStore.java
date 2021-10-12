@@ -36,6 +36,7 @@ import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.IMappingConstan
 import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.UnitMappingTable;
 import org.eclipse.emf.cdo.server.internal.db.messages.Messages;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
+import org.eclipse.emf.cdo.spi.server.InternalRepository.PostActivateable;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.LongIDStoreAccessor;
 import org.eclipse.emf.cdo.spi.server.Store;
@@ -76,7 +77,7 @@ import java.util.Timer;
 /**
  * @author Eike Stepper
  */
-public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAllRevisionsProvider
+public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAllRevisionsProvider, PostActivateable
 {
   public static final String TYPE = "db"; //$NON-NLS-1$
 
@@ -584,6 +585,36 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
   }
 
   @Override
+  public void doPostActivate(InternalSession session)
+  {
+    // if (OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.server.db.MIGRATE_WRONG_CONTAINERS"))
+    // {
+    // DBStoreAccessor reader = getReader(session);
+    // IDBConnection connection = reader.getDBConnection();
+    //
+    // try
+    // {
+    // Map<EClass, IClassMapping> classMappings = mappingStrategy.getClassMappings();
+    //
+    // for (IClassMapping classMapping : classMappings.values())
+    // {
+    // // ...
+    // }
+    //
+    // connection.commit();
+    // }
+    // catch (SQLException ex)
+    // {
+    // throw new DBException(ex);
+    // }
+    // finally
+    // {
+    // DBUtil.close(connection);
+    // }
+    // }
+  }
+
+  @Override
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
@@ -661,7 +692,6 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
         migrateSchema(schemaVersion);
       }
 
-      // CDODBSchema.INSTANCE.create(dbAdapter, connection);
       connection.commit();
     }
     finally
@@ -953,7 +983,7 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
         {
           result += ": " + getRepository().getName(); //$NON-NLS-1$
         }
-  
+
         return result;
       }
     };
@@ -1030,8 +1060,7 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
       {
         if (SCHEMA_MIGRATORS[version] != null)
         {
-          int nextVersion = version + 1;
-          OM.LOG.info("Migrating schema from version " + version + " to version " + nextVersion + "...");
+          OM.LOG.info("Migrating schema from version " + version + " to version " + (version + 1) + "...");
           SCHEMA_MIGRATORS[version].migrateSchema(this, connection);
         }
       }
@@ -1076,9 +1105,7 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
               statement = connection.createStatement();
 
               String from = " FROM " + name + " WHERE " + ATTRIBUTES_VERSION + "<" + CDOBranchVersion.FIRST_VERSION;
-
               statement.executeUpdate("DELETE FROM " + CDODBSchema.CDO_OBJECTS + " WHERE " + ATTRIBUTES_ID + " IN (SELECT " + ATTRIBUTES_ID + from + ")");
-
               statement.executeUpdate("DELETE" + from);
             }
             finally
@@ -1115,7 +1142,11 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
 
   private static final SchemaMigrator NULLABLE_COLUMNS_MIGRATION = null;
 
-  private static final SchemaMigrator[] SCHEMA_MIGRATORS = { NO_MIGRATION_NEEDED, NON_AUDIT_MIGRATION, LOB_SIZE_MIGRATION, NULLABLE_COLUMNS_MIGRATION };
+  private static final SchemaMigrator[] SCHEMA_MIGRATORS = { //
+      NO_MIGRATION_NEEDED, //
+      NON_AUDIT_MIGRATION, //
+      LOB_SIZE_MIGRATION, //
+      NULLABLE_COLUMNS_MIGRATION };
 
   static
   {

@@ -66,7 +66,6 @@ import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.registry.HashMapRegistry;
 import org.eclipse.net4j.util.registry.IRegistry;
 
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.text.MessageFormat;
@@ -457,10 +456,9 @@ public class Session extends Container<IView> implements InternalSession
       List<CDORevision> additionalRevisions)
   {
     InternalCDORevisionManager revisionManager = getRepository().getRevisionManager();
-    for (EStructuralFeature feature : revision.getClassInfo().getAllPersistentFeatures())
+    for (EStructuralFeature feature : revision.getClassInfo().getAllPersistentContainments())
     {
-      // TODO Clarify feature maps
-      if (feature instanceof EReference && !feature.isMany() && ((EReference)feature).isContainment())
+      if (!feature.isMany())
       {
         Object value = revision.getValue(feature);
         if (value instanceof CDOID)

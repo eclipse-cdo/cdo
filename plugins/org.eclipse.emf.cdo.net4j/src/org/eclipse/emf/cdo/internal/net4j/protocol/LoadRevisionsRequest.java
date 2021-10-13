@@ -103,7 +103,6 @@ public class LoadRevisionsRequest extends CDOClientRequest<List<RevisionInfo>>
     }
 
     CDOFetchRuleManager ruleManager = getSession().getFetchRuleManager();
-    CDOCollectionLoadingPolicy collectionLoadingPolicy = ruleManager.getCollectionLoadingPolicy();
     List<CDOFetchRule> fetchRules = ruleManager.getFetchRules(ids);
     if (fetchRules == null || fetchRules.size() <= 0)
     {
@@ -111,12 +110,13 @@ public class LoadRevisionsRequest extends CDOClientRequest<List<RevisionInfo>>
     }
     else
     {
-      // At this point, fetch size is more than one.
-      int fetchSize = fetchRules.size();
-      CDOID contextID = ruleManager.getContext();
+      int fetchRulesCount = fetchRules.size();
+      out.writeXInt(fetchRulesCount);
 
-      out.writeXInt(fetchSize);
+      CDOCollectionLoadingPolicy collectionLoadingPolicy = ruleManager.getCollectionLoadingPolicy();
       out.writeXInt(collectionLoadingPolicy != null ? collectionLoadingPolicy.getInitialChunkSize() : CDORevision.UNCHUNKED);
+
+      CDOID contextID = ruleManager.getContext();
       out.writeCDOID(contextID);
 
       for (CDOFetchRule fetchRule : fetchRules)

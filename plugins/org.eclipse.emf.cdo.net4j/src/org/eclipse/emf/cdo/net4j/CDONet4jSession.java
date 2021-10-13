@@ -51,6 +51,16 @@ public interface CDONet4jSession extends org.eclipse.emf.cdo.session.CDOSession
     public ISignalProtocol<CDONet4jSession> getNet4jProtocol();
 
     /**
+     * @since 4.5
+     */
+    public long getSignalTimeout();
+
+    /**
+     * @since 4.5
+     */
+    public void setSignalTimeout(long signalTimeout);
+
+    /**
      * Returns the timeout for commit operations in <b>seconds</b>.
      */
     public int getCommitTimeout();

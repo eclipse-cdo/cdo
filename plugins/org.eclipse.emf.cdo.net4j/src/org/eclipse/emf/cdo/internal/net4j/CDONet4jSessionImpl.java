@@ -403,6 +403,18 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
     }
 
     @Override
+    public long getSignalTimeout()
+    {
+      return CDONet4jSessionImpl.this.getSignalTimeout();
+    }
+
+    @Override
+    public void setSignalTimeout(long signalTimeout)
+    {
+      CDONet4jSessionImpl.this.setSignalTimeout(signalTimeout);
+    }
+
+    @Override
     public int getCommitTimeout()
     {
       return commitTimeout;

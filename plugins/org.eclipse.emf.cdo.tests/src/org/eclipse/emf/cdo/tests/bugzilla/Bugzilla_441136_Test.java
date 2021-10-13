@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.tests.bugzilla;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.internal.net4j.CDONet4jSessionImpl;
 import org.eclipse.emf.cdo.internal.net4j.protocol.CommitTransactionRequest;
 import org.eclipse.emf.cdo.internal.net4j.protocol.LoadRevisionsRequest;
 import org.eclipse.emf.cdo.internal.net4j.protocol.QueryCancelRequest;
@@ -66,7 +65,7 @@ public class Bugzilla_441136_Test extends AbstractCDOTest
     CDOSession session = openSession();
     getRepository().getCommitInfoManager().addCommitInfoHandler(new CommitTransactionIndicationWaiting());
     ((CDONet4jSession)session).options().setCommitTimeout(1000 * CommitTransactionRequest.DEFAULT_MONITOR_TIMEOUT_SECONDS);
-    ((CDONet4jSessionImpl)session).setSignalTimeout(10000 * SignalProtocol.DEFAULT_TIMEOUT);
+    ((CDONet4jSession)session).options().setSignalTimeout(10000 * SignalProtocol.DEFAULT_TIMEOUT);
     CDOTransaction transaction = session.openTransaction();
     ISignalProtocol<?> protocol = ((org.eclipse.emf.cdo.net4j.CDONet4jSession)session).options().getNet4jProtocol();
     SignalCounter signalCounter = new SignalCounter(protocol);

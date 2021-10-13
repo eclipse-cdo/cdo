@@ -571,10 +571,9 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
     synchronized (signals)
     {
       Signal signal = signals.get(correlationID);
-      if (signal instanceof RequestWithMonitoring<?>)
+      if (signal instanceof SignalActor)
       {
-        RequestWithMonitoring<?> request = (RequestWithMonitoring<?>)signal;
-        request.setMonitorProgress(totalWork, work);
+        ((SignalActor)signal).setMonitorProgress(totalWork, work);
       }
     }
   }
@@ -584,10 +583,9 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
     synchronized (signals)
     {
       Signal signal = signals.get(-correlationID);
-      if (signal instanceof IndicationWithMonitoring)
+      if (signal instanceof SignalReactor)
       {
-        IndicationWithMonitoring indication = (IndicationWithMonitoring)signal;
-        indication.setMonitorCanceled();
+        ((SignalReactor)signal).setMonitorCanceled();
       }
     }
   }

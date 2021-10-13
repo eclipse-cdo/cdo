@@ -55,6 +55,11 @@ public abstract class SignalActor extends Signal
 
   abstract void doExecute(BufferInputStream in, BufferOutputStream out) throws Exception;
 
+  void setMonitorProgress(double totalWork, double work)
+  {
+    getBufferInputStream().restartTimeout();
+  }
+
   @Override
   String getInputMeaning()
   {

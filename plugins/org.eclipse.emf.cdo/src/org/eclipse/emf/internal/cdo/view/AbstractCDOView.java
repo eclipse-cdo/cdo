@@ -36,6 +36,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
@@ -114,7 +115,6 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -1164,15 +1164,12 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
           throw new CDOException(MessageFormat.format(Messages.getString("CDOViewImpl.4"), folderID)); //$NON-NLS-1$
         }
 
-        EReference nodesFeature = EresourcePackage.eINSTANCE.getCDOResourceFolder_Nodes();
-        EAttribute nameFeature = EresourcePackage.eINSTANCE.getCDOResourceNode_Name();
-
         CDOList list;
         boolean bypassPermissionChecks = folderRevision.bypassPermissionChecks(true);
 
         try
         {
-          list = folderRevision.getListOrNull(nodesFeature);
+          list = folderRevision.getListOrNull(EresourcePackage.Literals.CDO_RESOURCE_FOLDER__NODES);
         }
         finally
         {
@@ -1184,11 +1181,11 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
         for (int i = 0; i < size; i++)
         {
           Object value = list.get(i);
-          value = store.resolveProxy(folderRevision, nodesFeature, i, value);
+          value = store.resolveProxy(folderRevision, EresourcePackage.Literals.CDO_RESOURCE_FOLDER__NODES, i, value);
 
           CDOID childID = (CDOID)convertObjectToID(value);
           InternalCDORevision childRevision = getLocalRevision(childID);
-          String childName = (String)childRevision.get(nameFeature, 0);
+          String childName = (String)childRevision.get(EresourcePackage.Literals.CDO_RESOURCE_NODE__NAME, 0);
           if (name.equals(childName))
           {
             return childID;
@@ -1217,6 +1214,12 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
       try
       {
+        CDOID id = getRootOrTopLevelResourceNodeIDCached(name);
+        if (id != null)
+        {
+          return id;
+        }
+
         CDOQuery resourceQuery = createResourcesQuery(null, name, true);
         resourceQuery.setMaxResults(1);
 
@@ -1233,6 +1236,61 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
         unlockView();
       }
     }
+  }
+
+  private CDOID getRootOrTopLevelResourceNodeIDCached(String name)
+  {
+    InternalCDORevision rootResourceRevision = getRevision(rootResourceID, false);
+    if (rootResourceRevision != null)
+    {
+      boolean bypassPermissionChecksRoot = rootResourceRevision.bypassPermissionChecks(true);
+
+      try
+      {
+        CDOList contents = rootResourceRevision.getListOrNull(EresourcePackage.Literals.CDO_RESOURCE__CONTENTS);
+        if (contents != null)
+        {
+          for (Object element : contents)
+          {
+            if (element instanceof CDOID)
+            {
+              CDOID id = (CDOID)element;
+              InternalCDORevision revision = getRevision(id, false);
+              if (revision != null)
+              {
+                boolean bypassPermissionChecks = revision.bypassPermissionChecks(true);
+
+                try
+                {
+                  if (name.equals(CDORevisionUtil.getResourceNodeName(revision)))
+                  {
+                    return id;
+                  }
+                }
+                finally
+                {
+                  revision.bypassPermissionChecks(bypassPermissionChecks);
+                }
+              }
+            }
+            else if (element instanceof CDOResourceNode)
+            {
+              CDOResourceNode node = (CDOResourceNode)element;
+              if (name.equals(node.getName()))
+              {
+                return node.cdoID();
+              }
+            }
+          }
+        }
+      }
+      finally
+      {
+        rootResourceRevision.bypassPermissionChecks(bypassPermissionChecksRoot);
+      }
+    }
+
+    return null;
   }
 
   private InternalCDORevision getLocalRevision(CDOID id)

@@ -499,6 +499,20 @@ public final class CDORevisionUtil
   }
 
   /**
+   * @since 4.15
+   */
+  public static String getResourceNodeName(CDORevision revision)
+  {
+    EAttribute attribute = getResourceNodeNameAttribute(revision);
+    if (attribute != null)
+    {
+      return (String)((InternalCDORevision)revision).get(attribute, 0);
+    }
+
+    return null;
+  }
+
+  /**
    * @since 4.3
    */
   public static String getResourceNodePath(CDOID id, CDORevisionProvider provider)

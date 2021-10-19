@@ -13,6 +13,7 @@ package org.eclipse.net4j.signal;
 import org.eclipse.net4j.buffer.BufferInputStream;
 import org.eclipse.net4j.buffer.BufferOutputStream;
 import org.eclipse.net4j.util.ReflectUtil;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
@@ -42,6 +43,8 @@ public abstract class Signal implements Runnable
   public static final long NO_TIMEOUT = BufferInputStream.NO_TIMEOUT;
 
   private static final boolean DISABLE_LOG_EXCEPTIONS = OMPlatform.INSTANCE.isProperty("org.eclipse.net4j.signal.Signal.disableLogExceptions");
+
+  private static final boolean SHORT_TO_STRING = OMPlatform.INSTANCE.isProperty("org.eclipse.net4j.signal.Signal.shortToString");
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SIGNAL, Signal.class);
 
@@ -139,8 +142,27 @@ public abstract class Signal implements Runnable
   @Override
   public String toString()
   {
-    return MessageFormat.format("Signal[protocol={0}, id={1}, name={2}, correlation={3}{4}]", getProtocol().getType(), //$NON-NLS-1$
-        getID(), getName(), getCorrelationID(), getAdditionalInfo());
+    String name = getName();
+
+    String additionalInfo = getAdditionalInfo();
+    if (StringUtil.isEmpty(additionalInfo))
+    {
+      if (SHORT_TO_STRING)
+      {
+        return name;
+      }
+
+      return MessageFormat.format("Signal[protocol={0}, id={1}, name={2}, correlation={3}]", getProtocol().getType(), //$NON-NLS-1$
+          getID(), name, getCorrelationID());
+    }
+
+    if (SHORT_TO_STRING)
+    {
+      return MessageFormat.format("{0}[{1}]", name, additionalInfo); //$NON-NLS-1$
+    }
+
+    return MessageFormat.format("Signal[protocol={0}, id={1}, name={2}, correlation={3}, {4}]", getProtocol().getType(), //$NON-NLS-1$
+        getID(), name, getCorrelationID(), additionalInfo);
   }
 
   /**

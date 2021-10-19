@@ -74,8 +74,8 @@ public class LockStateRequest extends CDOClientRequest<CDOLockState[]>
   }
 
   @Override
-  public String toString()
+  protected String getAdditionalInfo()
   {
-    return MessageFormat.format("LockStateRequest(viewID={0}, ids={1}, prefetchDepth={2})", viewID, ids, prefetchDepth);
+    return MessageFormat.format("viewID={0}, ids={1}, prefetchDepth={2}", viewID, ids, prefetchDepth);
   }
 }

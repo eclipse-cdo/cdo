@@ -10,11 +10,14 @@
  */
 package org.eclipse.emf.cdo.internal.explorer.repositories;
 
+import org.eclipse.emf.cdo.internal.explorer.bundle.OM;
+import org.eclipse.emf.cdo.security.User;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
+import org.eclipse.emf.cdo.server.spi.security.SecurityManagerFactory;
 import org.eclipse.emf.cdo.session.CDOSession;
 
 import org.eclipse.net4j.Net4jUtil;
@@ -22,8 +25,13 @@ import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.security.CredentialsUpdateOperation;
+import org.eclipse.net4j.util.security.IPasswordCredentials;
+import org.eclipse.net4j.util.security.IPasswordCredentialsUpdate;
+import org.eclipse.net4j.util.security.PasswordCredentials;
 
 import org.h2.jdbcx.JdbcDataSource;
 
@@ -37,9 +45,19 @@ import java.util.Properties;
  */
 public class LocalCDORepository extends CDORepositoryImpl
 {
+  public static final String PROP_SECURITY_DISABLED = "securityDisabled";
+
+  public static final String PROP_SECURITY_CONFIG = "securityConfig";
+
   public static final String PROP_TCP_DISABLED = "tcpDisabled";
 
   public static final String PROP_TCP_PORT = "tcpPort";
+
+  private static final PasswordCredentials CREDENTIALS = new PasswordCredentials(User.ADMINISTRATOR, User.ADMINISTRATOR_DEFAULT_PASSWORD);
+
+  private boolean securityDisabled;
+
+  private String securityConfig;
 
   private boolean tcpDisabled;
 
@@ -94,6 +112,16 @@ public class LocalCDORepository extends CDORepositoryImpl
     return "tcp://localhost:" + tcpPort + "/" + getName();
   }
 
+  public final boolean isSecurityDisabled()
+  {
+    return securityDisabled;
+  }
+
+  public final String getSecurityConfig()
+  {
+    return securityConfig;
+  }
+
   public final boolean isTCPDisabled()
   {
     return tcpDisabled;
@@ -108,17 +136,18 @@ public class LocalCDORepository extends CDORepositoryImpl
   protected void init(File folder, String type, Properties properties)
   {
     super.init(folder, type, properties);
-    tcpDisabled = Boolean.parseBoolean(properties.getProperty(PROP_TCP_DISABLED));
-    if (!tcpDisabled)
-    {
-      tcpPort = Integer.parseInt(properties.getProperty(PROP_TCP_PORT));
-    }
+    securityDisabled = Boolean.parseBoolean(properties.getProperty(PROP_SECURITY_DISABLED, Boolean.TRUE.toString()));
+    securityConfig = StringUtil.safe(properties.get(PROP_SECURITY_CONFIG));
+    tcpDisabled = Boolean.parseBoolean(properties.getProperty(PROP_TCP_DISABLED, Boolean.TRUE.toString()));
+    tcpPort = Integer.parseInt(properties.getProperty(PROP_TCP_PORT, "0"));
   }
 
   @Override
   protected void collectProperties(Properties properties)
   {
     super.collectProperties(properties);
+    properties.setProperty(PROP_SECURITY_DISABLED, Boolean.toString(securityDisabled));
+    properties.setProperty(PROP_SECURITY_CONFIG, StringUtil.safe(securityConfig));
     properties.setProperty(PROP_TCP_DISABLED, Boolean.toString(tcpDisabled));
     properties.setProperty(PROP_TCP_PORT, Integer.toString(tcpPort));
   }
@@ -128,12 +157,14 @@ public class LocalCDORepository extends CDORepositoryImpl
   {
     String repositoryName = getName();
     File folder = new File(getFolder(), "db");
+    VersioningMode versioningMode = getVersioningMode();
 
     JdbcDataSource dataSource = new JdbcDataSource();
     dataSource.setURL("jdbc:h2:" + folder);
 
-    IMappingStrategy mappingStrategy = CDODBUtil.createHorizontalMappingStrategy(getVersioningMode().isSupportingAudits(),
-        getVersioningMode().isSupportingBranches(), false);
+    boolean supportingAudits = versioningMode.isSupportingAudits();
+    boolean supportingBranches = versioningMode.isSupportingBranches();
+    IMappingStrategy mappingStrategy = CDODBUtil.createHorizontalMappingStrategy(supportingAudits, supportingBranches, false);
     mappingStrategy.setProperties(getMappingStrategyProperties());
 
     IDBAdapter dbAdapter = DBUtil.getDBAdapter("h2");
@@ -144,7 +175,26 @@ public class LocalCDORepository extends CDORepositoryImpl
 
     IManagedContainer container = getContainer();
     CDOServerUtil.addRepository(container, repository);
-    Net4jUtil.getAcceptor(container, getConnectorType(), getConnectorDescription());
+
+    if (!securityDisabled)
+    {
+      try
+      {
+        String qualifiedDescription = String.format("%s:%s", repositoryName, securityConfig); //$NON-NLS-1$
+        if (container.getElement(SecurityManagerFactory.PRODUCT_GROUP, "default", qualifiedDescription) == null)
+        {
+          throw new IllegalStateException("Security manager for repository " + repositoryName + " could not be created: " + securityConfig);
+        }
+      }
+      catch (Exception ex)
+      {
+        OM.LOG.error(ex);
+      }
+    }
+
+    String connectorType = getConnectorType();
+    String connectorDescription = getConnectorDescription();
+    Net4jUtil.getAcceptor(container, connectorType, connectorDescription);
 
     if (!tcpDisabled)
     {
@@ -154,12 +204,47 @@ public class LocalCDORepository extends CDORepositoryImpl
     return super.openSession();
   }
 
+  @Override
+  public IPasswordCredentials getCredentials(String realm)
+  {
+    if (!isSecurityDisabled())
+    {
+      return CREDENTIALS;
+    }
+
+    return super.getCredentials(realm);
+  }
+
+  @Override
+  public void setCredentials(IPasswordCredentials credentials)
+  {
+    if (!isSecurityDisabled())
+    {
+      return;
+    }
+
+    super.setCredentials(credentials);
+  }
+
+  @Override
+  public IPasswordCredentialsUpdate getCredentialsUpdate(String realm, String userID, CredentialsUpdateOperation operation)
+  {
+    if (!isSecurityDisabled())
+    {
+      return null;
+    }
+
+    return super.getCredentialsUpdate(realm, userID, operation);
+  }
+
   protected Map<String, String> getRepositoryProperties()
   {
+    VersioningMode versioningMode = getVersioningMode();
+
     Map<String, String> props = new HashMap<>();
     props.put(IRepository.Props.OVERRIDE_UUID, "");
-    props.put(IRepository.Props.SUPPORTING_AUDITS, Boolean.toString(getVersioningMode().isSupportingAudits()));
-    props.put(IRepository.Props.SUPPORTING_BRANCHES, Boolean.toString(getVersioningMode().isSupportingBranches()));
+    props.put(IRepository.Props.SUPPORTING_AUDITS, Boolean.toString(versioningMode.isSupportingAudits()));
+    props.put(IRepository.Props.SUPPORTING_BRANCHES, Boolean.toString(versioningMode.isSupportingBranches()));
     props.put(IRepository.Props.ID_GENERATION_LOCATION, getIDGeneration().getLocation().toString());
     return props;
   }

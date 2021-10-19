@@ -50,6 +50,11 @@ public interface User extends Assignee
   public static final String ADMINISTRATOR = "Administrator";
 
   /**
+   * @since 4.6
+   */
+  public static final String ADMINISTRATOR_DEFAULT_PASSWORD = "0000";
+
+  /**
    * Returns the value of the '<em><b>Groups</b></em>' reference list.
    * The list contents are of type {@link org.eclipse.emf.cdo.security.Group}.
    * It is bidirectional and its opposite is '{@link org.eclipse.emf.cdo.security.Group#getUsers <em>Users</em>}'.

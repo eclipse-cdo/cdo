@@ -104,11 +104,11 @@ public class SecurityExtension implements IAppExtension2, IAppExtension4
   protected void configureRepository(Element repositoryConfig)
   {
     IManagedContainer container = getContainer();
-    String name = repositoryConfig.getAttribute("name");
-    InternalRepository repository = (InternalRepository)RepositoryFactory.get(container, name);
+    String repositoryName = repositoryConfig.getAttribute("name");
+    InternalRepository repository = (InternalRepository)RepositoryFactory.get(container, repositoryName);
     if (repository == null)
     {
-      throw new IllegalStateException("Repository not registered with container: " + name); //$NON-NLS-1$
+      throw new IllegalStateException("Repository not registered with container: " + repositoryName); //$NON-NLS-1$
     }
 
     NodeList securityManagers = repositoryConfig.getElementsByTagName("securityManager"); //$NON-NLS-1$
@@ -137,10 +137,9 @@ public class SecurityExtension implements IAppExtension2, IAppExtension4
         description = DEFAULT_REALM_PATH;
       }
 
-      String qualifiedDescription = String.format("%s:%s", name, description); //$NON-NLS-1$
-      if (container.getElement(SecurityManagerFactory.PRODUCT_GROUP, type, qualifiedDescription) != null)
+      if (SecurityManagerFactory.Default.create(container, repositoryName, description) != null)
       {
-        OM.LOG.info("Security manager for repository " + repository.getName() + ": " + qualifiedDescription);
+        OM.LOG.info("Security manager for repository " + repositoryName + ": " + description);
       }
     }
   }

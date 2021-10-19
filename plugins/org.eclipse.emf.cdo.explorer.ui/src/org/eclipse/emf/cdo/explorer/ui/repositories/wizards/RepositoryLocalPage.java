@@ -18,9 +18,11 @@ import org.eclipse.emf.cdo.explorer.repositories.CDORepositoryManager;
 import org.eclipse.emf.cdo.explorer.ui.checkouts.wizards.CheckoutWizardPage.ValidationProblem;
 import org.eclipse.emf.cdo.internal.explorer.repositories.CDORepositoryImpl;
 import org.eclipse.emf.cdo.internal.explorer.repositories.LocalCDORepository;
+import org.eclipse.emf.cdo.ui.Support;
 
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.ui.widgets.TextAndDisable;
 
 import org.eclipse.swt.SWT;
@@ -43,6 +45,12 @@ import java.util.Set;
  */
 public class RepositoryLocalPage extends AbstractRepositoryPage
 {
+  private static final boolean SERVER_SECURITY_AVAILABLE = Support.SERVER_SECURITY.isAvailable();
+
+  private static final String DEFAULT_SECURITY_DESCRIPTION = OMPlatform.INSTANCE.getProperty( //
+      "org.eclipse.emf.cdo.explorer.ui.repositories.wizards.RepositoryLocalPage.DEFAULT_SECURITY_DESCRIPTION", //
+      "/security:annotation:home(/home)");
+
   private final Set<Integer> configuredPorts = new HashSet<>();
 
   private Text nameText;
@@ -56,6 +64,8 @@ public class RepositoryLocalPage extends AbstractRepositoryPage
   private Button counterButton;
 
   private Button uuidButton;
+
+  private TextAndDisable securityText;
 
   private TextAndDisable portText;
 
@@ -138,6 +148,25 @@ public class RepositoryLocalPage extends AbstractRepositoryPage
     uuidButton.setSelection(true);
     uuidButton.addSelectionListener(this);
 
+    if (SERVER_SECURITY_AVAILABLE)
+    {
+      createLabel(container, "Security:");
+      securityText = new TextAndDisable(container, SWT.BORDER, null)
+      {
+        @Override
+        protected GridData createTextLayoutData()
+        {
+          return new GridData(SWT.FILL, SWT.CENTER, true, false);
+        }
+      };
+
+      securityText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+      securityText.setValue(DEFAULT_SECURITY_DESCRIPTION);
+      securityText.setDisabled(true);
+      securityText.addModifyListener(this);
+      securityText.addSelectionListener(this);
+    }
+
     createLabel(container, "TCP port:");
     portText = new TextAndDisable(container, SWT.BORDER, null);
     portText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
@@ -191,6 +220,23 @@ public class RepositoryLocalPage extends AbstractRepositoryPage
     else if (uuidButton.getSelection())
     {
       properties.setProperty(CDORepositoryImpl.PROP_ID_GENERATION, IDGeneration.UUID.toString());
+    }
+
+    if (SERVER_SECURITY_AVAILABLE)
+    {
+      boolean securityDisabled = securityText.isDisabled();
+      properties.setProperty(LocalCDORepository.PROP_SECURITY_DISABLED, Boolean.toString(securityDisabled));
+
+      if (!securityDisabled)
+      {
+        String securityConfig = securityText.getText().getText();
+        if (securityConfig.isBlank())
+        {
+          throw new ValidationProblem("Security configuration must start with the realm path.");
+        }
+
+        properties.setProperty(LocalCDORepository.PROP_SECURITY_CONFIG, securityConfig);
+      }
     }
 
     boolean tcpPortDisabled = portText.isDisabled();

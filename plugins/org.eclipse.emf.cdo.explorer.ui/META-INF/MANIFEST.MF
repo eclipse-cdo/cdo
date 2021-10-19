@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emf.cdo.explorer.ui;singleton:=true
-Bundle-Version: 4.7.3.qualifier
+Bundle-Version: 4.7.4.qualifier
 Bundle-Activator: org.eclipse.emf.cdo.explorer.ui.bundle.OM$Activator
 Bundle-Vendor: %providerName
 Bundle-ClassPath: .
@@ -19,21 +19,22 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.emf.cdo.workspace;bundle-version="[4.0.0,5.0.0)",
  org.eclipse.emf.cdo.server;bundle-version="[4.0.0,5.0.0)",
  org.eclipse.emf.cdo.server.db;bundle-version="[4.0.0,5.0.0)",
+ org.eclipse.emf.cdo.server.security;bundle-version="[4.0.0,5.0.0)";resolution:=optional,
  org.eclipse.emf.cdo.admin;bundle-version="[4.0.0,5.0.0)",
  org.eclipse.emf.cdo.ui;bundle-version="[4.0.0,5.0.0)",
  org.eclipse.emf.cdo.ui.shared;bundle-version="[4.0.0,5.0.0)",
  org.eclipse.emf.cdo.ui.compare;bundle-version="[4.0.0,5.0.0)";resolution:=optional,
  org.eclipse.emf.cdo.ui.team;bundle-version="[4.0.0,5.0.0)";resolution:=optional
-Export-Package: org.eclipse.emf.cdo.explorer.ui;version="4.7.3";x-internal:=true,
- org.eclipse.emf.cdo.explorer.ui.actions;version="4.7.3";x-internal:=true,
- org.eclipse.emf.cdo.explorer.ui.application;version="4.7.3";x-internal:=true,
- org.eclipse.emf.cdo.explorer.ui.bundle;version="4.7.3";x-internal:=true,
- org.eclipse.emf.cdo.explorer.ui.checkouts;version="4.7.3";x-internal:=true,
- org.eclipse.emf.cdo.explorer.ui.checkouts.actions;version="4.7.3";x-internal:=true,
- org.eclipse.emf.cdo.explorer.ui.checkouts.wizards;version="4.7.3";x-internal:=true,
- org.eclipse.emf.cdo.explorer.ui.handlers;version="4.7.3";x-internal:=true,
- org.eclipse.emf.cdo.explorer.ui.properties;version="4.7.3";x-internal:=true,
- org.eclipse.emf.cdo.explorer.ui.repositories;version="4.7.3";x-internal:=true,
- org.eclipse.emf.cdo.explorer.ui.repositories.wizards;version="4.7.3";x-internal:=true
+Export-Package: org.eclipse.emf.cdo.explorer.ui;version="4.7.4";x-internal:=true,
+ org.eclipse.emf.cdo.explorer.ui.actions;version="4.7.4";x-internal:=true,
+ org.eclipse.emf.cdo.explorer.ui.application;version="4.7.4";x-internal:=true,
+ org.eclipse.emf.cdo.explorer.ui.bundle;version="4.7.4";x-internal:=true,
+ org.eclipse.emf.cdo.explorer.ui.checkouts;version="4.7.4";x-internal:=true,
+ org.eclipse.emf.cdo.explorer.ui.checkouts.actions;version="4.7.4";x-internal:=true,
+ org.eclipse.emf.cdo.explorer.ui.checkouts.wizards;version="4.7.4";x-internal:=true,
+ org.eclipse.emf.cdo.explorer.ui.handlers;version="4.7.4";x-internal:=true,
+ org.eclipse.emf.cdo.explorer.ui.properties;version="4.7.4";x-internal:=true,
+ org.eclipse.emf.cdo.explorer.ui.repositories;version="4.7.4";x-internal:=true,
+ org.eclipse.emf.cdo.explorer.ui.repositories.wizards;version="4.7.4";x-internal:=true
 Eclipse-BuddyPolicy: registered
 Automatic-Module-Name: org.eclipse.emf.cdo.explorer.ui

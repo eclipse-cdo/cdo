@@ -15,6 +15,7 @@ import org.eclipse.emf.common.CommonPlugin;
 /**
  * @author Eike Stepper
  * @since 4.5
+ * @noextend This class is not intended to be subclassed by clients.
  */
 public abstract class Support
 {
@@ -42,6 +43,18 @@ public abstract class Support
     protected boolean determineAvailability() throws Throwable
     {
       return CommonPlugin.loadClass("org.eclipse.emf.cdo.ui.compare", "org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil") != null;
+    }
+  };
+
+  /**
+   * @since 4.11
+   */
+  public static final Support SERVER_SECURITY = new Support()
+  {
+    @Override
+    protected boolean determineAvailability() throws Throwable
+    {
+      return CommonPlugin.loadClass("org.eclipse.emf.cdo.server.security", "org.eclipse.emf.cdo.server.security.SecurityManagerUtil") != null;
     }
   };
 

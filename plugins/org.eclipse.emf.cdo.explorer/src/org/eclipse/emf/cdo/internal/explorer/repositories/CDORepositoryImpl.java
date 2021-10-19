@@ -86,6 +86,10 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
 {
   public static final String PROP_NAME = "name";
 
+  public static final String PROP_VERSIONING_MODE = "versioningMode";
+
+  public static final String PROP_ID_GENERATION = "idGeneration";
+
   public static final String PROP_REALM = "realm";
 
   public static final String REPOSITORY_KEY = CDORepository.class.getName();
@@ -159,10 +163,6 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
   private int sessionRefCount;
 
   private CDOSession session;
-
-  public static final String PROP_VERSIONING_MODE = "versioningMode";
-
-  public static final String PROP_ID_GENERATION = "idGeneration";
 
   public CDORepositoryImpl()
   {

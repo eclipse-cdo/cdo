@@ -117,6 +117,15 @@ public abstract class SecurityManagerFactory extends Factory
 
       return (CommitHandler)container.getElement(CommitHandler.Factory.PRODUCT_GROUP, factoryType, description);
     }
+
+    /**
+     * @since 4.8
+     */
+    public static ISecurityManager create(IManagedContainer container, String repositoryName, String description)
+    {
+      String qualifiedDescription = String.format("%s:%s", repositoryName, description); //$NON-NLS-1$
+      return (ISecurityManager)container.getElement(PRODUCT_GROUP, TYPE, qualifiedDescription);
+    }
   }
 
   /**

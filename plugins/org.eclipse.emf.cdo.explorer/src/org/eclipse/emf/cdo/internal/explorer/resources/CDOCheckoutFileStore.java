@@ -121,42 +121,32 @@ public class CDOCheckoutFileStore extends FileStore
   @Override
   public IFileInfo fetchInfo(int options, IProgressMonitor monitor) throws CoreException
   {
-    FileInfo info = new FileInfo(getName());
-    info.setLength(EFS.NONE);
-    info.setAttribute(EFS.ATTRIBUTE_OWNER_READ, true);
-    info.setAttribute(EFS.ATTRIBUTE_GROUP_READ, true);
-    info.setAttribute(EFS.ATTRIBUTE_OTHER_READ, true);
-
-    info.setAttribute(EFS.ATTRIBUTE_OWNER_WRITE, false);
-    info.setAttribute(EFS.ATTRIBUTE_GROUP_WRITE, false);
-    info.setAttribute(EFS.ATTRIBUTE_OTHER_WRITE, false);
-
-    info.setAttribute(EFS.ATTRIBUTE_OWNER_EXECUTE, false);
-    info.setAttribute(EFS.ATTRIBUTE_GROUP_EXECUTE, false);
-    info.setAttribute(EFS.ATTRIBUTE_OTHER_EXECUTE, false);
-
-    CDOResourceNode node = getNode();
+    CDOResourceNode node = getNode(checkout, path);
     if (node == null)
     {
+      FileInfo info = createFileInfo(false);
       info.setExists(false);
+      return info;
     }
-    else
+
+    boolean root = node.isRoot();
+    boolean folder = root || node instanceof CDOResourceFolder;
+    boolean deepTimeStamp = !root && node instanceof CDOResource && !shallowTimeStamp;
+
+    FileInfo info = createFileInfo(deepTimeStamp);
+    info.setExists(true);
+    info.setDirectory(folder);
+
+    if (!deepTimeStamp)
     {
-      info.setExists(true);
+      info.setLastModified(getTimeStamp(node, deepTimeStamp));
+    }
 
-      boolean root = node.isRoot();
-      boolean folder = root || node instanceof CDOResourceFolder;
-      boolean model = !root && node instanceof CDOResource;
-
-      info.setDirectory(folder);
-      info.setLastModified(getTimeStamp(node, model));
-
-      if (node instanceof CDOFileResource)
-      {
-        CDOFileResource<?> file = (CDOFileResource<?>)node;
-        CDOLob<?> contents = file.getContents();
-        info.setLength(contents == null ? 0L : contents.getSize());
-      }
+    if (node instanceof CDOFileResource)
+    {
+      CDOFileResource<?> file = (CDOFileResource<?>)node;
+      CDOLob<?> contents = file.getContents();
+      info.setLength(contents == null ? 0L : contents.getSize());
     }
 
     return info;
@@ -165,7 +155,7 @@ public class CDOCheckoutFileStore extends FileStore
   @Override
   public String[] childNames(int options, IProgressMonitor monitor) throws CoreException
   {
-    CDOResourceNode node = getNode();
+    CDOResourceNode node = getNode(checkout, path);
 
     EList<? extends EObject> children = getChildren(node);
     if (children != null)
@@ -195,7 +185,7 @@ public class CDOCheckoutFileStore extends FileStore
   @Override
   public InputStream openInputStream(int options, IProgressMonitor monitor) throws CoreException
   {
-    CDOResourceNode node = getNode();
+    CDOResourceNode node = getNode(checkout, path);
     if (node == null)
     {
       throw new CoreException(new Status(IStatus.ERROR, OM.BUNDLE_ID, EFS.ERROR_NOT_EXISTS, "Resource does not exist: " + path, null));
@@ -224,7 +214,60 @@ public class CDOCheckoutFileStore extends FileStore
     return SLASH.equals(path);
   }
 
-  private CDOResourceNode getNode()
+  private FileInfo createFileInfo(boolean deepTimeStamp)
+  {
+    FileInfo info = deepTimeStamp ? new LazyTimeStampFileInfo(checkout, path, getName()) : new FileInfo(getName());
+    info.setLength(EFS.NONE);
+
+    info.setAttribute(EFS.ATTRIBUTE_OWNER_READ, true);
+    info.setAttribute(EFS.ATTRIBUTE_GROUP_READ, true);
+    info.setAttribute(EFS.ATTRIBUTE_OTHER_READ, true);
+
+    info.setAttribute(EFS.ATTRIBUTE_OWNER_WRITE, false);
+    info.setAttribute(EFS.ATTRIBUTE_GROUP_WRITE, false);
+    info.setAttribute(EFS.ATTRIBUTE_OTHER_WRITE, false);
+
+    info.setAttribute(EFS.ATTRIBUTE_OWNER_EXECUTE, false);
+    info.setAttribute(EFS.ATTRIBUTE_GROUP_EXECUTE, false);
+    info.setAttribute(EFS.ATTRIBUTE_OTHER_EXECUTE, false);
+
+    return info;
+  }
+
+  private EList<? extends EObject> getChildren(CDOResourceNode node)
+  {
+    if (node instanceof CDOResourceFolder)
+    {
+      CDOResourceFolder folder = (CDOResourceFolder)node;
+      return folder.getNodes();
+    }
+
+    if (node != null && node.isRoot())
+    {
+      return ((CDOResource)node).getContents();
+    }
+
+    return null;
+  }
+
+  private static long getTimeStamp(CDOResourceNode node, boolean deepTimeStamp)
+  {
+    long timeStamp = node.cdoRevision(true).getTimeStamp();
+
+    if (deepTimeStamp)
+    {
+      Resource resource = (Resource)node;
+      for (TreeIterator<EObject> it = EcoreUtil.getAllProperContents(resource, false); it.hasNext();)
+      {
+        CDOObject object = CDOUtil.getCDOObject(it.next());
+        timeStamp = Math.max(timeStamp, object.cdoRevision(true).getTimeStamp());
+      }
+    }
+
+    return timeStamp;
+  }
+
+  private static CDOResourceNode getNode(CDOCheckout checkout, String path)
   {
     CDOView view = checkout.getView();
     if (view != null)
@@ -247,36 +290,40 @@ public class CDOCheckoutFileStore extends FileStore
     return null;
   }
 
-  private EList<? extends EObject> getChildren(CDOResourceNode node)
+  /**
+   * @author Eike Stepper
+   */
+  private static final class LazyTimeStampFileInfo extends FileInfo
   {
-    if (node instanceof CDOResourceFolder)
+    private final CDOCheckout checkout;
+
+    private final String path;
+
+    private boolean timeStampInitialized;
+
+    public LazyTimeStampFileInfo(CDOCheckout checkout, String path, String name)
     {
-      CDOResourceFolder folder = (CDOResourceFolder)node;
-      return folder.getNodes();
+      super(name);
+      this.checkout = checkout;
+      this.path = path;
     }
 
-    if (node != null && node.isRoot())
+    @Override
+    public long getLastModified()
     {
-      return ((CDOResource)node).getContents();
-    }
-
-    return null;
-  }
-
-  private long getTimeStamp(CDOResourceNode node, boolean model)
-  {
-    long timeStamp = node.cdoRevision(true).getTimeStamp();
-
-    if (model && !shallowTimeStamp)
-    {
-      Resource resource = (Resource)node;
-      for (TreeIterator<EObject> it = EcoreUtil.getAllProperContents(resource, false); it.hasNext();)
+      if (!timeStampInitialized)
       {
-        CDOObject object = CDOUtil.getCDOObject(it.next());
-        timeStamp = Math.max(timeStamp, object.cdoRevision(true).getTimeStamp());
+        super.setLastModified(getTimeStamp(getNode(checkout, path), true));
       }
+
+      return super.getLastModified();
     }
 
-    return timeStamp;
+    @Override
+    public void setLastModified(long value)
+    {
+      super.setLastModified(value);
+      timeStampInitialized = true;
+    }
   }
 }

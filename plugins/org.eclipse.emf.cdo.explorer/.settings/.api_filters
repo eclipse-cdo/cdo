@@ -16,4 +16,12 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/internal/explorer/resources/CDOCheckoutFileStore.java" type="org.eclipse.emf.cdo.internal.explorer.resources.CDOCheckoutFileStore$LazyTimeStampFileInfo">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="FileInfo"/>
+                <message_argument value="LazyTimeStampFileInfo"/>
+            </message_arguments>
+        </filter>
+    </resource>
 </component>

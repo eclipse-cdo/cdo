@@ -73,21 +73,41 @@ public interface ResourceSetConfigurer
 
       for (String type : container.getFactoryTypes(Factory.PRODUCT_GROUP))
       {
-        ResourceSetConfigurer configurer = getConfigurer(container, type);
-
-        Object configurerResult = configurer.configureResourceSet(resourceSet, context, container);
-        if (configurerResult != null)
-        {
-          configuration.configurerResults.put(type, configurerResult);
-        }
+        configureResourceSet(resourceSet, context, container, type, configuration);
       }
 
+      return configuration;
+    }
+
+    /**
+     * @since 4.15
+     */
+    public ResourceSetConfiguration configureResourceSet(ResourceSet resourceSet, Object context, IManagedContainer container, String type)
+    {
+      ResourceSetConfiguration configuration = ResourceSetConfiguration.of(resourceSet);
+      if (configuration == null)
+      {
+        configuration = new ResourceSetConfiguration(resourceSet, context, container);
+      }
+
+      configureResourceSet(resourceSet, context, container, type, configuration);
       return configuration;
     }
 
     public ResourceSetConfiguration configureResourceSet(ResourceSet resourceSet, Object context)
     {
       return configureResourceSet(resourceSet, context, IPluginContainer.INSTANCE);
+    }
+
+    private void configureResourceSet(ResourceSet resourceSet, Object context, IManagedContainer container, String type, ResourceSetConfiguration configuration)
+    {
+      ResourceSetConfigurer configurer = getConfigurer(container, type);
+
+      Object configurerResult = configurer.configureResourceSet(resourceSet, context, container);
+      if (configurerResult != null)
+      {
+        configuration.configurerResults.put(type, configurerResult);
+      }
     }
 
     /**

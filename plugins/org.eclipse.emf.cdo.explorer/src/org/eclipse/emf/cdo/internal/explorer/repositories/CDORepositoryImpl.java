@@ -222,6 +222,12 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
     {
       // Delete node.
       withSecureNode(false, node -> {
+        // A workaround for https://bugs.eclipse.org/bugs/show_bug.cgi?id=571768#c2 :
+        // This flush() call makes sure that org.eclipse.equinox.internal.security.storage.SecurePreferences.root
+        // is initialized before removeNode() is called. Otherwise parent() will be used to find the root and
+        // that will throw an exception because the node is already marked as removed.
+        node.flush();
+
         node.removeNode();
         node.flush();
       });

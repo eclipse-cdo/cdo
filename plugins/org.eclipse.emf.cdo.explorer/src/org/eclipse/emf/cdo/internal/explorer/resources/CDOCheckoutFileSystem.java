@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.internal.explorer.bundle.OM;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.om.OMPlatform;
 
 import org.eclipse.core.filesystem.EFS;
 import org.eclipse.core.filesystem.IFileStore;
@@ -38,6 +39,8 @@ public class CDOCheckoutFileSystem extends FileSystem
 
   public static final String TIME_STAMPS_DEEP = "deep";
 
+  private static final boolean OMIT_CHECKOUT_FILE_SYSTEM = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.explorer.omitCheckoutFileSystem");
+
   public CDOCheckoutFileSystem()
   {
   }
@@ -45,26 +48,29 @@ public class CDOCheckoutFileSystem extends FileSystem
   @Override
   public IFileStore getStore(URI uri)
   {
-    try
+    if (!OMIT_CHECKOUT_FILE_SYSTEM)
     {
-      String scheme = uri.getScheme();
-      if (SCHEME.equals(scheme))
+      try
       {
-        String authority = uri.getAuthority();
-
-        CDOCheckout checkout = CDOExplorerUtil.getCheckout(authority);
-        if (checkout != null)
+        String scheme = uri.getScheme();
+        if (SCHEME.equals(scheme))
         {
-          String path = uri.getPath();
-          boolean shallowTimeStamp = isShallowTimeStamps(uri);
+          String authority = uri.getAuthority();
 
-          return createFileStore(checkout, path, shallowTimeStamp);
+          CDOCheckout checkout = CDOExplorerUtil.getCheckout(authority);
+          if (checkout != null)
+          {
+            String path = uri.getPath();
+            boolean shallowTimeStamp = isShallowTimeStamps(uri);
+
+            return createFileStore(checkout, path, shallowTimeStamp);
+          }
         }
       }
-    }
-    catch (Exception ex)
-    {
-      OM.LOG.error(ex);
+      catch (Exception ex)
+      {
+        OM.LOG.error(ex);
+      }
     }
 
     return EFS.getNullFileSystem().getStore(uri);

@@ -32,6 +32,7 @@ import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
+import org.eclipse.emf.cdo.spi.common.CDOLobStoreImpl;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -796,6 +797,7 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
 
     CDOSession session = sessionConfiguration.openSession();
     session.options().setGeneratedPackageEmulationEnabled(true);
+    session.options().setLobCache(new CDOLobStoreImpl(new File(getFolder(), "lobs")));
 
     if (SET_USER_NAME && StringUtil.isEmpty(session.getUserID()))
     {

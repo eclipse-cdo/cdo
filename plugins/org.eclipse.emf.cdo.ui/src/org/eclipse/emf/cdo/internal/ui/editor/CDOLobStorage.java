@@ -16,20 +16,12 @@ import org.eclipse.emf.cdo.eresource.CDOBinaryResource;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceLeaf;
 import org.eclipse.emf.cdo.eresource.CDOTextResource;
-import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOView;
-import org.eclipse.emf.cdo.view.CDOViewInvalidationEvent;
 
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
-import org.eclipse.net4j.util.event.EventUtil;
-import org.eclipse.net4j.util.event.IEvent;
-import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.io.IORuntimeException;
-import org.eclipse.net4j.util.ui.UIUtil;
-
-import org.eclipse.emf.spi.cdo.FSMUtil;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -89,34 +81,6 @@ public class CDOLobStorage extends AbstractDocumentProvider
   }
 
   @Override
-  protected ElementInfo createElementInfo(Object element) throws CoreException
-  {
-    if (element instanceof CDOLobEditorInput)
-    {
-      CDOResourceLeaf resource = ((CDOLobEditorInput)element).getResource();
-
-      CDOView view = resource.cdoView();
-      if (view != null && view.isReadOnly())
-      {
-        return new CDOElementInfo(createDocument(element), createAnnotationModel(element), view);
-      }
-    }
-
-    return new ElementInfo(createDocument(element), createAnnotationModel(element));
-  }
-
-  @Override
-  protected void disposeElementInfo(Object element, ElementInfo info)
-  {
-    if (element instanceof CDOElementInfo)
-    {
-      ((CDOElementInfo)element).dispose();
-    }
-
-    super.disposeElementInfo(element, info);
-  }
-
-  @Override
   public boolean isReadOnly(Object element)
   {
     if (element instanceof CDOLobEditorInput)
@@ -132,12 +96,6 @@ public class CDOLobStorage extends AbstractDocumentProvider
   public boolean isModifiable(Object element)
   {
     return !isReadOnly(element);
-  }
-
-  @Override
-  public boolean canSaveDocument(Object element)
-  {
-    return super.canSaveDocument(element);
   }
 
   @Override
@@ -190,29 +148,6 @@ public class CDOLobStorage extends AbstractDocumentProvider
 
   private String getContents(CDOResourceLeaf resource)
   {
-    if (resource == null)
-    {
-      return StringUtil.EMPTY;
-    }
-
-    if (FSMUtil.isInvalid(resource))
-    {
-      try
-      {
-        CDOResourceLeaf resource2 = (CDOResourceLeaf)resource.cdoView().getObject(resource.cdoID());
-        if (resource2 == resource)
-        {
-          return StringUtil.EMPTY;
-        }
-
-        return getContents(resource2);
-      }
-      catch (Exception ex)
-      {
-        return StringUtil.EMPTY;
-      }
-    }
-
     try
     {
       if (resource instanceof CDOTextResource)
@@ -272,43 +207,5 @@ public class CDOLobStorage extends AbstractDocumentProvider
     }
 
     return new CDOLobStorage(true);
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private final class CDOElementInfo extends ElementInfo implements IListener
-  {
-    private final CDOView view;
-
-    public CDOElementInfo(IDocument document, IAnnotationModel model, CDOView view)
-    {
-      super(document, model);
-      this.view = view;
-      EventUtil.addListener(view, this);
-    }
-
-    public void dispose()
-    {
-      EventUtil.removeListener(view, this);
-    }
-
-    @Override
-    public void notifyEvent(IEvent event)
-    {
-      if (event instanceof CDOViewInvalidationEvent)
-      {
-        UIUtil.asyncExec(() -> {
-          try
-          {
-            doResetDocument(fElement, null);
-          }
-          catch (CoreException ex)
-          {
-            OM.LOG.error(ex);
-          }
-        });
-      }
-    }
   }
 }

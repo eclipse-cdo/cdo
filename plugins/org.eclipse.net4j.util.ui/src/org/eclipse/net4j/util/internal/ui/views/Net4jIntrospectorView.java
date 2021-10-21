@@ -266,12 +266,6 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
   {
     if (modeAction.isChecked())
     {
-      IWorkbenchPart newPart = part.getSite().getPage().getActivePart();
-      if (newPart == this)
-      {
-        return;
-      }
-
       if (part == activePart)
       {
         activePart = null;

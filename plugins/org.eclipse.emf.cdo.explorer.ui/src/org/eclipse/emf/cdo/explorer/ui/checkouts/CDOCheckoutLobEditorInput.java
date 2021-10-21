@@ -133,8 +133,12 @@ public class CDOCheckoutLobEditorInput extends CDOLobEditorInput implements IPer
     {
       checkout.open();
 
-      CDOView view = checkout.getView();
-      if (!view.isHistorical())
+      CDOView view;
+      if (checkout.isReadOnly())
+      {
+        view = checkout.getView();
+      }
+      else
       {
         view = checkout.openTransaction();
       }

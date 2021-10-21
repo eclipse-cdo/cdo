@@ -14,6 +14,7 @@ import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
+import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
@@ -57,6 +58,11 @@ public class ContainerEventAdapter<E> implements IListener
       IContainerEvent<E> e = (IContainerEvent<E>)event;
       notifyContainerEvent(e);
     }
+    else if (event instanceof ILifecycleEvent)
+    {
+      ILifecycleEvent e = (ILifecycleEvent)event;
+      notifyLifecycleEvent(e);
+    }
     else
     {
       notifyOtherEvent(event);
@@ -97,6 +103,28 @@ public class ContainerEventAdapter<E> implements IListener
     });
   }
 
+  /**
+   * @since 3.16
+   */
+  protected void notifyLifecycleEvent(ILifecycleEvent event)
+  {
+    switch (event.getKind())
+    {
+    case ABOUT_TO_ACTIVATE:
+      onAboutToActivate(event.getSource());
+      break;
+    case ACTIVATED:
+      onActivated(event.getSource());
+      break;
+    case ABOUT_TO_DEACTIVATE:
+      onAboutToDeactivate(event.getSource());
+      break;
+    case DEACTIVATED:
+      onDeactivated(event.getSource());
+      break;
+    }
+  }
+
   protected void notifyOtherEvent(IEvent event)
   {
   }
@@ -106,6 +134,34 @@ public class ContainerEventAdapter<E> implements IListener
   }
 
   protected void onRemoved(IContainer<E> container, E element)
+  {
+  }
+
+  /**
+   * @since 3.16
+   */
+  protected void onAboutToActivate(ILifecycle lifecycle)
+  {
+  }
+
+  /**
+   * @since 3.16
+   */
+  protected void onActivated(ILifecycle lifecycle)
+  {
+  }
+
+  /**
+   * @since 3.16
+   */
+  protected void onAboutToDeactivate(ILifecycle lifecycle)
+  {
+  }
+
+  /**
+   * @since 3.16
+   */
+  protected void onDeactivated(ILifecycle lifecycle)
   {
   }
 }

@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.views.ContainerView;
 
@@ -108,6 +109,12 @@ public class CDORemoteSessionsView extends ContainerView.Default<CDORemoteSessio
           // ignore
         }
       }
+    }
+
+    @Override
+    protected void onDeactivated(ILifecycle lifecycle)
+    {
+      setContainer(null);
     }
   };
 

@@ -41,6 +41,8 @@ import java.util.Set;
  */
 public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> implements InternalCDORemoteSessionManager
 {
+  private static final CDORemoteSession[] NO_REMOTE_SESSIONS = {};
+
   private InternalCDOSession localSession;
 
   private boolean forceSubscription;
@@ -70,14 +72,19 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
   {
     synchronized (this)
     {
-      if (subscribed)
+      if (localSession.isActive())
       {
-        Collection<CDORemoteSession> values = remoteSessions.values();
-        return values.toArray(new CDORemoteSession[values.size()]);
+        if (subscribed)
+        {
+          Collection<CDORemoteSession> values = remoteSessions.values();
+          return values.toArray(new CDORemoteSession[values.size()]);
+        }
+
+        List<CDORemoteSession> loadedRemoteSessions = localSession.getSessionProtocol().getRemoteSessions(this, false);
+        return loadedRemoteSessions.toArray(new CDORemoteSession[loadedRemoteSessions.size()]);
       }
 
-      List<CDORemoteSession> loadedRemoteSessions = localSession.getSessionProtocol().getRemoteSessions(this, false);
-      return loadedRemoteSessions.toArray(new CDORemoteSession[loadedRemoteSessions.size()]);
+      return NO_REMOTE_SESSIONS;
     }
   }
 
@@ -320,7 +327,11 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
    */
   private IEvent[] unsubscribe()
   {
-    localSession.getSessionProtocol().unsubscribeRemoteSessions();
+    if (localSession.isActive())
+    {
+      localSession.getSessionProtocol().unsubscribeRemoteSessions();
+    }
+
     ContainerEvent<CDORemoteSession> event = new ContainerEvent<>(this);
     for (CDORemoteSession remoteSession : remoteSessions.values())
     {

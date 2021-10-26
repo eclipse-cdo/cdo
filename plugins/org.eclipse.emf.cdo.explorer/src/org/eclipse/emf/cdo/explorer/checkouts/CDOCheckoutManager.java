@@ -41,16 +41,35 @@ public interface CDOCheckoutManager extends CDOExplorerManager<CDOCheckout>
    * @author Eike Stepper
    * @noextend This interface is not intended to be extended by clients.
    * @noimplement This interface is not intended to be implemented by clients.
+   * @since 4.11
    */
-  public interface CheckoutStateEvent extends IEvent
+  public interface CheckoutEvent extends IEvent
   {
     @Override
     public CDOCheckoutManager getSource();
 
     public CDOCheckout getCheckout();
+  }
 
+  /**
+   * @author Eike Stepper
+   * @noextend This interface is not intended to be extended by clients.
+   * @noimplement This interface is not intended to be implemented by clients.
+   */
+  public interface CheckoutStateEvent extends CheckoutEvent
+  {
     public CDOCheckout.State getOldState();
 
     public CDOCheckout.State getNewState();
+  }
+
+  /**
+   * @author Eike Stepper
+   * @noextend This interface is not intended to be extended by clients.
+   * @noimplement This interface is not intended to be implemented by clients.
+   * @since 4.11
+   */
+  public interface CheckoutInitializeEvent extends CheckoutEvent
+  {
   }
 }

@@ -93,6 +93,11 @@ public class CDOCheckoutManagerImpl extends AbstractManager<CDOCheckout> impleme
     fireEvent(new CheckoutStateEventImpl(this, checkout, oldState, newState));
   }
 
+  public void fireCheckoutInitializeEvent(CDOCheckout checkout)
+  {
+    fireEvent(new CheckoutInitializeEventImpl(this, checkout));
+  }
+
   @Override
   protected CDOCheckout createElement(String type)
   {
@@ -142,22 +147,16 @@ public class CDOCheckoutManagerImpl extends AbstractManager<CDOCheckout> impleme
   /**
    * @author Eike Stepper
    */
-  private static final class CheckoutStateEventImpl extends Event implements CheckoutStateEvent
+  private static abstract class CheckoutEventImpl extends Event implements CheckoutEvent
   {
     private static final long serialVersionUID = 1L;
 
     private final CDOCheckout checkout;
 
-    private final CDOCheckout.State oldState;
-
-    private final CDOCheckout.State newState;
-
-    public CheckoutStateEventImpl(CDOCheckoutManager repositoryManager, CDOCheckout checkout, CDOCheckout.State oldState, CDOCheckout.State newState)
+    public CheckoutEventImpl(CDOCheckoutManager checkoutManager, CDOCheckout checkout)
     {
-      super(repositoryManager);
+      super(checkoutManager);
       this.checkout = checkout;
-      this.oldState = oldState;
-      this.newState = newState;
     }
 
     @Override
@@ -173,6 +172,31 @@ public class CDOCheckoutManagerImpl extends AbstractManager<CDOCheckout> impleme
     }
 
     @Override
+    protected String formatAdditionalParameters()
+    {
+      return String.valueOf(checkout);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class CheckoutStateEventImpl extends CheckoutEventImpl implements CheckoutStateEvent
+  {
+    private static final long serialVersionUID = 1L;
+
+    private final CDOCheckout.State oldState;
+
+    private final CDOCheckout.State newState;
+
+    public CheckoutStateEventImpl(CDOCheckoutManager checkoutManager, CDOCheckout checkout, CDOCheckout.State oldState, CDOCheckout.State newState)
+    {
+      super(checkoutManager, checkout);
+      this.oldState = oldState;
+      this.newState = newState;
+    }
+
+    @Override
     public CDOCheckout.State getOldState()
     {
       return oldState;
@@ -185,9 +209,34 @@ public class CDOCheckoutManagerImpl extends AbstractManager<CDOCheckout> impleme
     }
 
     @Override
-    public String toString()
+    protected String formatEventName()
     {
-      return "CDOCheckoutState[" + checkout + ", " + oldState + " --> " + newState + "]";
+      return CheckoutStateEvent.class.getSimpleName();
+    }
+
+    @Override
+    protected String formatAdditionalParameters()
+    {
+      return super.formatAdditionalParameters() + ", " + oldState + " --> " + newState;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class CheckoutInitializeEventImpl extends CheckoutEventImpl implements CheckoutInitializeEvent
+  {
+    private static final long serialVersionUID = 1L;
+
+    public CheckoutInitializeEventImpl(CDOCheckoutManager checkoutManager, CDOCheckout checkout)
+    {
+      super(checkoutManager, checkout);
+    }
+
+    @Override
+    protected String formatEventName()
+    {
+      return CheckoutInitializeEvent.class.getSimpleName();
     }
   }
 }

@@ -29,6 +29,7 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.ReadOnlyException;
+import org.eclipse.emf.cdo.view.CDOPrefetcherManager;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewLocksChangedEvent;
 import org.eclipse.emf.cdo.view.CDOViewTargetChangedEvent;
@@ -51,6 +52,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
+import org.eclipse.emf.spi.cdo.InternalCDOViewSet;
 
 import org.eclipse.core.runtime.Path;
 
@@ -82,6 +84,8 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
   public static final String PROP_BRANCH_PATH = "branchPath";
 
   public static final String PROP_BRANCH_POINTS = "branchPoints";
+
+  public static final String PROP_PREFETCH = "prefetch";
 
   public static final String PROP_REPOSITORY = "repository";
 
@@ -118,6 +122,10 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
   private CDOID rootID;
 
   private String rootLabel;
+
+  private boolean prefetch;
+
+  private CDOPrefetcherManager prefetcherManager;
 
   private State state = State.Closed;
 
@@ -184,6 +192,11 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
   @Override
   public final void setBranchPoint(CDOBranchPoint branchPoint)
   {
+    setBranchPoint(branchPoint, true);
+  }
+
+  private void setBranchPoint(CDOBranchPoint branchPoint, boolean updateHistory)
+  {
     int branchID = branchPoint.getBranch().getID();
     long timeStamp = branchPoint.getTimeStamp();
     setBranchPoint(branchID, timeStamp);
@@ -192,9 +205,17 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
   @Override
   public final void setBranchPoint(int branchID, long timeStamp)
   {
+    setBranchPoint(branchID, timeStamp, true);
+  }
+
+  private void setBranchPoint(int branchID, long timeStamp, boolean updateHistory)
+  {
     if (this.branchID != branchID || this.timeStamp != timeStamp)
     {
-      addBranchPoint(this.branchID, this.timeStamp);
+      if (updateHistory)
+      {
+        addBranchPoint(this.branchID, this.timeStamp);
+      }
 
       this.branchID = branchID;
       this.timeStamp = timeStamp;
@@ -377,6 +398,39 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
   }
 
   @Override
+  public final boolean isPrefetch()
+  {
+    return prefetch;
+  }
+
+  @Override
+  public final void setPrefetch(boolean prefetch)
+  {
+    if (this.prefetch != prefetch)
+    {
+      this.prefetch = prefetch;
+      save();
+
+      if (prefetch)
+      {
+        if (isOpen())
+        {
+          ResourceSet resourceSet = view.getResourceSet();
+          prefetcherManager = new CDOPrefetcherManager(resourceSet);
+        }
+      }
+      else
+      {
+        if (prefetcherManager != null)
+        {
+          prefetcherManager.dispose();
+          prefetcherManager = null;
+        }
+      }
+    }
+  }
+
+  @Override
   public final CDOID getRootID()
   {
     return rootID;
@@ -489,7 +543,18 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
               }
             });
 
-            configureViewAndResourceSet(view, view.getResourceSet());
+            if (manager != null)
+            {
+              manager.fireCheckoutInitializeEvent(this);
+            }
+
+            ResourceSet resourceSet = view.getResourceSet();
+            configureViewAndResourceSet(view, resourceSet);
+
+            if (prefetch)
+            {
+              prefetcherManager = new CDOPrefetcherManager(resourceSet);
+            }
 
             rootObject = loadRootObject();
             rootObject.eAdapters().add(this);
@@ -497,15 +562,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
             state = State.Open;
             newState = state;
           }
-          catch (RuntimeException ex)
-          {
-            view = null;
-            rootObject = null;
-            state = State.Closed;
-            newState = state;
-            throw ex;
-          }
-          catch (Error ex)
+          catch (Error | RuntimeException ex)
           {
             view = null;
             rootObject = null;
@@ -563,8 +620,22 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
         }
         finally
         {
+          if (prefetcherManager != null)
+          {
+            try
+            {
+              prefetcherManager.dispose();
+              prefetcherManager = null;
+            }
+            catch (Throwable ex)
+            {
+              OM.LOG.error(ex);
+            }
+          }
+
           rootObject = null;
           view = null;
+
           state = State.Closed;
         }
 
@@ -712,7 +783,22 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
   private ResourceSetConfiguration configureResourceSet(ResourceSet resourceSet)
   {
     IManagedContainer container = getContainer();
-    return ResourceSetConfigurer.Registry.INSTANCE.configureResourceSet(resourceSet, this, container);
+    ResourceSetConfiguration resourceSetConfiguration = ResourceSetConfigurer.Registry.INSTANCE.configureResourceSet(resourceSet, this, container);
+
+    try
+    {
+      InternalCDOViewSet viewSet = (InternalCDOViewSet)CDOUtil.getViewSet(resourceSet);
+      if (viewSet != null)
+      {
+        viewSet.commit();
+      }
+    }
+    catch (Exception ex)
+    {
+      OM.LOG.error(ex);
+    }
+
+    return resourceSetConfiguration;
   }
 
   private void unconfigureResourceSet(ResourceSetConfiguration resourceSetConfiguration)
@@ -770,7 +856,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
         else if (event instanceof CDOViewTargetChangedEvent)
         {
           CDOViewTargetChangedEvent e = (CDOViewTargetChangedEvent)event;
-          setBranchPoint(e.getBranchPoint());
+          setBranchPoint(e.getBranchPoint(), false);
         }
         else if (event instanceof ILifecycleEvent)
         {
@@ -931,13 +1017,15 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     timeStamp = Long.parseLong(properties.getProperty(PROP_TIME_STAMP));
     readOnly = isOnline() ? Boolean.parseBoolean(properties.getProperty(PROP_READ_ONLY)) : false;
 
-    String property = properties.getProperty(PROP_ROOT_ID);
-    if (property != null)
+    String rootIDProperty = properties.getProperty(PROP_ROOT_ID);
+    if (rootIDProperty != null)
     {
-      rootID = CDOIDUtil.read(property);
+      rootID = CDOIDUtil.read(rootIDProperty);
     }
 
     rootLabel = properties.getProperty(PROP_ROOT_LABEL);
+
+    prefetch = Boolean.parseBoolean(properties.getProperty(PROP_PREFETCH, Boolean.FALSE.toString()));
 
     uri = createResourceURI(null);
     ((CDORepositoryImpl)repository).addCheckout(this);
@@ -960,6 +1048,11 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     if (branchPoints != null)
     {
       properties.setProperty(PROP_BRANCH_POINTS, branchPoints);
+    }
+
+    if (prefetch)
+    {
+      properties.setProperty(PROP_PREFETCH, Boolean.TRUE.toString());
     }
 
     if (!CDOIDUtil.isNull(rootID))

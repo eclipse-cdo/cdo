@@ -16,6 +16,9 @@ import org.eclipse.emf.cdo.internal.explorer.checkouts.CDOCheckoutProperties;
 import org.eclipse.net4j.util.AdapterUtil;
 
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
@@ -24,9 +27,11 @@ import org.eclipse.swt.widgets.Control;
  */
 public final class CheckoutPropertyPage extends AbstractPropertyPage<CDOCheckout>
 {
+  private Button prefetchButton;
+
   public CheckoutPropertyPage()
   {
-    super(CDOCheckoutProperties.INSTANCE, CDOCheckoutProperties.CATEGORY_CHECKOUT, "id", "type", "label", "folder");
+    super(CDOCheckoutProperties.INSTANCE, CDOCheckoutProperties.CATEGORY_CHECKOUT, "id", "type", "label", "folder", "prefetch");
   }
 
   @Override
@@ -43,6 +48,32 @@ public final class CheckoutPropertyPage extends AbstractPropertyPage<CDOCheckout
       return createFileLink(parent, name, description, value);
     }
 
+    if ("prefetch".equals(name))
+    {
+      prefetchButton = new Button(parent, SWT.CHECK);
+      prefetchButton.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
+      prefetchButton.setSelection(getInput().isPrefetch());
+      // button.addSelectionListener(new SelectionAdapter()
+      // {
+      // @Override
+      // public void widgetSelected(SelectionEvent e)
+      // {
+      // consumer.accept(uri);
+      // }
+      // });
+
+      return prefetchButton;
+    }
+
     return super.createControl(parent, name, description, value);
+  }
+
+  @Override
+  public boolean performOk()
+  {
+    boolean prefetch = prefetchButton.getSelection();
+    getInput().setPrefetch(prefetch);
+
+    return super.performOk();
   }
 }

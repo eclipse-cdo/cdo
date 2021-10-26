@@ -95,6 +95,16 @@ public interface CDOCheckout extends CDOExplorerElement, CDOTimeProvider, StateP
   public String getRootLabel();
 
   /**
+   * @since 4.11
+   */
+  public boolean isPrefetch();
+
+  /**
+   * @since 4.11
+   */
+  public void setPrefetch(boolean prefetch);
+
+  /**
    * @since 4.5
    */
   public CDOCheckout duplicate();

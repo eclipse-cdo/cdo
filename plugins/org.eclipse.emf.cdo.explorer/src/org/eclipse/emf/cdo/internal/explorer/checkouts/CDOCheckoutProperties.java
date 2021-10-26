@@ -88,6 +88,15 @@ public class CDOCheckoutProperties extends Properties<CDOCheckout>
       }
     });
 
+    add(new Property<CDOCheckout>("prefetch", "Prefetch", "Whether the contents of this checkout are prefetched", CATEGORY_CHECKOUT)
+    {
+      @Override
+      protected Object eval(CDOCheckout checkout)
+      {
+        return checkout.isPrefetch();
+      }
+    });
+
     add(new Property<CDOCheckout>("rootType")
     {
       @Override

@@ -57,6 +57,7 @@ import org.eclipse.emf.cdo.spi.server.StoreAccessorPool;
 import org.eclipse.emf.internal.cdo.transaction.CDOTransactionImpl;
 
 import org.eclipse.net4j.util.HexUtil;
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.collection.AbstractFilteredIterator;
 import org.eclipse.net4j.util.collection.BidirectionalIterator;
@@ -180,7 +181,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader4, D
   @Override
   public synchronized Map<String, String> getPersistentProperties(Set<String> names)
   {
-    if (names == null || names.isEmpty())
+    if (ObjectUtil.isEmpty(names))
     {
       return new HashMap<>(properties);
     }

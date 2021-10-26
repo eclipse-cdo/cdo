@@ -35,8 +35,8 @@ import org.eclipse.emf.cdo.spi.common.revision.PointerCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
 import org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision;
 
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
-import org.eclipse.net4j.util.collection.CollectionUtil;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -354,7 +354,7 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
       List<? extends CDORevision> primaryRevisions //
           = getResultsAndSynthetics(infosToLoad.toArray(new RevisionInfo[infosToLoad.size()]), null);
 
-      if (!CollectionUtil.isEmpty(primaryRevisions) || !CollectionUtil.isEmpty(additionalRevisions))
+      if (!ObjectUtil.isEmpty(primaryRevisions) || !ObjectUtil.isEmpty(additionalRevisions))
       {
         if (primaryRevisions == null)
         {

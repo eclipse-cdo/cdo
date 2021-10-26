@@ -15,6 +15,7 @@ import org.eclipse.net4j.channel.IChannelMultiplexer;
 import org.eclipse.net4j.connector.IServerConnector;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.wrapping.StreamWrapperInjector;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.FactoryNotFoundException;
 import org.eclipse.net4j.util.container.IElementProcessor;
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -107,7 +108,7 @@ public class TransportConfigurator implements IManagedContainerProvider
   {
     String type = acceptorConfig.getAttribute("type"); //$NON-NLS-1$
     String description = acceptorConfig.getAttribute("description"); //$NON-NLS-1$
-    if (description == null || description.isEmpty())
+    if (StringUtil.isEmpty(description))
     {
       try
       {

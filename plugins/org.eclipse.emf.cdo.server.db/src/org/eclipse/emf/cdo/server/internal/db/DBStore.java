@@ -54,6 +54,7 @@ import org.eclipse.net4j.db.IDBSchemaTransaction;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
@@ -328,7 +329,7 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
     try
     {
       Map<String, String> result = new HashMap<>();
-      boolean allProperties = names == null || names.isEmpty();
+      boolean allProperties = ObjectUtil.isEmpty(names);
       if (allProperties)
       {
         sql = CDODBSchema.SQL_SELECT_ALL_PROPERTIES;

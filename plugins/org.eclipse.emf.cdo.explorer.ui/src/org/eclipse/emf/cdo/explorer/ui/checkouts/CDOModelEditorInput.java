@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.CheckUtil;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.om.monitor.EclipseMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
@@ -113,7 +114,7 @@ public class CDOModelEditorInput extends PlatformObject implements CDOEditorInpu
           OM.LOG.error(ex);
 
           String message = ex.getLocalizedMessage();
-          if (message == null || message.isEmpty())
+          if (StringUtil.isEmpty(message))
           {
             message = "Could not open checkout.";
           }

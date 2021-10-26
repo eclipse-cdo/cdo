@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.transfer.CDOTransferElement;
 import org.eclipse.emf.cdo.transfer.spi.ui.TransferUIProvider;
 import org.eclipse.emf.cdo.transfer.spi.ui.TransferUIProvider.Factory;
 
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.ui.dnd.DNDDropAdapter;
@@ -84,7 +85,7 @@ public class TransferDropAdapter extends DNDDropAdapter<Object>
     }
 
     final List<CDOTransferElement> sourceElements = getSourceElements(data);
-    if (sourceElements == null || sourceElements.isEmpty())
+    if (ObjectUtil.isEmpty(sourceElements))
     {
       return false;
     }

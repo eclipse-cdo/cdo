@@ -45,6 +45,7 @@ import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList.ConfigurableEquality;
 
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.om.trace.PerfTracer;
 
@@ -717,7 +718,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   public boolean isEmpty(EStructuralFeature feature)
   {
     CDOList list = getListOrNull(feature);
-    return list == null || list.isEmpty();
+    return ObjectUtil.isEmpty(list);
   }
 
   @Override

@@ -178,7 +178,7 @@ class CDOTransferMappingImpl implements CDOTransferMapping
   @Override
   public CDOTransferMapping[] getChildren()
   {
-    if (children == null || children.isEmpty())
+    if (ObjectUtil.isEmpty(children))
     {
       return NO_CHILDREN;
     }

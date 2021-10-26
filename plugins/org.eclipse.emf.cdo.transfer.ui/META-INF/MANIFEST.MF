@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emf.cdo.transfer.ui;singleton:=true
-Bundle-Version: 4.4.0.qualifier
+Bundle-Version: 4.4.1.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -15,11 +15,11 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.emf.cdo.ui.shared;bundle-version="[4.1.0,5.0.0)",
  org.eclipse.emf.cdo.transfer;bundle-version="[4.2.0,5.0.0)";visibility:=reexport,
  org.eclipse.emf.cdo.transfer.workspace;bundle-version="[4.2.0,5.0.0)";resolution:=optional
-Export-Package: org.eclipse.emf.cdo.transfer.internal.ui;version="4.4.0";x-internal:=true,
- org.eclipse.emf.cdo.transfer.internal.ui.bundle;version="4.4.0";x-internal:=true,
- org.eclipse.emf.cdo.transfer.spi.ui;version="4.4.0",
- org.eclipse.emf.cdo.transfer.ui;version="4.4.0",
- org.eclipse.emf.cdo.transfer.ui.swt;version="4.4.0",
+Export-Package: org.eclipse.emf.cdo.transfer.internal.ui;version="4.4.1";x-internal:=true,
+ org.eclipse.emf.cdo.transfer.internal.ui.bundle;version="4.4.1";x-internal:=true,
+ org.eclipse.emf.cdo.transfer.spi.ui;version="4.4.1",
+ org.eclipse.emf.cdo.transfer.ui;version="4.4.1",
+ org.eclipse.emf.cdo.transfer.ui.swt;version="4.4.1",
  org.eclipse.wb.swt;version="4.2.100";x-internal:=true
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.eclipse.emf.cdo.transfer.internal.ui.bundle.OM$Activator

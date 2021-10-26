@@ -201,7 +201,7 @@ public final class CDOStoreImpl implements CDOStore
         InternalCDORevision revision = readRevision(cdoObject);
 
         Object value = revision.get(feature, index);
-        value = convertToEMF(eObject, revision, feature, index, value);
+        value = convertToEMFInternal(eObject, revision, feature, index, value);
 
         featureAnalyzer.postTraverseFeature(cdoObject, feature, index, value);
         return value;
@@ -250,7 +250,7 @@ public final class CDOStoreImpl implements CDOStore
           return false;
         }
 
-        value = convertToEMF(eObject, revision, feature, NO_INDEX, value);
+        value = convertToEMFInternal(eObject, revision, feature, NO_INDEX, value);
         Object defaultValue = feature.getDefaultValue();
 
         return !ObjectUtil.equals(value, defaultValue);
@@ -348,7 +348,7 @@ public final class CDOStoreImpl implements CDOStore
           for (int i = 0; i < size; i++)
           {
             Object element = revision.get(feature, i);
-            Object emfElement = convertToEMF(eObject, revision, feature, i, element);
+            Object emfElement = convertToEMFInternal(eObject, revision, feature, i, element);
             if (emfElement == null)
             {
               return true;
@@ -360,7 +360,7 @@ public final class CDOStoreImpl implements CDOStore
           for (int i = 0; i < size; i++)
           {
             Object element = revision.get(feature, i);
-            Object emfElement = convertToEMF(eObject, revision, feature, i, element);
+            Object emfElement = convertToEMFInternal(eObject, revision, feature, i, element);
             if (value.equals(emfElement))
             {
               return true;
@@ -395,7 +395,7 @@ public final class CDOStoreImpl implements CDOStore
           TRACER.format("indexOf({0}, {1}, {2})", cdoObject, feature, value); //$NON-NLS-1$
         }
 
-        value = convertToCDO(cdoObject, feature, value);
+        value = convertToCDOInternal(feature, value);
 
         InternalCDORevision revision = readRevision(cdoObject);
         return revision.indexOf(feature, value);
@@ -425,7 +425,7 @@ public final class CDOStoreImpl implements CDOStore
           TRACER.format("lastIndexOf({0}, {1}, {2})", cdoObject, feature, value); //$NON-NLS-1$
         }
 
-        value = convertToCDO(cdoObject, feature, value);
+        value = convertToCDOInternal(feature, value);
 
         InternalCDORevision revision = readRevision(cdoObject);
         return revision.lastIndexOf(feature, value);
@@ -487,18 +487,8 @@ public final class CDOStoreImpl implements CDOStore
         Object[] result = revision.toArray(feature);
         for (int i = 0; i < result.length; i++)
         {
-          result[i] = convertToEMF(eObject, revision, feature, i, result[i]);
+          result[i] = convertToEMFInternal(eObject, revision, feature, i, result[i]);
         }
-
-        // // TODO Clarify feature maps
-        // if (feature instanceof EReference)
-        // {
-        // for (int i = 0; i < result.length; i++)
-        // {
-        // result[i] = resolveProxy(revision, feature, i, result[i]);
-        // result[i] = convertIdToObject(cdoObject.cdoView(), eObject, feature, i, result[i]);
-        // }
-        // }
 
         return result;
       }
@@ -595,12 +585,12 @@ public final class CDOStoreImpl implements CDOStore
           TRACER.format("set({0}, {1}, {2}, {3})", cdoObject, feature, index, value); //$NON-NLS-1$
         }
 
-        value = convertToCDO(cdoObject, feature, value);
+        value = convertToCDOInternal(feature, value);
 
         // TODO: Use writeRevision() result!!
         InternalCDORevision oldRevision = readRevision(cdoObject);
         Object oldValue = oldRevision.get(feature, index);
-        Object resultValue = convertToEMF(eObject, oldRevision, feature, index, oldValue);
+        Object resultValue = convertToEMFInternal(eObject, oldRevision, feature, index, oldValue);
 
         CDOFeatureDelta delta = new CDOSetFeatureDeltaImpl(feature, index, value, oldValue);
         writeRevision(cdoObject, delta);
@@ -675,7 +665,7 @@ public final class CDOStoreImpl implements CDOStore
           TRACER.format("add({0}, {1}, {2}, {3})", cdoObject, feature, index, value); //$NON-NLS-1$
         }
 
-        value = convertToCDO(cdoObject, feature, value);
+        value = convertToCDOInternal(feature, value);
 
         CDOFeatureDelta delta = new CDOAddFeatureDeltaImpl(feature, index, value);
         writeRevision(cdoObject, delta);
@@ -817,130 +807,6 @@ public final class CDOStoreImpl implements CDOStore
     return value;
   }
 
-  /**
-   * @since 3.0
-   */
-  @Override
-  public Object convertToCDO(InternalCDOObject object, EStructuralFeature feature, Object value)
-  {
-    if (value != null)
-    {
-      synchronized (view.getViewMonitor())
-      {
-        view.lockView();
-
-        try
-        {
-          if (feature instanceof EReference)
-          {
-            value = view.convertObjectToID(value, true);
-          }
-          else
-          {
-            CDOType type = CDOModelUtil.getType(feature.getEType());
-            if (type != null)
-            {
-              value = type.convertToCDO(feature.getEType(), value);
-            }
-          }
-        }
-        finally
-        {
-          view.unlockView();
-        }
-      }
-    }
-
-    return value;
-  }
-
-  /**
-   * @since 2.0
-   */
-  @Override
-  public Object convertToEMF(EObject eObject, InternalCDORevision revision, EStructuralFeature feature, int index, Object value)
-  {
-    if (value != null)
-    {
-      synchronized (view.getViewMonitor())
-      {
-        view.lockView();
-
-        try
-        {
-          if (feature.isMany())
-          {
-            if (index == EStore.NO_INDEX)
-            {
-              return value;
-            }
-
-            value = resolveProxy(revision, feature, index, value);
-            if (value instanceof CDOID)
-            {
-              CDOID id = (CDOID)value;
-              CDOList list = revision.getOrCreateList(feature);
-              CDORevisionPrefetchingPolicy policy = view.options().getRevisionPrefetchingPolicy();
-              InternalCDORevisionManager revisionManager = view.getSession().getRevisionManager();
-              List<CDOID> listOfIDs = policy.loadAhead(revisionManager, view, eObject, feature, list, index, id);
-              if (!listOfIDs.isEmpty())
-              {
-                int initialChunkSize = view.getSession().options().getCollectionLoadingPolicy().getInitialChunkSize();
-                revisionManager.getRevisions(listOfIDs, view, initialChunkSize, CDORevision.DEPTH_NONE, true);
-              }
-            }
-          }
-
-          if (feature instanceof EReference)
-          {
-            value = convertIDToObject(view, eObject, feature, index, value);
-          }
-          else
-          {
-            CDOType type = CDOModelUtil.getType(feature.getEType());
-            if (type != null)
-            {
-              value = type.convertToEMF(feature.getEType(), value);
-            }
-          }
-        }
-        finally
-        {
-          view.unlockView();
-        }
-      }
-    }
-
-    return value;
-  }
-
-  private Object convertIDToObject(InternalCDOView view, EObject eObject, EStructuralFeature feature, int index, Object value)
-  {
-    try
-    {
-      value = view.convertIDToObject(value);
-    }
-    catch (ObjectNotFoundException ex)
-    {
-      if (value instanceof CDOID)
-      {
-        // If feature == null then we come from getContainer()/getResource() and are in case of detached object
-        // consequently to a remote parent object remove then must return null
-        if (feature != null)
-        {
-          CDOStaleReferencePolicy staleReferencePolicy = view.options().getStaleReferencePolicy();
-          value = staleReferencePolicy.processStaleReference(eObject, feature, index, ex.getID());
-        }
-        else
-        {
-          value = null;
-        }
-      }
-    }
-
-    return getInternalInstance(value);
-  }
-
   private InternalCDOObject getCDOObject(Object object)
   {
     return FSMUtil.adapt(object, view);
@@ -973,7 +839,165 @@ public final class CDOStoreImpl implements CDOStore
     }
 
     Object oldValue = revision.get(feature, index);
-    return convertToEMF(eObject, revision, feature, index, oldValue);
+    return convertToEMFInternal(eObject, revision, feature, index, oldValue);
+  }
+
+  /**
+   * @since 3.0
+   */
+  @Override
+  public Object convertToCDO(InternalCDOObject object, EStructuralFeature feature, Object value)
+  {
+    if (value != null)
+    {
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          value = convertToCDOUnsynced(feature, value);
+        }
+        finally
+        {
+          view.unlockView();
+        }
+      }
+    }
+
+    return value;
+  }
+
+  private Object convertToCDOInternal(EStructuralFeature feature, Object value)
+  {
+    if (value != null)
+    {
+      return convertToCDOUnsynced(feature, value);
+    }
+
+    return null;
+  }
+
+  private Object convertToCDOUnsynced(EStructuralFeature feature, Object value)
+  {
+    if (feature instanceof EReference)
+    {
+      value = view.convertObjectToID(value, true);
+    }
+    else
+    {
+      CDOType type = CDOModelUtil.getType(feature.getEType());
+      if (type != null)
+      {
+        value = type.convertToCDO(feature.getEType(), value);
+      }
+    }
+
+    return value;
+  }
+
+  /**
+   * @since 2.0
+   */
+  @Override
+  public Object convertToEMF(EObject eObject, InternalCDORevision revision, EStructuralFeature feature, int index, Object value)
+  {
+    if (value != null)
+    {
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          value = convertToEMFUnsynced(eObject, revision, feature, index, value);
+        }
+        finally
+        {
+          view.unlockView();
+        }
+      }
+    }
+
+    return value;
+  }
+
+  private Object convertToEMFInternal(EObject eObject, InternalCDORevision revision, EStructuralFeature feature, int index, Object value)
+  {
+    if (value != null)
+    {
+      return convertToEMFUnsynced(eObject, revision, feature, index, value);
+    }
+
+    return null;
+  }
+
+  private Object convertToEMFUnsynced(EObject eObject, InternalCDORevision revision, EStructuralFeature feature, int index, Object value)
+  {
+    if (feature.isMany())
+    {
+      if (index == EStore.NO_INDEX)
+      {
+        return value;
+      }
+
+      value = resolveProxy(revision, feature, index, value);
+      if (value instanceof CDOID)
+      {
+        CDOID id = (CDOID)value;
+        CDOList list = revision.getOrCreateList(feature);
+        CDORevisionPrefetchingPolicy policy = view.options().getRevisionPrefetchingPolicy();
+        InternalCDORevisionManager revisionManager = view.getSession().getRevisionManager();
+        List<CDOID> listOfIDs = policy.loadAhead(revisionManager, view, eObject, feature, list, index, id);
+        if (!listOfIDs.isEmpty())
+        {
+          int initialChunkSize = view.getSession().options().getCollectionLoadingPolicy().getInitialChunkSize();
+          revisionManager.getRevisions(listOfIDs, view, initialChunkSize, CDORevision.DEPTH_NONE, true);
+        }
+      }
+    }
+
+    if (feature instanceof EReference)
+    {
+      value = convertIDToObject(view, eObject, feature, index, value);
+    }
+    else
+    {
+      CDOType type = CDOModelUtil.getType(feature.getEType());
+      if (type != null)
+      {
+        value = type.convertToEMF(feature.getEType(), value);
+      }
+    }
+
+    return value;
+  }
+
+  private Object convertIDToObject(InternalCDOView view, EObject eObject, EStructuralFeature feature, int index, Object value)
+  {
+    try
+    {
+      value = view.convertIDToObject(value);
+    }
+    catch (ObjectNotFoundException ex)
+    {
+      if (value instanceof CDOID)
+      {
+        // If feature == null then we come from getContainer()/getResource() and are in case of detached object
+        // consequently to a remote parent object remove then must return null
+        if (feature != null)
+        {
+          CDOStaleReferencePolicy staleReferencePolicy = view.options().getStaleReferencePolicy();
+          value = staleReferencePolicy.processStaleReference(eObject, feature, index, ex.getID());
+        }
+        else
+        {
+          value = null;
+        }
+      }
+    }
+
+    return getInternalInstance(value);
   }
 
   private static InternalCDORevision readRevision(InternalCDOObject cdoObject)

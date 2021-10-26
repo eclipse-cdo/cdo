@@ -186,8 +186,7 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
 
     if (eNotificationRequired())
     {
-      NotificationImpl notification = new NotificationImpl(NotificationImpl.ADD, null, view);
-      eNotify(notification);
+      eNotify(new NotificationImpl(Notification.ADD, null, view));
     }
   }
 
@@ -217,8 +216,7 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
     getResourceSet().getResources().removeAll(resToRemove);
     if (eNotificationRequired())
     {
-      NotificationImpl notification = new NotificationImpl(NotificationImpl.REMOVE, view, null);
-      eNotify(notification);
+      eNotify(new NotificationImpl(Notification.REMOVE, view, null));
     }
   }
 
@@ -327,6 +325,15 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
       {
         ignoreNotifications.remove();
       }
+    }
+  }
+
+  @Override
+  public void commit()
+  {
+    if (eNotificationRequired())
+    {
+      eNotify(new NotificationImpl(NOTIFICATION_COMMIT, null, null));
     }
   }
 

@@ -66,6 +66,22 @@ public interface CDORevisionCache extends CDORevisionCacheAdder, INotifier
   public void forEachCurrentRevision(Consumer<CDORevision> consumer);
 
   /**
+   * An {@link IEvent event} fired from a {@link CDORevisionCache revision cache} when a {@link CDORevision revision} is added to it.
+   *
+   * @author Eike Stepper
+   * @noextend This interface is not intended to be extended by clients.
+   * @noimplement This interface is not intended to be implemented by clients.
+   * @since 4.15
+   */
+  public interface AdditionEvent extends IEvent
+  {
+    @Override
+    public CDORevisionCache getSource();
+
+    public CDORevision getRevision();
+  }
+
+  /**
    * An {@link IEvent event} fired from a {@link CDORevisionCache revision cache} for {@link CDORevision revisions} that
    * are evicted because they are no longer strongly referenced when free memory runs low.
    *

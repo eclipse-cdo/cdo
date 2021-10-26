@@ -27,6 +27,14 @@ public final class CollectionUtil
   {
   }
 
+  /**
+   * @since 3.16
+   */
+  public static boolean isEmpty(Collection<?> c)
+  {
+    return c == null || c.isEmpty();
+  }
+
   public static <T> Iterator<T> dump(Iterator<T> it)
   {
     List<T> list = new ArrayList<>();

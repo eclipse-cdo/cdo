@@ -36,6 +36,7 @@ import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
 import org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision;
 
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
+import org.eclipse.net4j.util.collection.CollectionUtil;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -347,25 +348,25 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
     List<RevisionInfo> infosToLoad = createRevisionInfos(ids, branchPoint, prefetchDepth, loadOnDemand, infos);
     if (infosToLoad != null)
     {
-      List<? extends CDORevision> additionalLoadedRevisions //
+      List<? extends CDORevision> additionalRevisions //
           = loadRevisions(infosToLoad, branchPoint, referenceChunk, prefetchDepth);
 
-      List<? extends CDORevision> primaryLoadedRevisions //
-          = getResultsAndSynthetics(infosToLoad.toArray(new RevisionInfo[0]), null);
+      List<? extends CDORevision> primaryRevisions //
+          = getResultsAndSynthetics(infosToLoad.toArray(new RevisionInfo[infosToLoad.size()]), null);
 
-      if (primaryLoadedRevisions != null && !primaryLoadedRevisions.isEmpty() || additionalLoadedRevisions != null && !additionalLoadedRevisions.isEmpty())
+      if (!CollectionUtil.isEmpty(primaryRevisions) || !CollectionUtil.isEmpty(additionalRevisions))
       {
-        if (primaryLoadedRevisions == null)
+        if (primaryRevisions == null)
         {
-          primaryLoadedRevisions = Collections.emptyList();
+          primaryRevisions = Collections.emptyList();
         }
 
-        if (additionalLoadedRevisions == null)
+        if (additionalRevisions == null)
         {
-          additionalLoadedRevisions = Collections.emptyList();
+          additionalRevisions = Collections.emptyList();
         }
 
-        fireEvent(new RevisionsLoadedEvent(this, primaryLoadedRevisions, additionalLoadedRevisions, prefetchDepth));
+        fireEvent(new RevisionsLoadedEvent(this, primaryRevisions, additionalRevisions, prefetchDepth));
       }
     }
 
@@ -473,7 +474,7 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
         additionalRevisions = new ArrayList<>(additionalRevisionInfos.size());
         for (RevisionInfo info : additionalRevisionInfos)
         {
-          info.processResult(this, new ArrayList<CDORevision>(), null, 0);
+          info.processResult(this, null, null, 0);
           additionalRevisions.add(info.getResult());
         }
       }

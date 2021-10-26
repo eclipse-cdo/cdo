@@ -22,13 +22,13 @@ import org.eclipse.net4j.util.event.Event;
 /**
  * @author Eike Stepper
  */
-public class EvictionEventImpl extends Event implements EvictionEvent
+public final class CacheEvictionEvent extends Event implements EvictionEvent
 {
   private static final long serialVersionUID = 1L;
 
-  private CDORevisionKey key;
+  private final CDORevisionKey key;
 
-  public EvictionEventImpl(CDORevisionCache cache, CDORevisionKey key)
+  public CacheEvictionEvent(CDORevisionCache cache, CDORevisionKey key)
   {
     super(cache);
     this.key = key;

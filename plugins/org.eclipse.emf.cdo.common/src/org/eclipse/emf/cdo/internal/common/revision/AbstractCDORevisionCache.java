@@ -126,6 +126,12 @@ public abstract class AbstractCDORevisionCache extends Lifecycle implements Inte
   {
     referenceQueue.register((InternalCDORevision)revision);
     doAddRevision(revision);
+
+    IListener[] listeners = getListeners();
+    if (listeners != null)
+    {
+      fireEvent(new CacheAdditionEvent(this, revision));
+    }
   }
 
   protected abstract void doAddRevision(CDORevision revision);
@@ -193,7 +199,7 @@ public abstract class AbstractCDORevisionCache extends Lifecycle implements Inte
     IListener[] listeners = getListeners();
     if (listeners != null)
     {
-      fireEvent(new EvictionEventImpl(this, key), listeners);
+      fireEvent(new CacheEvictionEvent(this, key), listeners);
     }
 
     if (TRACER.isEnabled())

@@ -52,7 +52,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
-import org.eclipse.emf.spi.cdo.InternalCDOViewSet;
 
 import org.eclipse.core.runtime.Path;
 
@@ -398,6 +397,24 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
   }
 
   @Override
+  public final CDOID getRootID()
+  {
+    return rootID;
+  }
+
+  @Override
+  public final void setRootID(CDOID rootID)
+  {
+    this.rootID = rootID;
+  }
+
+  @Override
+  public String getRootLabel()
+  {
+    return rootLabel;
+  }
+
+  @Override
   public final boolean isPrefetch()
   {
     return prefetch;
@@ -415,37 +432,49 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
       {
         if (isOpen())
         {
-          ResourceSet resourceSet = view.getResourceSet();
-          prefetcherManager = new CDOPrefetcherManager(resourceSet);
+          startPrefetcherManager();
         }
       }
       else
       {
-        if (prefetcherManager != null)
-        {
-          prefetcherManager.dispose();
-          prefetcherManager = null;
-        }
+        stopPrefetcherManager();
       }
     }
   }
 
   @Override
-  public final CDOID getRootID()
+  public boolean waitUntilPrefetched()
   {
-    return rootID;
+    if (prefetcherManager != null)
+    {
+      return prefetcherManager.waitUntilPrefetched();
+    }
+
+    return true;
   }
 
-  @Override
-  public final void setRootID(CDOID rootID)
+  private void startPrefetcherManager()
   {
-    this.rootID = rootID;
+    ResourceSet resourceSet = view.getResourceSet();
+    prefetcherManager = new CDOPrefetcherManager(resourceSet);
+    prefetcherManager.activate();
+    prefetcherManager.waitUntilPrefetched();
   }
 
-  @Override
-  public String getRootLabel()
+  private void stopPrefetcherManager()
   {
-    return rootLabel;
+    if (prefetcherManager != null)
+    {
+      try
+      {
+        prefetcherManager.deactivate();
+        prefetcherManager = null;
+      }
+      catch (Throwable ex)
+      {
+        OM.LOG.error(ex);
+      }
+    }
   }
 
   @Override
@@ -553,7 +582,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
 
             if (prefetch)
             {
-              prefetcherManager = new CDOPrefetcherManager(resourceSet);
+              startPrefetcherManager();
             }
 
             rootObject = loadRootObject();
@@ -620,19 +649,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
         }
         finally
         {
-          if (prefetcherManager != null)
-          {
-            try
-            {
-              prefetcherManager.dispose();
-              prefetcherManager = null;
-            }
-            catch (Throwable ex)
-            {
-              OM.LOG.error(ex);
-            }
-          }
-
+          stopPrefetcherManager();
           rootObject = null;
           view = null;
 
@@ -783,22 +800,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
   private ResourceSetConfiguration configureResourceSet(ResourceSet resourceSet)
   {
     IManagedContainer container = getContainer();
-    ResourceSetConfiguration resourceSetConfiguration = ResourceSetConfigurer.Registry.INSTANCE.configureResourceSet(resourceSet, this, container);
-
-    try
-    {
-      InternalCDOViewSet viewSet = (InternalCDOViewSet)CDOUtil.getViewSet(resourceSet);
-      if (viewSet != null)
-      {
-        viewSet.commit();
-      }
-    }
-    catch (Exception ex)
-    {
-      OM.LOG.error(ex);
-    }
-
-    return resourceSetConfiguration;
+    return ResourceSetConfigurer.Registry.INSTANCE.configureResourceSet(resourceSet, this, container);
   }
 
   private void unconfigureResourceSet(ResourceSetConfiguration resourceSetConfiguration)

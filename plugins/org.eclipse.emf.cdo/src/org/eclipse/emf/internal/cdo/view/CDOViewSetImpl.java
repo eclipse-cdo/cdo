@@ -51,6 +51,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
 
 /**
  * @author Simon McDuff
@@ -106,6 +107,24 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
   public void setDefaultClearAdapterPolicy(CDOAdapterPolicy defaultClearAdapterPolicy)
   {
     this.defaultClearAdapterPolicy = defaultClearAdapterPolicy;
+  }
+
+  @Override
+  public ExecutorService getExecutorService()
+  {
+    synchronized (views)
+    {
+      for (InternalCDOView view : views)
+      {
+        ExecutorService executorService = view.getExecutorService();
+        if (executorService != null)
+        {
+          return executorService;
+        }
+      }
+    }
+
+    return null;
   }
 
   @Override
@@ -325,15 +344,6 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
       {
         ignoreNotifications.remove();
       }
-    }
-  }
-
-  @Override
-  public void commit()
-  {
-    if (eNotificationRequired())
-    {
-      eNotify(new NotificationImpl(NOTIFICATION_COMMIT, null, null));
     }
   }
 

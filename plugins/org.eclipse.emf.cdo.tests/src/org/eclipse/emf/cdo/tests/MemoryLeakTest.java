@@ -13,13 +13,11 @@ package org.eclipse.emf.cdo.tests;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
-import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
 
 import org.eclipse.net4j.util.WrappedException;
-import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -81,42 +79,11 @@ public class MemoryLeakTest extends AbstractCDOTest
 
     try
     {
-      createModel(category, LEVELS);
+      createModel(category, LEVELS, CATEGORIES, PRODUCTS, () -> commit());
     }
     catch (OutOfMemoryError error)
     {
       error.printStackTrace();
-    }
-  }
-
-  private void createModel(Category parent, int levels)
-  {
-    IOUtil.OUT().println(parent + ": " + (LEVELS - levels));
-
-    EList<Category> categories = parent.getCategories();
-    for (int i = 0; i < CATEGORIES; i++)
-    {
-      Category category = getModel1Factory().createCategory();
-      category.setName("Category" + levels + "-" + i);
-      categories.add(category);
-    }
-
-    EList<Product1> products = parent.getProducts();
-    for (int i = 0; i < PRODUCTS; i++)
-    {
-      Product1 product = getModel1Factory().createProduct1();
-      product.setName("Product" + levels + "-" + i);
-      products.add(product);
-    }
-
-    commit();
-
-    if (levels > 0)
-    {
-      for (Category category : categories)
-      {
-        createModel(category, levels - 1);
-      }
     }
   }
 

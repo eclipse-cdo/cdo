@@ -17,14 +17,12 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
-import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.io.StringCompressor;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 
@@ -60,7 +58,7 @@ public class Bugzilla_517225_Test extends AbstractCDOTest
       company.getCategories().add(category);
       resource.getContents().add(company);
 
-      createModel(category, LEVELS);
+      createModel(category, LEVELS, CATEGORIES, PRODUCTS);
       transaction.commit();
     }
 
@@ -86,32 +84,5 @@ public class Bugzilla_517225_Test extends AbstractCDOTest
 
     pendingAcknowledgements = (Collection<Integer>)ReflectUtil.getValue(ReflectUtil.getField(StringCompressor.class, "pendingAcknowledgements"), compressor);
     assertEquals("pendingAcknowledgements: " + pendingAcknowledgements, 0, pendingAcknowledgements.size());
-  }
-
-  private void createModel(Category parent, int levels)
-  {
-    EList<Category> categories = parent.getCategories();
-    for (int i = 0; i < CATEGORIES; i++)
-    {
-      Category category = getModel1Factory().createCategory();
-      category.setName("Category" + levels + "-" + i);
-      categories.add(category);
-    }
-
-    EList<Product1> products = parent.getProducts();
-    for (int i = 0; i < PRODUCTS; i++)
-    {
-      Product1 product = getModel1Factory().createProduct1();
-      product.setName("Product" + levels + "-" + i);
-      products.add(product);
-    }
-
-    if (levels > 0)
-    {
-      for (Category category : categories)
-      {
-        createModel(category, levels - 1);
-      }
-    }
   }
 }

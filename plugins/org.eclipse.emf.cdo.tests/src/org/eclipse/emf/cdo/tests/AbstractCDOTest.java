@@ -33,6 +33,9 @@ import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 import org.eclipse.emf.cdo.spi.server.InternalView;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
+import org.eclipse.emf.cdo.tests.model1.Category;
+import org.eclipse.emf.cdo.tests.model1.Model1Factory;
+import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUpdatable;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -52,6 +55,7 @@ import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.tests.AbstractOMTest;
 
 import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -177,6 +181,50 @@ public abstract class AbstractCDOTest extends ConfigTest
     }
 
     return lockTarget;
+  }
+
+  public int createModel(Category parent, int levels, int categories, int products)
+  {
+    return createModel(parent, levels, categories, products, null);
+  }
+
+  public int createModel(Category parent, int levels, int categories, int products, Runnable commit)
+  {
+    Model1Factory factory = getModel1Factory();
+    int count = 0;
+
+    EList<Category> categoriesList = parent.getCategories();
+    for (int i = 0; i < categories; i++)
+    {
+      Category category = factory.createCategory();
+      category.setName("Category" + levels + "-" + i);
+      categoriesList.add(category);
+      ++count;
+    }
+
+    EList<Product1> productsList = parent.getProducts();
+    for (int i = 0; i < products; i++)
+    {
+      Product1 product = factory.createProduct1();
+      product.setName("Product" + levels + "-" + i);
+      productsList.add(product);
+      ++count;
+    }
+
+    if (commit != null)
+    {
+      commit.run();
+    }
+
+    if (levels > 0)
+    {
+      for (Category category : categoriesList)
+      {
+        count += createModel(category, levels - 1, categories, products, commit);
+      }
+    }
+
+    return count;
   }
 
   public static void assertEquals(Object expected, Object actual)

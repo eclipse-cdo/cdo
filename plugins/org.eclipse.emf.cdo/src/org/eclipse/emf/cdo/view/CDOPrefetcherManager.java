@@ -14,88 +14,98 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCache;
+import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
+import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
-import org.eclipse.net4j.util.concurrent.ParallelRunner;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.om.OMPlatform;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ExecutorService;
 
 /**
  * @author Eike Stepper
  * @since 4.15
  */
-public final class CDOPrefetcherManager extends CDOViewSetHandler.Transactional
+public class CDOPrefetcherManager extends CDOViewSetHandler
 {
   public static final long EXECUTION_TIMEOUT = OMPlatform.INSTANCE.getProperty("org.eclipse.emf.cdo.view.CDOPrefetcherManager.EXECUTION_TIMEOUT", 30000L);
 
-  private ExecutorService executorService;
+  private final ExecutorService executorService;
 
-  private Map<CDOView, Prefetcher> prefetchers;
+  private final Map<CDOView, Prefetcher> prefetchers = Collections.synchronizedMap(new HashMap<>());
+
+  @ExcludeFromDump
+  private final Object lock = new Object();
+
+  private int runnables;
 
   public CDOPrefetcherManager(ResourceSet resourceSet)
   {
     super(resourceSet);
+    executorService = ConcurrencyUtil.getExecutorService(getViewSet());
   }
 
-  @Override
-  protected void init(CDOViewSet viewSet)
+  public boolean waitUntilPrefetched()
   {
-    executorService = ConcurrencyUtil.getExecutorService(IPluginContainer.INSTANCE);
-    prefetchers = new HashMap<>();
-    super.init(viewSet);
-  }
+    long end = System.currentTimeMillis() + getExecutionTimeout();
 
-  @Override
-  protected void viewSetCommitted(Set<CDOView> addedViews, Set<CDOView> changedViews, Set<CDOView> removedViews)
-  {
-    List<Runnable> runnables = new ArrayList<>();
-
-    synchronized (prefetchers)
+    synchronized (lock)
     {
-      for (CDOView view : removedViews)
+      while (runnables > 0)
       {
-        Prefetcher prefetcher = prefetchers.remove(view);
-        if (prefetcher != null)
+        try
         {
-          runnables.add(() -> prefetcher.dispose());
+          lock.wait(end - System.currentTimeMillis());
         }
-      }
-
-      for (CDOView view : addedViews)
-      {
-        Prefetcher prefetcher = createPrefetcher(view);
-        prefetchers.put(view, prefetcher);
-        runnables.add(prefetcher);
-      }
-
-      for (CDOView view : changedViews)
-      {
-        Prefetcher prefetcher = prefetchers.get(view);
-        if (prefetcher != null)
+        catch (InterruptedException ex)
         {
-          runnables.add(() -> prefetcher.changeBranchPoint(view));
+          return false;
         }
       }
     }
 
-    execute(executorService, runnables);
+    return true;
+  }
+
+  @Override
+  protected void viewAdded(CDOView view)
+  {
+    Prefetcher prefetcher = createPrefetcher(view);
+    prefetchers.put(view, prefetcher);
+    schedule(prefetcher::prefetch);
+  }
+
+  @Override
+  protected void viewChanged(CDOView view, CDOBranchPoint oldBranchPoint, CDOBranchPoint newBranchPoint)
+  {
+    Prefetcher prefetcher = prefetchers.get(view);
+    if (prefetcher != null)
+    {
+      schedule(prefetcher::changeBranchPoint);
+    }
+  }
+
+  @Override
+  protected void viewRemoved(CDOView view)
+  {
+    Prefetcher prefetcher = prefetchers.remove(view);
+    if (prefetcher != null)
+    {
+      schedule(prefetcher::dispose);
+    }
   }
 
   protected Prefetcher createPrefetcher(CDOView view)
@@ -103,32 +113,59 @@ public final class CDOPrefetcherManager extends CDOViewSetHandler.Transactional
     return new Prefetcher(view);
   }
 
-  protected void execute(ExecutorService executorService, List<Runnable> runnables)
+  protected void schedule(Runnable runnable)
   {
-    ParallelRunner runner = new ParallelRunner(runnables);
+    synchronized (lock)
+    {
+      ++runnables;
+    }
 
-    try
-    {
-      runner.run(executorService, EXECUTION_TIMEOUT);
-    }
-    catch (InterruptedException ex)
-    {
-      OM.LOG.warn(ex);
-    }
+    executorService.submit(() -> {
+      try
+      {
+        runnable.run();
+      }
+      catch (Error ex)
+      {
+        OM.LOG.error(ex);
+        throw ex;
+      }
+      catch (Throwable ex)
+      {
+        OM.LOG.error(ex);
+      }
+      finally
+      {
+        synchronized (lock)
+        {
+          if (--runnables == 0)
+          {
+            lock.notifyAll();
+          }
+        }
+      }
+    });
+  }
+
+  protected long getExecutionTimeout()
+  {
+    return EXECUTION_TIMEOUT;
   }
 
   /**
    * @author Eike Stepper
    */
-  protected static final class Prefetcher implements Runnable, IListener
+  protected static class Prefetcher implements IListener
   {
+    private final CDOView view;
+
     private final CDOID rootID;
 
     /**
      * A set is sufficient (instead of Map<CDORevisionKey, CDORevision>) because AbstractCDORevision.equals()
      * determines equality based on the revision key.
      */
-    private final Set<CDORevision> revisions = new HashSet<>();
+    private final Map<CDORevisionKey, CDORevision> revisions = new HashMap<>();
 
     private final InternalCDORevisionManager revisionManager;
 
@@ -136,6 +173,7 @@ public final class CDOPrefetcherManager extends CDOViewSetHandler.Transactional
 
     public Prefetcher(CDOView view)
     {
+      this.view = view;
       CDOSession session = view.getSession();
       rootID = session.getRepositoryInfo().getRootResourceID();
 
@@ -145,16 +183,15 @@ public final class CDOPrefetcherManager extends CDOViewSetHandler.Transactional
       branchPoint = CDOBranchUtil.copyBranchPoint(view);
     }
 
-    public void changeBranchPoint(CDOBranchPoint newBranchPoint)
-    {
-      branchPoint = CDOBranchUtil.copyBranchPoint(newBranchPoint);
-      run();
-    }
-
-    @Override
-    public void run()
+    public void prefetch()
     {
       revisionManager.getRevision(rootID, branchPoint, CDORevision.UNCHUNKED, CDORevision.DEPTH_INFINITE, true);
+    }
+
+    public void changeBranchPoint()
+    {
+      branchPoint = CDOBranchUtil.copyBranchPoint(view);
+      prefetch();
     }
 
     public void dispose()
@@ -174,9 +211,19 @@ public final class CDOPrefetcherManager extends CDOViewSetHandler.Transactional
         CDORevision revision = e.getRevision();
         if (revision.isValid(branchPoint))
         {
-          revisions.add(revision);
+          cacheRevision(revision);
         }
       }
+    }
+
+    protected CDORevision cacheRevision(CDORevision revision)
+    {
+      return revisions.put(CDORevisionUtil.copyRevisionKey(revision), revision);
+    }
+
+    protected int getSize()
+    {
+      return revisions.size();
     }
   }
 }

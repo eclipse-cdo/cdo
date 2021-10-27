@@ -15,21 +15,18 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.spi.cdo.InternalCDOViewSet;
-
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * @author Eike Stepper
  * @since 4.15
  */
-public class CDOViewSetHandler
+public class CDOViewSetHandler extends Lifecycle
 {
   private final CDOViewSet viewSet;
 
@@ -62,12 +59,6 @@ public class CDOViewSetHandler
         break;
       }
 
-      case InternalCDOViewSet.NOTIFICATION_COMMIT:
-      {
-        viewSetCommitted();
-        break;
-      }
-
       default:
         break;
       }
@@ -94,7 +85,6 @@ public class CDOViewSetHandler
   public CDOViewSetHandler(CDOViewSet viewSet)
   {
     this.viewSet = viewSet;
-    init(viewSet);
   }
 
   public CDOViewSetHandler(ResourceSet resourceSet)
@@ -105,33 +95,6 @@ public class CDOViewSetHandler
   public final CDOViewSet getViewSet()
   {
     return viewSet;
-  }
-
-  /**
-   * Subclasses may override.
-   */
-  public void dispose()
-  {
-    viewSet.eAdapters().remove(viewSetAdapter);
-
-    for (CDOView view : viewSet.getViews())
-    {
-      viewRemoved(view);
-    }
-  }
-
-  /**
-   * Subclasses may override.
-   */
-  protected void init(CDOViewSet viewSet)
-  {
-    for (CDOView view : viewSet.getViews())
-    {
-      viewAdded(view);
-    }
-
-    viewSetCommitted();
-    viewSet.eAdapters().add(viewSetAdapter);
   }
 
   /**
@@ -166,101 +129,29 @@ public class CDOViewSetHandler
     // Do nothing.
   }
 
-  /**
-   * Subclasses may override.
-   */
-  protected void viewSetCommitted()
+  @Override
+  protected void doActivate() throws Exception
   {
-    // Do nothing.
+    super.doActivate();
+
+    for (CDOView view : viewSet.getViews())
+    {
+      viewAdded(view);
+    }
+
+    viewSet.eAdapters().add(viewSetAdapter);
   }
 
-  /**
-   * @author Eike Stepper
-   */
-  public static class Transactional extends CDOViewSetHandler
+  @Override
+  protected void doDeactivate() throws Exception
   {
-    private Set<CDOView> addedViews;
+    viewSet.eAdapters().remove(viewSetAdapter);
 
-    private Set<CDOView> changedViews;
-
-    private Set<CDOView> removedViews;
-
-    public Transactional(CDOViewSet viewSet)
+    for (CDOView view : viewSet.getViews())
     {
-      super(viewSet);
+      viewRemoved(view);
     }
 
-    public Transactional(ResourceSet resourceSet)
-    {
-      super(resourceSet);
-    }
-
-    @Override
-    protected void init(CDOViewSet viewSet)
-    {
-      clearSets();
-      super.init(viewSet);
-    }
-
-    @Override
-    protected final void viewAdded(CDOView view)
-    {
-      synchronized (this)
-      {
-        addedViews.add(view);
-      }
-    }
-
-    @Override
-    protected final void viewChanged(CDOView view, CDOBranchPoint oldBranchPoint, CDOBranchPoint newBranchPoint)
-    {
-      synchronized (this)
-      {
-        changedViews.add(view);
-      }
-    }
-
-    @Override
-    protected final void viewRemoved(CDOView view)
-    {
-      synchronized (this)
-      {
-        removedViews.add(view);
-      }
-    }
-
-    @Override
-    protected final void viewSetCommitted()
-    {
-      Set<CDOView> paramAddedViews;
-      Set<CDOView> paramChangedViews;
-      Set<CDOView> paramRemovedViews;
-
-      synchronized (this)
-      {
-        paramAddedViews = addedViews;
-        paramChangedViews = changedViews;
-        paramRemovedViews = removedViews;
-
-        clearSets();
-      }
-
-      viewSetCommitted(paramAddedViews, paramChangedViews, paramRemovedViews);
-    }
-
-    /**
-     * Subclasses may override.
-     */
-    protected void viewSetCommitted(Set<CDOView> addedViews, Set<CDOView> changedViews, Set<CDOView> removedViews)
-    {
-      // Do nothing.
-    }
-
-    private void clearSets()
-    {
-      addedViews = new HashSet<>();
-      changedViews = new HashSet<>();
-      removedViews = new HashSet<>();
-    }
+    super.doDeactivate();
   }
 }

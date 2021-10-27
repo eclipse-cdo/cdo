@@ -105,6 +105,11 @@ public interface CDOCheckout extends CDOExplorerElement, CDOTimeProvider, StateP
   public void setPrefetch(boolean prefetch);
 
   /**
+   * @since 4.11
+   */
+  public boolean waitUntilPrefetched();
+
+  /**
    * @since 4.5
    */
   public CDOCheckout duplicate();

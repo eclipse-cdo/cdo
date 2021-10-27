@@ -12,8 +12,9 @@ package org.eclipse.emf.spi.cdo;
 
 import org.eclipse.emf.cdo.view.CDOViewSet;
 
+import org.eclipse.net4j.util.concurrent.IExecutorServiceProvider;
+
 import org.eclipse.emf.common.notify.Adapter;
-import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.URI;
 
 import java.util.concurrent.Callable;
@@ -26,13 +27,8 @@ import java.util.concurrent.Callable;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface InternalCDOViewSet extends CDOViewSet, Adapter
+public interface InternalCDOViewSet extends CDOViewSet, Adapter, IExecutorServiceProvider
 {
-  /**
-   * @since 4.15
-   */
-  public static final int NOTIFICATION_COMMIT = Notification.EVENT_TYPE_COUNT + 19701203;
-
   public void add(InternalCDOView view);
 
   public void remove(InternalCDOView view);
@@ -56,9 +52,4 @@ public interface InternalCDOViewSet extends CDOViewSet, Adapter
    * @since 4.1
    */
   public <V> V executeWithoutNotificationHandling(Callable<V> callable);
-
-  /**
-   * @since 4.15
-   */
-  public void commit();
 }

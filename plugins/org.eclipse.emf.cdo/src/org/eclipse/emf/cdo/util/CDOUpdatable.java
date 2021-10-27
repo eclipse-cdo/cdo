@@ -10,8 +10,6 @@
  */
 package org.eclipse.emf.cdo.util;
 
-import org.eclipse.emf.cdo.session.CDOSession.Options;
-
 /**
  * Represents facilities that can receive
  * {@link org.eclipse.emf.cdo.session.CDOSession.Options#setPassiveUpdateEnabled(boolean) passive updates}.
@@ -27,7 +25,7 @@ public interface CDOUpdatable
 
   /**
    * Returns the time stamp of the last commit operation. May not be accurate if
-   * {@link Options#isPassiveUpdateEnabled() passive updates} are disabled.
+   * {@link org.eclipse.emf.cdo.session.CDOSession.Options#isPassiveUpdateEnabled() passive updates} are disabled.
    */
   public long getLastUpdateTime();
 

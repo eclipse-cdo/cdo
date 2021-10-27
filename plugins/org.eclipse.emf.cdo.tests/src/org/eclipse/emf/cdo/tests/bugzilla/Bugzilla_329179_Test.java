@@ -19,14 +19,11 @@ import org.eclipse.emf.cdo.tests.config.IModelConfig;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Skips;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 import org.eclipse.emf.cdo.tests.model1.Category;
-import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.tests.util.TestRevisionManager;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.io.IOUtil;
-
-import org.eclipse.emf.common.util.EList;
 
 import java.util.Map;
 
@@ -60,7 +57,7 @@ public class Bugzilla_329179_Test extends AbstractCDOTest
     {
       IOUtil.OUT().println("Creating...");
       Category root = getModel1Factory().createCategory();
-      createModel(root, LEVELS);
+      createModel(root, LEVELS, CATEGORIES, PRODUCTS);
 
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
@@ -79,32 +76,5 @@ public class Bugzilla_329179_Test extends AbstractCDOTest
 
     IOUtil.OUT().println("Prefetching...");
     resource.cdoPrefetch(CDORevision.DEPTH_INFINITE);
-  }
-
-  private void createModel(Category parent, int levels)
-  {
-    EList<Category> categories = parent.getCategories();
-    for (int i = 0; i < CATEGORIES; i++)
-    {
-      Category category = getModel1Factory().createCategory();
-      category.setName("Category" + levels + "-" + i);
-      categories.add(category);
-    }
-
-    EList<Product1> products = parent.getProducts();
-    for (int i = 0; i < PRODUCTS; i++)
-    {
-      Product1 product = getModel1Factory().createProduct1();
-      product.setName("Product" + levels + "-" + i);
-      products.add(product);
-    }
-
-    if (levels > 0)
-    {
-      for (Category category : categories)
-      {
-        createModel(category, levels - 1);
-      }
-    }
   }
 }

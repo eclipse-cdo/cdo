@@ -46,16 +46,14 @@ public class CDOViewSetHandler extends Lifecycle
       case Notification.ADD:
       {
         CDOView view = (CDOView)msg.getNewValue();
-        view.addListener(viewListener);
-        viewAdded(view);
+        addView(view);
         break;
       }
 
       case Notification.REMOVE:
       {
         CDOView view = (CDOView)msg.getOldValue();
-        view.removeListener(viewListener);
-        viewRemoved(view);
+        removeView(view);
         break;
       }
 
@@ -136,7 +134,7 @@ public class CDOViewSetHandler extends Lifecycle
 
     for (CDOView view : viewSet.getViews())
     {
-      viewAdded(view);
+      addView(view);
     }
 
     viewSet.eAdapters().add(viewSetAdapter);
@@ -149,9 +147,21 @@ public class CDOViewSetHandler extends Lifecycle
 
     for (CDOView view : viewSet.getViews())
     {
-      viewRemoved(view);
+      removeView(view);
     }
 
     super.doDeactivate();
+  }
+
+  private void addView(CDOView view)
+  {
+    view.addListener(viewListener);
+    viewAdded(view);
+  }
+
+  private void removeView(CDOView view)
+  {
+    view.removeListener(viewListener);
+    viewRemoved(view);
   }
 }

@@ -34,7 +34,7 @@ public class TimerLifecycle extends Timer implements ILifecycle
     @Override
     protected void doDeactivate() throws Exception
     {
-      cancel();
+      superCancel();
     }
   };
 
@@ -116,6 +116,17 @@ public class TimerLifecycle extends Timer implements ILifecycle
   public String toString()
   {
     return "Timer";
+  }
+
+  @Override
+  public void cancel()
+  {
+    // Do nothing. Call deactivate() instead.
+  }
+
+  private void superCancel()
+  {
+    super.cancel();
   }
 
   /**

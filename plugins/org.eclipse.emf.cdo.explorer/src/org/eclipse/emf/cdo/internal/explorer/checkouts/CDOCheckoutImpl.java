@@ -36,6 +36,7 @@ import org.eclipse.emf.cdo.view.CDOViewTargetChangedEvent;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.concurrent.TimerLifecycle;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
@@ -44,6 +45,7 @@ import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent.Kind;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.registry.IRegistry;
 
 import org.eclipse.emf.common.util.URI;
@@ -62,6 +64,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.WeakHashMap;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -102,6 +106,9 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
 
   private static final String BRANCH_AND_POINT_SEPARATOR = "_";
 
+  private static final long PREFETCHER_CLEANUP_INTERVAL = //
+      OMPlatform.INSTANCE.getProperty("org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout.PREFETCHER_CLEANUP_INTERVAL", 60000L);
+
   private final Set<CDOView> views = new LinkedHashSet<>();
 
   private final Map<CDOID, String> editorIDs = new WeakHashMap<>();
@@ -125,6 +132,10 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
   private boolean prefetch;
 
   private CDOPrefetcherManager prefetcherManager;
+
+  private Timer prefetcherCleanupTimer;
+
+  private TimerTask prefetcherCleanupTask;
 
   private State state = State.Closed;
 
@@ -459,12 +470,35 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     prefetcherManager = new CDOPrefetcherManager(resourceSet);
     prefetcherManager.activate();
     prefetcherManager.waitUntilPrefetched();
+
+    prefetcherCleanupTask = new TimerTask()
+    {
+      @Override
+      public void run()
+      {
+        prefetcherManager.cleanup();
+      }
+    };
+
+    prefetcherCleanupTimer = TimerLifecycle.DaemonFactory.getTimer(getContainer(), null);
+    prefetcherCleanupTimer.scheduleAtFixedRate(prefetcherCleanupTask, PREFETCHER_CLEANUP_INTERVAL, PREFETCHER_CLEANUP_INTERVAL);
   }
 
   private void stopPrefetcherManager()
   {
     if (prefetcherManager != null)
     {
+      try
+      {
+        prefetcherCleanupTask.cancel();
+        prefetcherCleanupTask = null;
+        prefetcherCleanupTimer = null;
+      }
+      catch (Exception ex)
+      {
+        OM.LOG.error(ex);
+      }
+
       try
       {
         prefetcherManager.deactivate();

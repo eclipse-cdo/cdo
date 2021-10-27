@@ -116,6 +116,8 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
 
   private CDORevisionProvider revisionProvider;
 
+  private boolean closing;
+
   public ServerCDOView(InternalSession session, CDOBranchPoint branchPoint, CDORevisionProvider revisionProvider)
   {
     super(null, branchPoint);
@@ -272,6 +274,12 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
   public boolean isDurableView()
   {
     return false;
+  }
+
+  @Override
+  public boolean isClosing()
+  {
+    return closing;
   }
 
   @Override
@@ -604,6 +612,13 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
   public CDOUnitManager getUnitManager()
   {
     throw new UnsupportedOperationException();
+  }
+
+  @Override
+  protected void doBeforeDeactivate() throws Exception
+  {
+    closing = true;
+    super.doBeforeDeactivate();
   }
 
   /**

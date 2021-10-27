@@ -106,6 +106,8 @@ public class Lifecycle extends Notifier implements ILifecycle, DeferrableActivat
 
   Exception internalDeactivate()
   {
+    boolean unlocked = true;
+
     try
     {
       if (lifecycleState == LifecycleState.ACTIVE)
@@ -116,6 +118,7 @@ public class Lifecycle extends Notifier implements ILifecycle, DeferrableActivat
         }
 
         lock();
+        unlocked = false;
 
         doBeforeDeactivate();
         IListener[] listeners = getListeners();
@@ -129,6 +132,7 @@ public class Lifecycle extends Notifier implements ILifecycle, DeferrableActivat
 
         lifecycleState = LifecycleState.INACTIVE;
         unlock();
+        unlocked = true;
 
         // Get listeners again because they could have changed since the first call to getListeners().
         listeners = getListeners();
@@ -153,7 +157,12 @@ public class Lifecycle extends Notifier implements ILifecycle, DeferrableActivat
     catch (Exception ex)
     {
       lifecycleState = LifecycleState.INACTIVE;
-      unlock();
+
+      if (!unlocked)
+      {
+        unlock();
+      }
+
       return ex;
     }
   }

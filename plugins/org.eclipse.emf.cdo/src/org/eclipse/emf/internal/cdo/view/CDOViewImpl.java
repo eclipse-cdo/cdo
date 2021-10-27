@@ -174,6 +174,8 @@ public class CDOViewImpl extends AbstractCDOView
 
   private volatile boolean invalidating;
 
+  private boolean closing;
+
   /**
    * @since 2.0
    */
@@ -1771,6 +1773,8 @@ public class CDOViewImpl extends AbstractCDOView
   @Override
   protected void doBeforeDeactivate() throws Exception
   {
+    closing = true;
+
     // Detach the view set from the view.
     InternalCDOViewSet viewSet = getViewSet();
     viewSet.remove(this);
@@ -1912,6 +1916,12 @@ public class CDOViewImpl extends AbstractCDOView
     {
       OM.LOG.error(ex);
     }
+  }
+
+  @Override
+  public boolean isClosing()
+  {
+    return closing;
   }
 
   @Override

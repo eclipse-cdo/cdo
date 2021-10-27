@@ -231,6 +231,11 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle, IEx
   public void unlockView();
 
   /**
+   * @since 4.15
+   */
+  public boolean isClosing();
+
+  /**
    * Optimizes the storage of {@link CDOObject#cdoView()} and {@link CDOObject#cdoState()}. All objects of a view
    * share a small number of {@link CDOState} literals, so they are moved into a final AbstractCDOView.viewAndStates array.
    * For the {@link CDOState#TRANSIENT TRANSIENT} state, where there is no view associated with a {@link CDOObject}, this class

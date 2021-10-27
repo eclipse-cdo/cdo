@@ -32,6 +32,7 @@ import java.util.List;
  *
  * @author Eike Stepper
  * @since 3.0
+ * @noextend This class is not intended to be extended by clients.
  */
 public abstract class RevisionInfo
 {
@@ -359,6 +360,7 @@ public abstract class RevisionInfo
    *
    * @author Eike Stepper
    * @since 3.0
+   * @noextend This class is not intended to be extended by clients.
    */
   public static abstract class Available extends RevisionInfo
   {
@@ -434,6 +436,7 @@ public abstract class RevisionInfo
      *
      * @author Eike Stepper
      * @since 3.0
+     * @noextend This class is not intended to be extended by clients.
      */
     public static class Normal extends Available
     {
@@ -485,6 +488,7 @@ public abstract class RevisionInfo
      *
      * @author Eike Stepper
      * @since 3.0
+     * @noextend This class is not intended to be extended by clients.
      */
     public static class Pointer extends Available
     {
@@ -575,6 +579,7 @@ public abstract class RevisionInfo
      *
      * @author Eike Stepper
      * @since 3.0
+     * @noextend This class is not intended to be extended by clients.
      */
     public static class Detached extends Available
     {
@@ -612,6 +617,7 @@ public abstract class RevisionInfo
    *
    * @author Eike Stepper
    * @since 3.0
+   * @noextend This class is not intended to be extended by clients.
    */
   public static class Missing extends RevisionInfo
   {

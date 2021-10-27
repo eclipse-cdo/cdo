@@ -28,7 +28,7 @@ import java.util.Map;
  */
 public class CDORevisionCacheBranching extends CDORevisionCacheAuditing
 {
-  private Map<CDOID, TypeAndRefCounter> typeMap = CDOIDUtil.createMap();
+  private final Map<CDOID, TypeAndRefCounter> typeMap = CDOIDUtil.createMap();
 
   public CDORevisionCacheBranching()
   {
@@ -101,7 +101,7 @@ public class CDORevisionCacheBranching extends CDORevisionCacheAuditing
    */
   private static final class TypeAndRefCounter
   {
-    private EClass type;
+    private final EClass type;
 
     private int refCounter;
 

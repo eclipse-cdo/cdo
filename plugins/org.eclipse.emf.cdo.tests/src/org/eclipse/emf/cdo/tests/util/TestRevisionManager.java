@@ -14,7 +14,6 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionManagerImpl;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
 import org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision;
 
@@ -103,9 +102,9 @@ public class TestRevisionManager extends CDORevisionManagerImpl
   }
 
   @Override
-  protected List<InternalCDORevision> loadRevisions(List<RevisionInfo> infosToLoad, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth)
+  protected List<CDORevision> loadRevisions(List<RevisionInfo> infosToLoad, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth)
   {
-    List<InternalCDORevision> result = super.loadRevisions(infosToLoad, branchPoint, referenceChunk, prefetchDepth);
+    List<CDORevision> result = super.loadRevisions(infosToLoad, branchPoint, referenceChunk, prefetchDepth);
 
     synchronized (lock)
     {

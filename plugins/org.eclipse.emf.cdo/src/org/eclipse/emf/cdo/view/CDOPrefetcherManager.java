@@ -29,9 +29,11 @@ import org.eclipse.net4j.util.event.IListener;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -262,6 +264,32 @@ public class CDOPrefetcherManager extends CDOViewSetHandler
       {
         return revisions.size();
       }
+    }
+
+    public final boolean isDisposed()
+    {
+      synchronized (revisions)
+      {
+        return branchPoint == null;
+      }
+    }
+
+    public final List<CDORevision> getRevisions(CDOID id)
+    {
+      List<CDORevision> result = new ArrayList<>();
+
+      synchronized (revisions)
+      {
+        for (CDORevision revision : revisions.values())
+        {
+          if (revision.getID() == id)
+          {
+            result.add(revision);
+          }
+        }
+      }
+
+      return result;
     }
 
     protected void prefetch()

@@ -531,6 +531,7 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
           CDOBranchVersion target = pointer.getTarget();
           if (target instanceof InternalCDORevision)
           {
+            // Replace the target CDORevision by a proper CDOBranchVersion.
             revision = new PointerCDORevision(pointer.getEClass(), pointer.getID(), pointer.getBranch(), pointer.getRevised(),
                 CDOBranchUtil.copyBranchVersion(target));
           }

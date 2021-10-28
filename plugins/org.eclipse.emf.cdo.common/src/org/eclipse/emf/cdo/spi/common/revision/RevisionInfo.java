@@ -188,6 +188,7 @@ public abstract class RevisionInfo
     if (synthetic != null)
     {
       revisionManager.addRevision(synthetic);
+
       if (synthetic instanceof PointerCDORevision)
       {
         PointerCDORevision pointer = (PointerCDORevision)synthetic;

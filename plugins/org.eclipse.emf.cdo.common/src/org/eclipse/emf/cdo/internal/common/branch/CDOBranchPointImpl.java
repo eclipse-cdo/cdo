@@ -32,13 +32,13 @@ public class CDOBranchPointImpl implements CDOBranchPoint, Comparable<CDOBranchP
   }
 
   @Override
-  public CDOBranch getBranch()
+  public final CDOBranch getBranch()
   {
     return branch;
   }
 
   @Override
-  public long getTimeStamp()
+  public final long getTimeStamp()
   {
     return timeStamp;
   }

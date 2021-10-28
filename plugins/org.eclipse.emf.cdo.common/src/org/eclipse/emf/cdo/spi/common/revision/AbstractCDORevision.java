@@ -168,6 +168,30 @@ public abstract class AbstractCDORevision implements InternalCDORevision
   }
 
   /**
+   * @since 4.15
+   */
+  @Override
+  public boolean isValid(CDOBranchPoint branchPoint, boolean considerBases)
+  {
+    if (considerBases)
+    {
+      do
+      {
+        if (isValid(branchPoint))
+        {
+          return true;
+        }
+
+        branchPoint = branchPoint.getBranch().getBase();
+      } while (branchPoint.getBranch() != null);
+
+      return false;
+    }
+
+    return isValid(branchPoint);
+  }
+
+  /**
    * @since 4.1
    */
   @Override

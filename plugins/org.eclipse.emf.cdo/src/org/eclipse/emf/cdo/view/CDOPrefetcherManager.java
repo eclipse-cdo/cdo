@@ -332,7 +332,7 @@ public class CDOPrefetcherManager extends CDOViewSetHandler
 
     protected boolean isValidRevision(CDORevision revision, CDOBranchPoint branchPoint)
     {
-      return revision.isValid(branchPoint);
+      return revision.isValid(branchPoint, true);
     }
 
     protected CDORevision cacheRevision(CDORevision revision)

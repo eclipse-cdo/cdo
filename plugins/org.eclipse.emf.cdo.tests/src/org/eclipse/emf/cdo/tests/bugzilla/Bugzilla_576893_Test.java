@@ -137,7 +137,7 @@ public class Bugzilla_576893_Test extends AbstractCDOTest
     CDOBranch subBranch = view.getBranch().createBranch("subBranch");
     view.setBranch(subBranch);
     prefetcherManager.waitUntilPrefetched(DEFAULT_TIMEOUT);
-    assertEquals(oldSize, prefetcher.getSize());
+    assertEquals(2 * oldSize, prefetcher.getSize()); // Main branch revisions + subBranch pointer revisions.
 
     view.close();
     prefetcherManager.deactivate();

@@ -94,6 +94,11 @@ public interface CDORevision extends CDORevisionKey, CDORevisable
   public boolean isValid(CDOBranchPoint branchPoint);
 
   /**
+   * @since 4.15
+   */
+  public boolean isValid(CDOBranchPoint branchPoint, boolean considerBases);
+
+  /**
    * @since 2.0
    */
   public boolean isResourceNode();

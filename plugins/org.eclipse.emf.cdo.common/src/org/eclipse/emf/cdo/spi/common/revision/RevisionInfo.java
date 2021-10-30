@@ -168,6 +168,11 @@ public abstract class RevisionInfo
 
   public void processResult(InternalCDORevisionManager revisionManager, List<CDORevision> results, SyntheticCDORevision[] synthetics, int i)
   {
+    if (result != null)
+    {
+      result = (InternalCDORevision)revisionManager.internRevision(result);
+    }
+
     if (results != null)
     {
       if (result instanceof DetachedCDORevision)
@@ -180,14 +185,9 @@ public abstract class RevisionInfo
       }
     }
 
-    if (result != null)
-    {
-      revisionManager.addRevision(result);
-    }
-
     if (synthetic != null)
     {
-      revisionManager.addRevision(synthetic);
+      synthetic = (SyntheticCDORevision)revisionManager.internRevision(synthetic);
 
       if (synthetic instanceof PointerCDORevision)
       {
@@ -195,7 +195,7 @@ public abstract class RevisionInfo
         CDOBranchVersion target = pointer.getTarget();
         if (target != result && target instanceof InternalCDORevision)
         {
-          revisionManager.addRevision((CDORevision)target);
+          revisionManager.internRevision((CDORevision)target);
         }
       }
 
@@ -293,12 +293,14 @@ public abstract class RevisionInfo
       EClassifier classifier = in.readCDOClassifierRefAndResolve();
       long revised = in.readXLong();
       InternalCDORevision target = readResult(in, id, branch);
+
       // If target is null and we are in a Available RevisionInfo it means that we can use
       // availableBranchVersion/result as target
       if (target == null && result != null)
       {
         target = result;
       }
+
       return new PointerCDORevision((EClass)classifier, id, branch, revised, target);
     }
 

@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDOAllRevisionsProvider;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCache;
+import org.eclipse.emf.cdo.common.revision.CDORevisionInterner;
 
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 
@@ -29,7 +30,7 @@ import java.util.List;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface InternalCDORevisionCache extends CDORevisionCache, CDOAllRevisionsProvider, ILifecycle
+public interface InternalCDORevisionCache extends CDORevisionCache, CDORevisionInterner, CDOAllRevisionsProvider, ILifecycle
 {
   public InternalCDORevisionCache instantiate(CDORevision revision);
 

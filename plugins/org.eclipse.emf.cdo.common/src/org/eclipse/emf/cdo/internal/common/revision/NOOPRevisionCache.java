@@ -87,9 +87,9 @@ public class NOOPRevisionCache extends Lifecycle implements InternalCDORevisionC
   }
 
   @Override
-  public void addRevision(CDORevision revision)
+  public CDORevision internRevision(CDORevision revision)
   {
-    // Do nothing
+    return revision;
   }
 
   @Override

@@ -185,15 +185,6 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
   }
 
   /**
-   * @since 4.15
-   */
-  @Override
-  public boolean isValid(CDOBranchPoint branchPoint, boolean considerBases)
-  {
-    return getDelegate().isValid(branchPoint, considerBases);
-  }
-
-  /**
    * @since 4.0
    */
   @Override
@@ -612,7 +603,7 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
    * @author Eike Stepper
    */
   @SuppressWarnings("unused")
-  private static final class InternalCompletenessTest extends DelegatingCDORevision
+  private static final class InternalCompletenessChecker extends DelegatingCDORevision
   {
     @Override
     public InternalCDORevision getDelegate()

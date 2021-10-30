@@ -2405,7 +2405,7 @@ public class CDOViewImpl extends AbstractCDOView
               public boolean handleRevision(CDORevision revision)
               {
                 ++openingUnit.elements;
-                revisionManager.addRevision(revision);
+                revision = revisionManager.internRevision(revision);
                 revisions.add(revision);
 
                 CDOID id = revision.getID();

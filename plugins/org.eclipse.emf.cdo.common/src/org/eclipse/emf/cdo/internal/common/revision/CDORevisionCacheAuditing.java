@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 
 import org.eclipse.net4j.util.CheckUtil;
+import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
@@ -36,6 +37,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 /**
  * @author Eike Stepper
@@ -183,7 +185,7 @@ public class CDORevisionCacheAuditing extends AbstractCDORevisionCache
   }
 
   @Override
-  protected void doAddRevision(CDORevision revision)
+  public CDORevision internRevision(CDORevision revision)
   {
     CheckUtil.checkArg(revision, "revision");
 
@@ -193,18 +195,41 @@ public class CDORevisionCacheAuditing extends AbstractCDORevisionCache
     CDOID id = revision.getID();
     Object key = createKey(id, branch);
 
-    synchronized (revisionLists)
+    IListener[] listeners = getListeners();
+    CacheAdditionEvent event = null;
+
+    try
     {
-      RevisionList list = revisionLists.get(key);
-      if (list == null)
+      synchronized (revisionLists)
       {
-        list = new RevisionList();
-        revisionLists.put(key, list);
+        RevisionList list = revisionLists.get(key);
+        if (list == null)
+        {
+          list = new RevisionList();
+          revisionLists.put(key, list);
+        }
+
+        CDORevision cachedRevision = list.addRevision(revision, () -> createReference(revision));
+        if (cachedRevision != revision)
+        {
+          return cachedRevision;
+        }
+
+        typeRefIncrease(id, revision.getEClass());
       }
 
-      if (list.addRevision((InternalCDORevision)revision, createReference(revision)))
+      if (listeners.length != 0)
       {
-        typeRefIncrease(id, revision.getEClass());
+        event = new CacheAdditionEvent(this, revision);
+      }
+
+      return revision;
+    }
+    finally
+    {
+      if (event != null)
+      {
+        fireEvent(event, listeners);
       }
     }
   }
@@ -293,7 +318,7 @@ public class CDORevisionCacheAuditing extends AbstractCDORevisionCache
     {
     }
 
-    public synchronized InternalCDORevision getRevision(long timeStamp)
+    public InternalCDORevision getRevision(long timeStamp)
     {
       if (timeStamp == CDORevision.UNSPECIFIED_DATE)
       {
@@ -344,7 +369,7 @@ public class CDORevisionCacheAuditing extends AbstractCDORevisionCache
       return null;
     }
 
-    public synchronized InternalCDORevision getRevisionByVersion(int version)
+    public InternalCDORevision getRevisionByVersion(int version)
     {
       for (Iterator<Reference<InternalCDORevision>> it = iterator(); it.hasNext();)
       {
@@ -371,7 +396,7 @@ public class CDORevisionCacheAuditing extends AbstractCDORevisionCache
       return null;
     }
 
-    public synchronized boolean addRevision(InternalCDORevision revision, Reference<InternalCDORevision> reference)
+    public CDORevision addRevision(CDORevision revision, Supplier<Reference<InternalCDORevision>> referenceCreator)
     {
       int version = revision.getVersion();
       for (ListIterator<Reference<InternalCDORevision>> it = listIterator(); it.hasNext();)
@@ -384,14 +409,14 @@ public class CDORevisionCacheAuditing extends AbstractCDORevisionCache
           int v = key.getVersion();
           if (v == version)
           {
-            return false;
+            return foundRevision;
           }
 
           if (v < version)
           {
             it.previous();
-            it.add(reference);
-            return true;
+            it.add(referenceCreator.get());
+            return revision;
           }
         }
         else
@@ -400,11 +425,11 @@ public class CDORevisionCacheAuditing extends AbstractCDORevisionCache
         }
       }
 
-      addLast(reference);
-      return true;
+      addLast(referenceCreator.get());
+      return revision;
     }
 
-    public synchronized void removeRevision(int version)
+    public void removeRevision(int version)
     {
       for (Iterator<Reference<InternalCDORevision>> it = iterator(); it.hasNext();)
       {

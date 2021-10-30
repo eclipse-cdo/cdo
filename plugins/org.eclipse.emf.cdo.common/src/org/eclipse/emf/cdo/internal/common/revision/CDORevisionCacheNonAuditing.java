@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 
 import org.eclipse.net4j.util.CheckUtil;
+import org.eclipse.net4j.util.event.IListener;
 
 import org.eclipse.emf.ecore.EClass;
 
@@ -194,7 +195,7 @@ public class CDORevisionCacheNonAuditing extends AbstractCDORevisionCache
   }
 
   @Override
-  protected void doAddRevision(CDORevision revision)
+  public CDORevision internRevision(CDORevision revision)
   {
     CheckUtil.checkArg(revision, "revision");
     checkBranch(revision.getBranch());
@@ -202,25 +203,56 @@ public class CDORevisionCacheNonAuditing extends AbstractCDORevisionCache
     if (!revision.isHistorical())
     {
       CDOID id = revision.getID();
-      Reference<InternalCDORevision> reference = createReference(revision);
+      CDORevision passedRevision = revision;
+
+      IListener[] listeners = getListeners();
+      CacheAdditionEvent[] event = { null };
 
       synchronized (revisions)
       {
-        Reference<InternalCDORevision> oldReference = revisions.put(id, reference);
-        if (oldReference != null)
+        try
         {
-          InternalCDORevision oldRevision = oldReference.get();
-          if (oldRevision != null)
-          {
-            if (oldRevision.getVersion() > revision.getVersion())
+          revisions.compute(id, (k, cachedReference) -> {
+            if (cachedReference != null)
             {
-              // Put the old revision back because it's newer.
-              revisions.put(id, oldReference);
+              InternalCDORevision cachedRevision = cachedReference.get();
+              if (cachedRevision != null)
+              {
+                if (cachedRevision.getVersion() > passedRevision.getVersion())
+                {
+                  // Keep the cachedRevision in the cache because it's basically newer than the passedRevision,
+                  // but don't change the result of internRevision().
+                  throw new KeepCachedRevision(passedRevision);
+                }
+
+                if (cachedRevision.equals(passedRevision))
+                {
+                  // Keep the cachedRevision in the cache because it's basically equal to the passedRevision,
+                  // and change the result of internRevision() to the already cachedRevision.
+                  throw new KeepCachedRevision(cachedRevision);
+                }
+              }
             }
-          }
+
+            // No revision is already cached, so cache and return the passedRevision.
+            if (listeners.length != 0)
+            {
+              event[0] = new CacheAdditionEvent(this, passedRevision);
+            }
+
+            return createReference(passedRevision);
+          });
+        }
+        catch (KeepCachedRevision ex)
+        {
+          revision = ex.returnValue;
         }
       }
+
+      fireEvent(event[0]);
     }
+
+    return revision;
   }
 
   @Override
@@ -257,6 +289,21 @@ public class CDORevisionCacheNonAuditing extends AbstractCDORevisionCache
     synchronized (revisions)
     {
       revisions.clear();
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class KeepCachedRevision extends RuntimeException
+  {
+    private static final long serialVersionUID = 1L;
+
+    public final CDORevision returnValue;
+
+    public KeepCachedRevision(CDORevision returnValue)
+    {
+      this.returnValue = returnValue;
     }
   }
 }

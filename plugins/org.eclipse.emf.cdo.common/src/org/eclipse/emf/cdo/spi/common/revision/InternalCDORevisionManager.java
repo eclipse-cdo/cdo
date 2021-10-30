@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionCache;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
+import org.eclipse.emf.cdo.common.revision.CDORevisionInterner;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
@@ -36,7 +37,8 @@ import java.util.List;
  * @noimplement This interface is not intended to be implemented by clients.
  * @noextend This interface is not intended to be extended by clients.
  */
-public interface InternalCDORevisionManager extends CDORevisionManager, CDORevisionCacheAdder, ILifecycle
+@SuppressWarnings("deprecation")
+public interface InternalCDORevisionManager extends CDORevisionManager, CDORevisionInterner, CDORevisionCacheAdder, ILifecycle
 {
   /**
    * @since 4.0

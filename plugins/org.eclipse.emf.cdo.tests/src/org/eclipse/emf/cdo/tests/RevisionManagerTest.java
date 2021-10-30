@@ -171,7 +171,11 @@ public class RevisionManagerTest extends AbstractCDOTest
       long duration = durations[i];
       CDOBranchPoint branchPoint = branch.getPoint(timeStamp);
 
-      if (duration != DETACH)
+      if (duration == DETACH)
+      {
+        revisions[i] = store.detachObject(objectID, branch, timeStamp - 1);
+      }
+      else
       {
         timeStamp += duration;
 
@@ -181,10 +185,6 @@ public class RevisionManagerTest extends AbstractCDOTest
         revisions[i].setRevised(timeStamp - 1);
         revisions[i].setVersion(i + 1);
         store.addRevision(revisions[i], false);
-      }
-      else
-      {
-        revisions[i] = store.detachObject(objectID, branch, timeStamp - 1);
       }
     }
 

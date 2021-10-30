@@ -17,8 +17,8 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
+import org.eclipse.emf.cdo.common.revision.CDORevisionInterner;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
@@ -57,7 +57,7 @@ public class CDOExtentCreator implements OCLExtentCreator
 
   private CDOChangeSetData changeSetData;
 
-  private CDORevisionCacheAdder revisionCacheAdder;
+  private CDORevisionInterner revisionInterner;
 
   public CDOExtentCreator(CDOView view)
   {
@@ -79,14 +79,38 @@ public class CDOExtentCreator implements OCLExtentCreator
     this.changeSetData = changeSetData;
   }
 
-  public CDORevisionCacheAdder getRevisionCacheAdder()
+  /**
+   * @since 4.4
+   */
+  public CDORevisionInterner getRevisionInterner()
   {
-    return revisionCacheAdder;
+    return revisionInterner;
   }
 
-  public void setRevisionCacheAdder(CDORevisionCacheAdder revisionCacheAdder)
+  /**
+   * @since 4.4
+   */
+  public void setRevisionInterner(CDORevisionInterner revisionInterner)
   {
-    this.revisionCacheAdder = revisionCacheAdder;
+    this.revisionInterner = revisionInterner;
+  }
+
+  /**
+   * @deprecated as of 4.4 use {@link #getRevisionInterner()}.
+   */
+  @Deprecated
+  public org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder getRevisionCacheAdder()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * @deprecated as of 4.4 use {@link #setRevisionInterner(CDORevisionInterner)}.
+   */
+  @Deprecated
+  public void setRevisionCacheAdder(org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder revisionCacheAdder)
+  {
+    throw new UnsupportedOperationException();
   }
 
   @Override
@@ -122,9 +146,9 @@ public class CDOExtentCreator implements OCLExtentCreator
       @Override
       public boolean handleRevision(CDORevision revision)
       {
-        if (revisionCacheAdder != null)
+        if (revisionInterner != null)
         {
-          revisionCacheAdder.addRevision(revision);
+          revision = revisionInterner.internRevision(revision);
         }
 
         CDOID id = revision.getID();
@@ -308,10 +332,10 @@ public class CDOExtentCreator implements OCLExtentCreator
                   empty = false;
                   emptyKnown.countDown();
 
-                  CDORevisionCacheAdder revisionCacheAdder = getRevisionCacheAdder();
-                  if (revisionCacheAdder != null)
+                  CDORevisionInterner revisionInterner = getRevisionInterner();
+                  if (revisionInterner != null)
                   {
-                    revisionCacheAdder.addRevision(revision);
+                    revision = revisionInterner.internRevision(revision);
                   }
 
                   CDOID id = revision.getID();

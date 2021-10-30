@@ -11,12 +11,15 @@
 package org.eclipse.emf.cdo.spi.common.revision;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPointRange;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCache;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
+import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
@@ -120,10 +123,17 @@ public abstract class DelegatingCDORevisionManager extends Lifecycle implements 
   /**
    * @since 4.0
    */
+  @Deprecated
   @Override
   public void addRevision(CDORevision revision)
   {
     getDelegate().addRevision(revision);
+  }
+
+  @Override
+  public CDORevision internRevision(CDORevision revision)
+  {
+    return getDelegate().internRevision(revision);
   }
 
   @Override
@@ -142,6 +152,24 @@ public abstract class DelegatingCDORevisionManager extends Lifecycle implements 
   public EClass getObjectType(CDOID id)
   {
     return getDelegate().getObjectType(id);
+  }
+
+  @Override
+  public EClass getObjectType(CDOID id, CDOBranchManager branchManagerForLoadOnDemand)
+  {
+    return getDelegate().getObjectType(id, branchManagerForLoadOnDemand);
+  }
+
+  @Override
+  public CDOBranchPointRange getObjectLifetime(CDOID id, CDOBranchPoint branchPoint)
+  {
+    return getDelegate().getObjectLifetime(id, branchPoint);
+  }
+
+  @Override
+  public InternalCDORevision getBaseRevision(CDORevision revision, int referenceChunk, boolean loadOnDemand)
+  {
+    return getDelegate().getBaseRevision(revision, referenceChunk, loadOnDemand);
   }
 
   @Override
@@ -174,6 +202,12 @@ public abstract class DelegatingCDORevisionManager extends Lifecycle implements 
       SyntheticCDORevision[] synthetics)
   {
     return getDelegate().getRevisions(ids, branchPoint, referenceChunk, prefetchDepth, loadOnDemand, synthetics);
+  }
+
+  @Override
+  public void handleRevisions(EClass eClass, CDOBranch branch, boolean exactBranch, long timeStamp, boolean exactTime, CDORevisionHandler handler)
+  {
+    getDelegate().handleRevisions(eClass, branch, exactBranch, timeStamp, exactTime, handler);
   }
 
   @Override
@@ -212,4 +246,17 @@ public abstract class DelegatingCDORevisionManager extends Lifecycle implements 
   }
 
   protected abstract InternalCDORevisionManager getDelegate();
+
+  /**
+   * @author Eike Stepper
+   */
+  @SuppressWarnings("unused")
+  private static final class InternalCompletenessChecker extends DelegatingCDORevisionManager
+  {
+    @Override
+    protected InternalCDORevisionManager getDelegate()
+    {
+      return null;
+    }
+  }
 }

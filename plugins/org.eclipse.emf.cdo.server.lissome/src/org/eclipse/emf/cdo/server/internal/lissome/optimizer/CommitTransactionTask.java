@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder;
+import org.eclipse.emf.cdo.common.revision.CDORevisionInterner;
 import org.eclipse.emf.cdo.server.internal.lissome.LissomeStore;
 import org.eclipse.emf.cdo.server.internal.lissome.db.IndexWriter;
 import org.eclipse.emf.cdo.server.internal.lissome.file.Vob;
@@ -201,18 +201,16 @@ public class CommitTransactionTask implements OptimizerTask
     }
   }
 
-  public void cacheRevisions(CDORevisionCacheAdder cache)
+  public void cacheRevisions(CDORevisionInterner interner)
   {
     for (int i = 0; i < newObjects.length; i++)
     {
-      InternalCDORevision revision = newObjects[i];
-      cache.addRevision(revision);
+      newObjects[i] = (InternalCDORevision)interner.internRevision(newObjects[i]);
     }
 
     for (int i = 0; i < dirtyObjects.length; i++)
     {
-      InternalCDORevision revision = dirtyObjects[i];
-      cache.addRevision(revision);
+      dirtyObjects[i] = (InternalCDORevision)interner.internRevision(dirtyObjects[i]);
     }
 
     for (int i = 0; i < detachedObjects.length; i++)
@@ -225,7 +223,7 @@ public class CommitTransactionTask implements OptimizerTask
       long timeStamp = branchPoint.getTimeStamp();
 
       DetachedCDORevision revision = new DetachedCDORevision(eClass, id, branch, version, timeStamp);
-      cache.addRevision(revision);
+      interner.internRevision(revision);
     }
   }
 }

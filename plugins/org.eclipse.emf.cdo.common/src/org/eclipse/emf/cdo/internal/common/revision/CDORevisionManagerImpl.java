@@ -26,7 +26,6 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevisionsLoadedEvent;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
-import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
@@ -273,7 +272,7 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
           }
 
           revision = revisionLoader.loadRevisionByVersion(id, branchVersion, referenceChunk);
-          addRevision(revision);
+          revision = (InternalCDORevision)internRevision(revision);
         }
       }
 
@@ -517,7 +516,7 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
   }
 
   @Override
-  public void addRevision(CDORevision revision)
+  public CDORevision internRevision(CDORevision revision)
   {
     if (revision != null)
     {
@@ -525,18 +524,6 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
 
       try
       {
-        if (revision instanceof PointerCDORevision)
-        {
-          PointerCDORevision pointer = (PointerCDORevision)revision;
-          CDOBranchVersion target = pointer.getTarget();
-          if (target instanceof InternalCDORevision)
-          {
-            // Replace the target CDORevision by a proper CDOBranchVersion.
-            revision = new PointerCDORevision(pointer.getEClass(), pointer.getID(), pointer.getBranch(), pointer.getRevised(),
-                CDOBranchUtil.copyBranchVersion(target));
-          }
-        }
-
         int oldVersion = revision.getVersion() - 1;
         if (oldVersion >= CDORevision.UNSPECIFIED_VERSION)
         {
@@ -564,13 +551,22 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
           }
         }
 
-        cache.addRevision(revision);
+        revision = cache.internRevision(revision);
       }
       finally
       {
         releaseAtomicRequestLock(loadAndAddLock);
       }
     }
+
+    return revision;
+  }
+
+  @Deprecated
+  @Override
+  public void addRevision(CDORevision revision)
+  {
+    internRevision(revision);
   }
 
   @Override

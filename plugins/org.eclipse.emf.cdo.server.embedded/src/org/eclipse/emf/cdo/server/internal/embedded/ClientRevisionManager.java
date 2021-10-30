@@ -286,6 +286,7 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
     }
   }
 
+  @Deprecated
   @Override
   public void addRevision(CDORevision revision)
   {
@@ -293,6 +294,20 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
     {
       ServerSession.set(serverSession);
       delegate.addRevision(revision);
+    }
+    finally
+    {
+      ServerSession.unset();
+    }
+  }
+
+  @Override
+  public CDORevision internRevision(CDORevision revision)
+  {
+    try
+    {
+      ServerSession.set(serverSession);
+      return delegate.internRevision(revision);
     }
     finally
     {

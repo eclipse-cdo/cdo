@@ -16,8 +16,8 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCache;
-import org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
+import org.eclipse.emf.cdo.common.revision.CDORevisionInterner;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
@@ -227,7 +227,7 @@ public class Optimizer extends Lifecycle
 
     private final boolean supportingBranches;
 
-    private CDORevisionCache revisionCache;
+    private InternalCDORevisionCache revisionCache;
 
     public Cache(LinkedList<OptimizerTask> queue, boolean supportingBranches)
     {
@@ -244,15 +244,16 @@ public class Optimizer extends Lifecycle
     {
       if (revisionCache == null)
       {
-        revisionCache = CDORevisionUtil.createRevisionCache(true, supportingBranches);
+        revisionCache = (InternalCDORevisionCache)CDORevisionUtil.createRevisionCache(true, supportingBranches);
 
-        CDORevisionCacheAdder adder = new CDORevisionCacheAdder()
+        CDORevisionInterner interner = new CDORevisionInterner()
         {
+
           @Override
-          public void addRevision(CDORevision revision)
+          public CDORevision internRevision(CDORevision revision)
           {
             reviseOldRevision(revision);
-            revisionCache.addRevision(revision);
+            return revisionCache.internRevision(revision);
           }
 
           private void reviseOldRevision(CDORevision revision)
@@ -276,7 +277,7 @@ public class Optimizer extends Lifecycle
           if (task instanceof CommitTransactionTask)
           {
             CommitTransactionTask commitTask = (CommitTransactionTask)task;
-            commitTask.cacheRevisions(adder);
+            commitTask.cacheRevisions(interner);
           }
         }
       }

@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lob.CDOLobHandler;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockArea.Handler;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.server.IQueryHandler;
@@ -144,7 +143,8 @@ public class LissomeStoreReader extends StoreAccessorBase implements ILissomeSto
   }
 
   @Override
-  public InternalCDORevision readRevision(CDOID id, CDOBranchPoint branchPoint, int listChunk, CDORevisionCacheAdder cache)
+  public InternalCDORevision readRevision(CDOID id, CDOBranchPoint branchPoint, int listChunk,
+      @SuppressWarnings("deprecation") org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder cache)
   {
     Optimizer optimizer = getStore().getOptimizer();
     InternalCDORevision revision = optimizer.readRevision(id, branchPoint);
@@ -168,7 +168,8 @@ public class LissomeStoreReader extends StoreAccessorBase implements ILissomeSto
   }
 
   @Override
-  public InternalCDORevision readRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int listChunk, CDORevisionCacheAdder cache)
+  public InternalCDORevision readRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int listChunk,
+      @SuppressWarnings("deprecation") org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder cache)
   {
     RevisionInfo info = indexReader.readRevisionByVersion(id, branchVersion);
     return readRevision(info);

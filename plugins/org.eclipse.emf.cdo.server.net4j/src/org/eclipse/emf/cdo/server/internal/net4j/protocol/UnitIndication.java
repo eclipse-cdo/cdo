@@ -16,10 +16,10 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.UnitOpcode;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.CDORevisionCache;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.server.IUnit;
 import org.eclipse.emf.cdo.server.IUnitManager;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalView;
 
@@ -87,7 +87,7 @@ public class UnitIndication extends CDOServerReadIndicationWithMonitoring
       return;
     }
 
-    final CDORevisionCache revisionCache = repository.getRevisionManager().getCache();
+    final InternalCDORevisionCache revisionCache = repository.getRevisionManager().getCache();
     final IOException[] ioException = { null };
     final RuntimeException[] runtimeException = { null };
 
@@ -104,7 +104,7 @@ public class UnitIndication extends CDOServerReadIndicationWithMonitoring
           try
           {
             view.unsubscribe(revision.getID());
-            revisionCache.addRevision(revision);
+            revision = revisionCache.internRevision(revision);
 
             out.writeCDORevision(revision, CDORevision.UNCHUNKED); // Exposes revision to client side
             return true;

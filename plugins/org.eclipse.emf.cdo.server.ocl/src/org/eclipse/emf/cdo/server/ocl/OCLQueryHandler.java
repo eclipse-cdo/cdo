@@ -17,7 +17,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder;
+import org.eclipse.emf.cdo.common.revision.CDORevisionInterner;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
@@ -191,7 +191,7 @@ public class OCLQueryHandler implements IQueryHandler
   {
     CDOExtentCreator creator = createsLazyExtents() ? new CDOExtentCreator.Lazy(view) : new CDOExtentCreator(view);
     creator.setChangeSetData(changeSetData);
-    creator.setRevisionCacheAdder((CDORevisionCacheAdder)context.getView().getRepository().getRevisionManager());
+    creator.setRevisionInterner((CDORevisionInterner)context.getView().getRepository().getRevisionManager());
     return new CDOExtentMap(creator);
   }
 

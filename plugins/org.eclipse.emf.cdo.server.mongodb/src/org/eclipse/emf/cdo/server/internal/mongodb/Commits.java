@@ -25,7 +25,6 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDOList;
-import org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
@@ -671,7 +670,7 @@ public class Commits extends Coll
     return CDOBranchPoint.UNSPECIFIED_DATE;
   }
 
-  public InternalCDORevision readRevision(final CDOID id, final CDOBranchPoint branchPoint, int listChunk, CDORevisionCacheAdder cache)
+  public InternalCDORevision readRevision(final CDOID id, final CDOBranchPoint branchPoint, int listChunk)
   {
     final CDOBranch branch = branchPoint.getBranch();
     final long timeStamp = branchPoint.getTimeStamp();
@@ -732,7 +731,7 @@ public class Commits extends Coll
     }
   }
 
-  public InternalCDORevision readRevisionByVersion(final CDOID id, CDOBranchVersion branchVersion, int listChunk, CDORevisionCacheAdder cache)
+  public InternalCDORevision readRevisionByVersion(final CDOID id, CDOBranchVersion branchVersion, int listChunk)
   {
     DBObject query = new BasicDBObject();
     idHandler.write(query, REVISIONS + "." + REVISIONS_ID, id);

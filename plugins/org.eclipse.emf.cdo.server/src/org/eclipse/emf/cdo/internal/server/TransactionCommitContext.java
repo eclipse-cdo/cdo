@@ -1826,11 +1826,11 @@ public class TransactionCommitContext implements InternalCommitContext
       monitor.begin(revisions.length);
       InternalCDORevisionManager revisionManager = repository.getRevisionManager();
 
-      for (CDORevision revision : revisions)
+      for (int i = 0; i < revisions.length; i++)
       {
-        if (revision != null)
+        if (revisions[i] != null)
         {
-          revisionManager.addRevision(revision);
+          revisions[i] = revisionManager.internRevision(revisions[i]);
         }
 
         monitor.worked();

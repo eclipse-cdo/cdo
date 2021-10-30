@@ -122,21 +122,6 @@ public abstract class AbstractCDORevisionCache extends Lifecycle implements Inte
   }
 
   @Override
-  public final void addRevision(CDORevision revision)
-  {
-    referenceQueue.register((InternalCDORevision)revision);
-    doAddRevision(revision);
-
-    IListener[] listeners = getListeners();
-    if (listeners != null)
-    {
-      fireEvent(new CacheAdditionEvent(this, revision));
-    }
-  }
-
-  protected abstract void doAddRevision(CDORevision revision);
-
-  @Override
   public final CDORevision removeRevision(CDOID id, CDOBranchVersion branchVersion)
   {
     referenceQueue.clean();

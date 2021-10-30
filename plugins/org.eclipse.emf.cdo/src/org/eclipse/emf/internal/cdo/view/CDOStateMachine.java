@@ -1129,7 +1129,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       revision.freeze();
 
       InternalCDORevisionManager revisionManager = transaction.getSession().getRevisionManager();
-      revisionManager.addRevision(revision);
+      revisionManager.internRevision(revision);
     }
   }
 
@@ -1401,7 +1401,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
           newRevision.setBranchPoint(target);
           newRevision.setVersion(target.getVersion());
           newRevision.setRevised(target.getRevised());
-          cache.addRevision(newRevision);
+          cache.internRevision(newRevision);
         }
 
         object.cdoInternalSetRevision(newRevision);

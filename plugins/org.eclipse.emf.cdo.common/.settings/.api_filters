@@ -501,13 +501,6 @@
                 <message_argument value="DelegatingCDORevision"/>
             </message_arguments>
         </filter>
-        <filter id="1141899266">
-            <message_arguments>
-                <message_argument value="4.2"/>
-                <message_argument value="4.9"/>
-                <message_argument value="accept(CDORevisionValueVisitor, Predicate&lt;EStructuralFeature&gt;)"/>
-            </message_arguments>
-        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevisionManager.java" type="org.eclipse.emf.cdo.spi.common.revision.DelegatingCDORevisionManager">
         <filter id="576725006">

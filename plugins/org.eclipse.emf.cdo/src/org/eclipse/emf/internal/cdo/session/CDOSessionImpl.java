@@ -777,7 +777,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
     for (InternalCDORevision newRevision : newRevisions)
     {
-      revisionManager.addRevision(newRevision);
+      newRevision = (InternalCDORevision)revisionManager.internRevision(newRevision);
 
       CDOID id = newRevision.getID();
       InternalCDORevision oldRevision = oldRevisions.get(id);
@@ -1491,7 +1491,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     for (CDORevisionKey key : info.getAvailableRevisions().values())
     {
       CDORevision revision = (CDORevision)key;
-      revisionManager.addRevision(revision);
+      revision = revisionManager.internRevision(revision);
 
       if (revision.getBranch() != branch)
       {
@@ -1502,7 +1502,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
           long revised = firstRevision.getTimeStamp() - 1L;
           CDOBranchVersion target = CDOBranchUtil.copyBranchVersion(revision);
           PointerCDORevision pointer = new PointerCDORevision(revision.getEClass(), id, branch, revised, target);
-          revisionManager.addRevision(pointer);
+          revisionManager.internRevision(pointer);
         }
       }
     }
@@ -2239,7 +2239,8 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       long timeStamp = getTimeStamp();
 
       // Cache new revisions
-      for (CDOIDAndVersion key : commitInfo.getNewObjects())
+      List<CDOIDAndVersion> newObjects = commitInfo.getNewObjects();
+      for (CDOIDAndVersion key : newObjects)
       {
         if (key instanceof InternalCDORevision)
         {
@@ -2311,8 +2312,9 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       return oldRevisions;
     }
 
-    private void addNewRevision(InternalCDORevision newRevision)
+    private CDORevision addNewRevision(InternalCDORevision newRevision)
     {
+      newRevision = (InternalCDORevision)revisionManager.internRevision(newRevision);
       Map<CDOID, CDOPermission> newPermissions = invalidationData.getNewPermissions();
       if (newPermissions != null)
       {
@@ -2323,7 +2325,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
         }
       }
 
-      revisionManager.addRevision(newRevision);
+      return newRevision;
     }
 
     private void invalidateView(CDOCommitInfo commitInfo, InternalCDOView view, InternalCDOTransaction sender, Map<CDOID, InternalCDORevision> oldRevisions,

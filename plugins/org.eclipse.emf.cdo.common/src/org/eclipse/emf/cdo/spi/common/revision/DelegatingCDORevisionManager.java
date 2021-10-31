@@ -26,6 +26,7 @@ import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.emf.ecore.EClass;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * If the meaning of this type isn't clear, there really should be more of a description here...
@@ -202,6 +203,22 @@ public abstract class DelegatingCDORevisionManager extends Lifecycle implements 
       SyntheticCDORevision[] synthetics)
   {
     return getDelegate().getRevisions(ids, branchPoint, referenceChunk, prefetchDepth, loadOnDemand, synthetics);
+  }
+
+  /**
+   * @since 4.15
+   */
+  @Override
+  public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand,
+      List<CDORevision> additionalRevisions)
+  {
+    return getDelegate().getRevisions(ids, branchPoint, referenceChunk, prefetchDepth, loadOnDemand, additionalRevisions);
+  }
+
+  @Override
+  public void prefetchRevisions(CDOID id, CDOBranchPoint branchPoint, int prefetchDepth, Consumer<CDORevision> consumer)
+  {
+    getDelegate().prefetchRevisions(id, branchPoint, prefetchDepth, consumer);
   }
 
   @Override

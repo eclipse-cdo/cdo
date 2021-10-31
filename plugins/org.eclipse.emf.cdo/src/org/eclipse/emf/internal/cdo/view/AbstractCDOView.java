@@ -227,6 +227,14 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   public AbstractCDOView(CDOSession session, CDOBranchPoint branchPoint)
   {
     this(session);
+
+    if (session != null)
+    {
+      // The basicSetBranchPoint() method adjusts the branch point with the "session" field.
+      // As this field is not yet set adjust the branch point already here:
+      branchPoint = CDOBranchUtil.adjustBranchPoint(branchPoint, session.getBranchManager());
+    }
+
     basicSetBranchPoint(branchPoint);
   }
 

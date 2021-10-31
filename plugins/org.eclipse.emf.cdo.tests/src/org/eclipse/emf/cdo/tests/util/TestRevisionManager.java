@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * @author Eike Stepper
@@ -102,16 +103,15 @@ public class TestRevisionManager extends CDORevisionManagerImpl
   }
 
   @Override
-  protected List<CDORevision> loadRevisions(List<RevisionInfo> infosToLoad, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth)
+  protected void loadRevisions(List<RevisionInfo> infosToLoad, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth,
+      List<CDORevision> additionalRevisions, Consumer<CDORevision> consumer)
   {
-    List<CDORevision> result = super.loadRevisions(infosToLoad, branchPoint, referenceChunk, prefetchDepth);
+    super.loadRevisions(infosToLoad, branchPoint, referenceChunk, prefetchDepth, additionalRevisions, consumer);
 
     synchronized (lock)
     {
-      additionalCounter += result == null ? 0 : result.size();
+      additionalCounter += additionalRevisions == null ? 0 : additionalRevisions.size();
       loadCounter += infosToLoad.size();
     }
-
-    return result;
   }
 }

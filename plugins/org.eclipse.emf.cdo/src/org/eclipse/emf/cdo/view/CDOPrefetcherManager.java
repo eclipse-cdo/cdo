@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCache;
+import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -31,12 +32,10 @@ import org.eclipse.net4j.util.event.IListener;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
@@ -67,6 +66,12 @@ public class CDOPrefetcherManager extends CDOViewSetHandler
     executorService = ConcurrencyUtil.getExecutorService(getViewSet());
   }
 
+  public final Prefetcher[] getPrefetchers()
+  {
+    // Don't use prefetchers.size() because that wouldn't be thread-safe anymore.
+    return prefetchers.values().toArray(new Prefetcher[0]);
+  }
+
   public final Prefetcher getPrefetcher(CDOView view)
   {
     return prefetchers.get(view);
@@ -88,10 +93,12 @@ public class CDOPrefetcherManager extends CDOViewSetHandler
         try
         {
           long wait = end - System.currentTimeMillis();
-          if (wait > 0)
+          if (wait <= 0)
           {
-            lock.wait(wait);
+            return false;
           }
+
+          lock.wait(wait);
         }
         catch (InterruptedException ex)
         {
@@ -105,10 +112,10 @@ public class CDOPrefetcherManager extends CDOViewSetHandler
 
   public void cleanup()
   {
-    Prefetcher[] array = prefetchers.values().toArray(new Prefetcher[0]);
-    CountDownLatch finished = new CountDownLatch(array.length);
+    Prefetcher[] prefetchers = getPrefetchers();
+    CountDownLatch finished = new CountDownLatch(prefetchers.length);
 
-    for (Prefetcher prefetcher : array)
+    for (Prefetcher prefetcher : prefetchers)
     {
       executorService.submit(() -> {
         try
@@ -211,6 +218,8 @@ public class CDOPrefetcherManager extends CDOViewSetHandler
 
     private final CDOID rootID;
 
+    private final Map<CDORevisionKey, CDORevision> revisions = new HashMap<>();
+
     private final InternalCDORevisionManager revisionManager;
 
     private final IListener cacheListener = new IListener()
@@ -218,18 +227,32 @@ public class CDOPrefetcherManager extends CDOViewSetHandler
       @Override
       public void notifyEvent(IEvent event)
       {
+        if (prefetching)
+        {
+          return;
+        }
+
         if (event instanceof CDORevisionCache.AdditionEvent)
         {
           CDORevisionCache.AdditionEvent e = (CDORevisionCache.AdditionEvent)event;
           CDORevision revision = e.getRevision();
-          handleRevsion(revision);
+          CDOBranchPoint branchPoint = Prefetcher.this.branchPoint;
+
+          if (isValidRevision(revision, branchPoint))
+          {
+            notifyValidRevision(revision);
+          }
+          else
+          {
+            revisionIgnored(revision);
+          }
         }
       }
     };
 
-    private volatile Map<CDORevisionKey, CDORevision> revisions = new HashMap<>();
-
     private volatile CDOBranchPoint branchPoint;
+
+    private volatile boolean prefetching;
 
     private volatile boolean cancelCleanup;
 
@@ -265,11 +288,15 @@ public class CDOPrefetcherManager extends CDOViewSetHandler
       return branchPoint == null;
     }
 
-    public final List<CDORevision> getRevisions(CDOID id)
+    public final synchronized void handleRevisions(CDORevisionHandler handler)
     {
-      List<CDORevision> result = new ArrayList<>();
-      collectRevisions(id, result);
-      return result;
+      for (CDORevision revision : revisions.values())
+      {
+        if (!handler.handleRevision(revision))
+        {
+          break;
+        }
+      }
     }
 
     protected void prefetch()
@@ -293,7 +320,7 @@ public class CDOPrefetcherManager extends CDOViewSetHandler
 
     protected synchronized void cleanup()
     {
-      Set<CDORevisionKey> revisionsToKeep = new HashSet<>();
+      Set<CDORevisionKey> keysToKeep = new HashSet<>();
 
       for (Map.Entry<CDORevisionKey, CDORevision> entry : revisions.entrySet())
       {
@@ -306,17 +333,21 @@ public class CDOPrefetcherManager extends CDOViewSetHandler
         if (isValidRevision(revision, branchPoint))
         {
           CDORevisionKey key = entry.getKey();
-          revisionsToKeep.add(key);
+          keysToKeep.add(key);
 
-          while (!cancelCleanup && revision instanceof PointerCDORevision)
+          if (!cancelCleanup && revision instanceof PointerCDORevision)
           {
             PointerCDORevision pointer = (PointerCDORevision)revision;
-            CDOBranchVersion target = pointer.getTarget();
-            key = CDORevisionUtil.createRevisionKey(key.getID(), target.getBranch(), target.getVersion());
-            revisionsToKeep.add(key);
 
-            // Walk up the branch tree.
-            revision = revisions.get(key);
+            CDOBranchVersion target = pointer.getTarget();
+            if (target instanceof CDORevision)
+            {
+              keysToKeep.add((CDORevision)target);
+            }
+            else if (target != null)
+            {
+              keysToKeep.add(CDORevisionUtil.createRevisionKey(key.getID(), target.getBranch(), target.getVersion()));
+            }
           }
         }
       }
@@ -326,14 +357,14 @@ public class CDOPrefetcherManager extends CDOViewSetHandler
       {
         Map.Entry<CDORevisionKey, CDORevision> entry = it.next();
         CDORevisionKey key = entry.getKey();
-        if (!revisionsToKeep.contains(key))
+        if (!keysToKeep.contains(key))
         {
           CDORevision revision = entry.getValue();
           it.remove();
 
           try
           {
-            revisionEvicted(revision);
+            revisionRemoved(revision);
           }
           catch (Exception ex)
           {
@@ -350,46 +381,71 @@ public class CDOPrefetcherManager extends CDOViewSetHandler
       doDispose();
     }
 
-    protected boolean isValidRevision(CDORevision revision, CDOBranchPoint branchPoint)
-    {
-      return revision.isValid(branchPoint);
-    }
-
-    protected CDORevision cacheRevision(CDORevision revision)
+    /**
+     * The caller must synchronize on this prefetcher.
+     */
+    protected CDORevision addRevision(CDORevision revision)
     {
       return revisions.put(CDORevisionUtil.copyRevisionKey(revision), revision);
     }
 
     /**
      * Subclasses may override.
+     * <p>
+     * When this method is called the calling thread is holding the prefetcher lock.
+     * Do not pass control to a different thread which might attempt to access the prefetcher!
      */
-    protected void revisionEvicted(CDORevision revision)
+    protected void revisionRemoved(CDORevision revision)
     {
       // Do nothing.
     }
 
-    private synchronized void handleRevsion(CDORevision revision)
+    /**
+     * Subclasses may override.
+     */
+    protected void revisionIgnored(CDORevision revision)
     {
-      if (isValidRevision(revision, branchPoint))
-      {
-        cacheRevision(revision);
-      }
+      // Do nothing.
     }
 
-    private synchronized void collectRevisions(CDOID id, List<CDORevision> result)
+    private boolean isValidRevision(CDORevision revision, CDOBranchPoint branchPoint)
     {
-      for (CDORevision revision : revisions.values())
+      return revision.isValid(branchPoint);
+    }
+
+    private void handleValidRevision(CDORevision revision)
+    {
+      addRevision(revision);
+
+      if (revision instanceof PointerCDORevision)
       {
-        if (revision.getID() == id)
+        PointerCDORevision pointer = (PointerCDORevision)revision;
+
+        CDOBranchVersion target = pointer.getTarget();
+        if (target instanceof CDORevision)
         {
-          result.add(revision);
+          addRevision((CDORevision)target);
         }
       }
     }
 
+    private synchronized void notifyValidRevision(CDORevision revision)
+    {
+      handleValidRevision(revision);
+    }
+
     private synchronized void doPrefetch()
     {
-      revisionManager.getRevision(rootID, branchPoint, CDORevision.UNCHUNKED, CDORevision.DEPTH_INFINITE, true);
+      prefetching = true;
+
+      try
+      {
+        revisionManager.prefetchRevisions(rootID, branchPoint, CDORevision.DEPTH_INFINITE, r -> handleValidRevision(r));
+      }
+      finally
+      {
+        prefetching = false;
+      }
     }
 
     private synchronized void doChangeBranchPoint()

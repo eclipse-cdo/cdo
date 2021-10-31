@@ -69,6 +69,6 @@ public class LoadRevisionByVersionIndication extends CDOServerReadIndication
   {
     InternalCDORevisionManager revisionManager = getRepository().getRevisionManager();
     InternalCDORevision revision = revisionManager.getRevisionByVersion(id, branchVersion, referenceChunk, true);
-    RevisionInfo.writeResult(out, revision, referenceChunk, null); // Exposes revision to client side
+    RevisionInfo.writeResult(out, revision, true, referenceChunk, null); // Exposes revision to client side
   }
 }

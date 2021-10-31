@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionCache;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -31,6 +32,8 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.io.IOUtil;
 
+import org.eclipse.emf.ecore.resource.ResourceSet;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +47,6 @@ public class Bugzilla_576893_Test extends AbstractCDOTest
   @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
   public void testPrefetcherManager() throws Exception
   {
-    IOUtil.OUT().println("Creating...");
     Category root = getModel1Factory().createCategory();
     int created = 1 + createModel(root, 2, 3, 2);
 
@@ -53,123 +55,119 @@ public class Bugzilla_576893_Test extends AbstractCDOTest
     CDOResource resource = transaction.createResource(getResourcePath("res1"));
     resource.getContents().add(root);
 
-    IOUtil.OUT().println("Committing...");
     transaction.commit();
     CDOID rootID = CDOUtil.getCDOObject(root).cdoID();
 
-    IOUtil.OUT().println("\nTesting...");
+    // =======================================================================================
+    IOUtil.OUT().println("Testing...");
     CDOSession session2 = openSession();
     CDOView view = session2.openView();
 
-    int[] cached = { 0 };
-    int[] errors = { 0 };
-
-    CDOPrefetcherManager prefetcherManager = new CDOPrefetcherManager(view.getResourceSet())
-    {
-      @Override
-      protected Prefetcher createPrefetcher(CDOView view)
-      {
-        return new Prefetcher(view, rootID)
-        {
-          @Override
-          protected void prefetch()
-          {
-            IOUtil.OUT().println("Prefetching " + getView().getBranch().getName() + "/" + CDOCommonUtil.formatTimeStamp(getView().getTimeStamp()));
-            super.prefetch();
-          }
-
-          @Override
-          protected CDORevision cacheRevision(CDORevision revision)
-          {
-            IOUtil.OUT().println("Caching " + revision);
-
-            // Cache.
-            CDORevision oldRevision = super.cacheRevision(revision);
-
-            if (!(revision instanceof SyntheticCDORevision))
-            {
-              // Cache a copy.
-              if (super.cacheRevision(revision.copy()) != revision)
-              {
-                ++errors[0];
-              }
-
-              // Cache original again.
-              super.cacheRevision(revision);
-            }
-
-            ++cached[0];
-            return oldRevision;
-          }
-
-          @Override
-          protected void revisionEvicted(CDORevision revision)
-          {
-            System.out.println("Evicted: " + revision);
-          }
-        };
-      }
-    };
-
+    TestPrefetcherManager prefetcherManager = new TestPrefetcherManager(view.getResourceSet(), rootID);
     prefetcherManager.activate();
-    prefetcherManager.waitUntilPrefetched(DEFAULT_TIMEOUT);
+    waitUntilPrefetched(prefetcherManager);
 
     Prefetcher prefetcher = prefetcherManager.getPrefetcher(view);
     assertEquals(false, prefetcher.isDisposed());
 
     int oldSize = prefetcher.getSize();
-    assertEquals(0, errors[0]);
-    assertEquals(created, cached[0]);
+    assertEquals(0, prefetcherManager.errors);
+    assertEquals(created, prefetcherManager.added);
     assertEquals(created, oldSize);
 
+    // =======================================================================================
     IOUtil.OUT().println("\nTesting passive update...");
-    errors[0] = 0;
-    cached[0] = 0;
+    prefetcherManager.reset();
 
     session2.options().setPassiveUpdateMode(PassiveUpdateMode.CHANGES);
     root.setName("changed");
     commitAndSync(transaction, view);
-    assertEquals(0, errors[0]);
-    assertEquals(1, cached[0]); // Added Category@OID4:0v2.
+
+    assertPrefetchedRevisionsAreCached(prefetcher);
+    assertEquals(0, prefetcherManager.errors);
+    assertEquals(1, prefetcherManager.added); // Added Category@OID4:0v2.
     assertEquals(1 + oldSize, prefetcher.getSize()); // Added Category@OID4:0v2.
 
+    // =======================================================================================
     IOUtil.OUT().println("\nTesting cleanup...");
     prefetcherManager.cleanup();
+
+    assertPrefetchedRevisionsAreCached(prefetcher);
     assertEquals(oldSize, prefetcher.getSize()); // Removed Category@OID4:0v1.
 
+    // =======================================================================================
     IOUtil.OUT().println("\nTesting view target switch...");
     CDOBranch subBranch = view.getBranch().createBranch("subBranch");
     view.setBranch(subBranch);
-    prefetcherManager.waitUntilPrefetched(DEFAULT_TIMEOUT);
+
+    waitUntilPrefetched(prefetcherManager);
     assertEquals(2 * oldSize, prefetcher.getSize()); // Main branch revisions
                                                      // + subBranch pointer revisions.
 
-    IOUtil.OUT().println("\nTesting commits in sub branch...");
-    errors[0] = 0;
-    cached[0] = 0;
+    // =======================================================================================
+    IOUtil.OUT().println("\nTesting committing in sub branch...");
+    prefetcherManager.reset();
 
     transaction.setBranch(subBranch);
     root.setName("changed again");
     commitAndSync(transaction, view);
 
-    assertEquals(0, errors[0]);
-    assertEquals(1, cached[0]); // Added Category@OID4:1v1.
+    assertPrefetchedRevisionsAreCached(prefetcher);
+    assertEquals(0, prefetcherManager.errors);
+    assertEquals(1, prefetcherManager.added); // Added Category@OID4:1v1.
     assertEquals(2 * oldSize + 1, prefetcher.getSize()); // Main branch revisions
                                                          // + subBranch pointer revisions
                                                          // + Category@OID4:1v1.
 
+    // =======================================================================================
     IOUtil.OUT().println("\nTesting cleanup in sub branch...");
     prefetcherManager.cleanup();
-
-    List<CDORevision> prefetchedRevisions = prefetcher.getRevisions(rootID);
-    List<InternalCDORevision> cachedRevisions = getRevisionsFromCache(rootID, session2);
-
+    assertPrefetchedRevisionsAreCached(prefetcher);
     assertEquals(2 * oldSize - 2 + 1, prefetcher.getSize()); // Main branch revisions
                                                              // + subBranch pointer revisions
                                                              // - Category@OID4:0v2
                                                              // - Category@OID4:1v0->0v2
                                                              // + Category@OID4:1v1.
 
+    // =======================================================================================
+    IOUtil.OUT().println("\nTesting close view...");
+
+    // Remember because the prefetcher manager is bound to the view set of this resource set.
+    ResourceSet resourceSet = view.getResourceSet();
+
+    view.close();
+    assertEquals(true, prefetcher.isDisposed());
+    assertEquals(null, prefetcherManager.getPrefetcher(view));
+
+    // =======================================================================================
+    IOUtil.OUT().println("\nTesting new view in sub branch...");
+    view = session2.openView(subBranch.getHead(), resourceSet);
+
+    waitUntilPrefetched(prefetcherManager);
+    prefetcher = prefetcherManager.getPrefetcher(view);
+    assertEquals(false, prefetcher.isDisposed());
+    assertEquals(2 * oldSize - 2 + 1, prefetcher.getSize()); // Main branch revisions
+                                                             // + subBranch pointer revisions
+                                                             // - Category@OID4:0v2
+                                                             // - Category@OID4:1v0->0v2
+                                                             // + Category@OID4:1v1.
+
+    // =======================================================================================
+    IOUtil.OUT().println("\nTesting new session and new view in sub branch...");
+    session2.close();
+    session2 = openSession();
+    view = session2.openView(subBranch.getHead(), resourceSet);
+
+    waitUntilPrefetched(prefetcherManager);
+    prefetcher = prefetcherManager.getPrefetcher(view);
+    assertEquals(false, prefetcher.isDisposed());
+    assertEquals(2 * oldSize - 2 + 1, prefetcher.getSize()); // Main branch revisions
+                                                             // + subBranch pointer revisions
+                                                             // - Category@OID4:0v2
+                                                             // - Category@OID4:1v0->0v2
+                                                             // + Category@OID4:1v1.
+
+    // =======================================================================================
     view.close();
     assertEquals(true, prefetcher.isDisposed());
     assertEquals(null, prefetcherManager.getPrefetcher(view));
@@ -177,7 +175,45 @@ public class Bugzilla_576893_Test extends AbstractCDOTest
     prefetcherManager.deactivate();
   }
 
-  private List<InternalCDORevision> getRevisionsFromCache(CDOID id, CDOSession session)
+  private static void waitUntilPrefetched(TestPrefetcherManager prefetcherManager)
+  {
+    assertTrue(prefetcherManager.waitUntilPrefetched(DEFAULT_TIMEOUT));
+
+    for (Prefetcher prefetcher : prefetcherManager.getPrefetchers())
+    {
+      assertPrefetchedRevisionsAreCached(prefetcher);
+    }
+  }
+
+  private static void assertPrefetchedRevisionsAreCached(Prefetcher prefetcher)
+  {
+    CDORevisionCache cache = ((InternalCDORevisionManager)prefetcher.getView().getSession().getRevisionManager()).getCache();
+
+    prefetcher.handleRevisions(r -> {
+      CDORevision cachedRevision = cache.getRevisionByVersion(r.getID(), r);
+      assertTrue(cachedRevision == r);
+      return true;
+    });
+  }
+
+  @SuppressWarnings("unused")
+  private static List<CDORevision> getRevisionsFromPrefetcher(CDOID id, Prefetcher prefetcher)
+  {
+    List<CDORevision> result = new ArrayList<>();
+    prefetcher.handleRevisions(r -> {
+      if (r.getID() == id)
+      {
+        result.add(r);
+      }
+
+      return true;
+    });
+
+    return result;
+  }
+
+  @SuppressWarnings("unused")
+  private static List<InternalCDORevision> getRevisionsFromCache(CDOID id, CDOSession session)
   {
     class IDList extends ArrayList<InternalCDORevision>
     {
@@ -198,5 +234,79 @@ public class Bugzilla_576893_Test extends AbstractCDOTest
     IDList result = new IDList();
     ((InternalCDORevisionManager)session.getRevisionManager()).getCache().getAllRevisions(result);
     return result;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class TestPrefetcherManager extends CDOPrefetcherManager
+  {
+    public int added;
+
+    public int errors;
+
+    private final CDOID rootID;
+
+    public TestPrefetcherManager(ResourceSet resourceSet, CDOID rootID)
+    {
+      super(resourceSet);
+      this.rootID = rootID;
+    }
+
+    public void reset()
+    {
+      added = 0;
+      errors = 0;
+    }
+
+    @Override
+    protected Prefetcher createPrefetcher(CDOView view)
+    {
+      return new Prefetcher(view, rootID)
+      {
+        @Override
+        protected void prefetch()
+        {
+          IOUtil.OUT().println("Prefetching " + getView().getBranch().getName() + "/" + CDOCommonUtil.formatTimeStamp(getView().getTimeStamp()));
+          super.prefetch();
+        }
+
+        @Override
+        protected CDORevision addRevision(CDORevision revision)
+        {
+          IOUtil.OUT().println("  Adding  " + revision);
+
+          // Add.
+          CDORevision oldRevision = super.addRevision(revision);
+
+          if (!(revision instanceof SyntheticCDORevision))
+          {
+            // Add a copy.
+            if (super.addRevision(revision.copy()) != revision)
+            {
+              ++errors;
+            }
+
+            // Add original again.
+            super.addRevision(revision);
+          }
+
+          ++added;
+          return oldRevision;
+        }
+
+        @Override
+        protected void revisionRemoved(CDORevision revision)
+        {
+          IOUtil.OUT().println("  Removed " + revision);
+        }
+
+        @Override
+        protected void revisionIgnored(CDORevision revision)
+        {
+          // IOUtil.OUT().println(" Ignored " + revision);
+        }
+      };
+    }
   }
 }

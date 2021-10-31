@@ -139,6 +139,31 @@ public interface CDORevisionManager extends INotifier
   public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand);
 
   /**
+   * Returns the {@link CDORevision revisions} with the given {@link CDOID IDs} at the given {@link CDOBranchPoint
+   * branch point} (branch + timestamp), optionally demand loading them if they are not already in the
+   * {@link CDORevisionCache cache}.
+   *
+   * @param referenceChunk
+   *          The number of target {@link CDOID IDs} to load for each many-valued reference in the returned revisions,
+   *          or {@link CDORevision#UNCHUNKED} for all such list elements (IDs).
+   * @param prefetchDepth
+   *          The number of nested containment levels to load revisions for in one round trip. Use the symbolic
+   *          constants {@link CDORevision#DEPTH_INFINITE} to prefetch all contained revisions or
+   *          {@link CDORevision#DEPTH_NONE} to not prefetch anything. Only the explicitly requested revisions are
+   *          returned by this method. If additional revisions are prefetched they are placed in the revision cache to
+   *          speed up subsequent calls to this method.
+   * @param loadOnDemand
+   *          If one or more of the requested revisions is/are not contained in the revision cache it depends on this
+   *          parameter's value whether the revision(s) is/are loaded from the server or <code>null</code> is placed in
+   *          the list that is returned.
+   * @param additionalRevisions If non-<code>null</code>, a list to add additionally prefetched revisions to.
+   * @see #getRevision(CDOID, CDOBranchPoint, int, int, boolean)
+   * @since 4.15
+   */
+  public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand,
+      List<CDORevision> additionalRevisions);
+
+  /**
    * Returns <code>true</code> if the {@link CDORevisionCache revision cache} contains a {@link CDORevision revision}
    * with the given {@link CDOID ID} at the given {@link CDOBranchVersion branch version} (branch + version),
    * <code>false</code> otherwise.

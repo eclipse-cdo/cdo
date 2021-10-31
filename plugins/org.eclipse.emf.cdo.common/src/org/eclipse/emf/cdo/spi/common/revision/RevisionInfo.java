@@ -157,7 +157,9 @@ public abstract class RevisionInfo
   public void writeResult(CDODataOutput out, int referenceChunk, CDOBranchPoint securityContext) throws IOException
   {
     writeRevision(out, referenceChunk, securityContext);
-    writeResult(out, synthetic, referenceChunk, securityContext);
+
+    boolean writePointerTarget = synthetic instanceof PointerCDORevision && ((PointerCDORevision)synthetic).getTarget() != result;
+    writeResult(out, synthetic, writePointerTarget, referenceChunk, securityContext);
   }
 
   public void readResult(CDODataInput in) throws IOException
@@ -207,7 +209,7 @@ public abstract class RevisionInfo
   }
 
   /**
-   * @deprecated Not called anymore by the framework
+   * @deprecated Not called anymore by the framework.
    */
   @Deprecated
   protected void writeRevision(CDODataOutput out, int referenceChunk) throws IOException
@@ -230,7 +232,7 @@ public abstract class RevisionInfo
 
   /**
    * @since 4.0
-   * @deprecated Call {@link #writeResult(CDODataOutput, InternalCDORevision, int, CDOBranchPoint)}
+   * @deprecated As of 4.1 call {@link #writeResult(CDODataOutput, InternalCDORevision, int, CDOBranchPoint)}.
    */
   @Deprecated
   public static void writeResult(CDODataOutput out, InternalCDORevision revision, int referenceChunk) throws IOException
@@ -240,8 +242,20 @@ public abstract class RevisionInfo
 
   /**
    * @since 4.1
+   * @deprecated As of 4.15 call {@link #writeResult(CDODataOutput, InternalCDORevision, boolean, int, CDOBranchPoint)}.
    */
+  @Deprecated
   public static void writeResult(CDODataOutput out, InternalCDORevision revision, int referenceChunk, CDOBranchPoint securityContext) throws IOException
+  {
+    writeResult(out, revision, true, referenceChunk, securityContext);
+  }
+
+  /**
+   * @since 4.15
+   * @noreference This method is not intended to be referenced by clients.
+   */
+  public static void writeResult(CDODataOutput out, InternalCDORevision revision, boolean writePointerTarget, int referenceChunk,
+      CDOBranchPoint securityContext) throws IOException
   {
     if (revision == null)
     {
@@ -254,10 +268,17 @@ public abstract class RevisionInfo
       out.writeCDOClassifierRef(pointer.getEClass());
       out.writeXLong(pointer.getRevised());
 
-      CDOBranchVersion target = pointer.getTarget();
-      if (target instanceof InternalCDORevision)
+      if (writePointerTarget)
       {
-        writeResult(out, (InternalCDORevision)target, referenceChunk, securityContext);
+        CDOBranchVersion target = pointer.getTarget();
+        if (target instanceof InternalCDORevision)
+        {
+          writeResult(out, (InternalCDORevision)target, true, referenceChunk, securityContext);
+        }
+        else
+        {
+          out.writeByte(NO_RESULT);
+        }
       }
       else
       {

@@ -47,6 +47,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * @author Eike Stepper
@@ -197,7 +198,7 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
   {
     if (supportingBranches)
     {
-      return getRevision(id, branchPoint, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, false, null) != null;
+      return getRevision(id, branchPoint, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, false, (SyntheticCDORevision[])null) != null;
     }
 
     return getCachedRevision(id, branchPoint) != null;
@@ -321,7 +322,7 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
   @Override
   public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand)
   {
-    return getRevision(id, branchPoint, referenceChunk, prefetchDepth, loadOnDemand, null);
+    return getRevision(id, branchPoint, referenceChunk, prefetchDepth, loadOnDemand, (SyntheticCDORevision[])null);
   }
 
   @Override
@@ -333,32 +334,56 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
     return (InternalCDORevision)results.get(0);
   }
 
+  // @Override
+  // public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth,
+  // boolean loadOnDemand,
+  // List<CDORevision> additionalRevisions)
+  // {
+  // List<CDOID> ids = Collections.singletonList(id);
+  // List<CDORevision> results = getRevisions(ids, branchPoint, referenceChunk, prefetchDepth, loadOnDemand,
+  // synthetics);
+  // return (InternalCDORevision)results.get(0);
+  // }
+
   @Override
   public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand)
   {
-    return getRevisions(ids, branchPoint, referenceChunk, prefetchDepth, loadOnDemand, null);
+    return getRevisions(ids, branchPoint, referenceChunk, prefetchDepth, loadOnDemand, (SyntheticCDORevision[])null);
   }
 
   @Override
   public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand,
       SyntheticCDORevision[] synthetics)
   {
+    return getRevisions(ids, branchPoint, referenceChunk, prefetchDepth, loadOnDemand, synthetics, null, null);
+  }
+
+  @Override
+  public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand,
+      List<CDORevision> additionalRevisions)
+  {
+    return getRevisions(ids, branchPoint, referenceChunk, prefetchDepth, loadOnDemand, null, additionalRevisions, null);
+  }
+
+  private List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand,
+      SyntheticCDORevision[] synthetics, List<CDORevision> additionalRevisions, Consumer<CDORevision> consumer)
+  {
     RevisionInfo[] allInfos = new RevisionInfo[ids.size()];
-    List<CDORevision> additionalRevisions;
+
+    if (additionalRevisions == null)
+    {
+      additionalRevisions = new ArrayList<>();
+    }
 
     // Create revision infos for all ids in the allInfos[] array and return only those that need loading (or null).
     List<RevisionInfo> infosToLoad = createRevisionInfos(ids, branchPoint, prefetchDepth, loadOnDemand, allInfos);
     if (infosToLoad != null)
     {
       // Load the requested revision infos, then process and return additional revisions.
-      additionalRevisions = loadRevisions(infosToLoad, branchPoint, referenceChunk, prefetchDepth);
-    }
-    else
-    {
-      additionalRevisions = null;
+      loadRevisions(infosToLoad, branchPoint, referenceChunk, prefetchDepth, additionalRevisions, consumer);
     }
 
-    List<CDORevision> primaryRevisions = processResults(allInfos, synthetics);
+    List<CDORevision> primaryRevisions = processResults(allInfos, synthetics, consumer);
 
     if (infosToLoad != null)
     {
@@ -369,16 +394,22 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
           primaryRevisions = Collections.emptyList();
         }
 
-        if (additionalRevisions == null)
-        {
-          additionalRevisions = Collections.emptyList();
-        }
-
+        additionalRevisions = Collections.unmodifiableList(additionalRevisions);
         fireEvent(new RevisionsLoadedEvent(this, primaryRevisions, additionalRevisions, prefetchDepth));
       }
     }
 
     return primaryRevisions;
+  }
+
+  /**
+   * @since 4.15
+   */
+  @Override
+  public void prefetchRevisions(CDOID id, CDOBranchPoint branchPoint, int prefetchDepth, Consumer<CDORevision> consumer)
+  {
+    List<CDOID> ids = Collections.singletonList(id);
+    getRevisions(ids, branchPoint, CDORevision.UNCHUNKED, prefetchDepth, true, null, null, consumer);
   }
 
   @Override
@@ -474,28 +505,21 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
   /**
    * Loads the requested revision infos, then processes and returns additional revisions.
    */
-  protected List<CDORevision> loadRevisions(List<RevisionInfo> infosToLoad, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth)
+  protected void loadRevisions(List<RevisionInfo> infosToLoad, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth,
+      List<CDORevision> additionalRevisions, Consumer<CDORevision> consumer)
   {
     acquireAtomicRequestLock(loadAndAddLock);
 
     try
     {
-      List<RevisionInfo> additionalRevisionInfos = //
-          revisionLoader.loadRevisions(infosToLoad, branchPoint, referenceChunk, prefetchDepth);
-
+      List<RevisionInfo> additionalRevisionInfos = revisionLoader.loadRevisions(infosToLoad, branchPoint, referenceChunk, prefetchDepth);
       if (additionalRevisionInfos != null)
       {
-        List<CDORevision> additionalRevisions = new ArrayList<>(additionalRevisionInfos.size());
-
         for (RevisionInfo info : additionalRevisionInfos)
         {
-          info.processResult(this, additionalRevisions, null, 0);
+          processResult(info, additionalRevisions, null, 0, consumer);
         }
-
-        return additionalRevisions;
       }
-
-      return null;
     }
     finally
     {
@@ -503,16 +527,34 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
     }
   }
 
-  private List<CDORevision> processResults(RevisionInfo[] infos, SyntheticCDORevision[] synthetics)
+  private List<CDORevision> processResults(RevisionInfo[] infos, SyntheticCDORevision[] synthetics, Consumer<CDORevision> consumer)
   {
     List<CDORevision> results = new ArrayList<>(infos.length);
     for (int i = 0; i < infos.length; i++)
     {
-      RevisionInfo info = infos[i];
-      info.processResult(this, results, synthetics, i);
+      processResult(infos[i], results, synthetics, i, consumer);
     }
 
     return results;
+  }
+
+  private void processResult(RevisionInfo info, List<CDORevision> results, SyntheticCDORevision[] synthetics, int i, Consumer<CDORevision> consumer)
+  {
+    info.processResult(this, results, synthetics, i);
+
+    if (consumer != null)
+    {
+      InternalCDORevision revision = info.getSynthetic();
+      if (revision == null)
+      {
+        revision = info.getResult();
+      }
+
+      if (revision != null)
+      {
+        consumer.accept(revision);
+      }
+    }
   }
 
   @Override

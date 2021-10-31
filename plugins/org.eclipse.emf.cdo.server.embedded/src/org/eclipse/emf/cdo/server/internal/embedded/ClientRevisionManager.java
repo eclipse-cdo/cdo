@@ -30,6 +30,7 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.ecore.EClass;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * @author Eike Stepper
@@ -265,6 +266,35 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
     {
       ServerSession.set(serverSession);
       return delegate.getRevisions(ids, branchPoint, referenceChunk, prefetchDepth, loadOnDemand);
+    }
+    finally
+    {
+      ServerSession.unset();
+    }
+  }
+
+  @Override
+  public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand,
+      List<CDORevision> additionalRevisions)
+  {
+    try
+    {
+      ServerSession.set(serverSession);
+      return delegate.getRevisions(ids, branchPoint, referenceChunk, prefetchDepth, loadOnDemand, additionalRevisions);
+    }
+    finally
+    {
+      ServerSession.unset();
+    }
+  }
+
+  @Override
+  public void prefetchRevisions(CDOID id, CDOBranchPoint branchPoint, int prefetchDepth, Consumer<CDORevision> consumer)
+  {
+    try
+    {
+      ServerSession.set(serverSession);
+      delegate.prefetchRevisions(id, branchPoint, prefetchDepth, consumer);
     }
     finally
     {

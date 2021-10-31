@@ -28,6 +28,7 @@ import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.emf.ecore.EClass;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * If the meaning of this type isn't clear, there really should be more of a description here...
@@ -80,10 +81,15 @@ public interface InternalCDORevisionManager extends CDORevisionManager, CDORevis
 
   public void reviseVersion(CDOID id, CDOBranchVersion branchVersion, long timeStamp);
 
-  public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand,
-      SyntheticCDORevision[] synthetics);
+  /**
+   * @since 4.15
+   */
+  public void prefetchRevisions(CDOID id, CDOBranchPoint branchPoint, int prefetchDepth, Consumer<CDORevision> consumer);
 
   public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand,
+      SyntheticCDORevision[] synthetics);
+
+  public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand,
       SyntheticCDORevision[] synthetics);
 
   @Override

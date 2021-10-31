@@ -24,6 +24,15 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/server/internal/net4j/protocol/LoadRevisionByVersionIndication.java" type="org.eclipse.emf.cdo.server.internal.net4j.protocol.LoadRevisionByVersionIndication">
+        <filter id="640712815">
+            <message_arguments>
+                <message_argument value="RevisionInfo"/>
+                <message_argument value="LoadRevisionByVersionIndication"/>
+                <message_argument value="writeResult(CDODataOutput, InternalCDORevision, boolean, int, CDOBranchPoint)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/server/internal/net4j/protocol/ReplicateRepositoryIndication.java" type="org.eclipse.emf.cdo.server.internal.net4j.protocol.ReplicateRepositoryIndication">
         <filter id="574619656">
             <message_arguments>

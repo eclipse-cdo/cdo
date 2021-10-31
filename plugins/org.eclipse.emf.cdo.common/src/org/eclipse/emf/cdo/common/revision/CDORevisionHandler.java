@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
  * @author Eike Stepper
  * @since 3.0
  */
+@FunctionalInterface
 public interface CDORevisionHandler
 {
   /**

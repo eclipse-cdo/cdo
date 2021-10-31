@@ -39,6 +39,7 @@ import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
@@ -120,7 +121,7 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
 
   public ServerCDOView(InternalSession session, CDOBranchPoint branchPoint, CDORevisionProvider revisionProvider)
   {
-    super(null, branchPoint);
+    super(null, CDOBranchUtil.adjustBranchPoint(branchPoint, session.getRepository().getBranchManager()));
     this.session = new ServerCDOSession(session);
     this.revisionProvider = revisionProvider;
 
@@ -1490,7 +1491,7 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     @Override
     public boolean isPassiveUpdateEnabled()
     {
-      throw new UnsupportedOperationException();
+      return false;
     }
 
     @Override
@@ -1502,7 +1503,7 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     @Override
     public PassiveUpdateMode getPassiveUpdateMode()
     {
-      throw new UnsupportedOperationException();
+      return PassiveUpdateMode.INVALIDATIONS;
     }
 
     @Override
@@ -1580,7 +1581,7 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     @Override
     public boolean isDelegableViewLockEnabled()
     {
-      throw new UnsupportedOperationException();
+      return false;
     }
 
     @Override

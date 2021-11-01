@@ -68,12 +68,12 @@ import junit.framework.TestResult;
 public abstract class AbstractOMTest extends TestCase
 {
   /**
-   * Timeout duration in millseconds if timeout <b>is not</b> expected.
+   * Timeout duration in milliseconds if timeout <b>is not</b> expected.
    */
   public static final long DEFAULT_TIMEOUT = 15 * 1000;
 
   /**
-   * Timeout duration in millseconds if timeout <b>is</b> expected.
+   * Timeout duration in milliseconds if timeout <b>is</b> expected.
    */
   public static final long DEFAULT_TIMEOUT_EXPECTED = 3 * 1000;
 

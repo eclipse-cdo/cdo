@@ -970,7 +970,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
   /**
    * @author Eike Stepper
    * @since 3.1
-   * @deprecated as of 3.5 use {@link SlowElement}.
+   * @deprecated As of 3.5 use {@link SlowElement}.
    */
   @Deprecated
   public class LazyElement extends SlowElement

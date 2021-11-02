@@ -61,7 +61,7 @@ public class ComposeBranchPointComposite extends Composite
   }
 
   /**
-   * @deprecated as of 4.4 use {@link #ComposeBranchPointComposite(Composite, boolean, CDOBranchPoint)}.
+   * @deprecated As of 4.4 use {@link #ComposeBranchPointComposite(Composite, boolean, CDOBranchPoint)}.
    */
   @Deprecated
   public ComposeBranchPointComposite(Composite parent, int style, CDOSession session, CDOBranchPoint branchPoint, boolean allowTimeStamp)
@@ -163,7 +163,7 @@ public class ComposeBranchPointComposite extends Composite
   }
 
   /**
-   * @deprecated as of 4.4 use {@link #getBranchViewer()}.
+   * @deprecated As of 4.4 use {@link #getBranchViewer()}.
    */
   @Deprecated
   public SelectBranchComposite getSelectBranchComposite()
@@ -172,7 +172,7 @@ public class ComposeBranchPointComposite extends Composite
   }
 
   /**
-   * @deprecated as of 4.4 no longer supported.
+   * @deprecated As of 4.4 no longer supported.
    */
   @Deprecated
   public CDOSession getSession()
@@ -289,7 +289,7 @@ public class ComposeBranchPointComposite extends Composite
   }
 
   /**
-   * @deprecated as of 4.4 use {@link #createSelectTimeStampComposite()}.
+   * @deprecated As of 4.4 use {@link #createSelectTimeStampComposite()}.
    */
   @Deprecated
   protected SelectTimeStampComposite createSelectTimeStampComposite(CDOBranch branch, long timeStamp)
@@ -298,7 +298,7 @@ public class ComposeBranchPointComposite extends Composite
   }
 
   /**
-   * @deprecated as of 4.4 use {@link #createBranchViewer()}.
+   * @deprecated As of 4.4 use {@link #createBranchViewer()}.
    */
   @Deprecated
   protected SelectBranchComposite createSelectBranchComposite(CDOSession session, CDOBranch branch)

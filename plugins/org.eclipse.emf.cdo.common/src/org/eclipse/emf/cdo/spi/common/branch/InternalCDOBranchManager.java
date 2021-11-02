@@ -78,7 +78,7 @@ public interface InternalCDOBranchManager extends CDOBranchManager, ILifecycle
 
   /**
    * @since 4.3
-   * @deprecated as of 4.4 use {@link CDOBranch#setName(String)}.
+   * @deprecated As of 4.4 use {@link CDOBranch#setName(String)}.
    */
   @Deprecated
   public void renameBranch(CDOBranch branch, String newName);
@@ -331,7 +331,7 @@ public interface InternalCDOBranchManager extends CDOBranchManager, ILifecycle
     public void deleteBranch(int branchID);
 
     /**
-     * @deprecated as of 4.4. use {@link BranchLoader3#renameBranch(int, String, String)}.
+     * @deprecated As of 4.4. use {@link BranchLoader3#renameBranch(int, String, String)}.
      */
     @Deprecated
     public void renameBranch(int branchID, String newName);

@@ -467,7 +467,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
     /**
      * @since 4.2
-     * @deprecated as of 4.4 use {@link #OpenSessionResult(CDODataInput, int)}.
+     * @deprecated As of 4.4 use {@link #OpenSessionResult(CDODataInput, int)}.
      */
     @Deprecated
     public OpenSessionResult(int sessionID, String userID, String repositoryUUID, CDOCommonRepository.Type repositoryType,
@@ -704,7 +704,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     }
 
     /**
-    * @deprecated as of 4.5 use {@link #getUUID()}.
+    * @deprecated As of 4.5 use {@link #getUUID()}.
      */
     @Deprecated
     public String getRepositoryUUID()
@@ -714,7 +714,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
     /**
      * @since 3.0
-     * @deprecated as of 4.5 use {@link #getType()}.
+     * @deprecated As of 4.5 use {@link #getType()}.
      */
     @Deprecated
     public CDOCommonRepository.Type getRepositoryType()
@@ -724,7 +724,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
     /**
      * @since 3.0
-     * @deprecated as of 4.5 use {@link #getState()}.
+     * @deprecated As of 4.5 use {@link #getState()}.
      */
     @Deprecated
     public CDOCommonRepository.State getRepositoryState()
@@ -733,7 +733,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     }
 
     /**
-     * @deprecated as of 4.5 use {@link #getCreationTime()}.
+     * @deprecated As of 4.5 use {@link #getCreationTime()}.
      */
     @Deprecated
     public long getRepositoryCreationTime()
@@ -743,7 +743,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
     /**
      * @since 4.4
-     * @deprecated as of 4.5 use {@link #isAuthenticating()}.
+     * @deprecated As of 4.5 use {@link #isAuthenticating()}.
      */
     @Deprecated
     public boolean isRepositoryAuthenticating()
@@ -752,7 +752,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     }
 
     /**
-     * @deprecated as of 4.5 use {@link #isSupportingAudits()}.
+     * @deprecated As of 4.5 use {@link #isSupportingAudits()}.
      */
     @Deprecated
     public boolean isRepositorySupportingAudits()
@@ -762,7 +762,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
     /**
      * @since 3.0
-     * @deprecated as of 4.5 use {@link #isSupportingBranches()}.
+     * @deprecated As of 4.5 use {@link #isSupportingBranches()}.
      */
     @Deprecated
     public boolean isRepositorySupportingBranches()
@@ -781,7 +781,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
     /**
      * @since 4.2
-     * @deprecated as of 4.5 use {@link #isSerializingCommits()}.
+     * @deprecated As of 4.5 use {@link #isSerializingCommits()}.
      */
     @Deprecated
     public boolean isRepositorySerializingCommits()
@@ -791,7 +791,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
     /**
      * @since 4.0
-     * @deprecated as of 4.5 use {@link #isEnsuringReferentialIntegrity()}.
+     * @deprecated As of 4.5 use {@link #isEnsuringReferentialIntegrity()}.
      */
     @Deprecated
     public boolean isRepositoryEnsuringReferentialIntegrity()
@@ -801,7 +801,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
     /**
      * @since 4.1
-     * @deprecated as of 4.5 use {@link #getIDGenerationLocation()}.
+     * @deprecated As of 4.5 use {@link #getIDGenerationLocation()}.
      */
     @Deprecated
     public IDGenerationLocation getRepositoryIDGenerationLocation()

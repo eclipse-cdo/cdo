@@ -266,7 +266,7 @@ public interface InternalRepository extends IRepository, //
 
   /**
    * @since 4.0
-   * @deprecated as of 4.6 use {@link #getMergeData2(CDORevisionAvailabilityInfo, CDORevisionAvailabilityInfo, CDORevisionAvailabilityInfo, CDORevisionAvailabilityInfo, OMMonitor)}.
+   * @deprecated As of 4.6 use {@link #getMergeData2(CDORevisionAvailabilityInfo, CDORevisionAvailabilityInfo, CDORevisionAvailabilityInfo, CDORevisionAvailabilityInfo, OMMonitor)}.
    */
   @Deprecated
   public Set<CDOID> getMergeData(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo, CDORevisionAvailabilityInfo targetBaseInfo,

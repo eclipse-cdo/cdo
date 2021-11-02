@@ -193,7 +193,7 @@ public interface CDOBranch extends CDOBranchPoint, CDONameProvider, IContainer<C
    * Renames this branch with the given new name.
    *
    * @since 4.3
-   * @deprecated as of 4.4 use {@link #setName(String)}.
+   * @deprecated As of 4.4 use {@link #setName(String)}.
    */
   @Deprecated
   public void rename(String newName);

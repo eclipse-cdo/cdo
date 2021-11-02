@@ -210,7 +210,7 @@ public class SharedIcons
   public static final String WIZBAN_PROTOCOL_PROBLEM = WIZBAN + "ProtocolProblem" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
 
   /**
-   * @deprecated as of 4.3 use {@link #WIZBAN_BRANCH_SELECTION}
+   * @deprecated As of 4.3 use {@link #WIZBAN_BRANCH_SELECTION}
    */
   @Deprecated
   public static final String WIZBAN_TARGET_SELECTION = WIZBAN + "BranchBanner" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
@@ -244,7 +244,7 @@ public class SharedIcons
 
   /**
    * @since 4.1
-   * @deprecated as of 4.2 use {@link #WIZBAN_EXPORT}.
+   * @deprecated As of 4.2 use {@link #WIZBAN_EXPORT}.
    */
   @Deprecated
   public static final String WIZBAN_EXPOR = WIZBAN + "export_wiz" + IMAGE_FORMAT_PNG; //$NON-NLS-1$

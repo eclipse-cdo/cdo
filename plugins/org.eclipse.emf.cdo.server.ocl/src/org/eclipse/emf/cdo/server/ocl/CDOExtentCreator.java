@@ -96,7 +96,7 @@ public class CDOExtentCreator implements OCLExtentCreator
   }
 
   /**
-   * @deprecated as of 4.4 use {@link #getRevisionInterner()}.
+   * @deprecated As of 4.4 use {@link #getRevisionInterner()}.
    */
   @Deprecated
   public org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder getRevisionCacheAdder()
@@ -105,7 +105,7 @@ public class CDOExtentCreator implements OCLExtentCreator
   }
 
   /**
-   * @deprecated as of 4.4 use {@link #setRevisionInterner(CDORevisionInterner)}.
+   * @deprecated As of 4.4 use {@link #setRevisionInterner(CDORevisionInterner)}.
    */
   @Deprecated
   public void setRevisionCacheAdder(org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder revisionCacheAdder)

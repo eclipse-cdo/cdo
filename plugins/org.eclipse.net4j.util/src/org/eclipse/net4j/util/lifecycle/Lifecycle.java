@@ -64,7 +64,7 @@ public class Lifecycle extends Notifier implements ILifecycle, DeferrableActivat
         lock();
 
         IListener[] listeners = getListeners();
-        if (listeners != null)
+        if (listeners.length != 0)
         {
           fireEvent(new LifecycleEvent(this, ILifecycleEvent.Kind.ABOUT_TO_ACTIVATE), listeners);
         }
@@ -122,7 +122,7 @@ public class Lifecycle extends Notifier implements ILifecycle, DeferrableActivat
 
         doBeforeDeactivate();
         IListener[] listeners = getListeners();
-        if (listeners != null)
+        if (listeners.length != 0)
         {
           fireEvent(new LifecycleEvent(this, ILifecycleEvent.Kind.ABOUT_TO_DEACTIVATE), listeners);
         }
@@ -136,7 +136,7 @@ public class Lifecycle extends Notifier implements ILifecycle, DeferrableActivat
 
         // Get listeners again because they could have changed since the first call to getListeners().
         listeners = getListeners();
-        if (listeners != null)
+        if (listeners.length != 0)
         {
           fireEvent(new LifecycleEvent(this, ILifecycleEvent.Kind.DEACTIVATED), listeners);
         }
@@ -269,8 +269,9 @@ public class Lifecycle extends Notifier implements ILifecycle, DeferrableActivat
       }
 
       unlock();
+
       IListener[] listeners = getListeners();
-      if (listeners != null)
+      if (listeners.length != 0)
       {
         fireEvent(new LifecycleEvent(this, ILifecycleEvent.Kind.ACTIVATED), listeners);
       }

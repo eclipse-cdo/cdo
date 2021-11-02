@@ -88,8 +88,9 @@ public class ContainerCollection<E> extends AbstractDelegator<E> implements ICon
     {
       ContainerEvent<E> event = createEvent(getDelegate(), IContainerDelta.Kind.REMOVED);
       getDelegate().clear();
+
       IListener[] listeners = getListeners();
-      if (listeners != null)
+      if (listeners.length != 0)
       {
         fireEvent(event, listeners);
       }

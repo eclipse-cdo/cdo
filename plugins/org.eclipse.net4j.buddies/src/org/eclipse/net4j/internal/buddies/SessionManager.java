@@ -62,11 +62,13 @@ public class SessionManager extends Lifecycle implements ISessionManager, IListe
   {
     if (this.state != state)
     {
-      IEvent event = new SessionManagerEvent(this.state, state, session);
+      State oldState = this.state;
       this.state = state;
+
       IListener[] listeners = getListeners();
-      if (listeners != null)
+      if (listeners.length != 0)
       {
+        IEvent event = new SessionManagerEvent(oldState, state, session);
         fireEvent(event, listeners);
       }
     }

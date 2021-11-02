@@ -35,7 +35,7 @@ public abstract class AbstractDelegator<E> extends Notifier implements IContaine
   protected void fireAddedEvent(E o)
   {
     IListener[] listeners = getListeners();
-    if (listeners != null)
+    if (listeners.length != 0)
     {
       fireEvent(new SingleDeltaContainerEvent<>(this, o, IContainerDelta.Kind.ADDED), listeners);
     }
@@ -45,7 +45,7 @@ public abstract class AbstractDelegator<E> extends Notifier implements IContaine
   protected void fireRemovedEvent(Object o)
   {
     IListener[] listeners = getListeners();
-    if (listeners != null)
+    if (listeners.length != 0)
     {
       fireEvent(new SingleDeltaContainerEvent<>(this, (E)o, IContainerDelta.Kind.REMOVED), listeners);
     }
@@ -71,7 +71,7 @@ public abstract class AbstractDelegator<E> extends Notifier implements IContaine
     }
 
     IListener[] listeners = getListeners();
-    if (listeners != null)
+    if (listeners.length != 0)
     {
       fireEvent(event, listeners);
     }

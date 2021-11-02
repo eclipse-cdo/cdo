@@ -59,7 +59,7 @@ public class CollaborationContainer extends Lifecycle implements ICollaborationC
     }
 
     IListener[] listeners = getListeners();
-    if (listeners != null)
+    if (listeners.length != 0)
     {
       fireEvent(new SingleDeltaContainerEvent<>(this, collaboration, IContainerDelta.Kind.ADDED), listeners);
     }
@@ -79,7 +79,7 @@ public class CollaborationContainer extends Lifecycle implements ICollaborationC
     {
       collaboration.removeListener(this);
       IListener[] listeners = getListeners();
-      if (listeners != null)
+      if (listeners.length != 0)
       {
         fireEvent(new SingleDeltaContainerEvent<>(this, collaboration, IContainerDelta.Kind.REMOVED), listeners);
       }

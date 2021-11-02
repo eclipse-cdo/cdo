@@ -56,7 +56,7 @@ public class BuddyContainer extends Lifecycle implements IBuddyContainer, IListe
       {
         buddies.put(userID, buddy);
         IListener[] listeners = getListeners();
-        if (listeners != null)
+        if (listeners.length != 0)
         {
           fireEvent(new SingleDeltaContainerEvent<>(this, buddy, IContainerDelta.Kind.ADDED), listeners);
         }
@@ -81,7 +81,7 @@ public class BuddyContainer extends Lifecycle implements IBuddyContainer, IListe
     {
       buddy.removeListener(this);
       IListener[] listeners = getListeners();
-      if (listeners != null)
+      if (listeners.length != 0)
       {
         fireEvent(new SingleDeltaContainerEvent<>(this, buddy, IContainerDelta.Kind.REMOVED), listeners);
       }

@@ -60,7 +60,7 @@ public final class CDOWorkspaceUtil
     }
 
     IListener[] listeners = view.getListeners();
-    if (listeners != null)
+    if (listeners.length != 0)
     {
       for (int i = 0; i < listeners.length; i++)
       {

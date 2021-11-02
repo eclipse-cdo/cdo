@@ -317,7 +317,7 @@ public class CDOViewImpl extends AbstractCDOView
         }
 
         IListener[] listeners = getListeners();
-        if (listeners != null)
+        if (listeners.length != 0)
         {
           fireViewTargetChangedEvent(oldBranchPoint, listeners);
         }
@@ -642,7 +642,7 @@ public class CDOViewImpl extends AbstractCDOView
   protected final void fireLocksChangedEvent(InternalCDOView sender, CDOLockChangeInfo lockChangeInfo)
   {
     IListener[] listeners = getListeners();
-    if (listeners != null)
+    if (listeners.length != 0)
     {
       fireEvent(new ViewLocksChangedEvent(sender, lockChangeInfo), listeners);
     }
@@ -1438,7 +1438,7 @@ public class CDOViewImpl extends AbstractCDOView
     if (!revisionDeltas.isEmpty() || !detachedObjects.isEmpty())
     {
       IListener[] listeners = getListeners();
-      if (listeners != null)
+      if (listeners.length != 0)
       {
         fireEvent(new ViewInvalidationEvent(timeStamp, revisionDeltas, detachedObjects), listeners);
       }
@@ -3898,7 +3898,7 @@ public class CDOViewImpl extends AbstractCDOView
       }
 
       IListener[] listeners = getListeners();
-      if (listeners != null)
+      if (listeners.length != 0)
       {
         fireEvent(new CacheReferenceTypeEventImpl(), listeners);
       }
@@ -3944,7 +3944,7 @@ public class CDOViewImpl extends AbstractCDOView
       }
 
       IListener[] listeners = getListeners();
-      if (listeners != null)
+      if (listeners.length != 0)
       {
         fireEvent(new ClearAdapterPolicyEventImpl(), listeners);
       }

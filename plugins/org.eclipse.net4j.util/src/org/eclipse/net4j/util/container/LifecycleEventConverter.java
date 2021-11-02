@@ -72,7 +72,7 @@ public class LifecycleEventConverter<E> implements IListener
     if (element != null)
     {
       IListener[] listeners = owner.getListeners();
-      if (listeners != null)
+      if (listeners.length != 0)
       {
         owner.fireEvent(createContainerEvent((IContainer<E>)owner, element, kind), listeners);
       }

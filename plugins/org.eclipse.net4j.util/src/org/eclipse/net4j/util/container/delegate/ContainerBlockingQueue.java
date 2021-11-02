@@ -10,7 +10,6 @@
  */
 package org.eclipse.net4j.util.container.delegate;
 
-import org.eclipse.net4j.util.container.ContainerEvent;
 import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.event.IListener;
 
@@ -43,8 +42,9 @@ public class ContainerBlockingQueue<E> extends ContainerQueue<E> implements ICon
   public int drainTo(Collection<? super E> c)
   {
     int drainTo = getDelegate().drainTo(c);
+
     IListener[] listeners = getListeners();
-    if (listeners != null)
+    if (listeners.length != 0)
     {
       fireEvent(createEvent(c, IContainerDelta.Kind.REMOVED), listeners);
     }
@@ -59,13 +59,7 @@ public class ContainerBlockingQueue<E> extends ContainerQueue<E> implements ICon
   public int drainTo(Collection<? super E> c, int maxElements)
   {
     int drainTo = getDelegate().drainTo(c, maxElements);
-    ContainerEvent<E> event = createEvent(c, IContainerDelta.Kind.REMOVED);
-    IListener[] listeners = getListeners();
-    if (listeners != null)
-    {
-      fireEvent(event, listeners);
-    }
-
+    fireEvent(createEvent(c, IContainerDelta.Kind.REMOVED));
     return drainTo;
   }
 

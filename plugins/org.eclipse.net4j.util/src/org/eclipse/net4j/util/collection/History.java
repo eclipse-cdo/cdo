@@ -214,7 +214,7 @@ public class History<T> extends Notifier implements IHistory<T>
   private void fireChangedEvent()
   {
     IListener[] listeners = getListeners();
-    if (listeners != null)
+    if (listeners.length != 0)
     {
       fireEvent(new IHistoryChangeEvent()
       {

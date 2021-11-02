@@ -363,7 +363,7 @@ public class RollingLog extends Worker implements Log, Iterable<LogLine>
 
       recovery(properties, logLine);
 
-      if (listeners != null)
+      if (listeners.length != 0)
       {
         fireEvent(new RecoveryEvent(this, properties, logLine), listeners);
       }

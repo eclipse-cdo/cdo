@@ -205,8 +205,9 @@ public class CacheMonitor extends Worker implements ICacheMonitor
     if (newCondition != oldCondition)
     {
       condition = newCondition;
+
       IListener[] listeners = getListeners();
-      if (listeners != null)
+      if (listeners.length != 0)
       {
         fireEvent(new CacheMonitorEvent(oldCondition, newCondition), listeners);
       }

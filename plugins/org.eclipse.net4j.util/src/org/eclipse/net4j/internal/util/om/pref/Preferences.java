@@ -297,7 +297,7 @@ public class Preferences extends Notifier implements OMPreferences
   {
     dirty = true;
     IListener[] listeners = getListeners();
-    if (listeners != null)
+    if (listeners.length != 0)
     {
       fireEvent(new PreferencesChangeEvent<>(preference, oldValue, newValue), listeners);
     }

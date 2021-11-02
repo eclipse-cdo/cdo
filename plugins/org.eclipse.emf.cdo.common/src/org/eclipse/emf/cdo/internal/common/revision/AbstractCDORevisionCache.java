@@ -211,7 +211,7 @@ public abstract class AbstractCDORevisionCache extends Lifecycle implements Inte
     }
 
     IListener[] listeners = getListeners();
-    if (listeners != null)
+    if (listeners.length != 0)
     {
       fireEvent(new CacheEvictionEvent(this, key), listeners);
     }

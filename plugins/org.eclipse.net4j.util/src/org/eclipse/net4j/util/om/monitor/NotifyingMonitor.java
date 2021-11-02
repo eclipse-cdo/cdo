@@ -37,7 +37,7 @@ public class NotifyingMonitor extends Monitor implements INotifier
   public NotifyingMonitor(String task, IListener[] listeners)
   {
     this(task);
-    if (listeners != null)
+    if (listeners.length != 0)
     {
       for (IListener listener : listeners)
       {
@@ -81,7 +81,7 @@ public class NotifyingMonitor extends Monitor implements INotifier
     super.worked(work);
 
     IListener[] listeners = getListeners();
-    if (listeners != null)
+    if (listeners.length != 0)
     {
       notifier.fireEvent(new ProgressEvent(this, getTotalWork(), getWork()), listeners);
     }

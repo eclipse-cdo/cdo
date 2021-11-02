@@ -41,7 +41,7 @@ public class MembershipContainer extends Lifecycle implements IMembershipContain
     if (memberships.putIfAbsent(membership, membership) == null)
     {
       IListener[] listeners = getListeners();
-      if (listeners != null)
+      if (listeners.length != 0)
       {
         fireEvent(new SingleDeltaContainerEvent<>(this, membership, IContainerDelta.Kind.ADDED), listeners);
       }
@@ -57,17 +57,12 @@ public class MembershipContainer extends Lifecycle implements IMembershipContain
 
   public IMembership removeMembership(IMembershipKey key)
   {
-    // for (IMembership membership : memberships.values())
-    // {
-    //
-    // }
-    //
     IMembership membership = memberships.remove(key);
     if (membership != null)
     {
       membership.removeListener(this);
       IListener[] listeners = getListeners();
-      if (listeners != null)
+      if (listeners.length != 0)
       {
         fireEvent(new SingleDeltaContainerEvent<>(this, membership, IContainerDelta.Kind.REMOVED), listeners);
       }

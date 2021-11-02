@@ -57,7 +57,7 @@ public abstract class BufferProvider extends Notifier implements IBufferProvider
     ++providedBuffers;
 
     IListener[] listeners = getListeners();
-    if (listeners != null)
+    if (listeners.length != 0)
     {
       fireEvent(new BufferProviderEvent.Provided(this, buffer), listeners);
     }
@@ -69,7 +69,7 @@ public abstract class BufferProvider extends Notifier implements IBufferProvider
   public final void retainBuffer(IBuffer buffer)
   {
     IListener[] listeners = getListeners();
-    if (listeners != null)
+    if (listeners.length != 0)
     {
       fireEvent(new BufferProviderEvent.Retaining(this, buffer), listeners);
     }

@@ -252,7 +252,7 @@ public class CDORevisionCacheNonAuditing extends AbstractCDORevisionCache
         }
       }
 
-      fireEvent(event[0]);
+      fireEvent(event[0], listeners);
     }
 
     return revision;

@@ -641,7 +641,7 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
   private void fireSignalScheduledEvent(Signal signal)
   {
     IListener[] listeners = getListeners();
-    if (listeners != null)
+    if (listeners.length != 0)
     {
       IEvent event = new SignalScheduledEvent<>(this, signal);
       fireEvent(event, listeners);
@@ -651,7 +651,7 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
   private void fireSignalFinishedEvent(Signal signal, Exception exception)
   {
     IListener[] listeners = getListeners();
-    if (listeners != null)
+    if (listeners.length != 0)
     {
       IEvent event = new SignalFinishedEvent<>(this, signal, exception);
       fireEvent(event, listeners);

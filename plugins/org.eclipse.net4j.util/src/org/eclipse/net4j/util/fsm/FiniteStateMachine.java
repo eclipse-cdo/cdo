@@ -210,8 +210,9 @@ public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends En
     if (oldState != state)
     {
       setState(subject, state);
+
       IListener[] listeners = getListeners();
-      if (listeners != null)
+      if (listeners.length != 0)
       {
         fireEvent(new StateChangedEvent(subject, oldState, state), listeners);
       }

@@ -66,7 +66,7 @@ public class Chat extends Facility implements IChat
     }
 
     IListener[] listeners = getListeners();
-    if (listeners != null)
+    if (listeners.length != 0)
     {
       fireEvent(new CommentEvent(this, comment), listeners);
     }

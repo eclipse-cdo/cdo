@@ -50,8 +50,9 @@ public class ContainerMap<K, V> extends AbstractDelegator<Map.Entry<K, V>> imple
     {
       ContainerEvent<Map.Entry<K, V>> event = createEvent(getDelegate().entrySet(), IContainerDelta.Kind.REMOVED);
       getDelegate().clear();
+
       IListener[] listeners = getListeners();
-      if (listeners != null)
+      if (listeners.length != 0)
       {
         fireEvent(event, listeners);
       }
@@ -73,7 +74,7 @@ public class ContainerMap<K, V> extends AbstractDelegator<Map.Entry<K, V>> imple
 
     event.addDelta(new ContainerMapEntry<>(key, value), IContainerDelta.Kind.ADDED);
     IListener[] listeners = getListeners();
-    if (listeners != null)
+    if (listeners.length != 0)
     {
       fireEvent(event, listeners);
     }

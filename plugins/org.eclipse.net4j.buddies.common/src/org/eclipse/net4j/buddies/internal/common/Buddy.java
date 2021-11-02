@@ -66,11 +66,13 @@ public abstract class Buddy extends MembershipContainer implements IBuddy
   {
     if (this.state != state)
     {
-      IEvent event = new BuddyStateEvent(this.state, state);
+      State oldState = this.state;
       this.state = state;
+
       IListener[] listeners = getListeners();
-      if (listeners != null)
+      if (listeners.length != 0)
       {
+        IEvent event = new BuddyStateEvent(oldState, state);
         fireEvent(event, listeners);
       }
     }

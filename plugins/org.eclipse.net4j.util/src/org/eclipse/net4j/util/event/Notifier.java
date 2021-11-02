@@ -126,7 +126,7 @@ public class Notifier implements INotifier2
    */
   public void fireEvent(final IEvent event, final IListener[] listeners)
   {
-    if (event != null && listeners != null)
+    if (event != null && listeners.length != 0)
     {
       ExecutorService notificationService = getNotificationService();
       if (notificationService != null)

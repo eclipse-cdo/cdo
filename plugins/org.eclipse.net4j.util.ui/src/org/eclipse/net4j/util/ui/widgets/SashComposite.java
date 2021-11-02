@@ -166,8 +166,9 @@ public abstract class SashComposite extends Composite implements INotifier
 
       init();
       layout();
+
       IListener[] listeners = notifier.getListeners();
-      if (listeners != null)
+      if (listeners.length != 0)
       {
         notifier.fireEvent(new OrientationChangedEvent(vertical), listeners);
       }

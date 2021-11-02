@@ -161,7 +161,7 @@ public class Collaboration extends MembershipContainer implements ICollaboration
     {
       facilities.put(type, facility);
       IListener[] listeners = getListeners();
-      if (listeners != null)
+      if (listeners.length != 0)
       {
         fireEvent(new FacilityInstalledEvent(this, facility, remote), listeners);
       }

@@ -509,7 +509,7 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
     {
       int queueSize = size.incrementAndGet();
       IListener[] listeners = getListeners();
-      if (listeners != null)
+      if (listeners.length != 0)
       {
         fireEvent(new SendQueueEventImpl(Channel.this, Type.ENQUEUED, queueSize), listeners);
       }
@@ -519,7 +519,7 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
     {
       int queueSize = size.decrementAndGet();
       IListener[] listeners = getListeners();
-      if (listeners != null)
+      if (listeners.length != 0)
       {
         fireEvent(new SendQueueEventImpl(Channel.this, Type.DEQUEUED, queueSize), listeners);
       }

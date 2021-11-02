@@ -398,7 +398,7 @@ public class CDOTransfer implements INotifier
     }
 
     IListener[] listeners = notifier.getListeners();
-    if (listeners != null)
+    if (listeners.length != 0)
     {
       notifier.fireEvent(new ChildrenChangedEvent(mapping, child, kind), listeners);
     }
@@ -407,7 +407,7 @@ public class CDOTransfer implements INotifier
   protected void relativePathChanged(CDOTransferMapping mapping, IPath oldPath, IPath newPath)
   {
     IListener[] listeners = notifier.getListeners();
-    if (listeners != null)
+    if (listeners.length != 0)
     {
       notifier.fireEvent(new RelativePathChangedEvent(mapping, oldPath, newPath), listeners);
     }
@@ -426,7 +426,7 @@ public class CDOTransfer implements INotifier
     }
 
     IListener[] listeners = notifier.getListeners();
-    if (listeners != null)
+    if (listeners.length != 0)
     {
       notifier.fireEvent(new TransferTypeChangedEvent(mapping, oldType, newType), listeners);
     }

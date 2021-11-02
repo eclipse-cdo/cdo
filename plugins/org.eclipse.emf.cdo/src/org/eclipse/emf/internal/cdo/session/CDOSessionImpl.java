@@ -1630,7 +1630,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
         // TODO Check inconsistent state if switching off?
 
         IListener[] listeners = getListeners();
-        if (listeners != null)
+        if (listeners.length != 0)
         {
           fireEvent(new GeneratedPackageEmulationEventImpl(), listeners);
         }
@@ -1662,7 +1662,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
           }
 
           IListener[] listeners = getListeners();
-          if (listeners != null)
+          if (listeners.length != 0)
           {
             fireEvent(new PassiveUpdateEventImpl(!passiveUpdateEnabled, passiveUpdateEnabled, passiveUpdateMode, passiveUpdateMode), listeners);
           }
@@ -1690,7 +1690,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
           protocol.setPassiveUpdateMode(passiveUpdateMode);
 
           IListener[] listeners = getListeners();
-          if (listeners != null)
+          if (listeners.length != 0)
           {
             fireEvent(new PassiveUpdateEventImpl(passiveUpdateEnabled, passiveUpdateEnabled, oldMode, passiveUpdateMode), listeners);
           }
@@ -1718,7 +1718,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
           protocol.setLockNotificationMode(lockNotificationMode);
 
           IListener[] listeners = getListeners();
-          if (listeners != null)
+          if (listeners.length != 0)
           {
             fireEvent(new LockNotificationModeEventImpl(oldMode, lockNotificationMode), listeners);
           }
@@ -1760,7 +1760,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
         if (collectionLoadingPolicy != policy)
         {
           collectionLoadingPolicy = policy;
-          if (listeners != null)
+          if (listeners.length != 0)
           {
             event = new CollectionLoadingPolicyEventImpl();
           }
@@ -1798,7 +1798,8 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
         if (lobCache != cache)
         {
           lobCache = cache;
-          if (listeners != null)
+
+          if (listeners.length != 0)
           {
             event = new LobCacheEventImpl();
           }
@@ -1831,7 +1832,8 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
         if (this.permissionUpdater != permissionUpdater)
         {
           this.permissionUpdater = permissionUpdater;
-          if (listeners != null)
+
+          if (listeners.length != 0)
           {
             event = new PermissionUpdaterEventImpl();
           }
@@ -1864,7 +1866,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
         if (this.delegableViewLockEnabled != delegableViewLockEnabled)
         {
           this.delegableViewLockEnabled = delegableViewLockEnabled;
-          if (listeners != null)
+          if (listeners.length != 0)
           {
             event = new DelegableViewLockEventImpl();
           }

@@ -468,7 +468,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       this.dirty = dirty;
 
       IListener[] listeners = getListeners();
-      if (listeners != null)
+      if (listeners.length != 0)
       {
         IEvent event = dirty ? new StartedEvent() : new FinishedEvent(false);
         fireEvent(event, listeners);
@@ -2059,7 +2059,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         }
 
         IListener[] listeners = getListeners();
-        if (listeners != null)
+        if (listeners.length != 0)
         {
           fireEvent(new FinishedEvent(true), listeners);
         }
@@ -4883,7 +4883,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         }
 
         IListener[] listeners = getListeners();
-        if (listeners != null)
+        if (listeners.length != 0)
         {
           if (branchChanged)
           {

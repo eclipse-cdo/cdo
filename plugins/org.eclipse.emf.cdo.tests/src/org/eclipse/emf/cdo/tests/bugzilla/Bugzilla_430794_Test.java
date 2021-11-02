@@ -22,8 +22,6 @@ import org.eclipse.emf.cdo.util.CommitConflictException;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.spi.cdo.CDOMergingConflictResolver;
 
-import org.junit.Assert;
-
 /**
  * Bug 430794 - Using {@link CDOMergingConflictResolver} with {@link CDOSavepoint} provokes a {@link CommitConflictException} on server side.
  *
@@ -60,10 +58,10 @@ public class Bugzilla_430794_Test extends AbstractCDOTest
     company.getSuppliers().add(s2);
     commitAndSync(transactionOfUser1, transactionOfUser2);
 
-    Assert.assertTrue(transactionOfUser2.isDirty());
-    Assert.assertEquals(3, companyRefFromUser2.getSuppliers().size());
-    Assert.assertEquals(0, transactionOfUser2.getConflicts().size());
-    Assert.assertEquals(1, transactionOfUser2.getNewObjects().size());
+    assertTrue(transactionOfUser2.isDirty());
+    assertEquals(3, companyRefFromUser2.getSuppliers().size());
+    assertEquals(0, transactionOfUser2.getConflicts().size());
+    assertEquals(1, transactionOfUser2.getNewObjects().size());
 
     commitAndSync(transactionOfUser2, transactionOfUser1);
   }

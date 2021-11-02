@@ -18,8 +18,6 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import org.eclipse.emf.ecore.resource.Resource;
 
-import org.junit.Assert;
-
 import java.util.Collections;
 
 /**
@@ -85,7 +83,7 @@ public class Bugzilla_363355_Test extends AbstractCDOTest
     commitAndSync(transactionOfUser2, transactionOfUser1);
 
     // User 1 checks that its transaction is not dirty
-    Assert.assertFalse("Receiving remote changes shouldn't set local CDOTransaction dirty", transactionOfUser1.isDirty());
+    assertFalse("Receiving remote changes shouldn't set local CDOTransaction dirty", transactionOfUser1.isDirty());
 
     commitAndSync(transactionOfUser1, transactionOfUser2);
 
@@ -135,10 +133,10 @@ public class Bugzilla_363355_Test extends AbstractCDOTest
 
     // Asserts on user1 transaction, receiving the changes committed by
     // user2
-    Assert.assertNotSame(co2, co3.eContainer());
-    Assert.assertSame(co1.getContainmentOptional(), co3.eContainer());
-    Assert.assertNull(co2.eContainer());
-    Assert.assertFalse("Receiving remote changes shouldn't set local CDOTransaction dirty", transactionOfUser2.isDirty());
+    assertNotSame(co2, co3.eContainer());
+    assertSame(co1.getContainmentOptional(), co3.eContainer());
+    assertNull(co2.eContainer());
+    assertFalse("Receiving remote changes shouldn't set local CDOTransaction dirty", transactionOfUser2.isDirty());
 
     transactionOfUser2.close();
     sessionOfUser2.close();

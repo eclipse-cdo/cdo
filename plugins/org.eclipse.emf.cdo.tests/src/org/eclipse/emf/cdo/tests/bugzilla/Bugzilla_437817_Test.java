@@ -25,8 +25,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
-import org.junit.Assert;
-
 /**
  * Bug 437817: "Only one view per repository..." RuntimeException using connection aware URI
  *
@@ -51,8 +49,8 @@ public class Bugzilla_437817_Test extends AbstractCDOTest
     Resource sharedResource1 = resourceSet.createResource(sharedResource1URI);
     Resource sharedResource2 = resourceSet.createResource(sharedResource2URI);
 
-    Assert.assertTrue(sharedResource1 instanceof CDOResource);
-    Assert.assertTrue(sharedResource2 instanceof CDOResource);
+    assertTrue(sharedResource1 instanceof CDOResource);
+    assertTrue(sharedResource2 instanceof CDOResource);
     CDOResource sharedCDOResource1 = (CDOResource)sharedResource1;
     CDOResource sharedCDOResource2 = (CDOResource)sharedResource2;
     assertEquals("Both CDOResources should have the same CDOView as they have the same ResourceSet and use content from the same repository",

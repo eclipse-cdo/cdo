@@ -46,7 +46,7 @@ import junit.framework.AssertionFailedError;
 /**
  * @author Stefan Winkler
  */
-public abstract class DBStoreVerifier
+public abstract class DBStoreVerifier extends Assert
 {
   protected static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, DBStoreVerifier.class);
 
@@ -59,7 +59,7 @@ public abstract class DBStoreVerifier
     this.repository = repository;
     if (repository != null)
     {
-      Assert.assertEquals(true, repository.getStore() instanceof IDBStore);
+      assertEquals(true, repository.getStore() instanceof IDBStore);
     }
   }
 
@@ -254,7 +254,7 @@ public abstract class DBStoreVerifier
       super(repo);
 
       // this is a verifier for auditing mode
-      Assert.assertEquals(true, getStore().getMappingStrategy() instanceof HorizontalAuditMappingStrategy);
+      assertEquals(true, getStore().getMappingStrategy() instanceof HorizontalAuditMappingStrategy);
     }
 
     @Override
@@ -290,7 +290,7 @@ public abstract class DBStoreVerifier
       {
         while (resultSet.next())
         {
-          Assert.assertEquals("Multiple unrevised rows for ID " + resultSet.getLong(1), true, resultSet.getInt(2) <= 1);
+          assertEquals("Multiple unrevised rows for ID " + resultSet.getLong(1), true, resultSet.getInt(2) <= 1);
         }
       }
       finally
@@ -317,7 +317,7 @@ public abstract class DBStoreVerifier
       {
         while (resultSet.next())
         {
-          Assert.assertEquals("Multiple rows for ID " + resultSet.getLong(1) + "v" + resultSet.getInt(2), true, resultSet.getInt(3) <= 1);
+          assertEquals("Multiple rows for ID " + resultSet.getLong(1) + "v" + resultSet.getInt(2), true, resultSet.getInt(3) <= 1);
         }
       }
       catch (AssertionFailedError e)
@@ -385,7 +385,7 @@ public abstract class DBStoreVerifier
       {
         while (resultSet.next())
         {
-          Assert.assertEquals("Index " + indexShouldBe + " missing for ID" + id + "v" + version, indexShouldBe++, resultSet.getInt(1));
+          assertEquals("Index " + indexShouldBe + " missing for ID" + id + "v" + version, indexShouldBe++, resultSet.getInt(1));
         }
       }
       catch (AssertionFailedError e)
@@ -411,9 +411,9 @@ public abstract class DBStoreVerifier
       super(repo);
 
       // this is a verifier for non-auditing mode
-      Assert.assertEquals(true, getStore().getRevisionTemporality() == IStore.RevisionTemporality.NONE);
+      assertEquals(true, getStore().getRevisionTemporality() == IStore.RevisionTemporality.NONE);
       // ... and for horizontal class mapping
-      Assert.assertEquals(true, getStore().getMappingStrategy() instanceof HorizontalNonAuditMappingStrategy);
+      assertEquals(true, getStore().getMappingStrategy() instanceof HorizontalNonAuditMappingStrategy);
     }
 
     @Override
@@ -445,8 +445,8 @@ public abstract class DBStoreVerifier
       ResultSet resultSet = getStatement().executeQuery(sql);
       try
       {
-        Assert.assertEquals(true, resultSet.next());
-        Assert.assertEquals("Revised revision in table " + tableName, 0, resultSet.getInt(1));
+        assertEquals(true, resultSet.next());
+        assertEquals("Revised revision in table " + tableName, 0, resultSet.getInt(1));
       }
       finally
       {
@@ -468,7 +468,7 @@ public abstract class DBStoreVerifier
       {
         while (resultSet.next())
         {
-          Assert.assertEquals("Multiple rows for ID " + resultSet.getLong(1), 1, resultSet.getInt(2));
+          assertEquals("Multiple rows for ID " + resultSet.getLong(1), 1, resultSet.getInt(2));
         }
       }
       finally
@@ -524,7 +524,7 @@ public abstract class DBStoreVerifier
       {
         while (resultSet.next())
         {
-          Assert.assertEquals("Index " + indexShouldBe + " missing for ID" + id, indexShouldBe++, resultSet.getInt(1));
+          assertEquals("Index " + indexShouldBe + " missing for ID" + id, indexShouldBe++, resultSet.getInt(1));
         }
       }
       finally

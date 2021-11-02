@@ -29,8 +29,6 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
-import org.junit.Assert;
-
 import java.util.Collections;
 
 /**
@@ -83,7 +81,7 @@ public class Bugzilla_467174_Test extends AbstractCDOTest
 
     CDOObject companyCDOObjectFromTx2 = transaction2.getObject(companyCDOID);
     CDOObject categoryCDOObjectFromTx2 = transaction2.getObject(categoryCDOID);
-    Assert.assertTrue(companyCDOObjectFromTx2.cdoWriteLock().isLockedByOthers());
-    Assert.assertTrue(categoryCDOObjectFromTx2.cdoWriteLock().isLockedByOthers());
+    assertTrue(companyCDOObjectFromTx2.cdoWriteLock().isLockedByOthers());
+    assertTrue(categoryCDOObjectFromTx2.cdoWriteLock().isLockedByOthers());
   }
 }

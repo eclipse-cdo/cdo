@@ -128,7 +128,7 @@ public class ThreadPoolTest extends AbstractOMTest
   // {
   // try
   // {
-  // Assert.assertEquals(expected, actual);
+  // assertEquals(expected, actual);
   // }
   // catch (RuntimeException ex)
   // {

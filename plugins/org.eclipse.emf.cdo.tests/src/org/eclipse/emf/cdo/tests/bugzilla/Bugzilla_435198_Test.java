@@ -23,8 +23,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
-import org.junit.Assert;
-
 /**
  * Bug 435198 about {@link CDOResource} added to the {@link ResourceSet} even when we call {@link CDOView#getObject(CDOID)}
  * for an object contained in a {@link CDOResource} not yet added to the {@link ResourceSet}.
@@ -76,7 +74,7 @@ public class Bugzilla_435198_Test extends AbstractCDOTest
     CDOView view = session.openView();
 
     CDOObject object = view.getObject(resourceCDOID);
-    Assert.assertTrue(object instanceof CDOResource);
+    assertTrue(object instanceof CDOResource);
     CDOResource resource = (CDOResource)object;
     EObject company = resource.getContents().get(0);
 

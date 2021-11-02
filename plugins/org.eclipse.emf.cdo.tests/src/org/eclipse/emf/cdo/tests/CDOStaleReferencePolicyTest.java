@@ -64,7 +64,7 @@ public class CDOStaleReferencePolicyTest extends AbstractCDOTest
     assertNull(eContainer);
     assertEquals(CDOState.INVALID_CONFLICT, companyCDOObjectFromTx2.cdoState());
     // assertEquals(CDOState.PROXY, categoryCDOObjectFromTx2.cdoState());
-    // Assert.assertTrue(transaction2.hasConflict());
+    // assertTrue(transaction2.hasConflict());
     // transaction2.rollback();
     // assertEquals(CDOState.INVALID, companyCDOObjectFromTx2.cdoState());
     // assertEquals(CDOState.TRANSIENT, categoryCDOObjectFromTx2.cdoState());
@@ -97,7 +97,7 @@ public class CDOStaleReferencePolicyTest extends AbstractCDOTest
     assertNull(resource);
     assertEquals(CDOState.INVALID_CONFLICT, resource2.cdoState());
     // assertEquals(CDOState.PROXY, companyCDOObjectFromTx2.cdoState());
-    // Assert.assertTrue(transaction2.hasConflict());
+    // assertTrue(transaction2.hasConflict());
     // transaction2.rollback();
     // assertEquals(CDOState.INVALID, resource2.cdoState());
     // assertEquals(CDOState.TRANSIENT, companyCDOObjectFromTx2.cdoState());

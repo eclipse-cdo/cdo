@@ -30,8 +30,6 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 
-import org.junit.Assert;
-
 /**
  * Bug 377173 : test commit progress/cancel.
  *
@@ -65,7 +63,7 @@ public class Bugzilla_377173_Test extends AbstractCDOTest
     }
     catch (Exception ex)
     {
-      Assert.assertTrue(ex instanceof OperationCanceledException);
+      assertTrue(ex instanceof OperationCanceledException);
     }
     finally
     {

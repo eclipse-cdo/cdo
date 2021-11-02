@@ -29,8 +29,6 @@ import org.eclipse.net4j.util.om.log.OMLogger.Level;
 
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
-import org.junit.Assert;
-
 /**
  * Bug 466721 about NPE on {@link CDOView#getObject(CDOID)} call with a detached object's id and lock state prefetch option enabled.
  *
@@ -68,7 +66,7 @@ public class Bugzilla_466721_Test extends AbstractCDOTest
     catch (ObjectNotFoundException e)
     {
       Throwable t = exceptionAsserter.getThrowable();
-      Assert.assertFalse(t != null ? exceptionAsserter.getThrowable().toString() : "", exceptionAsserter.exceptionsOccured());
+      assertFalse(t != null ? exceptionAsserter.getThrowable().toString() : "", exceptionAsserter.exceptionsOccured());
     }
     finally
     {

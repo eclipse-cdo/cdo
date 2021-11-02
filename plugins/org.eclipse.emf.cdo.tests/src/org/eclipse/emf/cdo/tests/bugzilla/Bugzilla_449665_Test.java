@@ -25,8 +25,6 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 
-import org.junit.Assert;
-
 /**
  * Bug 449665 about {@link CDOLockState} on {@link CDOResource} in {@link CDOState#PROXY} state.
  *
@@ -68,7 +66,7 @@ public class Bugzilla_449665_Test extends AbstractCDOTest
     }
 
     assertEquals(expectedLockedObject, lockState.getLockedObject());
-    Assert.assertTrue(lockState.getReadLockOwners().isEmpty());
+    assertTrue(lockState.getReadLockOwners().isEmpty());
     assertNull(lockState.getWriteLockOwner());
     assertNull(lockState.getWriteOptionOwner());
   }
@@ -100,7 +98,7 @@ public class Bugzilla_449665_Test extends AbstractCDOTest
     }
 
     assertEquals(expectedLockedObject, lockState.getLockedObject());
-    Assert.assertTrue(lockState.getReadLockOwners().isEmpty());
+    assertTrue(lockState.getReadLockOwners().isEmpty());
     assertNull(lockState.getWriteLockOwner());
     assertNull(lockState.getWriteOptionOwner());
   }

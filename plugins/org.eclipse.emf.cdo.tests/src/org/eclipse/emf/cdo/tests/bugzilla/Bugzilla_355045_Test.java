@@ -24,8 +24,6 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 
-import org.junit.Assert;
-
 import java.util.Collections;
 
 /**
@@ -189,7 +187,7 @@ public class Bugzilla_355045_Test extends AbstractCDOTest
   {
     CDOObject categoryCDOObject = CDOUtil.getCDOObject(category);
     CDOLockState cdoLockState = categoryCDOObject.cdoLockState();
-    Assert.assertEquals("new object " + category.getName() + (lockedByMe ? " should be locally locked" : " shouldn't be locally locked"), lockedByMe,
+    assertEquals("new object " + category.getName() + (lockedByMe ? " should be locally locked" : " shouldn't be locally locked"), lockedByMe,
         cdoLockState.isLocked(LockType.WRITE, transaction, false));
 
     if (recursive)

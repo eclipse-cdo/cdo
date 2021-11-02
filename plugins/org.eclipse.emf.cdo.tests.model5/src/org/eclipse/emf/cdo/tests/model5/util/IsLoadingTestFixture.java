@@ -23,7 +23,7 @@ import java.util.Set;
 /**
  * Test fixture for the CDO resource "is loading" tests. Bug 393164.
  */
-public class IsLoadingTestFixture
+public class IsLoadingTestFixture extends Assert
 {
   private static IsLoadingTestFixture instance;
 
@@ -91,11 +91,11 @@ public class IsLoadingTestFixture
 
   public void assertReportedLoading(Resource resource, EObject object)
   {
-    Assert.assertEquals("Object did not report loading: " + object, true, getObjectsReportedLoading(resource).contains(object));
+    assertEquals("Object did not report loading: " + object, true, getObjectsReportedLoading(resource).contains(object));
   }
 
   public void assertNotReportedLoading(Resource resource, EObject object)
   {
-    Assert.assertEquals("Object reported loading: " + object, false, getObjectsReportedLoading(resource).contains(object));
+    assertEquals("Object reported loading: " + object, false, getObjectsReportedLoading(resource).contains(object));
   }
 }

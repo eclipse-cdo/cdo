@@ -23,8 +23,6 @@ import org.eclipse.emf.ecore.util.ECrossReferenceAdapter;
 import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 
-import org.junit.Assert;
-
 import java.util.Collections;
 
 /**
@@ -62,14 +60,14 @@ public class Bugzilla_464590_Test extends AbstractCDOTest
     localFragmentResource.save(Collections.emptyMap());
 
     // Test
-    Assert.assertFalse(rootContainmentObject.eIsProxy());
-    Assert.assertFalse(childReferenceObject.eIsProxy());
+    assertFalse(rootContainmentObject.eIsProxy());
+    assertFalse(childReferenceObject.eIsProxy());
 
     localFragmentResource.unload();
 
-    Assert.assertFalse(localFragmentResource.isLoaded());
-    Assert.assertTrue(rootContainmentObject.eIsProxy());
-    Assert.assertTrue(childReferenceObject.eIsProxy());
+    assertFalse(localFragmentResource.isLoaded());
+    assertTrue(rootContainmentObject.eIsProxy());
+    assertTrue(childReferenceObject.eIsProxy());
 
   }
 

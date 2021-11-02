@@ -20,8 +20,6 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
-import org.junit.Assert;
-
 import java.util.Collections;
 
 /**
@@ -86,12 +84,12 @@ public class Bugzilla_407157_Test extends AbstractCDOTest
     // Do assertion from second user
     assertEquals(dNode1OfSecondUser, dEdgeOfSecondUser.getSourceNode());
     assertEquals(dNode3OfSecondUser, dEdgeOfSecondUser.getTargetNode());
-    Assert.assertTrue(dNode3OfSecondUser.getIncomingEdges().contains(dEdgeOfSecondUser));
-    Assert.assertEquals(1, dNode3OfSecondUser.getIncomingEdges().size());
-    Assert.assertTrue(dNode1OfSecondUser.getOutgoingEdges().contains(dEdgeOfSecondUser));
-    Assert.assertEquals(1, dNode1OfSecondUser.getOutgoingEdges().size());
-    Assert.assertEquals(0, dNode2OfSecondUser.getOutgoingEdges().size());
-    Assert.assertEquals(0, dNode2OfSecondUser.getIncomingEdges().size());
+    assertTrue(dNode3OfSecondUser.getIncomingEdges().contains(dEdgeOfSecondUser));
+    assertEquals(1, dNode3OfSecondUser.getIncomingEdges().size());
+    assertTrue(dNode1OfSecondUser.getOutgoingEdges().contains(dEdgeOfSecondUser));
+    assertEquals(1, dNode1OfSecondUser.getOutgoingEdges().size());
+    assertEquals(0, dNode2OfSecondUser.getOutgoingEdges().size());
+    assertEquals(0, dNode2OfSecondUser.getIncomingEdges().size());
   }
 
 }

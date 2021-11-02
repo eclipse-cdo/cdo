@@ -42,6 +42,7 @@ import org.apache.log4j.Layout;
 import org.apache.log4j.spi.ErrorHandler;
 import org.apache.log4j.spi.Filter;
 import org.apache.log4j.spi.LoggingEvent;
+import org.junit.Assert;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -600,7 +601,7 @@ public abstract class AbstractOMTest extends TestCase
 
     try
     {
-      assertEquals(expected, actual);
+      Assert.assertEquals(expected, actual);
     }
     catch (AssertionError ex)
     {

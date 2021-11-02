@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
@@ -18,18 +19,19 @@ import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.util.CDOFetchRule;
-import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
+import org.eclipse.emf.cdo.spi.common.revision.PointerCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
 import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo.Type;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.eclipse.net4j.util.collection.MoveableList;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -48,8 +50,6 @@ import java.util.Set;
  */
 public class LoadRevisionsIndication extends CDOServerReadIndication
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, LoadRevisionsIndication.class);
-
   private RevisionInfo[] infos;
 
   private CDOBranchPoint branchPoint;
@@ -64,6 +64,8 @@ public class LoadRevisionsIndication extends CDOServerReadIndication
 
   private int loadRevisionCollectionChunkSize;
 
+  private Set<CDORevisionKey> validKeys;
+
   public LoadRevisionsIndication(CDOServerProtocol protocol)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_LOAD_REVISIONS);
@@ -73,43 +75,35 @@ public class LoadRevisionsIndication extends CDOServerReadIndication
   protected void indicating(CDODataInput in) throws IOException
   {
     branchPoint = in.readCDOBranchPoint();
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Read branchPoint: {0}", branchPoint); //$NON-NLS-1$
-    }
-
     referenceChunk = in.readXInt();
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Read referenceChunk: {0}", referenceChunk); //$NON-NLS-1$
-    }
 
     int size = in.readXInt();
     if (size < 0)
     {
       size = -size;
-      prefetchDepth = in.readXInt();
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Read prefetchDepth: {0}", prefetchDepth); //$NON-NLS-1$
-      }
-    }
 
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Reading {0} infos", size); //$NON-NLS-1$
+      prefetchDepth = in.readXInt();
+      if (prefetchDepth != CDORevision.DEPTH_NONE)
+      {
+        validKeys = new HashSet<>();
+
+        for (;;)
+        {
+          CDORevisionKey key = in.readCDORevisionKey();
+          if (key == null)
+          {
+            break;
+          }
+
+          validKeys.add(key);
+        }
+      }
     }
 
     infos = new RevisionInfo[size];
     for (int i = 0; i < size; i++)
     {
-      RevisionInfo info = RevisionInfo.read(in, branchPoint);
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Read info: {0}", info); //$NON-NLS-1$
-      }
-
-      infos[i] = info;
+      infos[i] = RevisionInfo.read(in, branchPoint);
     }
 
     int fetchRulesCount = in.readXInt();
@@ -122,10 +116,6 @@ public class LoadRevisionsIndication extends CDOServerReadIndication
       }
 
       contextID = in.readCDOID();
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Reading fetch rules for context {0}", contextID); //$NON-NLS-1$
-      }
 
       InternalCDOPackageRegistry packageRegistry = getRepository().getPackageRegistry();
 
@@ -140,14 +130,10 @@ public class LoadRevisionsIndication extends CDOServerReadIndication
   @Override
   protected void responding(CDODataOutput out) throws IOException
   {
+    List<RevisionInfo> additionalInfos = new ArrayList<>();
     List<CDORevision> additionalRevisions = new ArrayList<>();
-    List<RevisionInfo> additionalRevisionInfos = new ArrayList<>();
     Set<CDOID> revisionIDs = new HashSet<>();
     int size = infos.length;
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Writing {0} results", size); //$NON-NLS-1$
-    }
 
     for (RevisionInfo info : infos)
     {
@@ -161,14 +147,9 @@ public class LoadRevisionsIndication extends CDOServerReadIndication
     Set<CDOFetchRule> visitedFetchRules = new HashSet<>();
     if (!CDOIDUtil.isNull(contextID) && fetchRules.size() > 0)
     {
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Collecting more revisions based on rules"); //$NON-NLS-1$
-      }
-
-      RevisionInfo info = getRevisionInfo(revisionManager, contextID);
+      RevisionInfo info = createRevisionInfo(revisionManager, contextID);
       InternalCDORevision revisionContext = info.getResult();
-      collectRevisions(revisionManager, revisionContext, revisionIDs, additionalRevisionInfos, additionalRevisions, visitedFetchRules);
+      collectRevisions(revisionManager, revisionContext, revisionIDs, additionalInfos, additionalRevisions, visitedFetchRules);
     }
 
     InternalCDORevision[] revisions = new InternalCDORevision[size];
@@ -176,22 +157,22 @@ public class LoadRevisionsIndication extends CDOServerReadIndication
     {
       RevisionInfo info = infos[i];
       info.execute(revisionManager, referenceChunk);
+
       revisions[i] = info.getResult();
+
       if (loadRevisionCollectionChunkSize > 0)
       {
-        collectRevisions(revisionManager, revisions[i], revisionIDs, additionalRevisionInfos, additionalRevisions, visitedFetchRules);
+        collectRevisions(revisionManager, revisions[i], revisionIDs, additionalInfos, additionalRevisions, visitedFetchRules);
       }
     }
 
-    if (prefetchDepth != 0)
+    if (prefetchDepth != CDORevision.DEPTH_NONE)
     {
       OMMonitor monitor = createMonitor(1, 10);
-      // OMMonitor monitor = new Monitor();
 
       try
       {
-        prefetchRevisions(revisionManager, prefetchDepth > 0 ? prefetchDepth : Integer.MAX_VALUE, revisions, additionalRevisionInfos, additionalRevisions,
-            monitor);
+        prefetchRevisions(revisionManager, prefetchDepth > 0 ? prefetchDepth : Integer.MAX_VALUE, revisions, additionalInfos, additionalRevisions, monitor);
       }
       finally
       {
@@ -199,34 +180,59 @@ public class LoadRevisionsIndication extends CDOServerReadIndication
       }
     }
 
+    // Read access handlers may modify/replace the revisions and additionalRevisions,
+    // which must be reflected in the infos and additionalInfos below!
     repository.notifyReadAccessHandlers(getSession(), revisions, additionalRevisions);
 
     for (int i = 0; i < size; i++)
     {
       RevisionInfo info = infos[i];
-      info.setResult(revisions[i]);
-      info.writeResult(out, referenceChunk, branchPoint); // Exposes revision to client side
+      info.setResult(revisions[i]); // Replace result with revision from read access handlers.
+      info.writeResult(out, referenceChunk, branchPoint);
     }
 
-    int additionalSize = additionalRevisionInfos.size();
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Writing {0} additional revision infos", additionalSize); //$NON-NLS-1$
-    }
+    // Write keys of additional revisions that are already cached on the client.
+    int additionalSize = additionalRevisions.size();
+    CDOBranch requestedBranch = branchPoint.getBranch();
+    List<RevisionInfo> infosToWrite = new ArrayList<>();
 
-    out.writeXInt(additionalSize);
     for (int i = 0; i < additionalSize; i++)
     {
       InternalCDORevision revision = (InternalCDORevision)additionalRevisions.get(i);
-      RevisionInfo info = additionalRevisionInfos.get(i);
-      info.setResult(revision);
+      RevisionInfo info = additionalInfos.get(i);
+
+      if (validKeys != null && validKeys.contains(CDORevisionUtil.copyRevisionKey(revision)))
+      {
+        InternalCDORevision result = info.getResult();
+        out.writeCDORevisionKey(result);
+
+        if (result.getBranch() != requestedBranch)
+        {
+          PointerCDORevision pointer = (PointerCDORevision)info.getSynthetic();
+          out.writeXLong(pointer.getRevised());
+        }
+      }
+      else
+      {
+        info.setResult(revision); // Replace result with revision from read access handlers.
+        infosToWrite.add(info);
+      }
+    }
+
+    out.writeCDORevisionKey(null);
+
+    // Write remaining additional infos.
+    out.writeXInt(infosToWrite.size());
+
+    for (RevisionInfo info : infosToWrite)
+    {
       out.write(Type.MISSING.ordinal());
       out.writeCDOID(info.getID());
       info.writeResult(out, referenceChunk, branchPoint);
     }
   }
 
-  private RevisionInfo getRevisionInfo(InternalCDORevisionManager revisionManager, CDOID id)
+  private RevisionInfo createRevisionInfo(InternalCDORevisionManager revisionManager, CDOID id)
   {
     RevisionInfo info = new RevisionInfo.Missing(id, branchPoint);
     info.execute(revisionManager, referenceChunk);
@@ -234,7 +240,7 @@ public class LoadRevisionsIndication extends CDOServerReadIndication
   }
 
   private void collectRevisions(InternalCDORevisionManager revisionManager, InternalCDORevision revision, Set<CDOID> revisions,
-      List<RevisionInfo> additionalRevisionInfos, List<CDORevision> additionalRevisions, Set<CDOFetchRule> visitedFetchRules)
+      List<RevisionInfo> additionalInfos, List<CDORevision> additionalRevisions, Set<CDOFetchRule> visitedFetchRules)
   {
     if (revision == null)
     {
@@ -265,14 +271,14 @@ public class LoadRevisionsIndication extends CDOServerReadIndication
               CDOID id = (CDOID)value;
               if (!CDOIDUtil.isNull(id) && !revisions.contains(id))
               {
-                RevisionInfo info = getRevisionInfo(revisionManager, id);
+                RevisionInfo info = createRevisionInfo(revisionManager, id);
                 InternalCDORevision containedRevision = info.getResult();
                 if (containedRevision != null)
                 {
-                  additionalRevisionInfos.add(info);
+                  additionalInfos.add(info);
                   revisions.add(containedRevision.getID());
                   additionalRevisions.add(containedRevision);
-                  collectRevisions(revisionManager, containedRevision, revisions, additionalRevisionInfos, additionalRevisions, visitedFetchRules);
+                  collectRevisions(revisionManager, containedRevision, revisions, additionalInfos, additionalRevisions, visitedFetchRules);
                 }
               }
             }
@@ -287,13 +293,13 @@ public class LoadRevisionsIndication extends CDOServerReadIndication
           CDOID id = (CDOID)value;
           if (!id.isNull() && !revisions.contains(id))
           {
-            RevisionInfo info = getRevisionInfo(revisionManager, id);
+            RevisionInfo info = createRevisionInfo(revisionManager, id);
             InternalCDORevision containedRevision = info.getResult();
             if (containedRevision != null)
             {
               revisions.add(containedRevision.getID());
               additionalRevisions.add(containedRevision);
-              collectRevisions(revisionManager, containedRevision, revisions, additionalRevisionInfos, additionalRevisions, visitedFetchRules);
+              collectRevisions(revisionManager, containedRevision, revisions, additionalInfos, additionalRevisions, visitedFetchRules);
             }
           }
         }
@@ -303,7 +309,7 @@ public class LoadRevisionsIndication extends CDOServerReadIndication
     visitedFetchRules.remove(fetchRule);
   }
 
-  private void prefetchRevisions(InternalCDORevisionManager revisionManager, int depth, CDORevision[] revisions, List<RevisionInfo> additionalRevisionInfos,
+  private void prefetchRevisions(InternalCDORevisionManager revisionManager, int depth, CDORevision[] revisions, List<RevisionInfo> additionalInfos,
       List<CDORevision> additionalRevisions, OMMonitor monitor)
   {
     Map<CDOID, CDORevision> map = CDOIDUtil.createMap();
@@ -321,11 +327,11 @@ public class LoadRevisionsIndication extends CDOServerReadIndication
 
     for (CDORevision revision : revisions)
     {
-      prefetchRevision(revisionManager, depth, (InternalCDORevision)revision, additionalRevisionInfos, additionalRevisions, map, monitor.fork());
+      prefetchRevision(revisionManager, depth, (InternalCDORevision)revision, additionalInfos, additionalRevisions, map, monitor.fork());
     }
   }
 
-  private void prefetchRevision(InternalCDORevisionManager revisionManager, int depth, InternalCDORevision revision, List<RevisionInfo> additionalRevisionInfos,
+  private void prefetchRevision(InternalCDORevisionManager revisionManager, int depth, InternalCDORevision revision, List<RevisionInfo> additionalInfos,
       List<CDORevision> additionalRevisions, Map<CDOID, CDORevision> map, OMMonitor monitor)
   {
     CDOClassInfo classInfo = revision.getClassInfo();
@@ -338,7 +344,7 @@ public class LoadRevisionsIndication extends CDOServerReadIndication
       if (value instanceof CDOID)
       {
         CDOID id = (CDOID)value;
-        prefetchRevisionChild(revisionManager, depth, id, additionalRevisionInfos, additionalRevisions, map, monitor.fork());
+        prefetchRevisionChild(revisionManager, depth, id, additionalInfos, additionalRevisions, map, monitor.fork());
       }
       else if (value instanceof Collection<?>)
       {
@@ -354,7 +360,7 @@ public class LoadRevisionsIndication extends CDOServerReadIndication
           if (e instanceof CDOID)
           {
             CDOID id = (CDOID)e;
-            prefetchRevisionChild(revisionManager, depth, id, additionalRevisionInfos, additionalRevisions, map, subMonitor.fork());
+            prefetchRevisionChild(revisionManager, depth, id, additionalInfos, additionalRevisions, map, subMonitor.fork());
           }
           else
           {
@@ -373,7 +379,7 @@ public class LoadRevisionsIndication extends CDOServerReadIndication
     monitor.done();
   }
 
-  private void prefetchRevisionChild(InternalCDORevisionManager revisionManager, int depth, CDOID id, List<RevisionInfo> additionalRevisionInfos,
+  private void prefetchRevisionChild(InternalCDORevisionManager revisionManager, int depth, CDOID id, List<RevisionInfo> additionalInfos,
       List<CDORevision> additionalRevisions, Map<CDOID, CDORevision> map, OMMonitor monitor)
   {
     if (CDOIDUtil.isNull(id))
@@ -384,19 +390,19 @@ public class LoadRevisionsIndication extends CDOServerReadIndication
     CDORevision child = map.get(id);
     if (child == null)
     {
-      RevisionInfo info = getRevisionInfo(revisionManager, id);
+      RevisionInfo info = createRevisionInfo(revisionManager, id);
       child = info.getResult();
       if (child != null)
       {
         map.put(id, child);
         additionalRevisions.add(child);
-        additionalRevisionInfos.add(info);
+        additionalInfos.add(info);
       }
     }
 
     if (child != null && depth > 0)
     {
-      prefetchRevision(revisionManager, depth - 1, (InternalCDORevision)child, additionalRevisionInfos, additionalRevisions, map, monitor);
+      prefetchRevision(revisionManager, depth - 1, (InternalCDORevision)child, additionalInfos, additionalRevisions, map, monitor);
     }
   }
 }

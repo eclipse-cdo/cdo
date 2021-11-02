@@ -66,6 +66,21 @@ public interface CDORevisionCache extends INotifier
   public void forEachCurrentRevision(Consumer<CDORevision> consumer);
 
   /**
+   * Passes each {@link CDORevision revision} that is valid at the given {@link CDOBranchPoint branch point}
+   * (or optionally at the base ranch points) into the given consumer.
+   *
+   * @since 4.15
+   */
+  public void forEachValidRevision(CDOBranchPoint branchPoint, boolean considerBranchBases, Consumer<CDORevision> consumer);
+
+  /**
+   * Passes each {@link CDORevision revision} into the given consumer.
+   *
+   * @since 4.15
+   */
+  public void forEachRevision(Consumer<CDORevision> consumer);
+
+  /**
    * An {@link IEvent event} fired from a {@link CDORevisionCache revision cache} when a {@link CDORevision revision} is added to it.
    *
    * @author Eike Stepper

@@ -38,8 +38,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
-import org.junit.Assert;
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -148,19 +146,20 @@ public class Bugzilla_436246_Test extends AbstractCDOTest
     {
       resource.cdoPrefetch(CDORevision.DEPTH_INFINITE);
     }
+
     assertEquals(RESOURCE_NAME, resource.getName());
+
     EObject eObject = resource.getContents().get(0);
-    Assert.assertTrue(eObject instanceof Company);
+    assertTrue(eObject instanceof Company);
+
     Company company = (Company)eObject;
     assertEquals(pathSegments.size() + 1, signalCounter.getCountFor(LoadRevisionsRequest.class));
-    Assert.assertEquals(expectedNbCategories, company.getCategories().size());
+    assertEquals(expectedNbCategories, company.getCategories().size());
 
     view.getRevision(companyCDOID);
-
     assertEquals(pathSegments.size() + 1, signalCounter.getCountFor(LoadRevisionsRequest.class));
 
     view.getResourceSet().eAdapters().add(new EContentAdapter());
-
     assertEquals(pathSegments.size() + 1, signalCounter.getCountFor(LoadRevisionsRequest.class));
 
     view.close();

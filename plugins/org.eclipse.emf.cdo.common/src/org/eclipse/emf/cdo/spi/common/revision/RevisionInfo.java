@@ -54,7 +54,6 @@ public abstract class RevisionInfo
 
   protected RevisionInfo(CDOID id, CDOBranchPoint requestedBranchPoint)
   {
-    CheckUtil.checkArg(requestedBranchPoint, "requestedBranchPoint");
     this.id = id;
     this.requestedBranchPoint = requestedBranchPoint;
   }
@@ -102,8 +101,10 @@ public abstract class RevisionInfo
 
   public void write(CDODataOutput out) throws IOException
   {
+    // If this implementation is changed other places that make assumptions on the structure of a RevisionInfo header
+    // must be adjusted, too! For example LoadRevisionsIndication.responding()
     out.writeByte(getType().ordinal());
-    out.writeCDOID(getID());
+    out.writeCDOID(id);
   }
 
   @Override
@@ -138,7 +139,7 @@ public abstract class RevisionInfo
   public void execute(InternalCDORevisionManager revisionManager, int referenceChunk)
   {
     SyntheticCDORevision[] synthetics = new SyntheticCDORevision[1];
-    result = revisionManager.getRevision(getID(), requestedBranchPoint, referenceChunk, CDORevision.DEPTH_NONE, true, synthetics);
+    result = revisionManager.getRevision(id, requestedBranchPoint, referenceChunk, CDORevision.DEPTH_NONE, true, synthetics);
     synthetic = synthetics[0];
   }
 
@@ -165,7 +166,7 @@ public abstract class RevisionInfo
   public void readResult(CDODataInput in) throws IOException
   {
     readRevision(in);
-    synthetic = (SyntheticCDORevision)readResult(in, getID(), requestedBranchPoint.getBranch(), result);
+    synthetic = (SyntheticCDORevision)readResult(in, id, requestedBranchPoint.getBranch(), result);
   }
 
   public void processResult(InternalCDORevisionManager revisionManager, List<CDORevision> results, SyntheticCDORevision[] synthetics, int i)

@@ -59,7 +59,7 @@ public class Bugzilla_576893_Test extends AbstractCDOTest
     CDOID rootID = CDOUtil.getCDOObject(root).cdoID();
 
     // =======================================================================================
-    IOUtil.OUT().println("Testing...");
+    IOUtil.OUT().println("Testing open view...");
     CDOSession session2 = openSession();
     CDOView view = session2.openView();
 

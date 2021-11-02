@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
@@ -63,10 +64,10 @@ public class CDORevisionCacheAuditing extends AbstractCDORevisionCache
   {
     synchronized (revisionLists)
     {
-      RevisionList revisionList = revisionLists.get(id);
-      if (revisionList != null && !revisionList.isEmpty())
+      RevisionList list = revisionLists.get(id);
+      if (list != null && !list.isEmpty())
       {
-        Reference<InternalCDORevision> ref = revisionList.getFirst();
+        Reference<InternalCDORevision> ref = list.getFirst();
         InternalCDORevision revision = ref.get();
         if (revision != null)
         {
@@ -81,15 +82,10 @@ public class CDORevisionCacheAuditing extends AbstractCDORevisionCache
   @Override
   public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint)
   {
-    checkBranch(branchPoint.getBranch());
+    CDOBranch branch = branchPoint.getBranch();
+    checkBranch(branch);
 
-    RevisionList revisionList = getRevisionList(id, branchPoint.getBranch());
-    if (revisionList != null)
-    {
-      return revisionList.getRevision(branchPoint.getTimeStamp());
-    }
-
-    return null;
+    return withRevisionList(id, branch, list -> list.getRevision(branchPoint.getTimeStamp()));
   }
 
   @Override
@@ -98,64 +94,39 @@ public class CDORevisionCacheAuditing extends AbstractCDORevisionCache
     CDOBranch branch = branchVersion.getBranch();
     checkBranch(branch);
 
-    RevisionList revisionList = getRevisionList(id, branch);
-    if (revisionList != null)
-    {
-      return revisionList.getRevisionByVersion(branchVersion.getVersion());
-    }
-
-    return null;
-  }
-
-  @Override
-  public List<CDORevision> getCurrentRevisions()
-  {
-    List<CDORevision> currentRevisions = new ArrayList<>();
-    forEachCurrentRevision(r -> currentRevisions.add(r));
-    return currentRevisions;
+    return withRevisionList(id, branch, list -> list.getRevisionByVersion(branchVersion.getVersion()));
   }
 
   @Override
   public void forEachCurrentRevision(Consumer<CDORevision> consumer)
   {
-    synchronized (revisionLists)
-    {
-      for (RevisionList revisionList : revisionLists.values())
+    forEachRevisionList(list -> {
+      InternalCDORevision revision = list.getRevision(CDORevision.UNSPECIFIED_DATE);
+      if (revision != null)
       {
-        InternalCDORevision revision = revisionList.getRevision(CDORevision.UNSPECIFIED_DATE);
-        if (revision != null)
-        {
-          consumer.accept(revision);
-        }
+        consumer.accept(revision);
       }
-    }
+    });
+  }
+
+  @Override
+  public void forEachRevision(Consumer<CDORevision> consumer)
+  {
+    forEachRevisionList(list -> list.forEachRevision(consumer));
   }
 
   @Override
   public Map<CDOBranch, List<CDORevision>> getAllRevisions()
   {
     Map<CDOBranch, List<CDORevision>> result = new HashMap<>();
-    synchronized (revisionLists)
-    {
-      for (RevisionList list : revisionLists.values())
-      {
-        list.getAllRevisions(result);
-      }
-    }
-
+    forEachRevisionList(list -> list.getAllRevisions(result));
     return result;
   }
 
   @Override
   public void getAllRevisions(List<InternalCDORevision> result)
   {
-    synchronized (revisionLists)
-    {
-      for (RevisionList list : revisionLists.values())
-      {
-        list.getAllRevisions(result);
-      }
-    }
+    forEachRevisionList(list -> list.getAllRevisions(result));
   }
 
   @Override
@@ -298,12 +269,34 @@ public class CDORevisionCacheAuditing extends AbstractCDORevisionCache
     return true;
   }
 
-  protected RevisionList getRevisionList(CDOID id, CDOBranch branch)
+  // protected RevisionList getRevisionList(CDOID id, CDOBranch branch)
+  // {
+  // return withRevisionList(id, branch, list -> list);
+  // }
+
+  protected <T> T withRevisionList(CDOID id, CDOBranch branch, Function<RevisionList, T> function)
   {
     Object key = createKey(id, branch);
     synchronized (revisionLists)
     {
-      return revisionLists.get(key);
+      RevisionList list = revisionLists.get(key);
+      if (list != null)
+      {
+        return function.apply(list);
+      }
+    }
+
+    return null;
+  }
+
+  protected void forEachRevisionList(Consumer<RevisionList> consumer)
+  {
+    synchronized (revisionLists)
+    {
+      for (RevisionList revisionList : revisionLists.values())
+      {
+        consumer.accept(revisionList);
+      }
     }
   }
 
@@ -394,6 +387,18 @@ public class CDORevisionCacheAuditing extends AbstractCDORevisionCache
       }
 
       return null;
+    }
+
+    public void forEachRevision(Consumer<CDORevision> consumer)
+    {
+      for (Reference<InternalCDORevision> ref : this)
+      {
+        InternalCDORevision revision = ref.get();
+        if (revision != null)
+        {
+          consumer.accept(revision);
+        }
+      }
     }
 
     public CDORevision addRevision(CDORevision revision, Supplier<Reference<InternalCDORevision>> referenceCreator)

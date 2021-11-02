@@ -14,11 +14,13 @@ package org.eclipse.emf.cdo.internal.common.revision;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 
@@ -33,6 +35,9 @@ import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.SoftReference;
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * @author Eike Stepper
@@ -119,6 +124,30 @@ public abstract class AbstractCDORevisionCache extends Lifecycle implements Inte
   public void setMaxWorkPerPoll(int maxWorkPerPoll)
   {
     referenceQueue.setMaxWorkPerPoll(maxWorkPerPoll);
+  }
+
+  @Override
+  public List<CDORevision> getCurrentRevisions()
+  {
+    List<CDORevision> currentRevisions = new ArrayList<>();
+    forEachCurrentRevision(r -> currentRevisions.add(r));
+    return currentRevisions;
+  }
+
+  @Override
+  public void forEachValidRevision(CDOBranchPoint branchPoint, boolean considerBranchBases, Consumer<CDORevision> consumer)
+  {
+    checkBranch(branchPoint.getBranch());
+
+    forEachRevision(r -> CDOBranchUtil.forEachBranchPoint(branchPoint, considerBranchBases, bp -> {
+      if (r.isValid(bp))
+      {
+        consumer.accept(r);
+        return false;
+      }
+
+      return true; // Walk up the branch tree.
+    }));
   }
 
   @Override

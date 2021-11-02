@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.internal.common.branch.CDOBranchPointRangeImpl;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * If the meaning of this type isn't clear, there really should be more of a description here...
@@ -268,6 +269,35 @@ public final class CDOBranchUtil
 
     // Can not happen because any two branches meet on the main branch
     return null;
+  }
+
+  /**
+   * @since 4.15
+   */
+  public static void forEachBranchPoint(CDOBranchPoint branchPoint, boolean considerBranchBases, Predicate<CDOBranchPoint> consumer)
+  {
+    if (!consumer.test(branchPoint))
+    {
+      return;
+    }
+
+    if (considerBranchBases)
+    {
+      for (;;)
+      {
+        CDOBranch branch = branchPoint.getBranch();
+        if (branch.isMainBranch())
+        {
+          break;
+        }
+
+        branchPoint = branch.getBase();
+        if (!consumer.test(branchPoint))
+        {
+          return;
+        }
+      }
+    }
   }
 
   public static CDOBranchPoint[] getPath(CDOBranchPoint point)

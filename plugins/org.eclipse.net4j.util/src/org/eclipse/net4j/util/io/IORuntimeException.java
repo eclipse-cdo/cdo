@@ -10,6 +10,8 @@
  */
 package org.eclipse.net4j.util.io;
 
+import java.io.IOException;
+
 /**
  * @author Eike Stepper
  */
@@ -34,5 +36,19 @@ public class IORuntimeException extends RuntimeException
   public IORuntimeException(String message, Throwable cause)
   {
     super(message, cause);
+  }
+
+  /**
+   * @since 3.16
+   */
+  public void rethrow() throws IOException
+  {
+    Throwable cause = getCause();
+    if (cause instanceof IOException)
+    {
+      throw (IOException)cause;
+    }
+
+    throw this;
   }
 }

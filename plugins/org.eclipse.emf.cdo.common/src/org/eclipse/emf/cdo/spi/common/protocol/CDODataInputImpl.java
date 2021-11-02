@@ -460,6 +460,11 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
   public CDORevisionKey readCDORevisionKey() throws IOException
   {
     CDOID id = readCDOID();
+    if (CDOIDUtil.isNull(id))
+    {
+      return null;
+    }
+
     CDOBranch branch = readCDOBranch();
     int version = readXInt();
     return CDORevisionUtil.createRevisionKey(id, branch, version);

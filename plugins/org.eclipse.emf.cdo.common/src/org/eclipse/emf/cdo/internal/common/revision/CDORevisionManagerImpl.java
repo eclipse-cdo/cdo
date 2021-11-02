@@ -379,7 +379,7 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
     List<RevisionInfo> infosToLoad = createRevisionInfos(ids, branchPoint, prefetchDepth, loadOnDemand, allInfos);
     if (infosToLoad != null)
     {
-      // Load the requested revision infos, then process and return additional revisions.
+      // Load the requested revision infos, then process the additional revisions.
       loadRevisions(infosToLoad, branchPoint, referenceChunk, prefetchDepth, additionalRevisions, consumer);
     }
 

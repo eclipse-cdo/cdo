@@ -32,6 +32,22 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/internal/net4j/protocol/LoadRevisionsRequest.java" type="org.eclipse.emf.cdo.internal.net4j.protocol.LoadRevisionsRequest">
+        <filter id="571519004">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.internal.net4j.protocol.LoadRevisionsRequest.confirming(CDODataInput)"/>
+                <message_argument value="Available"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/internal/net4j/protocol/LoadRevisionsRequest.java" type="org.eclipse.emf.cdo.internal.net4j.protocol.LoadRevisionsRequest$RememberedRevisionInfo">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="Available"/>
+                <message_argument value="RememberedRevisionInfo"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/internal/net4j/protocol/OpenSessionRequest.java" type="org.eclipse.emf.cdo.internal.net4j.protocol.OpenSessionRequest">
         <filter id="572522506">
             <message_arguments>

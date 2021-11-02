@@ -10,33 +10,40 @@
  */
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.util.CDOFetchRule;
-import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
+import org.eclipse.emf.cdo.spi.common.revision.PointerCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
 import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 
-import org.eclipse.net4j.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.io.IORuntimeException;
+
+import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
  */
 public class LoadRevisionsRequest extends CDOClientRequest<List<RevisionInfo>>
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, LoadRevisionsRequest.class);
-
   private List<RevisionInfo> infos;
 
   private CDOBranchPoint branchPoint;
@@ -44,6 +51,11 @@ public class LoadRevisionsRequest extends CDOClientRequest<List<RevisionInfo>>
   private int referenceChunk;
 
   private int prefetchDepth;
+
+  /**
+   * Remembers strong references to valid revisions to prevent garbage collection.
+   */
+  private Map<CDORevisionKey, CDORevision> rememberedRevisions;
 
   public LoadRevisionsRequest(CDOClientProtocol protocol, List<RevisionInfo> infos, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth)
   {
@@ -57,52 +69,59 @@ public class LoadRevisionsRequest extends CDOClientRequest<List<RevisionInfo>>
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Writing branchPoint: {0}", branchPoint); //$NON-NLS-1$
-    }
-
     out.writeCDOBranchPoint(branchPoint);
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Writing referenceChunk: {0}", referenceChunk); //$NON-NLS-1$
-    }
-
     out.writeXInt(referenceChunk);
-    int size = infos.size();
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Writing {0} infos", size); //$NON-NLS-1$
-    }
 
-    if (prefetchDepth == 0)
+    InternalCDOSession session = getSession();
+    int size = infos.size();
+
+    if (prefetchDepth == CDORevision.DEPTH_NONE)
     {
       out.writeXInt(size);
     }
     else
     {
       out.writeXInt(-size);
-      if (TRACER.isEnabled())
+      out.writeXInt(prefetchDepth);
+
+      InternalCDORevisionCache cache = session.getRevisionManager().getCache();
+      boolean branching = session.getRepositoryInfo().isSupportingBranches();
+      rememberedRevisions = new HashMap<>();
+
+      try
       {
-        TRACER.format("Writing prefetchDepth: {0}", prefetchDepth); //$NON-NLS-1$
+        cache.forEachValidRevision(branchPoint, branching, r -> {
+          try
+          {
+            CDORevisionKey key = CDORevisionUtil.copyRevisionKey(r);
+
+            // Remember a strong reference prevents garbage collection.
+            rememberedRevisions.put(key, r);
+
+            out.writeCDORevisionKey(key);
+          }
+          catch (IOException ex)
+          {
+            throw new IORuntimeException(ex);
+          }
+        });
+      }
+      catch (IORuntimeException ex)
+      {
+        ex.rethrow();
       }
 
-      out.writeXInt(prefetchDepth);
+      out.writeCDORevisionKey(null);
     }
 
     Collection<CDOID> ids = new ArrayList<>(size);
     for (RevisionInfo info : infos)
     {
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Writing info: {0}", info); //$NON-NLS-1$
-      }
-
       info.write(out);
       ids.add(info.getID());
     }
 
-    CDOFetchRuleManager ruleManager = getSession().getFetchRuleManager();
+    CDOFetchRuleManager ruleManager = session.getFetchRuleManager();
     List<CDOFetchRule> fetchRules = ruleManager.getFetchRules(ids);
     if (fetchRules == null || fetchRules.size() <= 0)
     {
@@ -129,36 +148,64 @@ public class LoadRevisionsRequest extends CDOClientRequest<List<RevisionInfo>>
   @Override
   protected List<RevisionInfo> confirming(CDODataInput in) throws IOException
   {
-    int size = infos.size();
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Reading {0} revisions", size); //$NON-NLS-1$
-    }
-
     for (RevisionInfo info : infos)
     {
       info.readResult(in);
     }
 
-    List<RevisionInfo> additionalRevisionInfos = null;
+    List<RevisionInfo> additionalInfos = null;
+    CDOBranch requestedBranch = branchPoint.getBranch();
+
+    // Read keys of additional revisions that are already cached locally.
+    for (;;)
+    {
+      CDORevisionKey key = in.readCDORevisionKey();
+      if (key == null)
+      {
+        break;
+      }
+
+      if (additionalInfos == null)
+      {
+        additionalInfos = new ArrayList<>();
+      }
+
+      CDORevision revision = rememberedRevisions.get(key);
+
+      RevisionInfo info = new RememberedRevisionInfo(revision);
+      info.setResult((InternalCDORevision)revision);
+
+      if (revision.getBranch() != requestedBranch)
+      {
+        info.setSynthetic(new PointerCDORevision(revision.getEClass(), revision.getID(), requestedBranch, in.readXLong(), revision));
+      }
+
+      additionalInfos.add(info);
+    }
+
+    // Read remaining additional infos.
     int additionalSize = in.readXInt();
     if (additionalSize != 0)
     {
-      if (TRACER.isEnabled())
+      if (additionalInfos == null)
       {
-        TRACER.format("Reading {0} additional revision infos", additionalSize); //$NON-NLS-1$
+        additionalInfos = new ArrayList<>(additionalSize);
       }
 
-      additionalRevisionInfos = new ArrayList<>(additionalSize);
       for (int i = 0; i < additionalSize; i++)
       {
         RevisionInfo info = RevisionInfo.read(in, branchPoint);
         info.readResult(in);
-        additionalRevisionInfos.add(info);
+        additionalInfos.add(info);
       }
     }
 
-    return additionalRevisionInfos;
+    if (rememberedRevisions != null)
+    {
+      rememberedRevisions.clear(); // Help the garbage collector.
+    }
+
+    return additionalInfos;
   }
 
   @Override
@@ -166,5 +213,22 @@ public class LoadRevisionsRequest extends CDOClientRequest<List<RevisionInfo>>
   {
     return MessageFormat.format("LoadRevisionsRequest(infos={0}, branchPoint={1}, referenceChunk={2}, prefetchDepth={3})", infos, branchPoint, referenceChunk,
         prefetchDepth);
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class RememberedRevisionInfo extends RevisionInfo.Available
+  {
+    public RememberedRevisionInfo(CDORevision revision)
+    {
+      super(revision.getID(), null, revision);
+    }
+
+    @Override
+    public Type getType()
+    {
+      return null;
+    }
   }
 }

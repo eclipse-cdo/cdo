@@ -450,9 +450,16 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
   @Override
   public void writeCDORevisionKey(CDORevisionKey revisionKey) throws IOException
   {
-    writeCDOID(revisionKey.getID());
-    writeCDOBranch(revisionKey.getBranch());
-    writeXInt(revisionKey.getVersion());
+    if (revisionKey == null)
+    {
+      writeCDOID(CDOID.NULL);
+    }
+    else
+    {
+      writeCDOID(revisionKey.getID());
+      writeCDOBranch(revisionKey.getBranch());
+      writeXInt(revisionKey.getVersion());
+    }
   }
 
   @Override

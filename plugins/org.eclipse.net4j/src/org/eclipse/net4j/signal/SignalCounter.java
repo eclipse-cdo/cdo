@@ -128,9 +128,10 @@ public final class SignalCounter implements IListener
   {
     if (event instanceof SignalFinishedEvent)
     {
+      SignalFinishedEvent<?> e = (SignalFinishedEvent<?>)event;
+
       synchronized (signals)
       {
-        SignalFinishedEvent<?> e = (SignalFinishedEvent<?>)event;
         signals.add(e.getSignal().getClass());
       }
     }

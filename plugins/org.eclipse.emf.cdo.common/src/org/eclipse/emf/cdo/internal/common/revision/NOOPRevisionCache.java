@@ -69,6 +69,18 @@ public class NOOPRevisionCache extends Lifecycle implements InternalCDORevisionC
     // Do nothing.
   }
 
+  @Override
+  public void forEachValidRevision(CDOBranchPoint branchPoint, boolean considerBranchBases, Consumer<CDORevision> consumer)
+  {
+    // Do nothing.
+  }
+
+  @Override
+  public void forEachRevision(Consumer<CDORevision> consumer)
+  {
+    // Do nothing.
+  }
+
   public InternalCDORevision getRevision(CDOID id)
   {
     return null;

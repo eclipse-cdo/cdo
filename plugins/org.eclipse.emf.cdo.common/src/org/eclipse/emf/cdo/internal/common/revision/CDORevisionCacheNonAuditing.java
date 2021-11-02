@@ -112,22 +112,25 @@ public class CDORevisionCacheNonAuditing extends AbstractCDORevisionCache
   }
 
   @Override
-  public List<CDORevision> getCurrentRevisions()
+  public void forEachCurrentRevision(Consumer<CDORevision> consumer)
   {
-    List<CDORevision> currentRevisions = new ArrayList<>();
-    forEachCurrentRevision(r -> currentRevisions.add(r));
-    return currentRevisions;
+    forEachRevision(r -> {
+      if (!r.isHistorical())
+      {
+        consumer.accept(r);
+      }
+    });
   }
 
   @Override
-  public void forEachCurrentRevision(Consumer<CDORevision> consumer)
+  public void forEachRevision(Consumer<CDORevision> consumer)
   {
     synchronized (revisions)
     {
       for (Reference<InternalCDORevision> ref : revisions.values())
       {
         InternalCDORevision revision = ref.get();
-        if (revision != null && !revision.isHistorical())
+        if (revision != null)
         {
           consumer.accept(revision);
         }

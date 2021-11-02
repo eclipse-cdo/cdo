@@ -13,10 +13,7 @@ package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
-
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
 
@@ -25,8 +22,6 @@ import java.io.IOException;
  */
 public class GetRemoteSessionsIndication extends CDOServerReadIndication
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, GetRemoteSessionsIndication.class);
-
   private boolean subscribe;
 
   public GetRemoteSessionsIndication(CDOServerProtocol protocol)
@@ -38,10 +33,6 @@ public class GetRemoteSessionsIndication extends CDOServerReadIndication
   protected void indicating(CDODataInput in) throws IOException
   {
     subscribe = in.readBoolean();
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Read subscribe: {0}", subscribe); //$NON-NLS-1$
-    }
   }
 
   @Override

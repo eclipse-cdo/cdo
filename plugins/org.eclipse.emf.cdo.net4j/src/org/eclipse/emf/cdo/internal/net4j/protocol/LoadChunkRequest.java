@@ -10,18 +10,13 @@
  */
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
-import org.eclipse.emf.cdo.common.branch.CDOBranch;
-import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
-
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
@@ -32,8 +27,6 @@ import java.io.IOException;
  */
 public class LoadChunkRequest extends CDOClientRequest<Object>
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, LoadChunkRequest.class);
-
   private InternalCDORevision revision;
 
   private EStructuralFeature feature;
@@ -61,46 +54,14 @@ public class LoadChunkRequest extends CDOClientRequest<Object>
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
-    CDOID id = revision.getID();
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Writing revision ID: {0}", id); //$NON-NLS-1$
-    }
-
-    out.writeCDOID(id);
-    CDOBranch branch = revision.getBranch();
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Writing branch: {0}", branch); //$NON-NLS-1$
-    }
-
-    out.writeCDOBranch(branch);
-    int version = revision.getVersion();
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Writing  version: {0}", version); //$NON-NLS-1$
-    }
-
-    out.writeXInt(version);
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Writing feature: {0}", feature); //$NON-NLS-1$
-    }
-
+    out.writeCDOID(revision.getID());
+    out.writeCDOBranch(revision.getBranch());
+    out.writeXInt(revision.getVersion());
     out.writeCDOClassifierRef(feature.getEContainingClass());
     out.writeXInt(feature.getFeatureID());
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Writing fromIndex: {0}", fromIndex); //$NON-NLS-1$
-    }
 
     int diffIndex = accessIndex - fetchIndex;
     out.writeXInt(fromIndex - diffIndex);
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Writing toIndex: {0}", toIndex); //$NON-NLS-1$
-    }
-
     out.writeXInt(toIndex - diffIndex);
   }
 

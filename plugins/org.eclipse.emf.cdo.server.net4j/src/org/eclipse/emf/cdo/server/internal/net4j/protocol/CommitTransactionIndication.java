@@ -32,7 +32,6 @@ import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.etypes.EtypesPackage;
 import org.eclipse.emf.cdo.server.IPermissionManager;
 import org.eclipse.emf.cdo.server.IView;
-import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
@@ -46,7 +45,6 @@ import org.eclipse.emf.cdo.spi.server.InternalView;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.concurrent.RWOLockManager.LockState;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
@@ -67,8 +65,6 @@ import java.util.Map.Entry;
  */
 public class CommitTransactionIndication extends CDOServerIndicationWithMonitoring
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, CommitTransactionIndication.class);
-
   protected InternalCommitContext commitContext;
 
   public CommitTransactionIndication(CDOServerProtocol protocol)
@@ -108,11 +104,6 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
     }
     catch (Exception ex)
     {
-      if (TRACER.isEnabled())
-      {
-        TRACER.trace(ex);
-      }
-
       throw WrappedException.wrap(ex);
     }
     finally
@@ -144,11 +135,6 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
     try
     {
       // Locks on new objects
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Reading {0} locks on new objects", locksOnNewObjects.length); //$NON-NLS-1$
-      }
-
       for (int i = 0; i < locksOnNewObjects.length; i++)
       {
         locksOnNewObjects[i] = in.readCDOLockState();
@@ -156,11 +142,6 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
       }
 
       // Unlocks on changed objects
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Reading {0} IDs to unlock", idsToUnlock.length); //$NON-NLS-1$
-      }
-
       for (int i = 0; i < idsToUnlock.length; i++)
       {
         idsToUnlock[i] = in.readCDOID();
@@ -168,11 +149,6 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
       }
 
       // New package units
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Reading {0} new package units", newPackageUnits.length); //$NON-NLS-1$
-      }
-
       if (newPackageUnits.length != 0)
       {
         InternalCDOPackageRegistry packageRegistry = commitContext.getPackageRegistry();
@@ -190,11 +166,6 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
       }
 
       // New objects
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Reading {0} new objects", newObjects.length); //$NON-NLS-1$
-      }
-
       boolean usingEcore = false;
       boolean usingEtypes = false;
       for (int i = 0; i < newObjects.length; i++)
@@ -225,11 +196,6 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
       });
 
       // Dirty objects
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Reading {0} dirty object deltas", dirtyObjectDeltas.length); //$NON-NLS-1$
-      }
-
       for (int i = 0; i < dirtyObjectDeltas.length; i++)
       {
         dirtyObjectDeltas[i] = (InternalCDORevisionDelta)in.readCDORevisionDelta();

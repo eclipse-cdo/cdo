@@ -13,12 +13,10 @@ package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.security.CredentialsUpdateOperation;
 import org.eclipse.net4j.util.security.NotAuthenticatedException;
 
@@ -29,8 +27,6 @@ import org.eclipse.net4j.util.security.NotAuthenticatedException;
  */
 public class ChangeCredentialsIndication extends CDOServerIndicationWithMonitoring
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, ChangeCredentialsIndication.class);
-
   private CredentialsUpdateOperation operation;
 
   private String userID;
@@ -51,11 +47,6 @@ public class ChangeCredentialsIndication extends CDOServerIndicationWithMonitori
   {
     operation = in.readEnum(CredentialsUpdateOperation.class);
     userID = in.readString();
-
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Initiating {0} of user credentials", operation); //$NON-NLS-1$
-    }
   }
 
   @Override
@@ -79,11 +70,6 @@ public class ChangeCredentialsIndication extends CDOServerIndicationWithMonitori
         case RESET_PASSWORD:
           sessionManager.resetUserCredentials(getProtocol(), userID);
           break;
-        }
-
-        if (TRACER.isEnabled())
-        {
-          TRACER.format("Credentials %s processed.", operation); //$NON-NLS-1$
         }
 
         out.writeBoolean(true);

@@ -18,11 +18,9 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.internal.server.XATransactionCommitContext;
 import org.eclipse.emf.cdo.internal.server.XATransactionCommitContext.CommitState;
-import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
 
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.util.concurrent.ExecutionException;
 
@@ -31,8 +29,6 @@ import java.util.concurrent.ExecutionException;
  */
 public class CommitXATransactionPhase2Indication extends CommitTransactionIndication
 {
-  private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, CommitXATransactionPhase2Indication.class);
-
   public CommitXATransactionPhase2Indication(CDOServerProtocol protocol)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_XA_COMMIT_TRANSACTION_PHASE2);
@@ -45,11 +41,6 @@ public class CommitXATransactionPhase2Indication extends CommitTransactionIndica
     XATransactionCommitContext xaContextContext = (XATransactionCommitContext)commitContext;
 
     int size = in.readXInt();
-    if (PROTOCOL.isEnabled())
-    {
-      PROTOCOL.format("Receiving {0} mapping informations", size); //$NON-NLS-1$
-    }
-
     for (int i = 0; i < size; i++)
     {
       CDOIDTemp oldID = (CDOIDTemp)in.readCDOID();

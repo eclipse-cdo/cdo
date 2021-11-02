@@ -15,10 +15,7 @@ import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
-
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -30,8 +27,6 @@ import java.io.IOException;
  */
 public class LoadPackagesRequest extends CDOClientRequest<EPackage[]>
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, LoadPackagesRequest.class);
-
   private InternalCDOPackageUnit packageUnit;
 
   public LoadPackagesRequest(CDOClientProtocol protocol, InternalCDOPackageUnit packageUnit)
@@ -43,13 +38,7 @@ public class LoadPackagesRequest extends CDOClientRequest<EPackage[]>
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
-    String packageUnitID = packageUnit.getID();
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Writing packageUnitID: {0}", packageUnitID); //$NON-NLS-1$
-    }
-
-    out.writeCDOPackageURI(packageUnitID);
+    out.writeCDOPackageURI(packageUnit.getID());
   }
 
   @Override

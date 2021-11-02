@@ -16,10 +16,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
-
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -29,8 +26,6 @@ import java.text.MessageFormat;
  */
 public class LoadObjectLifetimeRequest extends CDOClientRequest<CDOBranchPointRange>
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, LoadObjectLifetimeRequest.class);
-
   private CDOID id;
 
   private CDOBranchPoint branchPoint;
@@ -45,17 +40,7 @@ public class LoadObjectLifetimeRequest extends CDOClientRequest<CDOBranchPointRa
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Writing id: {0}", id); //$NON-NLS-1$
-    }
-
     out.writeCDOID(id);
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Writing branchPoint: {0}", branchPoint); //$NON-NLS-1$
-    }
-
     out.writeCDOBranchPoint(branchPoint);
   }
 

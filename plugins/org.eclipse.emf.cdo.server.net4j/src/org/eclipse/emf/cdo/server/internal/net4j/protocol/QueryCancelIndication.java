@@ -14,9 +14,6 @@ package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
-
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
 
@@ -25,8 +22,6 @@ import java.io.IOException;
  */
 public class QueryCancelIndication extends CDOServerReadIndication
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, QueryCancelIndication.class);
-
   private int queryID;
 
   public QueryCancelIndication(CDOServerProtocol protocol)
@@ -38,10 +33,6 @@ public class QueryCancelIndication extends CDOServerReadIndication
   protected void indicating(CDODataInput in) throws IOException
   {
     queryID = in.readXInt();
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace("Query " + queryID + " will be cancelled"); //$NON-NLS-1$ //$NON-NLS-2$
-    }
   }
 
   @Override

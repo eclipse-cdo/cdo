@@ -14,10 +14,7 @@ import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
-
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EPackage;
 
@@ -28,8 +25,6 @@ import java.io.IOException;
  */
 public class LoadPackagesIndication extends CDOServerReadIndication
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, LoadPackagesIndication.class);
-
   private String packageUnitID;
 
   public LoadPackagesIndication(CDOServerProtocol protocol)
@@ -41,10 +36,6 @@ public class LoadPackagesIndication extends CDOServerReadIndication
   protected void indicating(CDODataInput in) throws IOException
   {
     packageUnitID = in.readCDOPackageURI();
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Read packageUnitID: {0}", packageUnitID); //$NON-NLS-1$
-    }
   }
 
   @Override

@@ -15,11 +15,8 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
-
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -29,8 +26,6 @@ import java.text.MessageFormat;
  */
 public class LoadRevisionByVersionRequest extends CDOClientRequest<InternalCDORevision>
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, LoadRevisionByVersionRequest.class);
-
   private CDOID id;
 
   private CDOBranchVersion branchVersion;
@@ -48,23 +43,8 @@ public class LoadRevisionByVersionRequest extends CDOClientRequest<InternalCDORe
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Writing id: {0}", id); //$NON-NLS-1$
-    }
-
     out.writeCDOID(id);
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Writing branchVersion: {0}", branchVersion); //$NON-NLS-1$
-    }
-
     out.writeCDOBranchVersion(branchVersion);
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Writing referenceChunk: {0}", referenceChunk); //$NON-NLS-1$
-    }
-
     out.writeXInt(referenceChunk);
   }
 

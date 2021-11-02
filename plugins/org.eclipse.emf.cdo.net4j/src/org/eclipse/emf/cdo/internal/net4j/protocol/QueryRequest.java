@@ -18,12 +18,9 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.util.CDOQueryQueue;
 import org.eclipse.emf.cdo.internal.common.CDOQueryInfoImpl;
-import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.object.CDOObjectReferenceImpl;
-
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.spi.cdo.AbstractQueryIterator;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
@@ -35,8 +32,6 @@ import java.io.IOException;
  */
 public class QueryRequest extends CDOClientRequest<Boolean>
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, QueryRequest.class);
-
   private CDOView view;
 
   private AbstractQueryIterator<?> queryResult;
@@ -72,7 +67,6 @@ public class QueryRequest extends CDOClientRequest<Boolean>
 
     try
     {
-      int numberOfObjectsReceived = 0;
       while (in.readBoolean())
       {
         Object element;
@@ -87,12 +81,6 @@ public class QueryRequest extends CDOClientRequest<Boolean>
         }
 
         resultQueue.add(element);
-        ++numberOfObjectsReceived;
-      }
-
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Query executed [{0} elements received]", numberOfObjectsReceived); //$NON-NLS-1$
       }
     }
     catch (RuntimeException ex)

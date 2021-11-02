@@ -17,12 +17,9 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.internal.common.CDOQueryInfoImpl;
-import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.spi.server.InternalQueryManager;
 import org.eclipse.emf.cdo.spi.server.InternalQueryResult;
 import org.eclipse.emf.cdo.spi.server.InternalView;
-
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
 
@@ -31,8 +28,6 @@ import java.io.IOException;
  */
 public class QueryIndication extends CDOServerReadIndication
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, QueryIndication.class);
-
   private boolean xrefs;
 
   private boolean disableResponseFlushing;
@@ -67,7 +62,6 @@ public class QueryIndication extends CDOServerReadIndication
     out.writeXInt(queryResult.getQueryID());
     flushUnlessDisabled();
 
-    int numberOfResults = 0;
     for (;;)
     {
       Object object;
@@ -103,8 +97,6 @@ public class QueryIndication extends CDOServerReadIndication
         }
       }
 
-      ++numberOfResults;
-
       try
       {
         if (queryResult.peek() == null)
@@ -118,16 +110,11 @@ public class QueryIndication extends CDOServerReadIndication
       }
       catch (Throwable ex)
       {
-        // Ignore execution exceptions from peek(); they're handle
+        // Ignore execution exceptions from peek(); they're handled.
       }
     }
 
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace("Query returned " + numberOfResults + " results"); //$NON-NLS-1$ //$NON-NLS-2$
-    }
-
-    // Query is done successfully
+    // Query is done successfully.
     out.writeBoolean(false);
   }
 

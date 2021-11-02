@@ -13,11 +13,8 @@ package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction.CommitAttempt;
-
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
 
@@ -26,8 +23,6 @@ import java.io.IOException;
  */
 public class ResetTransactionIndication extends CDOServerReadIndication
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, ResetTransactionIndication.class);
-
   private int transactionID;
 
   private int commitNumber;
@@ -41,16 +36,7 @@ public class ResetTransactionIndication extends CDOServerReadIndication
   protected void indicating(CDODataInput in) throws IOException
   {
     transactionID = in.readXInt();
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Read transactionID: {0}", transactionID); //$NON-NLS-1$
-    }
-
     commitNumber = in.readXInt();
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Read commitNumber: {0}", commitNumber); //$NON-NLS-1$
-    }
   }
 
   @Override
@@ -58,6 +44,7 @@ public class ResetTransactionIndication extends CDOServerReadIndication
   {
     InternalTransaction transaction = (InternalTransaction)getView(transactionID);
     CommitAttempt lastCommitSuccess = transaction.getLastCommitAttempt();
+
     if (lastCommitSuccess != null && lastCommitSuccess.getCommitNumber() == commitNumber)
     {
       out.writeBoolean(true);

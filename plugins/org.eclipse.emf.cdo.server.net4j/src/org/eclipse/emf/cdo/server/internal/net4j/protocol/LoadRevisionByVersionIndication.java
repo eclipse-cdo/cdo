@@ -15,12 +15,9 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
-
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
 
@@ -29,8 +26,6 @@ import java.io.IOException;
  */
 public class LoadRevisionByVersionIndication extends CDOServerReadIndication
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, LoadRevisionByVersionIndication.class);
-
   private CDOID id;
 
   private CDOBranchVersion branchVersion;
@@ -46,22 +41,8 @@ public class LoadRevisionByVersionIndication extends CDOServerReadIndication
   protected void indicating(CDODataInput in) throws IOException
   {
     id = in.readCDOID();
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Read id: {0}", id); //$NON-NLS-1$
-    }
-
     branchVersion = in.readCDOBranchVersion();
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Read branchVersion: {0}", branchVersion); //$NON-NLS-1$
-    }
-
     referenceChunk = in.readXInt();
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Read referenceChunk: {0}", referenceChunk); //$NON-NLS-1$
-    }
   }
 
   @Override

@@ -14,10 +14,7 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
-
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
 
@@ -26,8 +23,6 @@ import java.io.IOException;
  */
 public class ResetTransactionRequest extends CDOClientRequest<CDOCommitInfo>
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, ResetTransactionRequest.class);
-
   private int transactionID;
 
   private int commitNumber;
@@ -42,18 +37,7 @@ public class ResetTransactionRequest extends CDOClientRequest<CDOCommitInfo>
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Writing transactionID: {0}", transactionID); //$NON-NLS-1$
-    }
-
     out.writeXInt(transactionID);
-
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Writing commitNumber: {0}", commitNumber); //$NON-NLS-1$
-    }
-
     out.writeXInt(commitNumber);
   }
 

@@ -16,10 +16,6 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
-import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
-import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
-
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
 
@@ -30,8 +26,6 @@ import java.io.IOException;
  */
 public class HandleRevisionsIndication extends CDOServerReadIndication
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, HandleRevisionsIndication.class);
-
   private EClass eClass;
 
   private CDOBranch branch;
@@ -53,38 +47,16 @@ public class HandleRevisionsIndication extends CDOServerReadIndication
     if (in.readBoolean())
     {
       eClass = (EClass)in.readCDOClassifierRefAndResolve();
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Read eClass: {0}", eClass); //$NON-NLS-1$
-      }
     }
 
     if (in.readBoolean())
     {
       branch = in.readCDOBranch();
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Read branch: {0}", branch); //$NON-NLS-1$
-      }
-
       exactBranch = in.readBoolean();
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Read exactBranch: {0}", exactBranch); //$NON-NLS-1$
-      }
     }
 
     timeStamp = in.readXLong();
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Read timeStamp: {0}", CDOCommonUtil.formatTimeStamp(timeStamp)); //$NON-NLS-1$
-    }
-
     exactTime = in.readBoolean();
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Read exactTime: {0}", exactTime); //$NON-NLS-1$
-    }
   }
 
   @Override

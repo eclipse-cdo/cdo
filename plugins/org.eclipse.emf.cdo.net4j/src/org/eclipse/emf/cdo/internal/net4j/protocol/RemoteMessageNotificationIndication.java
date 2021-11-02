@@ -13,10 +13,7 @@ package org.eclipse.emf.cdo.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
-
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager;
 
@@ -27,8 +24,6 @@ import java.io.IOException;
  */
 public class RemoteMessageNotificationIndication extends CDOClientIndication
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, RemoteMessageNotificationIndication.class);
-
   public RemoteMessageNotificationIndication(CDOClientProtocol protocol)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_REMOTE_MESSAGE_NOTIFICATION);
@@ -38,16 +33,7 @@ public class RemoteMessageNotificationIndication extends CDOClientIndication
   protected void indicating(CDODataInput in) throws IOException
   {
     int senderID = in.readXInt();
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace("Read senderID: " + senderID); //$NON-NLS-1$
-    }
-
     CDORemoteSessionMessage message = new CDORemoteSessionMessage(in);
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace("Read message: " + message); //$NON-NLS-1$
-    }
 
     InternalCDORemoteSessionManager remoteSessionManager = getSession().getRemoteSessionManager();
     remoteSessionManager.handleRemoteSessionMessage(senderID, message);

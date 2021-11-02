@@ -13,11 +13,8 @@ package org.eclipse.emf.cdo.internal.net4j.protocol;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
-
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -29,8 +26,6 @@ import java.util.Set;
  */
 public class RemoteMessageRequest extends CDOClientRequest<Set<Integer>>
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, RemoteMessageRequest.class);
-
   private CDORemoteSessionMessage message;
 
   private List<CDORemoteSession> recipients;
@@ -45,25 +40,10 @@ public class RemoteMessageRequest extends CDOClientRequest<Set<Integer>>
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace("Writing message: " + message); //$NON-NLS-1$
-    }
-
     message.write(out);
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Writing {0} recipients", recipients.size()); //$NON-NLS-1$
-    }
-
     out.writeXInt(recipients.size());
     for (CDORemoteSession recipient : recipients)
     {
-      if (TRACER.isEnabled())
-      {
-        TRACER.trace("Writing recipient: " + recipient); //$NON-NLS-1$
-      }
-
       out.writeXInt(recipient.getSessionID());
     }
   }

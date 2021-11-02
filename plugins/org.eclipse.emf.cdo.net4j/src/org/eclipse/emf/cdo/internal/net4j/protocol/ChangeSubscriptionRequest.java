@@ -16,9 +16,6 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
-
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
 import java.util.List;
@@ -28,8 +25,6 @@ import java.util.List;
  */
 public class ChangeSubscriptionRequest extends CDOClientRequest<Boolean>
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, ChangeSubscriptionRequest.class);
-
   private int viewID;
 
   private List<CDOID> ids;
@@ -54,11 +49,6 @@ public class ChangeSubscriptionRequest extends CDOClientRequest<Boolean>
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace("View " + viewID + " subscribing to " + ids.size()); //$NON-NLS-1$ //$NON-NLS-2$
-    }
-
     out.writeXInt(viewID);
     out.writeBoolean(clear);
     out.writeXInt(subscribeMode ? ids.size() : -ids.size());

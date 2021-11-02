@@ -14,11 +14,8 @@ package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
-
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
 
@@ -27,8 +24,6 @@ import java.io.IOException;
  */
 public class RemoteMessageNotificationRequest extends CDOServerRequest
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, RemoteMessageNotificationRequest.class);
-
   private int senderID;
 
   private CDORemoteSessionMessage message;
@@ -43,17 +38,7 @@ public class RemoteMessageNotificationRequest extends CDOServerRequest
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace("Writing senderID: " + senderID); //$NON-NLS-1$
-    }
-
     out.writeXInt(senderID);
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace("Writing message: " + message); //$NON-NLS-1$
-    }
-
     message.write(out);
   }
 }

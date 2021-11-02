@@ -16,12 +16,10 @@ import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDTempObjectExternalImpl;
-import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.internal.net4j.messages.Messages;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
@@ -43,8 +41,6 @@ import java.util.Map.Entry;
  */
 public class CommitXATransactionPhase2Request extends CommitXATransactionRequest
 {
-  private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, CommitXATransactionPhase1Request.class);
-
   public CommitXATransactionPhase2Request(CDOClientProtocol protocol, InternalCDOXACommitContext xaContext)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_XA_COMMIT_TRANSACTION_PHASE2, xaContext);
@@ -66,10 +62,6 @@ public class CommitXATransactionPhase2Request extends CommitXATransactionRequest
     Map<CDOIDTempObjectExternalImpl, InternalCDOTransaction> requestedIDs = context.getRequestedIDs();
     int size = requestedIDs.size();
     out.writeXInt(size);
-    if (PROTOCOL.isEnabled())
-    {
-      PROTOCOL.format("Number of ids requested: {0}", size); //$NON-NLS-1$
-    }
 
     for (Entry<CDOIDTempObjectExternalImpl, InternalCDOTransaction> entry : requestedIDs.entrySet())
     {
@@ -92,11 +84,6 @@ public class CommitXATransactionPhase2Request extends CommitXATransactionRequest
       }
 
       CDOID newIDExternal = CDOURIUtil.convertExternalCDOID(oldURIExternal, newID);
-      if (PROTOCOL.isEnabled())
-      {
-        PROTOCOL.format("ID mapping: {0} --> {1}", tempID.toURIFragment(), newIDExternal.toURIFragment()); //$NON-NLS-1$
-      }
-
       out.writeCDOID(tempID);
       out.writeCDOID(newIDExternal);
 

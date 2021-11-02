@@ -39,7 +39,6 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
-import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 
@@ -50,7 +49,6 @@ import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
@@ -72,8 +70,6 @@ import java.util.List;
  */
 public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<CommitTransactionResult>
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, CommitTransactionRequest.class);
-
   private static long sleepMillisForTesting = 0L;
 
   private final int commitNumber;
@@ -172,19 +168,9 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
     out.writeXInt(changedObjects.size());
     out.writeXInt(detachedObjects.size());
 
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Writing {0} locks on new objects", locksOnNewObjects.size()); //$NON-NLS-1$
-    }
-
     for (CDOLockState lockState : locksOnNewObjects)
     {
       out.writeCDOLockState(lockState);
-    }
-
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Writing {0} unlocks on changed objects", idsToUnlock.size()); //$NON-NLS-1$
     }
 
     for (CDOID id : idsToUnlock)
@@ -192,19 +178,9 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
       out.writeCDOID(id);
     }
 
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Writing {0} new package units", newPackageUnits.size()); //$NON-NLS-1$
-    }
-
     for (CDOPackageUnit newPackageUnit : newPackageUnits)
     {
       out.writeCDOPackageUnit(newPackageUnit, true);
-    }
-
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Writing {0} new objects", newObjects.size()); //$NON-NLS-1$
     }
 
     for (CDOIDAndVersion newObject : newObjects)
@@ -215,11 +191,6 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
       {
         ConcurrencyUtil.sleep(sleepMillisForTesting);
       }
-    }
-
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Writing {0} dirty objects", changedObjects.size()); //$NON-NLS-1$
     }
 
     CDORepositoryInfo repositoryInfo = getSession().getRepositoryInfo();
@@ -236,11 +207,6 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
     }
 
     out.writeBoolean(clearResourcePathCache);
-
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Writing {0} detached objects", detachedObjects.size()); //$NON-NLS-1$
-    }
 
     boolean auditing = repositoryInfo.isSupportingAudits();
     boolean branching = repositoryInfo.isSupportingBranches();

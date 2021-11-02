@@ -13,11 +13,9 @@ package org.eclipse.emf.cdo.internal.net4j.protocol;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.session.CDOSession;
 
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.security.CredentialsUpdateOperation;
 
 import java.io.IOException;
@@ -33,8 +31,6 @@ import java.util.concurrent.atomic.AtomicReference;
 public class ChangeCredentialsRequest extends CDOClientRequestWithMonitoring<Boolean>
 {
   static final ConcurrentMap<CDOSession, AtomicReference<char[]>> NEW_PASSWORD_RECEIVERS = new ConcurrentHashMap<>();
-
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, ChangeCredentialsRequest.class);
 
   private final CredentialsUpdateOperation operation;
 
@@ -64,11 +60,6 @@ public class ChangeCredentialsRequest extends CDOClientRequestWithMonitoring<Boo
     if (newPasswordReceiver != null)
     {
       NEW_PASSWORD_RECEIVERS.put(getSession(), newPasswordReceiver);
-    }
-
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Requesting %s of user credentials", operation); //$NON-NLS-1$
     }
 
     out.writeEnum(operation);

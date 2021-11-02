@@ -15,10 +15,8 @@ import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
 
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.UnlockObjectsResult;
 
@@ -30,8 +28,6 @@ import java.util.Collection;
  */
 public class UnlockObjectsRequest extends CDOClientRequest<UnlockObjectsResult>
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, UnlockObjectsRequest.class);
-
   private int viewID;
 
   private Collection<CDOID> objectIDs;
@@ -60,31 +56,17 @@ public class UnlockObjectsRequest extends CDOClientRequest<UnlockObjectsResult>
     out.writeXInt(viewID);
     out.writeCDOLockType(lockType);
     out.writeBoolean(recursive);
+
     if (objectIDs == null)
     {
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Unlocking all objects for view {0}", viewID); //$NON-NLS-1$
-      }
-
       out.writeXInt(CDOProtocolConstants.RELEASE_ALL_LOCKS);
     }
     else
     {
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Unlocking of type {0} requested for view {1}", lockType == LockType.READ ? "read" //$NON-NLS-1$ //$NON-NLS-2$
-            : "write", viewID); //$NON-NLS-1$
-      }
-
       out.writeXInt(objectIDs.size());
+
       for (CDOID id : objectIDs)
       {
-        if (TRACER.isEnabled())
-        {
-          TRACER.format("Unlocking requested for object {0}", id); //$NON-NLS-1$
-        }
-
         out.writeCDOID(id);
       }
     }
@@ -96,10 +78,12 @@ public class UnlockObjectsRequest extends CDOClientRequest<UnlockObjectsResult>
     long timestamp = in.readXLong();
     int n = in.readXInt();
     CDOLockState[] newLockStates = new CDOLockState[n];
+
     for (int i = 0; i < n; i++)
     {
       newLockStates[i] = in.readCDOLockState();
     }
+
     return new UnlockObjectsResult(newLockStates, timestamp);
   }
 }

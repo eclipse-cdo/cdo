@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.server.IRepositoryProvider;
 import org.eclipse.emf.cdo.server.RepositoryNotFoundException;
-import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
@@ -28,7 +27,6 @@ import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.security.NotAuthenticatedException;
 
 import java.util.Set;
@@ -38,8 +36,6 @@ import java.util.Set;
  */
 public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, OpenSessionIndication.class);
-
   private String repositoryName;
 
   private int sessionID;
@@ -91,47 +87,12 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
   protected void indicating(CDODataInput in, OMMonitor monitor) throws Exception
   {
     repositoryName = in.readString();
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Read repositoryName: {0}", repositoryName); //$NON-NLS-1$
-    }
-
     sessionID = in.readXInt();
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Read sessionID: {0}", sessionID); //$NON-NLS-1$
-    }
-
     userID = in.readString();
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Read userID: {0}", userID); //$NON-NLS-1$
-    }
-
     passiveUpdateEnabled = in.readBoolean();
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Read passiveUpdateEnabled: {0}", passiveUpdateEnabled); //$NON-NLS-1$
-    }
-
     passiveUpdateMode = in.readEnum(PassiveUpdateMode.class);
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Read passiveUpdateMode: {0}", passiveUpdateMode); //$NON-NLS-1$
-    }
-
     lockNotificationMode = in.readEnum(LockNotificationMode.class);
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Read lockNotificationMode: {0}", lockNotificationMode); //$NON-NLS-1$
-    }
-
     subscribed = in.readBoolean();
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Read subscribed: {0}", subscribed); //$NON-NLS-1$
-    }
-
   }
 
   @Override
@@ -186,23 +147,9 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
       session.setSubscribed(subscribed);
 
       protocol.setInfraStructure(session);
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Writing sessionID: {0}", session.getSessionID()); //$NON-NLS-1$
-      }
 
       out.writeXInt(session.getSessionID());
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Writing userID: {0}", session.getUserID()); //$NON-NLS-1$
-      }
-
       out.writeString(session.getUserID());
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Writing repositoryUUID: {0}", repository.getUUID()); //$NON-NLS-1$
-      }
-
       out.writeString(repository.getUUID());
       out.writeString(repository.getName());
       out.writeEnum(repository.getType());

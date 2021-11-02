@@ -51,7 +51,7 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
 {
   public static final long DEFAULT_NEGOTIATION_TIMEOUT = 15 * 1000;
 
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, CDOServerProtocol.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, CDOServerProtocol.class);
 
   private static final boolean COMPRESS_PACKAGE_URIS = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.protocol.compressPackageURIs",
       !StringCompressor.BYPASS);

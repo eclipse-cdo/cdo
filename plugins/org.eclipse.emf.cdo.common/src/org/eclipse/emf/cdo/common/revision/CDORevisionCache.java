@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.internal.common.revision.NOOPRevisionCache;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.INotifier;
@@ -32,7 +33,7 @@ import java.util.function.Consumer;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface CDORevisionCache extends INotifier
+public interface CDORevisionCache extends CDORevisionCacheAdder, INotifier
 {
   /**
    * @since 3.0
@@ -79,6 +80,13 @@ public interface CDORevisionCache extends INotifier
    * @since 4.15
    */
   public void forEachRevision(Consumer<CDORevision> consumer);
+
+  /**
+   * @deprecated As of 4.15 use {@link InternalCDORevisionCache#internRevision(CDORevision)}.
+   */
+  @Deprecated
+  @Override
+  public void addRevision(CDORevision revision);
 
   /**
    * An {@link IEvent event} fired from a {@link CDORevisionCache revision cache} when a {@link CDORevision revision} is added to it.

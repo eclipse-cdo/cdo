@@ -38,7 +38,6 @@ import java.util.function.Consumer;
  * @noimplement This interface is not intended to be implemented by clients.
  * @noextend This interface is not intended to be extended by clients.
  */
-@SuppressWarnings("deprecation")
 public interface InternalCDORevisionManager extends CDORevisionManager, CDORevisionInterner, CDORevisionCacheAdder, ILifecycle
 {
   /**
@@ -102,6 +101,13 @@ public interface InternalCDORevisionManager extends CDORevisionManager, CDORevis
    * @since 4.8
    */
   public InternalCDORevision getBaseRevision(CDORevision revision, int referenceChunk, boolean loadOnDemand);
+
+  /**
+   * @deprecated As of 4.15 use {@link #internRevision(CDORevision)}.
+   */
+  @Deprecated
+  @Override
+  public void addRevision(CDORevision revision);
 
   /**
    * If the meaning of this type isn't clear, there really should be more of a description here...

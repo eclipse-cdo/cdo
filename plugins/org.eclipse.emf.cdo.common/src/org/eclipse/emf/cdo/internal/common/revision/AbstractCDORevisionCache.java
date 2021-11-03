@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionInterner;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
@@ -47,6 +48,8 @@ public abstract class AbstractCDORevisionCache extends Lifecycle implements Inte
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_REVISION, AbstractCDORevisionCache.class);
 
   private static boolean disableGC;
+
+  private static boolean warnAboutDeprecation = true;
 
   @ExcludeFromDump
   private final CleanableReferenceQueue<InternalCDORevision> referenceQueue = new CleanableReferenceQueue<InternalCDORevision>()
@@ -220,6 +223,24 @@ public abstract class AbstractCDORevisionCache extends Lifecycle implements Inte
     {
       TRACER.format("Evicted {0} from {1}", key, this); //$NON-NLS-1$
     }
+  }
+
+  @Deprecated
+  @Override
+  public void addRevision(CDORevision revision)
+  {
+    addRevision(revision, this);
+  }
+
+  static void addRevision(CDORevision revision, CDORevisionInterner interner)
+  {
+    if (warnAboutDeprecation)
+    {
+      warnAboutDeprecation = false;
+      OM.LOG.warn("As of CDO 4.15 use internRevision() instead of addRevision()");
+    }
+
+    interner.internRevision(revision);
   }
 
   /**

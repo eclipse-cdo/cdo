@@ -98,6 +98,13 @@ public class NOOPRevisionCache extends Lifecycle implements InternalCDORevisionC
     return null;
   }
 
+  @Deprecated
+  @Override
+  public void addRevision(CDORevision revision)
+  {
+    AbstractCDORevisionCache.addRevision(revision, this);
+  }
+
   @Override
   public CDORevision internRevision(CDORevision revision)
   {

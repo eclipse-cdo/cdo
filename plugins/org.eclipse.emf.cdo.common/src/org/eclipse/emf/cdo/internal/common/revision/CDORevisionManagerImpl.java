@@ -608,7 +608,7 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
   @Override
   public void addRevision(CDORevision revision)
   {
-    internRevision(revision);
+    AbstractCDORevisionCache.addRevision(revision, this);
   }
 
   @Override

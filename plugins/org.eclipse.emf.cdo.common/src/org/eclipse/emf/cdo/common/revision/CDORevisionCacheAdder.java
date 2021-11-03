@@ -15,9 +15,7 @@ package org.eclipse.emf.cdo.common.revision;
  *
  * @author Eike Stepper
  * @since 4.0
- * @deprecated As of 4.15 use {@link CDORevisionInterner}.
  */
-@Deprecated
 public interface CDORevisionCacheAdder
 {
   /**

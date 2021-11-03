@@ -23,7 +23,7 @@ import org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil.TransactionOpenerAndE
  */
 public class MergeFromActionProvider extends AbstractBranchPointActionProvider
 {
-  private static final String ID = MergeFromActionProvider.class.getName();
+  private static final String ID = "org.eclipse.emf.cdo.explorer.ui.checkouts.MergeFromActions";
 
   public MergeFromActionProvider()
   {

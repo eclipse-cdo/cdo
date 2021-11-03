@@ -339,6 +339,17 @@
             </enablement>
          </actionProvider>
          <actionProvider
+               class="org.eclipse.emf.cdo.explorer.ui.checkouts.actions.RevertToActionProvider"
+               id="org.eclipse.emf.cdo.explorer.ui.checkouts.RevertToActions">
+            <enablement>
+              <and>
+                 <instanceof value="org.eclipse.emf.cdo.internal.explorer.checkouts.OnlineCDOCheckout"/>
+                 <test property="org.eclipse.emf.cdo.explorer.checkout.readOnly" value="false"/>
+                 <test property="org.eclipse.emf.cdo.explorer.checkout.state" value="Open"/>
+              </and>
+            </enablement>
+         </actionProvider>
+         <actionProvider
                class="org.eclipse.emf.cdo.explorer.ui.checkouts.actions.ReplaceWithActionProvider"
                id="org.eclipse.emf.cdo.explorer.ui.checkouts.ReplaceWithActions">
             <enablement>

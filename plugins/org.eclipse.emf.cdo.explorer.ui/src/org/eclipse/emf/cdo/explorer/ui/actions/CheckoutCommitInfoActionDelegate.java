@@ -48,8 +48,9 @@ public class CheckoutCommitInfoActionDelegate extends LongRunningActionDelegate
         Object element = ssel.getFirstElement();
         if (element instanceof CDOCommitInfo)
         {
-          final CDOCommitInfo commitInfo = (CDOCommitInfo)element;
-          final CDOSession session = CDOUtil.getSession(commitInfo);
+          CDOCommitInfo commitInfo = (CDOCommitInfo)element;
+
+          CDOSession session = CDOUtil.getSession(commitInfo);
           if (session != null)
           {
             final CDORepository repository = (CDORepository)session.properties().get(CDORepositoryImpl.REPOSITORY_KEY);

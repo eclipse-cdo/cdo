@@ -18,7 +18,7 @@ import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
  */
 public class ReplaceWithActionProvider extends AbstractBranchPointActionProvider
 {
-  private static final String ID = ReplaceWithActionProvider.class.getName();
+  private static final String ID = "org.eclipse.emf.cdo.explorer.ui.checkouts.ReplaceWithActions";
 
   public ReplaceWithActionProvider()
   {

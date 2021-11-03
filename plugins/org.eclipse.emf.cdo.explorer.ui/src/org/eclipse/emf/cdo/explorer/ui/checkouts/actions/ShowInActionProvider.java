@@ -95,7 +95,7 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
 
   public static final String HISTORY_VIEW_ID = "org.eclipse.team.ui.GenericHistoryView";
 
-  public static final String ID = ShowInActionProvider.class.getName();
+  public static final String ID = "org.eclipse.emf.cdo.explorer.ui.checkouts.ShowInActions";
 
   private static final boolean PROPERTIES_SUPPORT_AVAILABLE = Support.PROPERTIES.isAvailable();
 

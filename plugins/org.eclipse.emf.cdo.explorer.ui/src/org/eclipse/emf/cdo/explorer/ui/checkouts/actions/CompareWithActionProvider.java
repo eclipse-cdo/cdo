@@ -21,7 +21,7 @@ import org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil;
  */
 public class CompareWithActionProvider extends AbstractBranchPointActionProvider
 {
-  private static final String ID = CompareWithActionProvider.class.getName();
+  private static final String ID = "org.eclipse.emf.cdo.explorer.ui.checkouts.CompareWithActions";
 
   public CompareWithActionProvider()
   {

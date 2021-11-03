@@ -25,7 +25,7 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public class SwitchToActionProvider extends AbstractBranchPointActionProvider
 {
-  private static final String ID = SwitchToActionProvider.class.getName();
+  private static final String ID = "org.eclipse.emf.cdo.explorer.ui.checkouts.SwitchToActions";
 
   public SwitchToActionProvider()
   {

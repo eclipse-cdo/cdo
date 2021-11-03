@@ -54,7 +54,7 @@ public class CDOTransactionCommentator implements Closeable
         String commitComment = transaction.getCommitComment();
         if (commitComment != null)
         {
-          transaction.setCommitComment(commitComment + " " + lastComment);
+          transaction.setCommitComment(commitComment + " (" + lastComment + ")");
         }
         else
         {
@@ -186,10 +186,22 @@ public class CDOTransactionCommentator implements Closeable
   {
     if (mergeSource != null)
     {
-      builder.append(MERGE_PREFIX);
-      builder.append(mergeSource.getBranch().getPathName());
+      return appendBranchPoint(builder, mergeSource);
+    }
+
+    return false;
+  }
+
+  /**
+   * @since 4.15
+   */
+  public static boolean appendBranchPoint(StringBuilder builder, CDOBranchPoint branchPoint)
+  {
+    if (branchPoint != null)
+    {
+      builder.append(branchPoint.getBranch().getPathName());
       builder.append(", ");
-      builder.append(CDOCommonUtil.formatTimeStamp(mergeSource.getTimeStamp()));
+      builder.append(CDOCommonUtil.formatTimeStamp(branchPoint.getTimeStamp()));
       return true;
     }
 

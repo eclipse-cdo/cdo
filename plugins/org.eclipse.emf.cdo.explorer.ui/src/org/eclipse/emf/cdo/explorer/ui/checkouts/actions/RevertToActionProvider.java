@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.transaction.CDOTransactionCommentator;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.util.ConcurrentAccessException;
 
@@ -93,6 +94,11 @@ public class RevertToActionProvider extends AbstractBranchPointActionProvider
     try
     {
       transaction.revertTo(branchPoint);
+
+      StringBuilder commentBuilder = new StringBuilder("Revert to ");
+      CDOTransactionCommentator.appendBranchPoint(commentBuilder, branchPoint);
+      transaction.setCommitComment(commentBuilder.toString());
+
       transaction.commit();
     }
     finally

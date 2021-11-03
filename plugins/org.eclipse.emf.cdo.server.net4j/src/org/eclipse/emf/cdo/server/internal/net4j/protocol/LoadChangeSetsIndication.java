@@ -38,6 +38,7 @@ public class LoadChangeSetsIndication extends CDOServerReadIndication
   {
     int size = in.readXInt();
     ranges = new CDOBranchPointRange[size];
+
     for (int i = 0; i < ranges.length; i++)
     {
       ranges[i] = CDOBranchUtil.readRange(in);

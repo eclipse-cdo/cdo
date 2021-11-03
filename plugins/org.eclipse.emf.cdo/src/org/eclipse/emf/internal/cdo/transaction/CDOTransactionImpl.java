@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPointRange;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSet;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
@@ -88,6 +89,7 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.protocol.CDODataInputImpl;
 import org.eclipse.emf.cdo.spi.common.protocol.CDODataOutputImpl;
 import org.eclipse.emf.cdo.spi.common.revision.CDOIDMapper;
+import org.eclipse.emf.cdo.spi.common.revision.CDORevisionProviderWithSynthetics;
 import org.eclipse.emf.cdo.spi.common.revision.CDORevisionUnchunker;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
@@ -584,6 +586,56 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   }
 
   @Override
+  public CDOChangeSetData revertTo(CDOBranchPoint branchPoint)
+  {
+    synchronized (getViewMonitor())
+    {
+      lockView();
+      List<CDORevision> cache = null;
+
+      try
+      {
+        if (isDirty())
+        {
+          throw new IllegalStateException("Reverting dirty transactions not yet supported");
+        }
+
+        CDOBranchPoint startPoint = CDOBranchUtil.copyBranchPoint(this);
+        CDOBranchPoint endPoint = CDOBranchUtil.copyBranchPoint(adjustBranchPoint(branchPoint));
+
+        if (!CDOBranchUtil.isContainedBy(endPoint, startPoint))
+        {
+          throw new IllegalArgumentException("Can not revert to " + endPoint);
+        }
+
+        InternalCDOSession session = getSession();
+        InternalCDORevisionManager revisionManager = session.getRevisionManager();
+
+        CDOBranchPointRange range = CDOBranchUtil.createRange(startPoint, endPoint);
+        CDOChangeSetData changeSetData = session.getSessionProtocol().loadChangeSets(range)[0];
+
+        // Load and cache missing revisions.
+        List<CDOID> ids = changeSetData.getAffectedIDs();
+        cache = revisionManager.getRevisions(ids, startPoint, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
+
+        CDORevisionProvider startProvider = new ManagedRevisionProvider(revisionManager, startPoint).withSynthetics();
+        CDORevisionProvider endProvider = new ManagedRevisionProvider(revisionManager, endPoint);
+
+        return applyChangeSet(changeSetData, startProvider, endProvider, null, false).getChangeSetData();
+      }
+      finally
+      {
+        unlockView();
+
+        if (cache != null)
+        {
+          cache.clear();
+        }
+      }
+    }
+  }
+
+  @Override
   public CDOChangeSetData merge(CDOBranch source, CDOMerger merger)
   {
     return merge(source.getHead(), merger);
@@ -666,9 +718,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           resultBaseProvider = mergeData.getTargetBaseInfo();
         }
 
-        ApplyChangeSetResult changeSet = applyChangeSet(result, resultBaseProvider, targetProvider, source, false);
+        ApplyChangeSetResult changeSetResult = applyChangeSet(result, resultBaseProvider, targetProvider, source, false);
         commitMergeSource = source;
-        return changeSet.getChangeSetData();
+        return changeSetResult.getChangeSetData();
       }
       finally
       {
@@ -712,13 +764,21 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         CDOChangeSetData resultData = result.getChangeSetData();
 
         // New objects
-        applyNewObjects(changeSetData.getNewObjects(), resultData.getNewObjects());
+        applyNewObjects( //
+            changeSetData.getNewObjects(), //
+            resultBaseProvider, //
+            resultData.getNewObjects());
 
         // Detached objects
-        Set<CDOObject> detachedSet = applyDetachedObjects(changeSetData.getDetachedObjects(), resultData.getDetachedObjects());
+        Set<CDOObject> detachedSet = applyDetachedObjects( //
+            changeSetData.getDetachedObjects(), //
+            resultData.getDetachedObjects());
 
         // Changed objects
-        Map<CDOID, InternalCDORevision> oldRevisions = applyChangedObjects(changeSetData.getChangedObjects(), resultBaseProvider, targetProvider, keepVersions,
+        Map<CDOID, InternalCDORevision> oldRevisions = applyChangedObjects( //
+            changeSetData.getChangedObjects(), //
+            resultBaseProvider, //
+            targetProvider, keepVersions, //
             resultData.getChangedObjects());
 
         // Delta notifications
@@ -779,7 +839,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
   }
 
-  private void applyNewObjects(List<CDOIDAndVersion> newObjects, List<CDOIDAndVersion> result)
+  private void applyNewObjects(List<CDOIDAndVersion> newObjects, CDORevisionProvider resultBaseProvider, List<CDOIDAndVersion> result)
   {
     List<InternalCDOObject> objects = new ArrayList<>();
 
@@ -791,7 +851,18 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       {
         revision = revision.copy();
         revision.setBranchPoint(getBranchPoint());
-        revision.setVersion(0);
+
+        int version = 0;
+        if (resultBaseProvider instanceof CDORevisionProviderWithSynthetics)
+        {
+          SyntheticCDORevision synthetic = ((CDORevisionProviderWithSynthetics)resultBaseProvider).getSynthetic(id);
+          if (synthetic != null)
+          {
+            version = synthetic.getVersion();
+          }
+        }
+
+        revision.setVersion(version);
 
         InternalCDOObject object = newInstance(revision.getEClass());
         object.cdoInternalSetView(this);
@@ -809,10 +880,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       for (InternalCDOObject object : objects)
       {
         object.cdoInternalPostLoad();
-        registerAttached(object, true);
+        registerAttached(object, true); // Also marks the transaction dirty.
       }
-
-      setDirty(true);
     }
   }
 

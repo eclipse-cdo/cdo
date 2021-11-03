@@ -39,6 +39,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.common.util.CDOException;
+import org.eclipse.emf.cdo.internal.common.commit.CDOChangeSetDataImpl;
 import org.eclipse.emf.cdo.internal.common.commit.DelegatingCommitInfo;
 import org.eclipse.emf.cdo.internal.common.revision.AbstractCDORevisionCache;
 import org.eclipse.emf.cdo.internal.server.Repository;
@@ -973,6 +974,12 @@ public abstract class SynchronizableRepository extends Repository.Default implem
           return detachedObjects.length;
         }
       };
+    }
+
+    @Override
+    public List<CDOID> getAffectedIDs()
+    {
+      return CDOChangeSetDataImpl.getAffectedIDs(this);
     }
 
     @Override

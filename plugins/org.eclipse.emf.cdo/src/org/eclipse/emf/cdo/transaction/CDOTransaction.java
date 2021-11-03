@@ -82,6 +82,11 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
   public Set<CDOObject> getConflicts();
 
   /**
+   * @since 4.15
+   */
+  public CDOChangeSetData revertTo(CDOBranchPoint branchPoint);
+
+  /**
    * Merges the changes from the given source branch into this transaction and possibly considers previous merges
    * from that branch by inspecting the {@link CDOCommitInfo#getMergeSource() merge source}
    * information of the {@link CDOSession#getCommitInfoManager() commit history}.

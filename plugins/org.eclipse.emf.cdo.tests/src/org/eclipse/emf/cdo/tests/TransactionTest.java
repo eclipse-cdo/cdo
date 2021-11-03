@@ -12,14 +12,21 @@
 package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.CDOState;
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.net4j.protocol.CommitTransactionRequest;
 import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.commit.CDOCommitInfoUtil;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Customer;
@@ -748,20 +755,92 @@ public class TransactionTest extends AbstractCDOTest
     company.setName("ABC");
     transaction.commit();
   }
-  //
-  // public static <V> V syncCommit(CDOTransaction transaction, int commitAttempts, EObject object, Transactional<V>
-  // transactional)
-  // throws ConcurrentAccessException, CommitException
-  // {
-  // int xxx;
-  // return null;
-  // }
-  //
-  // /**
-  // * @author Eike Stepper
-  // */
-  // public interface Transactional<S>
-  // {
-  //
-  // }
+
+  @Requires(IRepositoryConfig.CAPABILITY_AUDITING)
+  public void testRevertTo() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
+
+    Company company = getModel1Factory().createCompany();
+    resource.getContents().add(company);
+
+    CDOBranchPoint[] commits = new CDOBranchPoint[10];
+    for (int i = 0; i < commits.length; i++)
+    {
+      company.setName("Eclipse " + i);
+      transaction.setCommitComment((i == 0 ? "Attach " : "Modify ") + company.getName());
+      commits[i] = CDOBranchUtil.copyBranchPoint(transaction.commit());
+      IOUtil.OUT().println("Commit " + commits[i].getTimeStamp() + " --> " + company.getName());
+    }
+
+    company.setName("Eclipse " + commits.length);
+    transaction.setCommitComment("Modify " + company.getName());
+    IOUtil.OUT().println("Commit " + transaction.commit().getTimeStamp() + " --> " + company.getName());
+    IOUtil.OUT().println();
+
+    for (int i = commits.length - 1; i >= 0; --i)
+    {
+      CDOChangeSetData changeSetData = transaction.revertTo(commits[i]);
+      IOUtil.OUT().println("Revert " + commits[i].getTimeStamp() + " --> " + company.getName());
+
+      assertEquals(1, changeSetData.getChangedObjects().size());
+      assertEquals("Eclipse " + i, company.getName());
+      transaction.setCommitComment("Revert to " + commits[i].getTimeStamp());
+      transaction.commit();
+    }
+
+    // Attach a category.
+    Category category = getModel1Factory().createCategory();
+    company.getCategories().add(category);
+    transaction.setCommitComment("Attach a category");
+    CDOCommitInfo attach = transaction.commit();
+    long beforeAttach = attach.getTimeStamp() - 1;
+    assertClean(category, transaction);
+
+    // Revert the attachment.
+    CDOChangeSetData revertAttachData = transaction.revertTo(attach.getBranch().getPoint(beforeAttach));
+    assertEquals(1, revertAttachData.getChangedObjects().size()); // The resource.
+    assertEquals(1, revertAttachData.getDetachedObjects().size()); // The category.
+    assertEquals(0, company.getCategories().size());
+    assertTransient(category);
+    transaction.setCommitComment("Revert to " + beforeAttach);
+    transaction.commit();
+
+    // Detach the company.
+    CDOID companyID = CDOUtil.getCDOObject(company).cdoID();
+    resource.getContents().clear();
+    transaction.setCommitComment("Detach the company");
+    CDOCommitInfo detach = transaction.commit();
+    long beforeDetach = detach.getTimeStamp() - 1;
+    assertEquals(0, resource.getContents().size());
+    assertTransient(company);
+
+    // Revert the detachment.
+    CDOChangeSetData revertDetachData = transaction.revertTo(detach.getBranch().getPoint(beforeDetach));
+    assertEquals(1, revertDetachData.getChangedObjects().size()); // The resource.
+    assertEquals(1, revertDetachData.getNewObjects().size()); // The company.
+    assertEquals(1, resource.getContents().size());
+
+    CDOObject object = transaction.getObject(companyID);
+    assertEquals(CDOState.NEW, object.cdoState());
+
+    transaction.setCommitComment("Revert to " + beforeDetach);
+    transaction.commit();
+
+    if (getRepositoryConfig().supportingBranches())
+    {
+      CDOBranch subBranch = transaction.getBranch().createBranch("subBranch");
+
+      try
+      {
+        transaction.revertTo(subBranch.getHead());
+      }
+      catch (IllegalArgumentException expected)
+      {
+        assertTrue(expected.getMessage().startsWith("Can not revert to"));
+      }
+    }
+  }
 }

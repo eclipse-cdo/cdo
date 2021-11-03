@@ -141,6 +141,12 @@ public class FailureCommitInfo implements CDOCommitInfo
   }
 
   @Override
+  public List<CDOID> getAffectedIDs()
+  {
+    return Collections.emptyList();
+  }
+
+  @Override
   public Map<CDOID, CDOChangeKind> getChangeKinds()
   {
     return Collections.emptyMap();

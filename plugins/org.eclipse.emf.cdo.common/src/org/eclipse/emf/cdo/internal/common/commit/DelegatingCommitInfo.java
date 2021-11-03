@@ -132,6 +132,12 @@ public abstract class DelegatingCommitInfo implements CDOCommitInfo
   }
 
   @Override
+  public List<CDOID> getAffectedIDs()
+  {
+    return getDelegate().getAffectedIDs();
+  }
+
+  @Override
   public Map<CDOID, CDOChangeKind> getChangeKinds()
   {
     return getDelegate().getChangeKinds();

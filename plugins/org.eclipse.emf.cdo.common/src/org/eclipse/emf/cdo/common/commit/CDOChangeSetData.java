@@ -52,25 +52,32 @@ public interface CDOChangeSetData extends CDOChangeKindProvider
   public void merge(CDOChangeSetData changeSetData);
 
   /**
-   * Returns a collection of keys denoting which revisions have been added in the context of a commit operation.
+   * Returns a list of keys denoting which revisions have been added in the context of a commit operation.
    * Depending on various conditions like change subscriptions particular elements can also be full {@link CDORevision
    * revisions}.
    */
   public List<CDOIDAndVersion> getNewObjects();
 
   /**
-   * Returns a collection of revision keys denoting which (original) revisions have been changed in the context of a
+   * Returns a list of revision keys denoting which (original) revisions have been changed in the context of a
    * commit operation. Depending on various conditions like change subscriptions particular elements can also be full
    * {@link CDORevisionDelta revision deltas}.
    */
   public List<CDORevisionKey> getChangedObjects();
 
   /**
-   * Returns a collection of keys denoting which revisions have been revised (corresponds to detached objects) in the
+   * Returns a list of keys denoting which revisions have been revised (corresponds to detached objects) in the
    * context of a commit operation. Depending on various conditions the version part of particular elements can be
    * {@link CDOBranchVersion#UNSPECIFIED_VERSION unspecified}.
    */
   public List<CDOIDAndVersion> getDetachedObjects();
+
+  /**
+   * Returns a list of ids denoting which revisions have been added, changed, or revised in the context of a commit operation.
+   *
+   * @since 4.15
+   */
+  public List<CDOID> getAffectedIDs();
 
   /**
    * @since 4.1

@@ -160,16 +160,11 @@ public class CDOChangeSetSegment implements CDOBranchPoint
    */
   public static CDOChangeSetSegment[] createFrom(long startTime, CDOBranchPoint endPoint)
   {
-    final LinkedList<CDOChangeSetSegment> result = new LinkedList<>();
+    LinkedList<CDOChangeSetSegment> result = new LinkedList<>();
 
-    handleSegments(startTime, endPoint, new Handler()
-    {
-      @Override
-      public boolean handleSegment(CDOChangeSetSegment segment)
-      {
-        result.addFirst(segment);
-        return true;
-      }
+    handleSegments(startTime, endPoint, (Handler)segment -> {
+      result.addFirst(segment);
+      return true;
     });
 
     return result.toArray(new CDOChangeSetSegment[result.size()]);
@@ -177,16 +172,11 @@ public class CDOChangeSetSegment implements CDOBranchPoint
 
   public static CDOChangeSetSegment[] createFrom(CDOBranchPoint startPoint, CDOBranchPoint endPoint)
   {
-    final LinkedList<CDOChangeSetSegment> result = new LinkedList<>();
+    LinkedList<CDOChangeSetSegment> result = new LinkedList<>();
 
-    handleSegments(startPoint, endPoint, new Handler()
-    {
-      @Override
-      public boolean handleSegment(CDOChangeSetSegment segment)
-      {
-        result.addFirst(segment);
-        return true;
-      }
+    handleSegments(startPoint, endPoint, (Handler)segment -> {
+      result.addFirst(segment);
+      return true;
     });
 
     return result.toArray(new CDOChangeSetSegment[result.size()]);
@@ -212,6 +202,7 @@ public class CDOChangeSetSegment implements CDOBranchPoint
    * @author Eike Stepper
    * @since 4.6
    */
+  @FunctionalInterface
   public interface Handler
   {
     public boolean handleSegment(CDOChangeSetSegment segment);

@@ -1025,6 +1025,15 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
   }
 
   /**
+   * @since 4.15
+   */
+  @Override
+  public CDOChangeSetData revertTo(CDOBranchPoint branchPoint)
+  {
+    return delegate.revertTo(branchPoint);
+  }
+
+  /**
    * @since 4.6
    */
   @Override

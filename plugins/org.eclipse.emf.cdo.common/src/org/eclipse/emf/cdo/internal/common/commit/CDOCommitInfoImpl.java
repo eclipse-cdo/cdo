@@ -198,6 +198,13 @@ public class CDOCommitInfoImpl extends CDOBranchPointImpl implements CDOCommitIn
   }
 
   @Override
+  public synchronized List<CDOID> getAffectedIDs()
+  {
+    loadCommitDataIfNeeded();
+    return commitData.getAffectedIDs();
+  }
+
+  @Override
   public Map<CDOID, CDOChangeKind> getChangeKinds()
   {
     loadCommitDataIfNeeded();

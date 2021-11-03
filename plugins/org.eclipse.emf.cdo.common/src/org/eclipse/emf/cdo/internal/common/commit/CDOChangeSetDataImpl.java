@@ -199,6 +199,12 @@ public class CDOChangeSetDataImpl implements CDOChangeSetData
   }
 
   @Override
+  public List<CDOID> getAffectedIDs()
+  {
+    return getAffectedIDs(this);
+  }
+
+  @Override
   public synchronized Map<CDOID, CDOChangeKind> getChangeKinds()
   {
     if (changeKindCache == null)
@@ -220,6 +226,27 @@ public class CDOChangeSetDataImpl implements CDOChangeSetData
   {
     return MessageFormat.format("ChangeSetData[newObjects={0}, changedObjects={1}, detachedObjects={2}]", //$NON-NLS-1$
         newObjects.size(), changedObjects.size(), detachedObjects.size());
+  }
+
+  public static List<CDOID> getAffectedIDs(CDOChangeSetData changeSetData)
+  {
+    List<CDOID> ids = new ArrayList<>();
+    for (CDOIDAndVersion object : changeSetData.getNewObjects())
+    {
+      ids.add(object.getID());
+    }
+
+    for (CDORevisionKey object : changeSetData.getChangedObjects())
+    {
+      ids.add(object.getID());
+    }
+
+    for (CDOIDAndVersion object : changeSetData.getDetachedObjects())
+    {
+      ids.add(object.getID());
+    }
+
+    return ids;
   }
 
   public static String format(CDOChangeSetData changeSetData)

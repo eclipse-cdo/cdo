@@ -731,6 +731,12 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
     }
 
     @Override
+    public List<CDOID> getAffectedIDs()
+    {
+      return null;
+    }
+
+    @Override
     public List<CDOIDAndVersion> getNewObjects()
     {
       return null;

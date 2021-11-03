@@ -2533,6 +2533,12 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     }
 
     @Override
+    public List<CDOID> getAffectedIDs()
+    {
+      return commitInfo.getAffectedIDs();
+    }
+
+    @Override
     public Map<CDOID, CDOChangeKind> getChangeKinds()
     {
       return commitInfo.getChangeKinds();

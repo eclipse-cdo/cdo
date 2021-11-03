@@ -17,21 +17,28 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * A revision provider backed by a {@link CDORevisionManager revision manager} that provides revisions which are
+ * {@link CDORevision#isValid(CDOBranchPoint) valid} at the configured {@link #getBranchPoint() branch point}.
  *
  * @author Eike Stepper
  * @since 4.0
  */
 public class ManagedRevisionProvider implements CDORevisionProvider
 {
-  private CDORevisionManager revisionManager;
+  /**
+   * @since 4.15
+   */
+  protected final InternalCDORevisionManager revisionManager;
 
-  private CDOBranchPoint branchPoint;
+  /**
+   * @since 4.15
+   */
+  protected final CDOBranchPoint branchPoint;
 
   public ManagedRevisionProvider(CDORevisionManager revisionManager, CDOBranchPoint branchPoint)
   {
     this.branchPoint = branchPoint;
-    this.revisionManager = revisionManager;
+    this.revisionManager = (InternalCDORevisionManager)revisionManager;
   }
 
   public CDORevisionManager getRevisionManager()
@@ -48,5 +55,35 @@ public class ManagedRevisionProvider implements CDORevisionProvider
   public CDORevision getRevision(CDOID id)
   {
     return revisionManager.getRevision(id, branchPoint, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
+  }
+
+  /**
+   * @since 4.15
+   */
+  public CDORevisionProviderWithSynthetics withSynthetics()
+  {
+    return new WithSynthetics(revisionManager, branchPoint);
+  }
+
+  /**
+   * A managed revision provider that can also provide {@link SyntheticCDORevision synthetic revisions}.
+   *
+   * @author Eike Stepper
+   * @since 4.15
+   */
+  public static class WithSynthetics extends ManagedRevisionProvider implements CDORevisionProviderWithSynthetics
+  {
+    public WithSynthetics(CDORevisionManager revisionManager, CDOBranchPoint branchPoint)
+    {
+      super(revisionManager, branchPoint);
+    }
+
+    @Override
+    public SyntheticCDORevision getSynthetic(CDOID id)
+    {
+      SyntheticCDORevision[] synthetic = { null };
+      revisionManager.getRevision(id, branchPoint, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true, synthetic);
+      return synthetic[0];
+    }
   }
 }

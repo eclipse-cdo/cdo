@@ -356,11 +356,6 @@ public interface InternalCDOBranchManager extends CDOBranchManager, ILifecycle
    */
   public interface BranchLoader4 extends BranchLoader3
   {
-    // public CDOBranchPoint changeTag(AtomicInteger modCount, String oldName, String newName, CDOBranchPoint
-    // branchPoint);
-    //
-    // public void loadTags(AtomicInteger modCount, String name, Consumer<BranchInfo> handler);
-
     public CDOBranchPoint changeTag(AtomicInteger modCount, String oldName, String newName, CDOBranchPoint branchPoint);
 
     public void loadTags(String name, Consumer<BranchInfo> handler);

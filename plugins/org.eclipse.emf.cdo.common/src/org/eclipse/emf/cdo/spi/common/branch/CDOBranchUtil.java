@@ -219,6 +219,12 @@ public final class CDOBranchUtil
     }
   }
 
+  /**
+   * Returns <code>true</code> if the first given branch point "contained" is reachable from the second given branch point "container"
+   * by following the {@link CDOBranch#getBase() branch bases} <i>upwards</i>, <code>false</code> otherwise.
+   * <p>
+   *
+   */
   public static boolean isContainedBy(CDOBranchPoint contained, CDOBranchPoint container)
   {
     CDOBranch containerBranch = container.getBranch();

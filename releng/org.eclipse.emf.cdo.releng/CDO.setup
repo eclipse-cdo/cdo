@@ -64,13 +64,13 @@
         name="org.eclipse.emf.cdo.releng.apireports"
         optional="true"/>
     <repository
-        url="http://download.eclipse.org/mylyn/snapshots/weekly/"/>
+        url="https://download.eclipse.org/mylyn/snapshots/weekly/"/>
     <repository
-        url="http://download.eclipse.org/egit/updates-stable-nightly/"/>
+        url="https://download.eclipse.org/egit/updates-stable-nightly/"/>
     <repository
-        url="http://download.eclipse.org/oomph/updates/latest/"/>
+        url="https://download.eclipse.org/oomph/updates/latest/"/>
     <repository
-        url="http://download.eclipse.org/modeling/emf/cdo/updates/integration/latest"/>
+        url="https://download.eclipse.org/modeling/emf/cdo/updates/integration/latest"/>
   </setupTask>
   <setupTask
       xsi:type="setup:EclipseIniTask"

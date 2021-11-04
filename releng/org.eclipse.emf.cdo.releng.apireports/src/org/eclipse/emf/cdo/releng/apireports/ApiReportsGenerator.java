@@ -28,6 +28,7 @@ import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.pde.api.tools.internal.ApiBaselineManager;
+import org.eclipse.pde.api.tools.internal.IApiXmlConstants;
 import org.eclipse.pde.api.tools.internal.comparator.Delta;
 import org.eclipse.pde.api.tools.internal.comparator.DeltaXmlVisitor;
 import org.eclipse.pde.api.tools.internal.provisional.Factory;
@@ -41,6 +42,8 @@ import org.eclipse.pde.api.tools.internal.provisional.model.IApiBaseline;
 import org.eclipse.pde.api.tools.internal.provisional.model.IApiComponent;
 import org.eclipse.pde.api.tools.internal.provisional.model.IApiScope;
 import org.eclipse.pde.api.tools.internal.provisional.model.IApiTypeRoot;
+
+import org.w3c.dom.Element;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -133,7 +136,8 @@ public final class ApiReportsGenerator
             progress.worked(25);
             updateMonitor(progress);
 
-            DeltaXmlVisitor visitor = new DeltaXmlVisitor();
+            DeltaXmlVisitor visitor = new ApiDeltaVisitor();
+
             delta.accept(visitor);
 
             writer.write(visitor.getXML());
@@ -472,5 +476,39 @@ public final class ApiReportsGenerator
   private static void updateMonitor(IProgressMonitor monitor) throws OperationCanceledException
   {
     updateMonitor(monitor, 0);
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class ApiDeltaVisitor extends DeltaXmlVisitor
+  {
+    public ApiDeltaVisitor() throws CoreException
+    {
+    }
+
+    @Override
+    protected void processLeafDelta(IDelta delta)
+    {
+      super.processLeafDelta(delta);
+
+      if (delta.getElementType() != IDelta.API_COMPONENT_ELEMENT_TYPE)
+      {
+        Element deltasElement = (Element)getDocument().getFirstChild();
+        Element deltaElement = (Element)deltasElement.getLastChild();
+
+        String message = delta.getMessage();
+        if (message != null && //
+            (message.startsWith("The deprecation modifiers has") || message.startsWith("The deprecation modifier has")))
+        {
+          String[] arguments = delta.getArguments();
+          if (arguments != null && arguments.length >= 2)
+          {
+            message += "." + arguments[1]; // Append member signature.
+            deltaElement.setAttribute(IApiXmlConstants.ATTR_MESSAGE, message);
+          }
+        }
+      }
+    }
   }
 }

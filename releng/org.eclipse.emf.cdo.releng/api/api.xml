@@ -12,16 +12,16 @@
             <message_argument value="revisionManager"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.ocl(4.4.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="getRevisionCacheAdder()Lorg/eclipse/emf/cdo/common/revision/CDORevisionCacheAdder;" kind="ADDED" message="The deprecation modifiers has been added to org.eclipse.emf.cdo.server.ocl.CDOExtentCreator.getRevisionCacheAdder()" newModifiers="1048577" oldModifiers="1" restrictions="0" type_name="org.eclipse.emf.cdo.server.ocl.CDOExtentCreator">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.server.ocl.CDOExtentCreator"/>
-            <message_argument value="getRevisionCacheAdder()"/>
-        </message_arguments>
-    </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.server.ocl(4.4.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="setRevisionCacheAdder(Lorg/eclipse/emf/cdo/common/revision/CDORevisionCacheAdder;)V" kind="ADDED" message="The deprecation modifiers has been added to org.eclipse.emf.cdo.server.ocl.CDOExtentCreator.setRevisionCacheAdder(CDORevisionCacheAdder)" newModifiers="1048577" oldModifiers="1" restrictions="0" type_name="org.eclipse.emf.cdo.server.ocl.CDOExtentCreator">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.server.ocl.CDOExtentCreator"/>
             <message_argument value="setRevisionCacheAdder(CDORevisionCacheAdder)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.ocl(4.4.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="getRevisionCacheAdder()Lorg/eclipse/emf/cdo/common/revision/CDORevisionCacheAdder;" kind="ADDED" message="The deprecation modifiers has been added to org.eclipse.emf.cdo.server.ocl.CDOExtentCreator.getRevisionCacheAdder()" newModifiers="1048577" oldModifiers="1" restrictions="0" type_name="org.eclipse.emf.cdo.server.ocl.CDOExtentCreator">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.ocl.CDOExtentCreator"/>
+            <message_argument value="getRevisionCacheAdder()"/>
         </message_arguments>
     </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.15.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="addRevision(Lorg/eclipse/emf/cdo/common/revision/CDORevision;)V" kind="ADDED" message="The deprecation modifiers has been added to org.eclipse.emf.cdo.spi.common.revision.DelegatingCDORevisionManager.addRevision(CDORevision)" newModifiers="1048577" oldModifiers="1" restrictions="0" type_name="org.eclipse.emf.cdo.spi.common.revision.DelegatingCDORevisionManager">
@@ -52,6 +52,12 @@
         <message_arguments>
             <message_argument value="org.eclipse.net4j.signal.IndicationWithMonitoring"/>
             <message_argument value="getMonitoringExecutorService()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.15.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="deleteBranch(I)V" kind="REMOVED" message="The deprecation modifiers has been removed from org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader2.deleteBranch(int)" newModifiers="1025" oldModifiers="1049601" restrictions="0" type_name="org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager$BranchLoader2">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader2"/>
+            <message_argument value="deleteBranch(int)"/>
         </message_arguments>
     </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.security(4.6.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="16" key="ADMINISTRATOR_DEFAULT_PASSWORD" kind="ADDED" message="The field org.eclipse.emf.cdo.security.User.ADMINISTRATOR_DEFAULT_PASSWORD has been added in an interface that is tagged with '@noimplement'" newModifiers="25" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.security.User">

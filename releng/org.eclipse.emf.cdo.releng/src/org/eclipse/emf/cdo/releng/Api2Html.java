@@ -158,14 +158,14 @@ public class Api2Html extends DefaultHandler
         message = remove(message, " in an interface that is tagged with '@noimplement'");
         message = remove(message, " for interface " + typeName);
         message = remove(message, " for class " + typeName);
-        if (!message.contains("modifier has been"))
-        {
-          message = remove(message, " to " + typeName);
-        }
-
         if (message != null && message.startsWith("The deprecation modifiers has"))
         {
           message = "The deprecation modifier has" + message.substring("The deprecation modifiers has".length());
+        }
+
+        if (!message.contains("modifier has been"))
+        {
+          message = remove(message, " to " + typeName);
         }
 
         Category category;

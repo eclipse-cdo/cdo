@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <deltas>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.15.0)" element_type="FIELD_ELEMENT_TYPE" flags="31" key="branchPoint" kind="CHANGED" message="The 'final' keyword has been added for the non-visble field org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider.branchPoint" newModifiers="20" oldModifiers="2" restrictions="0" type_name="org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider"/>
+            <message_argument value="branchPoint"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.15.0)" element_type="FIELD_ELEMENT_TYPE" flags="31" key="revisionManager" kind="CHANGED" message="The 'final' keyword has been added for the non-visble field org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider.revisionManager" newModifiers="20" oldModifiers="2" restrictions="0" type_name="org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider"/>
+            <message_argument value="revisionManager"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.server.ocl(4.4.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="setRevisionCacheAdder(Lorg/eclipse/emf/cdo/common/revision/CDORevisionCacheAdder;)V" kind="ADDED" message="The deprecation modifiers has been added to org.eclipse.emf.cdo.server.ocl.CDOExtentCreator" newModifiers="1048577" oldModifiers="1" restrictions="0" type_name="org.eclipse.emf.cdo.server.ocl.CDOExtentCreator">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.server.ocl.CDOExtentCreator"/>
@@ -48,34 +60,6 @@
             <message_argument value="ADMINISTRATOR_DEFAULT_PASSWORD"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="69" key="org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache" kind="ADDED" message="The interface org.eclipse.emf.cdo.common.revision.CDORevisionInterner adds method internRevision(CDORevision) to org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache that is tagged as @noimplement" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache"/>
-            <message_argument value="org.eclipse.emf.cdo.common.revision.CDORevisionInterner"/>
-            <message_argument value="internRevision(CDORevision)"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="69" key="org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager" kind="ADDED" message="The interface org.eclipse.emf.cdo.common.revision.CDORevisionInterner adds method internRevision(CDORevision) to org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager that is tagged as @noimplement" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager"/>
-            <message_argument value="org.eclipse.emf.cdo.common.revision.CDORevisionInterner"/>
-            <message_argument value="internRevision(CDORevision)"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.explorer(4.11.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="69" key="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager$CheckoutStateEvent" kind="ADDED" message="The interface org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager$CheckoutEvent adds method getSource() to org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager.CheckoutStateEvent that is tagged as @noimplement" newModifiers="1545" oldModifiers="1545" restrictions="3" type_name="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager$CheckoutStateEvent">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager.CheckoutStateEvent"/>
-            <message_argument value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager$CheckoutEvent"/>
-            <message_argument value="getSource()"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="69" key="org.eclipse.emf.spi.cdo.InternalCDOViewSet" kind="ADDED" message="The interface org.eclipse.net4j.util.concurrent.IExecutorServiceProvider adds method getExecutorService() to org.eclipse.emf.spi.cdo.InternalCDOViewSet that is tagged as @noimplement" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.spi.cdo.InternalCDOViewSet">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.spi.cdo.InternalCDOViewSet"/>
-            <message_argument value="org.eclipse.net4j.util.concurrent.IExecutorServiceProvider"/>
-            <message_argument value="getExecutorService()"/>
-        </message_arguments>
-    </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="48" key="AdditionEvent" kind="ADDED" message="The member type AdditionEvent has been added" newModifiers="1545" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.common.revision.CDORevisionCache">
         <message_arguments>
             <message_argument value="AdditionEvent"/>
@@ -94,6 +78,17 @@
     <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="48" key="PostActivateable" kind="ADDED" message="The member type PostActivateable has been added" newModifiers="1545" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.InternalRepository">
         <message_arguments>
             <message_argument value="PostActivateable"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.15.0)" element_type="CLASS_ELEMENT_TYPE" flags="48" key="WithSynthetics" kind="ADDED" message="The member type WithSynthetics has been added" newModifiers="9" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider">
+        <message_arguments>
+            <message_argument value="WithSynthetics"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="getAffectedIDs()Ljava/util/List&lt;Lorg/eclipse/emf/cdo/common/id/CDOID;&gt;;" kind="ADDED" message="The method org.eclipse.emf.cdo.common.commit.CDOChangeSetData.getAffectedIDs() has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.common.commit.CDOChangeSetData">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.common.commit.CDOChangeSetData"/>
+            <message_argument value="getAffectedIDs()"/>
         </message_arguments>
     </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="forEachRevision(Ljava/util/function/Consumer&lt;Lorg/eclipse/emf/cdo/common/revision/CDORevision;&gt;;)V" kind="ADDED" message="The method org.eclipse.emf.cdo.common.revision.CDORevisionCache.forEachRevision(Consumer&lt;CDORevision&gt;) has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.common.revision.CDORevisionCache">
@@ -226,6 +221,18 @@
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager"/>
             <message_argument value="prefetchRevisions(CDOID, CDOBranchPoint, int, Consumer&lt;CDORevision&gt;)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.15.0)" element_type="CLASS_ELEMENT_TYPE" flags="36" key="revertTo(Lorg/eclipse/emf/cdo/common/branch/CDOBranchPoint;)Lorg/eclipse/emf/cdo/common/commit/CDOChangeSetData;" kind="ADDED" message="The method org.eclipse.emf.cdo.transaction.CDOPushTransaction.revertTo(CDOBranchPoint) has been added, overriding a method from a superclass" newModifiers="1" oldModifiers="0" restrictions="6" type_name="org.eclipse.emf.cdo.transaction.CDOPushTransaction">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.transaction.CDOPushTransaction"/>
+            <message_argument value="revertTo(CDOBranchPoint)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="revertTo(Lorg/eclipse/emf/cdo/common/branch/CDOBranchPoint;)Lorg/eclipse/emf/cdo/common/commit/CDOChangeSetData;" kind="ADDED" message="The method org.eclipse.emf.cdo.transaction.CDOTransaction.revertTo(CDOBranchPoint) has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransaction">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransaction"/>
+            <message_argument value="revertTo(CDOBranchPoint)"/>
         </message_arguments>
     </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo(4.15.0)" element_type="CLASS_ELEMENT_TYPE" flags="36" key="cdoInternalPostDetach(ZZ)V" kind="ADDED" message="The method org.eclipse.emf.internal.cdo.CDOObjectImpl.cdoInternalPostDetach(boolean, boolean) has been added, overriding a method from a superclass" newModifiers="1" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.internal.cdo.CDOObjectImpl">
@@ -375,6 +382,18 @@
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil"/>
             <message_argument value="forEachBranchPoint(CDOBranchPoint, boolean, Predicate&lt;CDOBranchPoint&gt;)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.15.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="withSynthetics()Lorg/eclipse/emf/cdo/spi/common/revision/CDORevisionProviderWithSynthetics;" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider.withSynthetics() has been added" newModifiers="1" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider"/>
+            <message_argument value="withSynthetics()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.15.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="appendBranchPoint(Ljava/lang/StringBuilder;Lorg/eclipse/emf/cdo/common/branch/CDOBranchPoint;)Z" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.transaction.CDOTransactionCommentator.appendBranchPoint(StringBuilder, CDOBranchPoint) has been added" newModifiers="9" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.transaction.CDOTransactionCommentator">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransactionCommentator"/>
+            <message_argument value="appendBranchPoint(StringBuilder, CDOBranchPoint)"/>
         </message_arguments>
     </delta>
     <delta compatible="true" componentId="org.eclipse.net4j(4.13.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="getRespondingWorkPercent()I" kind="ADDED" message="The non-abstract method org.eclipse.net4j.signal.IndicationWithMonitoring.getRespondingWorkPercent() has been added" newModifiers="20" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.signal.IndicationWithMonitoring">
@@ -1091,6 +1110,12 @@
             <message_argument value="org.eclipse.emf.cdo_4.14.1"/>
         </message_arguments>
     </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.14.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.common.revision.CDORevisionProviderWithSynthetics" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.common.revision.CDORevisionProviderWithSynthetics has been added to org.eclipse.emf.cdo_4.14.1" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.common.revision.CDORevisionProviderWithSynthetics">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.common.revision.CDORevisionProviderWithSynthetics"/>
+            <message_argument value="org.eclipse.emf.cdo_4.14.1"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.admin(4.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.view.CDOPrefetcherManager" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.view.CDOPrefetcherManager has been added to org.eclipse.emf.cdo.admin_4.3.1" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.view.CDOPrefetcherManager">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.view.CDOPrefetcherManager"/>
@@ -1247,34 +1272,10 @@
             <message_argument value="SHORT_TO_STRING"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.15.0)" element_type="CLASS_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.cdo.spi.common.revision.DelegatingCDORevisionManager" kind="CHANGED" message="The superinterfaces set has been expanded (org.eclipse.emf.cdo.common.revision.CDORevisionInterner) for class org.eclipse.emf.cdo.spi.common.revision.DelegatingCDORevisionManager" newModifiers="1057" oldModifiers="1057" restrictions="0" type_name="org.eclipse.emf.cdo.spi.common.revision.DelegatingCDORevisionManager">
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.15.0)" element_type="FIELD_ELEMENT_TYPE" flags="46" key="revisionManager" kind="CHANGED" message="The type of the non-visible field org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider.revisionManager has been changed" newModifiers="20" oldModifiers="2" restrictions="0" type_name="org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider">
         <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.spi.common.revision.DelegatingCDORevisionManager"/>
-            <message_argument value="org.eclipse.emf.cdo.common.revision.CDORevisionInterner"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache" kind="CHANGED" message="The superinterfaces set has been expanded (org.eclipse.emf.cdo.common.revision.CDORevisionInterner) for interface org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache"/>
-            <message_argument value="org.eclipse.emf.cdo.common.revision.CDORevisionInterner"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager" kind="CHANGED" message="The superinterfaces set has been expanded (org.eclipse.emf.cdo.common.revision.CDORevisionInterner) for interface org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager"/>
-            <message_argument value="org.eclipse.emf.cdo.common.revision.CDORevisionInterner"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.explorer(4.11.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager$CheckoutStateEvent" kind="CHANGED" message="The superinterfaces set has been expanded (org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager$CheckoutEvent) for interface org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager.CheckoutStateEvent" newModifiers="1545" oldModifiers="1545" restrictions="3" type_name="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager$CheckoutStateEvent">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager.CheckoutStateEvent"/>
-            <message_argument value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager$CheckoutEvent"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.spi.cdo.InternalCDOViewSet" kind="CHANGED" message="The superinterfaces set has been expanded (org.eclipse.net4j.util.concurrent.IExecutorServiceProvider) for interface org.eclipse.emf.spi.cdo.InternalCDOViewSet" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.spi.cdo.InternalCDOViewSet">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.spi.cdo.InternalCDOViewSet"/>
-            <message_argument value="org.eclipse.net4j.util.concurrent.IExecutorServiceProvider"/>
+            <message_argument value="org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider"/>
+            <message_argument value="revisionManager"/>
         </message_arguments>
     </delta>
     <delta compatible="true" componentId="org.eclipse.net4j(4.13.0)" element_type="FIELD_ELEMENT_TYPE" flags="46" key="monitor" kind="CHANGED" message="The type of the non-visible field org.eclipse.net4j.signal.IndicationWithMonitoring.monitor has been changed" newModifiers="2" oldModifiers="2" restrictions="0" type_name="org.eclipse.net4j.signal.IndicationWithMonitoring">
@@ -1289,6 +1290,12 @@
             <message_argument value="org.eclipse.emf.cdo.common_4.15.0"/>
         </message_arguments>
     </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.15.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.emf.cdo.spi.common.revision.CDORevisionProviderWithSynthetics" kind="ADDED" message="The type org.eclipse.emf.cdo.spi.common.revision.CDORevisionProviderWithSynthetics has been added to org.eclipse.emf.cdo.common_4.15.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.common.revision.CDORevisionProviderWithSynthetics">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.common.revision.CDORevisionProviderWithSynthetics"/>
+            <message_argument value="org.eclipse.emf.cdo.common_4.15.0"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo(4.15.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.emf.cdo.view.CDOPrefetcherManager" kind="ADDED" message="The type org.eclipse.emf.cdo.view.CDOPrefetcherManager has been added to org.eclipse.emf.cdo_4.15.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.view.CDOPrefetcherManager">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.view.CDOPrefetcherManager"/>
@@ -1299,6 +1306,18 @@
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.view.CDOViewSetHandler"/>
             <message_argument value="org.eclipse.emf.cdo_4.15.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.15.0)" element_type="FIELD_ELEMENT_TYPE" flags="22" key="branchPoint" kind="CHANGED" message="The visibility of the field org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider.branchPoint has been increased" newModifiers="20" oldModifiers="2" restrictions="0" type_name="org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider"/>
+            <message_argument value="branchPoint"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.15.0)" element_type="FIELD_ELEMENT_TYPE" flags="22" key="revisionManager" kind="CHANGED" message="The visibility of the field org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider.revisionManager has been increased" newModifiers="20" oldModifiers="2" restrictions="0" type_name="org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider"/>
+            <message_argument value="revisionManager"/>
         </message_arguments>
     </delta>
 </deltas>

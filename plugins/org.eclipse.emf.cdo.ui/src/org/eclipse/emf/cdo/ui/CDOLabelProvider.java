@@ -192,12 +192,15 @@ public class CDOLabelProvider extends AdapterFactoryLabelProvider implements ICo
     try
     {
       InternalCDOObject cdoObject = FSMUtil.adapt(object, view);
-      switch (cdoObject.cdoState())
+      if (cdoObject != null)
       {
-      case NEW:
-      case DIRTY:
-      case CONFLICT:
-        return bold;
+        switch (cdoObject.cdoState())
+        {
+        case NEW:
+        case DIRTY:
+        case CONFLICT:
+          return bold;
+        }
       }
     }
     catch (RuntimeException ignore)
@@ -213,28 +216,31 @@ public class CDOLabelProvider extends AdapterFactoryLabelProvider implements ICo
    */
   public static Color getColor(CDOObject object)
   {
-    try
+    if (object != null)
     {
-      if (object.cdoConflict())
+      try
       {
-        return COLOR_CONFLICT;
-      }
+        if (object.cdoConflict())
+        {
+          return COLOR_CONFLICT;
+        }
 
-      CDOPermission permission = object.cdoPermission();
-      switch (permission)
+        CDOPermission permission = object.cdoPermission();
+        switch (permission)
+        {
+        case NONE:
+          return COLOR_PERMISSION_NONE;
+
+        case READ:
+          return COLOR_PERMISSION_READ;
+
+        default:
+          //$FALL-THROUGH$
+        }
+      }
+      catch (RuntimeException ignore)
       {
-      case NONE:
-        return COLOR_PERMISSION_NONE;
-
-      case READ:
-        return COLOR_PERMISSION_READ;
-
-      default:
-        //$FALL-THROUGH$
       }
-    }
-    catch (RuntimeException ignore)
-    {
     }
 
     // Use default

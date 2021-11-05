@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.internal.explorer.AbstractManager;
 import org.eclipse.emf.cdo.internal.explorer.bundle.OM;
 import org.eclipse.emf.cdo.internal.explorer.repositories.CDORepositoryImpl;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.ReadOnlyException;
@@ -196,7 +197,12 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
   @Override
   public final CDOBranchPoint getBranchPoint()
   {
-    return view;
+    if (view != null)
+    {
+      return CDOBranchUtil.copyBranchPoint(view);
+    }
+
+    return getBranchPoint(this);
   }
 
   @Override

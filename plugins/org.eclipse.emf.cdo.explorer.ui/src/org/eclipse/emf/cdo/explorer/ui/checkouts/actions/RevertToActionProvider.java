@@ -51,7 +51,7 @@ public class RevertToActionProvider extends AbstractBranchPointActionProvider
   @Override
   protected void fillOtherCheckoutAction(IWorkbenchPage page, IMenuManager subMenu, CDOCheckout checkout, CDOCheckout otherCheckout)
   {
-    if (CDOBranchUtil.isContainedBy(checkout.getBranchPoint(), otherCheckout.getBranchPoint()))
+    if (CDOBranchUtil.isContainedBy(otherCheckout.getBranchPoint(), checkout.getBranchPoint()))
     {
       super.fillOtherCheckoutAction(page, subMenu, checkout, otherCheckout);
     }

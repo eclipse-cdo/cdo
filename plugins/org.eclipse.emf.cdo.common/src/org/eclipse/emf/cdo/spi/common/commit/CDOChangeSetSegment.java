@@ -95,6 +95,9 @@ public class CDOChangeSetSegment implements CDOBranchPoint
   }
 
   /**
+   * Calls the given {@link Handler handler} for all {@link CDOChangeSetSegment segments} from the given <code>endPoint</code>
+   * up to the repository creation point.
+   *
    * @since 4.6
    */
   public static void handleSegments(CDOBranchPoint endPoint, Handler handler)
@@ -104,6 +107,9 @@ public class CDOChangeSetSegment implements CDOBranchPoint
   }
 
   /**
+   * Calls the given {@link Handler handler} for all {@link CDOChangeSetSegment segments} from the given <code>endPoint</code>
+   * up to the given <code>startTime</code>.
+   *
    * @since 4.6
    */
   public static void handleSegments(long startTime, CDOBranchPoint endPoint, Handler handler)
@@ -133,6 +139,9 @@ public class CDOChangeSetSegment implements CDOBranchPoint
   }
 
   /**
+   * Calls the given {@link Handler handler} for all {@link CDOChangeSetSegment segments} from the given <code>endPoint</code>
+   * up to the given <code>startPoint</code>.
+   *
    * @since 4.6
    */
   public static void handleSegments(CDOBranchPoint startPoint, CDOBranchPoint endPoint, Handler handler)

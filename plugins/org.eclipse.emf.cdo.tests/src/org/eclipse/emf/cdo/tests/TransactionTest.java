@@ -777,7 +777,8 @@ public class TransactionTest extends AbstractCDOTest
 
     company.setName("Eclipse " + commits.length);
     transaction.setCommitComment("Modify " + company.getName());
-    IOUtil.OUT().println("Commit " + transaction.commit().getTimeStamp() + " --> " + company.getName());
+    CDOBranchPoint eclipse10Commit = CDOBranchUtil.copyBranchPoint(transaction.commit());
+    IOUtil.OUT().println("Commit " + eclipse10Commit.getTimeStamp() + " --> " + company.getName());
     IOUtil.OUT().println();
 
     for (int i = commits.length - 1; i >= 0; --i)
@@ -785,7 +786,9 @@ public class TransactionTest extends AbstractCDOTest
       CDOChangeSetData changeSetData = transaction.revertTo(commits[i]);
       IOUtil.OUT().println("Revert " + commits[i].getTimeStamp() + " --> " + company.getName());
 
+      assertEquals(0, changeSetData.getNewObjects().size());
       assertEquals(1, changeSetData.getChangedObjects().size());
+      assertEquals(0, changeSetData.getDetachedObjects().size());
       assertEquals("Eclipse " + i, company.getName());
       transaction.setCommitComment("Revert to " + commits[i].getTimeStamp());
       transaction.commit();
@@ -801,6 +804,7 @@ public class TransactionTest extends AbstractCDOTest
 
     // Revert the attachment.
     CDOChangeSetData revertAttachData = transaction.revertTo(attach.getBranch().getPoint(beforeAttach));
+    assertEquals(0, revertAttachData.getNewObjects().size());
     assertEquals(1, revertAttachData.getChangedObjects().size()); // The resource.
     assertEquals(1, revertAttachData.getDetachedObjects().size()); // The category.
     assertEquals(0, company.getCategories().size());
@@ -821,6 +825,7 @@ public class TransactionTest extends AbstractCDOTest
     CDOChangeSetData revertDetachData = transaction.revertTo(detach.getBranch().getPoint(beforeDetach));
     assertEquals(1, revertDetachData.getChangedObjects().size()); // The resource.
     assertEquals(1, revertDetachData.getNewObjects().size()); // The company.
+    assertEquals(0, revertDetachData.getDetachedObjects().size());
     assertEquals(1, resource.getContents().size());
 
     CDOObject object = transaction.getObject(companyID);
@@ -841,6 +846,29 @@ public class TransactionTest extends AbstractCDOTest
       {
         assertTrue(expected.getMessage().startsWith("Can not revert to"));
       }
+
+      // Commit a few times into the sub branch.
+      transaction.setBranch(subBranch);
+      company.setName("Sub-Eclipse");
+      transaction.commit();
+
+      company.getSuppliers().add(getModel1Factory().createSupplier());
+      company.getSuppliers().add(getModel1Factory().createSupplier());
+      company.getSuppliers().add(getModel1Factory().createSupplier());
+      company.getSuppliers().add(getModel1Factory().createSupplier());
+      company.getSuppliers().add(getModel1Factory().createSupplier());
+      transaction.commit();
+
+      company.getSuppliers().remove(0);
+      company.getSuppliers().remove(0);
+      transaction.commit();
+
+      CDOChangeSetData revertDetachData2 = transaction.revertTo(eclipse10Commit);
+      assertEquals(0, revertDetachData2.getNewObjects().size());
+      assertEquals(1, revertDetachData2.getChangedObjects().size()); // The resource.
+      assertEquals(0, revertDetachData2.getDetachedObjects().size());
+      assertEquals(1, resource.getContents().size());
+      assertEquals(3, company.getSuppliers().size());
     }
   }
 }

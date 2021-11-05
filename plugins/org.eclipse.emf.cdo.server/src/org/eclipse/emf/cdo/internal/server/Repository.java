@@ -1773,7 +1773,9 @@ public class Repository extends Container<Object> implements InternalRepository
   @Override
   public CDOChangeSetData getChangeSet(CDOBranchPoint startPoint, CDOBranchPoint endPoint)
   {
-    CDOChangeSetSegment[] segments = CDOChangeSetSegment.createFrom(startPoint, endPoint);
+    CDOChangeSetSegment[] segments = CDOBranchUtil.isContainedBy(startPoint, endPoint) ? //
+        CDOChangeSetSegment.createFrom(startPoint, endPoint) : //
+        CDOChangeSetSegment.createFrom(endPoint, startPoint);
 
     IStoreAccessor accessor = StoreThreadLocal.getAccessor();
     Set<CDOID> ids = accessor.readChangeSet(new Monitor(), segments);

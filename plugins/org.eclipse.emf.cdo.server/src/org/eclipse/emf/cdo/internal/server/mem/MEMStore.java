@@ -415,13 +415,6 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader4, D
     long startTime = segment.getTimeStamp();
     long endTime = segment.getEndTime();
 
-    if (startTime == 0 || startTime > endTime)
-    {
-      long tmp = startTime;
-      startTime = endTime;
-      endTime = tmp;
-    }
-
     boolean listCheckDone = false;
     for (InternalCDORevision revision : list)
     {

@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.internal.common.commit;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitHistory;
@@ -22,11 +23,13 @@ import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.commit.CDOCommitInfoUtil;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 
+import org.eclipse.net4j.util.collection.CollectionUtil;
+import org.eclipse.net4j.util.collection.ConcurrentArray;
+import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.ref.ReferenceValueMap2;
 
 import java.lang.ref.SoftReference;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.WeakHashMap;
 
@@ -41,11 +44,45 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
 
   private final Map<CDOBranch, BranchInfoCache> branches = new WeakHashMap<>();
 
+  private final ConcurrentArray<CDOCommitInfoHandler> handlers = new ConcurrentArray<CDOCommitInfoHandler>()
+  {
+    @Override
+    protected CDOCommitInfoHandler[] newArray(int length)
+    {
+      return new CDOCommitInfoHandler[length];
+    }
+  };
+
+  private final IListener branchManagerListener = new CDOBranchManager.EventAdapter()
+  {
+    @Override
+    protected void onBranchesDeleted(CDOBranch rootBranch, int[] branchIDs)
+    {
+      synchronized (branches)
+      {
+        for (Iterator<CDOBranch> it = branches.keySet().iterator(); it.hasNext();)
+        {
+          CDOBranch branch = it.next();
+          if (branch.isDeleted())
+          {
+            it.remove();
+          }
+        }
+      }
+
+      synchronized (cacheLock)
+      {
+        // We need to collect and delete in two loops because cache.entrySet().iterator().remove() is not supported.
+        CollectionUtil.removeAll(cache, (t, commitInfo) -> commitInfo.getBranch().isDeleted());
+      }
+    }
+  };
+
+  private CDOBranchManager branchManager;
+
   private CDOCommonRepository repository;
 
   private CommitInfoLoader loader;
-
-  private List<CDOCommitInfoHandler> handlers = new ArrayList<>();
 
   private long lastCommit = CDOBranchPoint.UNSPECIFIED_DATE;
 
@@ -75,6 +112,18 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
   }
 
   @Override
+  public CDOBranchManager getBranchManager()
+  {
+    return branchManager;
+  }
+
+  @Override
+  public void setBranchManager(CDOBranchManager branchManager)
+  {
+    this.branchManager = branchManager;
+  }
+
+  @Override
   public CommitInfoLoader getCommitInfoLoader()
   {
     return loader;
@@ -90,10 +139,7 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
   @Override
   public CDOCommitInfoHandler[] getCommitInfoHandlers()
   {
-    synchronized (handlers)
-    {
-      return handlers.toArray(new CDOCommitInfoHandler[handlers.size()]);
-    }
+    return handlers.get();
   }
 
   /**
@@ -102,10 +148,7 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
   @Override
   public void addCommitInfoHandler(CDOCommitInfoHandler handler)
   {
-    synchronized (handlers)
-    {
-      handlers.add(handler);
-    }
+    handlers.add(handler);
   }
 
   /**
@@ -114,10 +157,7 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
   @Override
   public void removeCommitInfoHandler(CDOCommitInfoHandler handler)
   {
-    synchronized (handlers)
-    {
-      handlers.remove(handler);
-    }
+    handlers.remove(handler);
   }
 
   @Override
@@ -216,15 +256,8 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
     checkActive();
     if (cache != null)
     {
-      final CDOCommitInfoHandler delegate = handler;
-      handler = new CDOCommitInfoHandler()
-      {
-        @Override
-        public void handleCommitInfo(CDOCommitInfo commitInfo)
-        {
-          delegate.handleCommitInfo(intern(commitInfo));
-        }
-      };
+      CDOCommitInfoHandler delegate = handler;
+      handler = commitInfo -> delegate.handleCommitInfo(intern(commitInfo));
     }
 
     loader.loadCommitInfos(branch, startTime, endTime, handler);
@@ -350,12 +383,22 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
+    checkState(branchManager, "branchManager"); //$NON-NLS-1$
     checkState(loader, "commitInfoLoader"); //$NON-NLS-1$
+  }
+
+  @Override
+  protected void doActivate() throws Exception
+  {
+    super.doActivate();
+    branchManager.addListener(branchManagerListener);
   }
 
   @Override
   protected void doDeactivate() throws Exception
   {
+    branchManager.removeListener(branchManagerListener);
+
     if (cache != null)
     {
       synchronized (cacheLock)
@@ -396,14 +439,17 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
 
   private BranchInfoCache getBranchInfoCache(CDOBranch branch, boolean createOnDemand)
   {
-    BranchInfoCache infoCache = branches.get(branch);
-    if (infoCache == null && createOnDemand)
+    synchronized (branches)
     {
-      infoCache = new BranchInfoCache();
-      branches.put(branch, infoCache);
-    }
+      BranchInfoCache infoCache = branches.get(branch);
+      if (infoCache == null && createOnDemand)
+      {
+        infoCache = new BranchInfoCache();
+        branches.put(branch, infoCache);
+      }
 
-    return infoCache;
+      return infoCache;
+    }
   }
 
   private CDOCommitInfo loadBaseOfBranch(CDOBranch branch)

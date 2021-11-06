@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.spi.common.revision;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -35,6 +36,11 @@ public interface InternalCDORevisionCache extends CDORevisionCache, CDORevisionI
   public InternalCDORevisionCache instantiate(CDORevision revision);
 
   public CDORevision removeRevision(CDOID id, CDOBranchVersion branchVersion);
+
+  /**
+   * @since 4.15
+   */
+  public void removeRevisions(CDOBranch... branches);
 
   public void clear();
 

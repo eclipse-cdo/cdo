@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.internal.explorer.checkouts;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
+import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.explorer.CDOExplorerManager.ElementsChangedEvent;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -82,6 +83,11 @@ public class OnlineCDOCheckout extends CDOCheckoutImpl
   {
     CDOBranchManager branchManager = session.getBranchManager();
     CDOBranch branch = branchManager.getBranch(getBranchID());
+    if (branch.isDeleted() || branch.getBase() == null)
+    {
+      throw new CDOException("Branch is deleted");
+    }
+
     setBranchPath(branch.getPathName());
 
     CDOView view = openView(session, branch);

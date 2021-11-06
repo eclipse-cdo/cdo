@@ -61,6 +61,8 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
 
   private int serverBrowserPort;
 
+  private String error;
+
   public AbstractElement()
   {
   }
@@ -138,6 +140,21 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
     {
       this.serverBrowserPort = serverBrowserPort;
       save();
+    }
+  }
+
+  @Override
+  public final String getError()
+  {
+    return error;
+  }
+
+  public final void setError(String error)
+  {
+    if (!ObjectUtil.equals(this.error, error))
+    {
+      this.error = error;
+      fireElementChangedEvent(ElementsChangedEvent.StructuralImpact.NONE);
     }
   }
 

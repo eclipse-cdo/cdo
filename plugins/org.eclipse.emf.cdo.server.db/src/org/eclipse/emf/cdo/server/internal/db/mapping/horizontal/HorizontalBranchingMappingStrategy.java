@@ -12,10 +12,14 @@
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
+import org.eclipse.emf.cdo.server.db.mapping.IBranchDeletionSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
+import org.eclipse.emf.cdo.server.internal.db.IObjectTypeMapper;
 
+import org.eclipse.net4j.db.Batch;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBConnection;
@@ -35,7 +39,7 @@ import java.sql.SQLException;
  * @author Eike Stepper
  * @since 2.0
  */
-public class HorizontalBranchingMappingStrategy extends AbstractHorizontalMappingStrategy
+public class HorizontalBranchingMappingStrategy extends AbstractHorizontalMappingStrategy implements IBranchDeletionSupport
 {
   public HorizontalBranchingMappingStrategy()
   {
@@ -195,6 +199,26 @@ public class HorizontalBranchingMappingStrategy extends AbstractHorizontalMappin
     {
       DBUtil.close(stmt);
       monitor.done();
+    }
+  }
+
+  @Override
+  public void deleteBranches(IDBStoreAccessor accessor, Batch batch, String idList)
+  {
+    // Delete the revisions, type mappings, and list elements.
+    for (IClassMapping classMapping : getClassMappings().values())
+    {
+      if (classMapping instanceof IBranchDeletionSupport)
+      {
+        ((IBranchDeletionSupport)classMapping).deleteBranches(accessor, batch, idList);
+      }
+    }
+
+    // Clear the object type cache.
+    IObjectTypeMapper objectTypeMapper = getObjectTypeMapper();
+    if (objectTypeMapper instanceof IBranchDeletionSupport)
+    {
+      ((IBranchDeletionSupport)objectTypeMapper).deleteBranches(accessor, batch, idList);
     }
   }
 }

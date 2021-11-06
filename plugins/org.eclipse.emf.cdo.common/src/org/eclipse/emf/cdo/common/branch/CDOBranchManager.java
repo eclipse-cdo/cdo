@@ -14,7 +14,10 @@ import org.eclipse.emf.cdo.common.CDOCommonRepository;
 
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.INotifier;
+
+import java.util.LinkedHashSet;
 
 /**
  * Manages a tree of {@link CDOBranch branches} and notifies about changes in this branch tree.
@@ -86,6 +89,11 @@ public interface CDOBranchManager extends INotifier
   public int getBranches(int startID, int endID, CDOBranchHandler handler);
 
   /**
+   * @since 4.15
+   */
+  public LinkedHashSet<CDOBranch> getBranches(int rootID);
+
+  /**
    * @since 4.11
    */
   public CDOBranchTag createTag(String name, CDOBranchPoint branchPoint);
@@ -134,6 +142,63 @@ public interface CDOBranchManager extends INotifier
      * @author Eike Stepper
      */
     public interface TagMovedEvent extends TagListEvent, CDOBranchTag.TagRenamedEvent
+    {
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 4.15
+   */
+  public static class EventAdapter implements IListener
+  {
+    public EventAdapter()
+    {
+    }
+
+    @Override
+    public void notifyEvent(IEvent event)
+    {
+      if (event instanceof CDOBranchChangedEvent)
+      {
+        CDOBranchChangedEvent e = (CDOBranchChangedEvent)event;
+        notifyBranchChangedEvent(e);
+      }
+      else
+      {
+        notifyOtherEvent(event);
+      }
+    }
+
+    protected void notifyBranchChangedEvent(CDOBranchChangedEvent event)
+    {
+      switch (event.getChangeKind())
+      {
+      case CREATED:
+        onBranchCreated(event.getBranch());
+        break;
+      case RENAMED:
+        onBranchRenamed(event.getBranch());
+        break;
+      case DELETED:
+        onBranchesDeleted(event.getBranch(), event.getBranchIDs());
+        break;
+      }
+    }
+
+    protected void onBranchCreated(CDOBranch branch)
+    {
+    }
+
+    protected void onBranchRenamed(CDOBranch branch)
+    {
+    }
+
+    protected void onBranchesDeleted(CDOBranch rootBranch, int[] branchIDs)
+    {
+    }
+
+    protected void notifyOtherEvent(IEvent event)
     {
     }
   }

@@ -24,22 +24,33 @@ import java.io.IOException;
  */
 public class BranchNotificationRequest extends CDOServerRequest
 {
-  private CDOBranch branch;
+  private final ChangeKind changeKind;
 
-  private ChangeKind changeKind;
+  private final CDOBranch[] branches;
 
-  public BranchNotificationRequest(CDOServerProtocol serverProtocol, CDOBranch branch, ChangeKind changeKind)
+  public BranchNotificationRequest(CDOServerProtocol serverProtocol, ChangeKind changeKind, CDOBranch... branches)
   {
     super(serverProtocol, CDOProtocolConstants.SIGNAL_BRANCH_NOTIFICATION);
-    this.branch = branch;
     this.changeKind = changeKind;
+    this.branches = branches;
   }
 
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
-    out.writeCDOBranch(branch);
     out.writeEnum(changeKind);
-    out.writeString(branch.getName());
+    out.writeXInt(branches.length);
+
+    for (int i = 0; i < branches.length; i++)
+    {
+      CDOBranch branch = branches[i];
+      out.writeXInt(branch.getID());
+
+      if (changeKind == ChangeKind.RENAMED)
+      {
+        out.writeString(branch.getName());
+        break;
+      }
+    }
   }
 }

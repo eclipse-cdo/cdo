@@ -17,8 +17,10 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
+import org.eclipse.emf.cdo.server.db.mapping.IBranchDeletionSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 
+import org.eclipse.net4j.db.Batch;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
@@ -40,7 +42,7 @@ import java.util.List;
  * @author Stefan Winkler
  * @since 3.0
  */
-public class BranchingListTableMapping extends AbstractListTableMapping
+public class BranchingListTableMapping extends AbstractListTableMapping implements IBranchDeletionSupport
 {
   private String sqlClear;
 
@@ -118,5 +120,17 @@ public class BranchingListTableMapping extends AbstractListTableMapping
     {
       DBUtil.close(stmt);
     }
+  }
+
+  @Override
+  public void deleteBranches(IDBStoreAccessor accessor, Batch batch, String idList)
+  {
+    IDBTable table = getTable();
+    if (table == null)
+    {
+      return;
+    }
+
+    batch.add("DELETE FROM " + table + " WHERE " + LIST_REVISION_BRANCH + " IN (" + idList + ")");
   }
 }

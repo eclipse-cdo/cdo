@@ -61,7 +61,7 @@ public class RenameBranchIndication extends CDOServerWriteIndication
 
     InternalSession session = getSession();
     InternalSessionManager sessionManager = getRepository().getSessionManager();
-    sessionManager.sendBranchNotification(session, branch, ChangeKind.RENAMED);
+    sessionManager.sendBranchNotification(session, ChangeKind.RENAMED, branch);
 
     out.writeBoolean(true);
   }

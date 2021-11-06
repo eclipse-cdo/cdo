@@ -111,9 +111,10 @@ public abstract class IndicationWithResponse extends SignalReactor
     SignalProtocol<?> protocol = getProtocol();
     int correlationID = -getCorrelationID();
     String message = getExceptionMessage(t);
+    String originalMessage = t.getMessage();
     final boolean closeChannel = closeChannelAfterException();
 
-    RemoteExceptionRequest request = new RemoteExceptionRequest(protocol, correlationID, responding, message, t)
+    RemoteExceptionRequest request = new RemoteExceptionRequest(protocol, correlationID, responding, message, originalMessage, t)
     {
       @Override
       protected boolean closeChannelAfterMe()

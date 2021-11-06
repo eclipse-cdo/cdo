@@ -13,6 +13,7 @@
 package org.eclipse.emf.cdo.spi.server;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
@@ -65,8 +66,15 @@ public interface ISessionProtocol extends CDOProtocol, IAuthenticationProtocol, 
 
   /**
    * @since 4.3
+   * @deprecated As of 4.15 use {@link #sendBranchNotification(ChangeKind, CDOBranch...)}.
    */
+  @Deprecated
   public void sendBranchNotification(InternalCDOBranch branch, ChangeKind changeKind) throws Exception;
+
+  /**
+   * @since 4.15
+   */
+  public void sendBranchNotification(ChangeKind changeKind, CDOBranch... branches) throws Exception;
 
   /**
    * @since 4.10
@@ -106,4 +114,9 @@ public interface ISessionProtocol extends CDOProtocol, IAuthenticationProtocol, 
    * @since 4.11
    */
   public void sendLockNotification(CDOLockChangeInfo lockChangeInfo, Set<CDOID> filter) throws Exception;
+
+  /**
+   * @since 4.15
+   */
+  public void sendViewClosedNotification(int viewID) throws Exception;
 }

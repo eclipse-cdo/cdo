@@ -18,16 +18,18 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPointRange;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockAreaNotFoundException;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
-import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.common.revision.AbstractCDORevisionCache;
 import org.eclipse.emf.cdo.internal.server.mem.MEMStore;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.model1.Company;
@@ -49,7 +51,6 @@ import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -1208,6 +1209,106 @@ public class BranchingTest extends AbstractCDOTest
     session.close();
   }
 
+  public void testDeleteBranch() throws Exception
+  {
+    CDOSession session1 = openSession1();
+    InternalCDOBranchManager branchManager = (InternalCDOBranchManager)session1.getBranchManager();
+
+    List<CDOBranch> subBranches = createBranchTree(session1, branchManager.getMainBranch(), 3);
+    assertEquals(3, subBranches.size());
+
+    // Create lock area to see if it gets deleted later.
+    CDOTransaction transaction = session1.openTransaction(subBranches.get(1));
+    String durableLockingID = transaction.enableDurableLocking();
+    CDOResource resource = transaction.getResource(getResourcePath("res1"));
+    resource.cdoWriteLock().lock();
+
+    // Load branches in second session.
+    CDOSession session2 = openSession2();
+    CDOBranchManager bm2 = session2.getBranchManager();
+    CDOBranch[] subBranches2 = { bm2.getBranch(subBranches.get(0).getID()), //
+        bm2.getBranch(subBranches.get(1).getID()), //
+        bm2.getBranch(subBranches.get(2).getID()) };
+    for (CDOBranch branch : subBranches2)
+    {
+      branch.getName(); // load()
+      branch.getBranches(); // loadBranches()
+      assertFalse(((InternalCDOBranch)branch).isProxy());
+    }
+
+    // Delete two branches.
+    CDOBranch[] deletedBranches = subBranches.get(1).delete(null);
+    assertEquals(2, deletedBranches.length);
+
+    // Deleted branch must be deleted.
+    assertEquals(subBranches.get(1), deletedBranches[0]);
+    assertDeleted(deletedBranches[0]);
+
+    // Sub branch of deleted branch must be deleted.
+    assertEquals(subBranches.get(2), deletedBranches[1]);
+    assertDeleted(deletedBranches[1]);
+
+    // Views on deleted branches must be closed by remote.
+    assertInactive(transaction);
+
+    try
+    {
+      // Lock areas for deleted branches must not exist anymore.
+      session1.openTransaction(durableLockingID);
+    }
+    catch (LockAreaNotFoundException expected)
+    {
+      assertTrue(expected.getMessage().startsWith("No lock area for"));
+    }
+
+    // Branches in second session must be deleted.
+    assertEquals(0, subBranches2[0].getBranches().length);
+    assertDeleted(subBranches2[1]);
+    assertDeleted(subBranches2[2]);
+  }
+
+  private List<CDOBranch> createBranchTree(CDOSession session, CDOBranch branch, int levels) throws Exception
+  {
+    List<CDOBranch> branches = new ArrayList<>();
+
+    if (levels > 0)
+    {
+      CDOTransaction transaction = session.openTransaction(branch);
+      CDOResource resource = transaction.getOrCreateResource(getResourcePath("res1"));
+
+      for (int i = 0; i < 10; i++)
+      {
+        Company company;
+        if (resource.getContents().isEmpty())
+        {
+          company = getModel1Factory().createCompany();
+          resource.getContents().add(company);
+        }
+        else
+        {
+          company = (Company)resource.getContents().get(0);
+          company.setName(branch.getPathName() + "/" + i);
+        }
+
+        company.getCategories().add(getModel1Factory().createCategory());
+        CDOCommitInfo commit = transaction.commit();
+
+        if (i == 4)
+        {
+          String name = branch.isMainBranch() ? "sub" : branch.getName() + "-sub";
+          CDOBranch subBranch = branch.createBranch(name, commit.getTimeStamp());
+
+          branches.add(subBranch);
+          branches.addAll(createBranchTree(session, subBranch, levels - 1));
+        }
+      }
+
+      transaction.close();
+    }
+
+    return branches;
+  }
+
   private CDOBranch modifyCompany(CDOTransaction transaction, Company company, String branchName) throws Exception
   {
     for (int i = 0; i < 10; i++)
@@ -1239,22 +1340,21 @@ public class BranchingTest extends AbstractCDOTest
     if (store instanceof MEMStore)
     {
       MEMStore memStore = (MEMStore)store;
-      dump("MEMStore", memStore.getAllRevisions());
+      dumpRevisions("MEMStore", memStore.getAllRevisions());
     }
 
-    dump("ServerCache", getRepository().getRevisionManager().getCache().getAllRevisions());
-    dump("ClientCache", ((InternalCDOSession)session).getRevisionManager().getCache().getAllRevisions());
+    dumpRevisions("ServerCache", getRepository().getRevisionManager().getCache().getAllRevisions());
+    dumpRevisions("ClientCache", ((InternalCDOSession)session).getRevisionManager().getCache().getAllRevisions());
   }
 
-  public static void dump(String label, Map<CDOBranch, List<CDORevision>> revisions)
+  private static void assertDeleted(CDOBranch branch)
   {
-    System.out.println();
-    System.out.println();
-    System.out.println(label);
-    System.out.println("===============================================================================================");
-    CDORevisionUtil.dumpAllRevisions(revisions, System.out);
-    System.out.println();
-    System.out.println();
+    assertTrue(branch.isDeleted());
+    assertTrue(((InternalCDOBranch)branch).isProxy());
+    assertEquals(null, branch.getName());
+    assertEquals(null, branch.getBase());
+    assertEquals(null, branch.getBranches());
+    assertEquals(null, branch.getPathName());
   }
 
   public static void assertEquals(Object expected, Object actual)

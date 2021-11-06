@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.spi.server;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.CDOCommonSession;
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
@@ -94,7 +95,16 @@ public interface InternalSession extends ISession, CDOIDProvider, CDOPermissionP
   @Override
   public InternalTransaction openTransaction(int viewID, CDOBranchPoint branchPoint);
 
+  /**
+   * @deprecated As of 4.15 use {@link #viewClosed(InternalView, boolean)}.
+   */
+  @Deprecated
   public void viewClosed(InternalView view);
+
+  /**
+   * @since 4.15
+   */
+  public void viewClosed(InternalView view, boolean inverse);
 
   public void setSubscribed(boolean subscribed);
 
@@ -124,8 +134,15 @@ public interface InternalSession extends ISession, CDOIDProvider, CDOPermissionP
 
   /**
    * @since 4.3
+   * @deprecated As of 4.15 use {@link #sendBranchNotification(ChangeKind, CDOBranch...)}.
    */
+  @Deprecated
   public void sendBranchNotification(InternalCDOBranch branch, ChangeKind changeKind) throws Exception;
+
+  /**
+   * @since 4.15
+   */
+  public void sendBranchNotification(ChangeKind changeKind, CDOBranch... branches) throws Exception;
 
   /**
    * @since 4.10

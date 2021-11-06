@@ -76,6 +76,7 @@ import org.eclipse.emf.internal.cdo.util.DefaultLocksChangedEvent;
 
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.ConcurrentArray;
 import org.eclipse.net4j.util.collection.HashBag;
@@ -166,15 +167,22 @@ public class CDOViewImpl extends AbstractCDOView
 
   private long lastUpdateTime;
 
+  @ExcludeFromDump
   private CDOLockOwner lockOwner;
 
   private Map<CDOObject, CDOLockState> lockStates = new WeakHashMap<>();
 
+  @ExcludeFromDump
   private ViewInvalidator invalidator = new ViewInvalidator();
 
+  @ExcludeFromDump
   private volatile boolean invalidating;
 
+  @ExcludeFromDump
   private boolean closing;
+
+  @ExcludeFromDump
+  private boolean inverseClosing;
 
   /**
    * @since 2.0
@@ -1807,10 +1815,13 @@ public class CDOViewImpl extends AbstractCDOView
 
     try
     {
-      CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
-      if (LifecycleUtil.isActive(sessionProtocol))
+      if (!inverseClosing)
       {
-        sessionProtocol.closeView(viewID);
+        CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
+        if (LifecycleUtil.isActive(sessionProtocol))
+        {
+          sessionProtocol.closeView(viewID);
+        }
       }
     }
     catch (Exception ex)
@@ -1915,6 +1926,21 @@ public class CDOViewImpl extends AbstractCDOView
     catch (Exception ex)
     {
       OM.LOG.error(ex);
+    }
+  }
+
+  @Override
+  public void inverseClose()
+  {
+    inverseClosing = true;
+
+    try
+    {
+      close();
+    }
+    finally
+    {
+      inverseClosing = false;
     }
   }
 

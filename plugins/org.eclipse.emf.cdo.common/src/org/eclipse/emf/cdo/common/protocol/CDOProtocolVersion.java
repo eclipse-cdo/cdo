@@ -19,8 +19,10 @@ class CDOProtocolVersion
 
   static
   {
-    VALUE = 42; // CDOPrefetcherManager, see bug 576893
+    VALUE = 44; // SIGNAL_VIEW_CLOSED_NOTIFICATION
 
+    // VALUE = 43; // SIGNAL_DELETE_BRANCH
+    // VALUE = 42; // CDOPrefetcherManager, see bug 576893
     // VALUE = 41; // ReconnectionSession mechanism does not update some items after a reconnection
     // VALUE = 40; // Prevent protocol version constant inlining
     // VALUE = 39; // CDOLockOwner.isDurableView becomes derived

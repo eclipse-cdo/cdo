@@ -30,7 +30,7 @@ import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.spi.common.CDOReplicationContext;
 import org.eclipse.emf.cdo.spi.common.CDOReplicationInfo;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
-import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader4;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader5;
 import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager.CommitInfoLoader;
@@ -75,7 +75,7 @@ import java.util.concurrent.Semaphore;
 public interface InternalRepository extends IRepository, //
     PackageProcessor, //
     PackageLoader, //
-    BranchLoader4, //
+    BranchLoader5, //
     RevisionLoader2, //
     CommitInfoLoader, //
     CDORevisionUnchunker, //

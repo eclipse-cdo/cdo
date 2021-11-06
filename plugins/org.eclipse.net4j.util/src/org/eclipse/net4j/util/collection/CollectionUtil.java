@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.function.BiPredicate;
 
 /**
  * Various static helper methods.
@@ -50,5 +52,31 @@ public final class CollectionUtil
     }
 
     return false;
+  }
+
+  /**
+   * @since 3.16
+   */
+  public static <K, V> List<K> removeAll(Map<K, V> map, BiPredicate<K, V> predicate)
+  {
+    List<K> keys = new ArrayList<>();
+
+    for (Map.Entry<K, V> entry : map.entrySet())
+    {
+      K key = entry.getKey();
+      V value = entry.getValue();
+
+      if (predicate.test(key, value))
+      {
+        keys.add(key);
+      }
+    }
+
+    for (K key : keys)
+    {
+      map.remove(key);
+    }
+
+    return keys;
   }
 }

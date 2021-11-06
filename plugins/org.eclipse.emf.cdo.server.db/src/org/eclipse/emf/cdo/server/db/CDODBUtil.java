@@ -78,7 +78,8 @@ public final class CDODBUtil
    */
   public static void prepareContainer(IManagedContainer container)
   {
-    container.registerFactory(new DBBrowserPage.Factory());
+    container.registerFactory(new DBBrowserPage.Tables.Factory());
+    container.registerFactory(new DBBrowserPage.Queries.Factory());
   }
 
   /**

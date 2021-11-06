@@ -44,6 +44,7 @@ import org.eclipse.emf.cdo.spi.common.CDOReplicationContext;
 import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -73,6 +74,7 @@ import org.eclipse.emf.spi.cdo.AbstractQueryIterator;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager;
+import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext;
 import org.eclipse.emf.spi.cdo.InternalCDOXATransaction.InternalCDOXACommitContext;
 
@@ -179,6 +181,17 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
   public int loadBranches(int startID, int endID, CDOBranchHandler handler)
   {
     return send(new LoadBranchesRequest(this, startID, endID, handler));
+  }
+
+  @Override
+  public CDOBranch[] deleteBranches(int branchID, OMMonitor monitor)
+  {
+    CDOBranch[] branches = send(new DeleteBranchRequest(this, branchID), monitor);
+
+    InternalCDORevisionCache cache = ((InternalCDOSession)getSession()).getRevisionManager().getCache();
+    cache.removeRevisions(branches);
+
+    return branches;
   }
 
   @Override
@@ -676,6 +689,9 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
 
     case SIGNAL_TAG_NOTIFICATION:
       return new TagNotificationIndication(this);
+
+    case SIGNAL_VIEW_CLOSED_NOTIFICATION:
+      return new ViewClosedNotificationIndication(this);
 
     default:
       return super.createSignalReactor(signalID);

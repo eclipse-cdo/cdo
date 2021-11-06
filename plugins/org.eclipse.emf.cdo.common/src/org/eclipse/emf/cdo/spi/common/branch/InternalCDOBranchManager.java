@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoad
 
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -77,6 +78,11 @@ public interface InternalCDOBranchManager extends CDOBranchManager, ILifecycle
   public InternalCDOBranch createBranch(int id, String name, InternalCDOBranch baseBranch, long baseTimeStamp);
 
   /**
+   * @since 4.15
+   */
+  public CDOBranch[] deleteBranches(int id, OMMonitor monitor);
+
+  /**
    * @since 4.3
    * @deprecated As of 4.4 use {@link CDOBranch#setName(String)}.
    */
@@ -91,8 +97,15 @@ public interface InternalCDOBranchManager extends CDOBranchManager, ILifecycle
 
   /**
    * @since 4.3
+   * @deprecated As of 4.15 use {@link #handleBranchChanged(InternalCDOBranch, ChangeKind, int...)}.
    */
+  @Deprecated
   public void handleBranchChanged(InternalCDOBranch branch, ChangeKind changeKind);
+
+  /**
+   * @since 4.15
+   */
+  public void handleBranchChanged(InternalCDOBranch branch, ChangeKind changeKind, int... branchIDs);
 
   /**
    * @since 4.11
@@ -325,7 +338,7 @@ public interface InternalCDOBranchManager extends CDOBranchManager, ILifecycle
   public interface BranchLoader2 extends BranchLoader
   {
     /**
-     * @deprecated Not yet implemented.
+     * @deprecated As of 4.15 use {@link BranchLoader5#deleteBranches(int, OMMonitor)}.
      */
     @Deprecated
     public void deleteBranch(int branchID);
@@ -359,5 +372,16 @@ public interface InternalCDOBranchManager extends CDOBranchManager, ILifecycle
     public CDOBranchPoint changeTag(AtomicInteger modCount, String oldName, String newName, CDOBranchPoint branchPoint);
 
     public void loadTags(String name, Consumer<BranchInfo> handler);
+  }
+
+  /**
+   * If the meaning of this type isn't clear, there really should be more of a description here...
+   *
+   * @author Eike Stepper
+   * @since 4.15
+   */
+  public interface BranchLoader5 extends BranchLoader4
+  {
+    public CDOBranch[] deleteBranches(int branchID, OMMonitor monitor);
   }
 }

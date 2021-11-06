@@ -17,6 +17,7 @@ package org.eclipse.emf.cdo.common.commit;
  * @author Eike Stepper
  * @since 3.0
  */
+@FunctionalInterface
 public interface CDOCommitInfoHandler
 {
   public void handleCommitInfo(CDOCommitInfo commitInfo);

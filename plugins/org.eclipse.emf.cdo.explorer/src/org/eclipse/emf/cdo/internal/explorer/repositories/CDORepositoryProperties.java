@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.internal.explorer.repositories;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.internal.explorer.AbstractElement;
 
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.properties.DefaultPropertyTester;
 import org.eclipse.net4j.util.properties.IProperties;
 import org.eclipse.net4j.util.properties.Properties;
@@ -38,6 +39,23 @@ public class CDORepositoryProperties extends Properties<CDORepository>
       protected Object eval(CDORepository repository)
       {
         return repository.getState();
+      }
+    });
+    add(new Property<CDORepository>("error")
+    {
+      @Override
+      protected Object eval(CDORepository repository)
+      {
+        return repository.getError();
+      }
+    });
+
+    add(new Property<CDORepository>("hasError")
+    {
+      @Override
+      protected Object eval(CDORepository repository)
+      {
+        return !StringUtil.isEmpty(repository.getError());
       }
     });
 
@@ -92,6 +110,16 @@ public class CDORepositoryProperties extends Properties<CDORepository>
       protected Object eval(CDORepository repository)
       {
         return repository.getURI();
+      }
+    });
+
+    add(new Property<CDORepository>("authenticating", "Authenticating", "Whether this repository is authenticating", CATEGORY_REPOSITORY)
+    {
+      @Override
+      protected Object eval(CDORepository repository)
+      {
+        IPasswordCredentials credentials = repository.getCredentials();
+        return credentials == null ? null : credentials.getUserID();
       }
     });
 

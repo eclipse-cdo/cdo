@@ -30,7 +30,7 @@ import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreAccessor.DurableLocking2;
 import org.eclipse.emf.cdo.server.IStoreAccessor.Raw2;
 import org.eclipse.emf.cdo.server.ITransaction;
-import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader4;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader5;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -63,7 +63,7 @@ import java.util.function.Consumer;
 /**
  * @author Simon McDuff
  */
-public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw2, DurableLocking2, BranchLoader4
+public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw2, DurableLocking2, BranchLoader5
 {
   private final MEMStore store;
 
@@ -133,6 +133,12 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw2, Durab
   public int loadBranches(int startID, int endID, CDOBranchHandler branchHandler)
   {
     return store.loadBranches(startID, endID, branchHandler);
+  }
+
+  @Override
+  public CDOBranch[] deleteBranches(int branchID, OMMonitor monitor)
+  {
+    return store.deleteBranches(branchID, monitor);
   }
 
   @Override

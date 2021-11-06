@@ -16,6 +16,7 @@
 package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
@@ -160,12 +161,19 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     sendBranchNotification(branch, ChangeKind.CREATED);
   }
 
+  @Deprecated
   @Override
   public void sendBranchNotification(InternalCDOBranch branch, ChangeKind changeKind) throws Exception
   {
+    sendBranchNotification(changeKind, branch);
+  }
+
+  @Override
+  public void sendBranchNotification(ChangeKind changeKind, CDOBranch... branches) throws Exception
+  {
     if (LifecycleUtil.isActive(getChannel()))
     {
-      new BranchNotificationRequest(this, branch, changeKind).sendAsync();
+      new BranchNotificationRequest(this, changeKind, branches).sendAsync();
     }
     else
     {
@@ -252,6 +260,19 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     if (LifecycleUtil.isActive(getChannel()))
     {
       new LockNotificationRequest(this, lockChangeInfo, filter).sendAsync();
+    }
+    else
+    {
+      handleInactiveSession();
+    }
+  }
+
+  @Override
+  public void sendViewClosedNotification(int viewID) throws Exception
+  {
+    if (LifecycleUtil.isActive(getChannel()))
+    {
+      new ViewClosedNotificationRequest(this, viewID).sendAsync();
     }
     else
     {
@@ -447,6 +468,9 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
 
     case SIGNAL_LOAD_TAGS:
       return new LoadTagsIndication(this);
+
+    case SIGNAL_DELETE_BRANCH:
+      return new DeleteBranchIndication(this);
 
     default:
       return super.createSignalReactor(signalID);

@@ -11,7 +11,6 @@
  */
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
-import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
@@ -33,18 +32,31 @@ public class BranchNotificationIndication extends CDOClientIndication
   @Override
   protected void indicating(CDODataInput in) throws IOException
   {
-    CDOBranch branch = in.readCDOBranch();
-    ChangeKind changeKind = in.readEnum(ChangeKind.class);
+    InternalCDOBranchManager branchManager = getSession().getBranchManager();
+    InternalCDOBranch firstBranch = null;
 
-    if (changeKind == ChangeKind.RENAMED)
+    ChangeKind changeKind = in.readEnum(ChangeKind.class);
+    int size = in.readXInt();
+    int[] branchIDs = new int[size];
+
+    for (int i = 0; i < size; i++)
     {
-      String name = in.readString();
-      ((InternalCDOBranch)branch).basicSetName(name);
+      int branchID = in.readXInt();
+      branchIDs[i] = branchID;
+
+      if (firstBranch == null)
+      {
+        firstBranch = branchManager.getBranch(branchID);
+      }
+
+      if (changeKind == ChangeKind.RENAMED)
+      {
+        String name = in.readString();
+        firstBranch.basicSetName(name);
+        break;
+      }
     }
-    else
-    {
-      InternalCDOBranchManager branchManager = getSession().getBranchManager();
-      branchManager.handleBranchChanged((InternalCDOBranch)branch, changeKind);
-    }
+
+    branchManager.handleBranchChanged(firstBranch, changeKind, branchIDs);
   }
 }

@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.spi.common.commit;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
@@ -34,6 +35,16 @@ public interface InternalCDOCommitInfoManager extends CDOCommitInfoManager, ILif
    * @since 4.2
    */
   public void setRepository(CDOCommonRepository repository);
+
+  /**
+   * @since 4.15
+   */
+  public CDOBranchManager getBranchManager();
+
+  /**
+   * @since 4.15
+   */
+  public void setBranchManager(CDOBranchManager branchManager);
 
   public CommitInfoLoader getCommitInfoLoader();
 

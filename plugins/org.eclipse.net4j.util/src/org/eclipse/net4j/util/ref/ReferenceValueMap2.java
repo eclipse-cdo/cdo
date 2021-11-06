@@ -10,6 +10,7 @@
  */
 package org.eclipse.net4j.util.ref;
 
+import org.eclipse.net4j.util.collection.CollectionUtil;
 import org.eclipse.net4j.util.collection.MapEntry;
 
 import java.lang.ref.ReferenceQueue;
@@ -17,9 +18,11 @@ import java.util.AbstractMap;
 import java.util.AbstractSet;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
+import java.util.function.BiPredicate;
 
 /**
  * A {@link Map} implementation that uses {@link KeyedReference} instances ({@link KeyedStrongReference},
@@ -40,7 +43,7 @@ public abstract class ReferenceValueMap2<K, V> extends AbstractMap<K, V>
 
   ReferenceQueue<V> queue;
 
-  private EntrySet entrySet;
+  private final EntrySet entrySet = new EntrySet();
 
   public ReferenceValueMap2()
   {
@@ -145,6 +148,14 @@ public abstract class ReferenceValueMap2<K, V> extends AbstractMap<K, V>
     return dereference(ref);
   }
 
+  /**
+   * @since 3.16
+   */
+  public List<K> removeAll(BiPredicate<K, V> predicate)
+  {
+    return CollectionUtil.removeAll(this, predicate);
+  }
+
   @Override
   public void clear()
   {
@@ -155,12 +166,6 @@ public abstract class ReferenceValueMap2<K, V> extends AbstractMap<K, V>
   @Override
   public Set<Map.Entry<K, V>> entrySet()
   {
-    if (entrySet == null)
-    {
-      purgeQueue();
-      entrySet = new EntrySet();
-    }
-
     return entrySet;
   }
 
@@ -405,8 +410,6 @@ public abstract class ReferenceValueMap2<K, V> extends AbstractMap<K, V>
 
     private MapEntry<K, V> nextEntry;
 
-    private K lastKey;
-
     public EntrySetIterator()
     {
     }
@@ -422,11 +425,10 @@ public abstract class ReferenceValueMap2<K, V> extends AbstractMap<K, V>
       while (it.hasNext())
       {
         Entry<K, KeyedReference<K, V>> entry = it.next();
-        lastKey = entry.getKey();
         V value = dereference(entry.getValue());
         if (value != null)
         {
-          nextEntry = new MapEntry<>(lastKey, value);
+          nextEntry = new MapEntry<>(entry.getKey(), value);
           return true;
         }
       }
@@ -453,19 +455,6 @@ public abstract class ReferenceValueMap2<K, V> extends AbstractMap<K, V>
       {
         nextEntry = null;
       }
-    }
-
-    @Override
-    public void remove()
-    {
-      if (lastKey == null)
-      {
-        throw new IllegalStateException("lastKey == null"); //$NON-NLS-1$
-      }
-
-      map.remove(lastKey);
-      lastKey = null;
-      nextEntry = null;
     }
   }
 }

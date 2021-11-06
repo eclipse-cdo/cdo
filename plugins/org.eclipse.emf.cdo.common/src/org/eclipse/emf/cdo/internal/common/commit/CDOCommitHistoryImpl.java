@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.internal.common.commit;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranch.BranchDeletedEvent;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOChangeKind;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
@@ -26,7 +27,9 @@ import org.eclipse.emf.cdo.internal.common.bundle.OM;
 
 import org.eclipse.net4j.util.collection.GrowingRandomAccessList;
 import org.eclipse.net4j.util.container.Container;
+import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.FinishedEvent;
+import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 
 import java.util.ArrayList;
@@ -48,6 +51,18 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
   private final CDOCommitInfoManager manager;
 
   private final CDOBranch branch;
+
+  private final IListener branchListener = new IListener()
+  {
+    @Override
+    public void notifyEvent(IEvent event)
+    {
+      if (event instanceof BranchDeletedEvent)
+      {
+        deactivate();
+      }
+    }
+  };
 
   private final GrowingRandomAccessList<CDOCommitInfo> commitInfos = new GrowingRandomAccessList<>(CDOCommitInfo.class, DEFAULT_LOAD_COUNT);
 
@@ -518,7 +533,8 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
 
   protected boolean filterCommitInfo(CDOCommitInfo commitInfo)
   {
-    return branch != null && branch != commitInfo.getBranch();
+    CDOBranch commitBranch = commitInfo.getBranch();
+    return commitBranch.isDeleted() || branch != null && commitBranch != branch;
   }
 
   protected final boolean addCommitInfo(CDOCommitInfo commitInfo)
@@ -580,6 +596,7 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
   protected void doActivate() throws Exception
   {
     super.doActivate();
+    EventUtil.addListener(branch, branchListener);
     manager.addCommitInfoHandler(this);
   }
 
@@ -594,6 +611,7 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
   protected void doDeactivate() throws Exception
   {
     manager.removeCommitInfoHandler(this);
+    EventUtil.removeListener(branch, branchListener);
     super.doDeactivate();
   }
 

@@ -17,6 +17,8 @@ import org.eclipse.emf.cdo.common.util.CDONameProvider;
 import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
 
 import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import org.eclipse.core.runtime.IAdaptable;
 
@@ -72,6 +74,13 @@ public interface CDOBranch extends CDOBranchPoint, CDONameProvider, IContainer<C
    * manually and they have negative {@link #getID() IDs}.
    */
   public boolean isLocal();
+
+  /**
+   * Returns <code>true</code> if this branch has is deleted, <code>false</code> otherwise.
+   *
+   * @since 4.15
+   */
+  public boolean isDeleted();
 
   /**
    * Returns the ID of this branch.
@@ -190,6 +199,19 @@ public interface CDOBranch extends CDOBranchPoint, CDONameProvider, IContainer<C
   public CDOBranch createBranch(String name);
 
   /**
+   * Deletes this branch and all its sub branches.
+   *
+   * @return an array of the ids of all deleted branches in top-down order.
+   * @since 4.15
+   */
+  public CDOBranch[] delete(OMMonitor monitor);
+
+  /**
+   * @since 4.15
+   */
+  public void fireDeletedEvent();
+
+  /**
    * Renames this branch with the given new name.
    *
    * @since 4.3
@@ -198,4 +220,17 @@ public interface CDOBranch extends CDOBranchPoint, CDONameProvider, IContainer<C
   @Deprecated
   public void rename(String newName);
 
+  /**
+   * An {@link IEvent event} fired from a {@link CDOBranch branch} when it gets deleted.
+   *
+   * @author Eike Stepper
+   * @since 4.15
+   * @noextend This interface is not intended to be extended by clients.
+   * @noimplement This interface is not intended to be implemented by clients.
+   */
+  public interface BranchDeletedEvent extends IEvent, CDOBranchProvider
+  {
+    @Override
+    public CDOBranch getSource();
+  }
 }

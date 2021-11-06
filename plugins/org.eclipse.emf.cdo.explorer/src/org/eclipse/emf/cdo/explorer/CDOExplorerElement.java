@@ -42,6 +42,11 @@ public interface CDOExplorerElement extends INotifier, IAdaptable, Adapter, Comp
   public void setDescription(String description);
 
   /**
+   * @since 4.11
+   */
+  public String getError();
+
+  /**
    * @since 4.8
    */
   public File getFolder();

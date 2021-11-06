@@ -427,9 +427,17 @@ public class Session extends Container<IView> implements InternalSession
 
   /**
    * @since 2.0
+   * @deprecated
    */
   @Override
+  @Deprecated
   public void viewClosed(InternalView view)
+  {
+    viewClosed(view, false);
+  }
+
+  @Override
+  public void viewClosed(InternalView view, boolean inverse)
   {
     int viewID = view.getViewID();
     InternalView removedView;
@@ -442,7 +450,22 @@ public class Session extends Container<IView> implements InternalSession
     if (removedView == view)
     {
       view.doClose();
-      fireElementRemovedEvent(view);
+
+      try
+      {
+        if (!inverse && protocol != null)
+        {
+          protocol.sendViewClosedNotification(viewID);
+        }
+      }
+      catch (Exception ex)
+      {
+        OM.LOG.error(ex);
+      }
+      finally
+      {
+        fireElementRemovedEvent(view);
+      }
     }
   }
 
@@ -528,12 +551,19 @@ public class Session extends Container<IView> implements InternalSession
     sendBranchNotification(branch, ChangeKind.CREATED);
   }
 
+  @Deprecated
   @Override
   public void sendBranchNotification(InternalCDOBranch branch, ChangeKind changeKind) throws Exception
   {
+    sendBranchNotification(changeKind, branch);
+  }
+
+  @Override
+  public void sendBranchNotification(ChangeKind changeKind, CDOBranch... branches) throws Exception
+  {
     if (protocol != null)
     {
-      protocol.sendBranchNotification(branch, changeKind);
+      protocol.sendBranchNotification(changeKind, branches);
     }
   }
 

@@ -32,11 +32,13 @@ import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
+import org.eclipse.emf.cdo.server.db.mapping.IBranchDeletionSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMappingAuditSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
+import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
@@ -45,6 +47,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
+import org.eclipse.net4j.db.Batch;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
@@ -71,7 +74,8 @@ import java.util.Set;
  * @author Stefan Winkler
  * @since 3.0
  */
-public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapping implements IClassMappingAuditSupport, IClassMappingDeltaSupport
+public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapping
+    implements IClassMappingAuditSupport, IClassMappingDeltaSupport, IBranchDeletionSupport
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HorizontalBranchingClassMapping.class);
 
@@ -104,6 +108,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   protected void initSQLStrings()
   {
     super.initSQLStrings();
+    IDBTable table = getTable();
 
     // ----------- Select Revision ---------------------------
     StringBuilder builder = new StringBuilder();
@@ -123,7 +128,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     appendFieldNames(builder, getUnsettableFields());
     appendFieldNames(builder, getListSizeFields());
     builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(getTable());
+    builder.append(table);
     builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(ATTRIBUTES_ID);
     builder.append("=? AND "); //$NON-NLS-1$
@@ -152,7 +157,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     // ----------- Insert Attributes -------------------------
     builder = new StringBuilder();
     builder.append("INSERT INTO "); //$NON-NLS-1$
-    builder.append(getTable());
+    builder.append(table);
     builder.append("("); //$NON-NLS-1$
     builder.append(ATTRIBUTES_ID);
     builder.append(", "); //$NON-NLS-1$
@@ -181,7 +186,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
 
     // ----------- Update to set revised ----------------
     builder = new StringBuilder("UPDATE "); //$NON-NLS-1$
-    builder.append(getTable());
+    builder.append(table);
     builder.append(" SET "); //$NON-NLS-1$
     builder.append(ATTRIBUTES_REVISED);
     builder.append("=? WHERE "); //$NON-NLS-1$
@@ -197,7 +202,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     builder = new StringBuilder("SELECT "); //$NON-NLS-1$
     builder.append(ATTRIBUTES_ID);
     builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(getTable());
+    builder.append(table);
     builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(ATTRIBUTES_REVISED);
     builder.append("=0"); //$NON-NLS-1$
@@ -205,7 +210,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
 
     // ----------- Raw delete one specific revision ------
     builder = new StringBuilder("DELETE FROM "); //$NON-NLS-1$
-    builder.append(getTable());
+    builder.append(table);
     builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(ATTRIBUTES_ID);
     builder.append("=? AND "); //$NON-NLS-1$
@@ -313,7 +318,8 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   public IDBPreparedStatement createResourceQueryStatement(IDBStoreAccessor accessor, CDOID folderId, String name, boolean exactMatch,
       CDOBranchPoint branchPoint)
   {
-    if (getTable() == null)
+    IDBTable table = getTable();
+    if (table == null)
     {
       return null;
     }
@@ -333,7 +339,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     builder.append("SELECT "); //$NON-NLS-1$
     builder.append(ATTRIBUTES_ID);
     builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(getTable());
+    builder.append(table);
     builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(ATTRIBUTES_VERSION);
     builder.append(">0 AND "); //$NON-NLS-1$
@@ -829,6 +835,34 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     {
       DBUtil.close(resultSet);
       DBUtil.close(stmt);
+    }
+  }
+
+  @Override
+  public void deleteBranches(IDBStoreAccessor accessor, Batch batch, String idList)
+  {
+    IDBTable table = getTable();
+    if (table == null)
+    {
+      return;
+    }
+
+    // Delete the revisions.
+    batch.add("DELETE FROM " + table + " WHERE " + ATTRIBUTES_BRANCH + " IN (" + idList + ")");
+
+    // Delete the type mappings.
+    String metaID = getMetaIDStr();
+    String join = "SELECT o." + ATTRIBUTES_ID + " FROM " + CDODBSchema.CDO_OBJECTS + " o LEFT JOIN " + table + " c ON c." + ATTRIBUTES_ID + "=o."
+        + ATTRIBUTES_ID + " WHERE o." + ATTRIBUTES_CLASS + "=" + metaID + " AND c." + ATTRIBUTES_ID + " IS NULL";
+    batch.add("DELETE FROM " + CDODBSchema.CDO_OBJECTS + " WHERE " + ATTRIBUTES_ID + " IN (" + join + ")");
+
+    // Delete the list elements.
+    for (IListMapping listMapping : getListMappings())
+    {
+      if (listMapping instanceof IBranchDeletionSupport)
+      {
+        ((IBranchDeletionSupport)listMapping).deleteBranches(accessor, batch, idList);
+      }
     }
   }
 

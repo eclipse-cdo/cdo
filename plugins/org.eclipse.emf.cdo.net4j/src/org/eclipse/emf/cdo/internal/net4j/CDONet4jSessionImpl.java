@@ -287,6 +287,7 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
     if (!commitInfoManager.isActive())
     {
       commitInfoManager.setRepository(repository);
+      commitInfoManager.setBranchManager(branchManager);
       commitInfoManager.setCommitInfoLoader(sessionProtocol);
       commitInfoManager.setLastCommitOfBranch(null, getLastUpdateTime());
       commitInfoManager.activate();

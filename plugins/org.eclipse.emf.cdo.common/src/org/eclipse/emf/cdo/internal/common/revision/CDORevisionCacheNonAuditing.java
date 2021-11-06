@@ -259,6 +259,13 @@ public class CDORevisionCacheNonAuditing extends AbstractCDORevisionCache
   }
 
   @Override
+  public void removeRevisions(CDOBranch... branches)
+  {
+    // Only needed with branching
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
   protected InternalCDORevision doRemoveRevision(CDOID id, CDOBranchVersion branchVersion)
   {
     checkBranch(branchVersion.getBranch());

@@ -103,7 +103,7 @@ public class DBStoreChunkReader extends StoreChunkReader implements IDBStoreChun
   private void prepareAddition()
   {
     // If not empty, a chunk has been already added, and the next condition needs to be OR-ed
-    if (builder.length() > 0)
+    if (builder.length() != 0)
     {
       builder.append(" OR "); //$NON-NLS-1$
     }

@@ -370,6 +370,20 @@ public final class StringUtil
   }
 
   /**
+   * @since 3.16
+   */
+  public static boolean appendSeparator(StringBuilder builder, String str)
+  {
+    if (builder.length() != 0)
+    {
+      builder.append(str);
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
    * Matches a string against a pattern.
    * <p>
    * Pattern description:

@@ -24,6 +24,9 @@ import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader.BranchInfo;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
+
+import java.util.LinkedHashSet;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -114,15 +117,27 @@ public class ClientBranchManager extends AbstractClientManager<InternalCDOBranch
   }
 
   @Override
-  public void handleBranchChanged(InternalCDOBranch branch, ChangeKind changeKind)
+  public CDOBranch[] deleteBranches(int id, OMMonitor monitor)
   {
-    delegate.handleBranchChanged(branch, changeKind);
+    return delegate.deleteBranches(id, monitor);
+  }
+
+  @Override
+  public void handleBranchChanged(InternalCDOBranch branch, ChangeKind changeKind, int... branchIDs)
+  {
+    delegate.handleBranchChanged(branch, changeKind, branchIDs);
   }
 
   @Override
   public int getBranches(int startID, int endID, CDOBranchHandler handler)
   {
     return delegate.getBranches(startID, endID, handler);
+  }
+
+  @Override
+  public LinkedHashSet<CDOBranch> getBranches(int rootID)
+  {
+    return delegate.getBranches(rootID);
   }
 
   @Override
@@ -202,6 +217,13 @@ public class ClientBranchManager extends AbstractClientManager<InternalCDOBranch
   @Override
   @Deprecated
   public void handleBranchCreated(InternalCDOBranch branch)
+  {
+    // Do nothing.
+  }
+
+  @Override
+  @Deprecated
+  public void handleBranchChanged(InternalCDOBranch branch, ChangeKind changeKind)
   {
     // Do nothing.
   }

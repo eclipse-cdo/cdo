@@ -17,6 +17,7 @@ package org.eclipse.emf.cdo.internal.server;
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.CDOCommonSession;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode;
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
@@ -391,8 +392,15 @@ public class SessionManager extends Container<ISession> implements InternalSessi
     sendBranchNotification(sender, branch, ChangeKind.CREATED);
   }
 
+  @Deprecated
   @Override
   public void sendBranchNotification(InternalSession sender, InternalCDOBranch branch, ChangeKind changeKind)
+  {
+    sendBranchNotification(sender, changeKind, branch);
+  }
+
+  @Override
+  public void sendBranchNotification(InternalSession sender, ChangeKind changeKind, CDOBranch... branches)
   {
     for (InternalSession session : getSessions())
     {
@@ -400,7 +408,7 @@ public class SessionManager extends Container<ISession> implements InternalSessi
       {
         try
         {
-          session.sendBranchNotification(branch, changeKind);
+          session.sendBranchNotification(changeKind, branches);
         }
         catch (Exception ex)
         {

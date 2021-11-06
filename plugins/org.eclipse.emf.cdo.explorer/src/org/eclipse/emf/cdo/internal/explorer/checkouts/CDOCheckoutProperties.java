@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.internal.explorer.AbstractElement;
 import org.eclipse.emf.cdo.internal.explorer.repositories.CDORepositoryProperties;
 
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.properties.DefaultPropertyTester;
 import org.eclipse.net4j.util.properties.IProperties;
 import org.eclipse.net4j.util.properties.Properties;
@@ -94,6 +95,24 @@ public class CDOCheckoutProperties extends Properties<CDOCheckout>
       protected Object eval(CDOCheckout checkout)
       {
         return checkout.isPrefetch();
+      }
+    });
+
+    add(new Property<CDOCheckout>("error")
+    {
+      @Override
+      protected Object eval(CDOCheckout checkout)
+      {
+        return checkout.getError();
+      }
+    });
+
+    add(new Property<CDOCheckout>("hasError")
+    {
+      @Override
+      protected Object eval(CDOCheckout checkout)
+      {
+        return !StringUtil.isEmpty(checkout.getError());
       }
     });
 

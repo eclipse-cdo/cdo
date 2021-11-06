@@ -12,8 +12,10 @@ package org.eclipse.emf.cdo.internal.ui;
 
 import org.eclipse.emf.cdo.CDOElement;
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.edit.CDOItemProviderAdapter.CDOPropertyDescriptor;
 import org.eclipse.emf.cdo.internal.common.RepositoryProperties;
+import org.eclipse.emf.cdo.internal.common.branch.BranchProperties;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -59,6 +61,8 @@ public class CDOPropertyAdapterFactory extends AbstractPropertyAdapterFactory
 {
   private static final IActionFilter REPOSITORY_ACTION_FILTER = new DefaultActionFilter<>(RepositoryProperties.INSTANCE);
 
+  private static final IActionFilter BRANCH_ACTION_FILTER = new DefaultActionFilter<>(BranchProperties.INSTANCE);
+
   private static final IActionFilter SESSION_ACTION_FILTER = new DefaultActionFilter<>(SessionProperties.INSTANCE);
 
   private static final IActionFilter VIEW_ACTION_FILTER = new DefaultActionFilter<>(ViewProperties.INSTANCE);
@@ -77,6 +81,11 @@ public class CDOPropertyAdapterFactory extends AbstractPropertyAdapterFactory
       if (object instanceof CDOCommonRepository)
       {
         return new DefaultPropertySource<>((CDOCommonRepository)object, RepositoryProperties.INSTANCE);
+      }
+
+      if (object instanceof CDOBranch)
+      {
+        return new DefaultPropertySource<>((CDOBranch)object, BranchProperties.INSTANCE);
       }
 
       if (object instanceof CDOSession)
@@ -104,7 +113,7 @@ public class CDOPropertyAdapterFactory extends AbstractPropertyAdapterFactory
           if (view != null && view.isActive())
           {
             Map<String, Object> emfProperties = new HashMap<>();
-            DefaultPropertySource<EObject> result = new DefaultPropertySource<EObject>(cdoObject, ObjectProperties.INSTANCE)
+            DefaultPropertySource<EObject> result = new DefaultPropertySource<>(cdoObject, ObjectProperties.INSTANCE)
             {
               @Override
               public Object getPropertyValue(Object id)
@@ -219,6 +228,11 @@ public class CDOPropertyAdapterFactory extends AbstractPropertyAdapterFactory
     if (object instanceof CDOCommonRepository)
     {
       return REPOSITORY_ACTION_FILTER;
+    }
+
+    if (object instanceof CDOBranch)
+    {
+      return BRANCH_ACTION_FILTER;
     }
 
     if (object instanceof CDOSession)

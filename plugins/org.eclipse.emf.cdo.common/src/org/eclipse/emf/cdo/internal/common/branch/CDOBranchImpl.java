@@ -27,9 +27,13 @@ import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoad
 import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.container.Container;
+import org.eclipse.net4j.util.event.Event;
+import org.eclipse.net4j.util.om.monitor.Monitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -39,7 +43,9 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
 {
   private static final InternalCDOBranch[] NO_BRANCHES = new InternalCDOBranch[0];
 
-  private InternalCDOBranchManager branchManager;
+  private final InternalCDOBranchManager branchManager;
+
+  private final CDOBranchPoint head = getPoint(CDOBranchPoint.UNSPECIFIED_DATE);
 
   private int id;
 
@@ -47,9 +53,9 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
 
   private CDOBranchPoint base;
 
-  private CDOBranchPoint head = getPoint(CDOBranchPoint.UNSPECIFIED_DATE);
-
   private InternalCDOBranch[] branches;
+
+  private boolean deleted;
 
   public CDOBranchImpl(InternalCDOBranchManager branchManager, int id, String name, CDOBranchPoint base)
   {
@@ -70,6 +76,30 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
   public boolean isLocal()
   {
     return id < 0;
+  }
+
+  @Override
+  public boolean isDeleted()
+  {
+    return deleted;
+  }
+
+  @Override
+  public synchronized void setDeleted()
+  {
+    if (base != null)
+    {
+      InternalCDOBranch branch = (InternalCDOBranch)base.getBranch();
+      if (branch != null)
+      {
+        branch.removeChild(this);
+      }
+    }
+
+    name = null;
+    base = null;
+    branches = null;
+    deleted = true;
   }
 
   @Override
@@ -99,15 +129,11 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
   public void setName(String name)
   {
     checkActive();
-    if (isMainBranch())
-    {
-      throw new IllegalArgumentException("Renaming of the MAIN branch is not supported");
-    }
 
     BranchLoader branchLoader = branchManager.getBranchLoader();
     if (!(branchLoader instanceof BranchLoader3))
     {
-      throw new UnsupportedOperationException("Renaming of branches is not supported by " + branchLoader);
+      throw new UnsupportedOperationException("Renaming branches is not supported by " + branchLoader);
     }
 
     String oldName = getName();
@@ -122,19 +148,19 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
   public void basicSetName(String name)
   {
     this.name = name;
-    branchManager.handleBranchChanged(this, ChangeKind.RENAMED);
+    branchManager.handleBranchChanged(this, ChangeKind.RENAMED, id);
   }
 
   @Override
   public CDOBranch getBranch()
   {
-    return base.getBranch();
+    return deleted ? null : base.getBranch();
   }
 
   @Override
   public long getTimeStamp()
   {
-    return base.getTimeStamp();
+    return deleted ? CDOBranchPoint.INVALID_DATE : base.getTimeStamp();
   }
 
   @Override
@@ -146,6 +172,11 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
   @Override
   public String getPathName()
   {
+    if (deleted)
+    {
+      return null;
+    }
+
     StringBuilder builder = new StringBuilder();
     computePathName(this, builder);
     return builder.toString();
@@ -228,6 +259,25 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
   public InternalCDOBranch createBranch(String name)
   {
     return createBranch(name, CDOBranchPoint.UNSPECIFIED_DATE);
+  }
+
+  @Override
+  public CDOBranch[] delete(OMMonitor monitor)
+  {
+    checkActive();
+
+    if (monitor == null)
+    {
+      monitor = new Monitor();
+    }
+
+    return branchManager.deleteBranches(id, monitor);
+  }
+
+  @Override
+  public void fireDeletedEvent()
+  {
+    fireEvent(new BranchDeletedEventImpl(this));
   }
 
   @Override
@@ -351,6 +401,37 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
   }
 
   @Override
+  public void removeChild(InternalCDOBranch branch)
+  {
+    boolean changed = true;
+
+    synchronized (this)
+    {
+      if (branches == null)
+      {
+        loadBranches();
+      }
+      else
+      {
+        List<InternalCDOBranch> list = new ArrayList<>(Arrays.asList(branches));
+        if (list.remove(branch))
+        {
+          branches = list.toArray(new InternalCDOBranch[list.size()]);
+        }
+        else
+        {
+          changed = false;
+        }
+      }
+    }
+
+    if (changed)
+    {
+      fireElementRemovedEvent(branch);
+    }
+  }
+
+  @Override
   @SuppressWarnings({ "unchecked", "rawtypes" })
   public Object getAdapter(Class adapter)
   {
@@ -397,6 +478,11 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
   {
     if (isProxy())
     {
+      if (deleted)
+      {
+        return MessageFormat.format("Branch[id={0}, DELETED]", id); //$NON-NLS-1$
+      }
+
       return MessageFormat.format("Branch[id={0}, PROXY]", id); //$NON-NLS-1$
     }
 
@@ -405,6 +491,11 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
 
   private synchronized void load()
   {
+    if (deleted)
+    {
+      return;
+    }
+
     BranchInfo branchInfo = branchManager.getBranchLoader().loadBranch(id);
     CDOBranch baseBranch = branchManager.getBranch(branchInfo.getBaseBranchID());
 
@@ -414,6 +505,11 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
 
   private synchronized void loadBranches()
   {
+    if (deleted)
+    {
+      return;
+    }
+
     SubBranchInfo[] infos = branchManager.getBranchLoader().loadSubBranches(id);
     branches = new InternalCDOBranch[infos.length];
     for (int i = 0; i < infos.length; i++)
@@ -446,6 +542,43 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
     public boolean isLocal()
     {
       return local;
+    }
+
+    @Override
+    public void setName(String name)
+    {
+      throw new IllegalArgumentException("Renaming the MAIN branch is not supported");
+    }
+
+    @Override
+    public CDOBranch[] delete(OMMonitor monitor)
+    {
+      throw new IllegalArgumentException("Deleting the MAIN branch is not supported");
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class BranchDeletedEventImpl extends Event implements BranchDeletedEvent
+  {
+    private static final long serialVersionUID = 1L;
+
+    public BranchDeletedEventImpl(CDOBranch branch)
+    {
+      super(branch);
+    }
+
+    @Override
+    public CDOBranch getSource()
+    {
+      return (CDOBranch)super.getSource();
+    }
+
+    @Override
+    public CDOBranch getBranch()
+    {
+      return getSource();
     }
   }
 }

@@ -56,7 +56,7 @@ public abstract class CDOViewContainerImpl extends Container<CDOView> implements
   }
 
   @Override
-  public CDOView getView(int viewID)
+  public InternalCDOView getView(int viewID)
   {
     checkActive();
     for (InternalCDOView view : getViews())
@@ -125,13 +125,13 @@ public abstract class CDOViewContainerImpl extends Container<CDOView> implements
   }
 
   @Override
-  public CDOView openView(CDOBranchPoint target, ResourceSet resourceSet)
+  public InternalCDOView openView(CDOBranchPoint target, ResourceSet resourceSet)
   {
     return openView(target.getBranch(), target.getTimeStamp(), resourceSet);
   }
 
   @Override
-  public CDOView openView(CDOBranchPoint target)
+  public InternalCDOView openView(CDOBranchPoint target)
   {
     return openView(target, createResourceSet());
   }
@@ -179,13 +179,13 @@ public abstract class CDOViewContainerImpl extends Container<CDOView> implements
   }
 
   @Override
-  public CDOView openView(String durableLockingID)
+  public InternalCDOView openView(String durableLockingID)
   {
     return openView(durableLockingID, createResourceSet());
   }
 
   @Override
-  public CDOView openView(String durableLockingID, ResourceSet resourceSet)
+  public InternalCDOView openView(String durableLockingID, ResourceSet resourceSet)
   {
     checkActive();
     InternalCDOView view = createView(durableLockingID);

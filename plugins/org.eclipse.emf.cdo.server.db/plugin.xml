@@ -19,8 +19,12 @@
          point="org.eclipse.net4j.util.factories">
       <factory
             productGroup="org.eclipse.emf.cdo.server.browserPages"
-            type="db"
-            class="org.eclipse.emf.cdo.server.internal.db.DBBrowserPage$Factory"/>
+            type="db-tables"
+            class="org.eclipse.emf.cdo.server.internal.db.DBBrowserPage$Tables$Factory"/>
+      <factory
+            productGroup="org.eclipse.emf.cdo.server.browserPages"
+            type="db-queries"
+            class="org.eclipse.emf.cdo.server.internal.db.DBBrowserPage$Queries$Factory"/>
       <factory
             productGroup="org.eclipse.emf.cdo.server.db.typeMappingProviders"
             type="registry"

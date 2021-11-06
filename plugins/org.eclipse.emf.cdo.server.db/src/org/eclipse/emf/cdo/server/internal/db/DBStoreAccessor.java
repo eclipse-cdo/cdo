@@ -45,6 +45,7 @@ import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.IMetaDataManager;
+import org.eclipse.emf.cdo.server.db.mapping.IBranchDeletionSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMappingAuditSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMappingDeltaSupport;
@@ -55,7 +56,7 @@ import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.AbstractHorizon
 import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.UnitMappingTable;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
-import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader4;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader5;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
@@ -69,6 +70,7 @@ import org.eclipse.emf.cdo.spi.server.InternalUnitManager;
 import org.eclipse.emf.cdo.spi.server.InternalUnitManager.InternalObjectAttacher;
 import org.eclipse.emf.cdo.spi.server.StoreAccessor;
 
+import org.eclipse.net4j.db.Batch;
 import org.eclipse.net4j.db.BatchedStatement;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
@@ -122,7 +124,7 @@ import java.util.function.Consumer;
 /**
  * @author Eike Stepper
  */
-public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, BranchLoader4, DurableLocking2
+public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, BranchLoader5, DurableLocking2
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, DBStoreAccessor.class);
 
@@ -780,7 +782,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
       try
       {
         async = monitor.forkAsync();
-        getConnection().commit();
+        connection.commit();
 
         if (maxID != CDOID.NULL)
         {
@@ -886,7 +888,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   {
     // this is called when the accessor is put back into the pool
     // we want to make sure that no DB lock is held (see Bug 276926)
-    getConnection().rollback();
+    connection.rollback();
 
     if (createdTables != null)
     {
@@ -905,14 +907,14 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   public EPackage[] loadPackageUnit(InternalCDOPackageUnit packageUnit)
   {
     IMetaDataManager metaDataManager = getStore().getMetaDataManager();
-    return metaDataManager.loadPackageUnit(getConnection(), packageUnit);
+    return metaDataManager.loadPackageUnit(connection, packageUnit);
   }
 
   @Override
   public Collection<InternalCDOPackageUnit> readPackageUnits()
   {
     IMetaDataManager metaDataManager = getStore().getMetaDataManager();
-    return metaDataManager.readPackageUnits(getConnection());
+    return metaDataManager.readPackageUnits(connection);
   }
 
   @Override
@@ -948,7 +950,6 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     try
     {
       DBStore store = getStore();
-      Connection connection = getConnection();
 
       IMetaDataManager metaDataManager = store.getMetaDataManager();
       metaDataManager.writePackageUnits(connection, packageUnits, monitor.fork());
@@ -985,7 +986,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
       stmt.setLong(4, branchInfo.getBaseTimeStamp());
 
       DBUtil.update(stmt, true);
-      getConnection().commit();
+      connection.commit();
       return Pair.create(branchID, branchInfo.getBaseTimeStamp());
     }
     catch (SQLException ex)
@@ -1077,7 +1078,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
       }
 
       DBUtil.update(stmt, true);
-      getConnection().commit();
+      connection.commit();
     }
     catch (SQLException ex)
     {
@@ -1146,6 +1147,74 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   }
 
   @Override
+  public CDOBranch[] deleteBranches(int branchID, OMMonitor monitor)
+  {
+    DBStore store = getStore();
+
+    Set<CDOBranch> branches = store.getRepository().getBranchManager().getBranches(branchID);
+    String idList = buildIDList(branches);
+
+    try (Batch batch = new Batch(connection))
+    {
+      // Delete the branches.
+      batch.add("DELETE FROM " + CDODBSchema.BRANCHES + " WHERE " + CDODBSchema.BRANCHES_ID + " IN (" + idList + ")");
+
+      // Delete the tags.
+      batch.add("DELETE FROM " + CDODBSchema.TAGS + " WHERE " + CDODBSchema.TAGS_BRANCH + " IN (" + idList + ")");
+
+      // Delete the revisions, type mappings, and list elements.
+      IMappingStrategy mappingStrategy = store.getMappingStrategy();
+      if (mappingStrategy instanceof IBranchDeletionSupport)
+      {
+        ((IBranchDeletionSupport)mappingStrategy).deleteBranches(this, batch, idList);
+      }
+
+      // Delete the commit infos.
+      CommitInfoTable commitInfoTable = store.getCommitInfoTable();
+      if (commitInfoTable != null)
+      {
+        commitInfoTable.deleteBranches(this, batch, idList);
+      }
+
+      // Delete the locks and lock areas.
+      store.getDurableLockingManager().deleteBranches(this, batch, idList);
+
+      monitor.begin();
+      Async async = monitor.forkAsync();
+
+      try
+      {
+        batch.execute();
+        connection.commit();
+      }
+      catch (SQLException ex)
+      {
+        throw new DBException(ex);
+      }
+      finally
+      {
+        async.stop();
+        monitor.done();
+      }
+    }
+
+    return branches.toArray(new CDOBranch[branches.size()]);
+  }
+
+  private String buildIDList(Set<CDOBranch> branches)
+  {
+    StringBuilder builder = new StringBuilder();
+
+    for (CDOBranch branch : branches)
+    {
+      StringUtil.appendSeparator(builder, ", ");
+      builder.append(branch.getID());
+    }
+
+    return builder.toString();
+  }
+
+  @Override
   @Deprecated
   public void deleteBranch(int branchID)
   {
@@ -1172,7 +1241,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
       stmt.setInt(2, branchID);
 
       DBUtil.update(stmt, true);
-      getConnection().commit();
+      connection.commit();
     }
     catch (SQLException ex)
     {
@@ -1319,8 +1388,6 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
       out.writeCDOID(store.getIDHandler().getLastObjectID()); // See bug 325097
     }
 
-    Connection connection = getConnection();
-
     String where = " WHERE " + CDODBSchema.BRANCHES_ID + " BETWEEN " + fromBranchID + " AND " + toBranchID;
     DBUtil.serializeTable(out, connection, CDODBSchema.BRANCHES, null, where);
 
@@ -1364,7 +1431,6 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     monitor.begin(commitWork + size + commitWork);
 
     Collection<InternalCDOPackageUnit> packageUnits = new HashSet<>();
-    Connection connection = getConnection();
 
     try
     {
@@ -1429,7 +1495,6 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   {
     try
     {
-      Connection connection = getConnection();
       connection.rollback();
     }
     catch (SQLException ex)
@@ -1437,7 +1502,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
       OM.LOG.error(ex);
     }
 
-    getStore().getMappingStrategy().removeMapping(getConnection(), packageUnits.toArray(new InternalCDOPackageUnit[packageUnits.size()]));
+    getStore().getMappingStrategy().removeMapping(connection, packageUnits.toArray(new InternalCDOPackageUnit[packageUnits.size()]));
   }
 
   protected void rawImportPackageUnits(CDODataInput in, long fromCommitTime, long toCommitTime, Collection<InternalCDOPackageUnit> packageUnits,
@@ -1449,7 +1514,6 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     {
       DBStore store = getStore();
       IMetaDataManager metaDataManager = store.getMetaDataManager();
-      Connection connection = getConnection();
 
       Collection<InternalCDOPackageUnit> imported = //
           metaDataManager.rawImport(connection, in, fromCommitTime, toCommitTime, monitor.fork());
@@ -1576,7 +1640,6 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
 
     try
     {
-      Connection connection = getConnection();
       connection.commit();
     }
     catch (SQLException ex)

@@ -12,6 +12,8 @@ package org.eclipse.net4j.util.om.trace;
 
 import org.eclipse.net4j.util.om.OMBundle;
 
+import java.util.function.Consumer;
+
 /**
  * Encapsulates a tracing {@link #getContext() context} and delegates trace calls to a bundle {@link OMTracer tracer}.
  *
@@ -81,6 +83,19 @@ public class ContextTracer
   public void format(String pattern, Throwable t, Object... args)
   {
     delegate.format(context, pattern, t, args);
+  }
+
+  /**
+   * @since 3.16
+   */
+  public boolean ifEnabled(Consumer<ContextTracer> consumer)
+  {
+    if (isEnabled())
+    {
+      consumer.accept(this);
+    }
+
+    return true;
   }
 
   public void trace(String msg, Throwable t)

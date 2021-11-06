@@ -52,7 +52,7 @@ public class CreateBranchIndication extends CDOServerWriteIndication
 
     InternalSession session = getSession();
     InternalSessionManager sessionManager = getRepository().getSessionManager();
-    sessionManager.sendBranchNotification(session, branch, ChangeKind.CREATED);
+    sessionManager.sendBranchNotification(session, ChangeKind.CREATED, branch);
 
     out.writeXInt(branch.getID());
     out.writeXLong(branch.getBase().getTimeStamp());

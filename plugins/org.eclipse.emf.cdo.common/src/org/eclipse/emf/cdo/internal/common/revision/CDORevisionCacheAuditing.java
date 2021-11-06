@@ -206,6 +206,35 @@ public class CDORevisionCacheAuditing extends AbstractCDORevisionCache
   }
 
   @Override
+  public void removeRevisions(CDOBranch... branches)
+  {
+    if (branches != null && branches.length != 0)
+    {
+      synchronized (revisionLists)
+      {
+        for (Iterator<Map.Entry<Object, RevisionList>> it = revisionLists.entrySet().iterator(); it.hasNext();)
+        {
+          Map.Entry<Object, RevisionList> entry = it.next();
+          Object key = entry.getKey();
+
+          for (int i = 0; i < branches.length; i++)
+          {
+            CDOBranch branch = branches[i];
+            if (isKeyInBranch(key, branch))
+            {
+              it.remove();
+
+              CDOID id = getID(key);
+              typeRefDecrease(id);
+              break;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @Override
   protected InternalCDORevision doRemoveRevision(CDOID id, CDOBranchVersion branchVersion)
   {
     CDOBranch branch = branchVersion.getBranch();
@@ -269,10 +298,10 @@ public class CDORevisionCacheAuditing extends AbstractCDORevisionCache
     return true;
   }
 
-  // protected RevisionList getRevisionList(CDOID id, CDOBranch branch)
-  // {
-  // return withRevisionList(id, branch, list -> list);
-  // }
+  protected CDOID getID(Object key)
+  {
+    return (CDOID)key;
+  }
 
   protected <T> T withRevisionList(CDOID id, CDOBranch branch, Function<RevisionList, T> function)
   {

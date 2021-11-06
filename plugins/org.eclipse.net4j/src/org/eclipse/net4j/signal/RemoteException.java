@@ -20,11 +20,13 @@ public class RemoteException extends RuntimeException
 {
   private static final long serialVersionUID = 1L;
 
-  private boolean whileResponding;
+  private final boolean whileResponding;
 
-  private transient RequestWithConfirmation<?> localRequest;
+  private final transient RequestWithConfirmation<?> localRequest;
 
   private StackTraceElement[] localStackTrace;
+
+  private final String originalMessage;
 
   /**
    * @since 4.0
@@ -34,17 +36,36 @@ public class RemoteException extends RuntimeException
     super(remoteCause);
     this.localRequest = localRequest;
     this.whileResponding = whileResponding;
+    originalMessage = remoteCause.getMessage();
+  }
+
+  /**
+   * @since 4.13
+   */
+  public RemoteException(String message, String originalMessage, boolean whileResponding)
+  {
+    super(message);
+    this.originalMessage = originalMessage;
+    this.whileResponding = whileResponding;
+    localRequest = null;
   }
 
   public RemoteException(String message, boolean whileResponding)
   {
-    super(message);
-    this.whileResponding = whileResponding;
+    this(message, getFirstLine(message), whileResponding);
   }
 
   public boolean whileResponding()
   {
     return whileResponding;
+  }
+
+  /**
+   * @since 4.13
+   */
+  public final String getOriginalMessage()
+  {
+    return originalMessage;
   }
 
   /**
@@ -72,5 +93,26 @@ public class RemoteException extends RuntimeException
   public StackTraceElement[] getLocalStackTrace()
   {
     return localStackTrace;
+  }
+
+  static String getFirstLine(String message)
+  {
+    if (message == null)
+    {
+      return null;
+    }
+
+    int nl = message.indexOf('\n');
+    if (nl == -1)
+    {
+      nl = message.length();
+    }
+
+    if (nl > 100)
+    {
+      nl = 100;
+    }
+
+    return message.substring(0, nl);
   }
 }

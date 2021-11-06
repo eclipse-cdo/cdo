@@ -131,7 +131,7 @@ public class RevisionManagerTest extends AbstractCDOTest
     revisions4 = createBranch(branch3, branch3.getBase().getTimeStamp() + 10, 30, DETACH);
     branch4 = revisions4[0].getBranch();
 
-    BranchingTest.dump("MEMStore", store.getAllRevisions());
+    dumpRevisions("MEMStore", store.getAllRevisions());
     revisionManager = (TestRevisionManager)getRevisionManager(repository, session);
   }
 
@@ -159,7 +159,7 @@ public class RevisionManagerTest extends AbstractCDOTest
 
   protected void dumpCache(CDOBranchPoint branchPoint)
   {
-    BranchingTest.dump(getLocation() + "Cache: Getting " + branchPoint, revisionManager.getCache().getAllRevisions());
+    dumpRevisions(getLocation() + "Cache: Getting " + branchPoint, revisionManager.getCache().getAllRevisions());
   }
 
   private InternalCDORevision[] fillBranch(CDOBranch branch, long offset, long... durations)

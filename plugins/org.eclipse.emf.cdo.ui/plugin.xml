@@ -177,6 +177,12 @@
         <adapter type="org.eclipse.ui.IActionFilter"/>
      </factory>
      <factory
+           adaptableType="org.eclipse.emf.cdo.common.branch.CDOBranch"
+           class="org.eclipse.emf.cdo.internal.ui.CDOPropertyAdapterFactory">
+        <adapter type="org.eclipse.ui.views.properties.IPropertySourceProvider"/>
+        <adapter type="org.eclipse.ui.IActionFilter"/>
+     </factory>
+     <factory
            adaptableType="org.eclipse.emf.cdo.session.CDOSession"
            class="org.eclipse.emf.cdo.internal.ui.CDOPropertyAdapterFactory">
         <adapter type="org.eclipse.ui.views.properties.IPropertySourceProvider"/>
@@ -337,6 +343,10 @@
             name="Create Branch"
             defaultHandler="org.eclipse.emf.cdo.internal.ui.handlers.CreateBranchHandler"/>
       <command
+            id="org.eclipse.emf.cdo.ui.DeleteBranch"
+            name="Delete Branch"
+            defaultHandler="org.eclipse.emf.cdo.internal.ui.handlers.DeleteBranchHandler"/>
+      <command
             id="org.eclipse.emf.cdo.ui.LockObject"
             name="Lock Object"
             defaultHandler="org.eclipse.emf.cdo.internal.ui.handlers.LockingHandler$LockObject"/>
@@ -370,6 +380,30 @@
                     <count value="1"/>
                     <iterate>
                       <adapt type="org.eclipse.emf.cdo.common.branch.CDOBranchCreationContext"/>
+                    </iterate>
+                  </and>
+               </with>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.ui.popup.any?after=group.edit">
+         <command
+               commandId="org.eclipse.emf.cdo.ui.DeleteBranch"
+               icon="icons/full/elcl16/delete_edit.gif"
+               label="Delete..."
+               style="push"
+               tooltip="Delete the branch and its sub branches">
+            <visibleWhen checkEnabled="false">
+               <with variable="activeMenuSelection">
+                  <and>
+                    <count value="1"/>
+                    <iterate>
+                      <adapt type="org.eclipse.emf.cdo.common.branch.CDOBranch">
+                        <test property="org.eclipse.emf.cdo.branch.main" value="false"/>
+                        <test property="org.eclipse.emf.cdo.branch.deleted" value="false"/>
+                      </adapt>
                     </iterate>
                   </and>
                </with>

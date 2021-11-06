@@ -631,6 +631,23 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
   }
 
   @Override
+  public CDOBranch[] deleteBranches(int branchID, OMMonitor monitor)
+  {
+    int attempt = 0;
+    for (;;)
+    {
+      try
+      {
+        return delegate.deleteBranches(branchID, monitor);
+      }
+      catch (Exception ex)
+      {
+        handleException(++attempt, ex);
+      }
+    }
+  }
+
+  @Override
   @Deprecated
   public void deleteBranch(int branchID)
   {

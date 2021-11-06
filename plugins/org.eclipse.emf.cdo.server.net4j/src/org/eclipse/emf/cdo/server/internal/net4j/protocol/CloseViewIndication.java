@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.server.IView;
+import org.eclipse.emf.cdo.spi.server.InternalView;
 
 import java.io.IOException;
 
@@ -31,10 +31,10 @@ public class CloseViewIndication extends CDOServerReadIndication
   protected void indicating(CDODataInput in) throws IOException
   {
     int viewID = in.readXInt();
-    IView view = getView(viewID);
+    InternalView view = getView(viewID);
     if (view != null)
     {
-      view.close();
+      view.inverseClose();
     }
   }
 

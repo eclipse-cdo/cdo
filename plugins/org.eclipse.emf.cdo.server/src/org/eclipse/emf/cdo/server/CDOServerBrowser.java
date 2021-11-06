@@ -69,9 +69,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -87,7 +89,7 @@ import java.util.Set;
  * <p>
  * Actual content is contributed through pluggable {@link CDOServerBrowser.Page pages}.
  * <p>
- * <b>Note:</b> Don't use this server in production, it's unsecure and does not perform or scale!
+ * <b>Note:</b> Don't use this server in production, it's insecure and does not perform or scale!
  *
  * @author Eike Stepper
  * @since 4.0
@@ -97,6 +99,8 @@ public class CDOServerBrowser extends Worker
   private static final String REQUEST_PREFIX = "GET ";
 
   private static final String REQUEST_SUFFIX = " HTTP/1.1";
+
+  private static final String UTF_8 = StandardCharsets.UTF_8.name();
 
   private ThreadLocal<Map<String, String>> params = new InheritableThreadLocal<Map<String, String>>()
   {
@@ -238,7 +242,21 @@ public class CDOServerBrowser extends Worker
   public String getParam(String key)
   {
     Map<String, String> map = params.get();
-    return map.get(key);
+    String value = map.get(key);
+
+    if (value != null)
+    {
+      try
+      {
+        value = java.net.URLDecoder.decode(value, UTF_8);
+      }
+      catch (UnsupportedEncodingException ex)
+      {
+        ex.printStackTrace();
+      }
+    }
+
+    return value;
   }
 
   /**

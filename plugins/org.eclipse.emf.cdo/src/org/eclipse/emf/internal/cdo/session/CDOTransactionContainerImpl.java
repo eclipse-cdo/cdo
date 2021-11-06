@@ -18,7 +18,6 @@ package org.eclipse.emf.internal.cdo.session;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransactionContainer;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -65,14 +64,14 @@ public abstract class CDOTransactionContainerImpl extends CDOViewContainerImpl i
   }
 
   @Override
-  public CDOTransaction openTransaction(CDOBranchPoint target, ResourceSet resourceSet)
+  public InternalCDOTransaction openTransaction(CDOBranchPoint target, ResourceSet resourceSet)
   {
     checkArg(target.getTimeStamp() == CDOBranchPoint.UNSPECIFIED_DATE, "Target is not head of a branch: " + target);
     return openTransaction(target.getBranch(), resourceSet);
   }
 
   @Override
-  public CDOTransaction openTransaction(CDOBranchPoint target)
+  public InternalCDOTransaction openTransaction(CDOBranchPoint target)
   {
     return openTransaction(target, createResourceSet());
   }
@@ -108,13 +107,13 @@ public abstract class CDOTransactionContainerImpl extends CDOViewContainerImpl i
   }
 
   @Override
-  public CDOTransaction openTransaction(String durableLockingID)
+  public InternalCDOTransaction openTransaction(String durableLockingID)
   {
     return openTransaction(durableLockingID, createResourceSet());
   }
 
   @Override
-  public CDOTransaction openTransaction(String durableLockingID, ResourceSet resourceSet)
+  public InternalCDOTransaction openTransaction(String durableLockingID, ResourceSet resourceSet)
   {
     checkActive();
     InternalCDOTransaction transaction = createTransaction(durableLockingID);

@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.ui.widgets;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitHistory;
 import org.eclipse.emf.cdo.common.commit.CDOCommitHistory.TriggerLoadElement;
@@ -315,7 +316,7 @@ public class CommitHistoryComposite extends Composite
    */
   public static class Input extends Notifier implements ILifecycle
   {
-    private IListener lifecycleListener = new IListener()
+    private final IListener lifecycleListener = new IListener()
     {
       @Override
       public void notifyEvent(IEvent event)
@@ -330,6 +331,16 @@ public class CommitHistoryComposite extends Composite
 
           fireEvent(new LifecycleEvent(Input.this, kind));
         }
+      }
+    };
+
+    private final IListener branchManagerListener = new CDOBranchManager.EventAdapter()
+    {
+      @Override
+      protected void onBranchesDeleted(CDOBranch rootBranch, int[] branchIDs)
+      {
+        deactivate();
+        fireEvent(new LifecycleEvent(Input.this, Kind.DEACTIVATED));
       }
     };
 
@@ -538,11 +549,21 @@ public class CommitHistoryComposite extends Composite
     public void activate() throws LifecycleException
     {
       EventUtil.addListener(getLifecycle(), lifecycleListener);
+
+      if (session != null)
+      {
+        EventUtil.addListener(session.getBranchManager(), branchManagerListener);
+      }
     }
 
     @Override
     public Exception deactivate()
     {
+      if (session != null)
+      {
+        EventUtil.removeListener(session.getBranchManager(), branchManagerListener);
+      }
+
       EventUtil.removeListener(getLifecycle(), lifecycleListener);
       return null;
     }

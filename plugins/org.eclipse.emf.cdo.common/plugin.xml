@@ -20,6 +20,12 @@
          namespace="org.eclipse.emf.cdo.repository"
          properties="repositoryName,repositoryUUID,repositoryType,repositoryState,repositoryCreationTime,authenticating,supportingAudits,supportingBranches,supportingUnits,serializeCommits,ensureReferentialIntegrity,idGenerationLocation,commitInfoStorage,storeType,objectIDTypes"
          class="org.eclipse.emf.cdo.internal.common.RepositoryProperties$Tester"/>
-   </extension>
+      <propertyTester
+         id="org.eclipse.emf.cdo.branch.properties"
+         type="org.eclipse.emf.cdo.common.branch.CDOBranch"
+         namespace="org.eclipse.emf.cdo.branch"
+         properties="id,name,pathName,baseBranchID,baseBranchID,baseTimeStamp,deleted,local,main,proxy"
+         class="org.eclipse.emf.cdo.internal.common.branch.BranchProperties$Tester"/>
+    </extension>
 
 </plugin>

@@ -40,6 +40,7 @@ import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IDBStoreChunkReader;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping4;
+import org.eclipse.emf.cdo.server.db.mapping.IBranchDeletionSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IListMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
@@ -48,6 +49,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
+import org.eclipse.net4j.db.Batch;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
@@ -86,7 +88,7 @@ import java.util.List;
  * @author Stefan Winkler
  * @author Lothar Werzinger
  */
-public class BranchingListTableMappingWithRanges extends AbstractBasicListTableMapping implements IListMappingDeltaSupport, IListMapping4
+public class BranchingListTableMappingWithRanges extends AbstractBasicListTableMapping implements IListMappingDeltaSupport, IListMapping4, IBranchDeletionSupport
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, BranchingListTableMappingWithRanges.class);
 
@@ -712,6 +714,17 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     }
 
     addEntry(accessor, revision.getID(), revision.getBranch().getID(), revision.getVersion(), index, value);
+  }
+
+  @Override
+  public void deleteBranches(IDBStoreAccessor accessor, Batch batch, String idList)
+  {
+    if (table == null)
+    {
+      return;
+    }
+
+    batch.add("DELETE FROM " + table + " WHERE " + LIST_REVISION_BRANCH + " IN (" + idList + ")");
   }
 
   /**

@@ -251,6 +251,11 @@ public interface InternalCDOSession
   public void handleLockNotification(CDOLockChangeInfo lockChangeInfo, InternalCDOView sender, boolean async);
 
   /**
+   * @since 4.15
+   */
+  public void handleViewClosed(int viewID);
+
+  /**
    * @since 4.3
    */
   public Object startLocalCommit();

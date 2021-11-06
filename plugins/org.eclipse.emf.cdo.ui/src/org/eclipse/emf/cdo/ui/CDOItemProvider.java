@@ -36,6 +36,7 @@ import org.eclipse.emf.cdo.internal.ui.actions.CloseSessionAction;
 import org.eclipse.emf.cdo.internal.ui.actions.CloseViewAction;
 import org.eclipse.emf.cdo.internal.ui.actions.CommitTransactionAction;
 import org.eclipse.emf.cdo.internal.ui.actions.CreateBranchAction;
+import org.eclipse.emf.cdo.internal.ui.actions.DeleteBranchAction;
 import org.eclipse.emf.cdo.internal.ui.actions.DisableViewDurabilityAction;
 import org.eclipse.emf.cdo.internal.ui.actions.EnableViewDurabilityAction;
 import org.eclipse.emf.cdo.internal.ui.actions.ExportResourceAction;
@@ -714,6 +715,11 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
   public void fillBranch(IMenuManager manager, CDOBranch branch)
   {
     manager.add(new CreateBranchAction(page, branch.getHead()));
+
+    if (!branch.isMainBranch() && !branch.isDeleted())
+    {
+      manager.add(new DeleteBranchAction(page, branch));
+    }
   }
 
   /**

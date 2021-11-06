@@ -38,7 +38,7 @@ Export-Package: org.eclipse.emf.cdo.common;version="4.15.0",
    org.eclipse.emf.cdo.server.net4j,
    org.eclipse.emf.cdo.ui,
    org.eclipse.emf.cdo.tests",
- org.eclipse.emf.cdo.internal.common.branch;version="4.15.0";x-friends:="org.eclipse.emf.cdo.tests",
+ org.eclipse.emf.cdo.internal.common.branch;version="4.15.0";x-friends:="org.eclipse.emf.cdo.tests,org.eclipse.emf.cdo.ui",
  org.eclipse.emf.cdo.internal.common.bundle;version="4.15.0";x-internal:=true,
  org.eclipse.emf.cdo.internal.common.commit;version="4.15.0";
   x-friends:="org.eclipse.emf.cdo.common,

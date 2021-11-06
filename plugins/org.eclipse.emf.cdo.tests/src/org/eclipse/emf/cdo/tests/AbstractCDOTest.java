@@ -349,6 +349,17 @@ public abstract class AbstractCDOTest extends ConfigTest
     }
   }
 
+  protected static void dumpRevisions(String label, Map<CDOBranch, List<CDORevision>> revisions)
+  {
+    System.out.println();
+    System.out.println();
+    System.out.println(label);
+    System.out.println("===============================================================================================");
+    CDORevisionUtil.dumpAllRevisions(revisions, System.out);
+    System.out.println();
+    System.out.println();
+  }
+
   protected static void dumpAllRevisions(Object allRevisionsProvider)
   {
     try

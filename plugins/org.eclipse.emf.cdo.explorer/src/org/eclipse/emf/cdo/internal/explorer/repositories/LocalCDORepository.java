@@ -205,6 +205,12 @@ public class LocalCDORepository extends CDORepositoryImpl
   }
 
   @Override
+  public boolean isAuthenticating()
+  {
+    return !isSecurityDisabled();
+  }
+
+  @Override
   public IPasswordCredentials getCredentials(String realm)
   {
     if (!isSecurityDisabled())

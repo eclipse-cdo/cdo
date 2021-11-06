@@ -36,10 +36,10 @@ class RemoteExceptionIndication extends Indication
     int correlationID = in.readInt();
     boolean responding = in.readBoolean();
     String message = in.readString();
+    String originalMessage = in.readString();
     if (TRACER.isEnabled())
     {
-      String msg = RemoteExceptionRequest.getFirstLine(message);
-      TRACER.format("Reading remote exception for signal {0}: {1}", correlationID, msg); //$NON-NLS-1$
+      TRACER.format("Reading remote exception for signal {0}: {1}", correlationID, originalMessage); //$NON-NLS-1$
     }
 
     try
@@ -53,7 +53,7 @@ class RemoteExceptionIndication extends Indication
 
     if (t == null)
     {
-      t = new RemoteException(message, responding);
+      t = new RemoteException(message, originalMessage, responding);
     }
 
     SignalProtocol<?> protocol = getProtocol();

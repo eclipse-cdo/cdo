@@ -21,10 +21,13 @@ import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockAreaNotFoundEx
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockGrade;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
+import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
+import org.eclipse.emf.cdo.server.db.mapping.IBranchDeletionSupport;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 
+import org.eclipse.net4j.db.Batch;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
@@ -50,7 +53,7 @@ import java.util.Map.Entry;
 /**
  * @author Eike Stepper
  */
-public class DurableLockingManager extends Lifecycle
+public class DurableLockingManager extends Lifecycle implements IBranchDeletionSupport
 {
   private static final String LOCK_AREAS = "CDO_LOCK_AREAS";
 
@@ -526,6 +529,17 @@ public class DurableLockingManager extends Lifecycle
       DBUtil.close(stmtInsertOrDelete);
       DBUtil.close(stmtSelect);
     }
+  }
+
+  @Override
+  public void deleteBranches(IDBStoreAccessor accessor, Batch batch, String idList)
+  {
+    // Delete the lock areas.
+    batch.add("DELETE FROM " + LOCK_AREAS + " WHERE " + LOCK_AREAS_VIEW_BRANCH + " IN (" + idList + ")");
+
+    // Delete the locks.
+    batch.add("DELETE FROM " + LOCKS + " WHERE " + LOCKS_AREA_ID + " NOT IN (SELECT " + LOCK_AREAS_ID + " FROM " + LOCK_AREAS + " WHERE " + LOCK_AREAS_ID + "="
+        + LOCKS_AREA_ID + ")");
   }
 
   public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime) throws IOException

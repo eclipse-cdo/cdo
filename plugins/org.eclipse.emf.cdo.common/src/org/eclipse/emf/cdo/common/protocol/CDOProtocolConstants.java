@@ -323,6 +323,16 @@ public interface CDOProtocolConstants
    */
   public static final short SIGNAL_TAG_NOTIFICATION = 65;
 
+  /**
+   * @since 4.15
+   */
+  public static final short SIGNAL_DELETE_BRANCH = 66;
+
+  /**
+   * @since 4.15
+   */
+  public static final short SIGNAL_VIEW_CLOSED_NOTIFICATION = 67;
+
   // //////////////////////////////////////////////////////////////////////
   // Session Refresh
 

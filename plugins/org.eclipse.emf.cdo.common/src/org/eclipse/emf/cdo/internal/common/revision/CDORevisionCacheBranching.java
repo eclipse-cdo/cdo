@@ -85,6 +85,12 @@ public class CDORevisionCacheBranching extends CDORevisionCacheAuditing
   }
 
   @Override
+  protected CDOID getID(Object key)
+  {
+    return ((CDOIDAndBranch)key).getID();
+  }
+
+  @Override
   protected boolean isKeyInBranch(Object key, CDOBranch branch)
   {
     return ((CDOIDAndBranch)key).getBranch() == branch;

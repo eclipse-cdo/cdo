@@ -74,6 +74,11 @@ public interface CDORepository extends CDOExplorerElement, //
 
   public IDGeneration getIDGeneration();
 
+  /**
+   * @since 4.11
+   */
+  public boolean isAuthenticating();
+
   @Override
   public IPasswordCredentials getCredentials();
 

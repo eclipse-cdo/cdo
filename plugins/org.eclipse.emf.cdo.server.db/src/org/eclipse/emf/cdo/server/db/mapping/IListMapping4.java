@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 /**
- * Extension interface to {@link IListMapping3}.
+ * Extension interface to {@link IListMapping}.
  *
  * @author Eike Stepper
  * @since 4.7

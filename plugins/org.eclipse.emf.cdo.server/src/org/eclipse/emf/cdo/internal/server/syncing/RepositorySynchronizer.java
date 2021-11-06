@@ -361,7 +361,7 @@ public class RepositorySynchronizer extends PriorityQueueRunner implements Inter
         }
         else
         {
-          throw new UnsupportedOperationException("Branch renaming not supported: " + RepositorySynchronizer.this);
+          throw new UnsupportedOperationException("Branch renaming and deleting not supported: " + RepositorySynchronizer.this);
         }
       }
       else if (event instanceof CDOSessionInvalidationEvent)

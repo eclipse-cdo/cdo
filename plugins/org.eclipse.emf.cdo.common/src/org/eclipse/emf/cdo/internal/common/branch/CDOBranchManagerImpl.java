@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchTag.TagEvent;
 import org.eclipse.emf.cdo.common.branch.CDOBranchTag.TagMovedEvent;
 import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
+import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
@@ -32,6 +33,7 @@ import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoad
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.event.Event;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.ref.ReferenceValueMap;
 
 import java.lang.ref.Reference;
@@ -40,6 +42,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ConcurrentModificationException;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -122,19 +125,78 @@ public class CDOBranchManagerImpl extends Container<CDOBranch> implements Intern
   }
 
   @Override
+  @Deprecated
   public void handleBranchChanged(InternalCDOBranch branch, ChangeKind changeKind)
   {
-    if (changeKind == ChangeKind.CREATED)
+    handleBranchChanged(branch, changeKind, branch.getID());
+  }
+
+  @Override
+  public void handleBranchChanged(InternalCDOBranch branch, ChangeKind changeKind, int... branchIDs)
+  {
+    switch (changeKind)
+    {
+    case CREATED:
     {
       CDOBranchPoint base = branch.getBase();
       InternalCDOBranch baseBranch = (InternalCDOBranch)base.getBranch();
       baseBranch.addChild(branch);
 
       fireEvent(new BranchCreatedEvent(branch));
+      break;
     }
-    else
+
+    case RENAMED:
     {
-      fireEvent(new BranchChangedEvent(branch, changeKind));
+      // branch.basicSetName() has already been called in BranchNotificationIndication.indicating()
+      fireEvent(new BranchChangedEvent(branch, changeKind, branchIDs));
+      break;
+    }
+
+    case DELETED:
+    {
+      CDOBranch[] deletedBranches = new CDOBranch[branchIDs.length];
+
+      synchronized (branches)
+      {
+        for (int i = 0; i < branchIDs.length; i++)
+        {
+          int branchID = branchIDs[i];
+
+          try
+          {
+            branch = branches.get(branchID);
+            if (branch != null)
+            {
+              branch.setDeleted();
+              deletedBranches[i] = branch;
+            }
+          }
+          catch (Exception ex)
+          {
+            OM.LOG.error(ex);
+          }
+        }
+      }
+
+      fireBranchDeletedEvents(deletedBranches);
+      fireEvent(new BranchChangedEvent(branch, changeKind, branchIDs));
+      break;
+    }
+
+    default:
+      break;
+    }
+  }
+
+  private void fireBranchDeletedEvents(CDOBranch[] branches)
+  {
+    for (CDOBranch branch : branches)
+    {
+      if (branch != null)
+      {
+        ((InternalCDOBranch)branch).fireDeletedEvent();
+      }
     }
   }
 
@@ -261,6 +323,17 @@ public class CDOBranchManagerImpl extends Container<CDOBranch> implements Intern
   }
 
   @Override
+  public LinkedHashSet<CDOBranch> getBranches(int rootID)
+  {
+    LinkedHashSet<CDOBranch> result = new LinkedHashSet<>();
+
+    InternalCDOBranch branch = getBranch(rootID);
+    CDOBranchUtil.forEachBranchInTree(branch, result::add);
+
+    return result;
+  }
+
+  @Override
   public InternalCDOBranch createBranch(int branchID, String name, InternalCDOBranch baseBranch, long baseTimeStamp)
   {
     checkActive();
@@ -284,6 +357,31 @@ public class CDOBranchManagerImpl extends Container<CDOBranch> implements Intern
   protected InternalCDOBranch createBranch(int branchID, String name, CDOBranchPoint base, long originalBaseTimeStamp)
   {
     return new CDOBranchImpl(this, branchID, name, base);
+  }
+
+  @Override
+  public CDOBranch[] deleteBranches(int id, OMMonitor monitor)
+  {
+    checkActive();
+
+    if (!(branchLoader instanceof BranchLoader5))
+    {
+      throw new UnsupportedOperationException("Deleting branches is not supported by " + branchLoader);
+    }
+
+    CDOBranch[] deletedBranches = ((BranchLoader5)branchLoader).deleteBranches(id, monitor);
+
+    synchronized (branches)
+    {
+      for (int i = deletedBranches.length - 1; i >= 0; --i)
+      {
+        InternalCDOBranch branch = (InternalCDOBranch)deletedBranches[i];
+        branch.setDeleted();
+      }
+    }
+
+    fireBranchDeletedEvents(deletedBranches);
+    return deletedBranches;
   }
 
   @Override
@@ -943,15 +1041,18 @@ public class CDOBranchManagerImpl extends Container<CDOBranch> implements Intern
   {
     private static final long serialVersionUID = 1L;
 
-    private CDOBranch branch;
+    private final CDOBranch branch;
 
-    private ChangeKind changeKind;
+    private final ChangeKind changeKind;
 
-    public BranchChangedEvent(CDOBranch branch, ChangeKind changeKind)
+    private final int[] branchIDs;
+
+    public BranchChangedEvent(CDOBranch branch, ChangeKind changeKind, int... branchIDs)
     {
       super(branch.getBranchManager());
       this.branch = branch;
       this.changeKind = changeKind;
+      this.branchIDs = branchIDs;
     }
 
     @Override
@@ -964,6 +1065,12 @@ public class CDOBranchManagerImpl extends Container<CDOBranch> implements Intern
     public CDOBranch getBranch()
     {
       return branch;
+    }
+
+    @Override
+    public int[] getBranchIDs()
+    {
+      return branchIDs;
     }
 
     @Override
@@ -983,7 +1090,7 @@ public class CDOBranchManagerImpl extends Container<CDOBranch> implements Intern
 
     public BranchCreatedEvent(CDOBranch branch)
     {
-      super(branch, ChangeKind.CREATED);
+      super(branch, ChangeKind.CREATED, branch.getID());
     }
   }
 }

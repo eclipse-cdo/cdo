@@ -55,6 +55,12 @@ public class CDOObjectHistoryImpl extends CDOCommitHistoryImpl implements CDOObj
   @Override
   protected boolean filterCommitInfo(CDOCommitInfo commitInfo)
   {
+    boolean filtered = super.filterCommitInfo(commitInfo);
+    if (filtered)
+    {
+      return true;
+    }
+
     if (commitInfo.isCommitDataLoaded())
     {
       CDOID id = object.cdoID();
@@ -86,7 +92,7 @@ public class CDOObjectHistoryImpl extends CDOCommitHistoryImpl implements CDOObj
       return true;
     }
 
-    return super.filterCommitInfo(commitInfo);
+    return false;
   }
 
   @Override

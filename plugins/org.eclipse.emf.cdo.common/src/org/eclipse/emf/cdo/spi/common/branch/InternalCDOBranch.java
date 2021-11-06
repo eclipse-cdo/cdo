@@ -52,7 +52,18 @@ public interface InternalCDOBranch extends CDOBranch
   public void addChild(InternalCDOBranch branch);
 
   /**
+   * @since 4.15
+   */
+  public void removeChild(InternalCDOBranch branch);
+
+  /**
+   * @since 4.15
+   */
+  public void setDeleted();
+
+  /**
    * @since 4.4
    */
   public void basicSetName(String name);
+
 }

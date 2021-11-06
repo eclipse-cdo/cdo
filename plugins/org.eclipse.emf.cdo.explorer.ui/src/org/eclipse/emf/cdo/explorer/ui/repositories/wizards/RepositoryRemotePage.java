@@ -92,6 +92,7 @@ public class RepositoryRemotePage extends AbstractRepositoryPage
 
     properties.setProperty(RemoteCDORepository.PROP_CONNECTOR_TYPE, "tcp");
     properties.setProperty(RemoteCDORepository.PROP_CONNECTOR_DESCRIPTION, connectorDescription);
+    properties.setProperty(RemoteCDORepository.PROP_AUTHENTICATING, Boolean.toString(controller.isAuthenticating()));
     properties.setProperty(RemoteCDORepository.PROP_NAME, repositoryName);
 
     VersioningMode versioningMode = controller.getVersioningMode();

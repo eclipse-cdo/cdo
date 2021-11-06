@@ -29,6 +29,11 @@ public interface CDOBranchChangedEvent extends IEvent, CDOBranchProvider
   @Override
   public CDOBranch getBranch();
 
+  /**
+   * @since 4.15
+   */
+  public int[] getBranchIDs();
+
   public ChangeKind getChangeKind();
 
   /**

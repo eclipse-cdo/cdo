@@ -388,7 +388,8 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
     public void run()
     {
       container.registerFactory(new CDOServerBrowser.ContainerBased.Factory(container));
-      container.registerFactory(new DBBrowserPage.Factory());
+      container.registerFactory(new DBBrowserPage.Tables.Factory());
+      container.registerFactory(new DBBrowserPage.Queries.Factory());
 
       String description = element.getType() + "-checkout-" + element.getID();
 

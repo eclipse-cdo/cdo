@@ -143,6 +143,8 @@ public class MasterRepositoryController
 
   private String password;
 
+  private boolean authenticating;
+
   private VersioningMode versioningMode;
 
   private IDGeneration idGeneration;
@@ -232,6 +234,11 @@ public class MasterRepositoryController
   public final String getRepositoryName()
   {
     return repositoryName;
+  }
+
+  public final boolean isAuthenticating()
+  {
+    return authenticating;
   }
 
   public final IPasswordCredentials getCredentials()
@@ -577,8 +584,6 @@ public class MasterRepositoryController
    */
   private final class RepositoryValidatingText extends ValidatingText
   {
-    private boolean authenticating;
-
     public RepositoryValidatingText(Composite parent)
     {
       super(parent);

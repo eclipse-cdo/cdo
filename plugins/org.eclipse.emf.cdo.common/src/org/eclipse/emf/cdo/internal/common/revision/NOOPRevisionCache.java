@@ -118,6 +118,12 @@ public class NOOPRevisionCache extends Lifecycle implements InternalCDORevisionC
   }
 
   @Override
+  public void removeRevisions(CDOBranch... branches)
+  {
+    // Do nothing
+  }
+
+  @Override
   public void clear()
   {
     // Do nothing

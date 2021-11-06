@@ -1104,6 +1104,16 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     }
   }
 
+  @Override
+  public void handleViewClosed(int viewID)
+  {
+    InternalCDOView view = getView(viewID);
+    if (view != null)
+    {
+      view.inverseClose();
+    }
+  }
+
   @Deprecated
   @Override
   public void handleLockNotification(CDOLockChangeInfo lockChangeInfo, InternalCDOView sender)

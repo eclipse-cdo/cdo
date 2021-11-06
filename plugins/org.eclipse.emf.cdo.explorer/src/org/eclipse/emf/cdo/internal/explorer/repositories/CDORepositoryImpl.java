@@ -12,8 +12,6 @@ package org.eclipse.emf.cdo.internal.explorer.repositories;
 
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
-import org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent;
-import org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind;
 import org.eclipse.emf.cdo.common.branch.CDOBranchCreationContext;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
@@ -105,22 +103,15 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
 
   private final Set<CDOCheckout> openCheckouts = new HashSet<>();
 
-  private final IListener branchManagerListener = new IListener()
+  private final IListener branchManagerListener = new CDOBranchManager.EventAdapter()
   {
     @Override
-    public void notifyEvent(IEvent event)
+    protected void onBranchesDeleted(CDOBranch rootBranch, int[] branchIDs)
     {
-      if (event instanceof CDOBranchChangedEvent)
+      CDORepositoryManagerImpl manager = getManager();
+      if (manager != null)
       {
-        CDOBranchChangedEvent e = (CDOBranchChangedEvent)event;
-        if (e.getChangeKind() == ChangeKind.RENAMED)
-        {
-          CDORepositoryManagerImpl manager = getManager();
-          if (manager != null)
-          {
-            manager.fireElementChangedEvent(ElementsChangedEvent.StructuralImpact.NONE, e.getBranch());
-          }
-        }
+        manager.fireElementChangedEvent(ElementsChangedEvent.StructuralImpact.ELEMENT, rootBranch);
       }
     }
   };

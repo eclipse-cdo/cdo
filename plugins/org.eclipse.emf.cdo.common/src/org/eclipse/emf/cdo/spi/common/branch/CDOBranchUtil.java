@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.internal.common.branch.CDOBranchPointRangeImpl;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 /**
@@ -303,6 +304,19 @@ public final class CDOBranchUtil
           return;
         }
       }
+    }
+  }
+
+  /**
+   * @since 4.15
+   */
+  public static void forEachBranchInTree(CDOBranch root, Consumer<CDOBranch> consumer)
+  {
+    consumer.accept(root);
+
+    for (CDOBranch branch : root.getBranches())
+    {
+      forEachBranchInTree(branch, consumer);
     }
   }
 

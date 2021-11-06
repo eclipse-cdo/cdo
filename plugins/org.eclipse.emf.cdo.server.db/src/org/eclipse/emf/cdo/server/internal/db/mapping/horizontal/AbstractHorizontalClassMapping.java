@@ -36,6 +36,7 @@ import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
+import org.eclipse.emf.cdo.server.db.IMetaDataManager;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping3;
@@ -522,6 +523,19 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
   public final EClass getEClass()
   {
     return eClass;
+  }
+
+  protected final CDOID getMetaID()
+  {
+    IMetaDataManager metaDataManager = mappingStrategy.getStore().getMetaDataManager();
+    return metaDataManager.getMetaID(eClass, CDOBranchPoint.UNSPECIFIED_DATE);
+  }
+
+  protected final String getMetaIDStr()
+  {
+    StringBuilder builder = new StringBuilder();
+    getMappingStrategy().getStore().getIDHandler().appendCDOID(builder, getMetaID());
+    return builder.toString();
   }
 
   protected final Map<EStructuralFeature, IDBField> getUnsettableFields()

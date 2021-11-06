@@ -53,15 +53,6 @@ public final class CheckoutPropertyPage extends AbstractPropertyPage<CDOCheckout
       prefetchButton = new Button(parent, SWT.CHECK);
       prefetchButton.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
       prefetchButton.setSelection(getInput().isPrefetch());
-      // button.addSelectionListener(new SelectionAdapter()
-      // {
-      // @Override
-      // public void widgetSelected(SelectionEvent e)
-      // {
-      // consumer.accept(uri);
-      // }
-      // });
-
       return prefetchButton;
     }
 

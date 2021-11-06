@@ -38,7 +38,7 @@ public class RevisionManagerClientSideTest extends RevisionManagerTest
   @Override
   protected void dumpCache(CDOBranchPoint branchPoint)
   {
-    BranchingTest.dump("ServerCache", repository.getRevisionManager().getCache().getAllRevisions());
+    dumpRevisions("ServerCache", repository.getRevisionManager().getCache().getAllRevisions());
     super.dumpCache(branchPoint);
   }
 

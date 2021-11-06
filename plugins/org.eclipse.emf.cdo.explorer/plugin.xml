@@ -42,13 +42,13 @@
          id="org.eclipse.emf.cdo.explorer.repository.properties"
          type="org.eclipse.emf.cdo.explorer.repositories.CDORepository"
          namespace="org.eclipse.emf.cdo.explorer.repository"
-         properties="state,connected,type,id,label,folder,uri"
+         properties="state,error,hasError,connected,type,id,label,folder,uri,authenticating,userID"
          class="org.eclipse.emf.cdo.internal.explorer.repositories.CDORepositoryProperties$Tester"/>
       <propertyTester
          id="org.eclipse.emf.cdo.explorer.checkout.properties"
          type="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"
          namespace="org.eclipse.emf.cdo.explorer.checkout"
-         properties="state,open,type,id,label,folder,prefetch,rootType,canContainResources,branchID,branch,timeStamp,readOnly,rootID,dirty,repositoryConnected,repositoryType,repositoryID,repositoryLabel,repositoryFolder,repositoryURI"
+         properties="state,open,type,id,label,folder,prefetch,error,hasError,rootType,canContainResources,branchID,branch,timeStamp,readOnly,rootID,dirty,repositoryConnected,repositoryType,repositoryID,repositoryLabel,repositoryFolder,repositoryURI"
          class="org.eclipse.emf.cdo.internal.explorer.checkouts.CDOCheckoutProperties$Tester"/>
       <propertyTester
          id="org.eclipse.emf.cdo.explorer.object.properties"

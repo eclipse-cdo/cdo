@@ -18,12 +18,14 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
+import org.eclipse.emf.cdo.server.db.mapping.IBranchDeletionSupport;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.commit.CDOCommitInfoUtil;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
+import org.eclipse.net4j.db.Batch;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
@@ -47,7 +49,7 @@ import java.sql.SQLException;
  * @author Eike Stepper
  * @since 4.6
  */
-public class CommitInfoTable extends Lifecycle
+public class CommitInfoTable extends Lifecycle implements IBranchDeletionSupport
 {
   private static final String COMMIT_INFOS = "cdo_commit_infos"; //$NON-NLS-1$
 
@@ -234,6 +236,18 @@ public class CommitInfoTable extends Lifecycle
       DBUtil.close(resultSet);
       DBUtil.close(stmt);
     }
+  }
+
+  @Override
+  public void deleteBranches(IDBStoreAccessor accessor, Batch batch, String idList)
+  {
+    // Delete the commit infos.
+    batch.add("DELETE FROM " + COMMIT_INFOS + " WHERE " + BRANCH + " IN (" + idList + ")");
+
+    // Adjust the previous times.
+    batch.add("UPDATE " + COMMIT_INFOS + " upd SET " + PREVIOUS_TIMESTAMP + "=(" + "SELECT MAX(" + TIMESTAMP + ") FROM " + COMMIT_INFOS + " WHERE " + TIMESTAMP
+        + "<upd." + TIMESTAMP + "" + ") WHERE " + TIMESTAMP + " IN (" + "SELECT " + TIMESTAMP + " FROM " + COMMIT_INFOS + " WHERE " + PREVIOUS_TIMESTAMP
+        + " NOT IN (SELECT " + TIMESTAMP + " FROM " + COMMIT_INFOS + ")" + ")");
   }
 
   public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime) throws IOException

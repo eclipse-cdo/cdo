@@ -74,6 +74,8 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
 
   private boolean lockNotificationsEnabled;
 
+  private boolean inverseClosing;
+
   private boolean closed;
 
   private final IRegistry<String, Object> properties = new HashMapRegistry.AutoCommit<>();
@@ -396,7 +398,7 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
   {
     if (!isClosed())
     {
-      session.viewClosed(this);
+      session.viewClosed(this, inverseClosing);
     }
 
     super.doDeactivate();
@@ -411,6 +413,21 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
     clearChangeSubscription();
     openUnitRoots.clear();
     closed = true;
+  }
+
+  @Override
+  public void inverseClose()
+  {
+    inverseClosing = true;
+
+    try
+    {
+      close();
+    }
+    finally
+    {
+      inverseClosing = false;
+    }
   }
 
   /**

@@ -62,6 +62,11 @@ public interface InternalView extends IView, ILifecycle, IExecutorServiceProvide
   public void doClose();
 
   /**
+   * @since 4.15
+   */
+  public void inverseClose();
+
+  /**
    * @since 4.5
    */
   public boolean openUnit(CDOID rootID, UnitOpcode opcode, CDORevisionHandler revisionHandler, OMMonitor monitor);

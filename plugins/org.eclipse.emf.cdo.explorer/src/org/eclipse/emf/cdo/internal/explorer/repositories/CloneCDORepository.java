@@ -90,6 +90,12 @@ public class CloneCDORepository extends CDORepositoryImpl
   }
 
   @Override
+  public boolean isAuthenticating()
+  {
+    return false;
+  }
+
+  @Override
   public final String getConnectorType()
   {
     return "jvm";

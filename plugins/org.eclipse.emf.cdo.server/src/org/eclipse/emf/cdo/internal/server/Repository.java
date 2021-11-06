@@ -73,6 +73,7 @@ import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader3;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader4;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader5;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.commit.CDOCommitInfoUtil;
 import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
@@ -84,6 +85,7 @@ import org.eclipse.emf.cdo.spi.common.revision.BaseCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.PointerCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
@@ -528,6 +530,52 @@ public class Repository extends Container<Object> implements InternalRepository
   }
 
   @Override
+  public CDOBranch[] deleteBranches(int branchID, OMMonitor monitor)
+  {
+    if (!isSupportingBranches())
+    {
+      throw new IllegalStateException("Branching is not supported by " + this);
+    }
+
+    if (branchID == CDOBranch.MAIN_BRANCH_ID)
+    {
+      throw new IllegalArgumentException("Deleting the MAIN branch is not supported");
+    }
+
+    IStoreAccessor accessor = StoreThreadLocal.getAccessor();
+    if (!(accessor instanceof BranchLoader5))
+    {
+      throw new UnsupportedOperationException("Branch deletion is not supported by " + this);
+    }
+
+    synchronized (createBranchLock)
+    {
+      CDOBranch[] branches = ((BranchLoader5)accessor).deleteBranches(branchID, monitor);
+
+      // Close views that "look" at one of the deleted branches.
+      for (InternalSession session : sessionManager.getSessions())
+      {
+        for (InternalView view : session.getViews())
+        {
+          CDOBranch viewBranch = view.getBranch();
+          for (CDOBranch branch : branches)
+          {
+            if (viewBranch == branch)
+            {
+              view.close();
+            }
+          }
+        }
+      }
+
+      InternalCDORevisionCache cache = getRevisionManager().getCache();
+      cache.removeRevisions(branches);
+
+      return branches;
+    }
+  }
+
+  @Override
   @Deprecated
   public void deleteBranch(int branchID)
   {
@@ -551,7 +599,7 @@ public class Repository extends Container<Object> implements InternalRepository
 
     if (branchID == CDOBranch.MAIN_BRANCH_ID)
     {
-      throw new IllegalArgumentException("Renaming of the MAIN branch is not supported");
+      throw new IllegalArgumentException("Renaming the MAIN branch is not supported");
     }
 
     IStoreAccessor accessor = StoreThreadLocal.getAccessor();
@@ -2628,6 +2676,11 @@ public class Repository extends Container<Object> implements InternalRepository
     if (commitInfoManager.getRepository() == null)
     {
       commitInfoManager.setRepository(this);
+    }
+
+    if (commitInfoManager.getBranchManager() == null)
+    {
+      commitInfoManager.setBranchManager(branchManager);
     }
 
     if (commitInfoManager.getCommitInfoLoader() == null)

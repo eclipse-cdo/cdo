@@ -22,6 +22,9 @@ import org.eclipse.net4j.util.security.IPasswordCredentials;
 import org.eclipse.net4j.util.ui.security.CredentialsDialog;
 
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Link;
@@ -63,6 +66,15 @@ public final class RepositoryPropertyPage extends AbstractPropertyPage<CDOReposi
     if ("folder".equals(name))
     {
       return createFileLink(parent, name, description, value);
+    }
+
+    if ("authenticating".equals(name))
+    {
+      Button button = new Button(parent, SWT.CHECK);
+      button.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
+      button.setSelection(getInput().isAuthenticating());
+      button.setEnabled(false);
+      return button;
     }
 
     if ("userID".equals(name))

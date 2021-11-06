@@ -18,10 +18,13 @@ import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.ui.BaseLabelDecorator;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
 import org.eclipse.emf.cdo.ui.CDOLabelDecorator;
+import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 
 import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleException;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+
+import org.eclipse.emf.ecore.EObject;
 
 import org.eclipse.swt.graphics.Image;
 
@@ -30,6 +33,8 @@ import org.eclipse.swt.graphics.Image;
  */
 public class CDOCheckoutLabelDecorator extends BaseLabelDecorator
 {
+  private static final Image ERROR_OVERLAY = SharedIcons.getImage(SharedIcons.OVR_ERROR);
+
   public CDOCheckoutLabelDecorator()
   {
   }
@@ -39,15 +44,24 @@ public class CDOCheckoutLabelDecorator extends BaseLabelDecorator
   {
     try
     {
+      if (element instanceof CDOCheckout)
+      {
+        CDOCheckout checkout = (CDOCheckout)element;
+        if (checkout.getError() != null)
+        {
+          return OM.getOverlayImage(image, ERROR_OVERLAY, 9, 7);
+        }
+      }
+
       CDOElement cdoElement = AdapterUtil.adapt(element, CDOElement.class);
       if (cdoElement != null)
       {
         element = cdoElement.getDelegate();
       }
 
-      if (element instanceof CDOCheckout)
+      if (element instanceof EObject)
       {
-        image = CDOLabelDecorator.decorate(image, element);
+        return CDOLabelDecorator.decorate(image, element);
       }
     }
     catch (LifecycleException ex)
@@ -133,6 +147,12 @@ public class CDOCheckoutLabelDecorator extends BaseLabelDecorator
           {
             text += "  clean";
           }
+        }
+
+        String error = checkout.getError();
+        if (error != null)
+        {
+          text += "  " + error;
         }
       }
     }

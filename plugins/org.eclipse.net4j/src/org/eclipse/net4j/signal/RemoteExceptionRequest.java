@@ -23,19 +23,27 @@ class RemoteExceptionRequest extends Request
 {
   public static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SIGNAL, RemoteExceptionRequest.class);
 
-  private int correlationID;
+  private final int correlationID;
 
-  private boolean responding;
+  private final boolean responding;
 
-  private String message;
+  private final String message;
 
-  private Throwable t;
+  private final String originalMessage;
+
+  private final Throwable t;
 
   public RemoteExceptionRequest(SignalProtocol<?> protocol, int correlationID, boolean responding, String message, Throwable t)
+  {
+    this(protocol, correlationID, responding, message, RemoteException.getFirstLine(message), t);
+  }
+
+  public RemoteExceptionRequest(SignalProtocol<?> protocol, int correlationID, boolean responding, String message, String originalMessage, Throwable t)
   {
     super(protocol, SignalProtocol.SIGNAL_REMOTE_EXCEPTION);
     this.correlationID = correlationID;
     this.message = message;
+    this.originalMessage = originalMessage;
     this.t = t;
     this.responding = responding;
   }
@@ -45,34 +53,13 @@ class RemoteExceptionRequest extends Request
   {
     if (TRACER.isEnabled())
     {
-      String msg = getFirstLine(message);
-      TRACER.format("Writing remote exception for signal {0}: {1}", correlationID, msg); //$NON-NLS-1$
+      TRACER.format("Writing remote exception for signal {0}: {1}", correlationID, originalMessage); //$NON-NLS-1$
     }
 
     out.writeInt(correlationID);
     out.writeBoolean(responding);
     out.writeString(message);
+    out.writeString(originalMessage);
     out.writeByteArray(ExtendedIOUtil.serializeThrowable(t));
-  }
-
-  static String getFirstLine(String message)
-  {
-    if (message == null)
-    {
-      return null;
-    }
-
-    int nl = message.indexOf('\n');
-    if (nl == -1)
-    {
-      nl = message.length();
-    }
-
-    if (nl > 100)
-    {
-      nl = 100;
-    }
-
-    return message.substring(0, nl);
   }
 }

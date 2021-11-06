@@ -21,11 +21,13 @@ import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager.CheckoutStateEvent;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
 import org.eclipse.emf.cdo.explorer.ui.checkouts.actions.OpenWithActionProvider;
+import org.eclipse.emf.cdo.internal.explorer.AbstractElement;
 import org.eclipse.emf.cdo.internal.ui.CDOContentProvider;
 import org.eclipse.emf.cdo.internal.ui.RunnableViewerRefresh;
 import org.eclipse.emf.cdo.internal.ui.ViewerUtil;
 import org.eclipse.emf.cdo.ui.CDOItemProvider;
 
+import org.eclipse.net4j.signal.RemoteException;
 import org.eclipse.net4j.util.container.IContainerEvent;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
@@ -441,10 +443,20 @@ public class CDOCheckoutContentProvider extends CDOContentProvider<CDOCheckout> 
                 try
                 {
                   checkout.open();
+                  ((AbstractElement)checkout).setError(null);
                 }
                 catch (Exception ex)
                 {
                   OM.LOG.error(ex);
+
+                  if (ex instanceof RemoteException)
+                  {
+                    ((AbstractElement)checkout).setError(((RemoteException)ex).getOriginalMessage());
+                  }
+                  else
+                  {
+                    ((AbstractElement)checkout).setError(ex.getMessage());
+                  }
                 }
 
                 return Status.OK_STATUS;

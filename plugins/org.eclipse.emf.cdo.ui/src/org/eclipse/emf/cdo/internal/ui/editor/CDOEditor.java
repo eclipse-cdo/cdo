@@ -2969,11 +2969,14 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
         };
       }
 
-      if (!CDOUtil.getResources(editingDomain.getResourceSet()).isEmpty())
+      if (contentOutlineViewer != null)
       {
-        // Select the root object in the view.
-        //
-        contentOutlineViewer.setSelection(new StructuredSelection(CDOUtil.getResources(editingDomain.getResourceSet()).get(0)), true);
+        if (!CDOUtil.getResources(editingDomain.getResourceSet()).isEmpty())
+        {
+          // Select the root object in the view.
+          //
+          contentOutlineViewer.setSelection(new StructuredSelection(CDOUtil.getResources(editingDomain.getResourceSet()).get(0)), true);
+        }
       }
     }
 

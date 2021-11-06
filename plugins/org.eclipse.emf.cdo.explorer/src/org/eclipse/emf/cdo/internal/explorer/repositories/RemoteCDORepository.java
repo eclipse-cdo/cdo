@@ -22,28 +22,32 @@ public class RemoteCDORepository extends CDORepositoryImpl
 
   public static final String PROP_CONNECTOR_DESCRIPTION = "connectorDescription";
 
+  public static final String PROP_AUTHENTICATING = "authenticating";
+
   private String connectorType;
 
   private String connectorDescription;
+
+  private boolean authenticating;
 
   public RemoteCDORepository()
   {
   }
 
   @Override
-  public boolean isRemote()
+  public final boolean isRemote()
   {
     return true;
   }
 
   @Override
-  public boolean isClone()
+  public final boolean isClone()
   {
     return false;
   }
 
   @Override
-  public boolean isLocal()
+  public final boolean isLocal()
   {
     return false;
   }
@@ -61,6 +65,12 @@ public class RemoteCDORepository extends CDORepositoryImpl
   }
 
   @Override
+  public final boolean isAuthenticating()
+  {
+    return authenticating;
+  }
+
+  @Override
   public String getURI()
   {
     return connectorType + "://" + connectorDescription + "/" + getName();
@@ -72,6 +82,7 @@ public class RemoteCDORepository extends CDORepositoryImpl
     super.init(folder, type, properties);
     connectorType = properties.getProperty(PROP_CONNECTOR_TYPE);
     connectorDescription = properties.getProperty(PROP_CONNECTOR_DESCRIPTION);
+    authenticating = Boolean.parseBoolean(properties.getProperty(PROP_AUTHENTICATING, Boolean.TRUE.toString()));
   }
 
   @Override
@@ -80,5 +91,6 @@ public class RemoteCDORepository extends CDORepositoryImpl
     super.collectProperties(properties);
     properties.setProperty(PROP_CONNECTOR_TYPE, connectorType);
     properties.setProperty(PROP_CONNECTOR_DESCRIPTION, connectorDescription);
+    properties.setProperty(PROP_AUTHENTICATING, Boolean.toString(authenticating));
   }
 }

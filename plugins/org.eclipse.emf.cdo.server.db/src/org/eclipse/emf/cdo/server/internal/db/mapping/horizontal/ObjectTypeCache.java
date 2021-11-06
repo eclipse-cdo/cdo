@@ -13,6 +13,9 @@ package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
+import org.eclipse.emf.cdo.server.db.mapping.IBranchDeletionSupport;
+
+import org.eclipse.net4j.db.Batch;
 
 import java.sql.Connection;
 import java.util.Collections;
@@ -23,7 +26,7 @@ import java.util.Map;
  * @author Eike Stepper
  * @since 4.0
  */
-public class ObjectTypeCache extends DelegatingObjectTypeMapper
+public class ObjectTypeCache extends DelegatingObjectTypeMapper implements IBranchDeletionSupport
 {
   public static final int DEFAULT_CACHE_CAPACITY = 100000;
 
@@ -34,6 +37,12 @@ public class ObjectTypeCache extends DelegatingObjectTypeMapper
   public ObjectTypeCache(int cacheSize)
   {
     this.cacheSize = cacheSize;
+  }
+
+  @Override
+  public void deleteBranches(IDBStoreAccessor accessor, Batch batch, String idList)
+  {
+    memoryCache.clear();
   }
 
   @Override

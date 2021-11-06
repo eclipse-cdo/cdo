@@ -278,6 +278,12 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
   }
 
   @Override
+  public void inverseClose()
+  {
+    // Do nothing.
+  }
+
+  @Override
   public boolean isClosing()
   {
     return closing;
@@ -1372,6 +1378,12 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     @Override
     @Deprecated
     public void handleBranchNotification(InternalCDOBranch branch)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void handleViewClosed(int viewID)
     {
       throw new UnsupportedOperationException();
     }

@@ -10,16 +10,17 @@
  */
 package org.eclipse.emf.cdo.server.internal.embedded;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchHandler;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.ISessionManager;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
-import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader3;
-import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader4;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader5;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 
 import org.eclipse.net4j.util.collection.Pair;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
@@ -27,19 +28,19 @@ import java.util.function.Consumer;
 /**
  * @author Eike Stepper
  */
-public final class ServerBranchLoader implements BranchLoader4
+public final class ServerBranchLoader implements BranchLoader5
 {
-  private final BranchLoader4 delegate;
+  private final BranchLoader5 delegate;
 
   private final ISessionManager sessionManager;
 
-  public ServerBranchLoader(BranchLoader4 delegate)
+  public ServerBranchLoader(BranchLoader5 delegate)
   {
     this.delegate = delegate;
     sessionManager = ((IRepository)delegate).getSessionManager();
   }
 
-  public BranchLoader3 getDelegate()
+  public BranchLoader5 getDelegate()
   {
     return delegate;
   }
@@ -182,15 +183,36 @@ public final class ServerBranchLoader implements BranchLoader4
   }
 
   @Override
+  public CDOBranch[] deleteBranches(int branchID, OMMonitor monitor)
+  {
+    if (!StoreThreadLocal.hasSession())
+    {
+      try
+      {
+        StoreThreadLocal.setSession(getServerSession());
+        return delegate.deleteBranches(branchID, monitor);
+      }
+      finally
+      {
+        StoreThreadLocal.release();
+      }
+    }
+
+    return delegate.deleteBranches(branchID, monitor);
+  }
+
+  @Override
   @Deprecated
   public void deleteBranch(int branchID)
   {
+    throw new UnsupportedOperationException();
   }
 
   @Override
   @Deprecated
   public void renameBranch(int branchID, String newName)
   {
+    throw new UnsupportedOperationException();
   }
 
   private InternalSession getServerSession()

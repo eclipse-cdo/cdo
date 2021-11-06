@@ -45,13 +45,13 @@ public interface IMappingConstants
 
   public static final String LIST_REVISION_ID = "CDO_SOURCE"; //$NON-NLS-1$
 
-  public static final String LIST_REVISION_VERSION = "CDO_VERSION"; //$NON-NLS-1$
+  public static final String LIST_REVISION_VERSION = ATTRIBUTES_VERSION;
 
   public static final String LIST_REVISION_VERSION_ADDED = "CDO_VERSION_ADDED"; //$NON-NLS-1$
 
   public static final String LIST_REVISION_VERSION_REMOVED = "CDO_VERSION_REMOVED"; //$NON-NLS-1$
 
-  public static final String LIST_REVISION_BRANCH = "CDO_BRANCH"; //$NON-NLS-1$
+  public static final String LIST_REVISION_BRANCH = ATTRIBUTES_BRANCH;
 
   public static final String LIST_IDX = "CDO_IDX"; //$NON-NLS-1$
 

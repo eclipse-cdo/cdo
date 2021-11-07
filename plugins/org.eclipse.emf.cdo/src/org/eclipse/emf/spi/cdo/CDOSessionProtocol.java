@@ -14,6 +14,7 @@ package org.eclipse.emf.spi.cdo;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOObjectReference;
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
+import org.eclipse.emf.cdo.common.CDOCommonSession.AuthorizableOperation;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
@@ -327,6 +328,11 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   public Map<CDORevision, CDOPermission> loadPermissions(InternalCDORevision[] revisions);
 
   /**
+   * @since 4.15
+   */
+  public String[] authorizeOperations(AuthorizableOperation[] operations);
+
+  /**
    * Requests that the server initiate the change-credentials protocol.
    * This is an optional session protocol operation.
    *
@@ -417,6 +423,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
     private boolean ensuringReferentialIntegrity;
 
+    private boolean authorizingOperations;
+
     private final List<InternalCDOPackageUnit> packageUnits = new ArrayList<>();
 
     private IDGenerationLocation idGenerationLocation;
@@ -455,6 +463,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
       supportingUnits = in.readBoolean();
       serializingCommits = in.readBoolean();
       ensuringReferentialIntegrity = in.readBoolean();
+      authorizingOperations = in.readBoolean();
       idGenerationLocation = in.readEnum(IDGenerationLocation.class);
       commitInfoStorage = in.readEnum(CommitInfoStorage.class);
 
@@ -626,6 +635,15 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     public boolean isEnsuringReferentialIntegrity()
     {
       return ensuringReferentialIntegrity;
+    }
+
+    /**
+     * @since 4.15
+     */
+    @Override
+    public boolean isAuthorizingOperations()
+    {
+      return authorizingOperations;
     }
 
     /**

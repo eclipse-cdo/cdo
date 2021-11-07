@@ -12,7 +12,6 @@ package org.eclipse.net4j.signal;
 
 import org.eclipse.net4j.buffer.BufferInputStream;
 import org.eclipse.net4j.buffer.BufferOutputStream;
-import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
@@ -60,7 +59,7 @@ public abstract class IndicationWithResponse extends SignalReactor
    */
   protected String getExceptionMessage(Throwable t)
   {
-    return StringUtil.formatException(t);
+    return t.getLocalizedMessage();
   }
 
   @Override
@@ -111,10 +110,9 @@ public abstract class IndicationWithResponse extends SignalReactor
     SignalProtocol<?> protocol = getProtocol();
     int correlationID = -getCorrelationID();
     String message = getExceptionMessage(t);
-    String originalMessage = t.getMessage();
-    final boolean closeChannel = closeChannelAfterException();
+    boolean closeChannel = closeChannelAfterException();
 
-    RemoteExceptionRequest request = new RemoteExceptionRequest(protocol, correlationID, responding, message, originalMessage, t)
+    RemoteExceptionRequest request = new RemoteExceptionRequest(protocol, correlationID, responding, message, t)
     {
       @Override
       protected boolean closeChannelAfterMe()

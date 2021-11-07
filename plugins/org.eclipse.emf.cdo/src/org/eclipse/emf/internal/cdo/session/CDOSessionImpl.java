@@ -710,6 +710,18 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     return null;
   }
 
+  @Override
+  public String[] authorizeOperations(AuthorizableOperation... operations)
+  {
+    if (repositoryInfo.isAuthorizingOperations())
+    {
+      return sessionProtocol.authorizeOperations(operations);
+    }
+
+    // No vetoes -> authorized.
+    return new String[operations.length];
+  }
+
   /**
    * @since 2.0
    */

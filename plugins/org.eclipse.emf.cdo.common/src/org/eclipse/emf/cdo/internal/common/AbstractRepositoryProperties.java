@@ -97,9 +97,7 @@ public abstract class AbstractRepositoryProperties<RECEIVER> extends Properties<
       }
     });
 
-    add(new Property<RECEIVER>("authenticating", Messages.getString("RepositoryPropertyTester_40"), //
-        Messages.getString("RepositoryPropertyTester_41"), //$NON-NLS-1$
-        CATEGORY_REPOSITORY)
+    add(new Property<RECEIVER>("authenticating")
     {
       @Override
       protected Object eval(RECEIVER receiver)
@@ -160,6 +158,17 @@ public abstract class AbstractRepositoryProperties<RECEIVER> extends Properties<
       protected Object eval(RECEIVER receiver)
       {
         return getRepository(receiver).isEnsuringReferentialIntegrity();
+      }
+    });
+
+    add(new Property<RECEIVER>("authorizingOperations", Messages.getString("RepositoryPropertyTester_44"), //
+        Messages.getString("RepositoryPropertyTester_45"), //$NON-NLS-1$
+        CATEGORY_REPOSITORY)
+    {
+      @Override
+      protected Object eval(RECEIVER receiver)
+      {
+        return getRepository(receiver).isAuthorizingOperations();
       }
     });
 
@@ -332,6 +341,12 @@ public abstract class AbstractRepositoryProperties<RECEIVER> extends Properties<
 
   @Override
   public boolean isEnsuringReferentialIntegrity()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public boolean isAuthorizingOperations()
   {
     throw new UnsupportedOperationException();
   }

@@ -44,6 +44,7 @@ import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
+import org.eclipse.emf.cdo.spi.server.IOperationAuthorizer;
 import org.eclipse.emf.cdo.spi.server.ISessionProtocol;
 import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
@@ -505,6 +506,21 @@ public class Session extends Container<IView> implements InternalSession
   public CDOID provideCDOID(Object idObject)
   {
     return (CDOID)idObject;
+  }
+
+  @Override
+  public String[] authorizeOperations(AuthorizableOperation... operations)
+  {
+    String[] result = new String[operations.length];
+    IOperationAuthorizer authorizer = getRepository();
+
+    for (int i = 0; i < operations.length; i++)
+    {
+      AuthorizableOperation operation = operations[i];
+      result[i] = authorizer.authorizeOperation(this, operation);
+    }
+
+    return result;
   }
 
   @Override

@@ -12,6 +12,7 @@
 package org.eclipse.net4j.util.ui.handlers;
 
 import org.eclipse.net4j.util.internal.ui.bundle.OM;
+import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -19,6 +20,8 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.jface.dialogs.ErrorDialog;
+import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
  * @author Eike Stepper
@@ -74,13 +77,15 @@ public abstract class LongRunningHandler extends SafeHandler
             try
             {
               doExecute(event, progressMonitor);
-              return Status.OK_STATUS;
             }
             catch (Exception ex)
             {
               OM.LOG.error(ex);
-              return new Status(IStatus.ERROR, getBundleID(), ex.getMessage(), ex);
+              UIUtil.asyncExec(() -> ErrorDialog.openError(HandlerUtil.getActiveShell(event), getErrorTitle(ex), getErrorMessage(ex),
+                  new Status(IStatus.ERROR, getBundleID(), ex.getMessage(), ex)));
             }
+
+            return Status.OK_STATUS;
           }
         }.schedule();
       }
@@ -92,6 +97,22 @@ public abstract class LongRunningHandler extends SafeHandler
     {
       CANCELED.remove();
     }
+  }
+
+  /**
+   * @since 3.12
+   */
+  protected String getErrorTitle(Exception ex)
+  {
+    return "Problem Occurred";
+  }
+
+  /**
+   * @since 3.12
+   */
+  protected String getErrorMessage(Exception ex)
+  {
+    return ex.getLocalizedMessage();
   }
 
   /**

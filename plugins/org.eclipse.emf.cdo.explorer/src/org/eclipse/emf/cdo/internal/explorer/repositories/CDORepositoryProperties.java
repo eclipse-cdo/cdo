@@ -41,6 +41,7 @@ public class CDORepositoryProperties extends Properties<CDORepository>
         return repository.getState();
       }
     });
+
     add(new Property<CDORepository>("error")
     {
       @Override
@@ -118,8 +119,7 @@ public class CDORepositoryProperties extends Properties<CDORepository>
       @Override
       protected Object eval(CDORepository repository)
       {
-        IPasswordCredentials credentials = repository.getCredentials();
-        return credentials == null ? null : credentials.getUserID();
+        return repository.isAuthenticating();
       }
     });
 

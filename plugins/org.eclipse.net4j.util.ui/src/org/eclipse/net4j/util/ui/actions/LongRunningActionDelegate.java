@@ -12,11 +12,13 @@ package org.eclipse.net4j.util.ui.actions;
 
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.internal.ui.bundle.OM;
+import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.jface.dialogs.ErrorDialog;
 
 /**
  * @author Eike Stepper
@@ -69,13 +71,15 @@ public abstract class LongRunningActionDelegate extends SafeActionDelegate
             try
             {
               doRun(progressMonitor);
-              return Status.OK_STATUS;
             }
             catch (Exception ex)
             {
               OM.LOG.error(ex);
-              return new Status(IStatus.ERROR, getBundleID(), ex.getMessage(), ex);
+              UIUtil.asyncExec(() -> ErrorDialog.openError(getShell(), getErrorTitle(ex), getErrorMessage(ex),
+                  new Status(IStatus.ERROR, getBundleID(), ex.getMessage(), ex)));
             }
+
+            return Status.OK_STATUS;
           }
         }.schedule();
       }
@@ -93,6 +97,22 @@ public abstract class LongRunningActionDelegate extends SafeActionDelegate
   protected String getBundleID()
   {
     return OM.BUNDLE_ID;
+  }
+
+  /**
+   * @since 3.12
+   */
+  protected String getErrorTitle(Exception ex)
+  {
+    return "Problem Occurred";
+  }
+
+  /**
+   * @since 3.12
+   */
+  protected String getErrorMessage(Exception ex)
+  {
+    return ex.getLocalizedMessage();
   }
 
   /**

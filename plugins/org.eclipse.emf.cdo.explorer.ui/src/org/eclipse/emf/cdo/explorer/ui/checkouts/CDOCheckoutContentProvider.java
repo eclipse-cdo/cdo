@@ -27,7 +27,6 @@ import org.eclipse.emf.cdo.internal.ui.RunnableViewerRefresh;
 import org.eclipse.emf.cdo.internal.ui.ViewerUtil;
 import org.eclipse.emf.cdo.ui.CDOItemProvider;
 
-import org.eclipse.net4j.signal.RemoteException;
 import org.eclipse.net4j.util.container.IContainerEvent;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
@@ -448,15 +447,7 @@ public class CDOCheckoutContentProvider extends CDOContentProvider<CDOCheckout> 
                 catch (Exception ex)
                 {
                   OM.LOG.error(ex);
-
-                  if (ex instanceof RemoteException)
-                  {
-                    ((AbstractElement)checkout).setError(((RemoteException)ex).getOriginalMessage());
-                  }
-                  else
-                  {
-                    ((AbstractElement)checkout).setError(ex.getMessage());
-                  }
+                  ((AbstractElement)checkout).setError(ex.getLocalizedMessage());
                 }
 
                 return Status.OK_STATUS;

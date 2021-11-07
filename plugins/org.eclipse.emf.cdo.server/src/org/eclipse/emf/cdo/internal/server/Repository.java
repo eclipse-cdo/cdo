@@ -15,6 +15,8 @@
  */
 package org.eclipse.emf.cdo.internal.server;
 
+import org.eclipse.emf.cdo.common.CDOCommonSession;
+import org.eclipse.emf.cdo.common.CDOCommonSession.AuthorizableOperation;
 import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchHandler;
@@ -45,6 +47,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
+import org.eclipse.emf.cdo.common.util.AuthorizationException;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
@@ -89,8 +92,10 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.PointerCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
+import org.eclipse.emf.cdo.spi.common.util.AuthorizableOperations;
 import org.eclipse.emf.cdo.spi.server.ContainerQueryHandlerProvider;
 import org.eclipse.emf.cdo.spi.server.ICommitConflictResolver;
+import org.eclipse.emf.cdo.spi.server.IOperationAuthorizer;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalCommitManager;
 import org.eclipse.emf.cdo.spi.server.InternalLockManager;
@@ -230,6 +235,8 @@ public class Repository extends Container<Object> implements InternalRepository
   private InternalUnitManager unitManager;
 
   private IQueryHandlerProvider queryHandlerProvider;
+
+  private List<IOperationAuthorizer> operationAuthorizers = new ArrayList<>();
 
   private IManagedContainer container;
 
@@ -501,6 +508,8 @@ public class Repository extends Container<Object> implements InternalRepository
       branchInfo = new BranchInfo(branchInfo.getName(), branchInfo.getBaseBranchID(), baseTimeStamp);
     }
 
+    authorizeOperation(AuthorizableOperations.createBranch(branchID, branchInfo.getName(), branchInfo.getBaseBranchID(), branchInfo.getBaseTimeStamp()));
+
     synchronized (createBranchLock)
     {
       IStoreAccessor accessor = StoreThreadLocal.getAccessor();
@@ -548,6 +557,8 @@ public class Repository extends Container<Object> implements InternalRepository
       throw new UnsupportedOperationException("Branch deletion is not supported by " + this);
     }
 
+    authorizeOperation(AuthorizableOperations.deleteBranch(branchID));
+
     synchronized (createBranchLock)
     {
       CDOBranch[] branches = ((BranchLoader5)accessor).deleteBranches(branchID, monitor);
@@ -568,8 +579,8 @@ public class Repository extends Container<Object> implements InternalRepository
         }
       }
 
-      InternalCDORevisionCache cache = getRevisionManager().getCache();
-      cache.removeRevisions(branches);
+      InternalCDORevisionCache revisionCache = getRevisionManager().getCache();
+      revisionCache.removeRevisions(branches);
 
       return branches;
     }
@@ -608,6 +619,8 @@ public class Repository extends Container<Object> implements InternalRepository
       throw new UnsupportedOperationException("Branch renaming is not supported by " + this);
     }
 
+    authorizeOperation(AuthorizableOperations.renameBranch(branchID, newName));
+
     synchronized (createBranchLock)
     {
       ((BranchLoader3)accessor).renameBranch(branchID, oldName, newName);
@@ -634,6 +647,26 @@ public class Repository extends Container<Object> implements InternalRepository
           {
             // Augment missing time stamp.
             branchPoint = branchPoint.getBranch().getPoint(getTimeStamp());
+          }
+
+          switch (InternalCDOBranchManager.getTagChangeKind(oldName, newName, branchPoint))
+          {
+          case CREATED:
+            authorizeOperation(AuthorizableOperations.createTag(newName, branchPoint.getBranch().getID(), branchPoint.getTimeStamp()));
+            break;
+
+          case RENAMED:
+            authorizeOperation(AuthorizableOperations.renameTag(oldName, newName));
+            break;
+
+          case MOVED:
+            authorizeOperation(AuthorizableOperations.moveTag(oldName, branchPoint.getBranch().getID(), branchPoint.getTimeStamp()));
+            break;
+
+          case DELETED:
+            authorizeOperation(AuthorizableOperations.deleteTag(oldName));
+            break;
+
           }
 
           ((BranchLoader4)accessor).changeTag(modCount, oldName, newName, branchPoint);
@@ -1542,6 +1575,65 @@ public class Repository extends Container<Object> implements InternalRepository
     }
 
     return null;
+  }
+
+  @Override
+  public void addOperationAuthorizer(IOperationAuthorizer operationAuthorizer)
+  {
+    checkInactive();
+    operationAuthorizers.add(operationAuthorizer);
+  }
+
+  @Override
+  public boolean isAuthorizingOperations()
+  {
+    return !operationAuthorizers.isEmpty();
+  }
+
+  @Override
+  public String authorizeOperation(CDOCommonSession session, AuthorizableOperation operation)
+  {
+    if (session == null)
+    {
+      return "No session";
+    }
+
+    for (IOperationAuthorizer authorizer : operationAuthorizers)
+    {
+      try
+      {
+        String result = authorizer.authorizeOperation(session, operation);
+        if (result != null)
+        {
+          return result;
+        }
+      }
+      catch (Error ex)
+      {
+        throw ex;
+      }
+      catch (Throwable t)
+      {
+        OM.LOG.error(t);
+      }
+    }
+
+    // No veto -> authorized.
+    return null;
+  }
+
+  protected final void authorizeOperation(AuthorizableOperation operation) throws AuthorizationException
+  {
+    if (isAuthorizingOperations())
+    {
+      InternalSession session = StoreThreadLocal.getSession();
+
+      String denial = authorizeOperation(session, operation);
+      if (denial != null)
+      {
+        throw new AuthorizationException(denial);
+      }
+    }
   }
 
   @Override

@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.CDOCommonSession.AuthorizableOperation;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
@@ -617,6 +618,12 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
   public Map<CDORevision, CDOPermission> loadPermissions(InternalCDORevision[] revisions)
   {
     return send(new LoadPermissionsRequest(this, revisions));
+  }
+
+  @Override
+  public String[] authorizeOperations(AuthorizableOperation[] operations)
+  {
+    return send(new AuthorizeOperationsRequest(this, operations));
   }
 
   @Override

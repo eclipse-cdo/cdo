@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.server.security;
 
 import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.server.internal.security.RealmOperationAuthorizer;
 import org.eclipse.emf.cdo.server.internal.security.SecurityManager;
 import org.eclipse.emf.cdo.server.spi.security.AnnotationHandler;
 import org.eclipse.emf.cdo.server.spi.security.HomeFolderHandler;
@@ -55,5 +56,8 @@ public final class SecurityManagerUtil
     container.registerFactory(new SecurityManagerFactory.Annotation());
     container.registerFactory(new AnnotationHandler.Factory());
     container.registerFactory(new HomeFolderHandler.Factory());
+    container.registerFactory(new RealmOperationAuthorizer.RequireUser.Factory());
+    container.registerFactory(new RealmOperationAuthorizer.RequireGroup.Factory());
+    container.registerFactory(new RealmOperationAuthorizer.RequireRole.Factory());
   }
 }

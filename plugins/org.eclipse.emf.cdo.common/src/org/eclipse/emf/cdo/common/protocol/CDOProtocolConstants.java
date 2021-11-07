@@ -333,6 +333,11 @@ public interface CDOProtocolConstants
    */
   public static final short SIGNAL_VIEW_CLOSED_NOTIFICATION = 67;
 
+  /**
+   * @since 4.15
+   */
+  public static final short SIGNAL_AUTHORIZE_OPERATIONS = 68;
+
   // //////////////////////////////////////////////////////////////////////
   // Session Refresh
 

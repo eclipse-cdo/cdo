@@ -77,6 +77,7 @@ public class CDOQueryInfoImpl implements CDOQueryInfo
     for (int i = 0; i < size; i++)
     {
       String key = in.readString();
+
       try
       {
         Object object = in.readCDORevisionOrPrimitiveOrClassifier();

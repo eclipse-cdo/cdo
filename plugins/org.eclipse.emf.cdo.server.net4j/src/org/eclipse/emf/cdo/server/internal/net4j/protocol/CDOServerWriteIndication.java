@@ -47,5 +47,6 @@ public abstract class CDOServerWriteIndication extends CDOServerIndication
 
     // Make the store writer available in a ThreadLocal variable
     StoreThreadLocal.setAccessor(accessor);
+    StoreThreadLocal.setSession(getSession());
   }
 }

@@ -12,6 +12,7 @@
 package org.eclipse.emf.internal.cdo.session;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.CDOCommonSession.AuthorizableOperation;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
@@ -1135,6 +1136,23 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
       try
       {
         return delegate.loadPermissions(revisions);
+      }
+      catch (Exception ex)
+      {
+        handleException(++attempt, ex);
+      }
+    }
+  }
+
+  @Override
+  public String[] authorizeOperations(AuthorizableOperation[] operations)
+  {
+    int attempt = 0;
+    for (;;)
+    {
+      try
+      {
+        return delegate.authorizeOperations(operations);
       }
       catch (Exception ex)
       {

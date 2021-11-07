@@ -70,6 +70,8 @@ public class CDOAdminClientRepositoryImpl extends Notifier implements CDOAdminCl
 
   private boolean ensuringReferentialIntegrity;
 
+  private boolean authorizingOperations;
+
   private IDGenerationLocation idGenerationLocation;
 
   private CommitInfoStorage commitInfoStorage;
@@ -107,6 +109,7 @@ public class CDOAdminClientRepositoryImpl extends Notifier implements CDOAdminCl
     supportingUnits = in.readBoolean();
     serializingCommits = in.readBoolean();
     ensuringReferentialIntegrity = in.readBoolean();
+    authorizingOperations = in.readBoolean();
     idGenerationLocation = in.readEnum(IDGenerationLocation.class);
     commitInfoStorage = in.readEnum(CommitInfoStorage.class);
   }
@@ -206,6 +209,12 @@ public class CDOAdminClientRepositoryImpl extends Notifier implements CDOAdminCl
   public boolean isEnsuringReferentialIntegrity()
   {
     return ensuringReferentialIntegrity;
+  }
+
+  @Override
+  public boolean isAuthorizingOperations()
+  {
+    return authorizingOperations;
   }
 
   @Override

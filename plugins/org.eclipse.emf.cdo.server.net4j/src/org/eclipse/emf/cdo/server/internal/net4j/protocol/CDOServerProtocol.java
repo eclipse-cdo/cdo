@@ -472,6 +472,9 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     case SIGNAL_DELETE_BRANCH:
       return new DeleteBranchIndication(this);
 
+    case SIGNAL_AUTHORIZE_OPERATIONS:
+      return new AuthorizeOperationsIndication(this);
+
     default:
       return super.createSignalReactor(signalID);
     }

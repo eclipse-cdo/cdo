@@ -209,6 +209,12 @@ public class CDOAdminServerRepository extends Notifier implements CDOAdminReposi
   }
 
   @Override
+  public boolean isAuthorizingOperations()
+  {
+    return delegate.isAuthorizingOperations();
+  }
+
+  @Override
   public boolean waitWhileInitial(IProgressMonitor monitor)
   {
     return delegate.waitWhileInitial(monitor);

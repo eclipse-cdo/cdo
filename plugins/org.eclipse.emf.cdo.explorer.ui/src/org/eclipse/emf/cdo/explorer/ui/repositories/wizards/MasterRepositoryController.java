@@ -368,6 +368,8 @@ public class MasterRepositoryController
 
     public void cancelValidation()
     {
+      valid = false;
+
       if (validationThread != null)
       {
         validationThread.cancel();

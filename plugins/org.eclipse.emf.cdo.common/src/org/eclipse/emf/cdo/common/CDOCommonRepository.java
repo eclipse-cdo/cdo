@@ -135,6 +135,11 @@ public interface CDOCommonRepository extends CDOTimeProvider, IAdaptable
   public boolean isEnsuringReferentialIntegrity();
 
   /**
+   * @since 4.15
+   */
+  public boolean isAuthorizingOperations();
+
+  /**
    * @since 4.2
    */
   public boolean waitWhileInitial(IProgressMonitor monitor);

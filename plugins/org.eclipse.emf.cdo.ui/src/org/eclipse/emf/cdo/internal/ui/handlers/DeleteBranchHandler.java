@@ -46,13 +46,12 @@ public class DeleteBranchHandler extends AbstractBaseHandler<CDOBranch>
   @Override
   protected void doExecute(IProgressMonitor monitor) throws Exception
   {
-    try
-    {
-      branch.delete(new EclipseMonitor(monitor));
-    }
-    finally
-    {
-      branch = null;
-    }
+    branch.delete(new EclipseMonitor(monitor));
+  }
+
+  @Override
+  protected String getErrorMessage(Exception ex)
+  {
+    return "Branch " + branch.getName() + " could not be deleted.";
   }
 }

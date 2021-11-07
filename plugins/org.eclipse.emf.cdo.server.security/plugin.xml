@@ -42,6 +42,18 @@
             productGroup="org.eclipse.emf.cdo.server.commands"
             type="setpassword"
             class="org.eclipse.emf.cdo.server.internal.security.SecurityManagerCommand$SetPassword"/>
+      <factory
+            productGroup="org.eclipse.emf.cdo.server.operationAuthorizers"
+            type="requireUser"
+            class="org.eclipse.emf.cdo.server.internal.security.RealmOperationAuthorizer$RequireUser$Factory"/>
+      <factory
+            productGroup="org.eclipse.emf.cdo.server.operationAuthorizers"
+            type="requireGroup"
+            class="org.eclipse.emf.cdo.server.internal.security.RealmOperationAuthorizer$RequireGroup$Factory"/>
+      <factory
+            productGroup="org.eclipse.emf.cdo.server.operationAuthorizers"
+            type="requireRole"
+            class="org.eclipse.emf.cdo.server.internal.security.RealmOperationAuthorizer$RequireRole$Factory"/>
    </extension>
 
 </plugin>

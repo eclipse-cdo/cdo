@@ -78,6 +78,12 @@ public class CreateBranchHandler extends AbstractBaseHandler<CDOBranchCreationCo
     }
   }
 
+  @Override
+  protected String getErrorMessage(Exception ex)
+  {
+    return "Branch " + name + " could not be created.";
+  }
+
   public static String getValidChildName(CDOBranch branch)
   {
     Set<String> names = new HashSet<>();

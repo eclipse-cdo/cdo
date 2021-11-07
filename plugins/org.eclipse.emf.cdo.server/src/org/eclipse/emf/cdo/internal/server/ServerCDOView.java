@@ -1004,6 +1004,18 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     }
 
     @Override
+    public boolean isAuthorizingOperations()
+    {
+      return repository.isAuthorizingOperations();
+    }
+
+    @Override
+    public String[] authorizeOperations(AuthorizableOperation... operations)
+    {
+      return internalSession.authorizeOperations(operations);
+    }
+
+    @Override
     public void handleRepositoryTypeChanged(Type oldType, Type newType)
     {
     }

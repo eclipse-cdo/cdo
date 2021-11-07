@@ -186,6 +186,8 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
 
     private boolean ensuringReferentialIntegrity;
 
+    private boolean authorizingOperations;
+
     private IDGenerationLocation idGenerationLocation;
 
     private CommitInfoStorage commitInfoStorage;
@@ -210,6 +212,7 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
       supportingUnits = result.isSupportingUnits();
       serializingCommits = result.isEnsuringReferentialIntegrity();
       ensuringReferentialIntegrity = result.isEnsuringReferentialIntegrity();
+      authorizingOperations = result.isAuthorizingOperations();
       idGenerationLocation = result.getIDGenerationLocation();
       commitInfoStorage = result.getCommitInfoStorage();
     }
@@ -356,6 +359,12 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
     public boolean isEnsuringReferentialIntegrity()
     {
       return ensuringReferentialIntegrity;
+    }
+
+    @Override
+    public boolean isAuthorizingOperations()
+    {
+      return authorizingOperations;
     }
 
     @Override

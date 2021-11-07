@@ -242,6 +242,7 @@ public class RepositoryConfigurator implements IManagedContainerProvider
 
     setUserManager(repository, repositoryConfig);
     setAuthenticator(repository, repositoryConfig);
+    addOperationAuthorizers(repository, repositoryConfig);
     setActivityLog(repository, repositoryConfig);
 
     EPackage[] initialPackages = getInitialPackages(repositoryConfig);
@@ -359,6 +360,49 @@ public class RepositoryConfigurator implements IManagedContainerProvider
         sessionManager.setAuthenticator(authenticator);
       }
     }
+  }
+
+  /**
+   * @since 4.15
+   */
+  protected void addOperationAuthorizers(InternalRepository repository, Element repositoryConfig) throws CoreException
+  {
+    NodeList children = repositoryConfig.getChildNodes();
+    for (int i = 0; i < children.getLength(); i++)
+    {
+      Node child = children.item(i);
+      if (child.getNodeType() == Node.ELEMENT_NODE)
+      {
+        Element childElement = (Element)child;
+        if (childElement.getNodeName().equalsIgnoreCase("operationAuthorizer"))//$NON-NLS-1$
+        {
+          String type = getAttribute(childElement, "type"); //$NON-NLS-1$
+          if (type == null)
+          {
+            throw new IllegalStateException("type missing for operationAuthorizer element"); //$NON-NLS-1$
+          }
+
+          String description = getAttribute(childElement, "description"); //$NON-NLS-1$
+
+          IOperationAuthorizer authorizer = getOperationAuthorizer(type, description);
+          repository.addOperationAuthorizer(authorizer);
+        }
+      }
+    }
+  }
+
+  /**
+   * @since 4.15
+   */
+  protected IOperationAuthorizer getOperationAuthorizer(String type, String description) throws CoreException
+  {
+    IOperationAuthorizer authorizer = (IOperationAuthorizer)container.getElement(OperationAuthorizerFactory.PRODUCT_GROUP, type, description);
+    if (authorizer == null)
+    {
+      throw new IllegalStateException("Operation authorizer factory not found: " + type); //$NON-NLS-1$
+    }
+
+    return authorizer;
   }
 
   /**

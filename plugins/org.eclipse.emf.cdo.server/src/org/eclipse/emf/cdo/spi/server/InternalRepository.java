@@ -79,6 +79,7 @@ public interface InternalRepository extends IRepository, //
     RevisionLoader2, //
     CommitInfoLoader, //
     CDORevisionUnchunker, //
+    IOperationAuthorizer, //
     IExecutorServiceProvider, //
     IManagedContainerProvider
 {
@@ -168,6 +169,11 @@ public interface InternalRepository extends IRepository, //
   public InternalQueryManager getQueryManager();
 
   public void setQueryHandlerProvider(IQueryHandlerProvider queryHandlerProvider);
+
+  /**
+   * @since 4.15
+   */
+  public void addOperationAuthorizer(IOperationAuthorizer operationAuthorizer);
 
   /**
    * @since 4.3

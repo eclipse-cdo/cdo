@@ -283,6 +283,7 @@ public class CDOAdminServerRepository extends Notifier implements CDOAdminReposi
     out.writeBoolean(isSupportingUnits());
     out.writeBoolean(isSerializingCommits());
     out.writeBoolean(isEnsuringReferentialIntegrity());
+    out.writeBoolean(isAuthorizingOperations());
     out.writeEnum(getIDGenerationLocation());
     out.writeEnum(getCommitInfoStorage());
   }

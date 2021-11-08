@@ -12,25 +12,23 @@ package org.eclipse.emf.cdo.internal.ui.dialogs;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.ui.CDOItemProvider;
 import org.eclipse.emf.cdo.ui.widgets.ComposeBranchPointComposite;
 
-import org.eclipse.jface.dialogs.IDialogConstants;
-import org.eclipse.jface.dialogs.TitleAreaDialog;
+import org.eclipse.net4j.util.ui.widgets.AbstractDialog;
+
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 
 /**
  * @author Eike Stepper
  */
-public abstract class AbstractBranchPointDialog extends TitleAreaDialog
+public abstract class AbstractBranchPointDialog extends AbstractDialog
 {
   private final boolean allowTimeStamp;
 
@@ -45,8 +43,6 @@ public abstract class AbstractBranchPointDialog extends TitleAreaDialog
     super(parentShell);
     this.allowTimeStamp = allowTimeStamp;
     this.branchPoint = branchPoint;
-
-    setShellStyle(SWT.CLOSE | SWT.RESIZE | SWT.TITLE | SWT.APPLICATION_MODAL);
   }
 
   public final boolean isAllowTimeStamp()
@@ -64,6 +60,11 @@ public abstract class AbstractBranchPointDialog extends TitleAreaDialog
     return branchPoint;
   }
 
+  public final ComposeBranchPointComposite getBranchPointComposite()
+  {
+    return branchPointComposite;
+  }
+
   @Override
   protected Point getInitialSize()
   {
@@ -71,29 +72,23 @@ public abstract class AbstractBranchPointDialog extends TitleAreaDialog
   }
 
   @Override
-  protected Control createDialogArea(Composite parent)
-  {
-    Composite area = (Composite)super.createDialogArea(parent);
-
-    GridLayout containerGridLayout = new GridLayout(2, false);
-    containerGridLayout.marginWidth = 10;
-    containerGridLayout.marginHeight = 10;
-    containerGridLayout.verticalSpacing = 10;
-
-    Composite container = new Composite(area, SWT.NONE);
-    container.setLayoutData(new GridData(GridData.FILL_BOTH));
-    container.setLayout(containerGridLayout);
-
-    createUI(container);
-
-    validate();
-    return area;
-  }
-
   protected void createUI(Composite container)
   {
     branchPointComposite = new ComposeBranchPointComposite(container, allowTimeStamp, branchPoint)
     {
+      @Override
+      protected CDOItemProvider createBranchItemProvider()
+      {
+        return AbstractBranchPointDialog.this.createBranchItemProvider();
+      }
+
+      @Override
+      protected Object getBranchViewerInput(CDOBranchPoint branchPoint)
+      {
+        Object defaultInput = super.getBranchViewerInput(branchPoint);
+        return AbstractBranchPointDialog.this.getBranchViewerInput(branchPoint, defaultInput);
+      }
+
       @Override
       protected void timeStampError(String message)
       {
@@ -125,36 +120,25 @@ public abstract class AbstractBranchPointDialog extends TitleAreaDialog
     branchViewer.setExpandedState(branch, true);
   }
 
-  protected final boolean validate()
+  protected CDOItemProvider createBranchItemProvider()
   {
-    String error = timeStampError;
-
-    if (error == null)
-    {
-      try
-      {
-        doValidate();
-      }
-      catch (Exception ex)
-      {
-        error = ex.getMessage();
-      }
-    }
-
-    setErrorMessage(error);
-
-    Button button = getButton(IDialogConstants.OK_ID);
-    if (button != null)
-    {
-      button.setEnabled(error == null);
-    }
-
-    return error == null;
+    return new CDOItemProvider(null);
   }
 
+  @Override
   protected void doValidate() throws Exception
   {
-    // Do nothing.
+    if (timeStampError != null)
+    {
+      throw new Exception(timeStampError);
+    }
+
+    super.doValidate();
+  }
+
+  protected Object getBranchViewerInput(CDOBranchPoint branchPoint, Object defaultInput)
+  {
+    return defaultInput;
   }
 
   protected void branchPointChanged(CDOBranchPoint branchPoint)

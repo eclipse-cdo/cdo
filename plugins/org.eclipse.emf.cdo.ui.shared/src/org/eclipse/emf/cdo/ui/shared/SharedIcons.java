@@ -269,6 +269,11 @@ public class SharedIcons
    */
   public static final String WIZBAN_EDIT = WIZBAN + "edit" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
 
+  /**
+   * @since 4.6
+   */
+  public static final String WIZBAN_DELETE = WIZBAN + "delete" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
+
   public static Image getImage(String key)
   {
     key = mangleKey(key);

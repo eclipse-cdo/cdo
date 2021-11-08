@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.util.CDOClassNotFoundException;
 import org.eclipse.emf.cdo.common.util.CDOPackageNotFoundException;
 
+import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.collection.Closeable;
 import org.eclipse.net4j.util.options.IOptions;
 import org.eclipse.net4j.util.options.IOptionsContainer;
@@ -29,6 +30,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 
 /**
  * Abstracts the information about CDO sessions that is common to both client and server side.
@@ -217,6 +219,7 @@ public interface CDOCommonSession extends IAdaptable, IUserAware, IOptionsContai
 
     public AuthorizableOperation(String id)
     {
+      CheckUtil.checkArg(id, "id");
       this.id = id;
     }
 
@@ -276,6 +279,35 @@ public interface CDOCommonSession extends IAdaptable, IUserAware, IOptionsContai
         out.writeString(entry.getKey());
         out.writeCDORevisionOrPrimitiveOrClassifier(entry.getValue());
       }
+    }
+
+    @Override
+    public int hashCode()
+    {
+      return Objects.hash(id);
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+      if (this == obj)
+      {
+        return true;
+      }
+
+      if (!(obj instanceof AuthorizableOperation))
+      {
+        return false;
+      }
+
+      AuthorizableOperation other = (AuthorizableOperation)obj;
+      return Objects.equals(id, other.id);
+    }
+
+    @Override
+    public String toString()
+    {
+      return "AuthorizableOperation[id=" + id + ", parameters=" + parameters + "]";
     }
   }
 }

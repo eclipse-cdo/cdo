@@ -11,23 +11,26 @@
 package org.eclipse.emf.cdo.internal.ui.handlers;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.internal.ui.dialogs.DeleteBranchDialog;
+import org.eclipse.emf.cdo.ui.AbstractAuthorizingHandler;
 
 import org.eclipse.net4j.util.om.monitor.EclipseMonitor;
-import org.eclipse.net4j.util.ui.handlers.AbstractBaseHandler;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
  * @author Eike Stepper
  */
-public class DeleteBranchHandler extends AbstractBaseHandler<CDOBranch>
+public class DeleteBranchHandler extends AbstractAuthorizingHandler<CDOBranch>
 {
   private CDOBranch branch;
 
   public DeleteBranchHandler()
   {
-    super(CDOBranch.class, false);
+    super(CDOBranch.class, "org.eclipse.emf.cdo.ui.DeleteBranches");
   }
 
   @Override
@@ -36,7 +39,13 @@ public class DeleteBranchHandler extends AbstractBaseHandler<CDOBranch>
     if (elements.size() == 1)
     {
       branch = elements.get(0);
-      return;
+
+      Shell shell = HandlerUtil.getActiveShell(event);
+      DeleteBranchDialog dialog = new DeleteBranchDialog(shell, branch);
+      if (dialog.open() == DeleteBranchDialog.OK)
+      {
+        return;
+      }
     }
 
     branch = null;

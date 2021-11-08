@@ -24,7 +24,6 @@ import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.ui.history.NetRenderer;
 import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -53,7 +52,6 @@ import org.eclipse.net4j.util.ui.StructuredContentProvider;
 import org.eclipse.net4j.util.ui.TableLabelProvider;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.IOpenListener;
@@ -370,7 +368,7 @@ public class CommitHistoryComposite extends Composite
         if (branchAdapter != null)
         {
           branch = branchAdapter;
-          session = (CDOSession)((CDOSessionProtocol)((InternalCDOBranchManager)branch.getBranchManager()).getBranchLoader()).getSession();
+          session = CDOUtil.getSession(branch);
           offline = determineOffline();
           object = null;
           return;

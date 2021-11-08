@@ -64,8 +64,13 @@ public class ResourceGroup extends CDOElement
       CDOCheckout checkout = CDOExplorerUtil.getCheckout(delegate);
       if (checkout != null && checkout.isOpen() && !checkout.isReadOnly())
       {
-        return new CDORenameContext()
+        return new CDORenameContext.WithElement()
         {
+          @Override
+          public Object getElement()
+          {
+            return delegate;
+          }
 
           @Override
           public String getType()

@@ -92,7 +92,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.PointerCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
-import org.eclipse.emf.cdo.spi.common.util.AuthorizableOperations;
+import org.eclipse.emf.cdo.spi.common.util.CoreOperations;
 import org.eclipse.emf.cdo.spi.server.ContainerQueryHandlerProvider;
 import org.eclipse.emf.cdo.spi.server.ICommitConflictResolver;
 import org.eclipse.emf.cdo.spi.server.IOperationAuthorizer;
@@ -508,10 +508,11 @@ public class Repository extends Container<Object> implements InternalRepository
       branchInfo = new BranchInfo(branchInfo.getName(), branchInfo.getBaseBranchID(), baseTimeStamp);
     }
 
-    authorizeOperation(AuthorizableOperations.createBranch(branchID, branchInfo.getName(), branchInfo.getBaseBranchID(), branchInfo.getBaseTimeStamp()));
-
     synchronized (createBranchLock)
     {
+      authorizeOperation(CoreOperations.createBranch(branchID, //
+          branchInfo.getName(), branchInfo.getBaseBranchID(), branchInfo.getBaseTimeStamp()));
+
       IStoreAccessor accessor = StoreThreadLocal.getAccessor();
       return accessor.createBranch(branchID, branchInfo);
     }
@@ -557,10 +558,11 @@ public class Repository extends Container<Object> implements InternalRepository
       throw new UnsupportedOperationException("Branch deletion is not supported by " + this);
     }
 
-    authorizeOperation(AuthorizableOperations.deleteBranch(branchID));
-
     synchronized (createBranchLock)
     {
+      CDOBranchUtil.forEachBranchInTree(getBranchManager().getBranch(branchID), //
+          b -> authorizeOperation(CoreOperations.deleteBranch(b.getID())));
+
       CDOBranch[] branches = ((BranchLoader5)accessor).deleteBranches(branchID, monitor);
 
       // Close views that "look" at one of the deleted branches.
@@ -619,10 +621,10 @@ public class Repository extends Container<Object> implements InternalRepository
       throw new UnsupportedOperationException("Branch renaming is not supported by " + this);
     }
 
-    authorizeOperation(AuthorizableOperations.renameBranch(branchID, newName));
-
     synchronized (createBranchLock)
     {
+      authorizeOperation(CoreOperations.renameBranch(branchID, newName));
+
       ((BranchLoader3)accessor).renameBranch(branchID, oldName, newName);
     }
   }
@@ -652,19 +654,19 @@ public class Repository extends Container<Object> implements InternalRepository
           switch (InternalCDOBranchManager.getTagChangeKind(oldName, newName, branchPoint))
           {
           case CREATED:
-            authorizeOperation(AuthorizableOperations.createTag(newName, branchPoint.getBranch().getID(), branchPoint.getTimeStamp()));
+            authorizeOperation(CoreOperations.createTag(newName, branchPoint.getBranch().getID(), branchPoint.getTimeStamp()));
             break;
 
           case RENAMED:
-            authorizeOperation(AuthorizableOperations.renameTag(oldName, newName));
+            authorizeOperation(CoreOperations.renameTag(oldName, newName));
             break;
 
           case MOVED:
-            authorizeOperation(AuthorizableOperations.moveTag(oldName, branchPoint.getBranch().getID(), branchPoint.getTimeStamp()));
+            authorizeOperation(CoreOperations.moveTag(oldName, branchPoint.getBranch().getID(), branchPoint.getTimeStamp()));
             break;
 
           case DELETED:
-            authorizeOperation(AuthorizableOperations.deleteTag(oldName));
+            authorizeOperation(CoreOperations.deleteTag(oldName));
             break;
 
           }
@@ -1615,6 +1617,7 @@ public class Repository extends Container<Object> implements InternalRepository
       catch (Throwable t)
       {
         OM.LOG.error(t);
+        return "Error: " + t.getLocalizedMessage();
       }
     }
 

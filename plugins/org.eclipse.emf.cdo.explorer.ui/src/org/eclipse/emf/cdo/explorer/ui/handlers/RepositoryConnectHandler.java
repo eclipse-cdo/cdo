@@ -11,7 +11,10 @@
 package org.eclipse.emf.cdo.explorer.ui.handlers;
 
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
+import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
 import org.eclipse.emf.cdo.explorer.ui.repositories.CDORepositoriesView;
+import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.ui.UIOperations;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -31,23 +34,44 @@ public class RepositoryConnectHandler extends AbstractRepositoryHandler
   @Override
   protected void doExecute(ExecutionEvent event, IProgressMonitor monitor) throws Exception
   {
-    CDORepositoriesView view = null;
+    CDORepositoriesView repositoriesView = null;
 
     IWorkbenchPart part = HandlerUtil.getActivePart(event);
     if (part instanceof CDORepositoriesView)
     {
-      view = (CDORepositoriesView)part;
+      repositoriesView = (CDORepositoriesView)part;
     }
 
     for (CDORepository repository : elements)
     {
-      if (view != null)
+      try
       {
-        view.connectRepository(repository);
+        if (repositoriesView != null)
+        {
+          repositoriesView.connectRepository(repository);
+        }
+        else
+        {
+          repository.connect();
+        }
       }
-      else
+      catch (Exception ex)
       {
-        repository.connect();
+        OM.LOG.error(ex);
+      }
+
+      try
+      {
+        CDOSession session = repository.getSession();
+        if (session != null)
+        {
+          // Ask for any valid operation to cause all authorizations be cached.
+          UIOperations.isAuthorized(session, UIOperations.CREATE_BRANCHES);
+        }
+      }
+      catch (Exception ex)
+      {
+        OM.LOG.error(ex);
       }
     }
   }

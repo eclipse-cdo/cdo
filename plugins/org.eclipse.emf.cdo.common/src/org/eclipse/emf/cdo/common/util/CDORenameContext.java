@@ -23,4 +23,12 @@ public interface CDORenameContext
   public void setName(String name);
 
   public String validateName(String name);
+
+  /**
+   * @since 4.15
+   */
+  public interface WithElement extends CDORenameContext
+  {
+    public Object getElement();
+  }
 }

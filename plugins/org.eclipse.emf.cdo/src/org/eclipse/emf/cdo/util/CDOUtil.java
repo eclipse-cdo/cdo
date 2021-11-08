@@ -15,6 +15,7 @@ package org.eclipse.emf.cdo.util;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchCreationContext;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPointRange;
 import org.eclipse.emf.cdo.common.lob.CDOBlob;
@@ -23,6 +24,7 @@ import org.eclipse.emf.cdo.common.lob.CDOLob;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
+import org.eclipse.emf.cdo.common.util.CDORenameContext;
 import org.eclipse.emf.cdo.eresource.CDOBinaryResource;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
@@ -242,6 +244,15 @@ public final class CDOUtil
     if (cdoObject != null)
     {
       return cdoObject.cdoView().getSession();
+    }
+
+    if (object instanceof CDOBranchCreationContext)
+    {
+      object = ((CDOBranchCreationContext)object).getBase();
+    }
+    else if (object instanceof CDORenameContext.WithElement)
+    {
+      object = ((CDORenameContext.WithElement)object).getElement();
     }
 
     CDOBranchPoint branchPoint = AdapterUtil.adapt(object, CDOBranchPoint.class);

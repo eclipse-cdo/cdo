@@ -14,8 +14,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchCreationContext;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.internal.ui.dialogs.CreateBranchDialog;
-
-import org.eclipse.net4j.util.ui.handlers.AbstractBaseHandler;
+import org.eclipse.emf.cdo.ui.AbstractAuthorizingHandler;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -28,7 +27,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class CreateBranchHandler extends AbstractBaseHandler<CDOBranchCreationContext>
+public class CreateBranchHandler extends AbstractAuthorizingHandler<CDOBranchCreationContext>
 {
   private CDOBranchPoint base;
 
@@ -36,7 +35,7 @@ public class CreateBranchHandler extends AbstractBaseHandler<CDOBranchCreationCo
 
   public CreateBranchHandler()
   {
-    super(CDOBranchCreationContext.class, false);
+    super(CDOBranchCreationContext.class, "org.eclipse.emf.cdo.ui.CreateBranches");
   }
 
   @Override
@@ -102,12 +101,5 @@ public class CreateBranchHandler extends AbstractBaseHandler<CDOBranchCreationCo
     }
 
     throw new IllegalStateException("Too many sub branches: " + branch);
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public static class TagHandler extends CreateBranchHandler
-  {
   }
 }

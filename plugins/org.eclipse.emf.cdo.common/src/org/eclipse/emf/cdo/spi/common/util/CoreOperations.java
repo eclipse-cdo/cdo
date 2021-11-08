@@ -16,29 +16,29 @@ import org.eclipse.emf.cdo.common.CDOCommonSession.AuthorizableOperation;
  * @author Eike Stepper
  * @since 4.15
  */
-public final class AuthorizableOperations
+public final class CoreOperations
 {
-  public static final String ID_BRANCH_CREATE = "org.eclipse.emf.cdo.branch.Create";
+  public static final String ID_CREATE_BRANCH = "org.eclipse.emf.cdo.CreateBranch";
 
-  public static final String ID_BRANCH_RENAME = "org.eclipse.emf.cdo.branch.Rename";
+  public static final String ID_RENAME_BRANCH = "org.eclipse.emf.cdo.RenameBranch";
 
-  public static final String ID_BRANCH_DELETE = "org.eclipse.emf.cdo.branch.Delete";
+  public static final String ID_DELETE_BRANCH = "org.eclipse.emf.cdo.DeleteBranch";
 
-  public static final String ID_TAG_CREATE = "org.eclipse.emf.cdo.tag.Create";
+  public static final String ID_CREATE_TAG = "org.eclipse.emf.cdo.CreateTag";
 
-  public static final String ID_TAG_RENAME = "org.eclipse.emf.cdo.tag.Rename";
+  public static final String ID_RENAME_TAG = "org.eclipse.emf.cdo.RenameTag";
 
-  public static final String ID_TAG_MOVE = "org.eclipse.emf.cdo.tag.Move";
+  public static final String ID_MOVE_TAG = "org.eclipse.emf.cdo.MoveTag";
 
-  public static final String ID_TAG_DELETE = "org.eclipse.emf.cdo.tag.Delete";
+  public static final String ID_DELETE_TAG = "org.eclipse.emf.cdo.DeleteTag";
 
-  private AuthorizableOperations()
+  private CoreOperations()
   {
   }
 
   public static AuthorizableOperation createBranch(int branchID, String name, int baseBranchID, long baseTimeStamp)
   {
-    return new AuthorizableOperation(ID_BRANCH_CREATE) //
+    return new AuthorizableOperation(ID_CREATE_BRANCH) //
         .parameter("branchID", branchID) //
         .parameter("name", name) //
         .parameter("baseBranchID", baseBranchID) //
@@ -47,20 +47,20 @@ public final class AuthorizableOperations
 
   public static AuthorizableOperation renameBranch(int branchID, String newName)
   {
-    return new AuthorizableOperation(ID_BRANCH_RENAME) //
+    return new AuthorizableOperation(ID_RENAME_BRANCH) //
         .parameter("branchID", branchID) //
         .parameter("newName", newName);
   }
 
   public static AuthorizableOperation deleteBranch(int branchID)
   {
-    return new AuthorizableOperation(ID_BRANCH_DELETE) //
+    return new AuthorizableOperation(ID_DELETE_BRANCH) //
         .parameter("branchID", branchID);
   }
 
   public static AuthorizableOperation createTag(String name, int branchID, long timeStamp)
   {
-    return new AuthorizableOperation(ID_TAG_CREATE) //
+    return new AuthorizableOperation(ID_CREATE_TAG) //
         .parameter("name", name) //
         .parameter("branchID", branchID) //
         .parameter("timeStamp", timeStamp);
@@ -68,14 +68,14 @@ public final class AuthorizableOperations
 
   public static AuthorizableOperation renameTag(String oldName, String newName)
   {
-    return new AuthorizableOperation(ID_TAG_RENAME) //
+    return new AuthorizableOperation(ID_RENAME_TAG) //
         .parameter("oldName", oldName) //
         .parameter("newName", newName);
   }
 
   public static AuthorizableOperation moveTag(String name, int branchID, long timeStamp)
   {
-    return new AuthorizableOperation(ID_TAG_MOVE) //
+    return new AuthorizableOperation(ID_MOVE_TAG) //
         .parameter("name", name) //
         .parameter("branchID", branchID) //
         .parameter("timeStamp", timeStamp);
@@ -83,7 +83,7 @@ public final class AuthorizableOperations
 
   public static AuthorizableOperation deleteTag(String name)
   {
-    return new AuthorizableOperation(ID_TAG_DELETE) //
+    return new AuthorizableOperation(ID_DELETE_TAG) //
         .parameter("name", name);
   }
 }

@@ -28,8 +28,8 @@
     <property name="optimisticLockingTimeout" value="10000"/>
 
     <!-- Example http://wiki.eclipse.org/CDO/Security_Manager
-		  <securityManager type="default" description="/security:annotation:home(/home)"/>
     -->
+		  <securityManager type="default" description="/security:annotation:home(/home)"/>
 
     <!-- Example http://bugs.eclipse.org/418454
       <adminRepository configurationManager="default" catalogPath="/catalog"/>
@@ -40,8 +40,11 @@
     -->
 
     <!-- Example http://bugs.eclipse.org/577114
-			<operationAuthorizer type="requireGroup" description="org.eclipse.emf.cdo.branch.Delete:Administrators,Operators"/>
     -->
+			<operationAuthorizer type="requireGroup" description="org.eclipse.emf.cdo.DeleteBranch:Administrators,Operators"/>
+			<operationAuthorizer type="requireGroup" description="org.eclipse.emf.cdo.ui.CreateBranches:Administrators,Operators"/>
+			<operationAuthorizer type="requireGroup" description="org.eclipse.emf.cdo.ui.RenameBranches:Administrators,Operators"/>
+			<operationAuthorizer type="requireGroup" description="org.eclipse.emf.cdo.ui.DeleteBranches:Administrators,Operators"/>
 
     <!-- Example http://bugs.eclipse.org/345431
 			<initialPackage nsURI="http://www.eclipse.org/emf/CDO/examples/company/1.0.0"/>

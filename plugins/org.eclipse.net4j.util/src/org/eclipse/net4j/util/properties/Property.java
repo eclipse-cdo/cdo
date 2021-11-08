@@ -70,28 +70,53 @@ public abstract class Property<RECEIVER>
     return category;
   }
 
+  public final Object getValue(RECEIVER receiver)
+  {
+    try
+    {
+      Object value = eval(receiver);
+      return convertValue(value);
+    }
+    catch (LifecycleException ex)
+    {
+      //$FALL-THROUGH$
+    }
+    catch (Throwable ex)
+    {
+      if (LifecycleUtil.isActive(receiver))
+      {
+        OM.LOG.error(ex);
+      }
+    }
+
+    return null;
+  }
+
   public boolean testValue(RECEIVER receiver, Object[] args, Object expectedValue)
   {
     Object value = getValue(receiver);
+    return testValue(value, expectedValue);
+  }
+
+  boolean testValue(Object value, Object expectedValue)
+  {
     if (value instanceof Boolean && expectedValue == null)
     {
-      // Per the Expressions extension point spec, the 'value' attribute
-      // is optional for boolean-valued properties, in which case its
-      // default is true
+      // Per the Expressions extension point specification, the 'value' attribute
+      // is optional for boolean-valued properties, in which case its default is true.
       expectedValue = Boolean.TRUE;
     }
 
     return ObjectUtil.equals(value, expectedValue);
   }
 
-  public final Object getValue(RECEIVER receiver)
+  Object convertValue(Object value)
   {
     try
     {
-      Object value = eval(receiver);
       if (value == null)
       {
-        return value;
+        return null;
       }
 
       Class<? extends Object> c = value.getClass();
@@ -142,16 +167,9 @@ public abstract class Property<RECEIVER>
 
       return value.toString();
     }
-    catch (LifecycleException ex)
-    {
-      //$FALL-THROUGH$
-    }
     catch (Throwable ex)
     {
-      if (LifecycleUtil.isActive(receiver))
-      {
-        OM.LOG.error(ex);
-      }
+      OM.LOG.error(ex);
     }
 
     return null;
@@ -162,4 +180,60 @@ public abstract class Property<RECEIVER>
    * all other types are converted with {@link #toString()} in {@link #eval(Object)}.
    */
   protected abstract Object eval(RECEIVER receiver);
+
+  /**
+   * Describes a property of a receiver object and extracts its value with given arguments.
+   *
+   * @author Eike Stepper
+   * @since 3.16
+   */
+  public static abstract class WithArguments<RECEIVER> extends Property<RECEIVER>
+  {
+    public WithArguments(String name, String label, String description, String category)
+    {
+      super(name, label, description, category);
+    }
+
+    public WithArguments(String name, String label, String description)
+    {
+      super(name, label, description);
+    }
+
+    public WithArguments(String name)
+    {
+      super(name);
+    }
+
+    @Override
+    public boolean testValue(RECEIVER receiver, Object[] args, Object expectedValue)
+    {
+      try
+      {
+        Object value = eval(receiver, args);
+        value = convertValue(value);
+        return testValue(value, expectedValue);
+      }
+      catch (LifecycleException ex)
+      {
+        //$FALL-THROUGH$
+      }
+      catch (Throwable ex)
+      {
+        if (LifecycleUtil.isActive(receiver))
+        {
+          OM.LOG.error(ex);
+        }
+      }
+
+      return false;
+    }
+
+    @Override
+    protected final Object eval(RECEIVER receiver)
+    {
+      return eval(receiver, null);
+    }
+
+    protected abstract Object eval(RECEIVER receiver, Object[] args);
+  }
 }

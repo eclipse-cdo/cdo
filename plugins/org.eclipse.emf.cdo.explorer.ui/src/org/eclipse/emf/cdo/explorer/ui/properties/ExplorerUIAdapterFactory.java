@@ -50,11 +50,14 @@ public class ExplorerUIAdapterFactory implements IAdapterFactory
 {
   private static final Class<CDORenameContext> CLASS_EXPLORER_RENAME_CONTEXT = CDORenameContext.class;
 
+  private static final Class<BranchRenameContext> CLASS_EXPLORER_RENAME_BRANCH_CONTEXT = BranchRenameContext.class;
+
   private static final Class<StateProvider> CLASS_STATE_PROVIDER = StateProvider.class;
 
   private static final Class<IWorkbenchAdapter> CLASS_WORKBENCH_ADAPTER = IWorkbenchAdapter.class;
 
-  private static final Class<?>[] CLASSES = { CLASS_EXPLORER_RENAME_CONTEXT, CLASS_STATE_PROVIDER, CLASS_WORKBENCH_ADAPTER };
+  private static final Class<?>[] CLASSES = { CLASS_EXPLORER_RENAME_CONTEXT, CLASS_EXPLORER_RENAME_BRANCH_CONTEXT, CLASS_STATE_PROVIDER,
+      CLASS_WORKBENCH_ADAPTER };
 
   public ExplorerUIAdapterFactory()
   {
@@ -70,7 +73,7 @@ public class ExplorerUIAdapterFactory implements IAdapterFactory
   @SuppressWarnings("unchecked")
   public <T> T getAdapter(Object adaptableObject, Class<T> adapterType)
   {
-    if (adapterType == CLASS_EXPLORER_RENAME_CONTEXT)
+    if (adapterType == CLASS_EXPLORER_RENAME_CONTEXT || adapterType == CLASS_EXPLORER_RENAME_BRANCH_CONTEXT)
     {
       if (adaptableObject instanceof AbstractElement)
       {
@@ -119,8 +122,14 @@ public class ExplorerUIAdapterFactory implements IAdapterFactory
 
   private Object createRenameContext(final AbstractElement element)
   {
-    return new CDORenameContext()
+    return new CDORenameContext.WithElement()
     {
+      @Override
+      public Object getElement()
+      {
+        return element;
+      }
+
       @Override
       public String getType()
       {
@@ -159,54 +168,19 @@ public class ExplorerUIAdapterFactory implements IAdapterFactory
 
   private Object createRenameContext(final CDOBranch branch)
   {
-    return new CDORenameContext()
-    {
-      @Override
-      public String getType()
-      {
-        return "Branch";
-      }
-
-      @Override
-      public String getName()
-      {
-        return branch.getName();
-      }
-
-      @Override
-      public void setName(String name)
-      {
-        branch.setName(name);
-      }
-
-      @Override
-      public String validateName(String name)
-      {
-        if (StringUtil.isEmpty(name))
-        {
-          return "Branch name is empty.";
-        }
-
-        if (name.equals(getName()))
-        {
-          return null;
-        }
-
-        CDOBranch baseBranch = branch.getBase().getBranch();
-        if (baseBranch.getBranch(name) != null)
-        {
-          return "Branch name is not unique within the base branch.";
-        }
-
-        return null;
-      }
-    };
+    return new BranchRenameContext(branch);
   }
 
   private Object createRenameContext(final CDOResourceNode resourceNode)
   {
-    return new CDORenameContext()
+    return new CDORenameContext.WithElement()
     {
+      @Override
+      public Object getElement()
+      {
+        return resourceNode;
+      }
+
       @Override
       public String getType()
       {

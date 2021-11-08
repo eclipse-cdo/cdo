@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.ui.widgets;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
-import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.ui.CDOItemProvider;
@@ -336,9 +335,17 @@ public class ComposeBranchPointComposite extends Composite
   {
   }
 
+  /**
+   * @since 4.11
+   */
+  protected Object getBranchViewerInput(CDOBranchPoint branchPoint)
+  {
+    return branchPoint.getBranch().getBranchManager();
+  }
+
   private void setBranchViewerInput()
   {
-    CDOBranchManager input = branchPoint.getBranch().getBranchManager();
+    Object input = getBranchViewerInput(branchPoint);
     if (input != branchViewer.getInput())
     {
       branchViewer.setInput(input);

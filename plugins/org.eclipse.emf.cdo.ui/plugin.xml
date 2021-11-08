@@ -16,40 +16,40 @@
 
   <extension-point id="editorOpeners" name="Editor Openers" schema="schema/editorOpeners.exsd"/>
 
-   <extension
-        point="org.eclipse.net4j.util.elementProcessors">
+   <extension point="org.eclipse.net4j.util.elementProcessors">
      <elementProcessor class="org.eclipse.emf.cdo.ui.CDOInteractiveExceptionHandler"/>
    </extension>
 
-   <extension
-         point="org.eclipse.net4j.util.factories">
+   <extension point="org.eclipse.net4j.util.factories">
       <factory
             class="org.eclipse.emf.cdo.internal.ui.transfer.RepositoryUIProvider$Factory"
             productGroup="org.eclipse.emf.cdo.transfer.ui.providers"
             type="repository"/>
    </extension>
 
-   <extension
-         point="org.eclipse.core.expressions.propertyTesters">
+   <extension point="org.eclipse.core.expressions.propertyTesters">
       <propertyTester
-            class="org.eclipse.emf.cdo.internal.ui.SupportPropertyTester"
-            id="org.eclipse.emf.cdo.ui.Support"
-            namespace="org.eclipse.emf.cdo.ui.support"
-            properties="history,compare"
-            type="java.lang.Object">
-      </propertyTester>
+         id="org.eclipse.emf.cdo.ui.properties"
+         type="java.lang.Object"
+         namespace="org.eclipse.emf.cdo.ui"
+         properties="authorizedOperation"
+         class="org.eclipse.emf.cdo.internal.ui.CDOUIProperties$Tester"/>
+      <propertyTester
+        class="org.eclipse.emf.cdo.internal.ui.SupportPropertyTester"
+        id="org.eclipse.emf.cdo.ui.Support"
+        namespace="org.eclipse.emf.cdo.ui.support"
+        properties="history,compare"
+        type="java.lang.Object"/>
    </extension>
 
-   <extension
-         point="org.eclipse.ui.dropActions">
+   <extension point="org.eclipse.ui.dropActions">
       <action
             class="org.eclipse.emf.cdo.internal.ui.transfer.RepositoryPluginDropAdapter"
             id="org.eclipse.emf.cdo.ui.RepositoryPluginDropAdapter">
       </action>
    </extension>
 
-   <extension
-         point="org.eclipse.ui.views">
+   <extension point="org.eclipse.ui.views">
       <category
             id="org.eclipse.emf.cdo"
             name="%category.name.0">
@@ -95,24 +95,21 @@
     </editor>
   </extension>
 
-  <extension
-        point="org.eclipse.ui.importWizards">
+  <extension point="org.eclipse.ui.importWizards">
      <category
            id="org.eclipse.emf.cdo.category"
            name="CDO">
      </category>
   </extension>
 
-  <extension
-        point="org.eclipse.ui.newWizards">
+  <extension point="org.eclipse.ui.newWizards">
      <category
            id="org.eclipse.emf.cdo.category"
            name="CDO">
      </category>
   </extension>
 
-  <extension
-        point="org.eclipse.ui.preferencePages">
+  <extension point="org.eclipse.ui.preferencePages">
      <page
            class="org.eclipse.emf.cdo.internal.ui.preferences.CDOPreferencePage"
            id="org.eclipse.emf.cdo.ui.CDOPreferencePage"
@@ -126,8 +123,7 @@
      </page>
   </extension>
 
-  <extension
-        point="org.eclipse.ui.decorators">
+  <extension point="org.eclipse.ui.decorators">
      <decorator
            adaptable="true"
            class="org.eclipse.emf.cdo.ui.CDOLabelDecorator"
@@ -168,8 +164,7 @@
      -->
   </extension>
 
-  <extension
-        point="org.eclipse.core.runtime.adapters">
+  <extension point="org.eclipse.core.runtime.adapters">
      <factory
            adaptableType="org.eclipse.emf.cdo.common.CDOCommonRepository"
            class="org.eclipse.emf.cdo.internal.ui.CDOPropertyAdapterFactory">
@@ -218,8 +213,7 @@
    </extension>
   -->
 
-   <extension
-         point="org.eclipse.ui.editors.documentProviders">
+   <extension point="org.eclipse.ui.editors.documentProviders">
       <provider
             class="org.eclipse.emf.cdo.internal.ui.editor.CDOLobStorage"
             inputTypes="org.eclipse.emf.cdo.internal.ui.editor.CDOLobEditorInput"
@@ -227,8 +221,8 @@
       </provider>
    </extension>
 
-   <!--extension
-         point="org.eclipse.ui.popupMenus">
+  <!--
+   <extension point="org.eclipse.ui.popupMenus">
       <objectContribution
             adaptable="true"
             id="org.eclipse.emf.cdo.ui.CDOResourceNodeContributionsWritableContainer"
@@ -318,7 +312,8 @@
               <test property="org.eclipse.emf.cdo.object.readable" value="true"/>
          </enablement>
       </objectContribution>
-   </extension-->
+   </extension>
+  -->
 
     <extension point="org.eclipse.ui.popupMenus">
       <objectContribution
@@ -340,12 +335,10 @@
   <extension point="org.eclipse.ui.commands">
       <command
             id="org.eclipse.emf.cdo.ui.CreateBranch"
-            name="Create Branch"
-            defaultHandler="org.eclipse.emf.cdo.internal.ui.handlers.CreateBranchHandler"/>
+            name="Create Branch"/>
       <command
             id="org.eclipse.emf.cdo.ui.DeleteBranch"
-            name="Delete Branch"
-            defaultHandler="org.eclipse.emf.cdo.internal.ui.handlers.DeleteBranchHandler"/>
+            name="Delete Branch"/>
       <command
             id="org.eclipse.emf.cdo.ui.LockObject"
             name="Lock Object"
@@ -362,6 +355,27 @@
             id="org.eclipse.emf.cdo.ui.UnlockTree"
             name="Unlock Tree"
             defaultHandler="org.eclipse.emf.cdo.internal.ui.handlers.LockingHandler$UnlockTree"/>
+  </extension>
+
+  <extension point="org.eclipse.ui.handlers">
+      <handler
+            class="org.eclipse.emf.cdo.internal.ui.handlers.CreateBranchHandler"
+            commandId="org.eclipse.emf.cdo.ui.CreateBranch">
+         <activeWhen>
+            <iterate ifEmpty="false">
+              <adapt type="org.eclipse.emf.cdo.common.branch.CDOBranchCreationContext"/>
+            </iterate>
+         </activeWhen>
+      </handler>
+      <handler
+            class="org.eclipse.emf.cdo.internal.ui.handlers.DeleteBranchHandler"
+            commandId="org.eclipse.emf.cdo.ui.DeleteBranch">
+         <activeWhen>
+            <iterate ifEmpty="false">
+              <adapt type="org.eclipse.emf.cdo.common.branch.CDOBranch"/>
+            </iterate>
+         </activeWhen>
+      </handler>
   </extension>
 
   <extension point="org.eclipse.ui.menus">

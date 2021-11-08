@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007, 2008, 2011, 2012, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007, 2008, 2011, 2012, 2016, 2021 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -75,17 +75,19 @@ public class ContextTracer
     delegate.setEnabled(enabled);
   }
 
-  public void format(String pattern, Object... args)
-  {
-    delegate.format(context, pattern, args);
-  }
-
-  public void format(String pattern, Throwable t, Object... args)
-  {
-    delegate.format(context, pattern, t, args);
-  }
-
   /**
+   * Provides zero-cost tracing in combination with the <code>assert</code> keyword.
+   * <p>
+   * Example:
+   * <p>
+   * <code>
+   * <pre>   ContextTracer tracer = ...;
+   *
+   *   assert tracer.ifEnabled(t -> t.format("User %0 logged on", user));
+   * </pre>
+   * </code>
+   *
+   * @return Always <code>true</code>
    * @since 3.16
    */
   public boolean ifEnabled(Consumer<ContextTracer> consumer)
@@ -96,6 +98,16 @@ public class ContextTracer
     }
 
     return true;
+  }
+
+  public void format(String pattern, Object... args)
+  {
+    delegate.format(context, pattern, args);
+  }
+
+  public void format(String pattern, Throwable t, Object... args)
+  {
+    delegate.format(context, pattern, t, args);
   }
 
   public void trace(String msg, Throwable t)

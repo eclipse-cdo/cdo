@@ -157,6 +157,9 @@ import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -257,10 +260,7 @@ public class Repository extends Container<Object> implements InternalRepository
   private final transient Object commitTransactionLock = new Object();
 
   @ExcludeFromDump
-  private final transient Object createBranchLock = new Object();
-
-  @ExcludeFromDump
-  private final transient Object changeTagLock = new Object();
+  private final transient ReadWriteLock branchingLock = new ReentrantReadWriteLock();
 
   private boolean skipInitialization;
 
@@ -514,13 +514,20 @@ public class Repository extends Container<Object> implements InternalRepository
       branchInfo = new BranchInfo(branchInfo.getName(), branchInfo.getBaseBranchID(), baseTimeStamp);
     }
 
-    synchronized (createBranchLock)
+    Lock writeLock = branchingLock.writeLock();
+    writeLock.lock();
+
+    try
     {
       authorizeOperation(CoreOperations.createBranch(branchID, //
           branchInfo.getName(), branchInfo.getBaseBranchID(), branchInfo.getBaseTimeStamp()));
 
       IStoreAccessor accessor = StoreThreadLocal.getAccessor();
       return accessor.createBranch(branchID, branchInfo);
+    }
+    finally
+    {
+      writeLock.unlock();
     }
   }
 
@@ -564,7 +571,10 @@ public class Repository extends Container<Object> implements InternalRepository
       throw new UnsupportedOperationException("Branch deletion is not supported by " + this);
     }
 
-    synchronized (createBranchLock)
+    Lock writeLock = branchingLock.writeLock();
+    writeLock.lock();
+
+    try
     {
       CDOBranchUtil.forEachBranchInTree(getBranchManager().getBranch(branchID), //
           b -> authorizeOperation(CoreOperations.deleteBranch(b.getID())));
@@ -591,6 +601,10 @@ public class Repository extends Container<Object> implements InternalRepository
       revisionCache.removeRevisions(branches);
 
       return branches;
+    }
+    finally
+    {
+      writeLock.unlock();
     }
   }
 
@@ -627,11 +641,18 @@ public class Repository extends Container<Object> implements InternalRepository
       throw new UnsupportedOperationException("Branch renaming is not supported by " + this);
     }
 
-    synchronized (createBranchLock)
+    Lock writeLock = branchingLock.writeLock();
+    writeLock.lock();
+
+    try
     {
       authorizeOperation(CoreOperations.renameBranch(branchID, newName));
 
       ((BranchLoader3)accessor).renameBranch(branchID, oldName, newName);
+    }
+    finally
+    {
+      writeLock.unlock();
     }
   }
 
@@ -643,7 +664,10 @@ public class Repository extends Container<Object> implements InternalRepository
       IStoreAccessor accessor = StoreThreadLocal.getAccessor();
       if (accessor instanceof BranchLoader4)
       {
-        synchronized (changeTagLock)
+        Lock writeLock = branchingLock.writeLock();
+        writeLock.lock();
+
+        try
         {
           if (oldName == null && branchPoint == null)
           {
@@ -696,6 +720,10 @@ public class Repository extends Container<Object> implements InternalRepository
           sessionManager.sendTagNotification(sender, newModCount, oldName, newName, branchPoint);
 
           return branchPoint;
+        }
+        finally
+        {
+          writeLock.unlock();
         }
       }
     }
@@ -1456,25 +1484,35 @@ public class Repository extends Container<Object> implements InternalRepository
       }
     }
 
-    if (commitContext.isTreeRestructuring())
+    Lock readLock = branchingLock.readLock();
+    readLock.lock();
+
+    try
     {
-      synchronized (commitTransactionLock)
+      if (commitContext.isTreeRestructuring())
       {
-        commitContext.setLastTreeRestructuringCommit(lastTreeRestructuringCommit);
+        synchronized (commitTransactionLock)
+        {
+          commitContext.setLastTreeRestructuringCommit(lastTreeRestructuringCommit);
+          commitUnsynced(commitContext, monitor);
+          lastTreeRestructuringCommit = commitContext.getTimeStamp();
+        }
+      }
+      else if (serializingCommits)
+      {
+        synchronized (commitTransactionLock)
+        {
+          commitUnsynced(commitContext, monitor);
+        }
+      }
+      else
+      {
         commitUnsynced(commitContext, monitor);
-        lastTreeRestructuringCommit = commitContext.getTimeStamp();
       }
     }
-    else if (serializingCommits)
+    finally
     {
-      synchronized (commitTransactionLock)
-      {
-        commitUnsynced(commitContext, monitor);
-      }
-    }
-    else
-    {
-      commitUnsynced(commitContext, monitor);
+      readLock.unlock();
     }
   }
 

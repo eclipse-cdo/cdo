@@ -48,7 +48,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Map;
-import java.util.Map.Entry;
 
 /**
  * @author Eike Stepper
@@ -174,7 +173,7 @@ public class DurableLockingManager extends Lifecycle implements IBranchDeletionS
     {
       stmt.setString(1, durableLockingID);
 
-      for (Entry<CDOID, LockGrade> entry : locks.entrySet())
+      for (Map.Entry<CDOID, LockGrade> entry : locks.entrySet())
       {
         CDOID id = entry.getKey();
         int grade = entry.getValue().getValue();

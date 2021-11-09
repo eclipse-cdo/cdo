@@ -29,7 +29,6 @@ import org.eclipse.emf.spi.cdo.InternalCDOXATransaction.InternalCDOXACommitConte
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Map;
-import java.util.Map.Entry;
 
 /**
  * <p>
@@ -63,7 +62,7 @@ public class CommitXATransactionPhase2Request extends CommitXATransactionRequest
     int size = requestedIDs.size();
     out.writeXInt(size);
 
-    for (Entry<CDOIDTempObjectExternalImpl, InternalCDOTransaction> entry : requestedIDs.entrySet())
+    for (Map.Entry<CDOIDTempObjectExternalImpl, InternalCDOTransaction> entry : requestedIDs.entrySet())
     {
       CDOIDTempObjectExternalImpl tempID = entry.getKey();
       URI oldURIExternal = URI.createURI(tempID.toURIFragment());

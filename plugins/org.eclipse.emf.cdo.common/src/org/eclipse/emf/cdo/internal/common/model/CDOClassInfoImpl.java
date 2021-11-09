@@ -484,7 +484,7 @@ public final class CDOClassInfoImpl implements InternalCDOClassInfo, Adapter.Int
   public static boolean isMap(EStructuralFeature eStructuralFeature)
   {
     // Java ensures that string constants are interned, so == is actually more efficient than equals().
-    return eStructuralFeature.getEType().getInstanceClassName() == "java.util.Map$Entry"; //$NON-NLS-1$
+    return eStructuralFeature.getEType().getInstanceClassName() == "java.util.Map$Map.Entry"; //$NON-NLS-1$
   }
 
   /**

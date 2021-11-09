@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emf.cdo.gmf.notation; singleton:=true
-Bundle-Version: 1.10.1.qualifier
+Bundle-Version: 1.10.2.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -11,4 +11,4 @@ Require-Bundle: org.eclipse.emf.cdo;bundle-version="[4.0.0,5.0.0)";visibility:=r
  org.eclipse.emf.cdo.ecore;bundle-version="[1.0.0,2.0.0)",
  org.eclipse.gmf.runtime.notation;bundle-version="[1.10.0,1.11.0)"
 Automatic-Module-Name: org.eclipse.emf.cdo.gmf.notation
-Export-Package: org.eclipse.emf.cdo.gmf.notation.impl;version="1.10.1"
+Export-Package: org.eclipse.emf.cdo.gmf.notation.impl;version="1.10.2"

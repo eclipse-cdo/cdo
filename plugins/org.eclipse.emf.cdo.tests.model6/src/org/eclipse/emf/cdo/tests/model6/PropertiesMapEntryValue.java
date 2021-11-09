@@ -14,7 +14,7 @@ import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Properties Map Entry Value</b></em>'.
+ * A representation of the model object '<em><b>Properties Map Map.Entry Value</b></em>'.
  * <!-- end-user-doc -->
  *
  * <p>

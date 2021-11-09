@@ -58,7 +58,6 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 /**
  * @author Eike Stepper
@@ -359,7 +358,7 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
   protected void respondingMappingNewObjects(CDODataOutput out) throws Exception
   {
     Map<CDOID, CDOID> idMappings = commitContext.getIDMappings();
-    for (Entry<CDOID, CDOID> entry : idMappings.entrySet())
+    for (Map.Entry<CDOID, CDOID> entry : idMappings.entrySet())
     {
       CDOID oldID = entry.getKey();
       CDOID newID = entry.getValue();

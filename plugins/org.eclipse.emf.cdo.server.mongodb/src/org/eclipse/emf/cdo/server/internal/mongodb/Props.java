@@ -17,7 +17,6 @@ import com.mongodb.DBObject;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 /**
@@ -83,7 +82,7 @@ public class Props extends Coll
 
   public void set(Map<String, String> properties)
   {
-    for (Entry<String, String> property : properties.entrySet())
+    for (Map.Entry<String, String> property : properties.entrySet())
     {
       DBObject doc = new BasicDBObject();
       doc.put(ID, property.getKey());

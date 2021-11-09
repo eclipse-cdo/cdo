@@ -99,7 +99,7 @@ public class ObjectTypeCache extends DelegatingObjectTypeMapper implements IBran
     }
 
     @Override
-    protected boolean removeEldestEntry(java.util.Map.Entry<CDOID, CDOID> eldest)
+    protected boolean removeEldestEntry(Map.Entry<CDOID, CDOID> eldest)
     {
       return size() > capacity;
     }

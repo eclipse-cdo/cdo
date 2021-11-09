@@ -141,7 +141,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.locks.Condition;
@@ -447,7 +446,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
     else
     {
-      for (Entry<CDOID, InternalCDOObject> entry : objects.entrySet())
+      for (Map.Entry<CDOID, InternalCDOObject> entry : objects.entrySet())
       {
         InternalCDOObject object = entry.getValue();
         if (object != null)

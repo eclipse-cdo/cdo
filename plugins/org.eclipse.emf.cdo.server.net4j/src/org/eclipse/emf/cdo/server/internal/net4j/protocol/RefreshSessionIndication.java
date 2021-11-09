@@ -31,7 +31,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 /**
  * @author Simon McDuff
@@ -143,7 +142,7 @@ public class RefreshSessionIndication extends CDOServerReadIndication
     InternalCDORevisionManager revisionManager = getRepository().getRevisionManager();
     SyntheticCDORevision[] synthetics = new SyntheticCDORevision[1];
 
-    for (Entry<CDOBranch, List<CDORevisionKey>> entry : viewedRevisions.entrySet())
+    for (Map.Entry<CDOBranch, List<CDORevisionKey>> entry : viewedRevisions.entrySet())
     {
       CDOBranch branch = entry.getKey();
       CDOBranchPoint head = branch.getHead();

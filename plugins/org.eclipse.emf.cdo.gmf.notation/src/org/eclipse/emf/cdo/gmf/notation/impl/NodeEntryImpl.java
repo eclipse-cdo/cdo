@@ -25,7 +25,7 @@ import org.eclipse.gmf.runtime.notation.NotationPackage;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Node
- * Entry</b></em>'. <!-- end-user-doc -->
+ * Map.Entry</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>

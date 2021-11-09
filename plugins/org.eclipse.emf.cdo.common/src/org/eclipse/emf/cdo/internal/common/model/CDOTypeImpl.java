@@ -52,7 +52,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 /**
@@ -863,7 +862,7 @@ public abstract class CDOTypeImpl implements CDOType
       Map<Object, Object> map = (Map<Object, Object>)value;
       out.writeXInt(map.size());
 
-      for (Entry<Object, Object> entry : map.entrySet())
+      for (Map.Entry<Object, Object> entry : map.entrySet())
       {
         writeTypeAndValue(out, entry.getKey());
         writeTypeAndValue(out, entry.getValue());

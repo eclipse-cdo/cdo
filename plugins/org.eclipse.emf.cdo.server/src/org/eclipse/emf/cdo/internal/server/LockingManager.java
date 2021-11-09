@@ -65,7 +65,6 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 /**
@@ -857,7 +856,7 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
       Collection<Object> readLocks = new ArrayList<>();
       Collection<Object> writeLocks = new ArrayList<>();
       Collection<Object> writeOptions = new ArrayList<>();
-      for (Entry<CDOID, LockGrade> entry : area.getLocks().entrySet())
+      for (Map.Entry<CDOID, LockGrade> entry : area.getLocks().entrySet())
       {
         Object key = getLockKey(entry.getKey(), area.getBranch());
         LockGrade grade = entry.getValue();

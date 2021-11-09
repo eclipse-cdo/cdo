@@ -23,7 +23,6 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 
 import java.util.Map;
-import java.util.Map.Entry;
 
 /**
  * Represents a CDO-specific {@link URI} in connection-aware format.
@@ -404,7 +403,7 @@ public final class CDOURIData
 
     if (extraParameters != null)
     {
-      for (Entry<String, String> entry : extraParameters.entrySet())
+      for (Map.Entry<String, String> entry : extraParameters.entrySet())
       {
         builder.append(params++ == 0 ? "?" : "&");
         builder.append(entry.getKey());

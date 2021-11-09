@@ -114,7 +114,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -398,7 +397,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     Map<String, Object> testProperties = getTestProperties();
     if (testProperties != null)
     {
-      for (Entry<String, Object> entry : testProperties.entrySet())
+      for (Map.Entry<String, Object> entry : testProperties.entrySet())
       {
         Object value = entry.getValue();
         if (value == null)
@@ -422,7 +421,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     Collections.sort(list, new Comparator<Map.Entry<String, String>>()
     {
       @Override
-      public int compare(Entry<String, String> o1, Entry<String, String> o2)
+      public int compare(Map.Entry<String, String> o1, Map.Entry<String, String> o2)
       {
         return o1.getKey().compareTo(o2.getKey());
       }

@@ -91,7 +91,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
@@ -241,7 +240,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
   {
     int count = 0;
     InternalCDOBranchManager branchManager = getRepository().getBranchManager();
-    for (Entry<Integer, BranchInfo> entry : branchInfos.entrySet())
+    for (Map.Entry<Integer, BranchInfo> entry : branchInfos.entrySet())
     {
       int id = entry.getKey();
       if (startID <= id && (id <= endID || endID == 0))
@@ -260,7 +259,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
   public synchronized SubBranchInfo[] loadSubBranches(int branchID)
   {
     List<SubBranchInfo> result = new ArrayList<>();
-    for (Entry<Integer, BranchInfo> entry : branchInfos.entrySet())
+    for (Map.Entry<Integer, BranchInfo> entry : branchInfos.entrySet())
     {
       BranchInfo branchInfo = entry.getValue();
       if (branchInfo.getBaseBranchID() == branchID)
@@ -1018,7 +1017,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
 
   public void handleLobs(long fromTime, long toTime, CDOLobHandler handler) throws IOException
   {
-    for (Entry<String, Object> entry : lobs.entrySet())
+    for (Map.Entry<String, Object> entry : lobs.entrySet())
     {
       byte[] id = HexUtil.hexToBytes(entry.getKey());
       Object lob = entry.getValue();

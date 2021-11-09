@@ -406,7 +406,7 @@ public abstract class ReferenceValueMap2<K, V> extends AbstractMap<K, V>
    */
   private class EntrySetIterator implements Iterator<Map.Entry<K, V>>
   {
-    private Iterator<Entry<K, KeyedReference<K, V>>> it = map.entrySet().iterator();
+    private Iterator<Map.Entry<K, KeyedReference<K, V>>> it = map.entrySet().iterator();
 
     private MapEntry<K, V> nextEntry;
 
@@ -424,7 +424,7 @@ public abstract class ReferenceValueMap2<K, V> extends AbstractMap<K, V>
 
       while (it.hasNext())
       {
-        Entry<K, KeyedReference<K, V>> entry = it.next();
+        Map.Entry<K, KeyedReference<K, V>> entry = it.next();
         V value = dereference(entry.getValue());
         if (value != null)
         {
@@ -437,7 +437,7 @@ public abstract class ReferenceValueMap2<K, V> extends AbstractMap<K, V>
     }
 
     @Override
-    public Entry<K, V> next()
+    public Map.Entry<K, V> next()
     {
       if (nextEntry == null)
       {

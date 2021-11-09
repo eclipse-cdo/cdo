@@ -53,7 +53,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.AbstractExecutorService;
 import java.util.concurrent.ExecutionException;
@@ -240,9 +239,9 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
 
       do
       {
-        for (Iterator<Entry<Future<Object>, InternalCDOXACommitContext>> it = futures.entrySet().iterator(); it.hasNext();)
+        for (Iterator<Map.Entry<Future<Object>, InternalCDOXACommitContext>> it = futures.entrySet().iterator(); it.hasNext();)
         {
-          Entry<Future<Object>, InternalCDOXACommitContext> entry = it.next();
+          Map.Entry<Future<Object>, InternalCDOXACommitContext> entry = it.next();
           Future<Object> future = entry.getKey();
           InternalCDOXACommitContext xaContext = entry.getValue();
 

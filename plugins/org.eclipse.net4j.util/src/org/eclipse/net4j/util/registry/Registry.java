@@ -53,7 +53,7 @@ public abstract class Registry<K, V> extends Container<Map.Entry<K, V>> implemen
   }
 
   @Override
-  public Set<Entry<K, V>> entrySet()
+  public Set<Map.Entry<K, V>> entrySet()
   {
     return getMap().entrySet();
   }
@@ -107,10 +107,10 @@ public abstract class Registry<K, V> extends Container<Map.Entry<K, V>> implemen
   {
     if (!t.isEmpty())
     {
-      Iterator<? extends Entry<? extends K, ? extends V>> i = t.entrySet().iterator();
+      Iterator<? extends Map.Entry<? extends K, ? extends V>> i = t.entrySet().iterator();
       while (i.hasNext())
       {
-        Entry<? extends K, ? extends V> e = i.next();
+        Map.Entry<? extends K, ? extends V> e = i.next();
         register(e.getKey(), e.getValue());
       }
 
@@ -148,9 +148,9 @@ public abstract class Registry<K, V> extends Container<Map.Entry<K, V>> implemen
 
   @Override
   @SuppressWarnings("unchecked")
-  public Entry<K, V>[] getElements()
+  public Map.Entry<K, V>[] getElements()
   {
-    return entrySet().toArray(new Entry[size()]);
+    return entrySet().toArray(new Map.Entry[size()]);
   }
 
   @Override

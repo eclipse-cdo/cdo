@@ -28,7 +28,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.util.List;
-import java.util.Map.Entry;
+import java.util.Map;
 
 /**
  * @author Simon McDuff
@@ -196,7 +196,7 @@ public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
     queryInfo.setMaxResults(getMaxResults());
     queryInfo.setChangeSetData(getChangeSetData());
 
-    for (Entry<String, Object> entry : getParameters().entrySet())
+    for (Map.Entry<String, Object> entry : getParameters().entrySet())
     {
       Object value = entry.getValue();
       value = adapt(value);

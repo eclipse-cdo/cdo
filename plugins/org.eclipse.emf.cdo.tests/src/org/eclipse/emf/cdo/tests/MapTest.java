@@ -513,7 +513,7 @@ public class MapTest extends AbstractCDOTest
 
         EClass mapEClass = theCoreFactory.createEClass();
         mapEClass.setName(mapName);
-        mapEClass.setInstanceTypeName("java.util.Map$Entry");
+        mapEClass.setInstanceTypeName("java.util.Map$Map.Entry");
 
         EStructuralFeature key;
         if (dataTypes.get(keyDataType))

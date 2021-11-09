@@ -26,7 +26,6 @@ import org.eclipse.emf.spi.cdo.CDOSessionProtocol.RefreshSessionResult;
 
 import java.io.IOException;
 import java.util.Map;
-import java.util.Map.Entry;
 
 /**
  * @author Simon McDuff
@@ -66,7 +65,7 @@ public class RefreshSessionRequest extends CDOClientRequest<RefreshSessionResult
     out.writeBoolean(enablePassiveUpdates);
 
     out.writeXInt(viewedRevisions.size());
-    for (Entry<CDOBranch, Map<CDOID, InternalCDORevision>> entry : viewedRevisions.entrySet())
+    for (Map.Entry<CDOBranch, Map<CDOID, InternalCDORevision>> entry : viewedRevisions.entrySet())
     {
       CDOBranch branch = entry.getKey();
       Map<CDOID, InternalCDORevision> revisions = entry.getValue();

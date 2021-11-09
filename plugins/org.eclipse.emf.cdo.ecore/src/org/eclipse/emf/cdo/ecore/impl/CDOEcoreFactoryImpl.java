@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.ecore.impl;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.impl.EcoreFactoryImpl;
 
-import java.util.Map.Entry;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -32,7 +32,7 @@ public class CDOEcoreFactoryImpl extends EcoreFactoryImpl
   }
 
   @Override
-  public Entry<String, String> createEStringToStringMapEntry()
+  public Map.Entry<String, String> createEStringToStringMapEntry()
   {
     return new EStringToStringMapEntryImpl();
   }

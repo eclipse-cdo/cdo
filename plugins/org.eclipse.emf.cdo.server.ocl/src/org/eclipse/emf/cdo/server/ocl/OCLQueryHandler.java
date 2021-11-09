@@ -69,7 +69,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 /**
@@ -263,7 +262,7 @@ public class OCLQueryHandler implements IQueryHandler
 
     // create variables for query parameters that should be passed through to the OCL query expression
     OCLStandardLibrary<EClassifier> stdLib = environment.getOCLStandardLibrary();
-    for (Entry<String, Object> parameter : parameters.entrySet())
+    for (Map.Entry<String, Object> parameter : parameters.entrySet())
     {
       String name = parameter.getKey();
       if (isOCLQueryParameter(name))
@@ -410,7 +409,7 @@ public class OCLQueryHandler implements IQueryHandler
   protected void setOCLQueryParameters(Map<String, Object> parameters, Query<EClassifier, EClass, EObject> query)
   {
     EvaluationEnvironment<EClassifier, ?, ?, EClass, EObject> evalEnv = query.getEvaluationEnvironment();
-    for (Entry<String, Object> parameter : parameters.entrySet())
+    for (Map.Entry<String, Object> parameter : parameters.entrySet())
     {
       String key = parameter.getKey();
 

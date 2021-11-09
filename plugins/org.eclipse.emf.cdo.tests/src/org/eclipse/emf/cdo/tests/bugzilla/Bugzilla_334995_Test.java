@@ -20,7 +20,7 @@ import org.eclipse.emf.cdo.util.CommitException;
 
 import org.eclipse.emf.ecore.resource.Resource;
 
-import java.util.Map.Entry;
+import java.util.Map;
 
 /**
  * Bug 334995 - CDOTransaction corrupted by persisted + new resource with same URI
@@ -50,7 +50,7 @@ public class Bugzilla_334995_Test extends AbstractCDOTest
     commitAndSync(transaction, transaction2);
 
     System.out.println("newObjects:");
-    for (Entry<CDOID, CDOObject> entry : transaction2.getNewObjects().entrySet())
+    for (Map.Entry<CDOID, CDOObject> entry : transaction2.getNewObjects().entrySet())
     {
       System.out.println(" " + entry + ", state: " + entry.getValue().cdoState());
       assertNew(entry.getValue(), transaction2);
@@ -68,7 +68,7 @@ public class Bugzilla_334995_Test extends AbstractCDOTest
     System.out.println("Local resource:  " + resourceB2);
 
     System.out.println("newObjects:");
-    for (Entry<CDOID, CDOObject> entry : transaction2.getNewObjects().entrySet())
+    for (Map.Entry<CDOID, CDOObject> entry : transaction2.getNewObjects().entrySet())
     {
       System.out.println(" " + entry + ", state: " + entry.getValue().cdoState());
       assertNew(entry.getValue(), transaction2);

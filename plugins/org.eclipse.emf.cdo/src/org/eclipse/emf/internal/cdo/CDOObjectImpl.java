@@ -2581,7 +2581,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     }
 
     @Override
-    public Set<java.util.Map.Entry<Object, Object>> entrySet()
+    public Set<Map.Entry<Object, Object>> entrySet()
     {
       checkListForReading();
       return super.entrySet();

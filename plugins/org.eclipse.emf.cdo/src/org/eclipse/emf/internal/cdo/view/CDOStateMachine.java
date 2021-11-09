@@ -76,7 +76,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.concurrent.locks.Lock;
 
 /**
@@ -987,9 +986,9 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       InternalCDOSavepoint lastSavepoint = transaction.getLastSavepoint();
 
       Map<CDOID, CDORevisionDelta> revisionDeltas = lastSavepoint.getRevisionDeltas2();
-      for (Iterator<Entry<CDOID, CDORevisionDelta>> it = revisionDeltas.entrySet().iterator(); it.hasNext();)
+      for (Iterator<Map.Entry<CDOID, CDORevisionDelta>> it = revisionDeltas.entrySet().iterator(); it.hasNext();)
       {
-        Entry<CDOID, CDORevisionDelta> entry = it.next();
+        Map.Entry<CDOID, CDORevisionDelta> entry = it.next();
         CDORevisionDelta revisionDelta = entry.getValue();
 
         Map<EStructuralFeature, CDOFeatureDelta> map = ((InternalCDORevisionDelta)revisionDelta).getFeatureDeltaMap();
@@ -1017,9 +1016,9 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
     private void processFeatureDeltas(CDOID reattachedObject, Map<EStructuralFeature, CDOFeatureDelta> map)
     {
-      for (Iterator<Entry<EStructuralFeature, CDOFeatureDelta>> it = map.entrySet().iterator(); it.hasNext();)
+      for (Iterator<Map.Entry<EStructuralFeature, CDOFeatureDelta>> it = map.entrySet().iterator(); it.hasNext();)
       {
-        Entry<EStructuralFeature, CDOFeatureDelta> entry = it.next();
+        Map.Entry<EStructuralFeature, CDOFeatureDelta> entry = it.next();
         CDOFeatureDelta featureDelta = entry.getValue();
         processFeatureDelta(reattachedObject, it, featureDelta);
       }

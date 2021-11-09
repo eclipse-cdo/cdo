@@ -54,7 +54,7 @@ public abstract class DelegatingRegistry<K, V> extends Registry<K, V>
   }
 
   @Override
-  public Set<Entry<K, V>> entrySet()
+  public Set<Map.Entry<K, V>> entrySet()
   {
     return mergedEntrySet();
   }
@@ -112,7 +112,7 @@ public abstract class DelegatingRegistry<K, V> extends Registry<K, V>
     return old;
   }
 
-  protected Set<Entry<K, V>> mergedEntrySet()
+  protected Set<Map.Entry<K, V>> mergedEntrySet()
   {
     final Map<K, V> merged = new HashMap<>();
     if (delegate != null)

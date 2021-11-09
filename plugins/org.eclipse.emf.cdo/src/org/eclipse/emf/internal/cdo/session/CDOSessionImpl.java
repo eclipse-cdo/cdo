@@ -155,7 +155,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -738,7 +737,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     setLastUpdateTime(result.getLastUpdateTime());
     registerPackageUnits(result.getPackageUnits());
 
-    for (Entry<CDOBranch, List<InternalCDOView>> entry : views.entrySet())
+    for (Map.Entry<CDOBranch, List<InternalCDOView>> entry : views.entrySet())
     {
       CDOBranch branch = entry.getKey();
       List<InternalCDOView> branchViews = entry.getValue();

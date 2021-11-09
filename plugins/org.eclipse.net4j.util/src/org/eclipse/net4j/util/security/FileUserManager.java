@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.MessageFormat;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Properties;
 
 /**
@@ -156,7 +155,7 @@ public class FileUserManager extends UserManager
     Properties properties = new Properties();
     properties.load(stream);
 
-    for (Entry<Object, Object> entry : properties.entrySet())
+    for (Map.Entry<Object, Object> entry : properties.entrySet())
     {
       String userID = (String)entry.getKey();
       char[] password = SecurityUtil.toCharArray((String)entry.getValue());
@@ -191,7 +190,7 @@ public class FileUserManager extends UserManager
   {
     Properties properties = new Properties();
 
-    for (Entry<String, char[]> entry : users.entrySet())
+    for (Map.Entry<String, char[]> entry : users.entrySet())
     {
       properties.put(entry.getKey(), SecurityUtil.toString(entry.getValue()));
     }

@@ -209,7 +209,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.WeakHashMap;
 import java.util.concurrent.Callable;
@@ -2090,7 +2089,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         }
 
         // Send notifications.
-        for (Entry<CDOObject, CDORevision> entry : oldRevisions.entrySet())
+        for (Map.Entry<CDOObject, CDORevision> entry : oldRevisions.entrySet())
         {
           InternalCDOObject object = (InternalCDOObject)entry.getKey();
           InternalCDORevision oldRevision = (InternalCDORevision)entry.getValue();
@@ -2303,7 +2302,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       Map<CDOID, CDOObject> detachedObjectsMap = itrSavepoint.getDetachedObjects();
       if (!detachedObjectsMap.isEmpty())
       {
-        for (Entry<CDOID, CDOObject> detachedObjectEntry : detachedObjectsMap.entrySet())
+        for (Map.Entry<CDOID, CDOObject> detachedObjectEntry : detachedObjectsMap.entrySet())
         {
           CDOID id = detachedObjectEntry.getKey();
           if (isObjectNew(id))
@@ -2320,7 +2319,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       }
 
       // Rollback dirty objects.
-      for (Entry<CDOID, CDOObject> entryDirtyObject : itrSavepoint.getDirtyObjects().entrySet())
+      for (Map.Entry<CDOID, CDOObject> entryDirtyObject : itrSavepoint.getDirtyObjects().entrySet())
       {
         CDOID id = entryDirtyObject.getKey();
         if (!isObjectNew(id))
@@ -2389,7 +2388,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
 
     // We need to register back new objects that are not removed anymore there.
-    for (Entry<CDOID, CDOObject> entryNewObject : newObjMaps.entrySet())
+    for (Map.Entry<CDOID, CDOObject> entryNewObject : newObjMaps.entrySet())
     {
       InternalCDOObject object = (InternalCDOObject)entryNewObject.getValue();
 
@@ -2398,7 +2397,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       object.cdoInternalSetState(CDOState.NEW);
     }
 
-    for (Entry<CDOID, CDOObject> entryDirtyObject : dirtyObjects.entrySet())
+    for (Map.Entry<CDOID, CDOObject> entryDirtyObject : dirtyObjects.entrySet())
     {
       if (detachedObjects.containsKey(entryDirtyObject.getKey()))
       {
@@ -2885,7 +2884,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   private <T> void copyUncommitted(Map<CDOID, T> oldSavepointMap, Map<CDOID, T> commitContextMap, Map<CDOID, T> newSavepointMap)
   {
-    for (Entry<CDOID, T> entry : oldSavepointMap.entrySet())
+    for (Map.Entry<CDOID, T> entry : oldSavepointMap.entrySet())
     {
       if (!commitContextMap.containsKey(entry.getKey()))
       {
@@ -4559,7 +4558,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         deltas.add(delta);
       }
 
-      for (Entry<CDOID, CDOObject> entry : detachedObjects.entrySet())
+      for (Map.Entry<CDOID, CDOObject> entry : detachedObjects.entrySet())
       {
         CDOObject object = entry.getValue();
         InternalCDORevision cleanRevision = cleanRevisions.get(object);
@@ -4618,7 +4617,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       }
 
       Map<CDOID, T> newMap = CDOIDUtil.createMap();
-      for (Entry<CDOID, T> entry : map.entrySet())
+      for (Map.Entry<CDOID, T> entry : map.entrySet())
       {
         CDOID id = entry.getKey();
         CDOObject o = getObject(id);

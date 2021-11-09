@@ -25,7 +25,7 @@ import org.eclipse.gmf.runtime.notation.PropertyValue;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>String
- * To Property Value Map Entry</b></em>'. <!-- end-user-doc -->
+ * To Property Value Map Map.Entry</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>

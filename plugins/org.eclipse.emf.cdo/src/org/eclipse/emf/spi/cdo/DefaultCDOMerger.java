@@ -53,7 +53,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 /**
@@ -145,7 +144,7 @@ public class DefaultCDOMerger implements CDOMerger
     sourceMap = createMap(source);
 
     Set<CDOID> taken = new HashSet<>();
-    for (Entry<CDOID, Object> entry : targetMap.entrySet())
+    for (Map.Entry<CDOID, Object> entry : targetMap.entrySet())
     {
       CDOID id = entry.getKey();
       Object targetData = entry.getValue();
@@ -157,7 +156,7 @@ public class DefaultCDOMerger implements CDOMerger
       }
     }
 
-    for (Entry<CDOID, Object> entry : sourceMap.entrySet())
+    for (Map.Entry<CDOID, Object> entry : sourceMap.entrySet())
     {
       CDOID id = entry.getKey();
       if (taken.add(id))

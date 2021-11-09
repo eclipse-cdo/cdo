@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Properties Map Entry</b></em>'.
+ * An implementation of the model object '<em><b>Properties Map Map.Entry</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:

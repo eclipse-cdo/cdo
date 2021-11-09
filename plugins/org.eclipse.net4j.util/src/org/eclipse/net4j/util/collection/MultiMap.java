@@ -292,7 +292,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
   /**
    * @author Eike Stepper
    */
-  private final class Entries extends AbstractSet<Entry<K, V>>
+  private final class Entries extends AbstractSet<Map.Entry<K, V>>
   {
     public Entries()
     {
@@ -302,7 +302,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
      * @category WRITE
      */
     @Override
-    public boolean add(Entry<K, V> o)
+    public boolean add(Map.Entry<K, V> o)
     {
       throw new UnsupportedOperationException();
     }
@@ -311,7 +311,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
      * @category WRITE
      */
     @Override
-    public boolean addAll(Collection<? extends Entry<K, V>> c)
+    public boolean addAll(Collection<? extends Map.Entry<K, V>> c)
     {
       throw new UnsupportedOperationException();
     }
@@ -402,15 +402,15 @@ public abstract class MultiMap<K, V> implements Map<K, V>
     }
 
     @Override
-    public Iterator<Entry<K, V>> iterator()
+    public Iterator<Map.Entry<K, V>> iterator()
     {
-      return new Iterator<Entry<K, V>>()
+      return new Iterator<Map.Entry<K, V>>()
       {
-        private Entry<K, V> next;
+        private Map.Entry<K, V> next;
 
         private int delegateIndex = -1;
 
-        private Iterator<Entry<K, V>> delegateIt;
+        private Iterator<Map.Entry<K, V>> delegateIt;
 
         /**
          * @category WRITE
@@ -762,7 +762,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
     {
       return new Iterator<V>()
       {
-        private Iterator<Entry<K, V>> delegateIt = entrySet().iterator();
+        private Iterator<Map.Entry<K, V>> delegateIt = entrySet().iterator();
 
         /**
          * @category WRITE

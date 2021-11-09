@@ -40,7 +40,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.ConcurrentMap;
 
@@ -317,7 +316,7 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
       }
 
       @Override
-      public Set<java.util.Map.Entry<CDOID, CDORevisionDelta>> entrySet()
+      public Set<Map.Entry<CDOID, CDORevisionDelta>> entrySet()
       {
         return revisionDeltas.entrySet();
       }
@@ -627,7 +626,7 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
         Map<CDOID, CDOObject> detachedObjects = CDOIDUtil.createMap();
         for (InternalCDOSavepoint savepoint = getFirstSavePoint(); savepoint != null; savepoint = savepoint.getNextSavepoint())
         {
-          for (Entry<CDOID, CDOObject> entry : savepoint.getDetachedObjects().entrySet())
+          for (Map.Entry<CDOID, CDOObject> entry : savepoint.getDetachedObjects().entrySet())
           {
             CDOID detachedID = entry.getKey();
             if (!isNewObject(detachedID))

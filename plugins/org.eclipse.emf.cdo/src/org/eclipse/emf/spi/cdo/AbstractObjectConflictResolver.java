@@ -52,7 +52,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 /**
@@ -93,7 +92,7 @@ public abstract class AbstractObjectConflictResolver extends AbstractConflictRes
   public void resolveConflicts(Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts, List<CDORevisionDelta> allRemoteDeltas)
   {
     Map<CDOID, CDORevisionDelta> localDeltas = getTransaction().getRevisionDeltas();
-    for (Entry<CDOObject, Pair<CDORevision, CDORevisionDelta>> entry : conflicts.entrySet())
+    for (Map.Entry<CDOObject, Pair<CDORevision, CDORevisionDelta>> entry : conflicts.entrySet())
     {
       CDOObject conflict = entry.getKey();
       CDORevision oldRevision = entry.getValue().getElement1();

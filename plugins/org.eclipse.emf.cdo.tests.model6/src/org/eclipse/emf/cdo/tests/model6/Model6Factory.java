@@ -77,10 +77,10 @@ public interface Model6Factory extends EFactory
   PropertiesMap createPropertiesMap();
 
   /**
-   * Returns a new object of class '<em>Properties Map Entry Value</em>'.
+   * Returns a new object of class '<em>Properties Map Map.Entry Value</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Properties Map Entry Value</em>'.
+   * @return a new object of class '<em>Properties Map Map.Entry Value</em>'.
    * @generated
    */
   PropertiesMapEntryValue createPropertiesMapEntryValue();

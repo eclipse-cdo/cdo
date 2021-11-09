@@ -59,7 +59,7 @@ public abstract class DelegatingCDOPackageRegistry extends Lifecycle implements 
   }
 
   @Override
-  public Set<java.util.Map.Entry<String, Object>> entrySet()
+  public Set<Map.Entry<String, Object>> entrySet()
   {
     return getDelegate().entrySet();
   }

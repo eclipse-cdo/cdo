@@ -19,7 +19,6 @@ import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.WeakHashMap;
 
 /**
@@ -60,7 +59,7 @@ public abstract class CDOCommitHistoryProviderImpl<KEY, HISTORY extends CDOCommi
   {
     synchronized (histories)
     {
-      for (Entry<CDOCommitHistory, KEY> entry : histories.entrySet())
+      for (Map.Entry<CDOCommitHistory, KEY> entry : histories.entrySet())
       {
         KEY currentKey = entry.getValue();
         if (currentKey == key)

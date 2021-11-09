@@ -81,7 +81,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 /**
@@ -794,7 +793,7 @@ public class CDOServerBrowser extends Worker
             out.println("<li>" + view + "</li>");
             out.println("<ul>");
 
-            for (Entry<CDOID, LockGrade> entry : locks.entrySet())
+            for (Map.Entry<CDOID, LockGrade> entry : locks.entrySet())
             {
               out.println("<li>" + entry.getKey() + " = " + entry.getValue() + "</li>");
             }

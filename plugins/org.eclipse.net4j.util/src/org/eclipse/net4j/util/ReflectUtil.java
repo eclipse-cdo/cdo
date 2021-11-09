@@ -33,7 +33,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.WeakHashMap;
 
 /**
@@ -512,7 +511,7 @@ public final class ReflectUtil
 
     String className = null;
     Map<String, Object> values = new HashMap<>();
-    for (Entry<Object, Object> entry : properties.entrySet())
+    for (Map.Entry<Object, Object> entry : properties.entrySet())
     {
       if (entry.getKey() instanceof String)
       {

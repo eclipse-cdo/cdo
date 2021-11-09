@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.Properties;
 import java.util.jar.JarEntry;
@@ -184,7 +184,7 @@ public class LegacyBundle extends AbstractBundle
       inputStream = new BufferedInputStream(getInputStream(LegacyPlatform.OPTIONS));
       properties.load(inputStream);
 
-      for (Entry<Object, Object> entry : properties.entrySet())
+      for (Map.Entry<Object, Object> entry : properties.entrySet())
       {
         try
         {

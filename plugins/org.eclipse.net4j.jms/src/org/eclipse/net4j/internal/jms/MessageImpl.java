@@ -28,7 +28,6 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 public class MessageImpl implements Message, Comparable<MessageImpl>
 {
@@ -477,7 +476,7 @@ public class MessageImpl implements Message, Comparable<MessageImpl>
     out.writeString(type);
 
     out.writeInt(properties.size());
-    for (Entry<String, Object> entry : properties.entrySet())
+    for (Map.Entry<String, Object> entry : properties.entrySet())
     {
       out.writeString(entry.getKey());
       TypeUtil.write(out, entry.getValue());

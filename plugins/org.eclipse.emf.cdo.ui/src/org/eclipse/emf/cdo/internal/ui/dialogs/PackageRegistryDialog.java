@@ -54,7 +54,6 @@ import javax.swing.text.AbstractDocument.Content;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 /**
@@ -226,7 +225,7 @@ public class PackageRegistryDialog extends TitleAreaDialog
     public String getColumnText(Object element, int columnIndex)
     {
       @SuppressWarnings("unchecked")
-      Map.Entry<String, Object> entry = (Entry<String, Object>)element;
+      Map.Entry<String, Object> entry = (Map.Entry<String, Object>)element;
       CDOPackageInfo packageInfo = CDOModelUtil.getPackageInfo(entry.getValue(), session.getPackageRegistry());
       if (packageInfo != null)
       {
@@ -267,7 +266,7 @@ public class PackageRegistryDialog extends TitleAreaDialog
       if (columnIndex == 0)
       {
         @SuppressWarnings("unchecked")
-        Map.Entry<String, Object> entry = (Entry<String, Object>)element;
+        Map.Entry<String, Object> entry = (Map.Entry<String, Object>)element;
         CDOPackageInfo packageInfo = CDOModelUtil.getPackageInfo(entry.getValue(), session.getPackageRegistry());
         if (packageInfo != null)
         {
@@ -300,7 +299,7 @@ public class PackageRegistryDialog extends TitleAreaDialog
     public Color getForeground(Object element)
     {
       @SuppressWarnings("unchecked")
-      Map.Entry<String, Object> entry = (Entry<String, Object>)element;
+      Map.Entry<String, Object> entry = (Map.Entry<String, Object>)element;
       CDOPackageInfo packageInfo = CDOModelUtil.getPackageInfo(entry.getValue(), session.getPackageRegistry());
       if (packageInfo != null)
       {

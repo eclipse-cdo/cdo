@@ -43,7 +43,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CountDownLatch;
@@ -612,7 +611,7 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
         Object initResult = storeAccessor.initUnit(view, rootID, revisionHandler, initializedIDs, timeStamp, monitor);
 
         List<CDOID> ids = new ArrayList<>();
-        for (Entry<ObjectAttacher, List<CDOID>> entry : objectAttachers.entrySet())
+        for (Map.Entry<ObjectAttacher, List<CDOID>> entry : objectAttachers.entrySet())
         {
           ObjectAttacher objectAttacher = entry.getKey();
           if (objectAttacher.awaitFinishedCommit())

@@ -355,7 +355,7 @@ public class ChunkingTest extends AbstractCDOTest
 
     for (int index = 0; index < expectedList.size(); index++)
     {
-      assertEquals("Entry at index " + index + " differs", expectedList.get(index), actualList.get(index));
+      assertEquals("Map.Entry at index " + index + " differs", expectedList.get(index), actualList.get(index));
     }
 
     view.close();

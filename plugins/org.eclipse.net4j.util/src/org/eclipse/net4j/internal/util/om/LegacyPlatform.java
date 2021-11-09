@@ -29,7 +29,6 @@ import java.io.InputStream;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
@@ -82,7 +81,7 @@ public class LegacyPlatform extends AbstractPlatform
       inputStream = new BufferedInputStream(new FileInputStream(debugOptionsPath));
       properties.load(inputStream);
 
-      for (Entry<Object, Object> entry : properties.entrySet())
+      for (Map.Entry<Object, Object> entry : properties.entrySet())
       {
         try
         {

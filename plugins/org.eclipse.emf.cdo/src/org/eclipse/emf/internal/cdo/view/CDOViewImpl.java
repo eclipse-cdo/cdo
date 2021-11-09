@@ -132,7 +132,6 @@ import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.WeakHashMap;
 import java.util.concurrent.ConcurrentHashMap;
@@ -2491,9 +2490,9 @@ public class CDOViewImpl extends AbstractCDOView
             resubscribe = false;
           }
 
-          for (Iterator<Entry<EObject, CDOUnit>> it = unitPerObject.entrySet().iterator(); it.hasNext();)
+          for (Iterator<Map.Entry<EObject, CDOUnit>> it = unitPerObject.entrySet().iterator(); it.hasNext();)
           {
-            Entry<EObject, CDOUnit> entry = it.next();
+            Map.Entry<EObject, CDOUnit> entry = it.next();
             if (entry.getValue() == unit)
             {
               it.remove(); // Remove the object from its unit first, so that shouldSubscribe() can return true.

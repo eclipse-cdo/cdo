@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.EClass;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Properties Map Entry Value</b></em>'.
+ * An implementation of the model object '<em><b>Properties Map Map.Entry Value</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:

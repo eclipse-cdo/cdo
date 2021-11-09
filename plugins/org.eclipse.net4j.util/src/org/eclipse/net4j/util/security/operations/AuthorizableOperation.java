@@ -20,7 +20,6 @@ import java.lang.ref.WeakReference;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Objects;
 
 /**
@@ -95,7 +94,7 @@ public final class AuthorizableOperation
     out.writeString(id);
     out.writeVarInt(parameters.size());
 
-    for (Entry<String, Object> entry : parameters.entrySet())
+    for (Map.Entry<String, Object> entry : parameters.entrySet())
     {
       out.writeString(entry.getKey());
       out.writeObject(entry.getValue());

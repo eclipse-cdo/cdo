@@ -52,7 +52,6 @@ import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 /**
@@ -525,7 +524,7 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
       if (event instanceof ContainerEvent<?>)
       {
         @SuppressWarnings("unchecked")
-        ContainerEvent<Map.Entry<IFactoryKey, IFactory>> ev = (ContainerEvent<Entry<IFactoryKey, IFactory>>)event;
+        ContainerEvent<Map.Entry<IFactoryKey, IFactory>> ev = (ContainerEvent<Map.Entry<IFactoryKey, IFactory>>)event;
 
         for (IContainerDelta<Map.Entry<IFactoryKey, IFactory>> delta : ev.getDeltas())
         {

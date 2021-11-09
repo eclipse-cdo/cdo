@@ -115,7 +115,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -1057,7 +1056,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
         {
           CDOTransactionFinishedEvent e = (CDOTransactionFinishedEvent)event;
           Map<CDOID, CDOID> remoteMappings = e.getIDMappings();
-          for (Entry<CDOID, CDOID> entry : idMappings.entrySet())
+          for (Map.Entry<CDOID, CDOID> entry : idMappings.entrySet())
           {
             CDOID tempID = entry.getValue();
             CDOID newID = remoteMappings.get(tempID);
@@ -1093,7 +1092,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
 
         monitor.begin(idMappings.size() * 2 + adjustedObjects.size() * 2 + 10);
 
-        for (Entry<CDOID, CDOID> entry : idMappings.entrySet())
+        for (Map.Entry<CDOID, CDOID> entry : idMappings.entrySet())
         {
           CDOID id = entry.getKey();
 

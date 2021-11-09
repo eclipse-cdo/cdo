@@ -116,7 +116,7 @@ public class UnmodifiableRegistry<K, V> implements IRegistry<K, V>
   }
 
   @Override
-  public Entry<K, V>[] getElements()
+  public Map.Entry<K, V>[] getElements()
   {
     return delegate.getElements();
   }
@@ -140,7 +140,7 @@ public class UnmodifiableRegistry<K, V> implements IRegistry<K, V>
   }
 
   @Override
-  public Set<Entry<K, V>> entrySet()
+  public Set<Map.Entry<K, V>> entrySet()
   {
     return delegate.entrySet();
   }

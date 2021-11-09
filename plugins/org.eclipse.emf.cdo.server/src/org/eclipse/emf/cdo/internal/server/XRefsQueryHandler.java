@@ -115,7 +115,7 @@ public class XRefsQueryHandler implements IQueryHandler
       // System.out.println();
       // System.out.println(packageInfo);
       collectSourceCandidates(packageInfo, concreteTypes, sourceCandidates);
-      // for (Entry<EClass, List<EReference>> entry : sourceCandidates.entrySet())
+      // for (Map.Entry<EClass, List<EReference>> entry : sourceCandidates.entrySet())
       // {
       // System.out.println(" ---> " + entry.getKey().getName());
       // for (EReference eReference : entry.getValue())

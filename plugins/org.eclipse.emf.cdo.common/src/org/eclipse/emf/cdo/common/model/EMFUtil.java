@@ -53,7 +53,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.function.Consumer;
 
@@ -271,7 +270,7 @@ public final class EMFUtil
   {
     Set<Map.Entry<String, Object>> entries = packageRegistry.entrySet();
     @SuppressWarnings("unchecked")
-    Map.Entry<String, Object>[] array = entries.toArray(new Entry[entries.size()]);
+    Map.Entry<String, Object>[] array = entries.toArray(new Map.Entry[entries.size()]);
     Arrays.sort(array, new Comparator<Map.Entry<String, Object>>()
     {
       @Override

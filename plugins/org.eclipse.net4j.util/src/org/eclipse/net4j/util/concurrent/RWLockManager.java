@@ -165,7 +165,7 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
       List<LockEntry<OBJECT, CONTEXT>> lockEntrysToRemove = new ArrayList<>();
       List<LockEntry<OBJECT, CONTEXT>> lockEntrysToAdd = new ArrayList<>();
 
-      for (Entry<OBJECT, LockEntry<OBJECT, CONTEXT>> entry : lockEntries.entrySet())
+      for (Map.Entry<OBJECT, LockEntry<OBJECT, CONTEXT>> entry : lockEntries.entrySet())
       {
         LockEntry<OBJECT, CONTEXT> lockedContext = entry.getValue();
         LockEntry<OBJECT, CONTEXT> newEntry = lockedContext.clearLock(context);

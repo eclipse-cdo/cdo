@@ -63,7 +63,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 /**
  * If the meaning of this type isn't clear, there really should be more of a description here...
@@ -560,7 +559,7 @@ public class RepositoryConfigurator implements IManagedContainerProvider
   {
     if (value != null && parameters != null)
     {
-      for (Entry<String, String> entry : parameters.entrySet())
+      for (Map.Entry<String, String> entry : parameters.entrySet())
       {
         value = value.replace(entry.getKey(), entry.getValue());
       }

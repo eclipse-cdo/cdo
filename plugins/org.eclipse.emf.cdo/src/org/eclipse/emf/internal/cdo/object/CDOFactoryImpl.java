@@ -31,7 +31,7 @@ public class CDOFactoryImpl extends EFactoryImpl implements CDOFactory
   @Override
   protected EObject basicCreate(EClass eClass)
   {
-    if (eClass.getInstanceClassName() == "java.util.Map$Entry") //$NON-NLS-1$
+    if (eClass.getInstanceClassName() == "java.util.Map$Map.Entry") //$NON-NLS-1$
     {
       return new DynamicCDOObjectImpl.BasicEMapEntry<String, String>(eClass);
     }

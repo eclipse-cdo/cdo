@@ -367,7 +367,7 @@ public interface Model6Package extends EPackage
   int PROPERTIES_MAP_FEATURE_COUNT = 3;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.impl.PropertiesMapEntryImpl <em>Properties Map Entry</em>}' class.
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.impl.PropertiesMapEntryImpl <em>Properties Map Map.Entry</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.tests.model6.impl.PropertiesMapEntryImpl
@@ -395,7 +395,7 @@ public interface Model6Package extends EPackage
   int PROPERTIES_MAP_ENTRY__VALUE = 1;
 
   /**
-   * The number of structural features of the '<em>Properties Map Entry</em>' class.
+   * The number of structural features of the '<em>Properties Map Map.Entry</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -404,7 +404,7 @@ public interface Model6Package extends EPackage
   int PROPERTIES_MAP_ENTRY_FEATURE_COUNT = 2;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.impl.PropertiesMapEntryValueImpl <em>Properties Map Entry Value</em>}' class.
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.impl.PropertiesMapEntryValueImpl <em>Properties Map Map.Entry Value</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.tests.model6.impl.PropertiesMapEntryValueImpl
@@ -423,7 +423,7 @@ public interface Model6Package extends EPackage
   int PROPERTIES_MAP_ENTRY_VALUE__LABEL = 0;
 
   /**
-   * The number of structural features of the '<em>Properties Map Entry Value</em>' class.
+   * The number of structural features of the '<em>Properties Map Map.Entry Value</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -1411,10 +1411,10 @@ public interface Model6Package extends EPackage
   EReference getPropertiesMap_TransientMap();
 
   /**
-   * Returns the meta object for class '{@link java.util.Map.Entry <em>Properties Map Entry</em>}'.
+   * Returns the meta object for class '{@link java.util.Map.Entry <em>Properties Map Map.Entry</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Properties Map Entry</em>'.
+   * @return the meta object for class '<em>Properties Map Map.Entry</em>'.
    * @see java.util.Map.Entry
    * @model keyDataType="org.eclipse.emf.ecore.EString"
    *        valueType="org.eclipse.emf.cdo.tests.model6.PropertiesMapEntryValue" valueContainment="true" valueResolveProxies="true"
@@ -1445,10 +1445,10 @@ public interface Model6Package extends EPackage
   EReference getPropertiesMapEntry_Value();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model6.PropertiesMapEntryValue <em>Properties Map Entry Value</em>}'.
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model6.PropertiesMapEntryValue <em>Properties Map Map.Entry Value</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Properties Map Entry Value</em>'.
+   * @return the meta object for class '<em>Properties Map Map.Entry Value</em>'.
    * @see org.eclipse.emf.cdo.tests.model6.PropertiesMapEntryValue
    * @generated
    */
@@ -2345,7 +2345,7 @@ public interface Model6Package extends EPackage
     EReference PROPERTIES_MAP__TRANSIENT_MAP = eINSTANCE.getPropertiesMap_TransientMap();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.PropertiesMapEntryImpl <em>Properties Map Entry</em>}' class.
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.PropertiesMapEntryImpl <em>Properties Map Map.Entry</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.tests.model6.impl.PropertiesMapEntryImpl
@@ -2371,7 +2371,7 @@ public interface Model6Package extends EPackage
     EReference PROPERTIES_MAP_ENTRY__VALUE = eINSTANCE.getPropertiesMapEntry_Value();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.PropertiesMapEntryValueImpl <em>Properties Map Entry Value</em>}' class.
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.PropertiesMapEntryValueImpl <em>Properties Map Map.Entry Value</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.tests.model6.impl.PropertiesMapEntryValueImpl

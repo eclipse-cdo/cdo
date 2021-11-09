@@ -89,10 +89,10 @@ public class ContainerMap<K, V> extends AbstractDelegator<Map.Entry<K, V>> imple
   public void putAll(Map<? extends K, ? extends V> t)
   {
     ContainerEvent<Map.Entry<K, V>> event = new ContainerEvent<>(this);
-    Iterator<? extends Entry<? extends K, ? extends V>> i = t.entrySet().iterator();
+    Iterator<? extends Map.Entry<? extends K, ? extends V>> i = t.entrySet().iterator();
     while (i.hasNext())
     {
-      Entry<? extends K, ? extends V> entry = i.next();
+      Map.Entry<? extends K, ? extends V> entry = i.next();
       K key = entry.getKey();
       V value = entry.getValue();
       V removed = getDelegate().put(key, value);
@@ -165,7 +165,7 @@ public class ContainerMap<K, V> extends AbstractDelegator<Map.Entry<K, V>> imple
   @SuppressWarnings("unchecked")
   public Map.Entry<K, V>[] getElements()
   {
-    return (Entry<K, V>[])getDelegate().entrySet().toArray();
+    return (Map.Entry<K, V>[])getDelegate().entrySet().toArray();
   }
 
   /**

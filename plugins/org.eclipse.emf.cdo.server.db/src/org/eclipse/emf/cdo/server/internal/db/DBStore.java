@@ -71,7 +71,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.Timer;
 
@@ -399,7 +398,7 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
 
     try
     {
-      for (Entry<String, String> entry : properties.entrySet())
+      for (Map.Entry<String, String> entry : properties.entrySet())
       {
         String name = entry.getKey();
         String value = entry.getValue();

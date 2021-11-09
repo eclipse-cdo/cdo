@@ -27,7 +27,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -209,7 +208,7 @@ public class GenerateExampleBuilders
 
   private static String substitute(String content, Map<String, String> substitutes)
   {
-    for (Entry<String, String> entry : substitutes.entrySet())
+    for (Map.Entry<String, String> entry : substitutes.entrySet())
     {
       content = content.replace(entry.getKey(), entry.getValue());
     }

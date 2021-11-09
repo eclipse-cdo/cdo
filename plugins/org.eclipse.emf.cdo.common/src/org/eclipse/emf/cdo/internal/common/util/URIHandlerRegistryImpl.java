@@ -28,7 +28,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 /**
  * @author Eike Stepper
@@ -67,7 +66,7 @@ public final class URIHandlerRegistryImpl implements URIHandlerRegistry, URIHand
       IPluginContainer.INSTANCE.getFactoryRegistry().addListener(new ContainerEventAdapter<Map.Entry<IFactoryKey, IFactory>>()
       {
         @Override
-        protected void onAdded(IContainer<Entry<IFactoryKey, IFactory>> container, Map.Entry<IFactoryKey, IFactory> element)
+        protected void onAdded(IContainer<Map.Entry<IFactoryKey, IFactory>> container, Map.Entry<IFactoryKey, IFactory> element)
         {
           String scheme = getScheme(element);
           if (scheme != null)
@@ -78,7 +77,7 @@ public final class URIHandlerRegistryImpl implements URIHandlerRegistry, URIHand
         }
 
         @Override
-        protected void onRemoved(IContainer<Entry<IFactoryKey, IFactory>> container, Map.Entry<IFactoryKey, IFactory> element)
+        protected void onRemoved(IContainer<Map.Entry<IFactoryKey, IFactory>> container, Map.Entry<IFactoryKey, IFactory> element)
         {
           String scheme = getScheme(element);
           if (scheme != null)

@@ -48,7 +48,6 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
@@ -376,7 +375,7 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
     {
       Map<CDOView, List<CDOResource>> resourcesPerView = getResourcesPerView(potentialResources);
 
-      for (Entry<CDOView, List<CDOResource>> entry : resourcesPerView.entrySet())
+      for (Map.Entry<CDOView, List<CDOResource>> entry : resourcesPerView.entrySet())
       {
         InternalCDOView view = (InternalCDOView)entry.getKey();
         List<CDOResource> resources = entry.getValue();

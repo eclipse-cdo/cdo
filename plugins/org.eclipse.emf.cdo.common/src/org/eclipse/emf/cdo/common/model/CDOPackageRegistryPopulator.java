@@ -15,7 +15,7 @@ import org.eclipse.net4j.util.concurrent.Worker;
 import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EPackage;
 
-import java.util.Map.Entry;
+import java.util.Map;
 
 /**
  * Populates a {@link #getTarget() target} package registry by asynchronously polling a {@link #getSource() source}
@@ -108,7 +108,7 @@ public class CDOPackageRegistryPopulator extends Worker
 
   private static boolean populateFirstMatch(EPackage.Registry source, CDOPackageRegistry target)
   {
-    for (Entry<String, Object> entry : source.entrySet())
+    for (Map.Entry<String, Object> entry : source.entrySet())
     {
       String nsURI = entry.getKey();
       if (!target.containsKey(nsURI))

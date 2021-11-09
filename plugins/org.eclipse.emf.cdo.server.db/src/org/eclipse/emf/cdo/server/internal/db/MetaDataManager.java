@@ -58,7 +58,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 /**
  * @author Eike Stepper
@@ -423,7 +422,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
       monitor.done();
     }
 
-    for (Entry<String, InternalCDOPackageUnit> entry : packageUnits.entrySet())
+    for (Map.Entry<String, InternalCDOPackageUnit> entry : packageUnits.entrySet())
     {
       String id = entry.getKey();
       InternalCDOPackageUnit packageUnit = entry.getValue();

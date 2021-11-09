@@ -24,7 +24,6 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 /**
@@ -204,7 +203,7 @@ public class TestListener2 implements IListener
 
     synchronized (this)
     {
-      for (Entry<IEvent, Long> entry : events.entrySet())
+      for (Map.Entry<IEvent, Long> entry : events.entrySet())
       {
         builder.append(prefix + entry.getValue() + ": " + entry.getKey() + suffix);
       }

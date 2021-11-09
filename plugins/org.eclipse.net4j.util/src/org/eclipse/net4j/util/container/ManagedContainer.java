@@ -43,7 +43,6 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -72,7 +71,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     @Override
     protected void onDeactivated(ILifecycle lifecycle)
     {
-      for (Entry<ElementKey, Object> entry : getElementRegistryEntries())
+      for (Map.Entry<ElementKey, Object> entry : getElementRegistryEntries())
       {
         Object value = entry.getValue();
         if (lifecycle == value)
@@ -167,7 +166,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     if (processExistingElements)
     {
       ContainerEvent<Object> event = new ContainerEvent<>(this);
-      for (Entry<ElementKey, Object> entry : getElementRegistryEntries())
+      for (Map.Entry<ElementKey, Object> entry : getElementRegistryEntries())
       {
         ElementKey key = entry.getKey();
         Object element = entry.getValue();
@@ -275,7 +274,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
   public String[] getElementKey(Object element)
   {
     checkActive();
-    for (Entry<ElementKey, Object> entry : getElementRegistryEntries())
+    for (Map.Entry<ElementKey, Object> entry : getElementRegistryEntries())
     {
       if (entry.getValue() == element)
       {
@@ -300,7 +299,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
   {
     checkActive();
     List<Object> result = new ArrayList<>();
-    for (Entry<ElementKey, Object> entry : getElementRegistryEntries())
+    for (Map.Entry<ElementKey, Object> entry : getElementRegistryEntries())
     {
       ElementKey key = entry.getKey();
       if (ObjectUtil.equals(key.getProductGroup(), productGroup))
@@ -317,7 +316,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
   {
     checkActive();
     List<Object> result = new ArrayList<>();
-    for (Entry<ElementKey, Object> entry : getElementRegistryEntries())
+    for (Map.Entry<ElementKey, Object> entry : getElementRegistryEntries())
     {
       ElementKey key = entry.getKey();
       if (ObjectUtil.equals(key.getProductGroup(), productGroup) && ObjectUtil.equals(key.getFactoryType(), factoryType))
@@ -597,11 +596,11 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     synchronized (elementRegistry)
     {
       ObjectOutputStream oos = new ObjectOutputStream(stream);
-      List<Entry<ElementKey, Object>> entries = new ArrayList<>(elementRegistry.entrySet());
+      List<Map.Entry<ElementKey, Object>> entries = new ArrayList<>(elementRegistry.entrySet());
       Collections.sort(entries, new EntryComparator());
 
       oos.writeInt(entries.size());
-      for (Entry<ElementKey, Object> entry : entries)
+      for (Map.Entry<ElementKey, Object> entry : entries)
       {
         oos.writeObject(entry.getKey());
         oos.writeBoolean(LifecycleUtil.isActive(entry.getValue()));
@@ -680,11 +679,11 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
    * @since 2.0
    */
   @SuppressWarnings("unchecked")
-  protected Entry<ElementKey, Object>[] getElementRegistryEntries()
+  protected Map.Entry<ElementKey, Object>[] getElementRegistryEntries()
   {
     synchronized (elementRegistry)
     {
-      return elementRegistry.entrySet().toArray(new Entry[elementRegistry.size()]);
+      return elementRegistry.entrySet().toArray(new Map.Entry[elementRegistry.size()]);
     }
   }
 
@@ -844,10 +843,10 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
   /**
    * @author Eike Stepper
    */
-  private static final class EntryComparator implements Comparator<Entry<ElementKey, Object>>
+  private static final class EntryComparator implements Comparator<Map.Entry<ElementKey, Object>>
   {
     @Override
-    public int compare(Entry<ElementKey, Object> entry1, Entry<ElementKey, Object> entry2)
+    public int compare(Map.Entry<ElementKey, Object> entry1, Map.Entry<ElementKey, Object> entry2)
     {
       return entry1.getKey().compareTo(entry2.getKey());
     }

@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 /**
  * @author Simon McDuff
@@ -112,7 +111,7 @@ public class CDOQueryInfoImpl implements CDOQueryInfo
     }
 
     out.writeXInt(parameters.size());
-    for (Entry<String, Object> entry : parameters.entrySet())
+    for (Map.Entry<String, Object> entry : parameters.entrySet())
     {
       out.writeString(entry.getKey());
       out.writeCDORevisionOrPrimitiveOrClassifier(entry.getValue());

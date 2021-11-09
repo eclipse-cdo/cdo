@@ -172,10 +172,16 @@ public class Repository extends Container<Object> implements InternalRepository
 
   private static final String PROP_UUID = "org.eclipse.emf.cdo.server.repositoryUUID"; //$NON-NLS-1$
 
-  private static final boolean DISABLE_FEATURE_MAP_CHECKS = OMPlatform.INSTANCE
-      .isProperty("org.eclipse.emf.cdo.internal.server.Repository.DISABLE_FEATURE_MAP_CHECKS");
-
   private static final Map<String, Repository> REPOSITORIES = new HashMap<>();
+
+  private static final String PROP_DISABLE_FEATURE_MAP_CHECKS = "org.eclipse.emf.cdo.internal.server.Repository.DISABLE_FEATURE_MAP_CHECKS";
+
+  private static final boolean DISABLE_FEATURE_MAP_CHECKS = OMPlatform.INSTANCE.isProperty(PROP_DISABLE_FEATURE_MAP_CHECKS);
+
+  private static final boolean ENABLE_FEATURE_MAP_CHECKS = OMPlatform.INSTANCE
+      .isProperty("org.eclipse.emf.cdo.internal.server.Repository.ENABLE_FEATURE_MAP_CHECKS");
+
+  private static boolean featureMapsChecked;
 
   private String name;
 
@@ -1435,6 +1441,17 @@ public class Repository extends Container<Object> implements InternalRepository
           {
             throw new CDOException(revision + " contains a feature map");
           }
+        }
+      }
+
+      if (!featureMapsChecked)
+      {
+        featureMapsChecked = true;
+
+        if (!ENABLE_FEATURE_MAP_CHECKS)
+        {
+          OM.LOG.info("You can be slightly increase commit performance if no models contain feature maps and you specify -D" + PROP_DISABLE_FEATURE_MAP_CHECKS
+              + "=true");
         }
       }
     }

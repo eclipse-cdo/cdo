@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.common.util.CountedTimeProvider;
 import org.eclipse.emf.cdo.internal.common.revision.NOOPRevisionCache;
 import org.eclipse.emf.cdo.internal.net4j.CDONet4jSessionConfigurationImpl;
 import org.eclipse.emf.cdo.internal.net4j.CDONet4jSessionImpl;
+import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.mem.MEMStore;
 import org.eclipse.emf.cdo.internal.server.mem.MEMStoreAccessor;
 import org.eclipse.emf.cdo.internal.server.syncing.OfflineClone;
@@ -370,6 +371,8 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
   protected IManagedContainer createServerContainer()
   {
+    ReflectUtil.setValue(ReflectUtil.getField(Repository.class, "DISABLE_FEATURE_MAP_CHECKS"), null, true, true);
+
     IManagedContainer container = ContainerUtil.createContainer();
     container.setName("server");
 

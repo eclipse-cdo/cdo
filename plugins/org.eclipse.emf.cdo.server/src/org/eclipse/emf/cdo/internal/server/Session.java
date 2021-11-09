@@ -39,12 +39,12 @@ import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.internal.common.commit.DelegatingCommitInfo;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IPermissionManager;
+import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
-import org.eclipse.emf.cdo.spi.server.IOperationAuthorizer;
 import org.eclipse.emf.cdo.spi.server.ISessionProtocol;
 import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
@@ -66,6 +66,8 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.registry.HashMapRegistry;
 import org.eclipse.net4j.util.registry.IRegistry;
+import org.eclipse.net4j.util.security.operations.AuthorizableOperation;
+import org.eclipse.net4j.util.security.operations.OperationAuthorizer;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
@@ -512,7 +514,7 @@ public class Session extends Container<IView> implements InternalSession
   public String[] authorizeOperations(AuthorizableOperation... operations)
   {
     String[] result = new String[operations.length];
-    IOperationAuthorizer authorizer = getRepository();
+    OperationAuthorizer<ISession> authorizer = getRepository();
 
     for (int i = 0; i < operations.length; i++)
     {

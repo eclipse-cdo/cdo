@@ -10,27 +10,15 @@
  */
 package org.eclipse.emf.cdo.common;
 
-import org.eclipse.emf.cdo.common.protocol.CDODataInput;
-import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
-import org.eclipse.emf.cdo.common.util.CDOClassNotFoundException;
-import org.eclipse.emf.cdo.common.util.CDOPackageNotFoundException;
-
-import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.collection.Closeable;
 import org.eclipse.net4j.util.options.IOptions;
 import org.eclipse.net4j.util.options.IOptionsContainer;
 import org.eclipse.net4j.util.options.IOptionsEvent;
 import org.eclipse.net4j.util.properties.IPropertiesContainer;
 import org.eclipse.net4j.util.security.IUserAware;
+import org.eclipse.net4j.util.security.operations.AuthorizableOperation;
 
 import org.eclipse.core.runtime.IAdaptable;
-
-import java.io.IOException;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Objects;
 
 /**
  * Abstracts the information about CDO sessions that is common to both client and server side.
@@ -204,110 +192,6 @@ public interface CDOCommonSession extends IAdaptable, IUserAware, IOptionsContai
       public LockNotificationMode getOldMode();
 
       public LockNotificationMode getNewMode();
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   * @since 4.15
-   */
-  public static final class AuthorizableOperation
-  {
-    private final String id;
-
-    private final Map<String, Object> parameters = new HashMap<>();
-
-    public AuthorizableOperation(String id)
-    {
-      CheckUtil.checkArg(id, "id");
-      this.id = id;
-    }
-
-    public AuthorizableOperation(CDODataInput in) throws IOException
-    {
-      id = in.readString();
-
-      int size = in.readXInt();
-      for (int i = 0; i < size; i++)
-      {
-        String key = in.readString();
-
-        try
-        {
-          Object object = in.readCDORevisionOrPrimitiveOrClassifier();
-          parameters.put(key, object);
-        }
-        catch (CDOPackageNotFoundException e)
-        {
-          //$FALL-THROUGH$
-        }
-        catch (CDOClassNotFoundException e)
-        {
-          //$FALL-THROUGH$
-        }
-      }
-    }
-
-    public final String getID()
-    {
-      return id;
-    }
-
-    public AuthorizableOperation parameter(String key, Object value)
-    {
-      parameters.put(key, value);
-      return this;
-    }
-
-    public Object getParameter(String key)
-    {
-      return parameters.get(key);
-    }
-
-    public Map<String, Object> getParameters()
-    {
-      return Collections.unmodifiableMap(parameters);
-    }
-
-    public void write(CDODataOutput out) throws IOException
-    {
-      out.writeString(id);
-      out.writeXInt(parameters.size());
-
-      for (Entry<String, Object> entry : parameters.entrySet())
-      {
-        out.writeString(entry.getKey());
-        out.writeCDORevisionOrPrimitiveOrClassifier(entry.getValue());
-      }
-    }
-
-    @Override
-    public int hashCode()
-    {
-      return Objects.hash(id);
-    }
-
-    @Override
-    public boolean equals(Object obj)
-    {
-      if (this == obj)
-      {
-        return true;
-      }
-
-      if (!(obj instanceof AuthorizableOperation))
-      {
-        return false;
-      }
-
-      AuthorizableOperation other = (AuthorizableOperation)obj;
-      return Objects.equals(id, other.id);
-    }
-
-    @Override
-    public String toString()
-    {
-      return "AuthorizableOperation[id=" + id + ", parameters=" + parameters + "]";
     }
   }
 }

@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.spi.server;
+package org.eclipse.net4j.util.security.operations;
 
 import org.eclipse.net4j.util.factory.Factory;
 import org.eclipse.net4j.util.factory.ProductCreationException;
@@ -17,11 +17,11 @@ import org.eclipse.net4j.util.factory.ProductCreationException;
  * If the meaning of this type isn't clear, there really should be more of a description here...
  *
  * @author Eike Stepper
- * @since 4.15
+ * @since 3.16
  */
-public abstract class OperationAuthorizerFactory extends Factory
+public abstract class OperationAuthorizerFactory<CONTEXT> extends Factory
 {
-  public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.operationAuthorizers"; //$NON-NLS-1$
+  public static final String PRODUCT_GROUP = "org.eclipse.net4j.util.security.operationAuthorizers"; //$NON-NLS-1$
 
   public OperationAuthorizerFactory(String type)
   {
@@ -32,5 +32,5 @@ public abstract class OperationAuthorizerFactory extends Factory
    * @since 3.0
    */
   @Override
-  public abstract IOperationAuthorizer create(String description) throws ProductCreationException;
+  public abstract OperationAuthorizer<CONTEXT> create(String description) throws ProductCreationException;
 }

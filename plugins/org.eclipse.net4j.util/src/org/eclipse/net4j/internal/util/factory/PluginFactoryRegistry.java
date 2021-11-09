@@ -18,6 +18,8 @@ import org.eclipse.net4j.util.factory.IFactory;
 import org.eclipse.net4j.util.factory.IFactoryKey;
 import org.eclipse.net4j.util.registry.HashMapRegistry;
 
+import org.eclipse.core.runtime.IConfigurationElement;
+
 /**
  * @author Eike Stepper
  */
@@ -26,6 +28,10 @@ public class PluginFactoryRegistry extends HashMapRegistry<IFactoryKey, IFactory
   public static final String NAMESPACE = OM.BUNDLE_ID;
 
   public static final String EXT_POINT = "factories"; //$NON-NLS-1$
+
+  private static final String ELEM_FACTORY = "factory"; //$NON-NLS-1$
+
+  private static final String ELEM_FACTORIES = "factories"; //$NON-NLS-1$
 
   private final IManagedContainer container;
 
@@ -105,7 +111,26 @@ public class PluginFactoryRegistry extends HashMapRegistry<IFactoryKey, IFactory
     org.eclipse.core.runtime.IConfigurationElement[] elements = extensionRegistry.getConfigurationElementsFor(NAMESPACE, EXT_POINT);
     for (org.eclipse.core.runtime.IConfigurationElement element : elements)
     {
-      registerFactory(new FactoryDescriptor(element));
+      String name = element.getName();
+
+      try
+      {
+        if (ELEM_FACTORY.equals(name))
+        {
+          registerFactory(new FactoryDescriptor(element));
+        }
+        else if (ELEM_FACTORIES.equals(name))
+        {
+          for (IConfigurationElement child : element.getChildren())
+          {
+            registerFactory(new FactoryDescriptor(child));
+          }
+        }
+      }
+      catch (Throwable t)
+      {
+        OM.LOG.warn(t);
+      }
     }
 
     org.eclipse.core.runtime.IRegistryChangeListener listener = new org.eclipse.core.runtime.IRegistryChangeListener()

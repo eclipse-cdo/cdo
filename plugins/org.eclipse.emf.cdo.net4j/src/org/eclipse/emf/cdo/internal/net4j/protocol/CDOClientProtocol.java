@@ -12,7 +12,6 @@
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.CDOObject;
-import org.eclipse.emf.cdo.common.CDOCommonSession.AuthorizableOperation;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
@@ -67,6 +66,7 @@ import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.PerfTracer;
+import org.eclipse.net4j.util.security.operations.AuthorizableOperation;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
@@ -124,9 +124,10 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
   }
 
   public OpenSessionResult openSession(String repositoryName, int sessionID, String userID, boolean passiveUpdateEnabled, PassiveUpdateMode passiveUpdateMode,
-      LockNotificationMode lockNotificationMode, boolean subscribed)
+      LockNotificationMode lockNotificationMode, boolean subscribed, AuthorizableOperation[] operations)
   {
-    return send(new OpenSessionRequest(this, repositoryName, sessionID, userID, passiveUpdateEnabled, passiveUpdateMode, lockNotificationMode, subscribed),
+    return send(
+        new OpenSessionRequest(this, repositoryName, sessionID, userID, passiveUpdateEnabled, passiveUpdateMode, lockNotificationMode, subscribed, operations),
         new Monitor());
   }
 

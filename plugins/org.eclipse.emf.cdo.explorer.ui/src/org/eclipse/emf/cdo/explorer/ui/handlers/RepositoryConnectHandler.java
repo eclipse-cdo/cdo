@@ -13,8 +13,6 @@ package org.eclipse.emf.cdo.explorer.ui.handlers;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
 import org.eclipse.emf.cdo.explorer.ui.repositories.CDORepositoriesView;
-import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.ui.UIOperations;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -53,20 +51,6 @@ public class RepositoryConnectHandler extends AbstractRepositoryHandler
         else
         {
           repository.connect();
-        }
-      }
-      catch (Exception ex)
-      {
-        OM.LOG.error(ex);
-      }
-
-      try
-      {
-        CDOSession session = repository.getSession();
-        if (session != null)
-        {
-          // Ask for any valid operation to cause all authorizations be cached.
-          UIOperations.isAuthorized(session, UIOperations.CREATE_BRANCHES);
         }
       }
       catch (Exception ex)

@@ -40,7 +40,10 @@
     -->
 
     <!-- Example http://bugs.eclipse.org/577114
-			<operationAuthorizer type="requireGroup" description="org.eclipse.emf.cdo.branch.Delete:Administrators,Operators"/>
+      <operationAuthorizer type="requireGroup" description="org.eclipse.emf.cdo.DeleteBranch:Administrators,Operators"/>
+      <operationAuthorizer type="requireRole" description="org.eclipse.emf.cdo.ui.CreateBranches:Operators"/>
+      <operationAuthorizer type="requireRole" description="org.eclipse.emf.cdo.ui.RenameBranches:Operators"/>
+      <operationAuthorizer type="requireRole" description="org.eclipse.emf.cdo.ui.DeleteBranches:Operators"/>
     -->
 
     <!-- Example http://bugs.eclipse.org/345431

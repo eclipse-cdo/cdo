@@ -50,6 +50,7 @@ import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IManagedContainerProvider;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
+import org.eclipse.net4j.util.security.operations.OperationAuthorizer;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -79,7 +80,7 @@ public interface InternalRepository extends IRepository, //
     RevisionLoader2, //
     CommitInfoLoader, //
     CDORevisionUnchunker, //
-    IOperationAuthorizer, //
+    OperationAuthorizer<ISession>, //
     IExecutorServiceProvider, //
     IManagedContainerProvider
 {
@@ -173,7 +174,7 @@ public interface InternalRepository extends IRepository, //
   /**
    * @since 4.15
    */
-  public void addOperationAuthorizer(IOperationAuthorizer operationAuthorizer);
+  public void addOperationAuthorizer(OperationAuthorizer<ISession> operationAuthorizer);
 
   /**
    * @since 4.3

@@ -8,16 +8,13 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.spi.server;
-
-import org.eclipse.emf.cdo.common.CDOCommonSession;
-import org.eclipse.emf.cdo.common.CDOCommonSession.AuthorizableOperation;
+package org.eclipse.net4j.util.security.operations;
 
 /**
  * @author Eike Stepper
- * @since 4.15
+ * @since 3.16
  */
-public interface IOperationAuthorizer
+public interface OperationAuthorizer<CONTEXT>
 {
-  public String authorizeOperation(CDOCommonSession session, AuthorizableOperation operation);
+  public String authorizeOperation(CONTEXT context, AuthorizableOperation operation);
 }

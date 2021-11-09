@@ -10,10 +10,10 @@
  */
 package org.eclipse.emf.cdo.ui;
 
-import org.eclipse.emf.cdo.common.CDOCommonSession.AuthorizableOperation;
 import org.eclipse.emf.cdo.session.CDOSession;
 
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
+import org.eclipse.net4j.util.security.operations.AuthorizableOperation;
 import org.eclipse.net4j.util.ui.UIUtil;
 
 import java.util.ArrayList;

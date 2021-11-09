@@ -20,8 +20,7 @@ import org.eclipse.core.runtime.IExtensionRegistry;
  * Example contribution:
  *
  * <pre>
- *    &lt;extension
- *          point="org.eclipse.net4j.util.factories"&gt;
+ *    &lt;extension point="org.eclipse.net4j.util.factories"&gt;
  *       &lt;factory
  *             class="org.eclipse.net4j.util.concurrent.TimerLifecycle$DaemonFactory"
  *             productGroup="org.eclipse.net4j.util.timers"
@@ -34,13 +33,19 @@ import org.eclipse.core.runtime.IExtensionRegistry;
  */
 public class FactoryDescriptor extends Factory
 {
+  private static final String ELEM_FACTORY = "factory"; //$NON-NLS-1$
+
+  private static final String ELEM_TYPE = "type"; //$NON-NLS-1$
+
   private static final String ATTR_PRODUCT_GROUP = "productGroup"; //$NON-NLS-1$
 
   private static final String ATTR_TYPE = "type"; //$NON-NLS-1$
 
   private static final String ATTR_CLASS = "class"; //$NON-NLS-1$
 
-  private IConfigurationElement configurationElement;
+  private static final String ATTR_VALUE = "value"; //$NON-NLS-1$
+
+  private final IConfigurationElement configurationElement;
 
   public FactoryDescriptor(IConfigurationElement configurationElement)
   {
@@ -57,7 +62,23 @@ public class FactoryDescriptor extends Factory
   {
     try
     {
-      return (IFactory)configurationElement.createExecutableExtension(ATTR_CLASS);
+      IConfigurationElement element = configurationElement;
+
+      String name = element.getName();
+      if (ELEM_TYPE.equals(name))
+      {
+        element = (IConfigurationElement)element.getParent();
+      }
+
+      IFactory factory = (IFactory)element.createExecutableExtension(ATTR_CLASS);
+
+      IFactoryKey key = factory.getKey();
+      if (key instanceof FactoryKey && key.getType() == null)
+      {
+        ((FactoryKey)key).setType(getType());
+      }
+
+      return factory;
     }
     catch (CoreException ex)
     {
@@ -79,8 +100,23 @@ public class FactoryDescriptor extends Factory
 
   private static FactoryKey createFactoryKey(IConfigurationElement element)
   {
-    String productGroup = element.getAttribute(ATTR_PRODUCT_GROUP);
-    String type = element.getAttribute(ATTR_TYPE);
-    return new FactoryKey(productGroup, type);
+    String name = element.getName();
+    if (ELEM_FACTORY.equals(name))
+    {
+      String productGroup = element.getAttribute(ATTR_PRODUCT_GROUP);
+      String type = element.getAttribute(ATTR_TYPE);
+      return new FactoryKey(productGroup, type);
+    }
+
+    if (ELEM_TYPE.equals(name))
+    {
+      IConfigurationElement parent = (IConfigurationElement)element.getParent();
+      String productGroup = parent.getAttribute(ATTR_PRODUCT_GROUP);
+
+      String value = element.getAttribute(ATTR_VALUE);
+      return new FactoryKey(productGroup, value);
+    }
+
+    throw new IllegalStateException("Wrong configuration element: " + name);
   }
 }

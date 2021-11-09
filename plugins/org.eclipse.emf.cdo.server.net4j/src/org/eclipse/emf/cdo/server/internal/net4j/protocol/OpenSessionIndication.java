@@ -28,6 +28,7 @@ import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 import org.eclipse.net4j.util.security.NotAuthenticatedException;
+import org.eclipse.net4j.util.security.operations.AuthorizableOperation;
 
 import java.util.Set;
 
@@ -49,6 +50,8 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
   private LockNotificationMode lockNotificationMode;
 
   private boolean subscribed;
+
+  private AuthorizableOperation[] operations;
 
   private InternalRepository repository;
 
@@ -93,6 +96,14 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
     passiveUpdateMode = in.readEnum(PassiveUpdateMode.class);
     lockNotificationMode = in.readEnum(LockNotificationMode.class);
     subscribed = in.readBoolean();
+
+    int size = in.readXInt();
+    operations = new AuthorizableOperation[size];
+
+    for (int i = 0; i < operations.length; i++)
+    {
+      operations[i] = new AuthorizableOperation(in);
+    }
   }
 
   @Override
@@ -141,6 +152,8 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
         session.setUserID(userID);
       }
 
+      String[] authorizations = session.authorizeOperations(operations);
+
       session.setPassiveUpdateEnabled(passiveUpdateEnabled);
       session.setPassiveUpdateMode(passiveUpdateMode);
       session.setLockNotificationMode(lockNotificationMode);
@@ -178,6 +191,14 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
       out.writeBoolean(repository.isAuthorizingOperations());
       out.writeEnum(repository.getIDGenerationLocation());
       out.writeEnum(repository.getCommitInfoStorage());
+
+      int length = authorizations == null ? 0 : authorizations.length;
+      out.writeXInt(length);
+
+      for (int i = 0; i < length; i++)
+      {
+        out.writeString(authorizations[i]);
+      }
 
       CDOPackageUnit[] packageUnits = repository.getPackageRegistry(false).getPackageUnits();
       out.writeCDOPackageUnits(packageUnits);

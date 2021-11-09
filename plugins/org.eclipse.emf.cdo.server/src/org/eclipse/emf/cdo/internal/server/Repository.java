@@ -15,8 +15,6 @@
  */
 package org.eclipse.emf.cdo.internal.server;
 
-import org.eclipse.emf.cdo.common.CDOCommonSession;
-import org.eclipse.emf.cdo.common.CDOCommonSession.AuthorizableOperation;
 import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchHandler;
@@ -61,6 +59,7 @@ import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
+import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStore.CanHandleClientAssignedIDs;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
@@ -95,7 +94,6 @@ import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
 import org.eclipse.emf.cdo.spi.common.util.CoreOperations;
 import org.eclipse.emf.cdo.spi.server.ContainerQueryHandlerProvider;
 import org.eclipse.emf.cdo.spi.server.ICommitConflictResolver;
-import org.eclipse.emf.cdo.spi.server.IOperationAuthorizer;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalCommitManager;
 import org.eclipse.emf.cdo.spi.server.InternalLockManager;
@@ -129,6 +127,8 @@ import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
+import org.eclipse.net4j.util.security.operations.AuthorizableOperation;
+import org.eclipse.net4j.util.security.operations.OperationAuthorizer;
 import org.eclipse.net4j.util.transaction.TransactionException;
 
 import org.eclipse.emf.ecore.EClass;
@@ -236,7 +236,7 @@ public class Repository extends Container<Object> implements InternalRepository
 
   private IQueryHandlerProvider queryHandlerProvider;
 
-  private List<IOperationAuthorizer> operationAuthorizers = new ArrayList<>();
+  private List<OperationAuthorizer<ISession>> operationAuthorizers = new ArrayList<>();
 
   private IManagedContainer container;
 
@@ -1580,7 +1580,7 @@ public class Repository extends Container<Object> implements InternalRepository
   }
 
   @Override
-  public void addOperationAuthorizer(IOperationAuthorizer operationAuthorizer)
+  public void addOperationAuthorizer(OperationAuthorizer<ISession> operationAuthorizer)
   {
     checkInactive();
     operationAuthorizers.add(operationAuthorizer);
@@ -1593,14 +1593,14 @@ public class Repository extends Container<Object> implements InternalRepository
   }
 
   @Override
-  public String authorizeOperation(CDOCommonSession session, AuthorizableOperation operation)
+  public String authorizeOperation(ISession session, AuthorizableOperation operation)
   {
     if (session == null)
     {
       return "No session";
     }
 
-    for (IOperationAuthorizer authorizer : operationAuthorizers)
+    for (OperationAuthorizer<ISession> authorizer : operationAuthorizers)
     {
       try
       {

@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.internal.ui.dialogs;
 
-import org.eclipse.emf.cdo.common.CDOCommonSession.AuthorizableOperation;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.util.CoreOperations;
@@ -21,6 +20,7 @@ import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.util.collection.MapEntry;
+import org.eclipse.net4j.util.security.operations.AuthorizableOperation;
 import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.jface.viewers.TreeViewer;

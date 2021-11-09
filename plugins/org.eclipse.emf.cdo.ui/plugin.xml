@@ -25,6 +25,13 @@
             class="org.eclipse.emf.cdo.internal.ui.transfer.RepositoryUIProvider$Factory"
             productGroup="org.eclipse.emf.cdo.transfer.ui.providers"
             type="repository"/>
+      <factories
+            class="org.eclipse.net4j.util.security.operations.AuthorizableOperationFactory"
+            productGroup="org.eclipse.net4j.util.security.authorizableOperations">
+         <type value="org.eclipse.emf.cdo.ui.RenameBranches"/>
+         <type value="org.eclipse.emf.cdo.ui.DeleteBranches"/>
+         <type value="org.eclipse.emf.cdo.ui.DeleteBranches"/>
+      </factories>
    </extension>
 
    <extension point="org.eclipse.core.expressions.propertyTesters">

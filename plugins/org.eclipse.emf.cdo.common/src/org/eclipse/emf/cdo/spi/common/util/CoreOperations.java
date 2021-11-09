@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.spi.common.util;
 
-import org.eclipse.emf.cdo.common.CDOCommonSession.AuthorizableOperation;
+import org.eclipse.net4j.util.security.operations.AuthorizableOperation;
 
 /**
  * @author Eike Stepper

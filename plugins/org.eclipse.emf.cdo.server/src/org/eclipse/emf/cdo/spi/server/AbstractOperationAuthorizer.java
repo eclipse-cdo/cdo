@@ -10,11 +10,11 @@
  */
 package org.eclipse.emf.cdo.spi.server;
 
-import org.eclipse.emf.cdo.common.CDOCommonSession;
-import org.eclipse.emf.cdo.common.CDOCommonSession.AuthorizableOperation;
-
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.factory.ProductCreationException;
+import org.eclipse.net4j.util.security.operations.AuthorizableOperation;
+import org.eclipse.net4j.util.security.operations.OperationAuthorizer;
+import org.eclipse.net4j.util.security.operations.OperationAuthorizerFactory;
 
 import java.util.Map;
 import java.util.Objects;
@@ -23,7 +23,7 @@ import java.util.Objects;
  * @author Eike Stepper
  * @since 4.15
  */
-public abstract class AbstractOperationAuthorizer implements IOperationAuthorizer
+public abstract class AbstractOperationAuthorizer<CONTEXT> implements OperationAuthorizer<CONTEXT>
 {
   private final String operationID;
 
@@ -38,7 +38,7 @@ public abstract class AbstractOperationAuthorizer implements IOperationAuthorize
   }
 
   @Override
-  public String authorizeOperation(CDOCommonSession session, AuthorizableOperation operation)
+  public String authorizeOperation(CONTEXT context, AuthorizableOperation operation)
   {
     if (!Objects.equals(operationID, operation.getID()))
     {
@@ -46,15 +46,15 @@ public abstract class AbstractOperationAuthorizer implements IOperationAuthorize
     }
 
     Map<String, Object> parameters = operation.getParameters();
-    return authorizeOperation(session, parameters);
+    return authorizeOperation(context, parameters);
   }
 
-  protected abstract String authorizeOperation(CDOCommonSession session, Map<String, Object> parameters);
+  protected abstract String authorizeOperation(CONTEXT context, Map<String, Object> parameters);
 
   /**
    * @author Eike Stepper
    */
-  public static abstract class Factory extends OperationAuthorizerFactory
+  public static abstract class Factory<CONTEXT> extends OperationAuthorizerFactory<CONTEXT>
   {
     public Factory(String type)
     {
@@ -62,7 +62,7 @@ public abstract class AbstractOperationAuthorizer implements IOperationAuthorize
     }
 
     @Override
-    public IOperationAuthorizer create(String description) throws ProductCreationException
+    public OperationAuthorizer<CONTEXT> create(String description) throws ProductCreationException
     {
       if (StringUtil.isEmpty(description))
       {
@@ -75,6 +75,6 @@ public abstract class AbstractOperationAuthorizer implements IOperationAuthorize
       return create(operationID, description);
     }
 
-    protected abstract IOperationAuthorizer create(String operationID, String description) throws ProductCreationException;
+    protected abstract OperationAuthorizer<CONTEXT> create(String operationID, String description) throws ProductCreationException;
   }
 }

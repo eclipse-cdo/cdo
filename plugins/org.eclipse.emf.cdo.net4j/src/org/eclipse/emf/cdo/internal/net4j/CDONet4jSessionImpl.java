@@ -45,11 +45,16 @@ import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.io.IStreamWrapper;
+import org.eclipse.net4j.util.security.operations.AuthorizableOperation;
+import org.eclipse.net4j.util.security.operations.AuthorizableOperationFactory;
 
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult;
 import org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -65,6 +70,8 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
   private String repositoryName;
 
   private long signalTimeout = SignalProtocol.DEFAULT_TIMEOUT;
+
+  private AuthorizationCache authorizationCache;
 
   public CDONet4jSessionImpl()
   {
@@ -160,6 +167,18 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
   }
 
   @Override
+  public String[] authorizeOperations(AuthorizableOperation... operations)
+  {
+    if (authorizationCache != null)
+    {
+      return authorizationCache.authorizeOperations(operations);
+    }
+
+    // No vetoes -> authorized.
+    return new String[operations.length];
+  }
+
+  @Override
   public OptionsImpl options()
   {
     return (OptionsImpl)super.options();
@@ -191,10 +210,11 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
 
       InternalCDORemoteSessionManager remoteSessionManager = getRemoteSessionManager();
       boolean subscribed = remoteSessionManager != null ? remoteSessionManager.isSubscribed() : false;
+      AuthorizableOperation[] operations = AuthorizableOperationFactory.getAuthorizableOperations(getContainer());
 
       // TODO (CD) The next call is on the CDOClientProtocol; shouldn't it be on the DelegatingSessionProtocol instead?
       OpenSessionResult result = protocol.openSession(repositoryName, getSessionID(), userID, passiveUpdateEnabled, passiveUpdateMode, lockNotificationMode,
-          subscribed);
+          subscribed, operations);
 
       if (result == null)
       {
@@ -207,6 +227,12 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
       setLastUpdateTime(result.getLastUpdateTime());
       setOpeningTime(result.getOpeningTime());
       setRepositoryInfo(new RepositoryInfo(this, result));
+
+      if (result.isAuthorizingOperations())
+      {
+        authorizationCache = new AuthorizationCache(getSessionProtocol(), operations, result.getAuthorizationResults());
+      }
+
       return result;
     }
     catch (RemoteException ex)
@@ -360,6 +386,81 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
     }
 
     return clientProtocol;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class AuthorizationCache
+  {
+    private static final String GRANTED = "";
+
+    private final Map<String, String> authorizations = new HashMap<>();
+
+    private final CDOSessionProtocol sessionProtocol;
+
+    public AuthorizationCache(CDOSessionProtocol sessionProtocol, AuthorizableOperation[] operations, String[] authorizations)
+    {
+      this.sessionProtocol = sessionProtocol;
+
+      // Prime the cache.
+      for (int i = 0; i < operations.length; i++)
+      {
+        this.authorizations.put(operations[i].getID(), authorizations[i]);
+      }
+    }
+
+    public String[] authorizeOperations(AuthorizableOperation[] operations)
+    {
+      int length = operations.length;
+      String[] result = new String[length];
+      Map<AuthorizableOperation, Integer> operationsToLoad = new LinkedHashMap<>();
+
+      synchronized (authorizations)
+      {
+        for (int i = 0; i < length; i++)
+        {
+          AuthorizableOperation operation = operations[i];
+          if (operation.getParameters().isEmpty())
+          {
+            String operationID = operation.getID();
+
+            String authorization = authorizations.get(operationID);
+            if (authorization != null)
+            {
+              result[i] = authorization == GRANTED ? null : authorization;
+            }
+            else
+            {
+              operationsToLoad.put(operation, i);
+            }
+          }
+        }
+      }
+
+      int size = operationsToLoad.size();
+      if (size != 0)
+      {
+        AuthorizableOperation[] load = operationsToLoad.keySet().toArray(new AuthorizableOperation[size]);
+        String[] loadResult = sessionProtocol.authorizeOperations(load);
+
+        synchronized (authorizations)
+        {
+          for (int i = 0; i < loadResult.length; i++)
+          {
+            AuthorizableOperation operation = load[i];
+            String loadedAuthorization = loadResult[i];
+
+            authorizations.put(operation.getID(), loadedAuthorization == null ? GRANTED : loadedAuthorization);
+
+            int index = operationsToLoad.get(operation);
+            result[index] = loadedAuthorization;
+          }
+        }
+      }
+
+      return result;
+    }
   }
 
   /**

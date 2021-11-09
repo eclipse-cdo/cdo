@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
+import org.eclipse.net4j.util.security.operations.AuthorizableOperation;
 
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult;
 
@@ -28,22 +29,24 @@ import java.io.IOException;
  */
 public class OpenSessionRequest extends CDOClientRequestWithMonitoring<OpenSessionResult>
 {
-  private String repositoryName;
+  private final String repositoryName;
 
-  private int sessionID;
+  private final int sessionID;
 
-  private String userID;
+  private final String userID;
 
-  private boolean passiveUpdateEnabled;
+  private final boolean passiveUpdateEnabled;
 
-  private PassiveUpdateMode passiveUpdateMode;
+  private final PassiveUpdateMode passiveUpdateMode;
 
-  private LockNotificationMode lockNotificationMode;
+  private final LockNotificationMode lockNotificationMode;
 
-  private boolean subscribed;
+  private final boolean subscribed;
+
+  private final AuthorizableOperation[] operations;
 
   public OpenSessionRequest(CDOClientProtocol protocol, String repositoryName, int sessionID, String userID, boolean passiveUpdateEnabled,
-      PassiveUpdateMode passiveUpdateMode, LockNotificationMode lockNotificationMode, boolean subscribed)
+      PassiveUpdateMode passiveUpdateMode, LockNotificationMode lockNotificationMode, boolean subscribed, AuthorizableOperation[] operations)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_OPEN_SESSION);
     this.repositoryName = repositoryName;
@@ -53,6 +56,7 @@ public class OpenSessionRequest extends CDOClientRequestWithMonitoring<OpenSessi
     this.passiveUpdateMode = passiveUpdateMode;
     this.lockNotificationMode = lockNotificationMode;
     this.subscribed = subscribed;
+    this.operations = operations;
   }
 
   @Override
@@ -65,6 +69,15 @@ public class OpenSessionRequest extends CDOClientRequestWithMonitoring<OpenSessi
     out.writeEnum(passiveUpdateMode);
     out.writeEnum(lockNotificationMode);
     out.writeBoolean(subscribed);
+
+    int size = operations == null ? 0 : operations.length;
+    out.writeXInt(size);
+
+    for (int i = 0; i < operations.length; i++)
+    {
+      AuthorizableOperation operation = operations[i];
+      operation.write(out);
+    }
   }
 
   @Override

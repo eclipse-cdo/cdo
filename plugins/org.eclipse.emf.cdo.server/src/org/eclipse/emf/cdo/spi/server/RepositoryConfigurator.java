@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRepositoryFactory;
+import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreFactory;
 import org.eclipse.emf.cdo.server.IStoreFactory.ParameterAware;
@@ -34,6 +35,8 @@ import org.eclipse.net4j.util.security.AuthenticatorFactory;
 import org.eclipse.net4j.util.security.IAuthenticator;
 import org.eclipse.net4j.util.security.IUserManager;
 import org.eclipse.net4j.util.security.UserManagerFactory;
+import org.eclipse.net4j.util.security.operations.OperationAuthorizer;
+import org.eclipse.net4j.util.security.operations.OperationAuthorizerFactory;
 
 import org.eclipse.emf.ecore.EPackage;
 
@@ -384,7 +387,8 @@ public class RepositoryConfigurator implements IManagedContainerProvider
 
           String description = getAttribute(childElement, "description"); //$NON-NLS-1$
 
-          IOperationAuthorizer authorizer = getOperationAuthorizer(type, description);
+          OperationAuthorizer<ISession> authorizer = getOperationAuthorizer(type, description);
+          OM.LOG.info("Adding operation authorizer " + type + ": " + description);
           repository.addOperationAuthorizer(authorizer);
         }
       }
@@ -394,9 +398,9 @@ public class RepositoryConfigurator implements IManagedContainerProvider
   /**
    * @since 4.15
    */
-  protected IOperationAuthorizer getOperationAuthorizer(String type, String description) throws CoreException
+  protected OperationAuthorizer<ISession> getOperationAuthorizer(String type, String description) throws CoreException
   {
-    IOperationAuthorizer authorizer = (IOperationAuthorizer)container.getElement(OperationAuthorizerFactory.PRODUCT_GROUP, type, description);
+    OperationAuthorizer<ISession> authorizer = container.getElementOrNull(OperationAuthorizerFactory.PRODUCT_GROUP, type, description);
     if (authorizer == null)
     {
       throw new IllegalStateException("Operation authorizer factory not found: " + type); //$NON-NLS-1$
@@ -443,6 +447,7 @@ public class RepositoryConfigurator implements IManagedContainerProvider
             throw new IllegalStateException("Initial package not found in global package registry: " + nsURI); //$NON-NLS-1$
           }
 
+          OM.LOG.info("Adding initial packages: " + nsURI);
           result.add(initialPackage);
         }
       }

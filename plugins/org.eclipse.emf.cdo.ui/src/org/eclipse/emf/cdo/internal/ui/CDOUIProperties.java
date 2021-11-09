@@ -11,13 +11,13 @@
 package org.eclipse.emf.cdo.internal.ui;
 
 import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.ui.UIOperations;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.util.properties.DefaultPropertyTester;
 import org.eclipse.net4j.util.properties.IProperties;
 import org.eclipse.net4j.util.properties.Properties;
 import org.eclipse.net4j.util.properties.Property;
+import org.eclipse.net4j.util.security.operations.AuthorizableOperation;
 
 /**
  * @author Eike Stepper
@@ -42,7 +42,8 @@ public class CDOUIProperties extends Properties<Object>
           {
             for (Object operationID : args)
             {
-              if (!UIOperations.isAuthorized(session, (String)operationID))
+              String result = session.authorizeOperations(new AuthorizableOperation((String)operationID))[0];
+              if (result != null)
               {
                 return false;
               }

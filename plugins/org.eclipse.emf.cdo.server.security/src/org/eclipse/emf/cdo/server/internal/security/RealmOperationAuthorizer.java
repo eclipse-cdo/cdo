@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.server.internal.security;
 
-import org.eclipse.emf.cdo.common.CDOCommonSession;
 import org.eclipse.emf.cdo.security.Group;
 import org.eclipse.emf.cdo.security.Realm;
 import org.eclipse.emf.cdo.security.Role;
@@ -21,7 +20,6 @@ import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.security.ISecurityManager;
 import org.eclipse.emf.cdo.server.security.SecurityManagerUtil;
 import org.eclipse.emf.cdo.spi.server.AbstractOperationAuthorizer;
-import org.eclipse.emf.cdo.spi.server.IOperationAuthorizer;
 
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
@@ -34,7 +32,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public abstract class RealmOperationAuthorizer<T extends SecurityItem> extends AbstractOperationAuthorizer
+public abstract class RealmOperationAuthorizer<T extends SecurityItem> extends AbstractOperationAuthorizer<ISession>
 {
   private final Set<String> itemIDs;
 
@@ -50,9 +48,9 @@ public abstract class RealmOperationAuthorizer<T extends SecurityItem> extends A
   }
 
   @Override
-  protected String authorizeOperation(CDOCommonSession session, Map<String, Object> parameters)
+  protected String authorizeOperation(ISession session, Map<String, Object> parameters)
   {
-    IRepository repository = ((ISession)session).getManager().getRepository();
+    IRepository repository = session.getManager().getRepository();
     ISecurityManager securityManager = SecurityManagerUtil.getSecurityManager(repository);
     if (securityManager == null)
     {
@@ -96,7 +94,7 @@ public abstract class RealmOperationAuthorizer<T extends SecurityItem> extends A
   /**
    * @author Eike Stepper
    */
-  public static abstract class Factory extends org.eclipse.emf.cdo.spi.server.AbstractOperationAuthorizer.Factory
+  public static abstract class Factory<T extends SecurityItem> extends org.eclipse.emf.cdo.spi.server.AbstractOperationAuthorizer.Factory<ISession>
   {
     public Factory(String type)
     {
@@ -104,7 +102,7 @@ public abstract class RealmOperationAuthorizer<T extends SecurityItem> extends A
     }
 
     @Override
-    protected IOperationAuthorizer create(String operationID, String description) throws ProductCreationException
+    protected RealmOperationAuthorizer<T> create(String operationID, String description) throws ProductCreationException
     {
       Set<String> itemIDs = new HashSet<>();
 
@@ -123,7 +121,7 @@ public abstract class RealmOperationAuthorizer<T extends SecurityItem> extends A
       return create(operationID, itemIDs);
     }
 
-    protected abstract IOperationAuthorizer create(String operationID, Set<String> itemIDs) throws ProductCreationException;
+    protected abstract RealmOperationAuthorizer<T> create(String operationID, Set<String> itemIDs) throws ProductCreationException;
   }
 
   /**
@@ -151,7 +149,7 @@ public abstract class RealmOperationAuthorizer<T extends SecurityItem> extends A
     /**
      * @author Eike Stepper
      */
-    public static final class Factory extends org.eclipse.emf.cdo.server.internal.security.RealmOperationAuthorizer.Factory
+    public static final class Factory extends org.eclipse.emf.cdo.server.internal.security.RealmOperationAuthorizer.Factory<User>
     {
       public static final String TYPE = "requireUser";
 
@@ -161,7 +159,7 @@ public abstract class RealmOperationAuthorizer<T extends SecurityItem> extends A
       }
 
       @Override
-      protected IOperationAuthorizer create(String operationID, Set<String> itemIDs) throws ProductCreationException
+      protected RequireUser create(String operationID, Set<String> itemIDs) throws ProductCreationException
       {
         return new RequireUser(operationID, itemIDs);
       }
@@ -193,7 +191,7 @@ public abstract class RealmOperationAuthorizer<T extends SecurityItem> extends A
     /**
      * @author Eike Stepper
      */
-    public static final class Factory extends org.eclipse.emf.cdo.server.internal.security.RealmOperationAuthorizer.Factory
+    public static final class Factory extends org.eclipse.emf.cdo.server.internal.security.RealmOperationAuthorizer.Factory<Group>
     {
       public static final String TYPE = "requireGroup";
 
@@ -203,7 +201,7 @@ public abstract class RealmOperationAuthorizer<T extends SecurityItem> extends A
       }
 
       @Override
-      protected IOperationAuthorizer create(String operationID, Set<String> itemIDs) throws ProductCreationException
+      protected RequireGroup create(String operationID, Set<String> itemIDs) throws ProductCreationException
       {
         return new RequireGroup(operationID, itemIDs);
       }
@@ -235,7 +233,7 @@ public abstract class RealmOperationAuthorizer<T extends SecurityItem> extends A
     /**
      * @author Eike Stepper
      */
-    public static final class Factory extends org.eclipse.emf.cdo.server.internal.security.RealmOperationAuthorizer.Factory
+    public static final class Factory extends org.eclipse.emf.cdo.server.internal.security.RealmOperationAuthorizer.Factory<Role>
     {
       public static final String TYPE = "requireRole";
 
@@ -245,7 +243,7 @@ public abstract class RealmOperationAuthorizer<T extends SecurityItem> extends A
       }
 
       @Override
-      protected IOperationAuthorizer create(String operationID, Set<String> itemIDs) throws ProductCreationException
+      protected RequireRole create(String operationID, Set<String> itemIDs) throws ProductCreationException
       {
         return new RequireRole(operationID, itemIDs);
       }

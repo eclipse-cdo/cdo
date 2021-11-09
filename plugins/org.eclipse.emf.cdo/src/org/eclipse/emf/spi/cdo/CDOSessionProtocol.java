@@ -14,7 +14,6 @@ package org.eclipse.emf.spi.cdo;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOObjectReference;
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
-import org.eclipse.emf.cdo.common.CDOCommonSession.AuthorizableOperation;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
@@ -57,6 +56,7 @@ import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.collection.UnionSet;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
+import org.eclipse.net4j.util.security.operations.AuthorizableOperation;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -431,6 +431,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
     private CommitInfoStorage commitInfoStorage;
 
+    private String[] authorizationResults;
+
     /**
      * @since 4.4
      */
@@ -466,6 +468,13 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
       authorizingOperations = in.readBoolean();
       idGenerationLocation = in.readEnum(IDGenerationLocation.class);
       commitInfoStorage = in.readEnum(CommitInfoStorage.class);
+
+      int operations = in.readXInt();
+      authorizationResults = new String[operations];
+      for (int i = 0; i < authorizationResults.length; i++)
+      {
+        authorizationResults[i] = in.readString();
+      }
 
       CDOPackageUnit[] packageUnits = in.readCDOPackageUnits(null);
       for (int i = 0; i < packageUnits.length; i++)
@@ -662,6 +671,14 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     public CommitInfoStorage getCommitInfoStorage()
     {
       return commitInfoStorage;
+    }
+
+    /**
+     * @since 4.15
+     */
+    public String[] getAuthorizationResults()
+    {
+      return authorizationResults;
     }
 
     /**

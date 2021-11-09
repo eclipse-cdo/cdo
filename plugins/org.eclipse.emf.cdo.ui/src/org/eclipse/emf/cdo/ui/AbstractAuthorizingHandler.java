@@ -10,10 +10,10 @@
  */
 package org.eclipse.emf.cdo.ui;
 
-import org.eclipse.emf.cdo.common.CDOCommonSession.AuthorizableOperation;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
+import org.eclipse.net4j.util.security.operations.AuthorizableOperation;
 import org.eclipse.net4j.util.ui.handlers.AbstractBaseHandler;
 
 /**
@@ -40,11 +40,7 @@ public class AbstractAuthorizingHandler<T> extends AbstractBaseHandler<T>
       CDOSession session = CDOUtil.getSession(element);
       if (session != null)
       {
-        String result = session.authorizeOperations(authorizableOperation)[0];
-        if (result == null)
-        {
-          return true;
-        }
+        return session.authorizeOperations(authorizableOperation)[0] == null;
       }
     }
 

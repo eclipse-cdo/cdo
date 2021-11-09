@@ -31,6 +31,14 @@ public abstract class Factory implements IFactory
     this(new FactoryKey(productGroup, type));
   }
 
+  /**
+   * @since 3.16
+   */
+  public Factory(String productGroup)
+  {
+    this(productGroup, null);
+  }
+
   @Override
   public FactoryKey getKey()
   {

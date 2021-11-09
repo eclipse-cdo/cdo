@@ -32,7 +32,10 @@ import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoad
 
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.container.Container;
+import org.eclipse.net4j.util.container.ContainerEvent;
+import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.event.Event;
+import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.ref.ReferenceValueMap;
 
@@ -42,6 +45,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ConcurrentModificationException;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -177,6 +181,12 @@ public class CDOBranchManagerImpl extends Container<CDOBranch> implements Intern
             OM.LOG.error(ex);
           }
         }
+      }
+
+      CDOTagListImpl tagList = getTagListOrNull();
+      if (tagList != null)
+      {
+        tagList.branchesDeleted(deletedBranches);
       }
 
       fireBranchDeletedEvents(deletedBranches);
@@ -814,6 +824,56 @@ public class CDOBranchManagerImpl extends Container<CDOBranch> implements Intern
       }
 
       return result.toArray(new CDOBranchTag[result.size()]);
+    }
+
+    public void branchesDeleted(CDOBranch[] deletedBranches)
+    {
+      IListener[] listeners = getListeners();
+      ContainerEvent<CDOBranchTag> event = listeners.length == 0 ? null : new ContainerEvent<>(this);
+      List<CDOBranchTagImpl> deletedTags = new ArrayList<>();
+
+      synchronized (tags)
+      {
+        synchronized (list)
+        {
+          for (Iterator<CDOBranchTag> it = list.iterator(); it.hasNext();)
+          {
+            CDOBranchTagImpl tag = (CDOBranchTagImpl)it.next();
+
+            for (CDOBranch deletedBranch : deletedBranches)
+            {
+              if (tag.getBranch() == deletedBranch)
+              {
+                it.remove();
+                tags.remove(tag.getName());
+                tag.deleteInternal();
+
+                if (event != null)
+                {
+                  event.addDelta(tag, IContainerDelta.Kind.REMOVED);
+                }
+
+                if (tag.hasListeners())
+                {
+                  deletedTags.add(tag);
+                }
+
+                break;
+              }
+            }
+          }
+        }
+      }
+
+      if (event != null && !event.isEmpty())
+      {
+        fireEvent(event, listeners);
+      }
+
+      for (CDOBranchTagImpl deletedTag : deletedTags)
+      {
+        deletedTag.fireTagDeletedEvent();
+      }
     }
 
     private void addTag(BranchInfo branchInfo)

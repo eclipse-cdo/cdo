@@ -1450,8 +1450,8 @@ public class Repository extends Container<Object> implements InternalRepository
 
         if (!ENABLE_FEATURE_MAP_CHECKS)
         {
-          OM.LOG.info("You can be slightly increase commit performance if no models contain feature maps and you specify -D" + PROP_DISABLE_FEATURE_MAP_CHECKS
-              + "=true");
+          OM.LOG.info("If no model contains feature maps commit performance can be slightly increased by specifying -D" //
+              + PROP_DISABLE_FEATURE_MAP_CHECKS + "=true");
         }
       }
     }

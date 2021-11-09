@@ -79,11 +79,7 @@ public abstract class PropertiesFactory extends Factory
 
     for (Map.Entry<String, String> entry : properties.entrySet())
     {
-      if (builder.length() != 0)
-      {
-        builder.append(PROPERTY_SEPARATOR);
-      }
-
+      StringUtil.appendSeparator(builder, PROPERTY_SEPARATOR);
       builder.append(entry.getKey());
       builder.append("=");
       builder.append(entry.getValue());

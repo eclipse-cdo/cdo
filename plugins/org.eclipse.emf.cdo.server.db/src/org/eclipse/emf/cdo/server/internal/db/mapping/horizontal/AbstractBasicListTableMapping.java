@@ -36,6 +36,7 @@ import org.eclipse.emf.cdo.server.internal.db.mapping.AbstractMappingStrategy;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
@@ -977,11 +978,7 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3, IM
       {
         if ((types & type) != 0)
         {
-          if (builder.length() != 0)
-          {
-            builder.append("|");
-          }
-
+          StringUtil.appendSeparator(builder, '|');
           builder.append(label);
         }
       }

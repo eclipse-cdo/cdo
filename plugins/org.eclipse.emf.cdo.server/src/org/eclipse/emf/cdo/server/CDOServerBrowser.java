@@ -284,13 +284,9 @@ public class CDOServerBrowser extends Worker
       String value = map.get(key);
       if (value != null)
       {
-        if (builder.length() != 0)
-        {
-          builder.append("&");
-        }
-
+        StringUtil.appendSeparator(builder, '&');
         builder.append(key);
-        builder.append("=");
+        builder.append('=');
         builder.append(value);
       }
     }

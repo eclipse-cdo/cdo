@@ -10,6 +10,8 @@
  */
 package org.eclipse.net4j.util.ui;
 
+import org.eclipse.net4j.util.StringUtil;
+
 import java.util.Map;
 import java.util.WeakHashMap;
 
@@ -63,11 +65,7 @@ public interface ValidationContext
       StringBuilder builder = new StringBuilder();
       for (String message : messages.values())
       {
-        if (builder.length() != 0)
-        {
-          builder.append("\n");
-        }
-
+        StringUtil.appendSeparator(builder, '\n');
         builder.append("- " + message);
       }
 

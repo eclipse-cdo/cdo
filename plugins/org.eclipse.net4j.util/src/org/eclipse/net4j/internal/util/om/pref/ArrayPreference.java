@@ -11,6 +11,7 @@
 package org.eclipse.net4j.internal.util.om.pref;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
+import org.eclipse.net4j.util.StringUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -43,11 +44,7 @@ public final class ArrayPreference extends Preference<String[]>
     StringBuilder builder = new StringBuilder();
     for (String element : array)
     {
-      if (builder.length() != 0)
-      {
-        builder.append(SEPARATOR);
-        builder.append(" "); //$NON-NLS-1$
-      }
+      StringUtil.appendSeparator(builder, SEPARATOR + " "); //$NON-NLS-1$
 
       try
       {

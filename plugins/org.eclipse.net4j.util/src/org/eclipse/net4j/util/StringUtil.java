@@ -384,6 +384,20 @@ public final class StringUtil
   }
 
   /**
+   * @since 3.16
+   */
+  public static boolean appendSeparator(StringBuilder builder, char c)
+  {
+    if (builder.length() != 0)
+    {
+      builder.append(c);
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
    * Matches a string against a pattern.
    * <p>
    * Pattern description:

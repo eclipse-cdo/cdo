@@ -14,6 +14,8 @@ import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.explorer.AbstractElement;
 
+import org.eclipse.net4j.util.StringUtil;
+
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -119,11 +121,7 @@ public class DeleteElementsDialog extends TitleAreaDialog
         StringBuilder builder = new StringBuilder();
         for (String path : contents)
         {
-          if (builder.length() != 0)
-          {
-            builder.append('\n');
-          }
-
+          StringUtil.appendSeparator(builder, '\n');
           builder.append(path);
         }
 

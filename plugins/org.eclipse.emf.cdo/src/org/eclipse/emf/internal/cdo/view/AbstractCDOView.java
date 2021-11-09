@@ -1761,14 +1761,11 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     StringBuilder builder = new StringBuilder();
     for (EReference sourceReference : sourceReferences)
     {
-      if (builder.length() != 0)
-      {
-        builder.append("|");
-      }
+      StringUtil.appendSeparator(builder, '|');
 
       CDOClassifierRef classifierRef = new CDOClassifierRef(sourceReference.getEContainingClass());
       builder.append(classifierRef.getURI());
-      builder.append("|");
+      builder.append('|');
       builder.append(sourceReference.getName());
     }
 

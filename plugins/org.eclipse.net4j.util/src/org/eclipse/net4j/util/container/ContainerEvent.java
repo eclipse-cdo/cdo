@@ -10,6 +10,7 @@
  */
 package org.eclipse.net4j.util.container;
 
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.IContainerEventVisitor.Filtered;
 import org.eclipse.net4j.util.event.Event;
 
@@ -130,11 +131,7 @@ public class ContainerEvent<E> extends Event implements IContainerEvent<E>
     StringBuilder builder = new StringBuilder();
     for (IContainerDelta<E> delta : getDeltas())
     {
-      if (builder.length() != 0)
-      {
-        builder.append(", "); //$NON-NLS-1$
-      }
-
+      StringUtil.appendSeparator(builder, ", "); //$NON-NLS-1$
       builder.append(delta.getKind());
       builder.append("="); //$NON-NLS-1$
       builder.append(delta.getElement());

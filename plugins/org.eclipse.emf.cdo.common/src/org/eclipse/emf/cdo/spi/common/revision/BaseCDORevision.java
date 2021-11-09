@@ -46,6 +46,7 @@ import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList.ConfigurableEquality;
 
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.om.trace.PerfTracer;
 
@@ -1297,41 +1298,25 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
     if ((flags & FROZEN_FLAG) != 0)
     {
-      if (builder.length() != 0)
-      {
-        builder.append("|");
-      }
-
+      StringUtil.appendSeparator(builder, '|');
       builder.append("FROZEN");
     }
 
     if ((flags & READ_PERMISSION_FLAG) != 0)
     {
-      if (builder.length() != 0)
-      {
-        builder.append("|");
-      }
-
+      StringUtil.appendSeparator(builder, '|');
       builder.append("READ");
     }
 
     if ((flags & WRITE_PERMISSION_FLAG) != 0)
     {
-      if (builder.length() != 0)
-      {
-        builder.append("|");
-      }
-
+      StringUtil.appendSeparator(builder, '|');
       builder.append("WRITE");
     }
 
     if ((flags & BYPASS_PERMISSION_CHECKS_FLAG) != 0)
     {
-      if (builder.length() != 0)
-      {
-        builder.append("|");
-      }
-
+      StringUtil.appendSeparator(builder, '|');
       builder.append("BYPASS_PERMISSION_CHECKS");
     }
 

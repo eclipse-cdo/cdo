@@ -11,6 +11,7 @@
 package org.eclipse.net4j.internal.tcp;
 
 import org.eclipse.net4j.internal.tcp.bundle.OM;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.nio.channels.CancelledKeyException;
@@ -111,11 +112,7 @@ public final class SelectorUtil
 
   private static void addInterestOp(StringBuilder builder, String op)
   {
-    if (builder.length() != 0)
-    {
-      builder.append("|"); //$NON-NLS-1$
-    }
-
+    StringUtil.appendSeparator(builder, '|');
     builder.append(op);
   }
 }

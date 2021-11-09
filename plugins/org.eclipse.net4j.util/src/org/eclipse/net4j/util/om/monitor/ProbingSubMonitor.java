@@ -17,6 +17,7 @@ import org.eclipse.net4j.internal.util.table.Formula;
 import org.eclipse.net4j.internal.util.table.Range;
 import org.eclipse.net4j.internal.util.table.Range.Alignment;
 import org.eclipse.net4j.internal.util.table.Table;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -601,11 +602,7 @@ public final class ProbingSubMonitor extends org.eclipse.net4j.util.om.monitor.S
             StringBuilder builder = new StringBuilder();
             for (int i = 0; i < row.forkTargets.length; i++)
             {
-              if (builder.length() != 0)
-              {
-                builder.append(", ");
-              }
-
+              StringUtil.appendSeparator(builder, ", ");
               StackTraceElement forkTarget = row.forkTargets[i];
               builder.append(shorten(forkTarget));
             }

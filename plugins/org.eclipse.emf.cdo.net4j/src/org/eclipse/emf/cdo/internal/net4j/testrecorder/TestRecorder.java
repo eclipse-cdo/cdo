@@ -757,11 +757,7 @@ public final class TestRecorder implements CDOTransactionHandler1.WithUndo
         String str = value.toString();
         if (str.length() != 0)
         {
-          if (builder.length() != 0)
-          {
-            builder.append(", ");
-          }
-
+          StringUtil.appendSeparator(builder, ", ");
           builder.append(str);
         }
       }

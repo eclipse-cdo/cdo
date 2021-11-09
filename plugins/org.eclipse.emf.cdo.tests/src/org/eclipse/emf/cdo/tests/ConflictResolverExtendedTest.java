@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
 
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -3773,11 +3774,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     StringBuilder builder = new StringBuilder();
     for (BaseObject element : list)
     {
-      if (builder.length() != 0)
-      {
-        builder.append(", ");
-      }
-
+      StringUtil.appendSeparator(builder, ", ");
       builder.append(element.getAttributeRequired() + " [" + CDOUtil.getCDOObject(element).cdoID() + "]");
     }
 

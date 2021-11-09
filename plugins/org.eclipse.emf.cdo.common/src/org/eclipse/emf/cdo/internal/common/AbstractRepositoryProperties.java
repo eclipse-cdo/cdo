@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
 
 import org.eclipse.net4j.util.AdapterUtil;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.properties.Properties;
 import org.eclipse.net4j.util.properties.Property;
 
@@ -216,11 +217,7 @@ public abstract class AbstractRepositoryProperties<RECEIVER> extends Properties<
         CDOCommonRepository repository = getRepository(receiver);
         for (CDOID.ObjectType objectIDType : repository.getObjectIDTypes())
         {
-          if (builder.length() != 0)
-          {
-            builder.append(", "); //$NON-NLS-1$
-          }
-
+          StringUtil.appendSeparator(builder, ", "); //$NON-NLS-1$
           builder.append(objectIDType);
         }
 

@@ -21,6 +21,8 @@ import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.IMappingConstants;
 import org.eclipse.emf.cdo.spi.server.StoreChunkReader;
 
+import org.eclipse.net4j.util.StringUtil;
+
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.util.List;
@@ -103,9 +105,6 @@ public class DBStoreChunkReader extends StoreChunkReader implements IDBStoreChun
   private void prepareAddition()
   {
     // If not empty, a chunk has been already added, and the next condition needs to be OR-ed
-    if (builder.length() != 0)
-    {
-      builder.append(" OR "); //$NON-NLS-1$
-    }
+    StringUtil.appendSeparator(builder, " OR "); //$NON-NLS-1$
   }
 }

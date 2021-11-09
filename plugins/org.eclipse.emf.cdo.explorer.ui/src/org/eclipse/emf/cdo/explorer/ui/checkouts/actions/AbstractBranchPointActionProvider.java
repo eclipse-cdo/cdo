@@ -236,7 +236,7 @@ public abstract class AbstractBranchPointActionProvider extends AbstractActionPr
     @Override
     protected void doRun(IProgressMonitor progressMonitor) throws Exception
     {
-      checkout.setBranchPoint(branchPoint);
+      execute(checkout, branchPoint);
     }
   }
 

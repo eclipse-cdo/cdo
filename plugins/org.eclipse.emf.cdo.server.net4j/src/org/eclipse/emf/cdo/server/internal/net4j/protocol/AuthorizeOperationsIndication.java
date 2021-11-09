@@ -39,7 +39,7 @@ public class AuthorizeOperationsIndication extends CDOServerReadIndication
 
     for (int i = 0; i < length; i++)
     {
-      operations[i] = new AuthorizableOperation(in);
+      operations[i] = AuthorizableOperation.read(in);
     }
   }
 

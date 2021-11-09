@@ -40,7 +40,7 @@ public final class AuthorizableOperationFactory extends Factory
   @Override
   public AuthorizableOperation create(String description) throws ProductCreationException
   {
-    return new AuthorizableOperation(getOperationID());
+    return AuthorizableOperation.build(getOperationID());
   }
 
   public static AuthorizableOperation getAuthorizableOperation(IManagedContainer container, String operationID)
@@ -48,7 +48,7 @@ public final class AuthorizableOperationFactory extends Factory
     AuthorizableOperation operation = container.getElementOrNull(PRODUCT_GROUP, operationID, null);
     if (operation == null)
     {
-      operation = new AuthorizableOperation(operationID);
+      operation = AuthorizableOperation.build(operationID);
     }
 
     return operation;

@@ -42,7 +42,7 @@ public class CDOUIProperties extends Properties<Object>
           {
             for (Object operationID : args)
             {
-              String result = session.authorizeOperations(new AuthorizableOperation((String)operationID))[0];
+              String result = session.authorizeOperations(AuthorizableOperation.build((String)operationID))[0];
               if (result != null)
               {
                 return false;

@@ -16,6 +16,7 @@ import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.io.ExtendedDataOutput;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,40 +33,17 @@ public final class AuthorizableOperation
 
   private final String id;
 
-  private final Map<String, Object> parameters = new HashMap<>();
+  private final Map<String, Object> parameters;
 
-  public AuthorizableOperation(String id)
+  private AuthorizableOperation(String id, Map<String, Object> parameters)
   {
-    CheckUtil.checkArg(id, "id");
     this.id = id;
+    this.parameters = parameters;
   }
 
-  public AuthorizableOperation(ExtendedDataInput in) throws IOException
-  {
-    id = in.readString();
-
-    int size = in.readVarInt();
-    for (int i = 0; i < size; i++)
-    {
-      String key = in.readString();
-
-      Object value = in.readObject(CLASS_LOADER);
-      parameters.put(key, value);
-    }
-  }
-
-  public final String getID()
+  public String getID()
   {
     return id;
-  }
-
-  public AuthorizableOperation parameter(String key, Object value)
-  {
-    CheckUtil.checkArg(key, "key");
-    CheckUtil.checkArg(value, "value");
-
-    parameters.put(key, value);
-    return this;
   }
 
   public Object getParameter(String key)
@@ -76,18 +54,6 @@ public final class AuthorizableOperation
   public Map<String, Object> getParameters()
   {
     return Collections.unmodifiableMap(parameters);
-  }
-
-  public void write(ExtendedDataOutput out) throws IOException
-  {
-    out.writeString(id);
-    out.writeVarInt(parameters.size());
-
-    for (Entry<String, Object> entry : parameters.entrySet())
-    {
-      out.writeString(entry.getKey());
-      out.writeObject(entry.getValue());
-    }
   }
 
   @Override
@@ -116,11 +82,154 @@ public final class AuthorizableOperation
   @Override
   public String toString()
   {
-    if (parameters != null)
+    if (parameters.isEmpty())
     {
-      return "AuthorizableOperation[" + id + ", parameters=" + parameters + "]";
+      return "AuthorizableOperation[" + id + "]";
     }
 
-    return "AuthorizableOperation[" + id + "]";
+    return "AuthorizableOperation[" + id + ", parameters=" + parameters + "]";
+  }
+
+  public void write(ExtendedDataOutput out) throws IOException
+  {
+    out.writeString(id);
+    out.writeVarInt(parameters.size());
+
+    for (Entry<String, Object> entry : parameters.entrySet())
+    {
+      out.writeString(entry.getKey());
+      out.writeObject(entry.getValue());
+    }
+  }
+
+  public static AuthorizableOperation read(ExtendedDataInput in) throws IOException
+  {
+    String id = in.readString();
+    Builder builder = builder(id);
+
+    int size = in.readVarInt();
+    for (int i = 0; i < size; i++)
+    {
+      String key = in.readString();
+
+      Object value = in.readObject(CLASS_LOADER);
+      builder.parameter(key, value);
+    }
+
+    return builder.build();
+  }
+
+  public static AuthorizableOperation build(String operationID)
+  {
+    return builder(operationID).build();
+  }
+
+  public static Builder builder(String operationID)
+  {
+    return new Builder(operationID);
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class Builder
+  {
+    private static final Map<String, WeakReference<AuthorizableOperation>> OPERATIONS = new HashMap<>();
+
+    private final String id;
+
+    private final Map<String, Object> parameters = new HashMap<>();
+
+    public Builder(String id)
+    {
+      CheckUtil.checkArg(id, "id");
+      this.id = id.intern();
+    }
+
+    public String id()
+    {
+      return id;
+    }
+
+    public Map<String, Object> parameters()
+    {
+      return parameters;
+    }
+
+    public Object parameter(String key)
+    {
+      return parameters.get(key);
+    }
+
+    public Builder parameter(String key, Object value)
+    {
+      CheckUtil.checkArg(key, "key");
+      CheckUtil.checkArg(value, "value");
+
+      parameters.put(key.intern(), value);
+      return this;
+    }
+
+    public AuthorizableOperation build()
+    {
+      if (parameters.isEmpty())
+      {
+        AuthorizableOperation operation;
+
+        synchronized (OPERATIONS)
+        {
+          WeakReference<AuthorizableOperation> ref = OPERATIONS.get(id);
+          if (ref != null)
+          {
+            operation = ref.get();
+            if (operation != null)
+            {
+              return operation;
+            }
+          }
+
+          operation = new AuthorizableOperation(id, Collections.emptyMap());
+          OPERATIONS.put(id, new WeakReference<>(operation));
+        }
+
+        return operation;
+      }
+
+      return new AuthorizableOperation(id, parameters);
+    }
+
+    @Override
+    public int hashCode()
+    {
+      return Objects.hash(id);
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+      if (this == obj)
+      {
+        return true;
+      }
+
+      if (!(obj instanceof Builder))
+      {
+        return false;
+      }
+
+      Builder other = (Builder)obj;
+      return Objects.equals(id, other.id);
+    }
+
+    @Override
+    public String toString()
+    {
+      if (parameters.isEmpty())
+      {
+        return "AuthorizableOperation.Builder[" + id + "]";
+      }
+
+      return "AuthorizableOperation.Builder[" + id + ", parameters=" + parameters + "]";
+    }
   }
 }

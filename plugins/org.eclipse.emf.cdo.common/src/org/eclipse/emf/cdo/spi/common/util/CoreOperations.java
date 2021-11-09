@@ -38,52 +38,59 @@ public final class CoreOperations
 
   public static AuthorizableOperation createBranch(int branchID, String name, int baseBranchID, long baseTimeStamp)
   {
-    return new AuthorizableOperation(ID_CREATE_BRANCH) //
+    return AuthorizableOperation.builder(ID_CREATE_BRANCH) //
         .parameter("branchID", branchID) //
         .parameter("name", name) //
         .parameter("baseBranchID", baseBranchID) //
-        .parameter("baseTimeStamp", baseTimeStamp);
+        .parameter("baseTimeStamp", baseTimeStamp) //
+        .build();
   }
 
   public static AuthorizableOperation renameBranch(int branchID, String newName)
   {
-    return new AuthorizableOperation(ID_RENAME_BRANCH) //
+    return AuthorizableOperation.builder(ID_RENAME_BRANCH) //
         .parameter("branchID", branchID) //
-        .parameter("newName", newName);
+        .parameter("newName", newName) //
+        .build();
   }
 
   public static AuthorizableOperation deleteBranch(int branchID)
   {
-    return new AuthorizableOperation(ID_DELETE_BRANCH) //
-        .parameter("branchID", branchID);
+    return AuthorizableOperation.builder(ID_DELETE_BRANCH) //
+        .parameter("branchID", branchID) //
+        .build();
   }
 
   public static AuthorizableOperation createTag(String name, int branchID, long timeStamp)
   {
-    return new AuthorizableOperation(ID_CREATE_TAG) //
+    return AuthorizableOperation.builder(ID_CREATE_TAG) //
         .parameter("name", name) //
         .parameter("branchID", branchID) //
-        .parameter("timeStamp", timeStamp);
+        .parameter("timeStamp", timeStamp) //
+        .build();
   }
 
   public static AuthorizableOperation renameTag(String oldName, String newName)
   {
-    return new AuthorizableOperation(ID_RENAME_TAG) //
+    return AuthorizableOperation.builder(ID_RENAME_TAG) //
         .parameter("oldName", oldName) //
-        .parameter("newName", newName);
+        .parameter("newName", newName) //
+        .build();
   }
 
   public static AuthorizableOperation moveTag(String name, int branchID, long timeStamp)
   {
-    return new AuthorizableOperation(ID_MOVE_TAG) //
+    return AuthorizableOperation.builder(ID_MOVE_TAG) //
         .parameter("name", name) //
         .parameter("branchID", branchID) //
-        .parameter("timeStamp", timeStamp);
+        .parameter("timeStamp", timeStamp) //
+        .build();
   }
 
   public static AuthorizableOperation deleteTag(String name)
   {
-    return new AuthorizableOperation(ID_DELETE_TAG) //
-        .parameter("name", name);
+    return AuthorizableOperation.builder(ID_DELETE_TAG) //
+        .parameter("name", name) //
+        .build();
   }
 }

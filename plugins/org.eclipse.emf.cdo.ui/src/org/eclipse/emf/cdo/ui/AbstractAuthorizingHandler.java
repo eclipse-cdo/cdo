@@ -27,7 +27,7 @@ public class AbstractAuthorizingHandler<T> extends AbstractBaseHandler<T>
   public AbstractAuthorizingHandler(Class<T> type, String operationID)
   {
     super(type, false);
-    authorizableOperation = new AuthorizableOperation(operationID);
+    authorizableOperation = AuthorizableOperation.build(operationID);
   }
 
   @Override

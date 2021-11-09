@@ -102,7 +102,7 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
 
     for (int i = 0; i < operations.length; i++)
     {
-      operations[i] = new AuthorizableOperation(in);
+      operations[i] = AuthorizableOperation.read(in);
     }
   }
 

@@ -13,8 +13,7 @@
 
 <plugin>
 
-   <extension
-         point="org.eclipse.ui.views">
+   <extension point="org.eclipse.ui.views">
       <category
             id="org.eclipse.net4j"
             name="%category.name">
@@ -24,19 +23,22 @@
             class="org.eclipse.net4j.internal.ui.views.AcceptorsView"
             icon="platform:/plugin/org.eclipse.net4j.ui.shared/icons/full/view16/acceptors.gif"
             id="org.eclipse.net4j.AcceptorsView"
-            name="%view.name">
-      </view>
+            name="%view.name"/>
       <view
             category="org.eclipse.net4j"
             class="org.eclipse.net4j.internal.ui.views.ConnectorsView"
             icon="platform:/plugin/org.eclipse.net4j.ui.shared/icons/full/view16/connectors.gif"
             id="org.eclipse.net4j.ConnectorsView"
-            name="%view.name.0">
-      </view>
+            name="%view.name.0"/>
+      <view
+            category="org.eclipse.net4j"
+            class="org.eclipse.net4j.internal.ui.views.ChannelsView"
+            icon="platform:/plugin/org.eclipse.net4j.ui.shared/icons/full/view16/channels.gif"
+            id="org.eclipse.net4j.ChannelsView"
+            name="%view.name.1"/>
    </extension>
    
-   <extension
-         point="org.eclipse.net4j.util.factories">
+   <extension point="org.eclipse.net4j.util.factories">
       <factory
             class="org.eclipse.net4j.internal.ui.container.TCPAcceptorWizard$Factory"
             productGroup="org.eclipse.net4j.util.ui.elementWizards"

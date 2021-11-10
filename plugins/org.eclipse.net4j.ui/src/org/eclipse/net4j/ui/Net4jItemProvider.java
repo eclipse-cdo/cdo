@@ -14,6 +14,7 @@ import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.internal.ui.messages.Messages;
+import org.eclipse.net4j.signal.Signal;
 import org.eclipse.net4j.ui.shared.SharedIcons;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -60,6 +61,11 @@ public class Net4jItemProvider extends ContainerItemProvider<IContainer<Object>>
     if (obj instanceof IChannel)
     {
       return SharedIcons.getImage(SharedIcons.OBJ_CHANNEL);
+    }
+
+    if (obj instanceof Signal)
+    {
+      return SharedIcons.getImage(SharedIcons.OBJ_SIGNAL);
     }
 
     return super.getImage(obj);

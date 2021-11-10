@@ -640,6 +640,8 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
 
   private void fireSignalScheduledEvent(Signal signal)
   {
+    signal.scheduled = System.currentTimeMillis();
+
     IListener[] listeners = getListeners();
     if (listeners.length != 0)
     {

@@ -155,18 +155,7 @@ public abstract class AbstractTransportView extends ContainerView implements IEl
 
       private void decorateChannel(StyledString styledText, IChannel channel)
       {
-        IBufferHandler receiveHandler = channel.getReceiveHandler();
-        if (receiveHandler instanceof IProtocol)
-        {
-          IProtocol<?> protocol = (IProtocol<?>)receiveHandler;
-
-          Object infraStructure = protocol.getInfraStructure();
-          if (infraStructure != null)
-          {
-            styledText.append("  " + infraStructure, StyledString.DECORATIONS_STYLER);
-          }
-        }
-
+        decorateChannelInfraStructure(styledText, channel);
         decorateCounters(styledText, channel.getReceivedBytes(), channel.getSentBytes());
       }
 
@@ -227,4 +216,19 @@ public abstract class AbstractTransportView extends ContainerView implements IEl
   }
 
   protected abstract IAction createNewAction(Shell shell, IManagedContainer container);
+
+  static void decorateChannelInfraStructure(StyledString styledText, IChannel channel)
+  {
+    IBufferHandler receiveHandler = channel.getReceiveHandler();
+    if (receiveHandler instanceof IProtocol)
+    {
+      IProtocol<?> protocol = (IProtocol<?>)receiveHandler;
+
+      Object infraStructure = protocol.getInfraStructure();
+      if (infraStructure != null)
+      {
+        styledText.append("  " + infraStructure, StyledString.DECORATIONS_STYLER);
+      }
+    }
+  }
 }

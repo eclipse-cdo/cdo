@@ -25,15 +25,19 @@ public class SignalFinishedEvent<INFRA_STRUCTURE> extends Event
 {
   private static final long serialVersionUID = 1L;
 
-  private Signal signal;
+  private final Signal signal;
 
-  private Exception exception;
+  private final Exception exception;
+
+  private final long duration;
 
   SignalFinishedEvent(ISignalProtocol<INFRA_STRUCTURE> source, Signal signal, Exception exception)
   {
     super(source);
     this.signal = signal;
     this.exception = exception;
+
+    duration = signal.scheduled == -1L ? -1L : System.currentTimeMillis() - signal.scheduled;
   }
 
   @Override
@@ -52,6 +56,14 @@ public class SignalFinishedEvent<INFRA_STRUCTURE> extends Event
   public Exception getException()
   {
     return exception;
+  }
+
+  /**
+   * @since 4.13
+   */
+  public long getDuration()
+  {
+    return duration;
   }
 
   @Override

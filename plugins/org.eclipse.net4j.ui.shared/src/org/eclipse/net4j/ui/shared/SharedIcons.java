@@ -33,6 +33,8 @@ public class SharedIcons
 
   public static final String OBJ_CHANNEL = OBJ + "channel"; //$NON-NLS-1$
 
+  public static final String OBJ_SIGNAL = OBJ + "message"; //$NON-NLS-1$
+
   public static final String OBJ_CONNECTOR = OBJ + "connector"; //$NON-NLS-1$
 
   public static final String OBJ_FACTORY = OBJ + "factory"; //$NON-NLS-1$

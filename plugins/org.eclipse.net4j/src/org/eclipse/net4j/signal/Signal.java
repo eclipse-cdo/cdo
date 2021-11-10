@@ -66,6 +66,8 @@ public abstract class Signal implements Runnable
 
   private Object currentStream;
 
+  long scheduled = -1L;
+
   /**
    * Both implementation classes of a logical signal must have the same signalID. The signalID of a user signals must be
    * equal to or greater than zero.
@@ -142,27 +144,35 @@ public abstract class Signal implements Runnable
   @Override
   public String toString()
   {
+    return toString(SHORT_TO_STRING);
+  }
+
+  /**
+   * @since 4.13
+   */
+  public String toString(boolean shortForm)
+  {
     String name = getName();
 
     String additionalInfo = getAdditionalInfo();
     if (StringUtil.isEmpty(additionalInfo))
     {
-      if (SHORT_TO_STRING)
+      if (shortForm)
       {
         return name;
       }
 
-      return MessageFormat.format("Signal[protocol={0}, id={1}, name={2}, correlation={3}]", getProtocol().getType(), //$NON-NLS-1$
-          getID(), name, getCorrelationID());
+      return MessageFormat.format("{0}[protocol={1}, correlation={2}]", name, getProtocol().getType(), //$NON-NLS-1$
+          getCorrelationID());
     }
 
-    if (SHORT_TO_STRING)
+    if (shortForm)
     {
       return MessageFormat.format("{0}[{1}]", name, additionalInfo); //$NON-NLS-1$
     }
 
-    return MessageFormat.format("Signal[protocol={0}, id={1}, name={2}, correlation={3}, {4}]", getProtocol().getType(), //$NON-NLS-1$
-        getID(), name, getCorrelationID(), additionalInfo);
+    return MessageFormat.format("{0}[protocol={1}, correlation={2}, {3}]", name, getProtocol().getType(), //$NON-NLS-1$
+        getCorrelationID(), additionalInfo);
   }
 
   /**

@@ -66,7 +66,11 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
 
   private transient long sentBuffers;
 
+  private transient long sentBytes;
+
   private transient long receivedBuffers;
+
+  private transient long receivedBytes;
 
   public Channel()
   {
@@ -180,12 +184,30 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
   }
 
   /**
+   * @since 4.13
+   */
+  @Override
+  public final long getSentBytes()
+  {
+    return sentBytes;
+  }
+
+  /**
    * @since 3.0
    */
   @Override
   public long getReceivedBuffers()
   {
     return receivedBuffers;
+  }
+
+  /**
+   * @since 4.13
+   */
+  @Override
+  public final long getReceivedBytes()
+  {
+    return receivedBytes;
   }
 
   @Override
@@ -256,7 +278,16 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
       return;
     }
 
-    ++sentBuffers;
+    try
+    {
+      ++sentBuffers;
+      sentBytes += buffer.getPosition();
+      fireCountersChangedEvent();
+    }
+    catch (Exception ex)
+    {
+      OM.LOG.warn(ex);
+    }
 
     if (sendQueue != null)
     {
@@ -284,7 +315,17 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
         TRACER.format("Handling buffer from multiplexer: {0} --> {1}", buffer, this); //$NON-NLS-1$
       }
 
-      ++receivedBuffers;
+      try
+      {
+        ++receivedBuffers;
+        receivedBytes += buffer.getLimit();
+        fireCountersChangedEvent();
+      }
+      catch (Exception ex)
+      {
+        OM.LOG.warn(ex);
+      }
+
       receiveHandler.handleBuffer(buffer);
     }
     else
@@ -385,6 +426,15 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
   public boolean isClosed()
   {
     return !isActive();
+  }
+
+  private void fireCountersChangedEvent()
+  {
+    IListener[] listeners = getListeners();
+    if (listeners.length != 0)
+    {
+      fireEvent(new CountersChangedEventImpl(this), listeners);
+    }
   }
 
   /**
@@ -560,6 +610,25 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
     public int getQueueSize()
     {
       return queueSize;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class CountersChangedEventImpl extends Event implements CountersChangedEvent
+  {
+    private static final long serialVersionUID = 1L;
+
+    private CountersChangedEventImpl(Channel channel)
+    {
+      super(channel);
+    }
+
+    @Override
+    public InternalChannel getSource()
+    {
+      return (InternalChannel)super.getSource();
     }
   }
 }

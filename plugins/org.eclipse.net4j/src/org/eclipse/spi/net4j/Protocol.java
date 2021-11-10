@@ -16,6 +16,7 @@ import org.eclipse.net4j.protocol.IProtocol2;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.concurrent.IExecutorServiceProvider;
+import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
@@ -102,7 +103,12 @@ public abstract class Protocol<INFRA_STRUCTURE> extends Lifecycle implements IPr
   @Override
   public void setInfraStructure(INFRA_STRUCTURE infraStructure)
   {
-    this.infraStructure = infraStructure;
+    if (this.infraStructure != infraStructure)
+    {
+      INFRA_STRUCTURE oldInfraStructure = this.infraStructure;
+      this.infraStructure = infraStructure;
+      fireEvent(new InfraStructureChangedEvent(oldInfraStructure, infraStructure));
+    }
   }
 
   /**
@@ -198,5 +204,41 @@ public abstract class Protocol<INFRA_STRUCTURE> extends Lifecycle implements IPr
   {
     setChannel(null);
     super.doDeactivate();
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 4.13
+   */
+  public final class InfraStructureChangedEvent extends Event
+  {
+    private static final long serialVersionUID = 1L;
+
+    private final INFRA_STRUCTURE oldInfraStructure;
+
+    private final INFRA_STRUCTURE newInfraStructure;
+
+    private InfraStructureChangedEvent(INFRA_STRUCTURE oldInfraStructure, INFRA_STRUCTURE newInfraStructure)
+    {
+      super(Protocol.this);
+      this.oldInfraStructure = oldInfraStructure;
+      this.newInfraStructure = newInfraStructure;
+    }
+
+    @Override
+    public Protocol<INFRA_STRUCTURE> getSource()
+    {
+      return Protocol.this;
+    }
+
+    public final INFRA_STRUCTURE getOldInfraStructure()
+    {
+      return oldInfraStructure;
+    }
+
+    public final INFRA_STRUCTURE getNewInfraStructure()
+    {
+      return newInfraStructure;
+    }
   }
 }

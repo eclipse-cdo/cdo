@@ -202,10 +202,12 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
     }
     catch (ChannelException ex)
     {
+      removeChannel(channel);
       throw ex;
     }
     catch (Exception ex)
     {
+      removeChannel(channel);
       throw new ChannelException(ex);
     }
 

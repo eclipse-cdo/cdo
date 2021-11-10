@@ -112,10 +112,25 @@ public interface IChannel extends ILocationAware, IUserAware, IBufferHandler, IN
   public long getSentBuffers();
 
   /**
+   * Returns the number of bytes that are sent to the {@link IChannelMultiplexer multiplexer} of this channel.
+   *
+   * @since 4.13
+   */
+  public long getSentBytes();
+
+  /**
    * Returns the number of {@link IBuffer buffers} that are received from the {@link IChannelMultiplexer multiplexer} of this channel
    * <b>and</b> are passed on to the {@link #getReceiveHandler() receive handler} of this channel.
    *
    * @since 4.10
    */
   public long getReceivedBuffers();
+
+  /**
+   * Returns the number of bytes that are received from the {@link IChannelMultiplexer multiplexer} of this channel
+   * <b>and</b> are passed on to the {@link #getReceiveHandler() receive handler} of this channel.
+   *
+   * @since 4.13
+   */
+  public long getReceivedBytes();
 }

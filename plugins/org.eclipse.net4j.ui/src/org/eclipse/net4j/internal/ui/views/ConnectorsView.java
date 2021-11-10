@@ -11,63 +11,35 @@
 package org.eclipse.net4j.internal.ui.views;
 
 import org.eclipse.net4j.connector.IConnector;
-import org.eclipse.net4j.ui.Net4jItemProvider;
 import org.eclipse.net4j.ui.shared.SharedIcons;
-import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.ui.container.ElementWizardAction;
-import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
-import org.eclipse.net4j.util.ui.views.ContainerView;
-import org.eclipse.net4j.util.ui.views.IElementFilter;
 
 import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.spi.net4j.ConnectorFactory;
 import org.eclipse.swt.widgets.Shell;
 
 /**
  * @author Eike Stepper
  */
-public class ConnectorsView extends ContainerView
+public class ConnectorsView extends AbstractTransportView
 {
   public static final String ID = "org.eclipse.net4j.ConnectorsView"; //$NON-NLS-1$
-
-  private IAction newConnectorAction;
 
   public ConnectorsView()
   {
   }
 
   @Override
-  protected IManagedContainer getContainer()
+  public boolean filter(Object element)
   {
-    return IPluginContainer.INSTANCE;
+    return element instanceof IConnector;
   }
 
   @Override
-  protected ContainerItemProvider<IContainer<Object>> createContainerItemProvider()
+  protected IAction createNewAction(Shell shell, IManagedContainer container)
   {
-    return new Net4jItemProvider(new IElementFilter()
-    {
-      @Override
-      public boolean filter(Object element)
-      {
-        return element instanceof IConnector;
-      }
-    });
-  }
-
-  @Override
-  protected void fillLocalToolBar(IToolBarManager manager)
-  {
-    if (newConnectorAction == null)
-    {
-      newConnectorAction = createNewConnectorAction(getShell(), getContainer());
-    }
-
-    manager.add(newConnectorAction);
-    super.fillLocalToolBar(manager);
+    return createNewConnectorAction(getShell(), getContainer());
   }
 
   public static ElementWizardAction createNewConnectorAction(Shell shell, IManagedContainer container)

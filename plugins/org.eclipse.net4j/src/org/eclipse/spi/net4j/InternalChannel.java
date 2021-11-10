@@ -86,4 +86,22 @@ public interface InternalChannel extends IChannel, IBufferProvider, ILifecycle
       ENQUEUED, DEQUEUED
     }
   }
+
+  /**
+   * An {@link IEvent event} fired from a {@link InternalChannel channel} when one of its statistical counters changed.
+   *
+   * @see IChannel#getReceivedBuffers()
+   * @see IChannel#getReceivedBytes()
+   * @see IChannel#getSentBuffers()
+   * @see IChannel#getSentBytes()
+   * @author Eike Stepper
+   * @since 4.13
+   * @noextend This interface is not intended to be extended by clients.
+   * @noimplement This interface is not intended to be implemented by clients.
+   */
+  public interface CountersChangedEvent extends IEvent
+  {
+    @Override
+    public InternalChannel getSource();
+  }
 }

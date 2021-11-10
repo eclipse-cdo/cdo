@@ -11,63 +11,35 @@
 package org.eclipse.net4j.internal.ui.views;
 
 import org.eclipse.net4j.acceptor.IAcceptor;
-import org.eclipse.net4j.ui.Net4jItemProvider;
 import org.eclipse.net4j.ui.shared.SharedIcons;
-import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.ui.container.ElementWizardAction;
-import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
-import org.eclipse.net4j.util.ui.views.ContainerView;
-import org.eclipse.net4j.util.ui.views.IElementFilter;
 
 import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.spi.net4j.AcceptorFactory;
 import org.eclipse.swt.widgets.Shell;
 
 /**
  * @author Eike Stepper
  */
-public class AcceptorsView extends ContainerView
+public class AcceptorsView extends AbstractTransportView
 {
   public static final String ID = "org.eclipse.net4j.AcceptorsView"; //$NON-NLS-1$
-
-  private IAction newAcceptorAction;
 
   public AcceptorsView()
   {
   }
 
   @Override
-  protected IManagedContainer getContainer()
+  public boolean filter(Object element)
   {
-    return IPluginContainer.INSTANCE;
+    return element instanceof IAcceptor;
   }
 
   @Override
-  protected ContainerItemProvider<IContainer<Object>> createContainerItemProvider()
+  protected IAction createNewAction(Shell shell, IManagedContainer container)
   {
-    return new Net4jItemProvider(new IElementFilter()
-    {
-      @Override
-      public boolean filter(Object element)
-      {
-        return element instanceof IAcceptor;
-      }
-    });
-  }
-
-  @Override
-  protected void fillLocalToolBar(IToolBarManager manager)
-  {
-    if (newAcceptorAction == null)
-    {
-      newAcceptorAction = createNewAcceptorAction(getShell(), getContainer());
-    }
-
-    manager.add(newAcceptorAction);
-    super.fillLocalToolBar(manager);
+    return createNewAcceptorAction(getShell(), getContainer());
   }
 
   public static ElementWizardAction createNewAcceptorAction(Shell shell, IManagedContainer container)

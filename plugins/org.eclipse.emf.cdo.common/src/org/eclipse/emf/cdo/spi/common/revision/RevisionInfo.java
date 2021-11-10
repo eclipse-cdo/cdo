@@ -110,6 +110,14 @@ public abstract class RevisionInfo
   @Override
   public String toString()
   {
+    return id.toString();
+  }
+
+  /**
+   * @since 4.15
+   */
+  public String toLongString()
+  {
     return MessageFormat.format("RevisionInfo.{0}[{1}, {2}]", getClass().getSimpleName(), id, requestedBranchPoint); //$NON-NLS-1$
   }
 

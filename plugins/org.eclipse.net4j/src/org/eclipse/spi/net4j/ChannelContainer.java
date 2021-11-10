@@ -18,9 +18,12 @@ import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.SelfAttachingContainerListener;
 import org.eclipse.net4j.util.container.SetContainer;
+import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.INotifier;
+
+import java.util.LinkedHashSet;
 
 /**
  * @author Eike Stepper
@@ -45,8 +48,7 @@ public class ChannelContainer extends SetContainer<IChannel>
         IBufferHandler receiveHandler = channel.getReceiveHandler();
         if (receiveHandler instanceof IProtocol)
         {
-          IProtocol<?> protocol = (IProtocol<?>)receiveHandler;
-          super.attach(protocol);
+          EventUtil.addUniqueListener(receiveHandler, this);
         }
       }
     }
@@ -62,8 +64,7 @@ public class ChannelContainer extends SetContainer<IChannel>
         IBufferHandler receiveHandler = channel.getReceiveHandler();
         if (receiveHandler instanceof IProtocol)
         {
-          IProtocol<?> protocol = (IProtocol<?>)receiveHandler;
-          super.detach(protocol);
+          EventUtil.removeListener(receiveHandler, this);
         }
       }
 
@@ -99,7 +100,7 @@ public class ChannelContainer extends SetContainer<IChannel>
 
   public ChannelContainer(IContainer<?> delegate)
   {
-    super(IChannel.class);
+    super(IChannel.class, new LinkedHashSet<IChannel>());
     this.delegate = delegate;
   }
 

@@ -81,6 +81,6 @@ public class CDOBranchPointImpl implements CDOBranchPoint, Comparable<CDOBranchP
   @Override
   public String toString()
   {
-    return MessageFormat.format("BranchPoint[{0}, {1}]", branch, CDOCommonUtil.formatTimeStamp(timeStamp)); //$NON-NLS-1$
+    return MessageFormat.format("BranchPoint[{0}, {1}]", String.valueOf(branch.getPathName()), CDOCommonUtil.formatTimeStamp(timeStamp)); //$NON-NLS-1$
   }
 }

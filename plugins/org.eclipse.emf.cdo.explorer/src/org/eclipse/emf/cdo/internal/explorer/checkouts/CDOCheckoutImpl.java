@@ -630,6 +630,8 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
 
             state = State.Open;
             newState = state;
+
+            setError(null);
           }
           catch (Error | RuntimeException ex)
           {
@@ -637,6 +639,16 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
             rootObject = null;
             state = State.Closed;
             newState = state;
+
+            try
+            {
+              setError(ex.getLocalizedMessage());
+            }
+            catch (Throwable t)
+            {
+              setError(t.getClass().getName());
+            }
+
             throw ex;
           }
         }

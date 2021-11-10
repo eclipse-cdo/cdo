@@ -42,6 +42,7 @@ import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * The default implementation of a {@link ISignalProtocol signal protocol}.
@@ -52,7 +53,7 @@ import java.util.Map;
  *
  * @author Eike Stepper
  */
-public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> implements ISignalProtocol<INFRA_STRUCTURE>
+public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> implements ISignalProtocol.WithSignalCounters<INFRA_STRUCTURE>
 {
   /**
    * @since 4.7
@@ -114,6 +115,10 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
   private int nextCorrelationID = MIN_CORRELATION_ID;
 
   private boolean failingOver;
+
+  private AtomicLong sentSignals = new AtomicLong();
+
+  private AtomicLong receivedSignals = new AtomicLong();
 
   /**
    * @since 2.0
@@ -198,6 +203,21 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
     {
       this.streamWrapper = new StreamWrapperChain(streamWrapper, this.streamWrapper);
     }
+  }
+
+  /**
+   * @since 4.13
+   */
+  @Override
+  public long getSentSignals()
+  {
+    return sentSignals.get();
+  }
+
+  @Override
+  public long getReceivedSignals()
+  {
+    return receivedSignals.get();
   }
 
   /**
@@ -645,18 +665,25 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
     IListener[] listeners = getListeners();
     if (listeners.length != 0)
     {
-      IEvent event = new SignalScheduledEvent<>(this, signal);
-      fireEvent(event, listeners);
+      fireEvent(new SignalScheduledEvent<>(this, signal), listeners);
     }
   }
 
   private void fireSignalFinishedEvent(Signal signal, Exception exception)
   {
+    if (signal instanceof SignalActor)
+    {
+      sentSignals.incrementAndGet();
+    }
+    else if (signal instanceof SignalReactor)
+    {
+      receivedSignals.incrementAndGet();
+    }
+
     IListener[] listeners = getListeners();
     if (listeners.length != 0)
     {
-      IEvent event = new SignalFinishedEvent<>(this, signal, exception);
-      fireEvent(event, listeners);
+      fireEvent(new SignalFinishedEvent<>(this, signal, exception), listeners);
     }
   }
 

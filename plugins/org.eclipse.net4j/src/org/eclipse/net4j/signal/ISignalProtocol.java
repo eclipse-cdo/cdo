@@ -42,4 +42,15 @@ public interface ISignalProtocol<INFRA_STRUCTURE> extends IProtocol<INFRA_STRUCT
   public IChannel open(IConnector connector);
 
   public void close();
+
+  /**
+   * @author Eike Stepper
+   * @since 4.13
+   */
+  public interface WithSignalCounters<INFRA_STRUCTURE> extends ISignalProtocol<INFRA_STRUCTURE>
+  {
+    public long getSentSignals();
+
+    public long getReceivedSignals();
+  }
 }

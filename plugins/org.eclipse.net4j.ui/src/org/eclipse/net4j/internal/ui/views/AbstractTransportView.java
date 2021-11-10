@@ -34,6 +34,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 
+import java.util.Collection;
+
 /**
  * @author Eike Stepper
  */
@@ -161,38 +163,41 @@ public abstract class AbstractTransportView extends ContainerView implements IEl
 
       private void decorateConnector(StyledString styledText, IConnector connector)
       {
-        long receivedBytes = 0;
-        long sentBytes = 0;
-
-        for (IChannel channel : connector.getChannels())
+        Collection<IChannel> channels = connector.getChannels();
+        if (channels.size() > 1)
         {
-          receivedBytes += channel.getReceivedBytes();
-          sentBytes += channel.getSentBytes();
-        }
+          long receivedBytes = 0;
+          long sentBytes = 0;
 
-        decorateCounters(styledText, receivedBytes, sentBytes);
-      }
-
-      private void decorateAcceptor(StyledString styledText, IAcceptor acceptor)
-      {
-        long receivedBytes = 0;
-        long sentBytes = 0;
-
-        for (IConnector connector : acceptor.getAcceptedConnectors())
-        {
-          for (IChannel channel : connector.getChannels())
+          for (IChannel channel : channels)
           {
             receivedBytes += channel.getReceivedBytes();
             sentBytes += channel.getSentBytes();
           }
-        }
 
-        decorateCounters(styledText, receivedBytes, sentBytes);
+          decorateCounters(styledText, receivedBytes, sentBytes);
+        }
       }
 
-      private void decorateCounters(StyledString styledText, long receivedBytes, long sentBytes)
+      private void decorateAcceptor(StyledString styledText, IAcceptor acceptor)
       {
-        styledText.append("  \u2190" + receivedBytes + "  " + sentBytes + "\u2192", StyledString.COUNTER_STYLER);
+        IConnector[] connectors = acceptor.getAcceptedConnectors();
+        if (connectors.length > 1)
+        {
+          long receivedBytes = 0;
+          long sentBytes = 0;
+
+          for (IConnector connector : connectors)
+          {
+            for (IChannel channel : connector.getChannels())
+            {
+              receivedBytes += channel.getReceivedBytes();
+              sentBytes += channel.getSentBytes();
+            }
+          }
+
+          decorateCounters(styledText, receivedBytes, sentBytes);
+        }
       }
     };
   }
@@ -230,5 +235,10 @@ public abstract class AbstractTransportView extends ContainerView implements IEl
         styledText.append("  " + infraStructure, StyledString.DECORATIONS_STYLER);
       }
     }
+  }
+
+  static void decorateCounters(StyledString styledText, long received, long sent)
+  {
+    styledText.append("  \u2190" + received + "  " + sent + "\u2192", StyledString.COUNTER_STYLER);
   }
 }

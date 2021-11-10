@@ -10,8 +10,10 @@
  */
 package org.eclipse.net4j.internal.ui.views;
 
+import org.eclipse.net4j.buffer.IBufferHandler;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.protocol.IProtocol;
+import org.eclipse.net4j.signal.ISignalProtocol;
 import org.eclipse.net4j.signal.Signal;
 import org.eclipse.net4j.signal.SignalFinishedEvent;
 import org.eclipse.net4j.signal.SignalProtocol;
@@ -153,7 +155,10 @@ public class ChannelsView extends ContainerView implements IElementFilter
 
           if (log != null)
           {
-            return log.toArray(new LogEntry[log.size()]);
+            synchronized (log)
+            {
+              return log.toArray(new LogEntry[log.size()]);
+            }
           }
         }
 
@@ -206,6 +211,13 @@ public class ChannelsView extends ContainerView implements IElementFilter
       private void decorateChannel(StyledString styledText, IChannel channel)
       {
         AbstractTransportView.decorateChannelInfraStructure(styledText, channel);
+
+        IBufferHandler receiveHandler = channel.getReceiveHandler();
+        if (receiveHandler instanceof ISignalProtocol.WithSignalCounters)
+        {
+          ISignalProtocol.WithSignalCounters<?> counters = (ISignalProtocol.WithSignalCounters<?>)receiveHandler;
+          AbstractTransportView.decorateCounters(styledText, counters.getReceivedSignals(), counters.getSentSignals());
+        }
       }
 
       private void decorateLogEntry(StyledString styledText, LogEntry entry)
@@ -220,7 +232,7 @@ public class ChannelsView extends ContainerView implements IElementFilter
           long duration = entry.getDuration();
           if (duration != -1L)
           {
-            styledText.append("  " + duration + " millis", StyledString.COUNTER_STYLER);
+            styledText.append("  " + duration + " ms", StyledString.COUNTER_STYLER);
           }
         }
       }
@@ -246,7 +258,11 @@ public class ChannelsView extends ContainerView implements IElementFilter
           }
         }
 
-        log.add(0, new LogEntry(signal.toString(true), error, duration));
+        synchronized (log)
+        {
+          log.add(0, new LogEntry(signal.toString(true), error, duration));
+        }
+
         refreshElement(channel, false);
       }
     }

@@ -209,10 +209,9 @@ public class LoadRevisionsRequest extends CDOClientRequest<List<RevisionInfo>>
   }
 
   @Override
-  public String toString()
+  protected String getAdditionalInfo()
   {
-    return MessageFormat.format("LoadRevisionsRequest(infos={0}, branchPoint={1}, referenceChunk={2}, prefetchDepth={3})", infos, branchPoint, referenceChunk,
-        prefetchDepth);
+    return MessageFormat.format("infos={0}, branchPoint={1}, referenceChunk={2}, prefetchDepth={3}", infos, branchPoint, referenceChunk, prefetchDepth);
   }
 
   /**

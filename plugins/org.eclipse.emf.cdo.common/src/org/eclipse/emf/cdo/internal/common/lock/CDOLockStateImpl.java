@@ -23,7 +23,6 @@ import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -102,11 +101,6 @@ public final class CDOLockStateImpl implements InternalCDOLockState
   @Override
   public boolean isLocked(LockType lockType, CDOLockOwner lockOwner, boolean others)
   {
-    if (lockedObject == null)
-    {
-      return false;
-    }
-
     if (lockType == null)
     {
       return isReadLocked(lockOwner, others) || isWriteLocked(lockOwner, others) || isOptionLocked(lockOwner, others);
@@ -373,10 +367,7 @@ public final class CDOLockStateImpl implements InternalCDOLockState
   @Override
   public int hashCode()
   {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + (lockedObject == null ? 0 : lockedObject.hashCode());
-    return result;
+    return lockedObject.hashCode();
   }
 
   @Override
@@ -398,14 +389,7 @@ public final class CDOLockStateImpl implements InternalCDOLockState
     }
 
     CDOLockStateImpl other = (CDOLockStateImpl)obj;
-    if (lockedObject == null)
-    {
-      if (other.lockedObject != null)
-      {
-        return false;
-      }
-    }
-    else if (!lockedObject.equals(other.lockedObject))
+    if (!lockedObject.equals(other.lockedObject))
     {
       return false;
     }
@@ -420,7 +404,29 @@ public final class CDOLockStateImpl implements InternalCDOLockState
       return false;
     }
 
-    if (!Objects.deepEquals(readLockOwners, other.readLockOwners))
+    if (readLockOwners != null && readLockOwners.getClass() == ARRAY_CLASS)
+    {
+      if (other.readLockOwners == null || other.readLockOwners.getClass() != ARRAY_CLASS)
+      {
+        return false;
+      }
+
+      CDOLockOwner[] owners = (CDOLockOwner[])readLockOwners;
+      CDOLockOwner[] otherOwners = (CDOLockOwner[])other.readLockOwners;
+      if (owners.length != otherOwners.length)
+      {
+        return false;
+      }
+
+      for (int i = 0; i < owners.length; i++)
+      {
+        if (owners[i] != otherOwners[i])
+        {
+          return false;
+        }
+      }
+    }
+    else if (readLockOwners != other.readLockOwners)
     {
       return false;
     }

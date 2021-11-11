@@ -18,10 +18,12 @@ import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
 import org.eclipse.emf.cdo.spi.common.lock.InternalCDOLockState;
 
+import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -43,6 +45,7 @@ public class CDOLockStateImpl implements InternalCDOLockState
   {
     assert lockedObject instanceof CDOID || lockedObject instanceof CDOIDAndBranch : "lockedObject is of wrong type";
     assert !CDOIDUtil.isNull(CDOLockUtil.getLockedObjectID(lockedObject)) : "lockedObject is null";
+    CheckUtil.checkArg(lockedObject, "lockedObject");
     this.lockedObject = lockedObject;
   }
 
@@ -151,7 +154,7 @@ public class CDOLockStateImpl implements InternalCDOLockState
       return false;
     }
 
-    return writeLockOwner.equals(by) ^ others;
+    return writeLockOwner == by ^ others;
   }
 
   private boolean isOptionLocked(CDOLockOwner by, boolean others)
@@ -161,13 +164,13 @@ public class CDOLockStateImpl implements InternalCDOLockState
       return false;
     }
 
-    return writeOptionOwner.equals(by) ^ others;
+    return writeOptionOwner == by ^ others;
   }
 
   @Override
   public Set<CDOLockOwner> getReadLockOwners()
   {
-    if (lockedObject == null || readLockOwners == null)
+    if (readLockOwners == null)
     {
       return NO_LOCK_OWNERS;
     }
@@ -319,12 +322,17 @@ public class CDOLockStateImpl implements InternalCDOLockState
       return false;
     }
 
-    if (writeLockOwner != other.getWriteLockOwner())
+    if (writeLockOwner != other.writeLockOwner)
     {
       return false;
     }
 
-    if (writeOptionOwner != other.getWriteOptionOwner())
+    if (writeOptionOwner != other.writeOptionOwner)
+    {
+      return false;
+    }
+
+    if (!Objects.equals(readLockOwners, other.readLockOwners))
     {
       return false;
     }

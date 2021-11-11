@@ -16,6 +16,8 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
+import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.UnitOpcode;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
@@ -66,6 +68,8 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
 
   private String durableLockingID;
 
+  private CDOLockOwner lockOwner;
+
   private final InternalRepository repository;
 
   private final Set<CDOID> changeSubscriptionIDs = new HashSet<>();
@@ -87,7 +91,9 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
   {
     this.session = session;
     this.viewID = viewID;
+
     sessionID = session.getSessionID();
+    lockOwner = CDOLockUtil.createLockOwner(this);
 
     repository = session.getRepository();
     setBranchPoint(branchPoint);
@@ -108,7 +114,7 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
   @Override
   public int getSessionID()
   {
-    return session.getSessionID();
+    return sessionID;
   }
 
   @Override
@@ -151,6 +157,19 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
   public String getDurableLockingID()
   {
     return durableLockingID;
+  }
+
+  @Override
+  public void setDurableLockingID(String durableLockingID)
+  {
+    this.durableLockingID = durableLockingID;
+    lockOwner = CDOLockUtil.createLockOwner(this);
+  }
+
+  @Override
+  public CDOLockOwner getLockOwner()
+  {
+    return lockOwner;
   }
 
   /**
@@ -219,12 +238,6 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
     {
       repository.validateTimeStamp(timeStamp);
     }
-  }
-
-  @Override
-  public void setDurableLockingID(String durableLockingID)
-  {
-    this.durableLockingID = durableLockingID;
   }
 
   @Override

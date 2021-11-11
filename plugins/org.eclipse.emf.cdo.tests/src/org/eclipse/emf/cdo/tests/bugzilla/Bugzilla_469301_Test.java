@@ -31,6 +31,7 @@ import org.eclipse.net4j.util.tests.TestListener2;
 
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
+import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.util.List;
 
@@ -66,7 +67,7 @@ public class Bugzilla_469301_Test extends AbstractCDOTest
 
     for (CDOLockState lockState : lockStates)
     {
-      assertEquals(transaction, lockState.getWriteLockOwner());
+      assertEquals(((InternalCDOTransaction)transaction).getLockOwner(), lockState.getWriteLockOwner());
 
       LockState<Object, IView> serverLockState = serverLockState(session, lockState);
       assertEquals(serverTransaction(transaction), serverLockState.getWriteLockOwner());
@@ -109,8 +110,9 @@ public class Bugzilla_469301_Test extends AbstractCDOTest
     return controlListener;
   }
 
-  private void assertEvent(TestListener2 controlListener, CDOLockOwner lockOwner, CDOLockChangeInfo.Operation operation)
+  private void assertEvent(TestListener2 controlListener, CDOView view, CDOLockChangeInfo.Operation operation)
   {
+    CDOLockOwner lockOwner = ((InternalCDOView)view).getLockOwner();
     controlListener.waitFor(1, DEFAULT_TIMEOUT);
 
     CDOViewLocksChangedEvent event = (CDOViewLocksChangedEvent)controlListener.getEvents().get(0);

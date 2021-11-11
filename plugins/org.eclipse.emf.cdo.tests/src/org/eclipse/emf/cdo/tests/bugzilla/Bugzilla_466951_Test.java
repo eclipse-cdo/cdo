@@ -27,6 +27,7 @@ import org.eclipse.net4j.signal.SignalCounter;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 
 import java.util.Collections;
 
@@ -83,7 +84,7 @@ public class Bugzilla_466951_Test extends AbstractCDOTest
 
       assertEquals(expectedLockedObject, lockState.getLockedObject());
       assertTrue(lockState.getReadLockOwners().isEmpty());
-      assertEquals(transaction1, lockState.getWriteLockOwner());
+      assertEquals(((InternalCDOTransaction)transaction1).getLockOwner(), lockState.getWriteLockOwner());
       assertNull(lockState.getWriteOptionOwner());
 
       EcoreUtil.delete(company);

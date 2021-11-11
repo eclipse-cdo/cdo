@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -643,6 +644,8 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
 
     private final boolean readOnly;
 
+    private final CDOLockOwner lockOwner;
+
     private IRegistry<String, Object> properties;
 
     public DurableView(String durableLockingID, CDOBranchPoint branchPoint, boolean readOnly)
@@ -650,6 +653,7 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
       this.durableLockingID = durableLockingID;
       this.readOnly = readOnly;
       this.branchPoint = CDOBranchUtil.copyBranchPoint(branchPoint);
+      lockOwner = CDOLockUtil.createLockOwner(this);
     }
 
     @Override
@@ -662,6 +666,12 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
     public boolean isDurableView()
     {
       return true;
+    }
+
+    @Override
+    public CDOLockOwner getLockOwner()
+    {
+      return lockOwner;
     }
 
     @Override

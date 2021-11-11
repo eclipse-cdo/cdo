@@ -24,6 +24,8 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.io.IOUtil;
 
+import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -158,7 +160,7 @@ public class Bugzilla_387563_Test extends AbstractCDOTest
     CDOLockState lockState = cdoObject.cdoLockState();
 
     assertEquals("new object " + category.getName() + (expected ? " should be locally locked" : " shouldn't be locally locked."), expected,
-        lockState.isLocked(LockType.WRITE, cdoObject.cdoView(), false));
+        lockState.isLocked(LockType.WRITE, ((InternalCDOTransaction)cdoObject.cdoView()).getLockOwner(), false));
 
     if (recursive)
     {

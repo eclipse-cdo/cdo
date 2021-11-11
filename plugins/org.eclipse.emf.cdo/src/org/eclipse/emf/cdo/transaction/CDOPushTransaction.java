@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitHistory;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
@@ -823,6 +824,15 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
   public boolean isDurableView()
   {
     return delegate.isDurableView();
+  }
+
+  /**
+   * @since 4.15
+   */
+  @Override
+  public CDOLockOwner getLockOwner()
+  {
+    return delegate.getLockOwner();
   }
 
   @Override

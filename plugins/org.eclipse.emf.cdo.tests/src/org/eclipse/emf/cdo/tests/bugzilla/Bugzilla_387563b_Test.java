@@ -19,6 +19,8 @@ import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
+import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
+
 /**
  * @author Eike Stepper
  */
@@ -58,7 +60,7 @@ public class Bugzilla_387563b_Test extends AbstractLockingTest
     cdoObject.cdoWriteLock().lock();
 
     CDOLockState lockState = cdoObject.cdoLockState();
-    assertEquals(transaction, lockState.getWriteLockOwner());
+    assertEquals(((InternalCDOTransaction)transaction).getLockOwner(), lockState.getWriteLockOwner());
 
     transaction.commit();
     assertWriteLock(false, company);
@@ -80,7 +82,7 @@ public class Bugzilla_387563b_Test extends AbstractLockingTest
     cdoObject.cdoWriteLock().lock();
 
     CDOLockState lockState = cdoObject.cdoLockState();
-    assertEquals(transaction, lockState.getWriteLockOwner());
+    assertEquals(((InternalCDOTransaction)transaction).getLockOwner(), lockState.getWriteLockOwner());
 
     transaction.commit();
     assertWriteLock(true, company);
@@ -102,7 +104,7 @@ public class Bugzilla_387563b_Test extends AbstractLockingTest
     cdoObject.cdoWriteLock().lock();
 
     CDOLockState lockState = cdoObject.cdoLockState();
-    assertEquals(transaction, lockState.getWriteLockOwner());
+    assertEquals(((InternalCDOTransaction)transaction).getLockOwner(), lockState.getWriteLockOwner());
 
     cdoObject.cdoWriteLock().unlock();
     lockState = cdoObject.cdoLockState();

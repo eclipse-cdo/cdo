@@ -232,15 +232,41 @@ public class CDOLockStateImpl implements InternalCDOLockState
   {
     boolean changed = removeReadLockOwner(lockOwner);
 
-    if (lockOwner.equals(writeLockOwner))
+    if (writeLockOwner == lockOwner)
     {
       writeLockOwner = null;
       changed = true;
     }
 
-    if (lockOwner.equals(writeOptionOwner))
+    if (writeOptionOwner == lockOwner)
     {
       writeOptionOwner = null;
+      changed = true;
+    }
+
+    return changed;
+  }
+
+  @Override
+  public boolean remapOwner(CDOLockOwner oldLockOwner, CDOLockOwner newLockOwner)
+  {
+    boolean changed = false;
+
+    if (readLockOwners != null && readLockOwners.remove(oldLockOwner))
+    {
+      readLockOwners.add(newLockOwner);
+      changed = true;
+    }
+
+    if (writeLockOwner == oldLockOwner)
+    {
+      writeLockOwner = newLockOwner;
+      changed = true;
+    }
+
+    if (writeOptionOwner == oldLockOwner)
+    {
+      writeOptionOwner = newLockOwner;
       changed = true;
     }
 
@@ -293,19 +319,12 @@ public class CDOLockStateImpl implements InternalCDOLockState
       return false;
     }
 
-    if (!getReadLockOwners().equals(other.getReadLockOwners()))
+    if (writeLockOwner != other.getWriteLockOwner())
     {
       return false;
     }
 
-    if (writeLockOwner == null && other.getWriteLockOwner() != null || writeLockOwner != null && other.getWriteLockOwner() == null
-        || writeLockOwner != null && !writeLockOwner.equals(other.getWriteLockOwner()))
-    {
-      return false;
-    }
-
-    if (writeOptionOwner == null && other.getWriteOptionOwner() != null || writeOptionOwner != null && other.getWriteOptionOwner() == null
-        || writeOptionOwner != null && !writeOptionOwner.equals(other.getWriteOptionOwner()))
+    if (writeOptionOwner != other.getWriteOptionOwner())
     {
       return false;
     }

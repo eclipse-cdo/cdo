@@ -22,6 +22,7 @@ import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
 import org.eclipse.emf.internal.cdo.view.CDOViewImpl.LockStatesChangedEvent;
 
 import org.eclipse.net4j.util.AdapterUtil;
+import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
@@ -87,7 +88,7 @@ public class CDOLockStatesView extends ViewPart implements ISelectionListener
     TableViewerColumn objectViewerColumn = new TableViewerColumn(viewer, SWT.NONE);
     TableColumn objectColumn = objectViewerColumn.getColumn();
     objectColumn.setText("Object");
-    tableLayout.setColumnData(objectColumn, new ColumnWeightData(30, 100, true));
+    tableLayout.setColumnData(objectColumn, new ColumnWeightData(20, 100, true));
     objectViewerColumn.setLabelProvider(new ColumnLabelProvider()
     {
       @Override
@@ -108,7 +109,7 @@ public class CDOLockStatesView extends ViewPart implements ISelectionListener
     TableViewerColumn lockStateViewerColumn = new TableViewerColumn(viewer, SWT.NONE);
     TableColumn lockStateColumn = lockStateViewerColumn.getColumn();
     lockStateColumn.setText("Lock State");
-    tableLayout.setColumnData(lockStateColumn, new ColumnWeightData(70, 150, true));
+    tableLayout.setColumnData(lockStateColumn, new ColumnWeightData(80, 150, true));
     lockStateViewerColumn.setLabelProvider(new ColumnLabelProvider()
     {
       @Override
@@ -116,7 +117,8 @@ public class CDOLockStatesView extends ViewPart implements ISelectionListener
       {
         @SuppressWarnings("unchecked")
         CDOLockState lockState = ((Map.Entry<CDOObject, CDOLockState>)element).getValue();
-        return StringUtil.safe(lockState);
+        int XXX;
+        return StringUtil.safe(lockState) + "@" + HexUtil.identityHashCode(lockState);
       }
     });
 
@@ -219,23 +221,6 @@ public class CDOLockStatesView extends ViewPart implements ISelectionListener
     }
 
     @Override
-    public Object[] getElements(Object inputElement)
-    {
-      CDOViewImpl view = getInput();
-      if (view == null)
-      {
-        return ItemProvider.NO_ELEMENTS;
-      }
-
-      Set<Map.Entry<CDOObject, CDOLockState>> entrySet = view.getLockStates().entrySet();
-
-      @SuppressWarnings("unchecked")
-      Map.Entry<CDOObject, CDOLockState>[] elements = entrySet.toArray(new Map.Entry[entrySet.size()]);
-      Arrays.sort(elements, Comparator.comparing(Map.Entry::getKey, Comparator.comparing(CDOObject::cdoID)));
-      return elements;
-    }
-
-    @Override
     public void notifyEvent(IEvent event)
     {
       if (event instanceof ILifecycleEvent)
@@ -254,6 +239,23 @@ public class CDOLockStatesView extends ViewPart implements ISelectionListener
       {
         refreshViewer(true);
       }
+    }
+
+    @Override
+    public Object[] getElements(Object inputElement)
+    {
+      CDOViewImpl view = getInput();
+      if (view == null)
+      {
+        return ItemProvider.NO_ELEMENTS;
+      }
+
+      Set<Map.Entry<CDOObject, CDOLockState>> entrySet = view.getLockStates().entrySet();
+
+      @SuppressWarnings("unchecked")
+      Map.Entry<CDOObject, CDOLockState>[] elements = entrySet.toArray(new Map.Entry[entrySet.size()]);
+      Arrays.sort(elements, Comparator.comparing(Map.Entry::getKey, Comparator.comparing(CDOObject::cdoID)));
+      return elements;
     }
   }
 }

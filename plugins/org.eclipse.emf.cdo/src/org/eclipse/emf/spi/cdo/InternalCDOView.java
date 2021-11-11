@@ -198,6 +198,7 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle, IEx
   /**
    * @since 4.12
    */
+  @Override
   public CDOLockOwner getLockOwner();
 
   /**

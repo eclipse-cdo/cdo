@@ -32,9 +32,13 @@ import org.eclipse.core.runtime.IAdaptable;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface CDOCommonView extends CDOLockOwner, CDOBranchPoint, CDORevisionProvider, IOptionsContainer, IPropertiesContainer, IAdaptable, Closeable
+public interface CDOCommonView extends CDOBranchPoint, CDORevisionProvider, IOptionsContainer, IPropertiesContainer, IAdaptable, Closeable
 {
-  @Override
+  /**
+   * @since 4.15
+   */
+  public int getSessionID();
+
   public int getViewID();
 
   /**
@@ -52,8 +56,17 @@ public interface CDOCommonView extends CDOLockOwner, CDOBranchPoint, CDORevision
   /**
    * @since 4.0
    */
-  @Override
   public String getDurableLockingID();
+
+  /**
+   * @since 4.15
+   */
+  public boolean isDurableView();
+
+  /**
+   * @since 4.15
+   */
+  public CDOLockOwner getLockOwner();
 
   /**
    * Returns the {@link Options options} of this view.

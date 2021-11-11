@@ -20,7 +20,8 @@ import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockGrade;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
 import org.eclipse.emf.cdo.internal.common.lock.CDOLockAreaImpl;
 import org.eclipse.emf.cdo.internal.common.lock.CDOLockChangeInfoImpl;
-import org.eclipse.emf.cdo.internal.common.lock.CDOLockOwnerImpl;
+import org.eclipse.emf.cdo.internal.common.lock.DurableCDOLockOwner;
+import org.eclipse.emf.cdo.internal.common.lock.NormalCDOLockOwner;
 import org.eclipse.emf.cdo.internal.common.lock.CDOLockStateImpl;
 import org.eclipse.emf.cdo.spi.common.lock.InternalCDOLockState;
 
@@ -142,7 +143,12 @@ public final class CDOLockUtil
    */
   public static CDOLockOwner createLockOwner(int sessionID, int viewID, String durableLockingID)
   {
-    return new CDOLockOwnerImpl(sessionID, viewID, durableLockingID);
+    if (durableLockingID != null)
+    {
+      return DurableCDOLockOwner.create(sessionID, viewID, durableLockingID);
+    }
+
+    return NormalCDOLockOwner.create(sessionID, viewID);
   }
 
   public static CDOLockChangeInfo createLockChangeInfo(long timestamp, CDOLockOwner lockOwner, CDOBranch branch, Operation op, LockType lockType,

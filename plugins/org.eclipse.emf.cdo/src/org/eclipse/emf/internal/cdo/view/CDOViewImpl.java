@@ -194,12 +194,14 @@ public class CDOViewImpl extends AbstractCDOView
 
   protected void fireLockStatesChangedEvent()
   {
+    int xxx;
     fireEvent(new LockStatesChangedEvent());
   }
 
   /**
    * @author Eike Stepper
    */
+  @Deprecated
   public final class LockStatesChangedEvent extends Event
   {
     private static final long serialVersionUID = 1L;
@@ -859,103 +861,92 @@ public class CDOViewImpl extends AbstractCDOView
   @Override
   public String enableDurableLocking()
   {
-    final String oldID = durableLockingID;
+    String oldID = null;
+    String newID = null;
 
-    try
+    synchronized (getViewMonitor())
     {
-      synchronized (getViewMonitor())
+      lockView();
+
+      try
       {
-        lockView();
-
-        try
+        oldID = durableLockingID;
+        if (oldID == null)
         {
-          if (durableLockingID == null)
-          {
-            CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
-            durableLockingID = sessionProtocol.changeLockArea(this, true);
-          }
+          CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
+          newID = sessionProtocol.changeLockArea(this, true);
 
-          // Recreate lockOwner with new durableLockingID.
-          lockOwner = CDOLockUtil.createLockOwner(this);
-
-          return durableLockingID;
+          durableLockingID = newID;
+          adjustLockOwner();
         }
-        finally
+        else
         {
-          unlockView();
+          newID = oldID;
         }
       }
+      finally
+      {
+        unlockView();
+      }
     }
-    finally
-    {
-      fireDurabilityChangedEvent(oldID);
-    }
+
+    fireDurabilityChangedEvent(oldID, newID);
+    return newID;
   }
 
   @Override
   public void disableDurableLocking(boolean releaseLocks)
   {
-    final String oldID = durableLockingID;
+    String oldID = null;
 
-    try
+    synchronized (getViewMonitor())
     {
-      synchronized (getViewMonitor())
-      {
-        lockView();
+      lockView();
 
-        try
+      try
+      {
+        oldID = durableLockingID;
+        if (oldID != null)
         {
           CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
-          if (durableLockingID != null)
+          sessionProtocol.changeLockArea(this, false);
+
+          durableLockingID = null;
+          adjustLockOwner();
+
+          if (releaseLocks)
           {
-            sessionProtocol.changeLockArea(this, false);
-            durableLockingID = null;
-
-            // Recreate lockOwner without durableLockingID.
-            lockOwner = CDOLockUtil.createLockOwner(this);
-
-            if (releaseLocks)
-            {
-              unlockObjects();
-            }
+            unlockObjects();
           }
         }
-        finally
-        {
-          unlockView();
-        }
+      }
+      finally
+      {
+        unlockView();
       }
     }
-    finally
+
+    fireDurabilityChangedEvent(oldID, null);
+  }
+
+  private void adjustLockOwner()
+  {
+    // Recreate lockOwner with new durableLockingID.
+    CDOLockOwner oldOwner = lockOwner;
+    lockOwner = CDOLockUtil.createLockOwner(this);
+
+    // Remap owners in existing lock states.
+    for (CDOLockState lockState : lockStates.values())
     {
-      fireDurabilityChangedEvent(oldID);
+      ((InternalCDOLockState)lockState).remapOwner(oldOwner, lockOwner);
     }
   }
 
-  private void fireDurabilityChangedEvent(final String oldID)
+  private void fireDurabilityChangedEvent(String oldID, String newID)
   {
-    if (!ObjectUtil.equals(oldID, durableLockingID))
+    if (!ObjectUtil.equals(oldID, newID))
     {
-      fireEvent(new CDOViewDurabilityChangedEvent()
-      {
-        @Override
-        public CDOView getSource()
-        {
-          return CDOViewImpl.this;
-        }
-
-        @Override
-        public String getOldDurableLockingID()
-        {
-          return oldID;
-        }
-
-        @Override
-        public String getNewDurableLockingID()
-        {
-          return durableLockingID;
-        }
-      });
+      fireEvent(new DurabilityChangedEvent(oldID, newID));
     }
   }
 
@@ -3122,6 +3113,36 @@ public class CDOViewImpl extends AbstractCDOView
     protected String formatEventName()
     {
       return "CDOViewLocksChangedEvent";
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class DurabilityChangedEvent extends Event implements CDOViewDurabilityChangedEvent
+  {
+    private static final long serialVersionUID = 1L;
+
+    private final String oldID;
+
+    private final String newID;
+
+    public DurabilityChangedEvent(String oldID, String newID)
+    {
+      this.oldID = oldID;
+      this.newID = newID;
+    }
+
+    @Override
+    public String getOldDurableLockingID()
+    {
+      return oldID;
+    }
+
+    @Override
+    public String getNewDurableLockingID()
+    {
+      return newID;
     }
   }
 

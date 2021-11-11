@@ -44,6 +44,11 @@ public interface InternalCDOLockState extends CDOLockState
   public boolean removeOwner(CDOLockOwner lockOwner);
 
   /**
+   * @since 4.15
+   */
+  public boolean remapOwner(CDOLockOwner oldLockOwner, CDOLockOwner newLockOwner);
+
+  /**
    * @since 4.2
    * @deprecated As of 4.5 use {@link InternalCDOLockState#updateFrom(CDOLockState)} instead.
    * The lockedObject field cannot be changed because it is used to compute the hash code.

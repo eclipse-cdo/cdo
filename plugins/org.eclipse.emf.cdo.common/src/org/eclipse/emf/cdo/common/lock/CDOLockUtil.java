@@ -20,12 +20,11 @@ import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockGrade;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
 import org.eclipse.emf.cdo.internal.common.lock.CDOLockAreaImpl;
 import org.eclipse.emf.cdo.internal.common.lock.CDOLockChangeInfoImpl;
+import org.eclipse.emf.cdo.internal.common.lock.CDOLockStateImpl;
 import org.eclipse.emf.cdo.internal.common.lock.DurableCDOLockOwner;
 import org.eclipse.emf.cdo.internal.common.lock.NormalCDOLockOwner;
-import org.eclipse.emf.cdo.internal.common.lock.CDOLockStateImpl;
 import org.eclipse.emf.cdo.spi.common.lock.InternalCDOLockState;
 
-import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.concurrent.RWOLockManager.LockState;
@@ -86,9 +85,14 @@ public final class CDOLockUtil
     return null;
   }
 
+  public static CDOLockState createLockState(Object target)
+  {
+    return new CDOLockStateImpl(target);
+  }
+
   public static CDOLockState copyLockState(CDOLockState lockState)
   {
-    return copyLockState(lockState, lockState.getLockedObject());
+    return ((CDOLockStateImpl)lockState).copy();
   }
 
   /**
@@ -96,18 +100,14 @@ public final class CDOLockUtil
    */
   public static CDOLockState copyLockState(CDOLockState lockState, Object lockedObject)
   {
-    CheckUtil.checkArg(lockState instanceof CDOLockStateImpl, "lockState instanceof CDOLockStateImpl");
     return ((CDOLockStateImpl)lockState).copy(lockedObject);
   }
 
-  public static CDOLockState createLockState(Object target)
+  /**
+   * @since 4.15
+   */
+  public static CDOLockState convertLockState(LockState<Object, ? extends CDOCommonView> lockState)
   {
-    return new CDOLockStateImpl(target);
-  }
-
-  public static CDOLockState createLockState(LockState<Object, ? extends CDOCommonView> lockState)
-  {
-    CheckUtil.checkArg(lockState, "lockState");
     InternalCDOLockState cdoLockState = new CDOLockStateImpl(lockState.getLockedObject());
 
     for (CDOCommonView view : lockState.getReadLockOwners())
@@ -128,6 +128,15 @@ public final class CDOLockUtil
     }
 
     return cdoLockState;
+  }
+
+  /**
+   * @deprecated As of 4.15 use {@link #convertLockState(LockState)}.
+   */
+  @Deprecated
+  public static CDOLockState createLockState(LockState<Object, ? extends CDOCommonView> lockState)
+  {
+    return convertLockState(lockState);
   }
 
   public static CDOLockOwner createLockOwner(CDOCommonView view)

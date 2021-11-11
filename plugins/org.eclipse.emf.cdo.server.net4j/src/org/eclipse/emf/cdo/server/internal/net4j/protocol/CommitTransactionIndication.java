@@ -377,7 +377,7 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
       out.writeXInt(newLockStates.size());
       for (LockState<Object, IView> lockState : newLockStates)
       {
-        CDOLockState cdoLockState = CDOLockUtil.createLockState(lockState);
+        CDOLockState cdoLockState = CDOLockUtil.convertLockState(lockState);
         out.writeCDOLockState(cdoLockState);
       }
     }

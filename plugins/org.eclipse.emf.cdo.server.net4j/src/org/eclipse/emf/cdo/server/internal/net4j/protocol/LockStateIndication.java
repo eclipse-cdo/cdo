@@ -71,7 +71,7 @@ public class LockStateIndication extends CDOServerReadIndication
       Collection<LockState<Object, IView>> lockStates = lockManager.getLockStates();
       for (LockState<Object, IView> lockState : lockStates)
       {
-        existingLockStates.add(CDOLockUtil.createLockState(lockState));
+        existingLockStates.add(CDOLockUtil.convertLockState(lockState));
       }
     }
     else
@@ -139,7 +139,7 @@ public class LockStateIndication extends CDOServerReadIndication
     LockState<Object, IView> lockState = lockManager.getLockState(key);
     if (lockState != null)
     {
-      existingLockStates.add(CDOLockUtil.createLockState(lockState));
+      existingLockStates.add(CDOLockUtil.convertLockState(lockState));
     }
   }
 

@@ -2394,7 +2394,7 @@ public class Repository extends Container<Object> implements InternalRepository
 
     for (LockState<Object, ? extends CDOCommonView> lockState : lockStates)
     {
-      CDOLockState cdoLockState = CDOLockUtil.createLockState(lockState);
+      CDOLockState cdoLockState = CDOLockUtil.convertLockState(lockState);
       cdoLockStates[i++] = cdoLockState;
     }
 

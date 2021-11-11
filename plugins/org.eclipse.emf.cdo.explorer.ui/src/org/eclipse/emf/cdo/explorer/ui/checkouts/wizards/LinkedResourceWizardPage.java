@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutContentProvider;
 
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.ui.UIUtil;
+import org.eclipse.net4j.util.ui.views.ItemProvider;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IProject;
@@ -265,7 +266,7 @@ public class LinkedResourceWizardPage extends CheckoutNodeWizardPage
         }
       }
 
-      return new Object[0];
+      return ItemProvider.NO_ELEMENTS;
     }
 
     @Override

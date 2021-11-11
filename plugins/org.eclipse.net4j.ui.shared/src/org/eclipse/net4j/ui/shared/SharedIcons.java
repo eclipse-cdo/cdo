@@ -21,7 +21,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 /**
  * @author Eike Stepper
  */
-public class SharedIcons
+public final class SharedIcons
 {
   private static final ImageRegistry REGISTRY = new ImageRegistry(getDisplay());
 
@@ -33,7 +33,30 @@ public class SharedIcons
 
   public static final String OBJ_CHANNEL = OBJ + "channel"; //$NON-NLS-1$
 
-  public static final String OBJ_SIGNAL = OBJ + "message"; //$NON-NLS-1$
+  /**
+   * @since 4.6
+   */
+  public static final String OBJ_SIGNAL = OBJ + "signal"; //$NON-NLS-1$
+
+  /**
+   * @since 4.6
+   */
+  public static final String OBJ_REQUEST_SYNC = OBJ + "request_sync"; //$NON-NLS-1$
+
+  /**
+   * @since 4.6
+   */
+  public static final String OBJ_REQUEST_ASYNC = OBJ + "request_async"; //$NON-NLS-1$
+
+  /**
+   * @since 4.6
+   */
+  public static final String OBJ_INDICATION_SYNC = OBJ + "indication_sync"; //$NON-NLS-1$
+
+  /**
+   * @since 4.6
+   */
+  public static final String OBJ_INDICATION_ASYNC = OBJ + "indication_async"; //$NON-NLS-1$
 
   public static final String OBJ_CONNECTOR = OBJ + "connector"; //$NON-NLS-1$
 
@@ -89,6 +112,11 @@ public class SharedIcons
    * @since 4.2
    */
   public static final String ETOOL_COLLAPSE_ALL = ETOOL + "collapse_all"; //$NON-NLS-1$
+
+  /**
+   * @since 4.6
+   */
+  public static final String ETOOL_CLEAR_LOG = ETOOL + "clear_log.png"; //$NON-NLS-1$
 
   private static final String VIEW = "view16/"; //$NON-NLS-1$
 
@@ -169,6 +197,12 @@ public class SharedIcons
 
   private static String mangleKey(String key)
   {
-    return "icons/full/" + key + ".gif"; //$NON-NLS-1$ //$NON-NLS-2$
+    key = "icons/full/" + key;
+    if (key.endsWith(".png"))
+    {
+      return key;
+    }
+
+    return key + ".gif"; //$NON-NLS-1$
   }
 }

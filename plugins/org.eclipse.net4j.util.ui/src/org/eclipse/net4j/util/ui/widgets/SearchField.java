@@ -13,6 +13,7 @@ package org.eclipse.net4j.util.ui.widgets;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.ui.UIUtil;
+import org.eclipse.net4j.util.ui.views.ItemProvider;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -69,7 +70,7 @@ public class SearchField extends Composite
           filterHandler.handleFilter(filter);
         }
 
-        return new Object[0];
+        return ItemProvider.NO_ELEMENTS;
       }
     };
 

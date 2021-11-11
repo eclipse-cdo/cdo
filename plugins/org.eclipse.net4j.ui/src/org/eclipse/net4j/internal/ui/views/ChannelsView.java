@@ -12,8 +12,13 @@ package org.eclipse.net4j.internal.ui.views;
 
 import org.eclipse.net4j.buffer.IBufferHandler;
 import org.eclipse.net4j.channel.IChannel;
+import org.eclipse.net4j.internal.ui.messages.Messages;
 import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.signal.ISignalProtocol;
+import org.eclipse.net4j.signal.Indication;
+import org.eclipse.net4j.signal.IndicationWithResponse;
+import org.eclipse.net4j.signal.Request;
+import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.signal.Signal;
 import org.eclipse.net4j.signal.SignalFinishedEvent;
 import org.eclipse.net4j.signal.SignalProtocol;
@@ -23,11 +28,17 @@ import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.INotifier;
+import org.eclipse.net4j.util.ui.UIUtil;
+import org.eclipse.net4j.util.ui.actions.SafeAction;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.ContainerView;
 import org.eclipse.net4j.util.ui.views.IElementFilter;
 
+import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.preference.JFacePreferences;
+import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.jface.viewers.StyledString.Styler;
 import org.eclipse.jface.viewers.Viewer;
@@ -36,9 +47,8 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.LinkedList;
 import java.util.Map;
 
 /**
@@ -50,7 +60,7 @@ public class ChannelsView extends ContainerView implements IElementFilter
 
   private static final Styler ERROR_STYLER = StyledString.createColorRegistryStyler(JFacePreferences.ERROR_COLOR, null);
 
-  private final Map<IChannel, List<LogEntry>> logs = new HashMap<>();
+  private final Map<IChannel, LinkedList<LogEntry>> logs = new HashMap<>();
 
   private final ChannelContainer channelContainer = new ChannelContainer(IPluginContainer.INSTANCE)
   {
@@ -71,14 +81,12 @@ public class ChannelsView extends ContainerView implements IElementFilter
       if (event instanceof SignalFinishedEvent)
       {
         SignalFinishedEvent<?> e = (SignalFinishedEvent<?>)event;
-
-        Exception exception = e.getException();
-        String error = exception == null ? null : exception.getMessage();
-
-        notifySignal(e.getSignal(), error, e.getDuration());
+        notifySignalFinished(e);
       }
     }
   };
+
+  private final IAction clearLogsAction = new ClearLogAction(null);
 
   public ChannelsView()
   {
@@ -111,6 +119,25 @@ public class ChannelsView extends ContainerView implements IElementFilter
   }
 
   @Override
+  protected void fillLocalToolBar(IToolBarManager manager)
+  {
+    super.fillLocalToolBar(manager);
+    manager.add(clearLogsAction);
+  }
+
+  @Override
+  protected void fillContextMenu(IMenuManager manager, ITreeSelection selection)
+  {
+    super.fillContextMenu(manager, selection);
+
+    IChannel channel = UIUtil.getElement(selection, IChannel.class);
+    if (channel != null)
+    {
+      manager.add(new ClearLogAction(channel));
+    }
+  }
+
+  @Override
   protected ContainerItemProvider<IContainer<Object>> createContainerItemProvider()
   {
     return new Net4jItemProvider(this)
@@ -128,7 +155,7 @@ public class ChannelsView extends ContainerView implements IElementFilter
         {
           IChannel channel = (IChannel)element;
 
-          List<LogEntry> log;
+          LinkedList<LogEntry> log;
           synchronized (logs)
           {
             log = logs.get(channel);
@@ -147,7 +174,7 @@ public class ChannelsView extends ContainerView implements IElementFilter
         {
           IChannel channel = (IChannel)element;
 
-          List<LogEntry> log;
+          LinkedList<LogEntry> log;
           synchronized (logs)
           {
             log = logs.get(channel);
@@ -183,7 +210,7 @@ public class ChannelsView extends ContainerView implements IElementFilter
       {
         if (obj instanceof LogEntry)
         {
-          return SharedIcons.getImage(SharedIcons.OBJ_SIGNAL);
+          return ((LogEntry)obj).getType().getImage();
         }
 
         return super.getImage(obj);
@@ -239,28 +266,28 @@ public class ChannelsView extends ContainerView implements IElementFilter
     };
   }
 
-  protected void notifySignal(Signal signal, String error, long duration)
+  protected void notifySignalFinished(SignalFinishedEvent<?> event)
   {
-    SignalProtocol<?> protocol = signal.getProtocol();
+    SignalProtocol<?> protocol = event.getSignal().getProtocol();
     if (protocol != null)
     {
       IChannel channel = protocol.getChannel();
       if (channel != null)
       {
-        List<LogEntry> log;
+        LinkedList<LogEntry> log;
         synchronized (logs)
         {
           log = logs.get(channel);
           if (log == null)
           {
-            log = new ArrayList<>();
+            log = new LinkedList<>();
             logs.put(channel, log);
           }
         }
 
         synchronized (log)
         {
-          log.add(0, new LogEntry(signal.toString(true), error, duration));
+          log.addFirst(new LogEntry(event));
         }
 
         refreshElement(channel, false);
@@ -273,17 +300,48 @@ public class ChannelsView extends ContainerView implements IElementFilter
    */
   private static final class LogEntry
   {
+    private final Type type;
+
     private final String text;
 
     private final String error;
 
     private final long duration;
 
-    public LogEntry(String text, String error, long duration)
+    public LogEntry(SignalFinishedEvent<?> event)
     {
-      this.text = text;
-      this.error = error;
-      this.duration = duration;
+      Signal signal = event.getSignal();
+      if (signal instanceof RequestWithConfirmation)
+      {
+        type = Type.REQUEST_SYNC;
+      }
+      else if (signal instanceof Request)
+      {
+        type = Type.REQUEST_ASYNC;
+      }
+      else if (signal instanceof IndicationWithResponse)
+      {
+        type = Type.INDICATION_SYNC;
+      }
+      else if (signal instanceof Indication)
+      {
+        type = Type.INDICATION_ASYNC;
+      }
+      else
+      {
+        type = Type.SIGNAL;
+      }
+
+      text = signal.toString(true);
+      duration = event.getDuration();
+
+      Exception exception = event.getException();
+      error = exception == null ? null : exception.getMessage();
+    }
+
+    public Type getType()
+    {
+      return type;
     }
 
     public String getText()
@@ -305,6 +363,62 @@ public class ChannelsView extends ContainerView implements IElementFilter
     public String toString()
     {
       return getText();
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    public enum Type
+    {
+      SIGNAL(SharedIcons.OBJ_SIGNAL), //
+      REQUEST_SYNC(SharedIcons.OBJ_REQUEST_SYNC), //
+      REQUEST_ASYNC(SharedIcons.OBJ_REQUEST_ASYNC), //
+      INDICATION_SYNC(SharedIcons.OBJ_INDICATION_SYNC), //
+      INDICATION_ASYNC(SharedIcons.OBJ_INDICATION_ASYNC);
+
+      private final Image image;
+
+      private Type(String key)
+      {
+        image = SharedIcons.getImage(key);
+      }
+
+      public Image getImage()
+      {
+        return image;
+      }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class ClearLogAction extends SafeAction
+  {
+    private final IChannel channel;
+
+    private ClearLogAction(IChannel channel)
+    {
+      super(Messages.getString("ChannelsView." + (channel == null ? "1" : "0")), SharedIcons.getDescriptor(SharedIcons.ETOOL_CLEAR_LOG));
+      this.channel = channel;
+    }
+
+    @Override
+    protected void safeRun() throws Exception
+    {
+      synchronized (logs)
+      {
+        if (channel == null)
+        {
+          logs.clear();
+        }
+        else
+        {
+          logs.remove(channel);
+        }
+      }
+
+      refreshViewer(true);
     }
   }
 }

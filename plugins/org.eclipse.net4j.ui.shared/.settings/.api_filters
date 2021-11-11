@@ -7,6 +7,11 @@
                 <message_argument value="OBJ_SIGNAL"/>
             </message_arguments>
         </filter>
+        <filter id="337768515">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.ui.shared.SharedIcons"/>
+            </message_arguments>
+        </filter>
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="OBJ_SIGNAL"/>

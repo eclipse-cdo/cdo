@@ -169,7 +169,41 @@ public class CDOViewImpl extends AbstractCDOView
   @ExcludeFromDump
   private CDOLockOwner lockOwner;
 
-  private Map<CDOObject, CDOLockState> lockStates = new WeakHashMap<>();
+  private Map<CDOObject, CDOLockState> lockStates = new WeakHashMap<CDOObject, CDOLockState>()
+  {
+    @Override
+    public CDOLockState put(CDOObject key, CDOLockState value)
+    {
+      CDOLockState old = super.put(key, value);
+      fireLockStatesChangedEvent();
+      return old;
+    }
+
+    @Override
+    public CDOLockState remove(Object key)
+    {
+      CDOLockState removed = super.remove(key);
+      if (removed != null)
+      {
+        fireLockStatesChangedEvent();
+      }
+
+      return removed;
+    }
+  };
+
+  protected void fireLockStatesChangedEvent()
+  {
+    fireEvent(new LockStatesChangedEvent());
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public final class LockStatesChangedEvent extends Event
+  {
+    private static final long serialVersionUID = 1L;
+  }
 
   @ExcludeFromDump
   private ViewInvalidator invalidator = new ViewInvalidator();

@@ -420,12 +420,19 @@ public final class CDOLockStateImpl implements InternalCDOLockState
       return false;
     }
 
-    if (!Objects.equals(readLockOwners, other.readLockOwners))
+    if (!Objects.deepEquals(readLockOwners, other.readLockOwners))
     {
       return false;
     }
 
     return true;
+  }
+
+  public static void main(String[] args)
+  {
+    String[] a = { "Eike", "Rene" };
+    String[] b = { "Eike", "Rene" };
+    System.out.println(a.equals(b));
   }
 
   @Override

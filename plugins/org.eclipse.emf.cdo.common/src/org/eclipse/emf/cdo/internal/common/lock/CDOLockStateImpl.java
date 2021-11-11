@@ -18,9 +18,9 @@ import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
 import org.eclipse.emf.cdo.spi.common.lock.InternalCDOLockState;
 
-import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
@@ -29,13 +29,15 @@ import java.util.Set;
 /**
  * @author Caspar De Groot
  */
-public class CDOLockStateImpl implements InternalCDOLockState
+public final class CDOLockStateImpl implements InternalCDOLockState
 {
   private static final Set<CDOLockOwner> NO_LOCK_OWNERS = Collections.emptySet();
 
+  private static final Class<CDOLockOwner[]> ARRAY_CLASS = CDOLockOwner[].class;
+
   private final Object lockedObject;
 
-  private Set<CDOLockOwner> readLockOwners;
+  private Object readLockOwners;
 
   private CDOLockOwner writeLockOwner;
 
@@ -45,8 +47,13 @@ public class CDOLockStateImpl implements InternalCDOLockState
   {
     assert lockedObject instanceof CDOID || lockedObject instanceof CDOIDAndBranch : "lockedObject is of wrong type";
     assert !CDOIDUtil.isNull(CDOLockUtil.getLockedObjectID(lockedObject)) : "lockedObject is null";
-    CheckUtil.checkArg(lockedObject, "lockedObject");
     this.lockedObject = lockedObject;
+  }
+
+  @Override
+  public Object getLockedObject()
+  {
+    return lockedObject;
   }
 
   public CDOLockStateImpl copy()
@@ -57,18 +64,22 @@ public class CDOLockStateImpl implements InternalCDOLockState
   public CDOLockStateImpl copy(Object lockedObject)
   {
     CDOLockStateImpl newLockState = new CDOLockStateImpl(lockedObject);
-
-    if (readLockOwners != null)
-    {
-      for (CDOLockOwner owner : readLockOwners)
-      {
-        newLockState.addReadLockOwner(owner);
-      }
-    }
-
+    copyReadLockOwners(newLockState);
     newLockState.writeLockOwner = writeLockOwner;
     newLockState.writeOptionOwner = writeOptionOwner;
     return newLockState;
+  }
+
+  private void copyReadLockOwners(CDOLockStateImpl target)
+  {
+    if (readLockOwners != null && readLockOwners.getClass() == ARRAY_CLASS)
+    {
+      CDOLockOwner[] owners = (CDOLockOwner[])readLockOwners;
+      target.readLockOwners = Arrays.copyOf(owners, owners.length);
+      return;
+    }
+
+    target.readLockOwners = readLockOwners;
   }
 
   @Override
@@ -81,18 +92,11 @@ public class CDOLockStateImpl implements InternalCDOLockState
   @Override
   public void updateFrom(CDOLockState source)
   {
-    Set<CDOLockOwner> owners = source.getReadLockOwners();
-    if (owners.isEmpty())
-    {
-      readLockOwners = null;
-    }
-    else
-    {
-      readLockOwners = new HashSet<>(owners);
-    }
+    CDOLockStateImpl lockState = (CDOLockStateImpl)source;
+    lockState.copyReadLockOwners(this);
 
-    writeLockOwner = source.getWriteLockOwner();
-    writeOptionOwner = source.getWriteOptionOwner();
+    writeLockOwner = lockState.writeLockOwner;
+    writeOptionOwner = lockState.writeOptionOwner;
   }
 
   @Override
@@ -130,13 +134,25 @@ public class CDOLockStateImpl implements InternalCDOLockState
       return false;
     }
 
-    int n = readLockOwners.size();
-    if (n == 0)
-    {
-      return false;
-    }
+    int n;
+    boolean contained;
 
-    boolean contained = readLockOwners.contains(by);
+    if (readLockOwners.getClass() == ARRAY_CLASS)
+    {
+      CDOLockOwner[] owners = (CDOLockOwner[])readLockOwners;
+      n = owners.length;
+      if (n == 0)
+      {
+        return false;
+      }
+
+      contained = indexOf(owners, by) != -1;
+    }
+    else
+    {
+      n = 1;
+      contained = readLockOwners == by;
+    }
 
     if (others)
     {
@@ -175,7 +191,19 @@ public class CDOLockStateImpl implements InternalCDOLockState
       return NO_LOCK_OWNERS;
     }
 
-    return Collections.unmodifiableSet(readLockOwners);
+    if (readLockOwners.getClass() == ARRAY_CLASS)
+    {
+      CDOLockOwner[] owners = (CDOLockOwner[])readLockOwners;
+      Set<CDOLockOwner> result = new HashSet<>();
+      for (CDOLockOwner owner : owners)
+      {
+        result.add(owner);
+      }
+
+      return Collections.unmodifiableSet(result);
+    }
+
+    return Collections.singleton((CDOLockOwner)readLockOwners);
   }
 
   @Override
@@ -183,10 +211,28 @@ public class CDOLockStateImpl implements InternalCDOLockState
   {
     if (readLockOwners == null)
     {
-      readLockOwners = new HashSet<>();
+      readLockOwners = lockOwner;
+      return;
     }
 
-    readLockOwners.add(lockOwner);
+    if (readLockOwners.getClass() == ARRAY_CLASS)
+    {
+      CDOLockOwner[] owners = (CDOLockOwner[])readLockOwners;
+      if (indexOf(owners, lockOwner) == -1)
+      {
+        int oldLength = owners.length;
+        readLockOwners = new CDOLockOwner[oldLength + 1];
+        System.arraycopy(owners, 0, readLockOwners, 0, oldLength);
+        ((CDOLockOwner[])readLockOwners)[oldLength] = lockOwner;
+      }
+
+      return;
+    }
+
+    if (readLockOwners != lockOwner)
+    {
+      readLockOwners = new CDOLockOwner[] { (CDOLockOwner)readLockOwners, lockOwner };
+    }
   }
 
   @Override
@@ -197,13 +243,39 @@ public class CDOLockStateImpl implements InternalCDOLockState
       return false;
     }
 
-    boolean changed = readLockOwners.remove(lockOwner);
-    if (changed && readLockOwners.isEmpty())
+    if (readLockOwners.getClass() == ARRAY_CLASS)
     {
-      readLockOwners = null;
+      CDOLockOwner[] owners = (CDOLockOwner[])readLockOwners;
+      int index = indexOf(owners, lockOwner);
+      if (index != -1)
+      {
+        int oldLength = owners.length;
+        readLockOwners = new CDOLockOwner[oldLength - 1];
+
+        if (index > 0)
+        {
+          System.arraycopy(owners, 0, readLockOwners, 0, index);
+        }
+
+        int rest = oldLength - index - 1;
+        if (rest > 0)
+        {
+          System.arraycopy(owners, index + 1, readLockOwners, index, rest);
+        }
+
+        return true;
+      }
+
+      return false;
     }
 
-    return changed;
+    if (readLockOwners == lockOwner)
+    {
+      readLockOwners = null;
+      return true;
+    }
+
+    return false;
   }
 
   @Override
@@ -255,10 +327,24 @@ public class CDOLockStateImpl implements InternalCDOLockState
   {
     boolean changed = false;
 
-    if (readLockOwners != null && readLockOwners.remove(oldLockOwner))
+    if (readLockOwners != null)
     {
-      readLockOwners.add(newLockOwner);
-      changed = true;
+      if (readLockOwners == oldLockOwner)
+      {
+        readLockOwners = newLockOwner;
+        changed = true;
+      }
+
+      if (readLockOwners.getClass() == ARRAY_CLASS)
+      {
+        CDOLockOwner[] owners = (CDOLockOwner[])readLockOwners;
+        int index = indexOf(owners, oldLockOwner);
+        if (index != -1)
+        {
+          ((CDOLockOwner[])readLockOwners)[index] = newLockOwner;
+          changed = true;
+        }
+      }
     }
 
     if (writeLockOwner == oldLockOwner)
@@ -277,9 +363,11 @@ public class CDOLockStateImpl implements InternalCDOLockState
   }
 
   @Override
-  public Object getLockedObject()
+  public void dispose()
   {
-    return lockedObject;
+    readLockOwners = null;
+    writeLockOwner = null;
+    writeOptionOwner = null;
   }
 
   @Override
@@ -347,24 +435,14 @@ public class CDOLockStateImpl implements InternalCDOLockState
     builder.append(lockedObject);
 
     builder.append(", readLockOwners=");
-    if (readLockOwners != null && readLockOwners.size() > 0)
+    if (readLockOwners != null)
     {
       boolean first = true;
-      for (CDOLockOwner lockOwner : readLockOwners)
+      for (CDOLockOwner lockOwner : getReadLockOwners())
       {
-        if (first)
-        {
-          first = false;
-        }
-        else
-        {
-          builder.append(", ");
-        }
-
-        builder.append(lockOwner);
+        appendLockOwner(builder, lockOwner, first);
+        first = false;
       }
-
-      builder.deleteCharAt(builder.length() - 1);
     }
     else
     {
@@ -381,11 +459,40 @@ public class CDOLockStateImpl implements InternalCDOLockState
     return builder.toString();
   }
 
-  @Override
-  public void dispose()
+  private static void appendLockOwner(StringBuilder builder, CDOLockOwner lockOwner, boolean first)
   {
-    readLockOwners = null;
-    writeLockOwner = null;
-    writeOptionOwner = null;
+    if (!first)
+    {
+      builder.append("+");
+    }
+
+    String durableLockingID = lockOwner.getDurableLockingID();
+    builder.append('[');
+
+    if (durableLockingID != null)
+    {
+      builder.append(durableLockingID);
+    }
+    else
+    {
+      builder.append(lockOwner.getSessionID());
+      builder.append(':');
+      builder.append(lockOwner.getViewID());
+    }
+
+    builder.append(']');
+  }
+
+  private static int indexOf(CDOLockOwner[] owners, CDOLockOwner owner)
+  {
+    for (int i = 0; i < owners.length; i++)
+    {
+      if (owners[i] == owner)
+      {
+        return i;
+      }
+    }
+
+    return -1;
   }
 }

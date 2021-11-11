@@ -154,22 +154,22 @@ public class CDOViewImpl extends AbstractCDOView
 
   private String durableLockingID;
 
+  private long lastUpdateTime;
+
   private final CDOUnitManagerImpl unitManager = new CDOUnitManagerImpl();
 
   private final CommitInfoDistributor commitInfoDistributor = new CommitInfoDistributor();
 
   private ChangeSubscriptionManager changeSubscriptionManager = new ChangeSubscriptionManager();
 
-  private AdapterManager adapterManager = new AdapterManager();
+  private final AdapterManager adapterManager = new AdapterManager();
 
-  private OptionsImpl options;
-
-  private long lastUpdateTime;
+  private final OptionsImpl options;
 
   @ExcludeFromDump
   private CDOLockOwner lockOwner;
 
-  private Map<CDOObject, CDOLockState> lockStates = new WeakHashMap<CDOObject, CDOLockState>()
+  private final Map<CDOObject, CDOLockState> lockStates = new WeakHashMap<CDOObject, CDOLockState>()
   {
     @Override
     public CDOLockState put(CDOObject key, CDOLockState value)
@@ -1218,9 +1218,6 @@ public class CDOViewImpl extends AbstractCDOView
     }
   }
 
-  /**
-   * The caller must synchronize on this view!
-   */
   public Map<CDOObject, CDOLockState> getLockStates()
   {
     return lockStates;

@@ -16,6 +16,7 @@ import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.SelfAttachingContainerListener;
 import org.eclipse.net4j.util.container.SetContainer;
 import org.eclipse.net4j.util.event.EventUtil;
@@ -38,19 +39,12 @@ public class ChannelContainer extends SetContainer<IChannel>
     @Override
     public void attach(Object element)
     {
-      super.attach(element);
-
       if (element instanceof IChannel)
       {
-        IChannel channel = (IChannel)element;
-        addElement(channel);
-
-        IBufferHandler receiveHandler = channel.getReceiveHandler();
-        if (receiveHandler instanceof IProtocol)
-        {
-          EventUtil.addUniqueListener(receiveHandler, this);
-        }
+        addChannel((IChannel)element);
       }
+
+      super.attach(element);
     }
 
     @Override
@@ -59,28 +53,16 @@ public class ChannelContainer extends SetContainer<IChannel>
       if (element instanceof IChannel)
       {
         IChannel channel = (IChannel)element;
-        removeElement(channel);
-
-        IBufferHandler receiveHandler = channel.getReceiveHandler();
-        if (receiveHandler instanceof IProtocol)
-        {
-          EventUtil.removeListener(receiveHandler, this);
-        }
+        removeChannel(channel);
       }
 
       super.detach(element);
     }
 
     @Override
-    protected boolean shouldAttach(Object element)
-    {
-      return shouldDescend(element) || element instanceof IChannel || element instanceof IProtocol;
-    }
-
-    @Override
     protected boolean shouldDescend(Object element)
     {
-      return element instanceof IAcceptor || element instanceof IConnector;
+      return element instanceof IManagedContainer || element instanceof IAcceptor || element instanceof IConnector;
     }
 
     @Override
@@ -124,5 +106,27 @@ public class ChannelContainer extends SetContainer<IChannel>
   {
     delegate.removeListener(delegateListener);
     super.doDeactivate();
+  }
+
+  protected void addChannel(IChannel channel)
+  {
+    addElement(channel);
+
+    IBufferHandler receiveHandler = channel.getReceiveHandler();
+    if (receiveHandler instanceof IProtocol)
+    {
+      EventUtil.addUniqueListener(receiveHandler, delegateListener);
+    }
+  }
+
+  protected void removeChannel(IChannel channel)
+  {
+    removeElement(channel);
+
+    IBufferHandler receiveHandler = channel.getReceiveHandler();
+    if (receiveHandler instanceof IProtocol)
+    {
+      EventUtil.removeListener(receiveHandler, delegateListener);
+    }
   }
 }

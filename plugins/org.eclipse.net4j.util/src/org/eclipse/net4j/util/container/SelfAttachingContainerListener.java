@@ -14,6 +14,7 @@ import org.eclipse.net4j.util.container.IContainerDelta.Kind;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.event.INotifier;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -22,77 +23,79 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
  * @author Eike Stepper
  * @since 3.6
  */
-public class SelfAttachingContainerListener implements IListener
+public class SelfAttachingContainerListener implements IListener.NotifierAware
 {
   public SelfAttachingContainerListener()
   {
   }
 
+  @Override
+  public void addNotifier(INotifier notifier)
+  {
+    attach(notifier);
+  }
+
+  @Override
+  public void removeNotifier(INotifier notifier)
+  {
+    detach(notifier);
+  }
+
   public void attach(Object element)
   {
-    if (shouldAttach(element))
+    if (shouldDescend(element))
     {
-      EventUtil.addListener(element, this);
-
-      if (shouldDescend(element))
+      try
       {
-        try
+        Object[] children = ContainerUtil.getElements(element);
+        if (children != null)
         {
-          Object[] children = ContainerUtil.getElements(element);
-          if (children != null)
+          for (Object child : children)
           {
-            for (Object child : children)
+            try
             {
-              try
-              {
-                attach(child);
-              }
-              catch (Exception ex)
-              {
-                handleException(ex);
-              }
+              EventUtil.addUniqueListener(child, this);
+            }
+            catch (Exception ex)
+            {
+              handleException(ex);
             }
           }
         }
-        catch (Exception ex)
-        {
-          handleException(ex);
-        }
+      }
+      catch (Exception ex)
+      {
+        handleException(ex);
       }
     }
   }
 
   public void detach(Object element)
   {
-    if (shouldAttach(element))
+    if (shouldDescend(element))
     {
-      if (shouldDescend(element))
+      try
       {
-        try
+        Object[] children = ContainerUtil.getElements(element);
+        if (children != null)
         {
-          Object[] children = ContainerUtil.getElements(element);
-          if (children != null)
+          for (Object child : children)
           {
-            for (Object child : children)
+            try
             {
-              try
-              {
-                detach(child);
-              }
-              catch (Exception ex)
-              {
-                handleException(ex);
-              }
+              EventUtil.removeListener(child, this);
+            }
+            catch (Exception ex)
+            {
+              handleException(ex);
             }
           }
         }
-        catch (Exception ex)
-        {
-          handleException(ex);
-        }
       }
-
-      EventUtil.removeListener(element, this);
+      catch (Exception ex)
+      {
+        handleException(ex);
+      }
     }
   }
 
@@ -131,12 +134,12 @@ public class SelfAttachingContainerListener implements IListener
         }
         else
         {
-          attach(element);
+          EventUtil.addUniqueListener(element, this);
         }
       }
       else
       {
-        detach(element);
+        EventUtil.removeListener(element, this);
       }
     }
   }
@@ -145,9 +148,13 @@ public class SelfAttachingContainerListener implements IListener
   {
   }
 
+  /**
+   * @deprecated As of 3.16 not used anymore.
+   */
+  @Deprecated
   protected boolean shouldAttach(Object element)
   {
-    return true;
+    throw new UnsupportedOperationException();
   }
 
   protected boolean shouldDescend(Object element)

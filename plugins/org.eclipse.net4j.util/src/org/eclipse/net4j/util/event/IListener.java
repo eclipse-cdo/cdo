@@ -21,4 +21,15 @@ import java.util.EventListener;
 public interface IListener extends EventListener
 {
   public void notifyEvent(IEvent event);
+
+  /**
+   * @author Eike Stepper
+   * @since 3.16
+   */
+  public interface NotifierAware extends IListener
+  {
+    public void addNotifier(INotifier notifier);
+
+    public void removeNotifier(INotifier notifier);
+  }
 }

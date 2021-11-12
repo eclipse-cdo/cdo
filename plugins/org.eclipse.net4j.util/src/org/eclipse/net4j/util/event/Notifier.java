@@ -13,6 +13,7 @@ package org.eclipse.net4j.util.event;
 import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.collection.ConcurrentArray;
+import org.eclipse.net4j.util.event.IListener.NotifierAware;
 import org.eclipse.net4j.util.event.INotifier.INotifier2;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -69,7 +70,17 @@ public class Notifier implements INotifier2
   public boolean addUniqueListener(IListener listener)
   {
     CheckUtil.checkArg(listener, "listener"); //$NON-NLS-1$
-    return listeners.addUnique(listener);
+    if (listeners.addUnique(listener))
+    {
+      if (listener instanceof NotifierAware)
+      {
+        ((NotifierAware)listener).addNotifier(this);
+      }
+
+      return true;
+    }
+
+    return false;
   }
 
   @Override
@@ -77,12 +88,23 @@ public class Notifier implements INotifier2
   {
     CheckUtil.checkArg(listener, "listener"); //$NON-NLS-1$
     listeners.add(listener);
+
+    if (listener instanceof NotifierAware)
+    {
+      ((NotifierAware)listener).addNotifier(this);
+    }
   }
 
   @Override
   public void removeListener(IListener listener)
   {
     CheckUtil.checkArg(listener, "listener"); //$NON-NLS-1$
+
+    if (listener instanceof NotifierAware)
+    {
+      ((NotifierAware)listener).removeNotifier(this);
+    }
+
     listeners.remove(listener);
   }
 

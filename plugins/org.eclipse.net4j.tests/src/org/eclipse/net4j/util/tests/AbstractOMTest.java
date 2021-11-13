@@ -14,6 +14,7 @@ import org.eclipse.net4j.internal.util.test.CurrentTestName;
 import org.eclipse.net4j.internal.util.test.TestExecuter;
 import org.eclipse.net4j.tests.bundle.OM;
 import org.eclipse.net4j.util.ReflectUtil;
+import org.eclipse.net4j.util.RunnableWithException;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
@@ -646,6 +647,21 @@ public abstract class AbstractOMTest extends TestCase
   public static void assertNotInstanceOf(Class<?> expected, Object object)
   {
     assertEquals("An instance of " + expected + ": " + object.getClass().getName(), false, expected.isInstance(object));
+  }
+
+  public static void assertException(Class<? extends Throwable> type, RunnableWithException runnable)
+  {
+    try
+    {
+      runnable.run();
+    }
+    catch (Throwable ex)
+    {
+      assertInstanceOf(type, ex);
+      return;
+    }
+
+    fail("Expected " + type);
   }
 
   public static void assertActive(Object object) throws InterruptedException

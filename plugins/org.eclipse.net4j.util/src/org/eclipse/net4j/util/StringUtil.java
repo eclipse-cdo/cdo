@@ -54,6 +54,14 @@ public final class StringUtil
     return baos.toString();
   }
 
+  /**
+   * @since 3.16
+   */
+  public static String replace(String text, String find, String replace)
+  {
+    return replace(text, new String[] { find }, new String[] { replace });
+  }
+
   public static String replace(String text, String[] find, String[] replace)
   {
     for (int i = 0; i < find.length; i++)

@@ -10,7 +10,6 @@
  */
 package org.eclipse.net4j.internal.ws;
 
-import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.ws.jetty.Net4jWebSocket;
 
 import org.eclipse.core.runtime.IPath;
@@ -30,7 +29,8 @@ import java.util.concurrent.TimeUnit;
  */
 public class WSClientConnector extends WSConnector
 {
-  private static final long CLIENT_IDLE_TIMEOUT = OMPlatform.INSTANCE.getProperty("org.eclipse.net4j.internal.ws.WSClientConnector.clientIdleTimeout", 30000);
+  // private static final long CLIENT_IDLE_TIMEOUT =
+  // OMPlatform.INSTANCE.getProperty("org.eclipse.net4j.internal.ws.WSClientConnector.clientIdleTimeout", 30000);
 
   private WebSocketClient client;
 
@@ -164,7 +164,8 @@ public class WSClientConnector extends WSConnector
   {
     if (ownedClient)
     {
-      client.getPolicy().setIdleTimeout(CLIENT_IDLE_TIMEOUT);
+      // TODO Find out how to set the timeouts with Jetty 10.
+      // client.getPolicy().setIdleTimeout(CLIENT_IDLE_TIMEOUT);
       client.start();
     }
 

@@ -24,4 +24,12 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/net4j/ws/jetty/Net4jWebSocketServlet.java" type="org.eclipse.net4j.ws.jetty.Net4jWebSocketServlet">
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.ws.jetty.Net4jWebSocketServlet"/>
+                <message_argument value="configure(WebSocketServletFactory)"/>
+            </message_arguments>
+        </filter>
+    </resource>
 </component>

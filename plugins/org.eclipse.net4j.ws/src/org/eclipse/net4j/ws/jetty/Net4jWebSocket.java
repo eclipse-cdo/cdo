@@ -39,6 +39,7 @@ import org.eclipse.spi.net4j.InternalChannel;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.text.MessageFormat;
+import java.time.Duration;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -95,6 +96,9 @@ public class Net4jWebSocket implements WebSocketListener
     return connector;
   }
 
+  /**
+   * @since 1.1
+   */
   public Session getSession()
   {
     return session;
@@ -109,7 +113,7 @@ public class Net4jWebSocket implements WebSocketListener
   public void onWebSocketConnect(Session session)
   {
     this.session = session;
-    session.setIdleTimeout(SESSION_IDLE_TIMEOUT);
+    session.setIdleTimeout(Duration.ofMillis(SESSION_IDLE_TIMEOUT));
 
     boolean client = connector != null;
     if (client)

@@ -10,19 +10,19 @@
  */
 package org.eclipse.net4j.ws.jetty;
 
-import org.eclipse.net4j.util.om.OMPlatform;
-
-import org.eclipse.jetty.websocket.servlet.WebSocketServlet;
-import org.eclipse.jetty.websocket.servlet.WebSocketServletFactory;
+import org.eclipse.jetty.websocket.server.JettyWebSocketServlet;
+import org.eclipse.jetty.websocket.server.JettyWebSocketServletFactory;
 
 /**
  * @author Eike Stepper
  */
-public class Net4jWebSocketServlet extends WebSocketServlet
+public class Net4jWebSocketServlet extends JettyWebSocketServlet
 {
-  private static final long ASYNC_WRITE_TIMEOUT = OMPlatform.INSTANCE.getProperty("org.eclipse.net4j.ws.jetty.Net4jWebSocketServlet.asyncWriteTimeout", 30000);
+  // private static final long ASYNC_WRITE_TIMEOUT =
+  // OMPlatform.INSTANCE.getProperty("org.eclipse.net4j.ws.jetty.Net4jWebSocketServlet.asyncWriteTimeout", 30000);
 
-  private static final long IDLE_TIMEOUT = OMPlatform.INSTANCE.getProperty("org.eclipse.net4j.ws.jetty.Net4jWebSocketServlet.idleTimeout", 30000);
+  // private static final long IDLE_TIMEOUT =
+  // OMPlatform.INSTANCE.getProperty("org.eclipse.net4j.ws.jetty.Net4jWebSocketServlet.idleTimeout", 30000);
 
   private static final long serialVersionUID = 1L;
 
@@ -31,10 +31,11 @@ public class Net4jWebSocketServlet extends WebSocketServlet
   }
 
   @Override
-  public void configure(WebSocketServletFactory factory)
+  public void configure(JettyWebSocketServletFactory factory)
   {
-    factory.getPolicy().setAsyncWriteTimeout(ASYNC_WRITE_TIMEOUT);
-    factory.getPolicy().setIdleTimeout(IDLE_TIMEOUT);
+    // TODO Find out how to set the timeouts with Jetty 10.
+    // factory.getPolicy().setAsyncWriteTimeout(ASYNC_WRITE_TIMEOUT);
+    // factory.getPolicy().setIdleTimeout(IDLE_TIMEOUT);
     factory.register(Net4jWebSocket.class);
   }
 }

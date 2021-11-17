@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.net4j.ws" version="2">
+    <resource path="META-INF/MANIFEST.MF">
+        <filter id="923795461">
+            <message_arguments>
+                <message_argument value="1.2.0"/>
+                <message_argument value="1.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/net4j/internal/ws/WSServerConnector.java" type="org.eclipse.net4j.internal.ws.WSServerConnector">
         <filter id="574619656">
             <message_arguments>
@@ -29,6 +37,11 @@
             <message_arguments>
                 <message_argument value="org.eclipse.net4j.ws.jetty.Net4jWebSocketServlet"/>
                 <message_argument value="configure(WebSocketServletFactory)"/>
+            </message_arguments>
+        </filter>
+        <filter id="338849923">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.ws.jetty.Net4jWebSocketServlet"/>
             </message_arguments>
         </filter>
     </resource>

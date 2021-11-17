@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde version="3.8"?>
-<target name="Generated from CDO" sequenceNumber="67">
+<target name="Generated from CDO" sequenceNumber="68">
   <locations>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
       <unit id="com.google.guava" version="0.0.0"/>
@@ -14,13 +14,9 @@
       <unit id="org.apache.derby" version="0.0.0"/>
       <unit id="org.apache.log4j" version="0.0.0"/>
       <unit id="org.aspectj.weaver" version="0.0.0"/>
-      <unit id="org.eclipse.emf.cdo.ui" version="0.0.0"/>
       <unit id="org.eclipse.emf.compare.ide.ui" version="0.0.0"/>
-      <unit id="org.eclipse.emf.ecp.view.label.model" version="0.0.0"/>
-      <unit id="org.eclipse.emf.ecp.view.model.common.di" version="0.0.0"/>
-      <unit id="org.eclipse.emf.ecp.view.template.service" version="0.0.0"/>
+      <unit id="org.eclipse.emf.ecp.emfforms.runtime.feature.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.emf.sdk.feature.group" version="0.0.0"/>
-      <unit id="org.eclipse.emfforms.view.annotation.model" version="0.0.0"/>
       <unit id="org.eclipse.equinox.executable.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.equinox.weaving.aspectj" version="0.0.0"/>
       <unit id="org.eclipse.equinox.weaving.hook" version="0.0.0"/>

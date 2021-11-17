@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 
 import org.eclipse.net4j.util.CheckUtil;
+import org.eclipse.net4j.util.collection.CollectionUtil.KeepMappedValue;
 import org.eclipse.net4j.util.event.IListener;
 
 import org.eclipse.emf.ecore.EClass;
@@ -225,14 +226,14 @@ public class CDORevisionCacheNonAuditing extends AbstractCDORevisionCache
                 {
                   // Keep the cachedRevision in the cache because it's basically newer than the passedRevision,
                   // but don't change the result of internRevision().
-                  throw new KeepCachedRevision(passedRevision);
+                  throw new KeepMappedValue(passedRevision);
                 }
 
                 if (cachedRevision.equals(passedRevision))
                 {
                   // Keep the cachedRevision in the cache because it's basically equal to the passedRevision,
                   // and change the result of internRevision() to the already cachedRevision.
-                  throw new KeepCachedRevision(cachedRevision);
+                  throw new KeepMappedValue(cachedRevision);
                 }
               }
             }
@@ -246,9 +247,9 @@ public class CDORevisionCacheNonAuditing extends AbstractCDORevisionCache
             return createReference(passedRevision);
           });
         }
-        catch (KeepCachedRevision ex)
+        catch (KeepMappedValue ex)
         {
-          revision = ex.returnValue;
+          revision = ex.mappedValue();
         }
       }
 
@@ -299,21 +300,6 @@ public class CDORevisionCacheNonAuditing extends AbstractCDORevisionCache
     synchronized (revisions)
     {
       revisions.clear();
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private static final class KeepCachedRevision extends RuntimeException
-  {
-    private static final long serialVersionUID = 1L;
-
-    public final CDORevision returnValue;
-
-    public KeepCachedRevision(CDORevision returnValue)
-    {
-      this.returnValue = returnValue;
     }
   }
 }

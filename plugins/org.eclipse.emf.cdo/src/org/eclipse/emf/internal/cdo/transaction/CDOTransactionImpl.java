@@ -50,7 +50,6 @@ import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitData;
-import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
@@ -135,13 +134,13 @@ import org.eclipse.emf.internal.cdo.object.CDOObjectMerger;
 import org.eclipse.emf.internal.cdo.object.CDOObjectReferenceImpl;
 import org.eclipse.emf.internal.cdo.object.CDOObjectWrapper;
 import org.eclipse.emf.internal.cdo.query.CDOQueryImpl;
+import org.eclipse.emf.internal.cdo.session.CDOLockStateCache;
 import org.eclipse.emf.internal.cdo.util.CommitIntegrityCheck;
 import org.eclipse.emf.internal.cdo.util.CompletePackageClosure;
 import org.eclipse.emf.internal.cdo.util.IPackageClosure;
 import org.eclipse.emf.internal.cdo.view.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
 
-import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.WrappedException;
@@ -213,6 +212,7 @@ import java.util.Set;
 import java.util.WeakHashMap;
 import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 
 /**
@@ -300,7 +300,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   /**
    * A map to hold a clean (i.e. unmodified) revision for objects that have been modified or detached.
    */
-  private Map<InternalCDOObject, InternalCDORevision> cleanRevisions = new CleanRevisionsMap();
+  private final Map<InternalCDOObject, InternalCDORevision> cleanRevisions = new CleanRevisionsMap();
+
+  private final Map<CDOObject, InternalCDOLockState> lockStatesOfNewObjects = new HashMap<>();
 
   public CDOTransactionImpl(CDOSession session, CDOBranch branch)
   {
@@ -2815,16 +2817,16 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   private void cleanUp(CDOCommitContext commitContext)
   {
-    Map<CDOObject, CDOLockState> lockStates = getLockStates();
+    // Map<CDOObject, CDOLockState> lockStates = getLockStates();
     if (commitContext == null || !commitContext.isPartialCommit())
     {
-      if (commitContext != null)
-      {
-        for (CDOObject object : commitContext.getDetachedObjects().values())
-        {
-          cleanUpLockState(lockStates, object);
-        }
-      }
+      // if (commitContext != null)
+      // {
+      // for (CDOObject object : commitContext.getDetachedObjects().values())
+      // {
+      // cleanUpLockState(lockStates, object);
+      // }
+      // }
 
       lastSavepoint = firstSavepoint;
       firstSavepoint.clear();
@@ -2849,7 +2851,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       for (CDOObject object : commitContext.getDetachedObjects().values())
       {
         cleanRevisions.remove(object);
-        cleanUpLockState(lockStates, object);
+        // cleanUpLockState(lockStates, object);
       }
 
       for (CDOObject object : commitContext.getDirtyObjects().values())
@@ -2860,15 +2862,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     // Reset partial-commit filter
     committables = null;
-  }
-
-  private void cleanUpLockState(Map<CDOObject, CDOLockState> lockStates, CDOObject object)
-  {
-    InternalCDOLockState lockState = (InternalCDOLockState)lockStates.remove(object);
-    if (lockState != null)
-    {
-      lockState.dispose();
-    }
   }
 
   private void collapseSavepoints(CDOCommitContext commitContext)
@@ -3472,7 +3465,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       {
         return listIterator == null;
       }
-
     };
   }
 
@@ -4262,69 +4254,142 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   }
 
   @Override
+  protected InternalCDOObject remapObjectUnsynced(CDOID oldID)
+  {
+    InternalCDOObject object = super.remapObjectUnsynced(oldID);
+
+    InternalCDOLockState oldLockState = lockStatesOfNewObjects.remove(object);
+    if (oldLockState != null)
+    {
+      Object lockedObject = getLockTarget(object); // CDOID or CDOIDAndBranch
+      InternalCDOLockState newLockState = (InternalCDOLockState)CDOLockUtil.createLockState(lockedObject);
+      newLockState.updateFrom(oldLockState);
+
+      lockStatesOfNewObjects.put(object, newLockState);
+    }
+
+    return object;
+  }
+
+  @Override
+  protected CDOLockStateCache forEachLockState(CDOBranch branch, BiConsumer<CDOObject, CDOLockState> consumer)
+  {
+    CDOLockStateCache lockStateCache = super.forEachLockState(branch, consumer);
+    lockStatesOfNewObjects.forEach(consumer);
+    return lockStateCache;
+  }
+
+  @Override
+  protected Collection<CDOID> collectLockStatesAndReturnMissingIDs(Collection<CDOID> ids, boolean loadOnDemand, List<CDOLockState> result)
+  {
+    if (ObjectUtil.isEmpty(ids))
+    {
+      for (InternalCDOObject object : getModifiableObjects().values())
+      {
+        if (FSMUtil.isNew(object))
+        {
+          addLockStateOfNewObject(object, result);
+        }
+      }
+
+      return ids;
+    }
+
+    // Filter out ids that are of new objects or that are duplicate.
+    List<CDOID> missingIDs = new ArrayList<>();
+    Set<CDOID> visited = new HashSet<>();
+
+    for (CDOID id : ids)
+    {
+      if (visited.add(id))
+      {
+        InternalCDOObject object = getObject(id, false);
+        if (object != null && FSMUtil.isNew(object))
+        {
+          addLockStateOfNewObject(object, result);
+        }
+        else
+        {
+          missingIDs.add(id);
+        }
+      }
+    }
+
+    return missingIDs;
+  }
+
+  private void addLockStateOfNewObject(CDOObject object, List<CDOLockState> result)
+  {
+    CDOLockState lockStateOfNewObject = getLockStateOfNewObject(object);
+    result.add(lockStateOfNewObject);
+  }
+
+  /**
+   * The caller must have checked FSMUtil.isNew(object) == true.
+   */
+  @Override
+  protected InternalCDOLockState getLockStateOfNewObject(CDOObject object)
+  {
+    InternalCDOLockState lockStateOfNewObject = lockStatesOfNewObjects.get(object);
+    if (lockStateOfNewObject == null)
+    {
+      Object lockTarget = getLockTarget(object.cdoID());
+      lockStateOfNewObject = (InternalCDOLockState)CDOLockUtil.createLockState(lockTarget);
+      lockStatesOfNewObjects.put(object, lockStateOfNewObject);
+    }
+
+    return lockStateOfNewObject;
+  }
+
+  @Override
   protected InternalCDOLockState createUpdatedLockStateForNewObject(CDOObject object, IRWLockManager.LockType lockType, boolean on)
   {
-    CheckUtil.checkState(FSMUtil.isNew(object), "Object is not in NEW state");
-    CheckUtil.checkArg(lockType, "lockType");
-
-    Map<CDOObject, CDOLockState> lockStates = getLockStates();
-    InternalCDOLockState lockState = (InternalCDOLockState)lockStates.get(object);
-    if (lockState == null)
+    if (!FSMUtil.isNew(object))
     {
-      CheckUtil.checkArg(on == true, "on != true");
-      Object lockTarget = getLockTarget(object);
-      lockState = (InternalCDOLockState)CDOLockUtil.createLockState(lockTarget);
-    }
-    else
-    {
-      lockState = (InternalCDOLockState)CDOLockUtil.copyLockState(lockState);
+      return null;
     }
 
-    CDOLockOwner lockOwner = CDOLockUtil.createLockOwner(this);
+    InternalCDOLockState lockStateOfNewObject = getLockStateOfNewObject(object);
 
-    if (on)
+    switch (lockType)
     {
-      switch (lockType)
+    case READ:
+      if (on)
       {
-      case READ:
-        lockState.addReadLockOwner(lockOwner);
-        break;
-      case WRITE:
-        lockState.setWriteLockOwner(lockOwner);
-        break;
-      case OPTION:
-        lockState.setWriteOptionOwner(lockOwner);
-        break;
-      default:
-        throw new IllegalArgumentException("Unknown lock type " + lockType);
+        lockStateOfNewObject.addReadLockOwner(getLockOwner());
       }
-    }
-    else
-    {
-      switch (lockType)
+      else
       {
-      case READ:
-        lockState.removeReadLockOwner(lockOwner);
-        break;
-      case WRITE:
-        lockState.setWriteLockOwner(null);
-        break;
-      case OPTION:
-        lockState.setWriteOptionOwner(null);
-        break;
-      default:
-        throw new IllegalArgumentException("Unknown lock type " + lockType);
+        lockStateOfNewObject.removeReadLockOwner(getLockOwner());
       }
+      break;
+
+    case WRITE:
+      lockStateOfNewObject.setWriteLockOwner(on ? getLockOwner() : null);
+      break;
+
+    case OPTION:
+      lockStateOfNewObject.setWriteOptionOwner(on ? getLockOwner() : null);
+      break;
+
+    default:
+      throw new IllegalArgumentException("Unknown lock type " + lockType);
     }
 
-    return lockState;
+    return lockStateOfNewObject;
   }
 
   @Override
   protected List<CDOLockState> createUnlockedLockStatesForAllNewObjects()
   {
-    List<CDOLockState> locksOnNewObjects = new LinkedList<>();
-    for (CDOObject object : getNewObjects().values())
+    Collection<CDOObject> newObjects = getNewObjects().values();
+    if (newObjects.isEmpty())
+    {
+      return null;
+    }
+
+    List<CDOLockState> locksOnNewObjects = new ArrayList<>();
+    for (CDOObject object : newObjects)
     {
       Object lockTarget = getLockTarget(object);
       CDOLockState lockState = CDOLockUtil.createLockState(lockTarget);
@@ -4332,6 +4397,20 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
 
     return locksOnNewObjects;
+  }
+
+  @Override
+  protected void adjustLockOwner()
+  {
+    CDOLockOwner oldLockOwner = getLockOwner();
+    super.adjustLockOwner();
+    CDOLockOwner newLockOwner = getLockOwner();
+
+    if (newLockOwner != oldLockOwner)
+    {
+      lockStatesOfNewObjects.values().forEach(lockState -> lockState.remapOwner(oldLockOwner, newLockOwner));
+
+    }
   }
 
   public static boolean isResourceMatch(String nodeName, String name, boolean exactMatch)
@@ -4525,6 +4604,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     private void calculateCommitData()
     {
+      CDOBranch branch = getBranch();
       OptionsImpl options = (OptionsImpl)transaction.options();
 
       List<CDOPackageUnit> newPackageUnits = analyzeNewPackages();
@@ -4538,12 +4618,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       List<CDORevisionKey> deltas = new ArrayList<>(revisionDeltas.size());
       List<CDOIDAndVersion> detached = new ArrayList<>(detachedObjects.size());
 
-      Map<CDOObject, CDOLockState> lockStates = getLockStates();
       for (CDOObject newObject : newObjects.values())
       {
         revisions.add(newObject.cdoRevision());
 
-        CDOLockState lockState = lockStates.get(newObject);
+        CDOLockState lockState = lockStatesOfNewObjects.get(newObject);
         if (lockState != null)
         {
           if (!options.isEffectiveAutoReleaseLock(newObject))
@@ -4571,7 +4650,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
             detached.add(CDOIDUtil.createIDAndVersion(revision));
           }
         }
-        else if (cleanRevision.getBranch() == getBranch())
+        else if (cleanRevision.getBranch() == branch)
         {
           detached.add(CDOIDUtil.createIDAndVersion(cleanRevision));
         }
@@ -4582,28 +4661,29 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       }
 
       CDOLockOwner lockOwner = getLockOwner();
-      for (Map.Entry<CDOObject, CDOLockState> lockStateEntry : lockStates.entrySet())
-      {
-        CDOObject lockedObject = lockStateEntry.getKey();
+      CDOLockStateCache lockStateCache = getSession().getLockStateCache();
+
+      lockStateCache.forEachLockState(branch, lockOwner, lockState -> {
+        CDOID id = lockState.getID();
+
+        InternalCDOObject lockedObject = getObject(id, false);
+        if (lockedObject == null)
+        {
+          return;
+        }
 
         if (FSMUtil.isTransient(lockedObject))
         {
-          continue;
+          return;
         }
 
         if (!options.isEffectiveAutoReleaseLock(lockedObject))
         {
-          continue;
+          return;
         }
 
-        InternalCDOLockState lockState = (InternalCDOLockState)lockStateEntry.getValue();
-        if (!lockState.isLocked(null, lockOwner, false))
-        {
-          continue;
-        }
-
-        idsToUnlock.add(lockedObject.cdoID());
-      }
+        idsToUnlock.add(id);
+      });
 
       commitData = CDOCommitInfoUtil.createCommitData(newPackageUnits, revisions, deltas, detached);
     }
@@ -4843,11 +4923,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         }
 
         CDOBranch oldBranch = getBranch();
-        CDOBranch branch = result.getBranch();
-        boolean branchChanged = branch != getBranch();
+        CDOBranch newBranch = result.getBranch();
+
+        boolean branchChanged = newBranch != oldBranch;
         if (branchChanged)
         {
-          basicSetBranchPoint(branch.getHead());
+          basicSetBranchPoint(newBranch.getHead());
         }
 
         for (CDOPackageUnit newPackageUnit : getNewPackageUnits())
@@ -4855,7 +4936,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           ((InternalCDOPackageUnit)newPackageUnit).setState(CDOPackageUnit.State.LOADED);
         }
 
-        CDOLockChangeInfo unlockChangeInfo = makeUnlockChangeInfo(result, branchChanged ? branch : null);
+        Set<CDOID> detachedObjectIDs = getDetachedObjects().keySet();
+        CDOLockChangeInfo unlockChangeInfo = processLocks(result, oldBranch, newBranch, detachedObjectIDs);
+
         CDOCommitInfo commitInfo = null;
 
         CommitData newCommitData = result.getNewCommitData();
@@ -4872,7 +4955,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
             ((InternalCDORevisionDelta)delta).adjustReferences(result.getReferenceAdjuster());
           }
 
-          for (CDOID id : getDetachedObjects().keySet())
+          for (CDOID id : detachedObjectIDs)
           {
             removeObject(id);
           }
@@ -4892,12 +4975,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           }
           else
           {
-            CDOLockState[] newLockStates = result.getNewLockStates();
-            if (newLockStates != null)
-            {
-              CDOLockChangeInfo lockChangeInfo = makeLockChangeInfo(CDOLockChangeInfo.Operation.UNLOCK, null, result.getTimeStamp(), newLockStates);
-              session.handleLockNotification(lockChangeInfo, transaction, true);
-            }
+            notifyLockChanges(unlockChangeInfo);
           }
 
           // Bug 290032 - Sticky views
@@ -4916,7 +4994,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
               session.setCommittedSinceLastRefresh(id, commitBranchPoint);
             }
 
-            for (CDOID id : getDetachedObjects().keySet())
+            for (CDOID id : detachedObjectIDs)
             {
               session.setCommittedSinceLastRefresh(id, commitBranchPoint);
             }
@@ -4990,94 +5068,87 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       return commitInfoManager.createCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, mergeSource, commitData);
     }
 
-    private CDOLockChangeInfo makeUnlockChangeInfo(CommitTransactionResult result, CDOBranch newBranch)
+    private CDOLockChangeInfo processLocks(CommitTransactionResult result, CDOBranch oldBranch, CDOBranch newBranch, Set<CDOID> detachedObjectIDs)
     {
-      Map<CDOObject, CDOLockState> lockStates = getLockStates();
-      if (lockStates.isEmpty())
-      {
-        return null;
-      }
-
-      List<CDOLockState> autoReleasedLocks = new ArrayList<>();
-      Map<CDOObject, CDOLockState> remappedLocks = new HashMap<>();
-      Map<CDOID, CDOID> idMappings = result.getIDMappings();
+      CDOLockStateCache lockStateCache = getSession().getLockStateCache();
       CDOLockOwner lockOwner = getLockOwner();
 
-      for (Map.Entry<CDOObject, CDOLockState> entry : lockStates.entrySet())
+      List<CDOLockState> lockStatesToChangeInOldBranch = new ArrayList<>();
+      List<CDOLockState> lockStatesToChangeInNewBranch = new ArrayList<>();
+      List<CDOLockState> releasedLocks = new ArrayList<>();
+
+      // 1. Process detached objects.
+      lockStateCache.removeLockStates(oldBranch, detachedObjectIDs, null);
+
+      // 2. Process new objects.
+      Map<CDOID, CDOID> idMappings = result.getIDMappings();
+      boolean branchChanged = newBranch != oldBranch;
+
+      for (Map.Entry<CDOObject, InternalCDOLockState> entry : lockStatesOfNewObjects.entrySet())
       {
         CDOObject object = entry.getKey();
-        InternalCDOLockState lockState = (InternalCDOLockState)entry.getValue();
+        InternalCDOLockState lockState = entry.getValue();
+        CDOID id = lockState.getID();
 
-        // Remap lockStates of new objects.
-        Object lockedObject = lockState.getLockedObject();
-        if (lockedObject instanceof CDOID)
+        CDOID newID = idMappings.get(id);
+        if (newID == null)
         {
-          CDOID id = (CDOID)lockedObject;
-          CDOID newID = idMappings.get(id);
-          if (newID == null)
-          {
-            newID = id;
-          }
-
-          if (newID != id)
-          {
-            lockState = (InternalCDOLockState)CDOLockUtil.copyLockState(lockState, newID);
-            remappedLocks.put(object, lockState);
-          }
+          newID = id;
         }
-        else
+
+        // Remember to remap the lock target in old branch.
+        if (newID != id || branchChanged)
         {
-          CDOIDAndBranch idAndBranch = (CDOIDAndBranch)lockedObject;
-          CDOID id = idAndBranch.getID();
-          CDOBranch branch = idAndBranch.getBranch();
-
-          CDOID newID = idMappings.get(id);
-          if (newID == null)
-          {
-            newID = id;
-          }
-
-          if (newID != id || newBranch != null && newBranch != branch)
-          {
-            CDOIDAndBranch newLockedObject = CDOIDUtil.createIDAndBranch(newID, newBranch != null ? newBranch : branch);
-
-            lockState = (InternalCDOLockState)CDOLockUtil.copyLockState(lockState, newLockedObject);
-            remappedLocks.put(object, lockState);
-          }
+          Object newLockTarget = getLockTarget(newID);
+          lockState = (InternalCDOLockState)CDOLockUtil.copyLockState(lockState, newLockTarget);
+          lockStatesToChangeInOldBranch.add(lockState);
         }
 
         // Auto-release locks.
         if (options().isEffectiveAutoReleaseLock(object))
         {
-          if (lockState.removeOwner(lockOwner)) // Side effect!!!
+          if (lockState.removeOwner(lockOwner))
           {
-            autoReleasedLocks.add(lockState);
+            releasedLocks.add(lockState);
           }
         }
-      }
-
-      lockStates.putAll(remappedLocks); // Side effect!!!
-
-      int size = autoReleasedLocks.size();
-      if (size == 0)
-      {
-        return null;
-      }
-
-      CDOLockState[] array = autoReleasedLocks.toArray(new CDOLockState[size]);
-      return makeLockChangeInfo(CDOLockChangeInfo.Operation.UNLOCK, null, result.getTimeStamp(), array);
-    }
-
-    private void preCommit(Map<CDOID, CDOObject> objects, Map<ByteArrayWrapper, CDOLob<?>> lobs)
-    {
-      if (!objects.isEmpty())
-      {
-        for (CDOObject object : objects.values())
+        else
         {
-          collectLobs((InternalCDORevision)object.cdoRevision(), lobs);
-          ((InternalCDOObject)object).cdoInternalPreCommit();
+          // Transfer lock state of the new object into the session-scoped lock state cache.
+          lockStatesToChangeInNewBranch.add(lockState);
         }
       }
+
+      // 3. Process all other locks.
+      forEachLockState(oldBranch, (object, lockState) -> {
+        // Auto-release locks.
+        if (options().isEffectiveAutoReleaseLock(object))
+        {
+          if (((InternalCDOLockState)lockState).removeOwner(lockOwner))
+          {
+            releasedLocks.add(lockState);
+          }
+        }
+      });
+
+      lockStatesOfNewObjects.clear();
+
+      if (!lockStatesToChangeInOldBranch.isEmpty())
+      {
+        lockStateCache.addLockStates(oldBranch, lockStatesToChangeInOldBranch, null);
+      }
+
+      if (!lockStatesToChangeInNewBranch.isEmpty())
+      {
+        lockStateCache.addLockStates(newBranch, lockStatesToChangeInNewBranch, null);
+      }
+
+      if (!releasedLocks.isEmpty())
+      {
+        return makeLockChangeInfo(CDOLockChangeInfo.Operation.UNLOCK, null, result.getTimeStamp(), releasedLocks);
+      }
+
+      return null;
     }
 
     private void collectLobs(InternalCDORevision revision, Map<ByteArrayWrapper, CDOLob<?>> lobs)
@@ -5093,6 +5164,18 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           {
             lobs.put(new ByteArrayWrapper(lob.getID()), lob);
           }
+        }
+      }
+    }
+
+    private void preCommit(Map<CDOID, CDOObject> objects, Map<ByteArrayWrapper, CDOLob<?>> lobs)
+    {
+      if (!objects.isEmpty())
+      {
+        for (CDOObject object : objects.values())
+        {
+          collectLobs((InternalCDORevision)object.cdoRevision(), lobs);
+          ((InternalCDOObject)object).cdoInternalPreCommit();
         }
       }
     }

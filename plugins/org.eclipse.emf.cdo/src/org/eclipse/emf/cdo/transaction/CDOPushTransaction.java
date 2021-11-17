@@ -900,7 +900,9 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
 
   /**
    * @since 4.12
+   * @deprecated
    */
+  @Deprecated
   @Override
   public void refreshLockStates(Consumer<CDOLockState> consumer)
   {

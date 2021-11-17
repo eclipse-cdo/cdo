@@ -369,7 +369,7 @@ public class Bugzilla_297491_Test extends AbstractCDOTest
     await(modCountingStarted);
     thread.join(DEFAULT_TIMEOUT);
 
-    int xxx;
+    // TODO
     // sleep(1000);
     // assertEquals(branchManager1.getTagModCount(), branchManager2.getTagModCount());
   }

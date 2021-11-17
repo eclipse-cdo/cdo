@@ -25,7 +25,7 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOLockStatePrefetcher;
 import org.eclipse.emf.cdo.view.CDOView;
 
-import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
+import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.util.Collections;
 
@@ -61,7 +61,7 @@ public class Bugzilla_541003_Test extends AbstractCDOTest
     CDOLock lock1 = loadLock(view1);
     CDOLock lock2 = loadLock(view2);
     assertEquals(lockStatePrefetchEnabled, hasLockState(lock1));
-    assertEquals(false, hasLockState(lock2));
+    assertEquals(lockStatePrefetchEnabled, hasLockState(lock2));
 
     // Without lockStatePrefetchEnabled the lock state is loaded here:
     assertTrue(lock1.isLockedByOthers());
@@ -105,7 +105,7 @@ public class Bugzilla_541003_Test extends AbstractCDOTest
   private boolean hasLockState(CDOLock lock)
   {
     CDOObject object = lock.getObject();
-    CDOViewImpl view = (CDOViewImpl)object.cdoView();
+    InternalCDOView view = (InternalCDOView)object.cdoView();
 
     CDOLockState[] lockStates = view.getLockStates(Collections.singleton(object.cdoID()), false);
     return lockStates != null && lockStates.length == 1;

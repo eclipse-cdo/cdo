@@ -160,6 +160,7 @@ public class SessionTest extends AbstractCDOTest
       @Override
       public void logged(OMLogger logger, OMLogger.Level level, String msg, Throwable t)
       {
+        t.printStackTrace();
         fail("Detaching the resource set adapter should not log inactive transaction exception");
       }
     };

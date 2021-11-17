@@ -17,6 +17,7 @@
 package org.eclipse.emf.internal.cdo.session;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
+import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
@@ -33,6 +34,7 @@ import org.eclipse.emf.cdo.common.lob.CDOClob;
 import org.eclipse.emf.cdo.common.lob.CDOLobInfo;
 import org.eclipse.emf.cdo.common.lob.CDOLobStore;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
+import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
 import org.eclipse.emf.cdo.common.revision.CDOElementProxy;
@@ -129,6 +131,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.spi.cdo.CDOPermissionUpdater;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.MergeDataResult;
@@ -182,6 +185,8 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
   private InternalCDOCommitInfoManager commitInfoManager;
 
+  private CDOLockStateCache lockStateCache;
+
   private CDOSessionProtocol sessionProtocol;
 
   @ExcludeFromDump
@@ -215,7 +220,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
   private CDOFetchRuleManager fetchRuleManager;
 
-  private IRWOLockManager<CDOSessionImpl, Object> lockManager = new RWOLockManager<>();
+  private final IRWOLockManager<CDOSessionImpl, Object> lockManager = new RWOLockManager<>();
 
   @ExcludeFromDump
   private Set<CDOSessionImpl> singletonCollection = Collections.singleton(this);
@@ -231,6 +236,18 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
    * was committed. (Used only for sticky transactions, see bug 290032 - Sticky views.)
    */
   private Map<CDOID, CDOBranchPoint> committedSinceLastRefresh = CDOIDUtil.createMap();
+
+  private final IListener viewOptionsListener = new IListener()
+  {
+    @Override
+    public void notifyEvent(IEvent event)
+    {
+      if (event instanceof CDOCommonView.Options.LockNotificationEvent)
+      {
+        recomputeViewsWithLockNotification();
+      }
+    }
+  };
 
   static
   {
@@ -361,6 +378,12 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   {
     checkInactive();
     this.commitInfoManager = commitInfoManager;
+  }
+
+  @Override
+  public CDOLockStateCache getLockStateCache()
+  {
+    return lockStateCache;
   }
 
   @Override
@@ -678,7 +701,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   }
 
   @Override
-  protected void initViewSynced(InternalCDOView view)
+  protected void initViewUnsynced(InternalCDOView view)
   {
     view.setSession(this);
     view.setLastUpdateTime(getLastUpdateTime());
@@ -1117,7 +1140,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   @Override
   public void handleLockNotification(CDOLockChangeInfo lockChangeInfo, InternalCDOView sender)
   {
-    handleLockNotification(lockChangeInfo, sender, false);
+    throw new UnsupportedOperationException();
   }
 
   @Override
@@ -1126,38 +1149,58 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     if (async)
     {
       ExecutorService executorService = getExecutorService();
-      executorService.submit(() -> doHandleLockNotification(lockChangeInfo, sender));
+      executorService.submit(() -> doHandleLockNotification(lockChangeInfo, sender, true));
     }
     else
     {
-      doHandleLockNotification(lockChangeInfo, sender);
+      doHandleLockNotification(lockChangeInfo, sender, true);
     }
   }
 
-  protected void doHandleLockNotification(CDOLockChangeInfo lockChangeInfo, InternalCDOView sender)
+  protected void doHandleLockNotification(CDOLockChangeInfo lockChangeInfo, InternalCDOView sender, boolean notifyViews)
   {
-    for (InternalCDOView view : getViews())
+    // Only update the lockStateCache if the changes come from remote, i.e., either from commit notifications or
+    // from lock notifications. Then the sender is null. Local senders have updated the lockStateCache already.
+    if (sender == null)
     {
-      if (view != sender)
+      CDOBranch branch = lockChangeInfo.getBranch();
+
+      if (lockChangeInfo.isInvalidateAll())
       {
-        try
-        {
-          if (view.isActive())
-          {
-            view.handleLockNotification(sender, lockChangeInfo);
-          }
-        }
-        catch (Exception ex)
-        {
-          if (view.isActive())
-          {
-            OM.LOG.error(ex);
-          }
-        }
+        lockStateCache.removeLockStates(branch);
+      }
+      else
+      {
+        List<CDOLockState> lockStates = lockChangeInfo.getNewLockStates();
+        lockStateCache.addLockStates(branch, lockStates, null);
       }
     }
 
     fireEvent(new SessionLocksChangedEvent(sender, lockChangeInfo));
+
+    if (notifyViews)
+    {
+      for (InternalCDOView view : getViews())
+      {
+        if (view != sender)
+        {
+          try
+          {
+            if (view.isActive())
+            {
+              view.handleLockNotification(sender, lockChangeInfo);
+            }
+          }
+          catch (Exception ex)
+          {
+            if (view.isActive())
+            {
+              OM.LOG.error(ex);
+            }
+          }
+        }
+      }
+    }
   }
 
   private void registerPackageUnits(List<CDOPackageUnit> packageUnits)
@@ -1172,7 +1215,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   /**
    * Computes/adjusts CDOMoveFeatureDelta.value, CDORemoveFeatureDelta.value and CDOSetFeatureDelta.oldValue.
    * <p>
-   * Implicitely adjusts the underlying CDORevisionDelta.
+   * Implicitly adjusts the underlying CDORevisionDelta.
    */
   private void addOldValuesToDelta(final CDORevision oldRevision, CDORevisionDelta revisionDelta)
   {
@@ -1543,6 +1586,11 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     checkState(remoteSessionManager, "remoteSessionManager"); //$NON-NLS-1$
   }
 
+  protected void doActivateAfterBranchManager() throws Exception
+  {
+    lockStateCache = new CDOLockStateCache(this);
+  }
+
   @Override
   protected void doDeactivate() throws Exception
   {
@@ -1581,6 +1629,41 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     deactivate();
   }
 
+  @Override
+  protected void initView(InternalCDOView view, ResourceSet resourceSet)
+  {
+    super.initView(view, resourceSet);
+    EventUtil.addListener(view.options(), viewOptionsListener);
+  }
+
+  @Override
+  public void viewDetached(InternalCDOView view)
+  {
+    EventUtil.removeListener(view.options(), viewOptionsListener);
+    super.viewDetached(view);
+
+    if (isActive())
+    {
+      // Recompute after view has been removed in viewDetached().
+      recomputeViewsWithLockNotification();
+    }
+  }
+
+  private void recomputeViewsWithLockNotification()
+  {
+    int viewsWithLockNotification = 0;
+
+    for (InternalCDOView view : getViews())
+    {
+      if (view.options().isLockNotificationEnabled())
+      {
+        ++viewsWithLockNotification;
+      }
+    }
+
+    ((OptionsImpl)options).setViewsWithLockNotification(viewsWithLockNotification);
+  }
+
   /**
    * A separate class for better monitor debugging.
    *
@@ -1601,6 +1684,10 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     private boolean passiveUpdateEnabled = true;
 
     private PassiveUpdateMode passiveUpdateMode = PassiveUpdateMode.INVALIDATIONS;
+
+    private int viewsWithLockNotification;
+
+    private boolean lockNotificationEnabled;
 
     private LockNotificationMode lockNotificationMode = LockNotificationMode.IF_REQUIRED_BY_VIEWS;
 
@@ -1630,20 +1717,27 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     }
 
     @Override
-    public synchronized void setGeneratedPackageEmulationEnabled(boolean generatedPackageEmulationEnabled)
+    public void setGeneratedPackageEmulationEnabled(boolean generatedPackageEmulationEnabled)
     {
-      this.generatedPackageEmulationEnabled = generatedPackageEmulationEnabled;
-      if (this.generatedPackageEmulationEnabled != generatedPackageEmulationEnabled)
+      IEvent event = null;
+      IListener[] listeners = getListeners();
+
+      synchronized (this)
       {
         this.generatedPackageEmulationEnabled = generatedPackageEmulationEnabled;
-        // TODO Check inconsistent state if switching off?
-
-        IListener[] listeners = getListeners();
-        if (listeners.length != 0)
+        if (this.generatedPackageEmulationEnabled != generatedPackageEmulationEnabled)
         {
-          fireEvent(new GeneratedPackageEmulationEventImpl(), listeners);
+          this.generatedPackageEmulationEnabled = generatedPackageEmulationEnabled;
+          // TODO Check inconsistent state if switching off?
+
+          if (listeners.length != 0)
+          {
+            event = new GeneratedPackageEmulationEventImpl();
+          }
         }
       }
+
+      fireEvent(event, listeners);
     }
 
     @Override
@@ -1653,30 +1747,38 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     }
 
     @Override
-    public synchronized void setPassiveUpdateEnabled(boolean passiveUpdateEnabled)
+    public void setPassiveUpdateEnabled(boolean passiveUpdateEnabled)
     {
-      if (this.passiveUpdateEnabled != passiveUpdateEnabled)
-      {
-        this.passiveUpdateEnabled = passiveUpdateEnabled;
-        CDOSessionProtocol protocol = getSessionProtocol();
-        if (protocol != null)
-        {
-          if (passiveUpdateEnabled)
-          {
-            refresh(true);
-          }
-          else
-          {
-            protocol.disablePassiveUpdate();
-          }
+      IEvent event = null;
+      IListener[] listeners = getListeners();
 
-          IListener[] listeners = getListeners();
-          if (listeners.length != 0)
+      synchronized (this)
+      {
+        if (this.passiveUpdateEnabled != passiveUpdateEnabled)
+        {
+          this.passiveUpdateEnabled = passiveUpdateEnabled;
+
+          CDOSessionProtocol protocol = getSessionProtocol();
+          if (protocol != null)
           {
-            fireEvent(new PassiveUpdateEventImpl(!passiveUpdateEnabled, passiveUpdateEnabled, passiveUpdateMode, passiveUpdateMode), listeners);
+            if (passiveUpdateEnabled)
+            {
+              refresh(true);
+            }
+            else
+            {
+              protocol.disablePassiveUpdate();
+            }
+
+            if (listeners.length != 0)
+            {
+              event = new PassiveUpdateEventImpl(!passiveUpdateEnabled, passiveUpdateEnabled, passiveUpdateMode, passiveUpdateMode);
+            }
           }
         }
       }
+
+      fireEvent(event, listeners);
     }
 
     @Override
@@ -1689,22 +1791,87 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     public void setPassiveUpdateMode(PassiveUpdateMode passiveUpdateMode)
     {
       checkArg(passiveUpdateMode, "passiveUpdateMode"); //$NON-NLS-1$
-      if (this.passiveUpdateMode != passiveUpdateMode)
-      {
-        PassiveUpdateMode oldMode = this.passiveUpdateMode;
-        this.passiveUpdateMode = passiveUpdateMode;
-        CDOSessionProtocol protocol = getSessionProtocol();
-        if (protocol != null)
-        {
-          protocol.setPassiveUpdateMode(passiveUpdateMode);
 
-          IListener[] listeners = getListeners();
-          if (listeners.length != 0)
+      IEvent event = null;
+      IListener[] listeners = getListeners();
+
+      synchronized (this)
+      {
+        if (this.passiveUpdateMode != passiveUpdateMode)
+        {
+          PassiveUpdateMode oldMode = this.passiveUpdateMode;
+          this.passiveUpdateMode = passiveUpdateMode;
+
+          CDOSessionProtocol protocol = getSessionProtocol();
+          if (protocol != null)
           {
-            fireEvent(new PassiveUpdateEventImpl(passiveUpdateEnabled, passiveUpdateEnabled, oldMode, passiveUpdateMode), listeners);
+            protocol.setPassiveUpdateMode(passiveUpdateMode);
+
+            if (listeners.length != 0)
+            {
+              event = new PassiveUpdateEventImpl(passiveUpdateEnabled, passiveUpdateEnabled, oldMode, passiveUpdateMode);
+            }
           }
         }
       }
+      fireEvent(event, listeners);
+    }
+
+    private boolean computeLockNotificationEnabled()
+    {
+      switch (lockNotificationMode)
+      {
+      case OFF:
+        return false;
+
+      case ALWAYS:
+        return true;
+
+      case IF_REQUIRED_BY_VIEWS:
+        return viewsWithLockNotification != 0;
+
+      default:
+        throw new IllegalStateException("Invalid lock notification mode: " + lockNotificationMode);
+      }
+    }
+
+    private void setViewsWithLockNotification(int viewsWithLockNotification)
+    {
+      IEvent event = null;
+      IListener[] listeners = getListeners();
+
+      synchronized (this)
+      {
+        if (this.viewsWithLockNotification != viewsWithLockNotification)
+        {
+          this.viewsWithLockNotification = viewsWithLockNotification;
+
+          if (lockNotificationMode == LockNotificationMode.IF_REQUIRED_BY_VIEWS)
+          {
+            boolean oldEnabled = lockNotificationEnabled;
+            lockNotificationEnabled = computeLockNotificationEnabled();
+
+            if (listeners.length != 0 && oldEnabled != lockNotificationEnabled)
+            {
+              event = new LockNotificationEventImpl(oldEnabled, lockNotificationEnabled, lockNotificationMode, lockNotificationMode);
+            }
+          }
+        }
+      }
+
+      fireEvent(event, listeners);
+    }
+
+    @Override
+    public boolean isLockNotificationEnabled()
+    {
+      return lockNotificationEnabled;
+    }
+
+    @Override
+    public void setLockNotificationEnabled(boolean enabled)
+    {
+      setLockNotificationMode(enabled ? LockNotificationMode.ALWAYS : LockNotificationMode.OFF);
     }
 
     @Override
@@ -1717,32 +1884,40 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     public void setLockNotificationMode(LockNotificationMode lockNotificationMode)
     {
       checkArg(lockNotificationMode, "lockNotificationMode"); //$NON-NLS-1$
-      if (this.lockNotificationMode != lockNotificationMode)
-      {
-        LockNotificationMode oldMode = this.lockNotificationMode;
-        this.lockNotificationMode = lockNotificationMode;
-        CDOSessionProtocol protocol = getSessionProtocol();
-        if (protocol != null)
-        {
-          protocol.setLockNotificationMode(lockNotificationMode);
 
-          IListener[] listeners = getListeners();
+      IEvent event = null;
+      IListener[] listeners = getListeners();
+
+      synchronized (this)
+      {
+        if (this.lockNotificationMode != lockNotificationMode)
+        {
+          LockNotificationMode oldMode = this.lockNotificationMode;
+          this.lockNotificationMode = lockNotificationMode;
+
+          boolean oldEnabled = lockNotificationEnabled;
+          lockNotificationEnabled = computeLockNotificationEnabled();
+
+          CDOSessionProtocol protocol = getSessionProtocol();
+          if (protocol != null)
+          {
+            protocol.setLockNotificationMode(lockNotificationMode);
+          }
+
           if (listeners.length != 0)
           {
-            fireEvent(new LockNotificationModeEventImpl(oldMode, lockNotificationMode), listeners);
+            event = new LockNotificationEventImpl(oldEnabled, lockNotificationEnabled, oldMode, lockNotificationMode);
           }
         }
       }
-      this.lockNotificationMode = lockNotificationMode;
+
+      fireEvent(event, listeners);
     }
 
     @Override
     public CDOCollectionLoadingPolicy getCollectionLoadingPolicy()
     {
-      synchronized (this)
-      {
-        return collectionLoadingPolicy;
-      }
+      return collectionLoadingPolicy;
     }
 
     @Override
@@ -1761,14 +1936,15 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
       policy.setSession(CDOSessionImpl.this);
 
-      IListener[] listeners = getListeners();
       IEvent event = null;
+      IListener[] listeners = getListeners();
 
       synchronized (this)
       {
         if (collectionLoadingPolicy != policy)
         {
           collectionLoadingPolicy = policy;
+
           if (listeners.length != 0)
           {
             event = new CollectionLoadingPolicyEventImpl();
@@ -1776,19 +1952,13 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
         }
       }
 
-      if (event != null)
-      {
-        fireEvent(event, listeners);
-      }
+      fireEvent(event, listeners);
     }
 
     @Override
     public CDOLobStore getLobCache()
     {
-      synchronized (this)
-      {
-        return lobCache;
-      }
+      return lobCache;
     }
 
     @Override
@@ -1799,8 +1969,8 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
         cache = CDOLobStoreImpl.INSTANCE;
       }
 
-      IListener[] listeners = getListeners();
       IEvent event = null;
+      IListener[] listeners = getListeners();
 
       synchronized (this)
       {
@@ -1815,26 +1985,20 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
         }
       }
 
-      if (event != null)
-      {
-        fireEvent(event, listeners);
-      }
+      fireEvent(event, listeners);
     }
 
     @Override
     public CDOPermissionUpdater getPermissionUpdater()
     {
-      synchronized (this)
-      {
-        return permissionUpdater;
-      }
+      return permissionUpdater;
     }
 
     @Override
     public void setPermissionUpdater(CDOPermissionUpdater permissionUpdater)
     {
-      IListener[] listeners = getListeners();
       IEvent event = null;
+      IListener[] listeners = getListeners();
 
       synchronized (this)
       {
@@ -1849,32 +2013,27 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
         }
       }
 
-      if (event != null)
-      {
-        fireEvent(event, listeners);
-      }
+      fireEvent(event, listeners);
     }
 
     @Override
     public boolean isDelegableViewLockEnabled()
     {
-      synchronized (this)
-      {
-        return delegableViewLockEnabled;
-      }
+      return delegableViewLockEnabled;
     }
 
     @Override
     public void setDelegableViewLockEnabled(boolean delegableViewLockEnabled)
     {
-      IListener[] listeners = getListeners();
       IEvent event = null;
+      IListener[] listeners = getListeners();
 
       synchronized (this)
       {
         if (this.delegableViewLockEnabled != delegableViewLockEnabled)
         {
           this.delegableViewLockEnabled = delegableViewLockEnabled;
+
           if (listeners.length != 0)
           {
             event = new DelegableViewLockEventImpl();
@@ -1882,10 +2041,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
         }
       }
 
-      if (event != null)
-      {
-        fireEvent(event, listeners);
-      }
+      fireEvent(event, listeners);
     }
 
     /**
@@ -1908,13 +2064,13 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     {
       private static final long serialVersionUID = 1L;
 
-      private boolean oldEnabled;
+      private final boolean oldEnabled;
 
-      private boolean newEnabled;
+      private final boolean newEnabled;
 
-      private PassiveUpdateMode oldMode;
+      private final PassiveUpdateMode oldMode;
 
-      private PassiveUpdateMode newMode;
+      private final PassiveUpdateMode newMode;
 
       public PassiveUpdateEventImpl(boolean oldEnabled, boolean newEnabled, PassiveUpdateMode oldMode, PassiveUpdateMode newMode)
       {
@@ -1953,17 +2109,37 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     /**
      * @author Caspar De Groot
      */
-    private final class LockNotificationModeEventImpl extends OptionsEvent implements LockNotificationModeEvent
+    private final class LockNotificationEventImpl extends OptionsEvent implements LockNotificationEvent
     {
       private static final long serialVersionUID = 1L;
 
-      private LockNotificationMode oldMode, newMode;
+      private final boolean oldEnabled;
 
-      public LockNotificationModeEventImpl(LockNotificationMode oldMode, LockNotificationMode newMode)
+      private final boolean newEnabled;
+
+      private final LockNotificationMode oldMode;
+
+      private final LockNotificationMode newMode;
+
+      public LockNotificationEventImpl(boolean oldEnabled, boolean newEnabled, LockNotificationMode oldMode, LockNotificationMode newMode)
       {
         super(OptionsImpl.this);
+        this.oldEnabled = oldEnabled;
+        this.newEnabled = newEnabled;
         this.oldMode = oldMode;
         this.newMode = newMode;
+      }
+
+      @Override
+      public boolean getOldEnabled()
+      {
+        return oldEnabled;
+      }
+
+      @Override
+      public boolean getNewEnabled()
+      {
+        return newEnabled;
       }
 
       @Override
@@ -2211,19 +2387,23 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
           if (success)
           {
-            fireEvent(new SessionInvalidationEvent(sender, commitInfo, invalidationData.getSecurityImpact(), oldPermissionsFinal));
-
             if (lockChangeInfo != null)
             {
-              fireEvent(new SessionLocksChangedEvent(sender, lockChangeInfo));
+              // Do not notify views because that will happen in invalidateView() below.
+              doHandleLockNotification(lockChangeInfo, sender, false);
             }
 
+            fireEvent(new SessionInvalidationEvent(sender, commitInfo, invalidationData.getSecurityImpact(), oldPermissionsFinal));
             commitInfoManager.notifyCommitInfoHandlers(commitInfo);
           }
 
+          boolean clearResourcePathCache = invalidationData.isClearResourcePathCache();
+
           for (InternalCDOView view : views)
           {
-            invalidateView(commitInfo, view, sender, oldRevisionsFinal, invalidationData.isClearResourcePathCache(), lockChangeInfo);
+            // The sender (committing view) is already valid, just the timestamp must be set "in sequence".
+            // Setting the sender's timestamp synchronously can lead to deadlock.
+            invalidateView(commitInfo, view, sender, oldRevisionsFinal, clearResourcePathCache, lockChangeInfo);
           }
         };
       }

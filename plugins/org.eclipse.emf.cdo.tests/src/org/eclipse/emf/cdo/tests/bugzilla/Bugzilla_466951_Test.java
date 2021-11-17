@@ -45,27 +45,28 @@ public class Bugzilla_466951_Test extends AbstractCDOTest
    */
   public void testCDOObjectCDOLockState() throws Exception
   {
-    CDOSession session1 = openSession();
-    CDOTransaction transaction1 = session1.openTransaction();
-    transaction1.options().setAutoReleaseLocksEnabled(false);
-    transaction1.options().setLockNotificationEnabled(true);
-    CDOResource resource1 = transaction1.createResource(getResourcePath(RESOURCE_NAME));
-    Company company = getModel1Factory().createCompany();
-    resource1.getContents().add(company);
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    transaction.options().setAutoReleaseLocksEnabled(false);
+    transaction.options().setLockNotificationEnabled(true);
 
-    ISignalProtocol<?> protocol = ((org.eclipse.emf.cdo.net4j.CDONet4jSession)session1).options().getNet4jProtocol();
+    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_NAME));
+    Company company1 = getModel1Factory().createCompany();
+    resource.getContents().add(company1);
+
+    ISignalProtocol<?> protocol = ((org.eclipse.emf.cdo.net4j.CDONet4jSession)session).options().getNet4jProtocol();
     SignalCounter signalCounter = new SignalCounter(protocol);
 
     try
     {
       assertEquals(0, signalCounter.removeCountFor(LockStateRequest.class));
 
-      CDOObject companyCDOObject = CDOUtil.getCDOObject(company);
-      CDOLockState lockState = companyCDOObject.cdoLockState();
-      Object expectedLockedObject = companyCDOObject.cdoID();
-      if (session1.getRepositoryInfo().isSupportingBranches())
+      CDOObject cdoCompany1 = CDOUtil.getCDOObject(company1);
+      CDOLockState lockState = cdoCompany1.cdoLockState();
+      Object expectedLockedObject = cdoCompany1.cdoID();
+      if (session.getRepositoryInfo().isSupportingBranches())
       {
-        expectedLockedObject = CDOIDUtil.createIDAndBranch(companyCDOObject.cdoID(), transaction1.getBranch());
+        expectedLockedObject = CDOIDUtil.createIDAndBranch(cdoCompany1.cdoID(), transaction.getBranch());
       }
 
       assertEquals(expectedLockedObject, lockState.getLockedObject());
@@ -73,34 +74,34 @@ public class Bugzilla_466951_Test extends AbstractCDOTest
       assertNull(lockState.getWriteLockOwner());
       assertNull(lockState.getWriteOptionOwner());
 
-      transaction1.lockObjects(Collections.singleton(companyCDOObject), LockType.WRITE, -1);
+      transaction.lockObjects(Collections.singleton(cdoCompany1), LockType.WRITE, -1);
 
-      lockState = companyCDOObject.cdoLockState();
-      expectedLockedObject = companyCDOObject.cdoID();
-      if (session1.getRepositoryInfo().isSupportingBranches())
+      lockState = cdoCompany1.cdoLockState();
+      expectedLockedObject = cdoCompany1.cdoID();
+      if (session.getRepositoryInfo().isSupportingBranches())
       {
-        expectedLockedObject = CDOIDUtil.createIDAndBranch(companyCDOObject.cdoID(), transaction1.getBranch());
+        expectedLockedObject = CDOIDUtil.createIDAndBranch(cdoCompany1.cdoID(), transaction.getBranch());
       }
 
       assertEquals(expectedLockedObject, lockState.getLockedObject());
       assertTrue(lockState.getReadLockOwners().isEmpty());
-      assertEquals(((InternalCDOTransaction)transaction1).getLockOwner(), lockState.getWriteLockOwner());
+      assertEquals(((InternalCDOTransaction)transaction).getLockOwner(), lockState.getWriteLockOwner());
       assertNull(lockState.getWriteOptionOwner());
 
-      EcoreUtil.delete(company);
-      assertEquals(CDOState.TRANSIENT, companyCDOObject.cdoState());
-      lockState = companyCDOObject.cdoLockState();
+      EcoreUtil.delete(company1);
+      assertEquals(CDOState.TRANSIENT, cdoCompany1.cdoState());
+      lockState = cdoCompany1.cdoLockState();
       assertNull(lockState);
 
       Company company2 = getModel1Factory().createCompany();
-      resource1.getContents().add(company2);
+      resource.getContents().add(company2);
 
-      CDOObject companyCDOObject2 = CDOUtil.getCDOObject(company2);
-      lockState = companyCDOObject2.cdoLockState();
-      expectedLockedObject = companyCDOObject2.cdoID();
-      if (session1.getRepositoryInfo().isSupportingBranches())
+      CDOObject cdoCompany2 = CDOUtil.getCDOObject(company2);
+      lockState = cdoCompany2.cdoLockState();
+      expectedLockedObject = cdoCompany2.cdoID();
+      if (session.getRepositoryInfo().isSupportingBranches())
       {
-        expectedLockedObject = CDOIDUtil.createIDAndBranch(companyCDOObject2.cdoID(), transaction1.getBranch());
+        expectedLockedObject = CDOIDUtil.createIDAndBranch(cdoCompany2.cdoID(), transaction.getBranch());
       }
 
       assertEquals(expectedLockedObject, lockState.getLockedObject());
@@ -109,13 +110,13 @@ public class Bugzilla_466951_Test extends AbstractCDOTest
       assertNull(lockState.getWriteOptionOwner());
       assertEquals(0, signalCounter.removeCountFor(LockStateRequest.class));
 
-      transaction1.commit();
+      transaction.commit();
 
-      lockState = companyCDOObject2.cdoLockState();
-      expectedLockedObject = companyCDOObject2.cdoID();
-      if (session1.getRepositoryInfo().isSupportingBranches())
+      lockState = cdoCompany2.cdoLockState();
+      expectedLockedObject = cdoCompany2.cdoID();
+      if (session.getRepositoryInfo().isSupportingBranches())
       {
-        expectedLockedObject = CDOIDUtil.createIDAndBranch(companyCDOObject2.cdoID(), transaction1.getBranch());
+        expectedLockedObject = CDOIDUtil.createIDAndBranch(cdoCompany2.cdoID(), transaction.getBranch());
       }
 
       assertEquals(expectedLockedObject, lockState.getLockedObject());

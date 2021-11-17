@@ -40,7 +40,7 @@ public class Bugzilla_423699_Test extends AbstractLockingTest
 {
   private CDOSession session;
 
-  private InternalCDOTransaction tx;
+  private InternalCDOTransaction transaction;
 
   private CDOObject container;
 
@@ -53,14 +53,14 @@ public class Bugzilla_423699_Test extends AbstractLockingTest
 
     // Open a session and a transaction
     session = openSession();
-    tx = (InternalCDOTransaction)session.openTransaction();
+    transaction = (InternalCDOTransaction)session.openTransaction();
 
     // Create semantic model
     Company company = getModel1Factory().createCompany();
     Category category = getModel1Factory().createCategory();
     company.getCategories().add(category);
-    tx.getOrCreateResource(getResourcePath("testResource")).getContents().add(company);
-    tx.commit();
+    transaction.getOrCreateResource(getResourcePath("testResource")).getContents().add(company);
+    transaction.commit();
 
     container = CDOUtil.getCDOObject(company);
     child = CDOUtil.getCDOObject(category);
@@ -69,8 +69,8 @@ public class Bugzilla_423699_Test extends AbstractLockingTest
   @Override
   protected void doTearDown() throws Exception
   {
-    tx.close();
-    tx = null;
+    transaction.close();
+    transaction = null;
 
     session.close();
     session = null;
@@ -106,10 +106,10 @@ public class Bugzilla_423699_Test extends AbstractLockingTest
   private void doTestUnlockDeletedElements(boolean durableLocking, boolean autoReleaseLocksEnabled) throws Exception
   {
     // Step 1: update transaction options
-    tx.options().setAutoReleaseLocksEnabled(autoReleaseLocksEnabled);
+    transaction.options().setAutoReleaseLocksEnabled(autoReleaseLocksEnabled);
     if (durableLocking)
     {
-      tx.enableDurableLocking();
+      transaction.enableDurableLocking();
     }
 
     CDOID containerID = container.cdoID();
@@ -120,7 +120,7 @@ public class Bugzilla_423699_Test extends AbstractLockingTest
     objectsToLock.add(container);
     objectsToLock.add(child);
 
-    tx.lockObjects(objectsToLock, LockType.WRITE, 10000);
+    transaction.lockObjects(objectsToLock, LockType.WRITE, 10000);
     assertIsLocked(durableLocking, true, containerID);
     assertIsLocked(durableLocking, true, childID);
 
@@ -128,23 +128,23 @@ public class Bugzilla_423699_Test extends AbstractLockingTest
     ((Company)CDOUtil.getEObject(container)).getCategories().clear();
 
     // Step 4: commit
-    tx.commit(new NullProgressMonitor());
+    transaction.commit(new NullProgressMonitor());
 
     // Lock should be deleted on detached object
     assertIsLocked(durableLocking, false, childID);
 
-    // Lock should be deleted only if lock autorelease is enabled
+    // Lock should be deleted only if lock auto release is enabled
     assertIsLocked(durableLocking, !autoReleaseLocksEnabled, containerID);
 
     // Step 5 (optional): reopen transaction & session with the same durable locking ID
     if (durableLocking)
     {
-      String durableLockingID = tx.getDurableLockingID();
-      tx.close();
+      String durableLockingID = transaction.getDurableLockingID();
+      transaction.close();
       session.close();
       session = openSession();
-      tx = (InternalCDOTransaction)session.openTransaction(durableLockingID);
-      tx.options().setAutoReleaseLocksEnabled(autoReleaseLocksEnabled);
+      transaction = (InternalCDOTransaction)session.openTransaction(durableLockingID);
+      transaction.options().setAutoReleaseLocksEnabled(autoReleaseLocksEnabled);
 
       // Lock states should not have changed
       assertIsLocked(durableLocking, false, childID);
@@ -152,7 +152,7 @@ public class Bugzilla_423699_Test extends AbstractLockingTest
     }
 
     // Step 6: unlock all elements
-    tx.unlockObjects();
+    transaction.unlockObjects();
     assertIsLocked(durableLocking, false, containerID);
     assertIsLocked(durableLocking, false, childID);
   }
@@ -161,7 +161,7 @@ public class Bugzilla_423699_Test extends AbstractLockingTest
    * Ensures that the given element is locked or not (according to the given parameter), durably or not (according to the given parameter).
    * @param durably indicates if we expect a durable lock or not
    * @param shouldBeLocked indicates if elements should be locked or not
-   * @param elementID {@link CDOID} of the element ot test
+   * @param elementID {@link CDOID} of the element to test
    */
   private void assertIsLocked(boolean durably, boolean shouldBeLocked, CDOID elementID)
   {
@@ -172,10 +172,10 @@ public class Bugzilla_423699_Test extends AbstractLockingTest
 
       try
       {
-        InternalSession session = getRepository().getSessionManager().getSession(tx.getSessionID());
+        InternalSession session = getRepository().getSessionManager().getSession(transaction.getSessionID());
         StoreThreadLocal.setSession(session);
         // Do your call
-        durableLock = getRepository().getLockingManager().getLockArea(tx.getDurableLockingID()).getLocks().get(elementID);
+        durableLock = getRepository().getLockingManager().getLockArea(transaction.getDurableLockingID()).getLocks().get(elementID);
       }
       finally
       {
@@ -189,7 +189,7 @@ public class Bugzilla_423699_Test extends AbstractLockingTest
     ArrayList<CDOID> elementIDs = new ArrayList<>();
     elementIDs.add(elementID);
 
-    CDOLockState cdoLockState = tx.getLockStates(elementIDs)[0];
+    CDOLockState cdoLockState = transaction.getLockStates(elementIDs)[0];
     assertEquals(elementID + " has wrong lock status", shouldBeLocked, cdoLockState.getWriteLockOwner() != null);
   }
 }

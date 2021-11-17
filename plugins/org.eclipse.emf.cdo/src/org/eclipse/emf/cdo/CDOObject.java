@@ -164,7 +164,7 @@ public interface CDOObject extends EObject, CDOWithID
   public CDOLock cdoWriteOption();
 
   /**
-   * Returns the {@link CDOLockState} of this object.
+   * Returns the {@link CDOLockState lock state} of this object, or <code>null</code> if this object is {@link CDOState#TRANSIENT transient}.
    *
    * @since 4.1
    */

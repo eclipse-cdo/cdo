@@ -105,7 +105,7 @@ public class Bugzilla_469301_Test extends AbstractCDOTest
       controlView.properties().put(name + counter++, controlObject);
     }
 
-    TestListener2 controlListener = new TestListener2(CDOViewLocksChangedEvent.class, name);
+    TestListener2 controlListener = new TestListener2(CDOViewLocksChangedEvent.class).setName(name);
     controlView.addListener(controlListener);
     return controlListener;
   }
@@ -119,9 +119,9 @@ public class Bugzilla_469301_Test extends AbstractCDOTest
     assertEquals(operation, event.getOperation());
     assertEquals(LockType.WRITE, event.getLockType());
     assertEquals(lockOwner, event.getLockOwner());
-    assertEquals(2, event.getLockStates().length);
+    assertEquals(2, event.getNewLockStates().size());
 
-    for (CDOLockState lockState : event.getLockStates())
+    for (CDOLockState lockState : event.getNewLockStates())
     {
       assertEquals(event.getOperation() == Operation.LOCK ? lockOwner : null, lockState.getWriteLockOwner());
     }

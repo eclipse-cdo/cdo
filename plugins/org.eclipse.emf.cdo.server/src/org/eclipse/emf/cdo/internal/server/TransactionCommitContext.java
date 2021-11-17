@@ -97,6 +97,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -201,7 +202,7 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private ExtendedDataInputStream lobs;
 
-  private CDOLockState[] locksOnNewObjects = new CDOLockState[0];
+  private CDOLockState[] locksOnNewObjects = Repository.NO_LOCK_STATES;
 
   private CDOID[] idsToUnlock = new CDOID[0];
 
@@ -1789,10 +1790,11 @@ public class TransactionCommitContext implements InternalCommitContext
 
   protected CDOLockChangeInfo createLockChangeInfo(List<LockState<Object, IView>> newLockStates)
   {
-    long timeStamp = getTimeStamp();
-    CDOLockState[] newStates = Repository.toCDOLockStates(newLockStates);
+    CDOBranchPoint branchPoint = getBranchPoint();
+    CDOLockOwner lockOwner = transaction.getLockOwner();
+    List<CDOLockState> newStates = Arrays.asList(Repository.toCDOLockStates(newLockStates));
 
-    return CDOLockUtil.createLockChangeInfo(timeStamp, transaction, branch, Operation.UNLOCK, null, newStates);
+    return CDOLockUtil.createLockChangeInfo(branchPoint, lockOwner, Operation.UNLOCK, null, newStates);
   }
 
   protected void addNewPackageUnits(OMMonitor monitor)

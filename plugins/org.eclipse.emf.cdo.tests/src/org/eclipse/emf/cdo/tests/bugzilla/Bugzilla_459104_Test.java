@@ -24,7 +24,8 @@ import org.eclipse.net4j.signal.ISignalProtocol;
 import org.eclipse.net4j.signal.SignalCounter;
 
 /**
- * Bug 459104 about {@link CDOObject#cdoLockState()} which should store loaded lock state into the cache after a request to the server when {@link Options#isLockNotificationEnabled()} return true.
+ * Bug 459104 about {@link CDOObject#cdoLockState()} which should store loaded lock state into the
+ * cache after a request to the server when {@link Options#isLockNotificationEnabled()} return true.
  *
  * @author Esteban Dugueperoux
  */

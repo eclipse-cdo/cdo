@@ -37,6 +37,8 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLocker;
 import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 
+import org.eclipse.emf.internal.cdo.session.CDOLockStateCache;
+
 import org.eclipse.net4j.util.concurrent.IExecutorServiceProvider;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
@@ -72,6 +74,11 @@ public interface InternalCDOSession
    * @since 3.0
    */
   public void setSessionProtocol(CDOSessionProtocol sessionProtocol);
+
+  /**
+   * @since 4.15
+   */
+  public CDOLockStateCache getLockStateCache();
 
   /**
    * @since 4.0

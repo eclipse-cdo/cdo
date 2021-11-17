@@ -57,7 +57,7 @@ public class AbstractLockingTest extends AbstractCDOTest
     {
       synchronized (activeLockNotifications)
       {
-        if (activeLockNotifications.get() == 0)
+        if (activeLockNotifications.get() <= 0)
         {
           return;
         }
@@ -67,7 +67,7 @@ public class AbstractLockingTest extends AbstractCDOTest
     }
   }
 
-  protected static CDOLock readLock(EObject object) throws InterruptedException
+  protected static CDOLock lockRead(EObject object) throws InterruptedException
   {
     CDOObject cdoObject = CDOUtil.getCDOObject(object);
     CDOLock lock = cdoObject.cdoReadLock();
@@ -75,15 +75,7 @@ public class AbstractLockingTest extends AbstractCDOTest
     return lock;
   }
 
-  protected static CDOLock readUnlock(EObject object) throws InterruptedException
-  {
-    CDOObject cdoObject = CDOUtil.getCDOObject(object);
-    CDOLock lock = cdoObject.cdoReadLock();
-    lock.unlock();
-    return lock;
-  }
-
-  protected static CDOLock writeLock(EObject object) throws InterruptedException
+  protected static CDOLock lockWrite(EObject object) throws InterruptedException
   {
     CDOObject cdoObject = CDOUtil.getCDOObject(object);
     CDOLock lock = cdoObject.cdoWriteLock();
@@ -91,15 +83,7 @@ public class AbstractLockingTest extends AbstractCDOTest
     return lock;
   }
 
-  protected static CDOLock writeUnlock(EObject object) throws InterruptedException
-  {
-    CDOObject cdoObject = CDOUtil.getCDOObject(object);
-    CDOLock lock = cdoObject.cdoWriteLock();
-    lock.unlock();
-    return lock;
-  }
-
-  protected static CDOLock optionLock(EObject object) throws InterruptedException
+  protected static CDOLock lockOption(EObject object) throws InterruptedException
   {
     CDOObject cdoObject = CDOUtil.getCDOObject(object);
     CDOLock lock = cdoObject.cdoWriteOption();
@@ -107,7 +91,23 @@ public class AbstractLockingTest extends AbstractCDOTest
     return lock;
   }
 
-  protected static CDOLock optionUnlock(EObject object) throws InterruptedException
+  protected static CDOLock unlockRead(EObject object) throws InterruptedException
+  {
+    CDOObject cdoObject = CDOUtil.getCDOObject(object);
+    CDOLock lock = cdoObject.cdoReadLock();
+    lock.unlock();
+    return lock;
+  }
+
+  protected static CDOLock unlockWrite(EObject object) throws InterruptedException
+  {
+    CDOObject cdoObject = CDOUtil.getCDOObject(object);
+    CDOLock lock = cdoObject.cdoWriteLock();
+    lock.unlock();
+    return lock;
+  }
+
+  protected static CDOLock unlockOption(EObject object) throws InterruptedException
   {
     CDOObject cdoObject = CDOUtil.getCDOObject(object);
     CDOLock lock = cdoObject.cdoWriteOption();
@@ -161,9 +161,9 @@ public class AbstractLockingTest extends AbstractCDOTest
         }
 
         @Override
-        protected void doHandleLockNotification(CDOLockChangeInfo lockChangeInfo, InternalCDOView sender)
+        protected void doHandleLockNotification(CDOLockChangeInfo lockChangeInfo, InternalCDOView sender, boolean notifyViews)
         {
-          super.doHandleLockNotification(lockChangeInfo, sender);
+          super.doHandleLockNotification(lockChangeInfo, sender, notifyViews);
 
           synchronized (activeLockNotifications)
           {

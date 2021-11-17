@@ -35,6 +35,7 @@ import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.ecore.EObject;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -176,11 +177,6 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle, IEx
   public Object convertIDToObject(Object potentialID);
 
   /**
-   * @since 3.0
-   */
-  public boolean isObjectLocked(CDOObject object, LockType lockType, boolean byOthers);
-
-  /**
    * @since 4.1
    */
   public boolean isObjectNew(CDOID id);
@@ -202,14 +198,31 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle, IEx
   public CDOLockOwner getLockOwner();
 
   /**
-   * @since 4.1
+   * @since 3.0
    */
-  public void handleLockNotification(InternalCDOView sender, CDOLockChangeInfo lockChangeInfo);
+  public boolean isObjectLocked(CDOObject object, LockType lockType, boolean byOthers);
 
   /**
    * @since 4.12
+   * @deprecated As of 4.15 use {@link #updateLockStates(Collection, boolean, Consumer)}.
    */
+  @Deprecated
   public void updateLockStates(CDOLockState[] newLockStates, boolean loadObjectsOnDemand, Consumer<CDOLockState> consumer);
+
+  /**
+   * @since 4.15
+   */
+  public void updateLockStates(Collection<? extends CDOLockState> newLockStates, boolean loadObjectsOnDemand, Consumer<CDOLockState> consumer);
+
+  /**
+   * @since 4.15
+   */
+  public CDOLockState[] getLockStates(Collection<CDOID> ids, boolean loadOnDemand);
+
+  /**
+   * @since 4.1
+   */
+  public void handleLockNotification(InternalCDOView sender, CDOLockChangeInfo lockChangeInfo);
 
   /**
    * @since 4.2

@@ -21,6 +21,8 @@ import org.eclipse.net4j.util.event.INotifier;
 
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
+import java.util.List;
+
 /**
  * @author Caspar De Groot
  * @since 4.1
@@ -75,10 +77,17 @@ public class DefaultLocksChangedEvent extends Event implements CDOLockChangeInfo
     return lockChangeInfo.getLockOwner();
   }
 
+  @Deprecated
   @Override
   public final CDOLockState[] getLockStates()
   {
     return lockChangeInfo.getLockStates();
+  }
+
+  @Override
+  public List<CDOLockState> getNewLockStates()
+  {
+    return lockChangeInfo.getNewLockStates();
   }
 
   @Override

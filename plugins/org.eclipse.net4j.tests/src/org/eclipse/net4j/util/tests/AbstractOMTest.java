@@ -76,7 +76,7 @@ public abstract class AbstractOMTest extends TestCase
   /**
    * Timeout duration in milliseconds if timeout <b>is</b> expected.
    */
-  public static final long DEFAULT_TIMEOUT_EXPECTED = 3 * 1000;
+  public static final long DEFAULT_TIMEOUT_EXPECTED = 5 * 1000;
 
   public static boolean EXTERNAL_LOG;
 

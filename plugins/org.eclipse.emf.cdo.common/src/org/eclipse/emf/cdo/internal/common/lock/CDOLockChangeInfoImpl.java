@@ -20,7 +20,10 @@ import org.eclipse.emf.cdo.spi.common.branch.CDOBranchAdjustable;
 
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Caspar De Groot
@@ -29,32 +32,33 @@ public final class CDOLockChangeInfoImpl implements CDOLockChangeInfo, CDOBranch
 {
   private CDOBranchPoint branchPoint;
 
+  private final CDOLockOwner lockOwner;
+
   private final Operation operation;
 
   private final LockType lockType;
 
-  private final CDOLockOwner lockOwner;
-
-  private final CDOLockState[] lockStates;
+  private final List<CDOLockState> lockStates;
 
   private final boolean isInvalidateAll;
 
-  public CDOLockChangeInfoImpl(CDOBranchPoint branchPoint, CDOLockOwner lockOwner, CDOLockState[] lockStates, Operation operation, LockType lockType)
+  public CDOLockChangeInfoImpl(CDOBranchPoint branchPoint, CDOLockOwner lockOwner, Operation operation, LockType lockType,
+      Collection<? extends CDOLockState> lockStates)
   {
     this.branchPoint = branchPoint;
     this.lockOwner = lockOwner;
-    this.lockStates = lockStates;
     this.operation = operation;
     this.lockType = lockType;
+    this.lockStates = Collections.unmodifiableList(lockStates instanceof List ? (List<? extends CDOLockState>)lockStates : new ArrayList<>(lockStates));
     isInvalidateAll = false;
   }
 
   public CDOLockChangeInfoImpl()
   {
     lockOwner = null;
-    lockStates = null;
     operation = null;
     lockType = null;
+    lockStates = null;
     isInvalidateAll = true;
   }
 
@@ -102,8 +106,15 @@ public final class CDOLockChangeInfoImpl implements CDOLockChangeInfo, CDOBranch
     return lockOwner;
   }
 
+  @Deprecated
   @Override
   public CDOLockState[] getLockStates()
+  {
+    return lockStates.toArray(new CDOLockState[lockStates.size()]);
+  }
+
+  @Override
+  public List<CDOLockState> getNewLockStates()
   {
     return lockStates;
   }
@@ -123,11 +134,11 @@ public final class CDOLockChangeInfoImpl implements CDOLockChangeInfo, CDOBranch
     builder.append(", operation=");
     builder.append(operation);
     builder.append(", lockType=");
-    builder.append(lockType);
+    builder.append(lockType == null ? "ALL" : lockType);
     builder.append(", lockOwner=");
     builder.append(lockOwner);
     builder.append(", lockStates=");
-    builder.append(Arrays.toString(lockStates));
+    builder.append(lockStates);
     builder.append(", invalidateAll=");
     builder.append(isInvalidateAll);
     builder.append("]");

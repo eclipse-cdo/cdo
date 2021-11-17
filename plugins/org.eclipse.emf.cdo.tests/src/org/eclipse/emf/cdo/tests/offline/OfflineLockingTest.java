@@ -74,14 +74,14 @@ public class OfflineLockingTest extends AbstractSyncingTest
     assertEquals(true, getRepository("repo2") instanceof OfflineClone);
 
     CDOSession clone1Session = openSession("repo1");
-    TestListener2 session1lockListener = new TestListener2(CDOSessionLocksChangedEvent.class, "session1lockListener");
+    TestListener2 session1lockListener = new TestListener2(CDOSessionLocksChangedEvent.class).setName("session1lockListener");
     clone1Session.addListener(session1lockListener);
     waitForOnline(clone1Session.getRepositoryInfo());
 
     CDOSession clone2Session = openSession("repo2");
-    TestListener2 session2invalidationListener = new TestListener2(CDOSessionInvalidationEvent.class, "session2invalidationListener");
+    TestListener2 session2invalidationListener = new TestListener2(CDOSessionInvalidationEvent.class).setName("session2invalidationListener");
     clone2Session.addListener(session2invalidationListener);
-    TestListener2 session2lockListener = new TestListener2(CDOSessionLocksChangedEvent.class, "session2lockListener");
+    TestListener2 session2lockListener = new TestListener2(CDOSessionLocksChangedEvent.class).setName("session2lockListener");
     clone2Session.addListener(session2lockListener);
     waitForOnline(clone2Session.getRepositoryInfo());
 

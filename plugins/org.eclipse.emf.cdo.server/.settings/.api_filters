@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.emf.cdo.server" version="2">
+    <resource path="META-INF/MANIFEST.MF">
+        <filter id="923795461">
+            <message_arguments>
+                <message_argument value="4.15.0"/>
+                <message_argument value="4.14.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.cdo.server.embedded.CDOSession">
         <filter id="305324134">
             <message_arguments>
@@ -377,6 +385,12 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/server/ITransaction.java" type="org.eclipse.emf.cdo.server.ITransaction">
+        <filter id="404791350">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.server.ITransaction"/>
+                <message_argument value="org.eclipse.emf.cdo.common.lock.CDOLockOwner"/>
+            </message_arguments>
+        </filter>
         <filter id="571473929">
             <message_arguments>
                 <message_argument value="CDOCommonTransaction"/>
@@ -385,6 +399,12 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/server/IView.java" type="org.eclipse.emf.cdo.server.IView">
+        <filter id="404791350">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.server.IView"/>
+                <message_argument value="org.eclipse.emf.cdo.common.lock.CDOLockOwner"/>
+            </message_arguments>
+        </filter>
         <filter id="571473929">
             <message_arguments>
                 <message_argument value="CDOCommonView"/>
@@ -472,6 +492,22 @@
             <message_arguments>
                 <message_argument value="CDOReplicationContext"/>
                 <message_argument value="InternalSynchronizableRepository"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/spi/server/InternalTransaction.java" type="org.eclipse.emf.cdo.spi.server.InternalTransaction">
+        <filter id="404791350">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.spi.server.InternalTransaction"/>
+                <message_argument value="org.eclipse.emf.cdo.common.lock.CDOLockOwner"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/spi/server/InternalView.java" type="org.eclipse.emf.cdo.spi.server.InternalView">
+        <filter id="404791350">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.spi.server.InternalView"/>
+                <message_argument value="org.eclipse.emf.cdo.common.lock.CDOLockOwner"/>
             </message_arguments>
         </filter>
     </resource>

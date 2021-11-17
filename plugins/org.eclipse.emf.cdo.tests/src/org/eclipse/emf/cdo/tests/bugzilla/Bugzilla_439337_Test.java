@@ -75,7 +75,7 @@ public class Bugzilla_439337_Test extends AbstractCDOTest
    */
   public void testCDOLockStateWithoutPrefetch() throws Exception
   {
-    testCDOLockState(false);
+    run(false);
   }
 
   /**
@@ -83,10 +83,10 @@ public class Bugzilla_439337_Test extends AbstractCDOTest
    */
   public void testCDOLockStateWithPrefetch() throws Exception
   {
-    testCDOLockState(true);
+    run(true);
   }
 
-  private void testCDOLockState(boolean lockStatePrefetchEnabled)
+  private void run(boolean lockStatePrefetchEnabled)
   {
     CDONet4jSession session = (CDONet4jSession)openSession();
     CDOView view = session.openView();
@@ -94,12 +94,13 @@ public class Bugzilla_439337_Test extends AbstractCDOTest
     if (lockStatePrefetchEnabled)
     {
       new CDOLockStatePrefetcher(view, false);
+      sleep(1000);
     }
 
     ISignalProtocol<?> protocol = session.options().getNet4jProtocol();
     SignalCounter signalCounter = new SignalCounter(protocol);
 
-    view.getResourceSet().eAdapters().add(new EContentAdapterQueringCDOLockState());
+    view.getResourceSet().eAdapters().add(new EContentAdapterQueryingCDOLockState());
     view.getResource(getResourcePath(RESOURCE_NAME + "?" + CDOResource.PREFETCH_PARAMETER + "=" + Boolean.TRUE));
 
     // QueryRequest, QueryCancel are used to get the resourcePath
@@ -112,9 +113,9 @@ public class Bugzilla_439337_Test extends AbstractCDOTest
     assertNotSame(0, signalCounter.getCountFor(LockStateRequest.class));
 
     assertEquals("1 single query request should have been sent to get the resourcePath", 1, signalCounter.getCountFor(QueryRequest.class));
-    assertEquals("1 single query request should have been sent to cancel the single QueryRequest", 1, signalCounter.getCountFor(QueryCancelRequest.class));
+    assertEquals("1 single query cancel request should have been sent", 1, signalCounter.getCountFor(QueryCancelRequest.class));
     assertEquals(
-        "3 load revisions request should have been sent, 2 first for revisions of CDOResourceFolders to get resource path and another in prefetch to load all revisions of CDOResource",
+        "3 load revision requests should have been sent, 2 for revisions of CDOResourceFolders to get resource path and another in prefetch to load all revisions of CDOResource",
         3, signalCounter.getCountFor(LoadRevisionsRequest.class));
 
     int expectedRequests = (lockStatePrefetchEnabled ? 0 : NB_CATEGORIES) + 2;
@@ -129,9 +130,9 @@ public class Bugzilla_439337_Test extends AbstractCDOTest
    *
    * @author Esteban Dugueperoux
    */
-  private static class EContentAdapterQueringCDOLockState extends EContentAdapter
+  private static class EContentAdapterQueryingCDOLockState extends EContentAdapter
   {
-    public EContentAdapterQueringCDOLockState()
+    public EContentAdapterQueryingCDOLockState()
     {
     }
 

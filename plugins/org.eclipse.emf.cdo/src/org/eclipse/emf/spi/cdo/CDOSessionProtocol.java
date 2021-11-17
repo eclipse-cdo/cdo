@@ -315,7 +315,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   /**
    * @since 4.4
    */
-  public CDOLockState[] getLockStates(int viewID, Collection<CDOID> ids, int depth);
+  public CDOLockState[] getLockStates(int branchID, Collection<CDOID> ids, int depth);
 
   /**
    * @since 4.1

@@ -13,8 +13,6 @@ package org.eclipse.emf.internal.cdo.object;
 
 import org.eclipse.emf.cdo.CDOLock;
 import org.eclipse.emf.cdo.CDOObject;
-import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
-import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.util.LockTimeoutException;
 
 import org.eclipse.net4j.util.WrappedException;
@@ -177,9 +175,8 @@ public class CDOLockImpl implements CDOLock
 
   private boolean isLocked(boolean others)
   {
-    CDOLockState lockState = object.cdoLockState();
-    CDOLockOwner owner = object.cdoView().getLockOwner();
-    return lockState.isLocked(type, owner, others);
+    InternalCDOView view = object.cdoView();
+    return view.isObjectLocked(object, type, others);
   }
 
   /**

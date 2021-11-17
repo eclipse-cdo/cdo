@@ -303,19 +303,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
   protected final Map<CDOID, InternalCDOObject> getModifiableObjects()
   {
-    synchronized (getViewMonitor())
-    {
-      lockView();
-
-      try
-      {
-        return objects;
-      }
-      finally
-      {
-        unlockView();
-      }
-    }
+    return objects;
   }
 
   public int purgeUnusedObjects()
@@ -1945,21 +1933,9 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
   protected void excludeNewObject(CDOID id)
   {
-    synchronized (getViewMonitor())
+    if (isObjectNew(id))
     {
-      lockView();
-
-      try
-      {
-        if (isObjectNew(id))
-        {
-          throw new ObjectNotFoundException(id, this);
-        }
-      }
-      finally
-      {
-        unlockView();
-      }
+      throw new ObjectNotFoundException(id, this);
     }
   }
 
@@ -2706,7 +2682,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   }
 
   @Override
-  public void remapObject(CDOID oldID)
+  public final void remapObject(CDOID oldID)
   {
     synchronized (getViewMonitor())
     {
@@ -2714,7 +2690,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
       try
       {
-        remapObjectSynced(oldID);
+        remapObjectUnsynced(oldID);
       }
       finally
       {
@@ -2723,7 +2699,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
-  protected InternalCDOObject remapObjectSynced(CDOID oldID)
+  protected InternalCDOObject remapObjectUnsynced(CDOID oldID)
   {
     InternalCDOObject object = objects.remove(oldID);
     CDOID newID = object.cdoID();

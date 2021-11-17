@@ -3,6 +3,12 @@
     <resource path="META-INF/MANIFEST.MF">
         <filter id="923795461">
             <message_arguments>
+                <message_argument value="4.15.0"/>
+                <message_argument value="4.14.2"/>
+            </message_arguments>
+        </filter>
+        <filter id="923795461">
+            <message_arguments>
                 <message_argument value="4.2.0"/>
                 <message_argument value="4.1.0"/>
             </message_arguments>
@@ -107,6 +113,22 @@
             <message_arguments>
                 <message_argument value="org.eclipse.emf.cdo.spi.common.id.AbstractCDOIDString"/>
                 <message_argument value="org.eclipse.emf.cdo.common_4.2.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/common/CDOCommonTransaction.java" type="org.eclipse.emf.cdo.common.CDOCommonTransaction">
+        <filter id="404791350">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.common.CDOCommonTransaction"/>
+                <message_argument value="org.eclipse.emf.cdo.common.lock.CDOLockOwner"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/common/CDOCommonView.java" type="org.eclipse.emf.cdo.common.CDOCommonView">
+        <filter id="404791350">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.common.CDOCommonView"/>
+                <message_argument value="org.eclipse.emf.cdo.common.lock.CDOLockOwner"/>
             </message_arguments>
         </filter>
     </resource>
@@ -432,6 +454,20 @@
         <filter id="404791350">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.cdo.spi.common.id.InternalCDOIDObject"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/spi/common/lock/AbstractCDOLockState.java" type="org.eclipse.emf.cdo.spi.common.lock.AbstractCDOLockState">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="CDOLockState"/>
+                <message_argument value="AbstractCDOLockState"/>
+            </message_arguments>
+        </filter>
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="InternalCDOLockState"/>
+                <message_argument value="AbstractCDOLockState"/>
             </message_arguments>
         </filter>
     </resource>

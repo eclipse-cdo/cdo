@@ -60,6 +60,7 @@ import org.eclipse.emf.cdo.view.CDOStaleReferencePolicy;
 import org.eclipse.emf.cdo.view.CDOUnitManager;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.emf.internal.cdo.session.CDOLockStateCache;
 import org.eclipse.emf.internal.cdo.session.SessionUtil;
 import org.eclipse.emf.internal.cdo.view.AbstractCDOView;
 
@@ -364,7 +365,14 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
   }
 
   @Override
+  @Deprecated
   public void updateLockStates(CDOLockState[] newLockStates, boolean loadObjectsOnDemand, Consumer<CDOLockState> consumer)
+  {
+    // Do nothing
+  }
+
+  @Override
+  public void updateLockStates(Collection<? extends CDOLockState> newLockStates, boolean loadObjectsOnDemand, Consumer<CDOLockState> consumer)
   {
     // Do nothing
   }
@@ -617,6 +625,12 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
   }
 
   @Override
+  public CDOLockState[] getLockStates(Collection<CDOID> ids, boolean loadOnDemand)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
   public CDOUnitManager getUnitManager()
   {
     throw new UnsupportedOperationException();
@@ -731,6 +745,12 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     public CDOView getView(int viewID)
     {
       return viewID == getViewID() ? ServerCDOView.this : null;
+    }
+
+    @Override
+    public CDOLockStateCache getLockStateCache()
+    {
+      throw new UnsupportedOperationException();
     }
 
     @Override
@@ -1533,6 +1553,18 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
 
     @Override
     public void setPassiveUpdateMode(PassiveUpdateMode mode)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean isLockNotificationEnabled()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void setLockNotificationEnabled(boolean enabled)
     {
       throw new UnsupportedOperationException();
     }

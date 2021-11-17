@@ -274,6 +274,39 @@ public class Session extends Container<IView> implements InternalSession
   }
 
   @Override
+  public boolean isLockNotificationEnabled()
+  {
+    switch (lockNotificationMode)
+    {
+    case ALWAYS:
+      return true;
+
+    case OFF:
+      return false;
+
+    case IF_REQUIRED_BY_VIEWS:
+      for (InternalView view : getViews())
+      {
+        if (view.options().isLockNotificationEnabled())
+        {
+          return true;
+        }
+      }
+
+      return false;
+
+    default:
+      throw new IllegalStateException("Invalid lock notification mode: " + lockNotificationMode);
+    }
+  }
+
+  @Override
+  public void setLockNotificationEnabled(boolean enabled)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
   public LockNotificationMode getLockNotificationMode()
   {
     return lockNotificationMode;
@@ -731,7 +764,7 @@ public class Session extends Container<IView> implements InternalSession
       {
         Map<CDOID, LockGrade> locks = lockingManager.getLocks(view);
 
-        for (CDOLockState lockState : lockChangeInfo.getLockStates())
+        for (CDOLockState lockState : lockChangeInfo.getNewLockStates())
         {
           Object lockedObject = lockState.getLockedObject();
           CDOID id = CDOLockUtil.getLockedObjectID(lockedObject);

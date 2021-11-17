@@ -307,11 +307,11 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
       writeEnum(lockChangeInfo.getOperation());
       writeCDOLockType(lockChangeInfo.getLockType());
 
-      CDOLockState[] lockStates = lockChangeInfo.getLockStates();
+      Collection<CDOLockState> lockStates = lockChangeInfo.getNewLockStates();
 
       if (filter != null)
       {
-        List<CDOLockState> filtered = new ArrayList<>(lockStates.length);
+        List<CDOLockState> filtered = new ArrayList<>(lockStates.size());
         for (CDOLockState lockState : lockStates)
         {
           Object lockedObject = lockState.getLockedObject();
@@ -330,7 +330,7 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
       }
       else
       {
-        writeXInt(lockStates.length);
+        writeXInt(lockStates.size());
         for (CDOLockState lockState : lockStates)
         {
           writeCDOLockState(lockState);

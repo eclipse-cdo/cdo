@@ -25,16 +25,16 @@ import java.util.Collection;
  */
 public class LockStateRequest extends CDOClientRequest<CDOLockState[]>
 {
-  private int viewID;
+  private int branchID;
 
   private Collection<CDOID> ids;
 
   private int prefetchDepth;
 
-  public LockStateRequest(CDOClientProtocol protocol, int viewID, Collection<CDOID> ids, int prefetchDepth)
+  public LockStateRequest(CDOClientProtocol protocol, int branchID, Collection<CDOID> ids, int prefetchDepth)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_LOCK_STATE);
-    this.viewID = viewID;
+    this.branchID = branchID;
     this.ids = ids;
     this.prefetchDepth = prefetchDepth;
   }
@@ -42,7 +42,7 @@ public class LockStateRequest extends CDOClientRequest<CDOLockState[]>
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
-    out.writeXInt(viewID);
+    out.writeXInt(branchID);
 
     if (prefetchDepth == CDOLockState.DEPTH_NONE)
     {
@@ -76,6 +76,6 @@ public class LockStateRequest extends CDOClientRequest<CDOLockState[]>
   @Override
   protected String getAdditionalInfo()
   {
-    return MessageFormat.format("viewID={0}, ids={1}, prefetchDepth={2}", viewID, ids, prefetchDepth);
+    return MessageFormat.format("branchID={0}, ids={1}, prefetchDepth={2}", branchID, ids, prefetchDepth);
   }
 }

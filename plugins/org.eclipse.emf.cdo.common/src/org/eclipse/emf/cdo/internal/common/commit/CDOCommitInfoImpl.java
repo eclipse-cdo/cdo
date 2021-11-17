@@ -145,7 +145,6 @@ public class CDOCommitInfoImpl extends CDOBranchPointImpl implements CDOCommitIn
   @Override
   public boolean isInitialCommit()
   {
-    int xxx;
     return CDOCommonUtil.SYSTEM_USER_ID.equals(userID);
   }
 

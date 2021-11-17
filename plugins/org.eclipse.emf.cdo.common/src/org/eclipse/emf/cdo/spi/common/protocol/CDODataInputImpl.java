@@ -55,7 +55,6 @@ import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.internal.common.commit.CDOChangeSetDataImpl;
 import org.eclipse.emf.cdo.internal.common.commit.FailureCommitInfo;
 import org.eclipse.emf.cdo.internal.common.lock.CDOLockAreaImpl;
-import org.eclipse.emf.cdo.internal.common.lock.CDOLockChangeInfoImpl;
 import org.eclipse.emf.cdo.internal.common.lock.CDOLockStateImpl;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
 import org.eclipse.emf.cdo.internal.common.revision.CDOIDAndBranchImpl;
@@ -343,13 +342,14 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     LockType lockType = readCDOLockType();
 
     int n = readXInt();
-    CDOLockState[] lockStates = new CDOLockState[n];
+    List<CDOLockState> lockStates = new ArrayList<>(n);
+
     for (int i = 0; i < n; i++)
     {
-      lockStates[i] = readCDOLockState();
+      lockStates.add(readCDOLockState());
     }
 
-    return new CDOLockChangeInfoImpl(branchPoint, lockOwner, lockStates, operation, lockType);
+    return CDOLockUtil.createLockChangeInfo(branchPoint, lockOwner, operation, lockType, lockStates);
   }
 
   @Override

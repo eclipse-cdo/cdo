@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
 
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
@@ -30,9 +31,11 @@ import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.function.Predicate;
@@ -80,8 +83,6 @@ public class CDOLockStatePrefetcher
 
   private final InternalCDOView view;
 
-  private final Map<CDOObject, CDOLockState> viewLockStates;
-
   private final boolean asyncUpdate;
 
   private boolean updateOtherViews;
@@ -92,8 +93,6 @@ public class CDOLockStatePrefetcher
   {
     this.view = (InternalCDOView)view;
     this.asyncUpdate = asyncUpdate;
-
-    viewLockStates = ((CDOViewImpl)view).getLockStates();
 
     view.addListener(viewListener);
     view.getSession().getRevisionManager().addListener(revisionManagerListener);
@@ -147,7 +146,13 @@ public class CDOLockStatePrefetcher
 
   protected final CDOLockState getLockState(CDOObject object)
   {
-    return viewLockStates.get(object);
+    CDOLockState[] lockStates = view.getLockStates(Collections.singleton(object.cdoID()), false);
+    if (!ObjectUtil.isEmpty(lockStates))
+    {
+      return lockStates[0];
+    }
+
+    return null;
   }
 
   private void addMissingLockState(CDOObject object, List<CDOLockState> missingLockStates)
@@ -203,9 +208,9 @@ public class CDOLockStatePrefetcher
         {
           // Direct call the session protocol.
           CDOSessionProtocol sessionProtocol = view.getSession().getSessionProtocol();
-          CDOLockState[] loadedLockStates = sessionProtocol.getLockStates(view.getViewID(), ids, event.getPrefetchDepth());
+          CDOLockState[] loadedLockStates = sessionProtocol.getLockStates(view.getBranch().getID(), ids, event.getPrefetchDepth());
 
-          updateLockStates(loadedLockStates, true);
+          updateLockStates(Arrays.asList(loadedLockStates), true);
 
           // Add missing lock states.
           List<CDOLockState> missingLockStates = new ArrayList<>();
@@ -247,7 +252,7 @@ public class CDOLockStatePrefetcher
             }
           }
 
-          updateLockStates(missingLockStates.toArray(new CDOLockState[missingLockStates.size()]), false);
+          updateLockStates(missingLockStates, false);
         }
       }
       catch (Exception ex)
@@ -260,7 +265,7 @@ public class CDOLockStatePrefetcher
     });
   }
 
-  private void updateLockStates(CDOLockState[] lockStates, boolean loadOnDemand)
+  private void updateLockStates(Collection<? extends CDOLockState> lockStates, boolean loadOnDemand)
   {
     try
     {
@@ -291,7 +296,7 @@ public class CDOLockStatePrefetcher
     }
   }
 
-  private void updateLockStatesForOtherView(CDOLockState[] lockStates, boolean loadOnDemand, InternalCDOView otherview)
+  private void updateLockStatesForOtherView(Collection<? extends CDOLockState> lockStates, boolean loadOnDemand, InternalCDOView otherview)
   {
     try
     {

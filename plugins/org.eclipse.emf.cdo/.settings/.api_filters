@@ -3,6 +3,12 @@
     <resource path="META-INF/MANIFEST.MF">
         <filter id="923795461">
             <message_arguments>
+                <message_argument value="4.15.0"/>
+                <message_argument value="4.14.1"/>
+            </message_arguments>
+        </filter>
+        <filter id="923795461">
+            <message_arguments>
                 <message_argument value="4.6.0"/>
                 <message_argument value="4.5.0"/>
             </message_arguments>
@@ -326,6 +332,12 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/transaction/CDOPushTransaction.java" type="org.eclipse.emf.cdo.transaction.CDOPushTransaction">
+        <filter id="337682486">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.transaction.CDOPushTransaction"/>
+                <message_argument value="org.eclipse.emf.cdo.common.lock.CDOLockOwner"/>
+            </message_arguments>
+        </filter>
         <filter id="574660632">
             <message_arguments>
                 <message_argument value="CDOTransaction"/>
@@ -356,6 +368,12 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/transaction/CDOTransaction.java" type="org.eclipse.emf.cdo.transaction.CDOTransaction">
+        <filter id="404791350">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransaction"/>
+                <message_argument value="org.eclipse.emf.cdo.common.lock.CDOLockOwner"/>
+            </message_arguments>
+        </filter>
         <filter id="571473929">
             <message_arguments>
                 <message_argument value="CDOChangeSetDataProvider"/>
@@ -415,6 +433,12 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/view/CDOView.java" type="org.eclipse.emf.cdo.view.CDOView">
+        <filter id="404791350">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.view.CDOView"/>
+                <message_argument value="org.eclipse.emf.cdo.common.lock.CDOLockOwner"/>
+            </message_arguments>
+        </filter>
         <filter id="571473929">
             <message_arguments>
                 <message_argument value="CDOCommonView"/>
@@ -838,6 +862,22 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/internal/cdo/session/CDOLockStateCache.java" type="org.eclipse.emf.internal.cdo.session.CDOLockStateCache$LockState">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="AbstractCDOLockState"/>
+                <message_argument value="LockState"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/internal/cdo/session/CDOLockStateCache.java" type="org.eclipse.emf.internal.cdo.session.CDOLockStateCache$MutableLockState">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="InternalCDOLockState"/>
+                <message_argument value="MutableLockState"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/internal/cdo/session/CDOSessionImpl.java" type="org.eclipse.emf.internal.cdo.session.CDOSessionImpl">
         <filter id="574668824">
             <message_arguments>
@@ -1040,11 +1080,36 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/spi/cdo/InternalCDOSession.java" type="org.eclipse.emf.spi.cdo.InternalCDOSession">
+        <filter id="643842064">
+            <message_arguments>
+                <message_argument value="CDOLockStateCache"/>
+                <message_argument value="InternalCDOSession"/>
+                <message_argument value="getLockStateCache()"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/spi/cdo/InternalCDOSessionInvalidationEvent.java" type="org.eclipse.emf.spi.cdo.InternalCDOSessionInvalidationEvent">
         <filter id="576778288">
             <message_arguments>
                 <message_argument value="CDOSessionInvalidationEvent"/>
                 <message_argument value="InternalCDOSessionInvalidationEvent"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/spi/cdo/InternalCDOTransaction.java" type="org.eclipse.emf.spi.cdo.InternalCDOTransaction">
+        <filter id="404791350">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.spi.cdo.InternalCDOTransaction"/>
+                <message_argument value="org.eclipse.emf.cdo.common.lock.CDOLockOwner"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/spi/cdo/InternalCDOView.java" type="org.eclipse.emf.spi.cdo.InternalCDOView">
+        <filter id="404791350">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.spi.cdo.InternalCDOView"/>
+                <message_argument value="org.eclipse.emf.cdo.common.lock.CDOLockOwner"/>
             </message_arguments>
         </filter>
     </resource>

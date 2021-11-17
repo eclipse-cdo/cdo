@@ -12,9 +12,12 @@ package org.eclipse.net4j.util.collection;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 
 /**
@@ -57,6 +60,20 @@ public final class CollectionUtil
   /**
    * @since 3.16
    */
+  @SuppressWarnings("unchecked")
+  public static <T> Set<T> setOf(Collection<? extends T> c)
+  {
+    if (c instanceof Set)
+    {
+      return (Set<T>)c;
+    }
+
+    return new HashSet<>(c);
+  }
+
+  /**
+   * @since 3.16
+   */
   public static <K, V> List<K> removeAll(Map<K, V> map, BiPredicate<K, V> predicate)
   {
     List<K> keys = new ArrayList<>();
@@ -78,5 +95,42 @@ public final class CollectionUtil
     }
 
     return keys;
+  }
+
+  /**
+   * @since 3.16
+   */
+  public static <K, V> V compute(Map<K, V> map, K key, BiFunction<? super K, ? super V, ? extends V> remappingFunction)
+  {
+    try
+    {
+      return map.compute(key, remappingFunction);
+    }
+    catch (KeepMappedValue ex)
+    {
+      return ex.mappedValue();
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 3.16
+   */
+  public static final class KeepMappedValue extends RuntimeException
+  {
+    private static final long serialVersionUID = 1L;
+
+    private final transient Object mappedValue;
+
+    public KeepMappedValue(Object mappedValue)
+    {
+      this.mappedValue = mappedValue;
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T> T mappedValue()
+    {
+      return (T)mappedValue;
+    }
   }
 }

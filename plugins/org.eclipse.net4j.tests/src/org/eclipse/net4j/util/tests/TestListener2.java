@@ -10,6 +10,8 @@
  */
 package org.eclipse.net4j.util.tests;
 
+import org.eclipse.net4j.util.ReflectUtil;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
@@ -18,9 +20,9 @@ import org.junit.Assert;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,30 +43,35 @@ public class TestListener2 implements IListener
 
   private final Map<IEvent, Long> events = new LinkedHashMap<>();
 
-  private final String name;
+  private String name;
 
   private long timeout;
 
+  private boolean dumpEvents;
+
+  private boolean dumpThreads;
+
   public TestListener2(Collection<Class<? extends IEvent>> eventClasses)
   {
-    this(eventClasses, null);
-  }
-
-  public TestListener2(Class<? extends IEvent> eventClass)
-  {
-    this(singleton(eventClass));
-  }
-
-  public TestListener2(Collection<Class<? extends IEvent>> eventClasses, String name)
-  {
     this.eventClasses = eventClasses != null ? eventClasses : NO_EVENT_CLASSES;
-    this.name = name;
     timeout = DEFAULT_TIMEOUT;
   }
 
-  public TestListener2(Class<? extends IEvent> eventClass, String name)
+  @SafeVarargs
+  public TestListener2(Class<? extends IEvent>... eventClasses)
   {
-    this(singleton(eventClass), name);
+    this(Arrays.asList(eventClasses));
+  }
+
+  public String getName()
+  {
+    return name;
+  }
+
+  public TestListener2 setName(String name)
+  {
+    this.name = name;
+    return this;
   }
 
   public boolean isApplicable(IEvent event)
@@ -95,6 +102,23 @@ public class TestListener2 implements IListener
       if (timeStamp == NO_TIME_STAMP)
       {
         throw new IllegalStateException("Regular time stamp is equal to NO_TIME_STAMP");
+      }
+
+      StringBuilder builder = new StringBuilder();
+      if (dumpEvents)
+      {
+        builder.append(event);
+      }
+
+      if (dumpThreads)
+      {
+        StringUtil.appendSeparator(builder, "\n  ");
+        builder.append(ReflectUtil.dumpThread());
+      }
+
+      if (builder.length() != 0)
+      {
+        System.out.println(builder);
       }
 
       synchronized (this)
@@ -149,9 +173,27 @@ public class TestListener2 implements IListener
     return timeStamp;
   }
 
-  public void setTimeout(long timeout)
+  public TestListener2 setTimeout(long timeout)
   {
     this.timeout = timeout;
+    return this;
+  }
+
+  public boolean isDumpEvents()
+  {
+    return dumpEvents;
+  }
+
+  public boolean isDumpThreads()
+  {
+    return dumpThreads;
+  }
+
+  public TestListener2 dump(boolean dumpEvents, boolean dumpThreads)
+  {
+    this.dumpEvents = dumpEvents;
+    this.dumpThreads = dumpThreads;
+    return this;
   }
 
   public synchronized IEvent[] waitFor(int n, long timeout)
@@ -164,7 +206,8 @@ public class TestListener2 implements IListener
       {
         if (timeout <= 0)
         {
-          Assert.fail("Timed out");
+          Assert.fail("Waiting for " + n + " event" + (n == 1 ? "" : "s") + //
+              ", but received only " + events.size() + " event" + (events.size() == 1 ? "" : "s"));
         }
 
         try
@@ -277,10 +320,20 @@ public class TestListener2 implements IListener
     return count;
   }
 
-  private static Set<Class<? extends IEvent>> singleton(Class<? extends IEvent> eventClass)
+  public static <E extends IEvent> List<E> filterEvents(IEvent[] events, Class<E> eventClass)
   {
-    Set<Class<? extends IEvent>> singleton = new HashSet<>();
-    singleton.add(eventClass);
-    return singleton;
+    List<E> result = new ArrayList<>();
+    for (int i = 0; i < events.length; i++)
+    {
+      IEvent event = events[i];
+      if (eventClass.isInstance(event))
+      {
+        @SuppressWarnings("unchecked")
+        E e = (E)event;
+        result.add(e);
+      }
+    }
+
+    return result;
   }
 }

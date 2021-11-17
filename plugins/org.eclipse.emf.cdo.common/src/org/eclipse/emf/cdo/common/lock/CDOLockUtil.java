@@ -29,6 +29,8 @@ import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.concurrent.RWOLockManager.LockState;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Map;
 import java.util.Random;
 
@@ -85,9 +87,20 @@ public final class CDOLockUtil
     return null;
   }
 
-  public static CDOLockState createLockState(Object target)
+  /**
+   * @since 4.15
+   */
+  public static int indexOf(CDOLockOwner[] lockOwners, CDOLockOwner lockOwner)
   {
-    return new CDOLockStateImpl(target);
+    for (int i = 0; i < lockOwners.length; i++)
+    {
+      if (lockOwners[i] == lockOwner)
+      {
+        return i;
+      }
+    }
+
+    return -1;
   }
 
   public static CDOLockState copyLockState(CDOLockState lockState)
@@ -130,6 +143,11 @@ public final class CDOLockUtil
     return cdoLockState;
   }
 
+  public static CDOLockState createLockState(Object target)
+  {
+    return new CDOLockStateImpl(target);
+  }
+
   /**
    * @deprecated As of 4.15 use {@link #convertLockState(LockState)}.
    */
@@ -160,10 +178,23 @@ public final class CDOLockUtil
     return NormalCDOLockOwner.create(sessionID, viewID);
   }
 
+  /**
+   * @deprecated As of 4.15 use the faster {@link #createLockChangeInfo(CDOBranchPoint, CDOLockOwner, Operation, LockType, Collection)} method.
+   */
+  @Deprecated
   public static CDOLockChangeInfo createLockChangeInfo(long timestamp, CDOLockOwner lockOwner, CDOBranch branch, Operation op, LockType lockType,
       CDOLockState[] newLockStates)
   {
-    return new CDOLockChangeInfoImpl(branch.getPoint(timestamp), lockOwner, newLockStates, op, lockType);
+    return createLockChangeInfo(branch.getPoint(timestamp), lockOwner, op, lockType, Arrays.asList(newLockStates));
+  }
+
+  /**
+   * @since 4.15
+   */
+  public static CDOLockChangeInfo createLockChangeInfo(CDOBranchPoint branchPoint, CDOLockOwner lockOwner, Operation op, LockType lockType,
+      Collection<? extends CDOLockState> newLockStates)
+  {
+    return new CDOLockChangeInfoImpl(branchPoint, lockOwner, op, lockType, newLockStates);
   }
 
   public static CDOLockChangeInfo createLockChangeInfo()

@@ -270,7 +270,7 @@ public abstract class CDOViewContainerImpl extends Container<CDOView> implements
     synchronized (views)
     {
       view.setViewID(++lastViewID);
-      initViewSynced(view); // Must be called before setting the view provider!
+      initViewUnsynced(view); // Must be called before setting the view provider!
 
       CDOViewProvider viewProvider = VIEW_PROVIDER.get();
       if (viewProvider != null)
@@ -304,7 +304,7 @@ public abstract class CDOViewContainerImpl extends Container<CDOView> implements
     }
   }
 
-  protected void initViewSynced(InternalCDOView view)
+  protected void initViewUnsynced(InternalCDOView view)
   {
   }
 

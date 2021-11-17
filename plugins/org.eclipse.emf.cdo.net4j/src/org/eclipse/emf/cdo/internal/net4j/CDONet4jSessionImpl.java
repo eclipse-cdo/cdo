@@ -268,6 +268,7 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
     }
 
     super.doActivate();
+
     CDORepositoryInfo repository = getRepositoryInfo();
     CDOSessionProtocol sessionProtocol = getSessionProtocol();
 
@@ -302,6 +303,8 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
       branchManager.setTagModCount(result.getTagModCount());
       branchManager.activate();
     }
+
+    doActivateAfterBranchManager();
 
     InternalCDOCommitInfoManager commitInfoManager = getCommitInfoManager();
     if (commitInfoManager == null)

@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 
+import java.util.List;
+
 /**
  * Represents a change in the lock state of a set of objects. Instances are meant to be sent from the server to the
  * client for the purpose of notifying the latter.
@@ -62,8 +64,15 @@ public interface CDOLockChangeInfo extends CDOBranchPoint
 
   /**
    * @return The new lock states of the objects that were affected by the change
+   * @deprecated As of 4.15 use the faster {@link #getNewLockStates()} method.
    */
+  @Deprecated
   public CDOLockState[] getLockStates();
+
+  /**
+   * @since 4.15
+   */
+  public List<CDOLockState> getNewLockStates();
 
   /**
    * Enumerates the possible locking operations.

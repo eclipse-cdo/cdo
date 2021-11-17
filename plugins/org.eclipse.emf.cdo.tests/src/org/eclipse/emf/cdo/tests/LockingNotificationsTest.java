@@ -146,7 +146,7 @@ public class LockingNotificationsTest extends AbstractLockingTest
     session2.close();
   }
 
-  public void testLockStateNewAndTransient() throws Exception
+  public void testLockStateTransientAndNew() throws Exception
   {
     Company company1 = getModel1Factory().createCompany();
     CDOObject cdoObj = CDOUtil.getCDOObject(company1);
@@ -174,6 +174,33 @@ public class LockingNotificationsTest extends AbstractLockingTest
     assertNull(cdoObj.cdoLockState());
 
     session1.close();
+  }
+
+  public void testEventForNewObjects() throws Exception
+  {
+    CDOObject company = CDOUtil.getCDOObject(getModel1Factory().createCompany());
+    assertTransient(company);
+    assertNull(company.cdoLockState());
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("r1"));
+    resource.getContents().add(company);
+    assertNew(company, transaction);
+
+    TestListener2 listener = new TestListener2(CDOViewLocksChangedEvent.class);
+    transaction.addListener(listener);
+
+    lockWrite(company);
+    assertWriteLock(true, company);
+
+    listener.waitFor(1);
+    listener.clearEvents();
+
+    unlockWrite(company);
+    assertWriteLock(false, company);
+
+    listener.waitFor(1);
   }
 
   private CDOView openViewWithLockNotifications(CDOSession session, CDOBranch branch)
@@ -260,17 +287,17 @@ public class LockingNotificationsTest extends AbstractLockingTest
 
   private void withExplicitRelease(CDOSession session1, CDOView controlView, boolean mustReceiveNotifications) throws Exception
   {
-    TestListener2 controlViewListener = new TestListener2(CDOViewLocksChangedEvent.class);
+    TestListener2 controlViewListener = new TestListener2(CDOViewLocksChangedEvent.class).dump(true, true);
     controlView.addListener(controlViewListener);
 
-    CDOTransaction tx1 = session1.openTransaction();
-    CDOResource res1 = tx1.getOrCreateResource(getResourcePath("r1"));
+    CDOTransaction transaction1 = session1.openTransaction();
+    CDOResource res1 = transaction1.getOrCreateResource(getResourcePath("r1"));
     TestListener2 transactionListener = new TestListener2(CDOViewLocksChangedEvent.class);
-    tx1.addListener(transactionListener);
+    transaction1.addListener(transactionListener);
     res1.getContents().clear();
     Company company = getModel1Factory().createCompany();
     res1.getContents().add(company);
-    tx1.commit();
+    transaction1.commit();
 
     CDOObject cdoCompany = CDOUtil.getCDOObject(company);
     CDOObject cdoCompanyInControlView = null;
@@ -283,36 +310,38 @@ public class LockingNotificationsTest extends AbstractLockingTest
 
     cdoCompany.cdoWriteLock().lock();
     waitForActiveLockNotifications();
+
     if (mustReceiveNotifications)
     {
       IEvent[] events = controlViewListener.waitFor(1);
       assertEquals(1, events.length);
 
       CDOViewLocksChangedEvent event = (CDOViewLocksChangedEvent)controlViewListener.getEvents().get(0);
-      assertLockOwner(tx1, event.getLockOwner());
+      assertLockOwner(transaction1, event.getLockOwner());
 
-      CDOLockState[] lockStates = event.getLockStates();
-      assertEquals(1, lockStates.length);
-      assertLockedObject(cdoCompany, lockStates[0]);
-      assertLockOwner(tx1, lockStates[0].getWriteLockOwner());
-      assertEquals(cdoCompanyInControlView.cdoLockState(), lockStates[0]);
+      List<CDOLockState> lockStates = event.getNewLockStates();
+      assertEquals(1, lockStates.size());
+      assertLockedObject(cdoCompany, lockStates.get(0));
+      assertLockOwner(transaction1, lockStates.get(0).getWriteLockOwner());
+      assertEquals(cdoCompanyInControlView.cdoLockState(), lockStates.get(0));
     }
 
     cdoCompany.cdoWriteLock().unlock();
     waitForActiveLockNotifications();
+
     if (mustReceiveNotifications)
     {
       IEvent[] events = controlViewListener.waitFor(2);
       assertEquals(2, events.length);
 
       CDOViewLocksChangedEvent event = (CDOViewLocksChangedEvent)controlViewListener.getEvents().get(1);
-      assertLockOwner(tx1, event.getLockOwner());
+      assertLockOwner(transaction1, event.getLockOwner());
 
-      CDOLockState[] lockStates = event.getLockStates();
-      assertEquals(1, lockStates.length);
-      assertLockedObject(cdoCompany, lockStates[0]);
-      assertNull(lockStates[0].getWriteLockOwner());
-      assertEquals(cdoCompanyInControlView.cdoLockState(), lockStates[0]);
+      List<CDOLockState> lockStates = event.getNewLockStates();
+      assertEquals(1, lockStates.size());
+      assertLockedObject(cdoCompany, lockStates.get(0));
+      assertNull(lockStates.get(0).getWriteLockOwner());
+      assertEquals(cdoCompanyInControlView.cdoLockState(), lockStates.get(0));
     }
 
     /* Test read lock */
@@ -325,15 +354,15 @@ public class LockingNotificationsTest extends AbstractLockingTest
       assertEquals(3, events.length);
 
       CDOViewLocksChangedEvent event = (CDOViewLocksChangedEvent)controlViewListener.getEvents().get(2);
-      assertLockOwner(tx1, event.getLockOwner());
+      assertLockOwner(transaction1, event.getLockOwner());
 
-      CDOLockState[] lockStates = event.getLockStates();
-      assertEquals(1, lockStates.length);
-      assertLockedObject(cdoCompany, lockStates[0]);
-      assertEquals(1, lockStates[0].getReadLockOwners().size());
-      CDOLockOwner tx1Lo = CDOLockUtil.createLockOwner(tx1);
-      assertEquals(true, lockStates[0].getReadLockOwners().contains(tx1Lo));
-      assertEquals(cdoCompanyInControlView.cdoLockState(), lockStates[0]);
+      List<CDOLockState> lockStates = event.getNewLockStates();
+      assertEquals(1, lockStates.size());
+      assertLockedObject(cdoCompany, lockStates.get(0));
+      assertEquals(1, lockStates.get(0).getReadLockOwners().size());
+      CDOLockOwner tx1Lo = CDOLockUtil.createLockOwner(transaction1);
+      assertEquals(true, lockStates.get(0).getReadLockOwners().contains(tx1Lo));
+      assertEquals(cdoCompanyInControlView.cdoLockState(), lockStates.get(0));
     }
 
     cdoCompany.cdoReadLock().unlock();
@@ -344,12 +373,12 @@ public class LockingNotificationsTest extends AbstractLockingTest
       assertEquals(4, events.length);
 
       CDOViewLocksChangedEvent event = (CDOViewLocksChangedEvent)controlViewListener.getEvents().get(3);
-      assertLockOwner(tx1, event.getLockOwner());
+      assertLockOwner(transaction1, event.getLockOwner());
 
-      CDOLockState[] lockStates = event.getLockStates();
-      assertEquals(1, lockStates.length);
-      assertEquals(0, lockStates[0].getReadLockOwners().size());
-      assertEquals(cdoCompanyInControlView.cdoLockState(), lockStates[0]);
+      List<CDOLockState> lockStates = event.getNewLockStates();
+      assertEquals(1, lockStates.size());
+      assertEquals(0, lockStates.get(0).getReadLockOwners().size());
+      assertEquals(cdoCompanyInControlView.cdoLockState(), lockStates.get(0));
     }
 
     /* Test write option */
@@ -362,13 +391,13 @@ public class LockingNotificationsTest extends AbstractLockingTest
       assertEquals(5, events.length);
 
       CDOViewLocksChangedEvent event = (CDOViewLocksChangedEvent)controlViewListener.getEvents().get(4);
-      assertLockOwner(tx1, event.getLockOwner());
+      assertLockOwner(transaction1, event.getLockOwner());
 
-      CDOLockState[] lockStates = event.getLockStates();
-      assertEquals(1, lockStates.length);
-      assertLockedObject(cdoCompany, lockStates[0]);
-      assertLockOwner(tx1, lockStates[0].getWriteOptionOwner());
-      assertEquals(cdoCompanyInControlView.cdoLockState(), lockStates[0]);
+      List<CDOLockState> lockStates = event.getNewLockStates();
+      assertEquals(1, lockStates.size());
+      assertLockedObject(cdoCompany, lockStates.get(0));
+      assertLockOwner(transaction1, lockStates.get(0).getWriteOptionOwner());
+      assertEquals(cdoCompanyInControlView.cdoLockState(), lockStates.get(0));
     }
 
     cdoCompany.cdoWriteOption().unlock();
@@ -379,13 +408,13 @@ public class LockingNotificationsTest extends AbstractLockingTest
       assertEquals(6, events.length);
 
       CDOViewLocksChangedEvent event = (CDOViewLocksChangedEvent)controlViewListener.getEvents().get(5);
-      assertLockOwner(tx1, event.getLockOwner());
+      assertLockOwner(transaction1, event.getLockOwner());
 
-      CDOLockState[] lockStates = event.getLockStates();
-      assertEquals(1, lockStates.length);
-      assertLockedObject(cdoCompany, lockStates[0]);
-      assertNull(lockStates[0].getWriteOptionOwner());
-      assertEquals(cdoCompanyInControlView.cdoLockState(), lockStates[0]);
+      List<CDOLockState> lockStates = event.getNewLockStates();
+      assertEquals(1, lockStates.size());
+      assertLockedObject(cdoCompany, lockStates.get(0));
+      assertNull(lockStates.get(0).getWriteOptionOwner());
+      assertEquals(cdoCompanyInControlView.cdoLockState(), lockStates.get(0));
     }
 
     List<IEvent> events = transactionListener.getEvents();

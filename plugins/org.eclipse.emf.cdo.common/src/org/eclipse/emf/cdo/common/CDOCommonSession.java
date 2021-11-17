@@ -101,6 +101,16 @@ public interface CDOCommonSession extends IAdaptable, IUserAware, IOptionsContai
     public void setPassiveUpdateMode(PassiveUpdateMode mode);
 
     /**
+     * @since 4.15
+     */
+    public boolean isLockNotificationEnabled();
+
+    /**
+     * @since 4.15
+     */
+    public void setLockNotificationEnabled(boolean enabled);
+
+    /**
      * @since 4.1
      */
     public LockNotificationMode getLockNotificationMode();
@@ -192,6 +202,19 @@ public interface CDOCommonSession extends IAdaptable, IUserAware, IOptionsContai
       public LockNotificationMode getOldMode();
 
       public LockNotificationMode getNewMode();
+    }
+
+    /**
+     * An {@link IOptionsEvent options event} fired when the {@link LockNotificationMode lock notification mode} of a
+     * CDO session has changed.
+     *
+     * @since 4.15
+     */
+    public interface LockNotificationEvent extends LockNotificationModeEvent
+    {
+      public boolean getOldEnabled();
+
+      public boolean getNewEnabled();
     }
   }
 }

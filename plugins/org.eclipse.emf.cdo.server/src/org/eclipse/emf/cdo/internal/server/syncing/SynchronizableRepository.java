@@ -380,7 +380,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
       view = SyncingUtil.openViewWithLockArea(replicatorSession, lockManager, viewedBranch, durableLockingID);
       List<Object> lockables = new LinkedList<>();
 
-      for (CDOLockState lockState : lockChangeInfo.getLockStates())
+      for (CDOLockState lockState : lockChangeInfo.getNewLockStates())
       {
         lockables.add(lockState.getLockedObject());
       }

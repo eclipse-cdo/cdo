@@ -66,6 +66,8 @@ public interface InternalCDOLockState extends CDOLockState
 
   /**
    * @since 4.2
+   * @deprecated As of 4.15 no longer used.
    */
+  @Deprecated
   public void dispose();
 }

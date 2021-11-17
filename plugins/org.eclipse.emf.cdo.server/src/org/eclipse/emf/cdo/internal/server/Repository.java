@@ -33,6 +33,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lob.CDOLobHandler;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo.Operation;
+import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
@@ -145,6 +146,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -169,6 +171,8 @@ import java.util.stream.Collectors;
  */
 public class Repository extends Container<Object> implements InternalRepository
 {
+  public static final CDOLockState[] NO_LOCK_STATES = new CDOLockState[0];
+
   private static final int UNCHUNKED = CDORevision.UNCHUNKED;
 
   private static final int NONE = CDORevision.DEPTH_NONE;
@@ -2307,7 +2311,7 @@ public class Repository extends Container<Object> implements InternalRepository
     }
     catch (TimeoutRuntimeException ex)
     {
-      return new LockObjectsResult(false, true, false, 0, new CDORevisionKey[0], new CDOLockState[0], getTimeStamp());
+      return new LockObjectsResult(false, true, false, 0, new CDORevisionKey[0], NO_LOCK_STATES, getTimeStamp());
     }
     catch (InterruptedException ex)
     {
@@ -2335,14 +2339,15 @@ public class Repository extends Container<Object> implements InternalRepository
     if (staleNoUpdate)
     {
       getLockingManager().unlock2(true, type, view, lockables, recursive);
-      return new LockObjectsResult(false, false, false, requiredTimestamp[0], staleRevisionsArray, new CDOLockState[0], getTimeStamp());
+      return new LockObjectsResult(false, false, false, requiredTimestamp[0], staleRevisionsArray, NO_LOCK_STATES, getTimeStamp());
     }
 
-    CDOLockState[] cdoLockStates = toCDOLockStates(newLockStates);
+    CDOLockState[] array = toCDOLockStates(newLockStates);
+    List<CDOLockState> cdoLockStates = Arrays.asList(array);
     sendLockNotifications(view, Operation.LOCK, type, cdoLockStates);
 
     boolean waitForUpdate = staleRevisionsArray.length > 0;
-    return new LockObjectsResult(true, false, waitForUpdate, requiredTimestamp[0], staleRevisionsArray, cdoLockStates, getTimeStamp());
+    return new LockObjectsResult(true, false, waitForUpdate, requiredTimestamp[0], staleRevisionsArray, array, getTimeStamp());
   }
 
   private CDORevisionKey[] checkStaleRevisions(InternalView view, List<CDORevisionKey> revisionKeys, List<Object> objectsToLock, LockType lockType,
@@ -2379,15 +2384,18 @@ public class Repository extends Container<Object> implements InternalRepository
     return staleRevisionsArray;
   }
 
-  private void sendLockNotifications(IView view, Operation operation, LockType lockType, CDOLockState[] cdoLockStates)
+  private void sendLockNotifications(IView view, Operation operation, LockType lockType, Collection<? extends CDOLockState> cdoLockStates)
   {
-    long timestamp = getTimeStamp();
-    CDOLockChangeInfo lockChangeInfo = CDOLockUtil.createLockChangeInfo(timestamp, view, view.getBranch(), operation, lockType, cdoLockStates);
-    getSessionManager().sendLockNotification((InternalSession)view.getSession(), lockChangeInfo);
+    CDOBranchPoint branchPoint = view.getBranch().getPoint(getTimeStamp());
+    CDOLockOwner lockOwner = view.getLockOwner();
+    CDOLockChangeInfo lockChangeInfo = CDOLockUtil.createLockChangeInfo(branchPoint, lockOwner, operation, lockType, cdoLockStates);
+
+    InternalSession sender = (InternalSession)view.getSession();
+    sessionManager.sendLockNotification(sender, lockChangeInfo);
   }
 
   // TODO (CD) This doesn't really belong here.. but getting it into CDOLockUtil isn't possible
-  public static CDOLockState[] toCDOLockStates(List<LockState<Object, IView>> lockStates)
+  public static CDOLockState[] toCDOLockStates(Collection<? extends LockState<Object, IView>> lockStates)
   {
     CDOLockState[] cdoLockStates = new CDOLockState[lockStates.size()];
     int i = 0;
@@ -2433,7 +2441,7 @@ public class Repository extends Container<Object> implements InternalRepository
 
     long timestamp = getTimeStamp();
     CDOLockState[] cdoLockStates = toCDOLockStates(newLockStates);
-    sendLockNotifications(view, Operation.UNLOCK, lockType, cdoLockStates);
+    sendLockNotifications(view, Operation.UNLOCK, lockType, Arrays.asList(cdoLockStates));
 
     return new UnlockObjectsResult(cdoLockStates, timestamp);
   }

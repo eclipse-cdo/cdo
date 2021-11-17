@@ -31,6 +31,7 @@ import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.concurrent.RWOLockManager.LockState;
@@ -116,6 +117,24 @@ public class LockingManagerRestartTransactionTest extends AbstractLockingTest
     assertEquals(durableLockingID, actual);
   }
 
+  public void testEnableDurableLockingWithNewObject() throws Exception
+  {
+    CDOObject company = CDOUtil.getCDOObject(getModel1Factory().createCompany());
+    resource.getContents().add(company);
+    assertNew(company, transaction);
+
+    lockWrite(company);
+
+    CDOLockState lockState = company.cdoLockState();
+    assertEquals(transaction.getLockOwner(), lockState.getWriteLockOwner());
+
+    transaction.enableDurableLocking();
+    assertEquals(transaction.getLockOwner(), lockState.getWriteLockOwner());
+
+    transaction.disableDurableLocking(false);
+    assertEquals(transaction.getLockOwner(), lockState.getWriteLockOwner());
+  }
+
   public void testDisableDurableLocking() throws Exception
   {
     String durableLockingID = transaction.enableDurableLocking();
@@ -156,7 +175,7 @@ public class LockingManagerRestartTransactionTest extends AbstractLockingTest
     Company company = getModel1Factory().createCompany();
     resource.getContents().add(company);
     transaction.commit();
-    readLock(company);
+    lockRead(company);
 
     transaction.enableDurableLocking();
     assertReadLock(true, company);
@@ -232,7 +251,7 @@ public class LockingManagerRestartTransactionTest extends AbstractLockingTest
     transaction.commit();
 
     String durableLockingID = transaction.enableDurableLocking();
-    readLock(company);
+    lockRead(company);
 
     restart(durableLockingID);
 
@@ -246,7 +265,7 @@ public class LockingManagerRestartTransactionTest extends AbstractLockingTest
     resource.getContents().add(company);
     transaction.commit();
 
-    readLock(company);
+    lockRead(company);
     String durableLockingID = transaction.enableDurableLocking();
 
     restart(durableLockingID);
@@ -262,7 +281,7 @@ public class LockingManagerRestartTransactionTest extends AbstractLockingTest
     transaction.commit();
 
     String durableLockingID = transaction.enableDurableLocking();
-    writeLock(company);
+    lockWrite(company);
 
     restart(durableLockingID);
 
@@ -276,7 +295,7 @@ public class LockingManagerRestartTransactionTest extends AbstractLockingTest
     resource.getContents().add(company);
     transaction.commit();
 
-    writeLock(company);
+    lockWrite(company);
     String durableLockingID = transaction.enableDurableLocking();
 
     restart(durableLockingID);
@@ -292,7 +311,7 @@ public class LockingManagerRestartTransactionTest extends AbstractLockingTest
     transaction.commit();
 
     String durableLockingID = transaction.enableDurableLocking();
-    optionLock(company);
+    lockOption(company);
 
     restart(durableLockingID);
 
@@ -306,7 +325,7 @@ public class LockingManagerRestartTransactionTest extends AbstractLockingTest
     resource.getContents().add(company);
     transaction.commit();
 
-    optionLock(company);
+    lockOption(company);
     String durableLockingID = transaction.enableDurableLocking();
 
     restart(durableLockingID);
@@ -322,8 +341,8 @@ public class LockingManagerRestartTransactionTest extends AbstractLockingTest
     transaction.commit();
 
     String durableLockingID = transaction.enableDurableLocking();
-    readLock(company);
-    writeLock(company);
+    lockRead(company);
+    lockWrite(company);
 
     restart(durableLockingID);
 
@@ -337,8 +356,8 @@ public class LockingManagerRestartTransactionTest extends AbstractLockingTest
     resource.getContents().add(company);
     transaction.commit();
 
-    readLock(company);
-    writeLock(company);
+    lockRead(company);
+    lockWrite(company);
     String durableLockingID = transaction.enableDurableLocking();
 
     restart(durableLockingID);
@@ -355,15 +374,15 @@ public class LockingManagerRestartTransactionTest extends AbstractLockingTest
 
     String durableLockingID = transaction.enableDurableLocking();
 
-    readLock(company);
+    lockRead(company);
     assertReadLock(true, company);
     assertWriteLock(false, company);
 
-    writeLock(company);
+    lockWrite(company);
     assertReadLock(true, company);
     assertWriteLock(true, company);
 
-    writeUnlock(company);
+    unlockWrite(company);
     assertReadLock(true, company);
     assertWriteLock(false, company);
 
@@ -380,15 +399,15 @@ public class LockingManagerRestartTransactionTest extends AbstractLockingTest
     resource.getContents().add(company);
     transaction.commit();
 
-    readLock(company);
+    lockRead(company);
     assertReadLock(true, company);
     assertWriteLock(false, company);
 
-    writeLock(company);
+    lockWrite(company);
     assertReadLock(true, company);
     assertWriteLock(true, company);
 
-    writeUnlock(company);
+    unlockWrite(company);
     assertReadLock(true, company);
     assertWriteLock(false, company);
     String durableLockingID = transaction.enableDurableLocking();
@@ -406,7 +425,7 @@ public class LockingManagerRestartTransactionTest extends AbstractLockingTest
     resource.getContents().add(company);
     transaction.commit();
 
-    writeLock(company);
+    lockWrite(company);
 
     String durableLockingID = transaction.enableDurableLocking();
 
@@ -445,7 +464,7 @@ public class LockingManagerRestartTransactionTest extends AbstractLockingTest
     // EventUtil.addListener(remoteView, CDOViewLocksChangedEvent.class, System.out::println);
     CDOResource remoteResource = remoteView.getResource(resource.getPath());
 
-    writeLock(resource);
+    lockWrite(resource);
     assertWriteLock(true, resource);
     assertServerLockState(resource);
     assertServerLockState(localResource);

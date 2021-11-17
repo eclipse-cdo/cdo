@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.tests.config.impl;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.internal.net4j.CDONet4jSessionConfigurationImpl;
@@ -744,6 +745,20 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   public final EPackage createUniquePackage()
   {
     return createUniquePackage(null);
+  }
+
+  public final CDOBranch createUniqueBranch(CDOBranch baseBranch, String name)
+  {
+    for (int i = 1; i < 100000; i++)
+    {
+      String branchName = i == 1 ? name : name + "-" + i;
+      if (baseBranch.getBranch(branchName) == null)
+      {
+        return baseBranch.createBranch(branchName);
+      }
+    }
+
+    throw new IllegalStateException();
   }
 
   protected boolean isConfig(Config config)

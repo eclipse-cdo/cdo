@@ -326,14 +326,6 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
   public LockObjectsResult lockObjects(List<InternalCDORevision> revisions, int viewID, CDOBranch viewedBranch, LockType lockType, long timeout)
       throws InterruptedException
   {
-    // List<CDORevisionKey> revisionKeys = new LinkedList<CDORevisionKey>();
-    // for (InternalCDORevision rev : revisions)
-    // {
-    // revisionKeys.add(rev);
-    // }
-    //
-    // return lockObjects2(revisionKeys, viewID, viewedBranch, lockType, false, timeout);
-
     throw new UnsupportedOperationException();
   }
 
@@ -419,8 +411,6 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
   @Deprecated
   public void unlockObjects(CDOView view, Collection<CDOID> objectIDs, LockType lockType)
   {
-    // send(new UnlockObjectsRequest(this, view.getViewID(), objectIDs, lockType, false));
-
     throw new UnsupportedOperationException();
   }
 
@@ -592,15 +582,15 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
 
   @Override
   @Deprecated
-  public CDOLockState[] getLockStates(int viewID, Collection<CDOID> ids)
+  public CDOLockState[] getLockStates(int branchID, Collection<CDOID> ids)
   {
-    return getLockStates(viewID, ids, CDOLockState.DEPTH_NONE);
+    throw new UnsupportedOperationException();
   }
 
   @Override
-  public CDOLockState[] getLockStates(int viewID, Collection<CDOID> ids, int depth)
+  public CDOLockState[] getLockStates(int branchID, Collection<CDOID> ids, int depth)
   {
-    return send(new LockStateRequest(this, viewID, ids, depth));
+    return send(new LockStateRequest(this, branchID, ids, depth));
   }
 
   @Override
@@ -631,7 +621,7 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
   @Deprecated
   public void requestChangeCredentials()
   {
-    requestChangeServerPassword(null);
+    throw new UnsupportedOperationException();
   }
 
   @Override

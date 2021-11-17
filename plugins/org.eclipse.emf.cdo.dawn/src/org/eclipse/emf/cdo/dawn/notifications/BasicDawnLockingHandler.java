@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.dawn.spi.DawnState;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewLocksChangedEvent;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,7 +40,7 @@ public class BasicDawnLockingHandler extends BasicDawnListener
   {
     CDOViewLocksChangedEvent lockEvent = event;
 
-    CDOLockState[] lockStates = lockEvent.getLockStates();
+    Collection<CDOLockState> lockStates = lockEvent.getNewLockStates();
 
     Map<Object, DawnState> changedObjects = new HashMap<>();
 

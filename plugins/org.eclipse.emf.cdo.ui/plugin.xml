@@ -85,14 +85,6 @@
             icon="platform:/plugin/org.eclipse.emf.cdo.ui.shared/icons/full/view16/cdo_time_machine.gif"
             id="org.eclipse.emf.cdo.ui.CDOTimeMachineView"
             name="%view.name.3"/>
-      <!--
-      <view
-            category="org.eclipse.emf.cdo"
-            class="org.eclipse.emf.cdo.internal.ui.views.CDOLockStatesView"
-            icon="icons/full/elcl16/lock.gif"
-            id="org.eclipse.emf.cdo.ui.CDOLockStatesView"
-            name="CDO Lock States"/>
-      -->
    </extension>
 
   <extension point = "org.eclipse.ui.editors">

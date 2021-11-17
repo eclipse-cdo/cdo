@@ -302,7 +302,7 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
 
         try
         {
-          setExtensionSynced(extension);
+          setExtensionUnsynced(extension);
         }
         finally
         {
@@ -312,11 +312,11 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
     }
     else
     {
-      setExtensionSynced(extension);
+      setExtensionUnsynced(extension);
     }
   }
 
-  private void setExtensionSynced(String extension)
+  private void setExtensionUnsynced(String extension)
   {
     if (StringUtil.isEmpty(extension))
     {
@@ -376,7 +376,7 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
 
         try
         {
-          setBasenameSynced(basename);
+          setBasenameUnsynced(basename);
         }
         finally
         {
@@ -386,11 +386,11 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
     }
     else
     {
-      setBasenameSynced(basename);
+      setBasenameUnsynced(basename);
     }
   }
 
-  private void setBasenameSynced(String basename)
+  private void setBasenameUnsynced(String basename)
   {
     if (basename == null)
     {

@@ -61,7 +61,7 @@ public final class DurableCDOLockOwner implements CDOLockOwner
   @Override
   public int hashCode()
   {
-    return getHashCode(durableLockingID);
+    return getHashCode(sessionID, viewID, durableLockingID);
   }
 
   @Override
@@ -74,6 +74,10 @@ public final class DurableCDOLockOwner implements CDOLockOwner
   public String toString()
   {
     StringBuilder builder = new StringBuilder("CDOLockOwner[");
+    builder.append(sessionID);
+    builder.append(':');
+    builder.append(viewID);
+    builder.append(" --> ");
     builder.append(durableLockingID);
     builder.append(']');
     return builder.toString();
@@ -81,12 +85,13 @@ public final class DurableCDOLockOwner implements CDOLockOwner
 
   public static DurableCDOLockOwner create(int sessionID, int viewID, String durableLockingID)
   {
-    return INTERNER.intern(sessionID, viewID, durableLockingID);
+    return INTERNER.intern(sessionID, viewID, durableLockingID.intern());
   }
 
-  private static int getHashCode(String durableLockingID)
+  private static int getHashCode(int sessionID, int viewID, String durableLockingID)
   {
-    return durableLockingID.hashCode();
+
+    return 31 * (31 * (31 + sessionID) + viewID + durableLockingID.hashCode());
   }
 
   /**
@@ -96,11 +101,11 @@ public final class DurableCDOLockOwner implements CDOLockOwner
   {
     public synchronized DurableCDOLockOwner intern(int sessionID, int viewID, String durableLockingID)
     {
-      int hashCode = getHashCode(durableLockingID);
+      int hashCode = getHashCode(sessionID, viewID, durableLockingID);
       for (Entry<DurableCDOLockOwner> entry = getEntry(hashCode); entry != null; entry = entry.getNextEntry())
       {
         DurableCDOLockOwner lockOwner = entry.get();
-        if (lockOwner != null && lockOwner.durableLockingID.equals(durableLockingID))
+        if (lockOwner != null && lockOwner.sessionID == sessionID && lockOwner.viewID == viewID && lockOwner.durableLockingID == durableLockingID)
         {
           return lockOwner;
         }
@@ -114,7 +119,7 @@ public final class DurableCDOLockOwner implements CDOLockOwner
     @Override
     protected int hashCode(DurableCDOLockOwner lockOwner)
     {
-      return getHashCode(lockOwner.durableLockingID);
+      return getHashCode(lockOwner.sessionID, lockOwner.viewID, lockOwner.durableLockingID);
     }
   }
 }

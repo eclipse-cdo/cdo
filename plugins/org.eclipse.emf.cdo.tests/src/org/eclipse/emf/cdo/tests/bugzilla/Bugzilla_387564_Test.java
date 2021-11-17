@@ -26,9 +26,6 @@ import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.tests.TestListener2;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Bug 387564 - Ensure lock notification sending after invalidation for "lock/unlock objects on commit"
  *
@@ -36,12 +33,12 @@ import java.util.List;
  */
 public class Bugzilla_387564_Test extends AbstractLockingTest
 {
-  private static final boolean DEBUG = true;
+  private static final boolean DEBUG = false;
 
   @Override
   protected long getInvalidationDelay()
   {
-    return 1000L;
+    return 500L;
   }
 
   public void testLockEventAfterInvalidationEventSameSession() throws Exception
@@ -59,6 +56,16 @@ public class Bugzilla_387564_Test extends AbstractLockingTest
 
   private void runTest(CDOSession session, CDOSession controlSession) throws Exception
   {
+    TestListener2 controlSessionListener = new TestListener2( //
+        CDOSessionInvalidationEvent.class, //
+        CDOSessionLocksChangedEvent.class) //
+            .setName("SESSION");
+
+    TestListener2 controlViewListener = new TestListener2( //
+        CDOViewInvalidationEvent.class, //
+        CDOViewLocksChangedEvent.class) //
+            .setName("VIEW");
+
     Company company = getModel1Factory().createCompany();
     company.setName("Initial");
 
@@ -71,10 +78,8 @@ public class Bugzilla_387564_Test extends AbstractLockingTest
     waitForActiveLockNotifications();
     company.setName("Changed");
 
-    TestListener2 controlSessionListener = createControlListener("SESSION");
     controlSession.addListener(controlSessionListener);
 
-    TestListener2 controlViewListener = createControlListener("VIEW");
     CDOView controlView = controlSession.openView();
     controlView.options().setLockNotificationEnabled(true);
     controlView.addListener(controlViewListener);
@@ -86,7 +91,6 @@ public class Bugzilla_387564_Test extends AbstractLockingTest
     waitForActiveLockNotifications();
 
     IEvent[] events = controlSessionListener.waitFor(2);
-
     assertEquals(1, TestListener2.countEvents(events, CDOSessionInvalidationEvent.class));
     assertEquals(1, TestListener2.countEvents(events, CDOSessionLocksChangedEvent.class));
     if (DEBUG)
@@ -105,16 +109,5 @@ public class Bugzilla_387564_Test extends AbstractLockingTest
     }
 
     IOUtil.OUT().println(controlObject.getName());
-  }
-
-  private static TestListener2 createControlListener(String name)
-  {
-    List<Class<? extends IEvent>> eventClasses = new ArrayList<>();
-    eventClasses.add(CDOSessionInvalidationEvent.class);
-    eventClasses.add(CDOSessionLocksChangedEvent.class);
-    eventClasses.add(CDOViewInvalidationEvent.class);
-    eventClasses.add(CDOViewLocksChangedEvent.class);
-
-    return new TestListener2(eventClasses, name);
   }
 }

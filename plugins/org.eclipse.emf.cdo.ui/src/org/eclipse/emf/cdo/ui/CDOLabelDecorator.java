@@ -22,12 +22,14 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.pref.OMPreferencesChangeEvent;
 
 import org.eclipse.emf.ecore.EObject;
@@ -61,6 +63,10 @@ public class CDOLabelDecorator implements ILabelDecorator
   private static final Image LOCK_OVERLAY = SharedIcons.getImage(SharedIcons.OVR_LOCK);
 
   private static final Image LOCK_SELF_OVERLAY = SharedIcons.getImage(SharedIcons.OVR_LOCK_SELF);
+
+  private static final String PROP_DISABLE_LOCK_DECORATION = "org.eclipse.emf.cdo.ui.CDOLabelDecorator.DISABLE_LOCK_DECORATION";
+
+  private static final boolean DEFAULT_DISABLE_LOCK_DECORATION = OMPlatform.INSTANCE.isProperty(PROP_DISABLE_LOCK_DECORATION);
 
   private final IListener preferenceListener = new IListener()
   {
@@ -210,19 +216,26 @@ public class CDOLabelDecorator implements ILabelDecorator
       CDOObject cdoObject = CDOUtil.getCDOObject(eObject, false);
       if (cdoObject != null)
       {
-        CDOLockState lockState = cdoObject.cdoLockState();
-        if (lockState != null)
+        CDOView view = cdoObject.cdoView();
+        if (view != null)
         {
-          CDOLockOwner owner = lockState.getWriteLockOwner();
-          if (owner != null)
+          if (!Boolean.TRUE.equals(view.properties().getOrDefault(PROP_DISABLE_LOCK_DECORATION, DEFAULT_DISABLE_LOCK_DECORATION)))
           {
-            if (owner.equals(cdoObject.cdoView()))
+            CDOLockState lockState = cdoObject.cdoLockState();
+            if (lockState != null)
             {
-              image = OM.getOverlayImage(image, LOCK_SELF_OVERLAY, 10, 0);
-            }
-            else
-            {
-              image = OM.getOverlayImage(image, LOCK_OVERLAY, 10, 0);
+              CDOLockOwner owner = lockState.getWriteLockOwner();
+              if (owner != null)
+              {
+                if (owner == view.getLockOwner())
+                {
+                  image = OM.getOverlayImage(image, LOCK_SELF_OVERLAY, 10, 0);
+                }
+                else
+                {
+                  image = OM.getOverlayImage(image, LOCK_OVERLAY, 10, 0);
+                }
+              }
             }
           }
         }

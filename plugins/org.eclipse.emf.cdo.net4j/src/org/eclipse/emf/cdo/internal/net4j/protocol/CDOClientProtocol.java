@@ -246,10 +246,18 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
     return send(new LoadChunkRequest(this, revision, feature, accessIndex, fetchIndex, fromIndex, toIndex));
   }
 
+  @Deprecated
   @Override
   public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth)
   {
-    return send(new LoadRevisionsRequest(this, infos, branchPoint, referenceChunk, prefetchDepth));
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth,
+      boolean prefetchLockStates)
+  {
+    return send(new LoadRevisionsRequest(this, infos, branchPoint, referenceChunk, prefetchDepth, prefetchLockStates));
   }
 
   @Override

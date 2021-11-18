@@ -23,6 +23,7 @@ import org.eclipse.net4j.util.concurrent.RWOLockManager.LockState;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
 
 /**
  * The type of the to-be-locked objects is either {@link CDOIDAndBranch} or {@link CDOID}, depending on whether
@@ -72,7 +73,7 @@ public interface InternalLockManager extends IRWOLockManager<Object, IView>, ILo
       long timeout) throws InterruptedException;
 
   /**
-   * Attempts to release for a given locktype, view and objects.
+   * Attempts to release for a given lock type, view and objects.
    *
    * @throws IllegalMonitorStateException
    *           Unlocking objects without lock.
@@ -129,6 +130,11 @@ public interface InternalLockManager extends IRWOLockManager<Object, IView>, ILo
    * @since 4.1
    */
   public LockState<Object, IView> getLockState(Object key);
+
+  /**
+   * @since 4.15
+   */
+  public void getLockStates(Collection<Object> keys, BiConsumer<Object, LockState<Object, IView>> consumer);
 
   /**
    * @since 4.4

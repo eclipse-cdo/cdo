@@ -103,10 +103,10 @@ public class TestRevisionManager extends CDORevisionManagerImpl
   }
 
   @Override
-  protected void loadRevisions(List<RevisionInfo> infosToLoad, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth,
+  protected void loadRevisions(List<RevisionInfo> infosToLoad, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean prefetchLockStates,
       List<CDORevision> additionalRevisions, Consumer<CDORevision> consumer)
   {
-    super.loadRevisions(infosToLoad, branchPoint, referenceChunk, prefetchDepth, additionalRevisions, consumer);
+    super.loadRevisions(infosToLoad, branchPoint, referenceChunk, prefetchDepth, prefetchLockStates, additionalRevisions, consumer);
 
     synchronized (lock)
     {

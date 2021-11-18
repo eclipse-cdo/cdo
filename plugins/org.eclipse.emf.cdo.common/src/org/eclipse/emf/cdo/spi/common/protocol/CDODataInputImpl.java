@@ -386,14 +386,23 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
   public CDOLockState readCDOLockState() throws IOException
   {
     Object target;
-    boolean sendingBranchWithID = readBoolean();
-    if (!sendingBranchWithID)
+
+    byte type = readByte();
+    switch (type)
     {
+    case 0:
+      return null;
+
+    case 1:
       target = readCDOID();
-    }
-    else
-    {
+      break;
+
+    case 2:
       target = readCDOIDAndBranch();
+      break;
+
+    default:
+      throw new IOException("Invalid type: " + type);
     }
 
     InternalCDOLockState lockState = new CDOLockStateImpl(target);

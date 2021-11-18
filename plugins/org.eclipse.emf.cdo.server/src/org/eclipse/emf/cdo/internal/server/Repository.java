@@ -763,7 +763,15 @@ public class Repository extends Container<Object> implements InternalRepository
   }
 
   @Override
+  @Deprecated
   public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth,
+      boolean prefetchLockStates)
   {
     for (RevisionInfo info : infos)
     {

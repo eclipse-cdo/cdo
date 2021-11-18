@@ -18,7 +18,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLoader2;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLoader3;
 import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 
@@ -29,22 +29,30 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public final class ServerRevisionLoader implements RevisionLoader2
+public final class ServerRevisionLoader implements RevisionLoader3
 {
-  private final RevisionLoader2 delegate;
+  private final RevisionLoader3 delegate;
 
-  public ServerRevisionLoader(RevisionLoader2 delegate)
+  public ServerRevisionLoader(RevisionLoader3 delegate)
   {
     this.delegate = delegate;
   }
 
-  public RevisionLoader2 getDelegate()
+  public RevisionLoader3 getDelegate()
   {
     return delegate;
   }
 
   @Override
+  @Deprecated
   public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth,
+      boolean prefetchLockStates)
   {
     InternalSession serverSession = ServerSession.get();
     if (serverSession != null)
@@ -52,7 +60,7 @@ public final class ServerRevisionLoader implements RevisionLoader2
       try
       {
         StoreThreadLocal.setSession(serverSession);
-        return delegate.loadRevisions(infos, branchPoint, referenceChunk, prefetchDepth);
+        return delegate.loadRevisions(infos, branchPoint, referenceChunk, prefetchDepth, prefetchLockStates);
       }
       finally
       {
@@ -60,7 +68,7 @@ public final class ServerRevisionLoader implements RevisionLoader2
       }
     }
 
-    return delegate.loadRevisions(infos, branchPoint, referenceChunk, prefetchDepth);
+    return delegate.loadRevisions(infos, branchPoint, referenceChunk, prefetchDepth, prefetchLockStates);
   }
 
   @Override

@@ -41,7 +41,7 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.CDORevisionUnchunker;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLoader2;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLoader3;
 
 import org.eclipse.net4j.util.concurrent.IExecutorServiceProvider;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
@@ -77,7 +77,7 @@ public interface InternalRepository extends IRepository, //
     PackageProcessor, //
     PackageLoader, //
     BranchLoader5, //
-    RevisionLoader2, //
+    RevisionLoader3, //
     CommitInfoLoader, //
     CDORevisionUnchunker, //
     OperationAuthorizer<ISession>, //

@@ -27,6 +27,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.BiConsumer;
 
 /**
  * Keeps track of locks on objects. Locks are owned by contexts. A particular combination of locks and their owners, for
@@ -297,9 +298,20 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
     return contextToLockStates;
   }
 
-  public LockState<OBJECT, CONTEXT> getLockState(OBJECT key)
+  public synchronized LockState<OBJECT, CONTEXT> getLockState(OBJECT key)
   {
     return objectToLockStateMap.get(key);
+  }
+
+  /**
+   * @since 3.16
+   */
+  public synchronized void getLockStates(Collection<OBJECT> keys, BiConsumer<OBJECT, LockState<OBJECT, CONTEXT>> consumer)
+  {
+    keys.forEach(key -> {
+      LockState<OBJECT, CONTEXT> lockState = objectToLockStateMap.get(key);
+      consumer.accept(key, lockState);
+    });
   }
 
   /**

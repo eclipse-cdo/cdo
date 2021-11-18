@@ -474,7 +474,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
   @Deprecated
   public CDOLockState[] getLockStates(int branchID, Collection<CDOID> ids)
   {
-    return getLockStates(branchID, ids, CDOLockState.DEPTH_NONE);
+    throw new UnsupportedOperationException();
   }
 
   @Override
@@ -768,14 +768,22 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
   }
 
   @Override
+  @Deprecated
   public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth,
+      boolean prefetchLockStates)
   {
     int attempt = 0;
     for (;;)
     {
       try
       {
-        return delegate.loadRevisions(infos, branchPoint, referenceChunk, prefetchDepth);
+        return delegate.loadRevisions(infos, branchPoint, referenceChunk, prefetchDepth, prefetchLockStates);
       }
       catch (Exception ex)
       {
@@ -1165,7 +1173,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
   @Deprecated
   public void requestChangeCredentials()
   {
-    requestChangeServerPassword(null);
+    throw new UnsupportedOperationException();
   }
 
   @Override

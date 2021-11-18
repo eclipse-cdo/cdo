@@ -83,10 +83,16 @@ public interface InternalCDORevisionManager extends CDORevisionManager, CDORevis
   /**
    * @since 4.15
    */
-  public void prefetchRevisions(CDOID id, CDOBranchPoint branchPoint, int prefetchDepth, Consumer<CDORevision> consumer);
+  public void prefetchRevisions(CDOID id, CDOBranchPoint branchPoint, int prefetchDepth, boolean prefetchLockStates, Consumer<CDORevision> consumer);
 
   public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand,
       SyntheticCDORevision[] synthetics);
+
+  /**
+   * @since 4.15
+   */
+  public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean prefetchLockStates,
+      boolean loadOnDemand, SyntheticCDORevision[] synthetics);
 
   public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand,
       SyntheticCDORevision[] synthetics);
@@ -119,6 +125,10 @@ public interface InternalCDORevisionManager extends CDORevisionManager, CDORevis
    */
   public interface RevisionLoader
   {
+    /**
+     * @deprecated As of 4.15 use {@link RevisionLoader3#loadRevisions(List, CDOBranchPoint, int, int, boolean)}.
+     */
+    @Deprecated
     public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth);
 
     public InternalCDORevision loadRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int referenceChunk);
@@ -140,6 +150,20 @@ public interface InternalCDORevisionManager extends CDORevisionManager, CDORevis
   public interface RevisionLoader2 extends RevisionLoader
   {
     public CDOBranchPointRange loadObjectLifetime(CDOID id, CDOBranchPoint branchPoint);
+  }
+
+  /**
+   * If the meaning of this type isn't clear, there really should be more of a description here...
+   *
+   * @author Eike Stepper
+   * @since 4.15
+   * @noextend This interface is not intended to be extended by clients.
+   * @noimplement This interface is not intended to be implemented by clients.
+   */
+  public interface RevisionLoader3 extends RevisionLoader2
+  {
+    public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth,
+        boolean prefetchLockStates);
   }
 
   /**

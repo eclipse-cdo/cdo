@@ -91,6 +91,8 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
 
   public static final String PROP_PREFETCH = "prefetch";
 
+  public static final String PROP_PREFETCH_LOCK_STATES = "prefetchLockStates";
+
   public static final String PROP_REPOSITORY = "repository";
 
   public static final String EDITOR_PROPERTIES = "editor.properties";
@@ -459,6 +461,23 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     }
   }
 
+  public final boolean isPrefetchLockStates()
+  {
+    Object checkoutProperty = getProperties().get(PROP_PREFETCH_LOCK_STATES);
+    if (checkoutProperty instanceof String)
+    {
+      return Boolean.parseBoolean((String)checkoutProperty);
+    }
+
+    String systemProperty = OMPlatform.INSTANCE.getProperty("org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout.DISABLE_PREFETCH_LOCK_STATES");
+    if (checkoutProperty != null)
+    {
+      return !Boolean.parseBoolean(systemProperty);
+    }
+
+    return view.options().isLockNotificationEnabled();
+  }
+
   @Override
   public boolean waitUntilPrefetched()
   {
@@ -472,8 +491,10 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
 
   private void startPrefetcherManager()
   {
+    boolean prefetchLockStates = isPrefetchLockStates();
+
     ResourceSet resourceSet = view.getResourceSet();
-    prefetcherManager = new CDOPrefetcherManager(resourceSet);
+    prefetcherManager = new CDOPrefetcherManager(resourceSet, prefetchLockStates);
     prefetcherManager.activate();
     prefetcherManager.waitUntilPrefetched();
 

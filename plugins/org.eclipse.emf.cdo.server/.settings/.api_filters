@@ -471,6 +471,12 @@
                 <message_argument value="InternalRepository"/>
             </message_arguments>
         </filter>
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="RevisionLoader3"/>
+                <message_argument value="InternalRepository"/>
+            </message_arguments>
+        </filter>
         <filter id="574668824">
             <message_arguments>
                 <message_argument value="IRepository"/>

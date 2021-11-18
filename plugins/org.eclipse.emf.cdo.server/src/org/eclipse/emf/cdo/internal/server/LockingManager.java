@@ -902,7 +902,7 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
   }
 
   @Override
-  public LockGrade getLockGrade(Object key)
+  public synchronized LockGrade getLockGrade(Object key)
   {
     LockState<Object, IView> lockState = getObjectToLocksMap().get(key);
     LockGrade grade = LockGrade.NONE;

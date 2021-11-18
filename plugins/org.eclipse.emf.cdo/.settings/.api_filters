@@ -981,6 +981,12 @@
                 <message_argument value="CDOSessionProtocol"/>
             </message_arguments>
         </filter>
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="RevisionLoader3"/>
+                <message_argument value="CDOSessionProtocol"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/spi/cdo/CDOSessionProtocol.java" type="org.eclipse.emf.spi.cdo.CDOSessionProtocol$CommitTransactionResult">
         <filter id="574619656">

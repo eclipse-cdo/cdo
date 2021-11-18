@@ -334,17 +334,6 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
     return (InternalCDORevision)results.get(0);
   }
 
-  // @Override
-  // public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth,
-  // boolean loadOnDemand,
-  // List<CDORevision> additionalRevisions)
-  // {
-  // List<CDOID> ids = Collections.singletonList(id);
-  // List<CDORevision> results = getRevisions(ids, branchPoint, referenceChunk, prefetchDepth, loadOnDemand,
-  // synthetics);
-  // return (InternalCDORevision)results.get(0);
-  // }
-
   @Override
   public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand)
   {
@@ -355,18 +344,25 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
   public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand,
       SyntheticCDORevision[] synthetics)
   {
-    return getRevisions(ids, branchPoint, referenceChunk, prefetchDepth, loadOnDemand, synthetics, null, null);
+    return getRevisions(ids, branchPoint, referenceChunk, prefetchDepth, false, loadOnDemand, synthetics, null, null);
+  }
+
+  @Override
+  public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean prefetchLockStates,
+      boolean loadOnDemand, SyntheticCDORevision[] synthetics)
+  {
+    return getRevisions(ids, branchPoint, referenceChunk, prefetchDepth, prefetchLockStates, loadOnDemand, synthetics, null, null);
   }
 
   @Override
   public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand,
       List<CDORevision> additionalRevisions)
   {
-    return getRevisions(ids, branchPoint, referenceChunk, prefetchDepth, loadOnDemand, null, additionalRevisions, null);
+    return getRevisions(ids, branchPoint, referenceChunk, prefetchDepth, false, loadOnDemand, null, additionalRevisions, null);
   }
 
-  private List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand,
-      SyntheticCDORevision[] synthetics, List<CDORevision> additionalRevisions, Consumer<CDORevision> consumer)
+  private List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean prefetchLockStates,
+      boolean loadOnDemand, SyntheticCDORevision[] synthetics, List<CDORevision> additionalRevisions, Consumer<CDORevision> consumer)
   {
     RevisionInfo[] allInfos = new RevisionInfo[ids.size()];
 
@@ -380,7 +376,7 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
     if (infosToLoad != null)
     {
       // Load the requested revision infos, then process the additional revisions.
-      loadRevisions(infosToLoad, branchPoint, referenceChunk, prefetchDepth, additionalRevisions, consumer);
+      loadRevisions(infosToLoad, branchPoint, referenceChunk, prefetchDepth, prefetchLockStates, additionalRevisions, consumer);
     }
 
     List<CDORevision> primaryRevisions = processResults(allInfos, synthetics, consumer);
@@ -406,10 +402,10 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
    * @since 4.15
    */
   @Override
-  public void prefetchRevisions(CDOID id, CDOBranchPoint branchPoint, int prefetchDepth, Consumer<CDORevision> consumer)
+  public void prefetchRevisions(CDOID id, CDOBranchPoint branchPoint, int prefetchDepth, boolean prefetchLockStates, Consumer<CDORevision> consumer)
   {
     List<CDOID> ids = Collections.singletonList(id);
-    getRevisions(ids, branchPoint, CDORevision.UNCHUNKED, prefetchDepth, true, null, null, consumer);
+    getRevisions(ids, branchPoint, CDORevision.UNCHUNKED, prefetchDepth, prefetchLockStates, true, null, null, consumer);
   }
 
   @Override
@@ -505,14 +501,18 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
   /**
    * Loads the requested revision infos, then processes and returns additional revisions.
    */
-  protected void loadRevisions(List<RevisionInfo> infosToLoad, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth,
+  protected void loadRevisions(List<RevisionInfo> infosToLoad, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean prefetchLockStates,
       List<CDORevision> additionalRevisions, Consumer<CDORevision> consumer)
   {
     acquireAtomicRequestLock(loadAndAddLock);
 
     try
     {
-      List<RevisionInfo> additionalRevisionInfos = revisionLoader.loadRevisions(infosToLoad, branchPoint, referenceChunk, prefetchDepth);
+      @SuppressWarnings("deprecation")
+      List<RevisionInfo> additionalRevisionInfos = revisionLoader instanceof RevisionLoader3
+          ? ((RevisionLoader3)revisionLoader).loadRevisions(infosToLoad, branchPoint, referenceChunk, prefetchDepth, prefetchLockStates)
+          : revisionLoader.loadRevisions(infosToLoad, branchPoint, referenceChunk, prefetchDepth);
+
       if (additionalRevisionInfos != null)
       {
         for (RevisionInfo info : additionalRevisionInfos)

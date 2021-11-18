@@ -15,12 +15,13 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.security.NoPermissionException;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
+import org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -339,9 +340,19 @@ public abstract class CDOContentProvider<CONTEXT> implements ITreeContentProvide
               {
                 CDOObject cdoObject = getCDOObject((EObject)finalObject);
                 view = cdoObject.cdoView();
-                CDORevisionManager revisionManager = view.getSession().getRevisionManager();
 
-                List<CDORevision> revisions = revisionManager.getRevisions(missingIDs, view, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
+                InternalCDORevisionManager revisionManager = (InternalCDORevisionManager)view.getSession().getRevisionManager();
+                boolean prefetchLockStates = view.options().isLockNotificationEnabled();
+
+                List<CDORevision> revisions = revisionManager.getRevisions( //
+                    missingIDs, //
+                    view, //
+                    CDORevision.UNCHUNKED, //
+                    CDORevision.DEPTH_NONE, //
+                    prefetchLockStates, //
+                    true, //
+                    (SyntheticCDORevision[])null);
+
                 loadedRevisions.addAll(revisions);
               }
 

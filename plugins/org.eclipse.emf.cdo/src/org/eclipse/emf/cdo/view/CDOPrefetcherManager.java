@@ -53,6 +53,8 @@ public class CDOPrefetcherManager extends CDOViewSetHandler
 
   private final ExecutorService executorService;
 
+  private final boolean prefetchLockStates;
+
   private final Map<CDOView, Prefetcher> prefetchers = Collections.synchronizedMap(new HashMap<>());
 
   @ExcludeFromDump
@@ -60,10 +62,16 @@ public class CDOPrefetcherManager extends CDOViewSetHandler
 
   private int runnables;
 
-  public CDOPrefetcherManager(ResourceSet resourceSet)
+  public CDOPrefetcherManager(ResourceSet resourceSet, boolean prefetchLockStates)
   {
     super(resourceSet);
+    this.prefetchLockStates = prefetchLockStates;
     executorService = ConcurrencyUtil.getExecutorService(getViewSet());
+  }
+
+  public boolean isPrefetchLockStates()
+  {
+    return prefetchLockStates;
   }
 
   public final Prefetcher[] getPrefetchers()
@@ -169,7 +177,7 @@ public class CDOPrefetcherManager extends CDOViewSetHandler
 
   protected Prefetcher createPrefetcher(CDOView view)
   {
-    return new Prefetcher(view);
+    return new Prefetcher(view, prefetchLockStates);
   }
 
   protected void schedule(Runnable runnable)
@@ -222,6 +230,8 @@ public class CDOPrefetcherManager extends CDOViewSetHandler
 
     private final InternalCDORevisionManager revisionManager;
 
+    private final boolean prefetchLockStates;
+
     private final IListener cacheListener = new IListener()
     {
       @Override
@@ -256,11 +266,13 @@ public class CDOPrefetcherManager extends CDOViewSetHandler
 
     private volatile boolean cancelCleanup;
 
-    public Prefetcher(CDOView view, CDOID rootID)
+    public Prefetcher(CDOView view, CDOID rootID, boolean prefetchLockStates)
     {
       this.view = view;
+
       CDOSession session = view.getSession();
       this.rootID = rootID != null ? rootID : session.getRepositoryInfo().getRootResourceID();
+      this.prefetchLockStates = prefetchLockStates;
 
       revisionManager = (InternalCDORevisionManager)session.getRevisionManager();
       revisionManager.getCache().addListener(cacheListener);
@@ -268,9 +280,9 @@ public class CDOPrefetcherManager extends CDOViewSetHandler
       branchPoint = CDOBranchUtil.copyBranchPoint(view);
     }
 
-    public Prefetcher(CDOView view)
+    public Prefetcher(CDOView view, boolean prefetchLockStates)
     {
-      this(view, null);
+      this(view, null, prefetchLockStates);
     }
 
     public final CDOView getView()
@@ -440,7 +452,7 @@ public class CDOPrefetcherManager extends CDOViewSetHandler
 
       try
       {
-        revisionManager.prefetchRevisions(rootID, branchPoint, CDORevision.DEPTH_INFINITE, r -> handleValidRevision(r));
+        revisionManager.prefetchRevisions(rootID, branchPoint, CDORevision.DEPTH_INFINITE, prefetchLockStates, r -> handleValidRevision(r));
       }
       finally
       {

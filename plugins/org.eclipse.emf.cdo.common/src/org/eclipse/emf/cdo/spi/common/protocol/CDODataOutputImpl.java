@@ -369,15 +369,21 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
   @Override
   public void writeCDOLockState(CDOLockState lockState) throws IOException
   {
+    if (lockState == null)
+    {
+      writeByte(0);
+      return;
+    }
+
     Object o = lockState.getLockedObject();
     if (o instanceof CDOID)
     {
-      writeBoolean(false);
+      writeByte(1);
       writeCDOID((CDOID)o);
     }
     else if (o instanceof CDOIDAndBranch)
     {
-      writeBoolean(true);
+      writeByte(2);
       writeCDOIDAndBranch((CDOIDAndBranch)o);
     }
     else

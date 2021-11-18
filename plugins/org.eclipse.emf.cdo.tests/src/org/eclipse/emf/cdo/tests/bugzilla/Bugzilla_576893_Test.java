@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.tests.bugzilla;
 
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -17,6 +18,8 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCache;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.internal.net4j.protocol.LockStateRequest;
+import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
@@ -30,8 +33,12 @@ import org.eclipse.emf.cdo.view.CDOPrefetcherManager;
 import org.eclipse.emf.cdo.view.CDOPrefetcherManager.Prefetcher;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.signal.ISignalProtocol;
+import org.eclipse.net4j.signal.SignalCounter;
 import org.eclipse.net4j.util.io.IOUtil;
 
+import org.eclipse.emf.common.util.TreeIterator;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
 import java.util.ArrayList;
@@ -63,7 +70,7 @@ public class Bugzilla_576893_Test extends AbstractCDOTest
     CDOSession session2 = openSession();
     CDOView view = session2.openView();
 
-    TestPrefetcherManager prefetcherManager = new TestPrefetcherManager(view.getResourceSet(), rootID);
+    TestPrefetcherManager prefetcherManager = new TestPrefetcherManager(view.getResourceSet(), rootID, false);
     prefetcherManager.activate();
     waitUntilPrefetched(prefetcherManager);
 
@@ -175,6 +182,44 @@ public class Bugzilla_576893_Test extends AbstractCDOTest
     prefetcherManager.deactivate();
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
+  public void testLockStatePrefetching() throws Exception
+  {
+    Category root = getModel1Factory().createCategory();
+    createModel(root, 2, 3, 2);
+
+    CDOSession session1 = openSession();
+    CDOTransaction transaction = session1.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("res1"));
+    resource.getContents().add(root);
+
+    transaction.commit();
+    CDOID rootID = CDOUtil.getCDOObject(root).cdoID();
+
+    // =======================================================================================
+    IOUtil.OUT().println("Testing open view...");
+    CDOSession session2 = openSession();
+
+    ISignalProtocol<?> protocol = ((CDONet4jSession)session2).options().getNet4jProtocol();
+    SignalCounter signalCounter = new SignalCounter(protocol);
+
+    CDOView view = session2.openView();
+    TestPrefetcherManager prefetcherManager = new TestPrefetcherManager(view.getResourceSet(), rootID, true);
+    prefetcherManager.activate();
+    waitUntilPrefetched(prefetcherManager);
+
+    CDOObject object = view.getObject(rootID);
+    object.cdoLockState();
+
+    for (TreeIterator<EObject> it = object.eAllContents(); it.hasNext();)
+    {
+      EObject child = it.next();
+      CDOUtil.getCDOObject(child).cdoLockState();
+    }
+
+    assertEquals(0, signalCounter.getCountFor(LockStateRequest.class));
+  }
+
   private static void waitUntilPrefetched(TestPrefetcherManager prefetcherManager)
   {
     assertTrue(prefetcherManager.waitUntilPrefetched(DEFAULT_TIMEOUT));
@@ -247,9 +292,9 @@ public class Bugzilla_576893_Test extends AbstractCDOTest
 
     private final CDOID rootID;
 
-    public TestPrefetcherManager(ResourceSet resourceSet, CDOID rootID)
+    public TestPrefetcherManager(ResourceSet resourceSet, CDOID rootID, boolean prefetchLockStates)
     {
-      super(resourceSet);
+      super(resourceSet, prefetchLockStates);
       this.rootID = rootID;
     }
 
@@ -262,7 +307,7 @@ public class Bugzilla_576893_Test extends AbstractCDOTest
     @Override
     protected Prefetcher createPrefetcher(CDOView view)
     {
-      return new Prefetcher(view, rootID)
+      return new Prefetcher(view, rootID, isPrefetchLockStates())
       {
         @Override
         protected void prefetch()

@@ -232,6 +232,21 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
   }
 
   @Override
+  public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean prefetchLockStates,
+      boolean loadOnDemand, SyntheticCDORevision[] synthetics)
+  {
+    try
+    {
+      ServerSession.set(serverSession);
+      return delegate.getRevisions(ids, branchPoint, referenceChunk, prefetchDepth, prefetchLockStates, loadOnDemand, synthetics);
+    }
+    finally
+    {
+      ServerSession.unset();
+    }
+  }
+
+  @Override
   public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand)
   {
     try
@@ -289,12 +304,12 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
   }
 
   @Override
-  public void prefetchRevisions(CDOID id, CDOBranchPoint branchPoint, int prefetchDepth, Consumer<CDORevision> consumer)
+  public void prefetchRevisions(CDOID id, CDOBranchPoint branchPoint, int prefetchDepth, boolean prefetchLockStates, Consumer<CDORevision> consumer)
   {
     try
     {
       ServerSession.set(serverSession);
-      delegate.prefetchRevisions(id, branchPoint, prefetchDepth, consumer);
+      delegate.prefetchRevisions(id, branchPoint, prefetchDepth, prefetchLockStates, consumer);
     }
     finally
     {

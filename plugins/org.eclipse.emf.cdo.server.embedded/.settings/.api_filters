@@ -29,5 +29,11 @@
                 <message_argument value="ServerRevisionLoader"/>
             </message_arguments>
         </filter>
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="RevisionLoader3"/>
+                <message_argument value="ServerRevisionLoader"/>
+            </message_arguments>
+        </filter>
     </resource>
 </component>

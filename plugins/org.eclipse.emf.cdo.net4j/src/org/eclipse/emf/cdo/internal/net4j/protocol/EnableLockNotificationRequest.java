@@ -44,4 +44,10 @@ public class EnableLockNotificationRequest extends CDOClientRequest<Boolean>
   {
     return in.readBoolean();
   }
+
+  @Override
+  protected String getAdditionalInfo()
+  {
+    return "viewID=" + viewID + ", " + (on ? "ON" : "OFF");
+  }
 }

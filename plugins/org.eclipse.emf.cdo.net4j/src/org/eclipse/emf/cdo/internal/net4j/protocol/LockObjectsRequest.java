@@ -98,4 +98,10 @@ public class LockObjectsRequest extends CDOClientRequest<LockObjectsResult>
 
     return new LockObjectsResult(succesful, timeout, waitForUpdate, requiredTimestamp, staleRevisions, newLockStates, timestamp);
   }
+
+  @Override
+  protected String getAdditionalInfo()
+  {
+    return "viewID=" + viewID + ", lockType=" + lockType + ", timeout=" + timeout + ", revisionKeys=" + revisionKeys + ", recursive=" + recursive;
+  }
 }

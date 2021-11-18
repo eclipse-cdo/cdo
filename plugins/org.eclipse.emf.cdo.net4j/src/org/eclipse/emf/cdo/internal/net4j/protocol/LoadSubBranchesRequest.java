@@ -48,4 +48,10 @@ public class LoadSubBranchesRequest extends CDOClientRequest<SubBranchInfo[]>
 
     return infos;
   }
+
+  @Override
+  protected String getAdditionalInfo()
+  {
+    return "branchID=" + branchID;
+  }
 }

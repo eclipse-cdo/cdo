@@ -86,4 +86,17 @@ public class OpenViewRequest extends CDOClientRequest<CDOBranchPoint>
 
     return null;
   }
+
+  @Override
+  protected String getAdditionalInfo()
+  {
+    String info = "readOnly=" + readOnly + ", branchPoint=" + branchPoint;
+
+    if (durableLockingID != null)
+    {
+      info += ", durableLockingID=" + durableLockingID;
+    }
+
+    return info;
+  }
 }

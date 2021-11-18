@@ -92,4 +92,29 @@ public class OpenSessionRequest extends CDOClientRequestWithMonitoring<OpenSessi
 
     return new OpenSessionResult(in, sessionID);
   }
+
+  @Override
+  protected String getAdditionalInfo()
+  {
+    String info = "repository=" + repositoryName;
+
+    if (userID != null)
+    {
+      info += ", userID=" + userID;
+    }
+
+    info += ", passiveUpdates=";
+    if (passiveUpdateEnabled)
+    {
+      info += passiveUpdateMode;
+    }
+    else
+    {
+      info += "OFF";
+    }
+
+    info += ", lockNotifications=" + lockNotificationMode;
+    info += ", subscribed=" + subscribed;
+    return info;
+  }
 }

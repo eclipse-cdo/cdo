@@ -63,4 +63,10 @@ public class ChangeSubscriptionRequest extends CDOClientRequest<Boolean>
   {
     return in.readBoolean();
   }
+
+  @Override
+  protected String getAdditionalInfo()
+  {
+    return "viewID=" + viewID + ", ids=" + ids;
+  }
 }

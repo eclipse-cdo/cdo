@@ -86,4 +86,10 @@ public class UnlockObjectsRequest extends CDOClientRequest<UnlockObjectsResult>
 
     return new UnlockObjectsResult(newLockStates, timestamp);
   }
+
+  @Override
+  protected String getAdditionalInfo()
+  {
+    return "viewID=" + viewID + ", lockType=" + lockType + ", objectIDs=" + objectIDs + ", recursive=" + recursive;
+  }
 }

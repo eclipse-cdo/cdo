@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.internal.common.bundle;
 
+import org.eclipse.emf.cdo.common.util.URIHandlerRegistry;
 import org.eclipse.emf.cdo.internal.common.util.URIHandlerRegistryImpl;
 
 import org.eclipse.net4j.util.ReflectUtil;
@@ -17,6 +18,7 @@ import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.OSGiActivator;
 import org.eclipse.net4j.util.om.log.OMLogger;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.om.trace.OMTracer;
 
 import org.eclipse.emf.ecore.resource.URIHandler;
@@ -60,6 +62,8 @@ public abstract class OM
    */
   public static final class Activator extends OSGiActivator
   {
+    private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, Activator.class);
+
     private static final boolean disableURIHandlerRegistry = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.common.disableURIHandlerRegistry");
 
     public Activator()
@@ -84,7 +88,17 @@ public abstract class OM
         }
         catch (Throwable t)
         {
-          LOG.error(t);
+          try
+          {
+            if (TRACER.isEnabled())
+            {
+              TRACER.format(URIHandlerRegistry.class + ".INSTANCE could not be added to " + URIHandler.class + ".DEFAULT_HANDLERS", t);
+            }
+          }
+          catch (Throwable ignored)
+          {
+            //$FALL-THROUGH$
+          }
         }
       }
     }

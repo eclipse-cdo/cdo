@@ -46,381 +46,353 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 {
   public void testSameSession() throws Exception
   {
-    final Category category1A = getModel1Factory().createCategory();
-    category1A.setName("category1");
+    Category category1 = getModel1Factory().createCategory();
+    category1.setName("category1");
 
-    final Company companyA = getModel1Factory().createCompany();
-    companyA.getCategories().add(category1A);
+    Company company1 = getModel1Factory().createCompany();
+    company1.getCategories().add(category1);
 
-    final CDOSession session = openSession();
-
-    // ************************************************************* //
-
-    final CDOTransaction transaction = session.openTransaction();
-    transaction.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
-
-    final CDOResource resourceA = transaction.createResource(getResourcePath("/test1"));
-    resourceA.getContents().add(companyA);
-
-    transaction.commit();
-    final TestAdapter adapter = new TestAdapter(category1A);
+    CDOSession session1 = openSession();
 
     // ************************************************************* //
 
-    final CDOTransaction transaction2 = session.openTransaction();
+    CDOTransaction transaction1 = session1.openTransaction();
+    transaction1.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
 
-    final Category category1B = (Category)CDOUtil.getEObject(transaction2.getObject(CDOUtil.getCDOObject(category1A).cdoID(), true));
-    category1B.setName("CHANGED NAME");
-    adapter.assertNotifications(0);
+    CDOResource resource1 = transaction1.createResource(getResourcePath("/test1"));
+    resource1.getContents().add(company1);
+
+    transaction1.commit();
+    TestAdapter adapter1 = new TestAdapter(category1);
+
+    // ************************************************************* //
+
+    CDOTransaction transaction2 = session1.openTransaction();
+
+    Category category2 = (Category)CDOUtil.getEObject(transaction2.getObject(CDOUtil.getCDOObject(category1).cdoID(), true));
+    category2.setName("CHANGED NAME");
+    adapter1.assertNotifications(0);
 
     transaction2.commit();
-    adapter.assertNoTimeout(1);
+    adapter1.assertNoTimeout(1);
 
     // Removing policy
-    transaction.options().removeChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
-    adapter.clearNotifications();
+    transaction1.options().removeChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
+    adapter1.clearNotifications();
 
-    category1B.setName("CHANGED NAME_VERSION 2");
-    adapter.assertNotifications(0);
+    category2.setName("CHANGED NAME_VERSION 2");
+    adapter1.assertNotifications(0);
 
     transaction2.commit();
-    adapter.assertNoTimeout(1);
+    adapter1.assertNoTimeout(1);
   }
 
   public void testSameSession_WithoutPolicy() throws Exception
   {
-    final Category category1A = getModel1Factory().createCategory();
-    category1A.setName("category1");
+    Category category1 = getModel1Factory().createCategory();
+    category1.setName("category1");
 
-    final Company companyA = getModel1Factory().createCompany();
-    companyA.getCategories().add(category1A);
+    Company company1 = getModel1Factory().createCompany();
+    company1.getCategories().add(category1);
 
-    final CDOSession session = openSession();
-
-    // ************************************************************* //
-
-    final CDOTransaction transaction = session.openTransaction();
-
-    final CDOResource resourceA = transaction.createResource(getResourcePath("/test1"));
-    resourceA.getContents().add(companyA);
-
-    transaction.commit();
-    final TestAdapter adapter = new TestAdapter(category1A);
+    CDOSession session1 = openSession();
 
     // ************************************************************* //
 
-    final CDOTransaction transaction2 = session.openTransaction();
+    CDOTransaction transaction1 = session1.openTransaction();
 
-    final Category category1B = (Category)CDOUtil.getEObject(transaction2.getObject(CDOUtil.getCDOObject(category1A).cdoID(), true));
-    category1B.setName("CHANGED NAME");
-    adapter.assertNotifications(0);
+    CDOResource resource1 = transaction1.createResource(getResourcePath("/test1"));
+    resource1.getContents().add(company1);
+
+    transaction1.commit();
+    TestAdapter adapter1 = new TestAdapter(category1);
+
+    // ************************************************************* //
+
+    CDOTransaction transaction2 = session1.openTransaction();
+
+    Category category2 = (Category)CDOUtil.getEObject(transaction2.getObject(CDOUtil.getCDOObject(category1).cdoID(), true));
+    category2.setName("CHANGED NAME");
+    adapter1.assertNotifications(0);
 
     transaction2.commit();
-    adapter.assertNoTimeout(1);
+    adapter1.assertNoTimeout(1);
 
     // Adding policy
-    transaction.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
-    adapter.clearNotifications();
+    transaction1.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
+    adapter1.clearNotifications();
 
-    category1B.setName("CHANGED NAME_VERSION 2");
-    adapter.assertNotifications(0);
+    category2.setName("CHANGED NAME_VERSION 2");
+    adapter1.assertNotifications(0);
 
     transaction2.commit();
-    adapter.assertNoTimeout(1);
+    adapter1.assertNoTimeout(1);
   }
 
   public void testSeparateSession() throws Exception
   {
-    Category category1A = getModel1Factory().createCategory();
-    category1A.setName("category1");
+    Category category1 = getModel1Factory().createCategory();
+    category1.setName("category1");
 
-    Company companyA = getModel1Factory().createCompany();
-    companyA.getCategories().add(category1A);
+    Company company1 = getModel1Factory().createCompany();
+    company1.getCategories().add(category1);
 
-    CDOSession session = openSession();
-    CDOTransaction transaction = session.openTransaction();
-    transaction.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
+    CDOSession session1 = openSession();
+    CDOTransaction transaction1 = session1.openTransaction();
+    transaction1.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
 
-    CDOResource resourceA = transaction.createResource(getResourcePath("/test1"));
-    resourceA.getContents().add(companyA);
-    transaction.commit();
+    CDOResource resource1 = transaction1.createResource(getResourcePath("/test1"));
+    resource1.getContents().add(company1);
+    transaction1.commit();
 
-    final TestAdapter adapter = new TestAdapter(category1A);
+    TestAdapter adapter1 = new TestAdapter(category1);
 
     // ************************************************************* //
 
     CDOSession session2 = openSession();
     CDOTransaction transaction2 = session2.openTransaction();
 
-    Category category1B = (Category)CDOUtil.getEObject(transaction2.getObject(CDOUtil.getCDOObject(category1A).cdoID(), true));
-    category1B.setName("CHANGED NAME");
-    adapter.assertNotifications(0);
+    Category category2 = (Category)CDOUtil.getEObject(transaction2.getObject(CDOUtil.getCDOObject(category1).cdoID(), true));
+    category2.setName("CHANGED NAME");
+    adapter1.assertNotifications(0);
 
     transaction2.commit();
-    adapter.assertNoTimeout(1);
+    adapter1.assertNoTimeout(1);
 
     // Removing policy
-    transaction.options().removeChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
-    adapter.clearNotifications();
+    transaction1.options().removeChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
+    adapter1.clearNotifications();
 
-    category1B.setName("CHANGED NAME_VERSION 2");
-    adapter.assertNotifications(0);
+    category2.setName("CHANGED NAME_VERSION 2");
+    adapter1.assertNotifications(0);
 
-    transaction2.commit();
-
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        // No change subscription, other session ==> no delta notification
-        Notification[] notifications = adapter.getNotifications();
-        return notifications.length != 0;
-      }
-    }.assertTimeOut();
+    commitAndSync(transaction2, transaction1);
+    adapter1.assertNotifications(0);
   }
 
   public void testSeparateSession_WithoutPolicy() throws Exception
   {
-    Category category1A = getModel1Factory().createCategory();
-    category1A.setName("category1");
+    Category category1 = getModel1Factory().createCategory();
+    category1.setName("category1");
 
-    Company companyA = getModel1Factory().createCompany();
-    companyA.getCategories().add(category1A);
+    Company company1 = getModel1Factory().createCompany();
+    company1.getCategories().add(category1);
 
-    CDOSession session = openSession();
-    CDOTransaction transaction = session.openTransaction();
+    CDOSession session1 = openSession();
+    CDOTransaction transaction1 = session1.openTransaction();
 
-    CDOResource resourceA = transaction.createResource(getResourcePath("/test1"));
-    resourceA.getContents().add(companyA);
-    transaction.commit();
+    CDOResource resource1 = transaction1.createResource(getResourcePath("/test1"));
+    resource1.getContents().add(company1);
+    transaction1.commit();
 
-    final TestAdapter adapter = new TestAdapter(category1A);
+    TestAdapter adapter1 = new TestAdapter(category1);
 
     // ************************************************************* //
 
     CDOSession session2 = openSession();
     CDOTransaction transaction2 = session2.openTransaction();
 
-    Category category1B = (Category)CDOUtil.getEObject(transaction2.getObject(CDOUtil.getCDOObject(category1A).cdoID(), true));
-    category1B.setName("CHANGED NAME");
-    adapter.assertNotifications(0);
+    Category category2 = (Category)CDOUtil.getEObject(transaction2.getObject(CDOUtil.getCDOObject(category1).cdoID(), true));
+    category2.setName("CHANGED NAME");
+    adapter1.assertNotifications(0);
 
-    transaction2.commit();
-
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        // No change subscription, other session ==> no delta notification
-        Notification[] notifications = adapter.getNotifications();
-        return notifications.length != 0;
-      }
-    }.assertTimeOut();
+    commitAndSync(transaction2, transaction1);
+    adapter1.assertNotifications(0);
 
     // Adding policy
-    transaction.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
-    adapter.clearNotifications();
+    transaction1.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
+    adapter1.clearNotifications();
 
-    category1B.setName("CHANGED NAME_VERSION 2");
-    adapter.assertNotifications(0);
+    category2.setName("CHANGED NAME_VERSION 2");
+    adapter1.assertNotifications(0);
 
     transaction2.commit();
-    adapter.assertNoTimeout(1);
+    adapter1.assertNoTimeout(1);
   }
 
   public void testTemporaryObject() throws Exception
   {
-    msg("Opening session");
-    final CDOSession session = openSession();
+    msg("Opening session1");
+    CDOSession session1 = openSession();
 
     // ************************************************************* //
 
     msg("Creating category1");
-    final Category category1A = getModel1Factory().createCategory();
-    category1A.setName("category1");
+    Category category1 = getModel1Factory().createCategory();
+    category1.setName("category1");
 
     msg("Creating company");
-    final Company companyA = getModel1Factory().createCompany();
+    Company company1 = getModel1Factory().createCompany();
 
     msg("Adding categories");
-    companyA.getCategories().add(category1A);
+    company1.getCategories().add(category1);
 
-    msg("Opening transaction");
-    final CDOTransaction transaction = session.openTransaction();
-    transaction.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
+    msg("Opening transaction1");
+    CDOTransaction transaction1 = session1.openTransaction();
+    transaction1.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
     msg("Creating resource");
-    final CDOResource resourceA = transaction.createResource(getResourcePath("/test1"));
+    CDOResource resource1 = transaction1.createResource(getResourcePath("/test1"));
 
     msg("Adding company");
-    resourceA.getContents().add(companyA);
+    resource1.getContents().add(company1);
 
     msg("Committing");
 
-    final TestAdapter adapter = new TestAdapter(category1A);
+    TestAdapter adapter1 = new TestAdapter(category1);
 
-    transaction.commit();
+    transaction1.commit();
 
     // ************************************************************* //
 
     msg("Opening view");
-    final CDOSession session2 = openSession();
-    final CDOTransaction transaction2 = session2.openTransaction();
-    transaction.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
+    CDOSession session2 = openSession();
+    CDOTransaction transaction2 = session2.openTransaction();
+    transaction1.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
 
-    final Category category1B = (Category)CDOUtil.getEObject(transaction2.getObject(CDOUtil.getCDOObject(category1A).cdoID(), true));
+    Category category2 = (Category)CDOUtil.getEObject(transaction2.getObject(CDOUtil.getCDOObject(category1).cdoID(), true));
 
     msg("Changing name");
-    category1B.setName("CHANGED NAME");
-
-    adapter.assertNotifications(0);
+    category2.setName("CHANGED NAME");
+    adapter1.assertNotifications(0);
 
     msg("Committing");
-    transaction2.commit();
+    commitAndSync(transaction2, transaction1);
 
     msg("Checking after commit");
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        return adapter.getNotifications().length == 1;
-      }
-    }.assertNoTimeOut();
+    adapter1.assertNotifications(1);
   }
 
   public void testSeparateSession_CUSTOM() throws Exception
   {
     CDOIDFilterChangeSubscriptionPolicy customPolicy = new CDOIDFilterChangeSubscriptionPolicy();
 
-    msg("Opening session");
-    final CDOSession session = openSession();
+    msg("Opening session1");
+    CDOSession session1 = openSession();
 
     // ************************************************************* //
 
     msg("Creating category1");
-    final Category category1A = getModel1Factory().createCategory();
-    category1A.setName("category1");
+    Category category1 = getModel1Factory().createCategory();
+    category1.setName("category1");
 
     msg("Creating company");
-    final Company companyA = getModel1Factory().createCompany();
+    Company company1 = getModel1Factory().createCompany();
 
     msg("Adding categories");
-    companyA.getCategories().add(category1A);
+    company1.getCategories().add(category1);
 
-    msg("Opening transaction");
-    final CDOTransaction transaction = session.openTransaction();
+    msg("Opening transaction1");
+    CDOTransaction transaction1 = session1.openTransaction();
 
-    transaction.options().addChangeSubscriptionPolicy(customPolicy);
+    transaction1.options().addChangeSubscriptionPolicy(customPolicy);
 
     msg("Creating resource");
-    final CDOResource resourceA = transaction.createResource(getResourcePath("/test1"));
+    CDOResource resource1 = transaction1.createResource(getResourcePath("/test1"));
 
     msg("Adding company");
-    resourceA.getContents().add(companyA);
+    resource1.getContents().add(company1);
 
     msg("Committing");
-    transaction.commit();
+    transaction1.commit();
 
-    customPolicy.getCdoIDs().add(CDOUtil.getCDOObject(category1A).cdoID());
+    customPolicy.getCdoIDs().add(CDOUtil.getCDOObject(category1).cdoID());
 
-    final TestAdapter adapter = new TestAdapter(category1A, companyA);
+    TestAdapter adapter1 = new TestAdapter(category1, company1);
 
     // ************************************************************* //
 
     msg("Opening view");
-    final CDOSession session2 = openSession();
-    final CDOTransaction transaction2 = session2.openTransaction();
+    CDOSession session2 = openSession();
+    CDOTransaction transaction2 = session2.openTransaction();
 
-    final Category category1B = (Category)CDOUtil.getEObject(transaction2.getObject(CDOUtil.getCDOObject(category1A).cdoID(), true));
-    final Company company1B = (Company)CDOUtil.getEObject(transaction2.getObject(CDOUtil.getCDOObject(companyA).cdoID(), true));
+    Category category2 = (Category)CDOUtil.getEObject(transaction2.getObject(CDOUtil.getCDOObject(category1).cdoID(), true));
+    Company company2 = (Company)CDOUtil.getEObject(transaction2.getObject(CDOUtil.getCDOObject(company1).cdoID(), true));
 
     msg("Changing name");
-    category1B.setName("CHANGED NAME");
-    company1B.setName("TEST1");
+    category2.setName("CHANGED NAME");
+    company2.setName("TEST1");
 
-    adapter.assertNotifications(0);
+    adapter1.assertNotifications(0);
 
     msg("Committing");
     transaction2.commit();
 
     msg("Checking after commit");
-    adapter.assertNoTimeout(1);
+    adapter1.assertNoTimeout(1);
 
     // Switching policy to the other
-    transaction.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
+    transaction1.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
 
-    adapter.clearNotifications();
+    adapter1.clearNotifications();
 
     msg("Changing name");
-    category1B.setName("CHANGED NAME_VERSION 2");
-    company1B.setName("TEST2");
+    category2.setName("CHANGED NAME_VERSION 2");
+    company2.setName("TEST2");
 
-    adapter.assertNotifications(0);
+    adapter1.assertNotifications(0);
 
     msg("Committing");
     transaction2.commit();
 
     msg("Checking after commit");
-    adapter.assertNoTimeout(2);
+    adapter1.assertNoTimeout(2);
   }
 
   public void testNotificationChain() throws Exception
   {
-    msg("Opening session");
-    final CDOSession session = openSession();
+    msg("Opening session1");
+    CDOSession session1 = openSession();
 
     // ************************************************************* //
 
     msg("Creating category1");
-    final Category category1A = getModel1Factory().createCategory();
-    category1A.setName("category1");
+    Category category1 = getModel1Factory().createCategory();
+    category1.setName("category1");
 
     msg("Creating company");
-    final Company companyA = getModel1Factory().createCompany();
+    Company company1 = getModel1Factory().createCompany();
 
     msg("Adding categories");
-    companyA.getCategories().add(category1A);
+    company1.getCategories().add(category1);
 
-    msg("Opening transaction");
-    final CDOTransaction transaction = session.openTransaction();
+    msg("Opening transaction1");
+    CDOTransaction transaction1 = session1.openTransaction();
 
-    transaction.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
+    transaction1.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
 
     msg("Creating resource");
-    final CDOResource resourceA = transaction.createResource(getResourcePath("/test1"));
+    CDOResource resource1 = transaction1.createResource(getResourcePath("/test1"));
 
     msg("Adding company");
-    resourceA.getContents().add(companyA);
+    resource1.getContents().add(company1);
 
     msg("Committing");
-    transaction.commit();
+    transaction1.commit();
 
-    final TestAdapter adapter = new TestAdapter(companyA);
+    TestAdapter adapter1 = new TestAdapter(company1);
 
     // ************************************************************* //
 
     msg("Opening view");
-    final CDOSession session2 = openSession();
-    final CDOTransaction transaction2 = session2.openTransaction();
+    CDOSession session2 = openSession();
+    CDOTransaction transaction2 = session2.openTransaction();
 
-    final Company company1B = (Company)CDOUtil.getEObject(transaction2.getObject(CDOUtil.getCDOObject(companyA).cdoID(), true));
+    Company company2 = (Company)CDOUtil.getEObject(transaction2.getObject(CDOUtil.getCDOObject(company1).cdoID(), true));
 
     msg("Changing name");
-    company1B.setName("TEST1");
-    company1B.setCity("CITY1");
+    company2.setName("TEST1");
+    company2.setCity("CITY1");
 
-    final Category category2B = getModel1Factory().createCategory();
-    company1B.getCategories().add(category2B);
+    Category category2B = getModel1Factory().createCategory();
+    company2.getCategories().add(category2B);
 
-    adapter.assertNotifications(0);
+    adapter1.assertNotifications(0);
 
     msg("Committing");
     transaction2.commit();
 
     msg("Checking after commit");
-    Notification[] notifications = adapter.assertNoTimeout(3);
+    Notification[] notifications = adapter1.assertNoTimeout(3);
 
     int count = 0;
     for (Notification notification : notifications)
@@ -449,7 +421,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
       {
         assertEquals(Notification.ADD, notification.getEventType());
         assertEquals(1, notification.getPosition());
-        assertEquals(transaction.getObject(CDOUtil.getCDOObject(category2B).cdoID(), true), notification.getNewValue());
+        assertEquals(transaction1.getObject(CDOUtil.getCDOObject(category2B).cdoID(), true), notification.getNewValue());
       }
       else
       {
@@ -474,11 +446,11 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     company.getCategories().add(getModel1Factory().createCategory());
     company.getCategories().add(getModel1Factory().createCategory());
 
-    CDOSession session = openSession();
-    CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
+    CDOSession session1 = openSession();
+    CDOTransaction transaction1 = session1.openTransaction();
+    CDOResource resource = transaction1.createResource(getResourcePath("/test1"));
     resource.getContents().add(company);
-    transaction.commit();
+    transaction1.commit();
 
     CDOSession session2 = openSession();
     CDOView view = session2.openView();
@@ -490,36 +462,24 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     Object[] strongRefs = company2.getCategories().toArray(); // Keep those in memory
     msg(strongRefs);
 
-    final TestAdapter adapter = new TestAdapter(company2);
+    TestAdapter adapter2 = new TestAdapter(company2);
 
     company.getCategories().removeAll(categories);
-    transaction.commit();
+    commitAndSync(transaction1, view);
 
-    final Object[] oldValue = { null };
-    new PollingTimeOuter()
+    for (Notification notification : adapter2.getNotifications())
     {
-      @Override
-      protected boolean successful()
+      if (notification.getEventType() == Notification.REMOVE && notification.getFeature() == getModel1Package().getCompany_Categories())
       {
-        for (Notification notification : adapter.getNotifications())
-        {
-          if (notification.getEventType() == Notification.REMOVE && notification.getFeature() == getModel1Package().getCompany_Categories())
-          {
-            oldValue[0] = notification.getOldValue();
-            return true;
-          }
-        }
-
-        return false;
+        assertInstanceOf(Category.class, CDOUtil.getEObject((EObject)notification.getOldValue()));
+        break;
       }
-    }.assertNoTimeOut();
-
-    assertInstanceOf(Category.class, CDOUtil.getEObject((EObject)oldValue[0]));
+    }
   }
 
   public void testRemoveManyContained() throws Exception
   {
-    final List<Category> categories = new ArrayList<>();
+    List<Category> categories = new ArrayList<>();
     categories.add(getModel1Factory().createCategory());
     categories.add(getModel1Factory().createCategory());
     categories.add(getModel1Factory().createCategory());
@@ -534,11 +494,11 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     company.getCategories().add(getModel1Factory().createCategory());
     company.getCategories().add(getModel1Factory().createCategory());
 
-    CDOSession session = openSession();
-    CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
+    CDOSession session1 = openSession();
+    CDOTransaction transaction1 = session1.openTransaction();
+    CDOResource resource = transaction1.createResource(getResourcePath("/test1"));
     resource.getContents().add(company);
-    transaction.commit();
+    transaction1.commit();
 
     CDOSession session2 = openSession();
     CDOView view = session2.openView();
@@ -550,39 +510,11 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     Object[] strongRefs = company2.getCategories().toArray(); // Keep those in memory
     msg(strongRefs);
 
-    final TestAdapter adapter = new TestAdapter(company2);
+    TestAdapter adapter2 = new TestAdapter(company2);
 
     company.getCategories().removeAll(categories);
-    transaction.commit();
-
-    // TODO Consider to uncomment the following if bug 317144 is addressed in EMF
-    // final Object[] oldValue = { null };
-
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        return adapter.getNotifications().length == categories.size();
-
-        // TODO Consider to uncomment the following if bug 317144 is addressed in EMF
-        // for (Notification notification : adapter.getNotifications())
-        // {
-        // if (notification.getEventType() == Notification.REMOVE_MANY
-        // && notification.getFeature() == getModel1Package().getCompany_Categories())
-        // {
-        // oldValue[0] = notification.getOldValue();
-        // return true;
-        // }
-        // }
-        //
-        // return false;
-      }
-    }.assertNoTimeOut();
-
-    // TODO Consider to uncomment the following if bug 317144 is addressed in EMF
-    // assertInstanceOf(Collection.class, oldValue[0]);
-    // assertEquals(categories.size(), ((Collection<?>)oldValue[0]).size());
+    commitAndSync(transaction1, view);
+    adapter2.assertNotifications(categories.size());
   }
 
   public void testRemoveXRef() throws Exception
@@ -600,12 +532,12 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     product.setName("test1");
     product.getOrderDetails().addAll(details);
 
-    CDOSession session = openSession();
-    CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
+    CDOSession session1 = openSession();
+    CDOTransaction transaction1 = session1.openTransaction();
+    CDOResource resource = transaction1.createResource(getResourcePath("/test1"));
     resource.getContents().add(product);
     resource.getContents().addAll(details);
-    transaction.commit();
+    transaction1.commit();
 
     CDOSession session2 = openSession();
     CDOView view = session2.openView();
@@ -617,7 +549,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     Object[] strongRefs = product2.getOrderDetails().toArray(); // Keep those in memory
     msg(strongRefs);
 
-    final TestAdapter adapter = new TestAdapter(product2);
+    TestAdapter adapter2 = new TestAdapter(product2);
 
     details.remove(0);
     details.remove(0);
@@ -626,33 +558,22 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     details.remove(1);
     details.remove(1);
     product.getOrderDetails().removeAll(details);
-    transaction.commit();
 
-    final Object[] oldValue = { null };
-    new PollingTimeOuter()
+    commitAndSync(transaction1, view);
+
+    for (Notification notification : adapter2.getNotifications())
     {
-      @Override
-      protected boolean successful()
+      if (notification.getEventType() == Notification.REMOVE && notification.getFeature() == getModel1Package().getProduct1_OrderDetails())
       {
-        for (Notification notification : adapter.getNotifications())
-        {
-          if (notification.getEventType() == Notification.REMOVE && notification.getFeature() == getModel1Package().getProduct1_OrderDetails())
-          {
-            oldValue[0] = notification.getOldValue();
-            return true;
-          }
-        }
-
-        return false;
+        assertInstanceOf(OrderDetail.class, CDOUtil.getEObject((EObject)notification.getOldValue()));
+        break;
       }
-    }.assertNoTimeOut();
-
-    assertInstanceOf(OrderDetail.class, CDOUtil.getEObject((EObject)oldValue[0]));
+    }
   }
 
   public void testRemoveManyXRef() throws Exception
   {
-    final List<OrderDetail> details = new ArrayList<>();
+    List<OrderDetail> details = new ArrayList<>();
     details.add(getModel1Factory().createOrderDetail());
     details.add(getModel1Factory().createOrderDetail());
     details.add(getModel1Factory().createOrderDetail());
@@ -668,12 +589,12 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     product.setName("test1");
     product.getOrderDetails().addAll(details);
 
-    CDOSession session = openSession();
-    CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
+    CDOSession session1 = openSession();
+    CDOTransaction transaction1 = session1.openTransaction();
+    CDOResource resource = transaction1.createResource(getResourcePath("/test1"));
     resource.getContents().add(product);
     resource.getContents().addAll(details);
-    transaction.commit();
+    transaction1.commit();
 
     CDOSession session2 = openSession();
     CDOView view = session2.openView();
@@ -685,7 +606,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     Object[] strongRefs = product2.getOrderDetails().toArray(); // Keep those in memory
     msg(strongRefs);
 
-    final TestAdapter adapter = new TestAdapter(product2);
+    TestAdapter adapter2 = new TestAdapter(product2);
 
     details.remove(0);
     details.remove(0);
@@ -694,36 +615,9 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     details.remove(4);
     details.remove(4);
     product.getOrderDetails().removeAll(details);
-    transaction.commit();
 
-    // TODO Consider to uncomment the following if bug 317144 is addressed in EMF
-    // final Object[] oldValue = { null };
-
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        return adapter.getNotifications().length == details.size();
-
-        // TODO Consider to uncomment the following if bug 317144 is addressed in EMF
-        // for (Notification notification : adapter.getNotifications())
-        // {
-        // if (notification.getEventType() == Notification.REMOVE_MANY
-        // && notification.getFeature() == getModel1Package().getProduct1_OrderDetails())
-        // {
-        // oldValue[0] = notification.getOldValue();
-        // return true;
-        // }
-        // }
-        //
-        // return false;
-      }
-    }.assertNoTimeOut();
-
-    // TODO Consider to uncomment the following if bug 317144 is addressed in EMF
-    // assertInstanceOf(Collection.class, oldValue[0]);
-    // assertEquals(details.size(), ((Collection<?>)oldValue[0]).size());
+    commitAndSync(transaction1, view);
+    adapter2.assertNotifications(details.size());
   }
 
   /**
@@ -731,40 +625,40 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
    */
   public void testInvalidationWithDeltas_SameBranch() throws Exception
   {
-    CDOSession session = openSession();
-    CDOTransaction transaction = session.openTransaction();
-    CDOView view = session.openView();
+    CDOSession session1 = openSession();
+    CDOTransaction transaction1 = session1.openTransaction();
+    CDOView view = session1.openView();
 
     Company company = getModel1Factory().createCompany();
     company.setName("main-v1");
 
-    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
+    CDOResource resource = transaction1.createResource(getResourcePath("/test1"));
     resource.getContents().add(company);
 
-    commitAndSync(transaction, view);
+    commitAndSync(transaction1, view);
 
     company.setName("main-v2");
-    commitAndSync(transaction, view);
+    commitAndSync(transaction1, view);
 
     view.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
     Company company2 = view.getObject(company);
     company2.eAdapters().add(new AdapterImpl());
 
     company.setName("main-v3");
-    commitAndSync(transaction, view);
+    commitAndSync(transaction1, view);
 
     CDORevision revision2 = CDOUtil.getCDOObject(company2).cdoRevision();
     assertEquals(3, revision2.getVersion());
-    assertEquals(transaction.getBranch(), revision2.getBranch());
-    assertEquals(transaction.getLastCommitTime(), revision2.getTimeStamp());
+    assertEquals(transaction1.getBranch(), revision2.getBranch());
+    assertEquals(transaction1.getLastCommitTime(), revision2.getTimeStamp());
 
     company.setName("main-v4");
-    commitAndSync(transaction, view);
+    commitAndSync(transaction1, view);
 
     revision2 = CDOUtil.getCDOObject(company2).cdoRevision();
     assertEquals(4, revision2.getVersion());
-    assertEquals(transaction.getBranch(), revision2.getBranch());
-    assertEquals(transaction.getLastCommitTime(), revision2.getTimeStamp());
+    assertEquals(transaction1.getBranch(), revision2.getBranch());
+    assertEquals(transaction1.getLastCommitTime(), revision2.getTimeStamp());
   }
 
   /**
@@ -773,43 +667,43 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
   @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
   public void _testInvalidationWithDeltas_SubBranch() throws Exception
   {
-    CDOSession session = openSession();
-    CDOTransaction transaction = session.openTransaction();
+    CDOSession session1 = openSession();
+    CDOTransaction transaction1 = session1.openTransaction();
 
     Company company = getModel1Factory().createCompany();
     company.setName("main-v1");
 
-    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
+    CDOResource resource = transaction1.createResource(getResourcePath("/test1"));
     resource.getContents().add(company);
 
-    transaction.commit();
+    transaction1.commit();
 
     company.setName("main-v2");
-    transaction.commit();
+    transaction1.commit();
 
-    CDOBranch subBranch = transaction.getBranch().createBranch("SUB_BRANCH");
-    transaction.setBranch(subBranch);
+    CDOBranch subBranch = transaction1.getBranch().createBranch("SUB_BRANCH");
+    transaction1.setBranch(subBranch);
 
-    CDOView view = session.openView(subBranch);
+    CDOView view = session1.openView(subBranch);
     view.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
     Company company2 = view.getObject(company);
     company2.eAdapters().add(new AdapterImpl());
 
     company.setName("sub-v1");
-    commitAndSync(transaction, view);
+    commitAndSync(transaction1, view);
 
     CDORevision revision2 = CDOUtil.getCDOObject(company2).cdoRevision();
     assertEquals(1, revision2.getVersion());
-    assertEquals(transaction.getBranch(), revision2.getBranch());
-    assertEquals(transaction.getLastCommitTime(), revision2.getTimeStamp());
+    assertEquals(transaction1.getBranch(), revision2.getBranch());
+    assertEquals(transaction1.getLastCommitTime(), revision2.getTimeStamp());
 
     company.setName("sub-v2");
-    commitAndSync(transaction, view);
+    commitAndSync(transaction1, view);
 
     revision2 = CDOUtil.getCDOObject(company2).cdoRevision();
     assertEquals(2, revision2.getVersion());
-    assertEquals(transaction.getBranch(), revision2.getBranch());
-    assertEquals(transaction.getLastCommitTime(), revision2.getTimeStamp());
+    assertEquals(transaction1.getBranch(), revision2.getBranch());
+    assertEquals(transaction1.getLastCommitTime(), revision2.getTimeStamp());
   }
 
   /**

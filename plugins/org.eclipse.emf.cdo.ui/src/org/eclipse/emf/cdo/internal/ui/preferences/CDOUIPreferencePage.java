@@ -39,6 +39,8 @@ public class CDOUIPreferencePage extends OMPreferencePage
 {
   private TextAndDisable decoration;
 
+  private Text lockTimeout;
+
   private Button autoReload;
 
   public CDOUIPreferencePage()
@@ -77,18 +79,44 @@ public class CDOUIPreferencePage extends OMPreferencePage
     new ContentAssistCommandAdapter(text, contentAdapter, provider, null, new char[] { '$' }, true);
     UIUtil.addDecorationMargin(text);
 
+    Label lockTimeoutLabel = new Label(composite, SWT.NONE);
+    lockTimeoutLabel.setText(Messages.getString("CDOUIPreferencePage.3")); //$NON-NLS-1$
+    lockTimeoutLabel.setLayoutData(new GridData(GridData.BEGINNING, GridData.CENTER, false, false));
+
+    lockTimeout = new Text(composite, SWT.BORDER);
+    lockTimeout.setLayoutData(new GridData(GridData.FILL, GridData.CENTER, true, false));
+    UIUtil.setIndentation(lockTimeout, 7, 10);
+    addListeners(lockTimeout);
+
     autoReload = new Button(composite, SWT.CHECK);
     autoReload.setText(Messages.getString("CDOUIPreferencePage.1")); //$NON-NLS-1$
-    autoReload.setLayoutData(UIUtil.createGridData(false, false));
+    autoReload.setLayoutData(UIUtil.createGridData(2, 1));
     UIUtil.setIndentation(autoReload, -1, 10);
 
     initValues();
     return composite;
   }
 
+  @Override
+  protected void dialogChanged()
+  {
+    try
+    {
+      Long.parseLong(lockTimeout.getText());
+      setErrorMessage(null);
+      setValid(true);
+    }
+    catch (NumberFormatException ex)
+    {
+      setErrorMessage("Lock timeout value (ms) is not valid.");
+      setValid(false);
+    }
+  }
+
   protected void initValues()
   {
     decoration.setValue(OM.PREF_LABEL_DECORATION.getValue());
+    lockTimeout.setText(Long.toString(OM.PREF_LOCK_TIMEOUT.getValue()));
     autoReload.setSelection(OM.PREF_EDITOR_AUTO_RELOAD.getValue());
   }
 
@@ -96,6 +124,7 @@ public class CDOUIPreferencePage extends OMPreferencePage
   public boolean performOk()
   {
     OM.PREF_LABEL_DECORATION.setValue(decoration.getValue());
+    OM.PREF_LOCK_TIMEOUT.setValue(Long.parseLong(lockTimeout.getText()));
     OM.PREF_EDITOR_AUTO_RELOAD.setValue(autoReload.getSelection());
     return super.performOk();
   }

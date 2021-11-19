@@ -69,6 +69,9 @@ public abstract class OM
   public static final OMPreference<Boolean> PREF_EDITOR_AUTO_RELOAD = //
       PREFS.init("PREF_EDITOR_AUTO_RELOAD", true); //$NON-NLS-1$
 
+  public static final OMPreference<Long> PREF_LOCK_TIMEOUT = //
+      PREFS.init("PREF_LOCK_TIMEOUT", 10000L); //$NON-NLS-1$
+
   private static Boolean historySupportAvailable;
 
   private static Boolean compareSupportAvailable;

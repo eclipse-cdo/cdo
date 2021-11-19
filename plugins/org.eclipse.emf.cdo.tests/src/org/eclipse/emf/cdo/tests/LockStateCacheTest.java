@@ -19,10 +19,12 @@ import org.eclipse.emf.cdo.spi.common.lock.InternalCDOLockState;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.view.CDOView;
 
-import org.eclipse.emf.internal.cdo.session.CDOLockStateCache;
+import org.eclipse.emf.internal.cdo.session.CDOLockStateCacheImpl;
 
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.io.IOUtil;
+
+import org.eclipse.emf.spi.cdo.CDOLockStateCache;
 
 import java.util.Set;
 
@@ -34,7 +36,7 @@ public class LockStateCacheTest extends AbstractCDOTest
   public void testLockStateCache() throws Exception
   {
     CDOSession session = openSession();
-    CDOLockStateCache cache = new CDOLockStateCache(session);
+    CDOLockStateCache cache = new CDOLockStateCacheImpl(session);
     CDOBranchPoint head = getTestBranch(session).getHead();
 
     CDOView view1 = session.openView(head);
@@ -811,7 +813,7 @@ public class LockStateCacheTest extends AbstractCDOTest
       initialReaders = readers;
 
       CDOSession session = openSession();
-      cache = new CDOLockStateCache(session);
+      cache = new CDOLockStateCacheImpl(session);
       CDOBranchPoint head = getTestBranch(session).getHead();
 
       for (int i = 0; i < lockOwners.length; i++)

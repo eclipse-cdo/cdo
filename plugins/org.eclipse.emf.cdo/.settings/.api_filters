@@ -878,6 +878,22 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/internal/cdo/session/CDOLockStateCacheImpl.java" type="org.eclipse.emf.internal.cdo.session.CDOLockStateCacheImpl$LockState">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="AbstractCDOLockState"/>
+                <message_argument value="LockState"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/internal/cdo/session/CDOLockStateCacheImpl.java" type="org.eclipse.emf.internal.cdo.session.CDOLockStateCacheImpl$MutableLockState">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="InternalCDOLockState"/>
+                <message_argument value="MutableLockState"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/internal/cdo/session/CDOSessionImpl.java" type="org.eclipse.emf.internal.cdo.session.CDOSessionImpl">
         <filter id="574668824">
             <message_arguments>

@@ -31,10 +31,9 @@ import org.eclipse.emf.cdo.spi.common.revision.PointerCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
 import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 
-import org.eclipse.emf.internal.cdo.session.CDOLockStateCache;
-
 import org.eclipse.net4j.util.io.IORuntimeException;
 
+import org.eclipse.emf.spi.cdo.CDOLockStateCache;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 import java.io.IOException;

@@ -132,6 +132,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.spi.cdo.CDOLockStateCache;
 import org.eclipse.emf.spi.cdo.CDOPermissionUpdater;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.MergeDataResult;
@@ -1588,7 +1589,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
   protected void doActivateAfterBranchManager() throws Exception
   {
-    lockStateCache = new CDOLockStateCache(this);
+    lockStateCache = new CDOLockStateCacheImpl(this);
   }
 
   @Override

@@ -14,8 +14,11 @@ package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.CDOLock;
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
+import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -41,6 +44,8 @@ import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.io.IOUtil;
 
+import org.eclipse.emf.spi.cdo.CDOLockStateCache;
+import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 
 import java.util.ArrayList;
@@ -1164,6 +1169,70 @@ public class LockingManagerTest extends AbstractLockingTest
     Category category = getModel1Factory().createCategory();
     company.getCategories().add(category);
     objects.add(CDOUtil.getCDOObject(category));
+  }
+
+  public void _testLockContention() throws Exception
+  {
+    Company company1 = getModel1Factory().createCompany();
+
+    CDOSession session1 = openSession();
+    CDOTransaction transaction1 = session1.openTransaction();
+    CDOResource resource1 = transaction1.createResource(getResourcePath("/res1"));
+    resource1.getContents().add(company1);
+    transaction1.commit();
+
+    lockWrite(company1);
+
+    CDOSession session2 = openSession();
+    CDOTransaction transaction2 = session2.openTransaction();
+    Company company2 = (Company)transaction2.getResource(getResourcePath("/res1")).getContents().get(0);
+
+    Throwable[] exception = { null };
+    Thread client2 = new Thread("Client 2")
+    {
+      @Override
+      public void run()
+      {
+        try
+        {
+          lockWrite(company2);
+          assertWriteLock(true, company2);
+        }
+        catch (Throwable ex)
+        {
+          exception[0] = ex;
+        }
+      }
+    };
+
+    client2.start();
+    sleep(100); // Wait until client2 must have called lock().
+
+    unlockWrite(company1); // Unblock client2.
+    client2.join(DEFAULT_TIMEOUT);
+
+    if (exception[0] instanceof Error)
+    {
+      throw (Error)exception[0];
+    }
+
+    if (exception[0] instanceof Exception)
+    {
+      throw (Exception)exception[0];
+    }
+
+    CDOBranch mainBranch = session2.getBranchManager().getMainBranch();
+    CDOID id = CDOUtil.getCDOObject(company2).cdoID();
+
+    CDOLockStateCache lockStateCache2 = ((InternalCDOSession)session2).getLockStateCache();
+    CDOLockState lockState = lockStateCache2.getLockState(mainBranch, id);
+    CDOLockOwner expectedLockOwner = transaction2.getLockOwner();
+    assertEquals("1", expectedLockOwner, lockState.getWriteLockOwner());
+
+    sleep(200);
+    assertEquals("2", expectedLockOwner, lockState.getWriteLockOwner());
+
+    System.out.println();
   }
 
   public void testRecursiveLock() throws Exception

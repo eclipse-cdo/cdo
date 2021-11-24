@@ -69,6 +69,12 @@
             <message_argument value="org.eclipse.net4j.ui.shared.SharedIcons"/>
         </message_arguments>
     </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util(3.16.0)" element_type="METHOD_ELEMENT_TYPE" flags="34" key="getLockState(TOBJECT;)Lorg/eclipse/net4j/util/concurrent/RWOLockManager$LockState&lt;TOBJECT;TCONTEXT;&gt;;" kind="CHANGED" message="The 'synchronized' keyword has been added for method org.eclipse.net4j.util.concurrent.RWOLockManager.getLockState(OBJECT)" newModifiers="33" oldModifiers="1" restrictions="0" type_name="org.eclipse.net4j.util.concurrent.RWOLockManager">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.concurrent.RWOLockManager"/>
+            <message_argument value="getLockState(OBJECT)"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.net4j.util(3.16.0)" element_type="CLASS_ELEMENT_TYPE" flags="8" key="Factory(Ljava/lang/String;)V" kind="ADDED" message="The constructor org.eclipse.net4j.util.factory.Factory.Factory(String) has been added" newModifiers="1" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.factory.Factory">
         <message_arguments>
             <message_argument value="org.eclipse.net4j.util.factory.Factory"/>
@@ -123,6 +129,12 @@
             <message_argument value="addRevision(CDORevision)"/>
         </message_arguments>
     </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.15.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="loadRevisions(Ljava/util/List&lt;Lorg/eclipse/emf/cdo/spi/common/revision/RevisionInfo;&gt;;Lorg/eclipse/emf/cdo/common/branch/CDOBranchPoint;II)Ljava/util/List&lt;Lorg/eclipse/emf/cdo/spi/common/revision/RevisionInfo;&gt;;" kind="ADDED" message="The deprecation modifiers has been added to org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLoader.loadRevisions(List&lt;RevisionInfo&gt;, CDOBranchPoint, int, int)" newModifiers="1049601" oldModifiers="1025" restrictions="3" type_name="org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager$RevisionLoader">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLoader"/>
+            <message_argument value="loadRevisions(List&lt;RevisionInfo&gt;, CDOBranchPoint, int, int)"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.15.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="writeResult(Lorg/eclipse/emf/cdo/common/protocol/CDODataOutput;Lorg/eclipse/emf/cdo/spi/common/revision/InternalCDORevision;ILorg/eclipse/emf/cdo/common/branch/CDOBranchPoint;)V" kind="ADDED" message="The deprecation modifiers has been added to org.eclipse.emf.cdo.spi.common.revision.RevisionInfo.writeResult(CDODataOutput, InternalCDORevision, int, CDOBranchPoint)" newModifiers="1048585" oldModifiers="9" restrictions="2" type_name="org.eclipse.emf.cdo.spi.common.revision.RevisionInfo">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.spi.common.revision.RevisionInfo"/>
@@ -135,16 +147,16 @@
             <message_argument value="sendBranchNotification(InternalCDOBranch, CDOBranchChangedEvent.ChangeKind)"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.15.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="viewClosed(Lorg/eclipse/emf/cdo/spi/server/InternalView;)V" kind="ADDED" message="The deprecation modifiers has been added to org.eclipse.emf.cdo.spi.server.InternalSession.viewClosed(InternalView)" newModifiers="1049601" oldModifiers="1025" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.InternalSession">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.spi.server.InternalSession"/>
-            <message_argument value="viewClosed(InternalView)"/>
-        </message_arguments>
-    </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.15.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="sendBranchNotification(Lorg/eclipse/emf/cdo/spi/common/branch/InternalCDOBranch;Lorg/eclipse/emf/cdo/common/branch/CDOBranchChangedEvent$ChangeKind;)V" kind="ADDED" message="The deprecation modifiers has been added to org.eclipse.emf.cdo.spi.server.InternalSession.sendBranchNotification(InternalCDOBranch, CDOBranchChangedEvent.ChangeKind)" newModifiers="1049601" oldModifiers="1025" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.InternalSession">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.spi.server.InternalSession"/>
             <message_argument value="sendBranchNotification(InternalCDOBranch, CDOBranchChangedEvent.ChangeKind)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.15.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="viewClosed(Lorg/eclipse/emf/cdo/spi/server/InternalView;)V" kind="ADDED" message="The deprecation modifiers has been added to org.eclipse.emf.cdo.spi.server.InternalSession.viewClosed(InternalView)" newModifiers="1049601" oldModifiers="1025" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.InternalSession">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.InternalSession"/>
+            <message_argument value="viewClosed(InternalView)"/>
         </message_arguments>
     </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.15.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="sendBranchNotification(Lorg/eclipse/emf/cdo/spi/server/InternalSession;Lorg/eclipse/emf/cdo/spi/common/branch/InternalCDOBranch;Lorg/eclipse/emf/cdo/common/branch/CDOBranchChangedEvent$ChangeKind;)V" kind="ADDED" message="The deprecation modifiers has been added to org.eclipse.emf.cdo.spi.server.InternalSessionManager.sendBranchNotification(InternalSession, InternalCDOBranch, CDOBranchChangedEvent.ChangeKind)" newModifiers="1049601" oldModifiers="1025" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.InternalSessionManager">
@@ -267,83 +279,6 @@
             <message_argument value="getBranch()"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="69" key="org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache" kind="ADDED" message="The interface org.eclipse.emf.cdo.common.revision.CDORevisionInterner adds method internRevision(CDORevision) to org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache that is tagged as @noimplement" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache"/>
-            <message_argument value="org.eclipse.emf.cdo.common.revision.CDORevisionInterner"/>
-            <message_argument value="internRevision(CDORevision)"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="69" key="org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager" kind="ADDED" message="The interface org.eclipse.emf.cdo.common.revision.CDORevisionInterner adds method internRevision(CDORevision) to org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager that is tagged as @noimplement" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager"/>
-            <message_argument value="org.eclipse.emf.cdo.common.revision.CDORevisionInterner"/>
-            <message_argument value="internRevision(CDORevision)"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.explorer(4.11.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="69" key="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager$CheckoutStateEvent" kind="ADDED" message="The interface org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager$CheckoutEvent adds method getSource() to org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager.CheckoutStateEvent that is tagged as @noimplement" newModifiers="1545" oldModifiers="1545" restrictions="3" type_name="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager$CheckoutStateEvent">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager.CheckoutStateEvent"/>
-            <message_argument value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager$CheckoutEvent"/>
-            <message_argument value="getSource()"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="69" key="org.eclipse.emf.cdo.spi.server.InternalFailoverParticipant" kind="ADDED" message="The interface org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager$BranchLoader5 adds method deleteBranches(int, OMMonitor) to org.eclipse.emf.cdo.spi.server.InternalFailoverParticipant that is tagged as @noimplement" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.InternalFailoverParticipant">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.spi.server.InternalFailoverParticipant"/>
-            <message_argument value="org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager$BranchLoader5"/>
-            <message_argument value="deleteBranches(int, OMMonitor)"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="69" key="org.eclipse.emf.cdo.spi.server.InternalRepository" kind="ADDED" message="The interface org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager$BranchLoader5 adds method deleteBranches(int, OMMonitor) to org.eclipse.emf.cdo.spi.server.InternalRepository that is tagged as @noimplement" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.InternalRepository">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.spi.server.InternalRepository"/>
-            <message_argument value="org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager$BranchLoader5"/>
-            <message_argument value="deleteBranches(int, OMMonitor)"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="69" key="org.eclipse.emf.cdo.spi.server.InternalSynchronizableRepository" kind="ADDED" message="The interface org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager$BranchLoader5 adds method deleteBranches(int, OMMonitor) to org.eclipse.emf.cdo.spi.server.InternalSynchronizableRepository that is tagged as @noimplement" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.InternalSynchronizableRepository">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.spi.server.InternalSynchronizableRepository"/>
-            <message_argument value="org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager$BranchLoader5"/>
-            <message_argument value="deleteBranches(int, OMMonitor)"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="69" key="org.eclipse.emf.spi.cdo.CDOSessionProtocol" kind="ADDED" message="The interface org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager$BranchLoader5 adds method deleteBranches(int, OMMonitor) to org.eclipse.emf.spi.cdo.CDOSessionProtocol that is tagged as @noimplement" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.spi.cdo.CDOSessionProtocol">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.spi.cdo.CDOSessionProtocol"/>
-            <message_argument value="org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager$BranchLoader5"/>
-            <message_argument value="deleteBranches(int, OMMonitor)"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="69" key="org.eclipse.emf.spi.cdo.InternalCDOViewSet" kind="ADDED" message="The interface org.eclipse.net4j.util.concurrent.IExecutorServiceProvider adds method getExecutorService() to org.eclipse.emf.spi.cdo.InternalCDOViewSet that is tagged as @noimplement" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.spi.cdo.InternalCDOViewSet">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.spi.cdo.InternalCDOViewSet"/>
-            <message_argument value="org.eclipse.net4j.util.concurrent.IExecutorServiceProvider"/>
-            <message_argument value="getExecutorService()"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="69" key="org.eclipse.emf.cdo.spi.server.InternalFailoverParticipant" kind="ADDED" message="The interface org.eclipse.net4j.util.security.operations.OperationAuthorizer adds method authorizeOperation(CONTEXT, AuthorizableOperation) to org.eclipse.emf.cdo.spi.server.InternalFailoverParticipant that is tagged as @noimplement" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.InternalFailoverParticipant">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.spi.server.InternalFailoverParticipant"/>
-            <message_argument value="org.eclipse.net4j.util.security.operations.OperationAuthorizer"/>
-            <message_argument value="authorizeOperation(CONTEXT, AuthorizableOperation)"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="69" key="org.eclipse.emf.cdo.spi.server.InternalRepository" kind="ADDED" message="The interface org.eclipse.net4j.util.security.operations.OperationAuthorizer adds method authorizeOperation(CONTEXT, AuthorizableOperation) to org.eclipse.emf.cdo.spi.server.InternalRepository that is tagged as @noimplement" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.InternalRepository">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.spi.server.InternalRepository"/>
-            <message_argument value="org.eclipse.net4j.util.security.operations.OperationAuthorizer"/>
-            <message_argument value="authorizeOperation(CONTEXT, AuthorizableOperation)"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="69" key="org.eclipse.emf.cdo.spi.server.InternalSynchronizableRepository" kind="ADDED" message="The interface org.eclipse.net4j.util.security.operations.OperationAuthorizer adds method authorizeOperation(CONTEXT, AuthorizableOperation) to org.eclipse.emf.cdo.spi.server.InternalSynchronizableRepository that is tagged as @noimplement" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.InternalSynchronizableRepository">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.spi.server.InternalSynchronizableRepository"/>
-            <message_argument value="org.eclipse.net4j.util.security.operations.OperationAuthorizer"/>
-            <message_argument value="authorizeOperation(CONTEXT, AuthorizableOperation)"/>
-        </message_arguments>
-    </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="48" key="AdditionEvent" kind="ADDED" message="The member type AdditionEvent has been added" newModifiers="1545" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.common.revision.CDORevisionCache">
         <message_arguments>
             <message_argument value="AdditionEvent"/>
@@ -404,6 +339,11 @@
             <message_argument value="PostActivateable"/>
         </message_arguments>
     </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="48" key="RevisionLoader3" kind="ADDED" message="The member type RevisionLoader3 has been added" newModifiers="1545" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager">
+        <message_arguments>
+            <message_argument value="RevisionLoader3"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.net4j.util(3.16.0)" element_type="CLASS_ELEMENT_TYPE" flags="48" key="WithArguments" kind="ADDED" message="The member type WithArguments has been added" newModifiers="1033" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.properties.Property">
         <message_arguments>
             <message_argument value="WithArguments"/>
@@ -454,13 +394,13 @@
             <message_argument value="getLockOwner()"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="67" key="getSessionID()I" kind="ADDED" message="The method org.eclipse.emf.cdo.common.CDOCommonView.getSessionID() has been moved down in the hierarchy" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.common.CDOCommonView">
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="getSessionID()I" kind="ADDED" message="The method org.eclipse.emf.cdo.common.CDOCommonView.getSessionID() has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.common.CDOCommonView">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.common.CDOCommonView"/>
             <message_argument value="getSessionID()"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="67" key="isDurableView()Z" kind="ADDED" message="The method org.eclipse.emf.cdo.common.CDOCommonView.isDurableView() has been moved down in the hierarchy" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.common.CDOCommonView">
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="isDurableView()Z" kind="ADDED" message="The method org.eclipse.emf.cdo.common.CDOCommonView.isDurableView() has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.common.CDOCommonView">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.common.CDOCommonView"/>
             <message_argument value="isDurableView()"/>
@@ -670,6 +610,12 @@
             <message_argument value="getRevisions(List&lt;CDOID&gt;, CDOBranchPoint, int, int, boolean, List&lt;CDORevision&gt;)"/>
         </message_arguments>
     </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.15.0)" element_type="CLASS_ELEMENT_TYPE" flags="36" key="getRevisions(Ljava/util/List&lt;Lorg/eclipse/emf/cdo/common/id/CDOID;&gt;;Lorg/eclipse/emf/cdo/common/branch/CDOBranchPoint;IIZZ[Lorg/eclipse/emf/cdo/spi/common/revision/SyntheticCDORevision;)Ljava/util/List&lt;Lorg/eclipse/emf/cdo/common/revision/CDORevision;&gt;;" kind="ADDED" message="The method org.eclipse.emf.cdo.spi.common.revision.DelegatingCDORevisionManager.getRevisions(List&lt;CDOID&gt;, CDOBranchPoint, int, int, boolean, boolean, SyntheticCDORevision[]) has been added, overriding a method from a superclass" newModifiers="1" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.common.revision.DelegatingCDORevisionManager">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.common.revision.DelegatingCDORevisionManager"/>
+            <message_argument value="getRevisions(List&lt;CDOID&gt;, CDOBranchPoint, int, int, boolean, boolean, SyntheticCDORevision[])"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.15.0)" element_type="CLASS_ELEMENT_TYPE" flags="36" key="handleRevisions(Lorg/eclipse/emf/ecore/EClass;Lorg/eclipse/emf/cdo/common/branch/CDOBranch;ZJZLorg/eclipse/emf/cdo/common/revision/CDORevisionHandler;)V" kind="ADDED" message="The method org.eclipse.emf.cdo.spi.common.revision.DelegatingCDORevisionManager.handleRevisions(EClass, CDOBranch, boolean, long, boolean, CDORevisionHandler) has been added, overriding a method from a superclass" newModifiers="1" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.common.revision.DelegatingCDORevisionManager">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.spi.common.revision.DelegatingCDORevisionManager"/>
@@ -682,10 +628,10 @@
             <message_argument value="internRevision(CDORevision)"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.15.0)" element_type="CLASS_ELEMENT_TYPE" flags="36" key="prefetchRevisions(Lorg/eclipse/emf/cdo/common/id/CDOID;Lorg/eclipse/emf/cdo/common/branch/CDOBranchPoint;ILjava/util/function/Consumer&lt;Lorg/eclipse/emf/cdo/common/revision/CDORevision;&gt;;)V" kind="ADDED" message="The method org.eclipse.emf.cdo.spi.common.revision.DelegatingCDORevisionManager.prefetchRevisions(CDOID, CDOBranchPoint, int, Consumer&lt;CDORevision&gt;) has been added, overriding a method from a superclass" newModifiers="1" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.common.revision.DelegatingCDORevisionManager">
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.15.0)" element_type="CLASS_ELEMENT_TYPE" flags="36" key="prefetchRevisions(Lorg/eclipse/emf/cdo/common/id/CDOID;Lorg/eclipse/emf/cdo/common/branch/CDOBranchPoint;IZLjava/util/function/Consumer&lt;Lorg/eclipse/emf/cdo/common/revision/CDORevision;&gt;;)V" kind="ADDED" message="The method org.eclipse.emf.cdo.spi.common.revision.DelegatingCDORevisionManager.prefetchRevisions(CDOID, CDOBranchPoint, int, boolean, Consumer&lt;CDORevision&gt;) has been added, overriding a method from a superclass" newModifiers="1" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.common.revision.DelegatingCDORevisionManager">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.spi.common.revision.DelegatingCDORevisionManager"/>
-            <message_argument value="prefetchRevisions(CDOID, CDOBranchPoint, int, Consumer&lt;CDORevision&gt;)"/>
+            <message_argument value="prefetchRevisions(CDOID, CDOBranchPoint, int, boolean, Consumer&lt;CDORevision&gt;)"/>
         </message_arguments>
     </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="removeRevisions([Lorg/eclipse/emf/cdo/common/branch/CDOBranch;)V" kind="ADDED" message="The method org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache.removeRevisions(CDOBranch[]) has been added in an interface that is tagged with '@noimplement'" newModifiers="1153" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache">
@@ -694,10 +640,16 @@
             <message_argument value="removeRevisions(CDOBranch[])"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="prefetchRevisions(Lorg/eclipse/emf/cdo/common/id/CDOID;Lorg/eclipse/emf/cdo/common/branch/CDOBranchPoint;ILjava/util/function/Consumer&lt;Lorg/eclipse/emf/cdo/common/revision/CDORevision;&gt;;)V" kind="ADDED" message="The method org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.prefetchRevisions(CDOID, CDOBranchPoint, int, Consumer&lt;CDORevision&gt;) has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager">
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="getRevisions(Ljava/util/List&lt;Lorg/eclipse/emf/cdo/common/id/CDOID;&gt;;Lorg/eclipse/emf/cdo/common/branch/CDOBranchPoint;IIZZ[Lorg/eclipse/emf/cdo/spi/common/revision/SyntheticCDORevision;)Ljava/util/List&lt;Lorg/eclipse/emf/cdo/common/revision/CDORevision;&gt;;" kind="ADDED" message="The method org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.getRevisions(List&lt;CDOID&gt;, CDOBranchPoint, int, int, boolean, boolean, SyntheticCDORevision[]) has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager"/>
-            <message_argument value="prefetchRevisions(CDOID, CDOBranchPoint, int, Consumer&lt;CDORevision&gt;)"/>
+            <message_argument value="getRevisions(List&lt;CDOID&gt;, CDOBranchPoint, int, int, boolean, boolean, SyntheticCDORevision[])"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="prefetchRevisions(Lorg/eclipse/emf/cdo/common/id/CDOID;Lorg/eclipse/emf/cdo/common/branch/CDOBranchPoint;IZLjava/util/function/Consumer&lt;Lorg/eclipse/emf/cdo/common/revision/CDORevision;&gt;;)V" kind="ADDED" message="The method org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.prefetchRevisions(CDOID, CDOBranchPoint, int, boolean, Consumer&lt;CDORevision&gt;) has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager"/>
+            <message_argument value="prefetchRevisions(CDOID, CDOBranchPoint, int, boolean, Consumer&lt;CDORevision&gt;)"/>
         </message_arguments>
     </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="sendBranchNotification(Lorg/eclipse/emf/cdo/common/branch/CDOBranchChangedEvent$ChangeKind;[Lorg/eclipse/emf/cdo/common/branch/CDOBranch;)V" kind="ADDED" message="The method org.eclipse.emf.cdo.spi.server.ISessionProtocol.sendBranchNotification(CDOBranchChangedEvent.ChangeKind, CDOBranch[]) has been added in an interface that is tagged with '@noimplement'" newModifiers="1153" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.ISessionProtocol">
@@ -710,6 +662,12 @@
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.spi.server.ISessionProtocol"/>
             <message_argument value="sendViewClosedNotification(int)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="getLockStates(Ljava/util/Collection&lt;Ljava/lang/Object;&gt;;Ljava/util/function/BiConsumer&lt;Ljava/lang/Object;Lorg/eclipse/net4j/util/concurrent/RWOLockManager$LockState&lt;Ljava/lang/Object;Lorg/eclipse/emf/cdo/server/IView;&gt;;&gt;;)V" kind="ADDED" message="The method org.eclipse.emf.cdo.spi.server.InternalLockManager.getLockStates(Collection&lt;Object&gt;, BiConsumer&lt;Object,RWOLockManager.LockState&lt;Object,IView&gt;&gt;) has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.InternalLockManager">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.InternalLockManager"/>
+            <message_argument value="getLockStates(Collection&lt;Object&gt;, BiConsumer&lt;Object,RWOLockManager.LockState&lt;Object,IView&gt;&gt;)"/>
         </message_arguments>
     </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="addOperationAuthorizer(Lorg/eclipse/net4j/util/security/operations/OperationAuthorizer&lt;Lorg/eclipse/emf/cdo/server/ISession;&gt;;)V" kind="ADDED" message="The method org.eclipse.emf.cdo.spi.server.InternalRepository.addOperationAuthorizer(OperationAuthorizer&lt;ISession&gt;) has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.InternalRepository">
@@ -784,7 +742,7 @@
             <message_argument value="cdoInternalPostDetach(boolean, boolean)"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="getLockStateCache()Lorg/eclipse/emf/internal/cdo/session/CDOLockStateCache;" kind="ADDED" message="The method org.eclipse.emf.spi.cdo.InternalCDOSession.getLockStateCache() has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.spi.cdo.InternalCDOSession">
+    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="getLockStateCache()Lorg/eclipse/emf/spi/cdo/CDOLockStateCache;" kind="ADDED" message="The method org.eclipse.emf.spi.cdo.InternalCDOSession.getLockStateCache() has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.spi.cdo.InternalCDOSession">
         <message_arguments>
             <message_argument value="org.eclipse.emf.spi.cdo.InternalCDOSession"/>
             <message_argument value="getLockStateCache()"/>
@@ -1066,6 +1024,12 @@
             <message_argument value="setExtensionUnsynced(String)"/>
         </message_arguments>
     </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.net4j(4.5.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="getFailoverMonitor(Lorg/eclipse/net4j/util/container/IManagedContainer;Ljava/lang/String;Ljava/lang/String;)Lorg/eclipse/emf/cdo/server/net4j/FailoverMonitor;" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.server.net4j.CDONet4jServerUtil.getFailoverMonitor(IManagedContainer, String, String) has been added" newModifiers="9" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.server.net4j.CDONet4jServerUtil">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.net4j.CDONet4jServerUtil"/>
+            <message_argument value="getFailoverMonitor(IManagedContainer, String, String)"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.server.ocl(4.4.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="getRevisionInterner()Lorg/eclipse/emf/cdo/common/revision/CDORevisionInterner;" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.server.ocl.CDOExtentCreator.getRevisionInterner() has been added" newModifiers="1" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.ocl.CDOExtentCreator">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.server.ocl.CDOExtentCreator"/>
@@ -1234,6 +1198,24 @@
             <message_argument value="setOf(Collection&lt;? extends T&gt;)"/>
         </message_arguments>
     </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util(3.16.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="addAndGet(TT;I)I" kind="ADDED" message="The non-abstract method org.eclipse.net4j.util.collection.HashBag.addAndGet(T, int) has been added" newModifiers="1" oldModifiers="0" restrictions="2" type_name="org.eclipse.net4j.util.collection.HashBag">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.collection.HashBag"/>
+            <message_argument value="addAndGet(T, int)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util(3.16.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="removeAndGet(Ljava/lang/Object;I)I" kind="ADDED" message="The non-abstract method org.eclipse.net4j.util.collection.HashBag.removeAndGet(Object, int) has been added" newModifiers="1" oldModifiers="0" restrictions="2" type_name="org.eclipse.net4j.util.collection.HashBag">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.collection.HashBag"/>
+            <message_argument value="removeAndGet(Object, int)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util(3.16.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="getLockStates(Ljava/util/Collection&lt;TOBJECT;&gt;;Ljava/util/function/BiConsumer&lt;TOBJECT;Lorg/eclipse/net4j/util/concurrent/RWOLockManager$LockState&lt;TOBJECT;TCONTEXT;&gt;;&gt;;)V" kind="ADDED" message="The non-abstract method org.eclipse.net4j.util.concurrent.RWOLockManager.getLockStates(Collection&lt;OBJECT&gt;, BiConsumer&lt;OBJECT,RWOLockManager.LockState&lt;OBJECT,CONTEXT&gt;&gt;) has been added" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.concurrent.RWOLockManager">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.concurrent.RWOLockManager"/>
+            <message_argument value="getLockStates(Collection&lt;OBJECT&gt;, BiConsumer&lt;OBJECT,RWOLockManager.LockState&lt;OBJECT,CONTEXT&gt;&gt;)"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.net4j.util(3.16.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="superCancel()V" kind="ADDED" message="The non-abstract method org.eclipse.net4j.util.concurrent.TimerLifecycle.superCancel() has been added" newModifiers="2" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.concurrent.TimerLifecycle">
         <message_arguments>
             <message_argument value="org.eclipse.net4j.util.concurrent.TimerLifecycle"/>
@@ -1352,6 +1334,24 @@
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.server.ocl.CDOExtentCreator"/>
             <message_argument value="revisionInterner"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.11.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="EDITOR_REGISTRY" kind="REMOVED" message="The non-visible field org.eclipse.emf.cdo.ui.CDOItemProvider.EDITOR_REGISTRY has been removed" newModifiers="0" oldModifiers="26" restrictions="0" type_name="org.eclipse.emf.cdo.ui.CDOItemProvider">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.ui.CDOItemProvider"/>
+            <message_argument value="EDITOR_REGISTRY"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.11.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="LOCK_OVERLAY" kind="REMOVED" message="The non-visible field org.eclipse.emf.cdo.ui.CDOLabelDecorator.LOCK_OVERLAY has been removed" newModifiers="0" oldModifiers="26" restrictions="0" type_name="org.eclipse.emf.cdo.ui.CDOLabelDecorator">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.ui.CDOLabelDecorator"/>
+            <message_argument value="LOCK_OVERLAY"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.11.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="LOCK_SELF_OVERLAY" kind="REMOVED" message="The non-visible field org.eclipse.emf.cdo.ui.CDOLabelDecorator.LOCK_SELF_OVERLAY has been removed" newModifiers="0" oldModifiers="26" restrictions="0" type_name="org.eclipse.emf.cdo.ui.CDOLabelDecorator">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.ui.CDOLabelDecorator"/>
+            <message_argument value="LOCK_SELF_OVERLAY"/>
         </message_arguments>
     </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.11.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="branchManagerListener" kind="ADDED" message="The non-visible field org.eclipse.emf.cdo.ui.widgets.CommitHistoryComposite.Input.branchManagerListener has been added" newModifiers="18" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.ui.widgets.CommitHistoryComposite$Input">
@@ -2338,6 +2338,78 @@
             <message_argument value="org.eclipse.emf.cdo.ui_4.10.1"/>
         </message_arguments>
     </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.admin(4.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.spi.cdo.CDOLockStateCache" kind="ADDED" message="The re-exported type org.eclipse.emf.spi.cdo.CDOLockStateCache has been added to org.eclipse.emf.cdo.admin_4.3.1" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.spi.cdo.CDOLockStateCache">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.spi.cdo.CDOLockStateCache"/>
+            <message_argument value="org.eclipse.emf.cdo.admin_4.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.compare(4.5.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.spi.cdo.CDOLockStateCache" kind="ADDED" message="The re-exported type org.eclipse.emf.spi.cdo.CDOLockStateCache has been added to org.eclipse.emf.cdo.compare_4.5.1" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.spi.cdo.CDOLockStateCache">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.spi.cdo.CDOLockStateCache"/>
+            <message_argument value="org.eclipse.emf.cdo.compare_4.5.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.dawn(2.3.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.spi.cdo.CDOLockStateCache" kind="ADDED" message="The re-exported type org.eclipse.emf.spi.cdo.CDOLockStateCache has been added to org.eclipse.emf.cdo.dawn_2.3.0" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.spi.cdo.CDOLockStateCache">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.spi.cdo.CDOLockStateCache"/>
+            <message_argument value="org.eclipse.emf.cdo.dawn_2.3.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.edit(4.5.5)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.spi.cdo.CDOLockStateCache" kind="ADDED" message="The re-exported type org.eclipse.emf.spi.cdo.CDOLockStateCache has been added to org.eclipse.emf.cdo.edit_4.5.5" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.spi.cdo.CDOLockStateCache">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.spi.cdo.CDOLockStateCache"/>
+            <message_argument value="org.eclipse.emf.cdo.edit_4.5.5"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.expressions(4.4.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.spi.cdo.CDOLockStateCache" kind="ADDED" message="The re-exported type org.eclipse.emf.spi.cdo.CDOLockStateCache has been added to org.eclipse.emf.cdo.expressions_4.4.0" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.spi.cdo.CDOLockStateCache">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.spi.cdo.CDOLockStateCache"/>
+            <message_argument value="org.eclipse.emf.cdo.expressions_4.4.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.gmf.notation(1.10.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.spi.cdo.CDOLockStateCache" kind="ADDED" message="The re-exported type org.eclipse.emf.spi.cdo.CDOLockStateCache has been added to org.eclipse.emf.cdo.gmf.notation_1.10.1" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.spi.cdo.CDOLockStateCache">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.spi.cdo.CDOLockStateCache"/>
+            <message_argument value="org.eclipse.emf.cdo.gmf.notation_1.10.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.net4j(4.4.4)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.spi.cdo.CDOLockStateCache" kind="ADDED" message="The re-exported type org.eclipse.emf.spi.cdo.CDOLockStateCache has been added to org.eclipse.emf.cdo.net4j_4.4.4" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.spi.cdo.CDOLockStateCache">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.spi.cdo.CDOLockStateCache"/>
+            <message_argument value="org.eclipse.emf.cdo.net4j_4.4.4"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.security(4.5.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.spi.cdo.CDOLockStateCache" kind="ADDED" message="The re-exported type org.eclipse.emf.spi.cdo.CDOLockStateCache has been added to org.eclipse.emf.cdo.security_4.5.1" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.spi.cdo.CDOLockStateCache">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.spi.cdo.CDOLockStateCache"/>
+            <message_argument value="org.eclipse.emf.cdo.security_4.5.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.admin(4.3.3)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.spi.cdo.CDOLockStateCache" kind="ADDED" message="The re-exported type org.eclipse.emf.spi.cdo.CDOLockStateCache has been added to org.eclipse.emf.cdo.server.admin_4.3.3" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.spi.cdo.CDOLockStateCache">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.spi.cdo.CDOLockStateCache"/>
+            <message_argument value="org.eclipse.emf.cdo.server.admin_4.3.3"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.14.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.spi.cdo.CDOLockStateCache" kind="ADDED" message="The re-exported type org.eclipse.emf.spi.cdo.CDOLockStateCache has been added to org.eclipse.emf.cdo.server_4.14.0" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.spi.cdo.CDOLockStateCache">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.spi.cdo.CDOLockStateCache"/>
+            <message_argument value="org.eclipse.emf.cdo.server_4.14.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.transfer.repository(4.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.spi.cdo.CDOLockStateCache" kind="ADDED" message="The re-exported type org.eclipse.emf.spi.cdo.CDOLockStateCache has been added to org.eclipse.emf.cdo.transfer.repository_4.3.1" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.spi.cdo.CDOLockStateCache">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.spi.cdo.CDOLockStateCache"/>
+            <message_argument value="org.eclipse.emf.cdo.transfer.repository_4.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.10.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.spi.cdo.CDOLockStateCache" kind="ADDED" message="The re-exported type org.eclipse.emf.spi.cdo.CDOLockStateCache has been added to org.eclipse.emf.cdo.ui_4.10.1" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.spi.cdo.CDOLockStateCache">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.spi.cdo.CDOLockStateCache"/>
+            <message_argument value="org.eclipse.emf.cdo.ui_4.10.1"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.server.db(4.10.3)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.db.Batch" kind="ADDED" message="The re-exported type org.eclipse.net4j.db.Batch has been added to org.eclipse.emf.cdo.server.db_4.10.3" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.db.Batch">
         <message_arguments>
             <message_argument value="org.eclipse.net4j.db.Batch"/>
@@ -2650,6 +2722,18 @@
             <message_argument value="UTF_8"/>
         </message_arguments>
     </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.11.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="DEFAULT_DISABLE_LOCK_DECORATION" kind="ADDED" message="The static field org.eclipse.emf.cdo.ui.CDOLabelDecorator.DEFAULT_DISABLE_LOCK_DECORATION has been added" newModifiers="26" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.ui.CDOLabelDecorator">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.ui.CDOLabelDecorator"/>
+            <message_argument value="DEFAULT_DISABLE_LOCK_DECORATION"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.11.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="PROP_DISABLE_LOCK_DECORATION" kind="ADDED" message="The static field org.eclipse.emf.cdo.ui.CDOLabelDecorator.PROP_DISABLE_LOCK_DECORATION has been added" newModifiers="26" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.ui.CDOLabelDecorator">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.ui.CDOLabelDecorator"/>
+            <message_argument value="PROP_DISABLE_LOCK_DECORATION"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.11.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="SERVER_SECURITY" kind="ADDED" message="The static field org.eclipse.emf.cdo.ui.Support.SERVER_SECURITY has been added" newModifiers="25" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.ui.Support">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.ui.Support"/>
@@ -2728,75 +2812,19 @@
             <message_argument value="ELEM_TYPE"/>
         </message_arguments>
     </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.11.0)" element_type="CLASS_ELEMENT_TYPE" flags="7" key="org.eclipse.emf.cdo.ui.CDOItemProvider" kind="REMOVED" message="The static initializer has been removed from org.eclipse.emf.cdo.ui.CDOItemProvider" newModifiers="0" oldModifiers="8" restrictions="0" type_name="org.eclipse.emf.cdo.ui.CDOItemProvider">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.ui.CDOItemProvider"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.net4j.ws(1.2.0)" element_type="CLASS_ELEMENT_TYPE" flags="7" key="org.eclipse.net4j.ws.jetty.Net4jWebSocketServlet" kind="REMOVED" message="The static initializer has been removed from org.eclipse.net4j.ws.jetty.Net4jWebSocketServlet" newModifiers="0" oldModifiers="8" restrictions="0" type_name="org.eclipse.net4j.ws.jetty.Net4jWebSocketServlet">
         <message_arguments>
             <message_argument value="org.eclipse.net4j.ws.jetty.Net4jWebSocketServlet"/>
         </message_arguments>
     </delta>
-    <delta compatible="false" componentId="org.eclipse.emf.cdo.common(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="10" key="org.eclipse.emf.cdo.common.CDOCommonTransaction" kind="CHANGED" message="The super interfaces set has been reduced (org.eclipse.emf.cdo.common.lock.CDOLockOwner) for type org.eclipse.emf.cdo.common.CDOCommonTransaction" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.cdo.common.CDOCommonTransaction">
+    <delta compatible="false" componentId="org.eclipse.net4j.ws(1.2.0)" element_type="CLASS_ELEMENT_TYPE" flags="39" key="org.eclipse.net4j.ws.jetty.Net4jWebSocketServlet" kind="REMOVED" message="The superclass hierarchy for org.eclipse.net4j.ws.jetty.Net4jWebSocketServlet has been reduced" newModifiers="33" oldModifiers="33" restrictions="0" type_name="org.eclipse.net4j.ws.jetty.Net4jWebSocketServlet">
         <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.common.CDOCommonTransaction"/>
-            <message_argument value="org.eclipse.emf.cdo.common.lock.CDOLockOwner"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="false" componentId="org.eclipse.emf.cdo.common(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="10" key="org.eclipse.emf.cdo.common.CDOCommonView" kind="CHANGED" message="The super interfaces set has been reduced (org.eclipse.emf.cdo.common.lock.CDOLockOwner) for type org.eclipse.emf.cdo.common.CDOCommonView" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.cdo.common.CDOCommonView">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.common.CDOCommonView"/>
-            <message_argument value="org.eclipse.emf.cdo.common.lock.CDOLockOwner"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="false" componentId="org.eclipse.emf.cdo.server(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="10" key="org.eclipse.emf.cdo.server.ITransaction" kind="CHANGED" message="The super interfaces set has been reduced (org.eclipse.emf.cdo.common.lock.CDOLockOwner) for type org.eclipse.emf.cdo.server.ITransaction" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.cdo.server.ITransaction">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.server.ITransaction"/>
-            <message_argument value="org.eclipse.emf.cdo.common.lock.CDOLockOwner"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="false" componentId="org.eclipse.emf.cdo.server(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="10" key="org.eclipse.emf.cdo.server.IView" kind="CHANGED" message="The super interfaces set has been reduced (org.eclipse.emf.cdo.common.lock.CDOLockOwner) for type org.eclipse.emf.cdo.server.IView" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.cdo.server.IView">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.server.IView"/>
-            <message_argument value="org.eclipse.emf.cdo.common.lock.CDOLockOwner"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="false" componentId="org.eclipse.emf.cdo.server(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="10" key="org.eclipse.emf.cdo.spi.server.InternalTransaction" kind="CHANGED" message="The super interfaces set has been reduced (org.eclipse.emf.cdo.common.lock.CDOLockOwner) for type org.eclipse.emf.cdo.spi.server.InternalTransaction" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.InternalTransaction">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.spi.server.InternalTransaction"/>
-            <message_argument value="org.eclipse.emf.cdo.common.lock.CDOLockOwner"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="false" componentId="org.eclipse.emf.cdo.server(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="10" key="org.eclipse.emf.cdo.spi.server.InternalView" kind="CHANGED" message="The super interfaces set has been reduced (org.eclipse.emf.cdo.common.lock.CDOLockOwner) for type org.eclipse.emf.cdo.spi.server.InternalView" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.InternalView">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.spi.server.InternalView"/>
-            <message_argument value="org.eclipse.emf.cdo.common.lock.CDOLockOwner"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="false" componentId="org.eclipse.emf.cdo(4.15.0)" element_type="CLASS_ELEMENT_TYPE" flags="10" key="org.eclipse.emf.cdo.transaction.CDOPushTransaction" kind="CHANGED" message="The super interfaces set has been reduced (org.eclipse.emf.cdo.common.lock.CDOLockOwner) for type org.eclipse.emf.cdo.transaction.CDOPushTransaction" newModifiers="33" oldModifiers="33" restrictions="6" type_name="org.eclipse.emf.cdo.transaction.CDOPushTransaction">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.transaction.CDOPushTransaction"/>
-            <message_argument value="org.eclipse.emf.cdo.common.lock.CDOLockOwner"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="false" componentId="org.eclipse.emf.cdo(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="10" key="org.eclipse.emf.cdo.transaction.CDOTransaction" kind="CHANGED" message="The super interfaces set has been reduced (org.eclipse.emf.cdo.common.lock.CDOLockOwner) for type org.eclipse.emf.cdo.transaction.CDOTransaction" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransaction">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransaction"/>
-            <message_argument value="org.eclipse.emf.cdo.common.lock.CDOLockOwner"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="false" componentId="org.eclipse.emf.cdo(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="10" key="org.eclipse.emf.cdo.view.CDOView" kind="CHANGED" message="The super interfaces set has been reduced (org.eclipse.emf.cdo.common.lock.CDOLockOwner) for type org.eclipse.emf.cdo.view.CDOView" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.cdo.view.CDOView">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.view.CDOView"/>
-            <message_argument value="org.eclipse.emf.cdo.common.lock.CDOLockOwner"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="false" componentId="org.eclipse.emf.cdo(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="10" key="org.eclipse.emf.spi.cdo.InternalCDOTransaction" kind="CHANGED" message="The super interfaces set has been reduced (org.eclipse.emf.cdo.common.lock.CDOLockOwner) for type org.eclipse.emf.spi.cdo.InternalCDOTransaction" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.spi.cdo.InternalCDOTransaction">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.spi.cdo.InternalCDOTransaction"/>
-            <message_argument value="org.eclipse.emf.cdo.common.lock.CDOLockOwner"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="false" componentId="org.eclipse.emf.cdo(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="10" key="org.eclipse.emf.spi.cdo.InternalCDOView" kind="CHANGED" message="The super interfaces set has been reduced (org.eclipse.emf.cdo.common.lock.CDOLockOwner) for type org.eclipse.emf.spi.cdo.InternalCDOView" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.spi.cdo.InternalCDOView">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.spi.cdo.InternalCDOView"/>
-            <message_argument value="org.eclipse.emf.cdo.common.lock.CDOLockOwner"/>
+            <message_argument value="org.eclipse.net4j.ws.jetty.Net4jWebSocketServlet"/>
         </message_arguments>
     </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.cdo.common.lock.CDOLockState" kind="CHANGED" message="The superinterfaces set has been expanded (org.eclipse.emf.cdo.common.id.CDOIdentifiable,org.eclipse.emf.cdo.common.revision.CDOIDAndBranch,org.eclipse.emf.cdo.common.branch.CDOBranchProvider) for interface org.eclipse.emf.cdo.common.lock.CDOLockState" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.cdo.common.lock.CDOLockState">
@@ -2809,54 +2837,6 @@
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.spi.common.lock.InternalCDOLockState"/>
             <message_argument value="org.eclipse.emf.cdo.common.id.CDOIdentifiable,org.eclipse.emf.cdo.common.revision.CDOIDAndBranch,org.eclipse.emf.cdo.common.branch.CDOBranchProvider"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.15.0)" element_type="CLASS_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.cdo.spi.common.revision.DelegatingCDORevisionManager" kind="CHANGED" message="The superinterfaces set has been expanded (org.eclipse.emf.cdo.common.revision.CDORevisionInterner) for class org.eclipse.emf.cdo.spi.common.revision.DelegatingCDORevisionManager" newModifiers="1057" oldModifiers="1057" restrictions="0" type_name="org.eclipse.emf.cdo.spi.common.revision.DelegatingCDORevisionManager">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.spi.common.revision.DelegatingCDORevisionManager"/>
-            <message_argument value="org.eclipse.emf.cdo.common.revision.CDORevisionInterner"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache" kind="CHANGED" message="The superinterfaces set has been expanded (org.eclipse.emf.cdo.common.revision.CDORevisionInterner) for interface org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache"/>
-            <message_argument value="org.eclipse.emf.cdo.common.revision.CDORevisionInterner"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager" kind="CHANGED" message="The superinterfaces set has been expanded (org.eclipse.emf.cdo.common.revision.CDORevisionInterner) for interface org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager"/>
-            <message_argument value="org.eclipse.emf.cdo.common.revision.CDORevisionInterner"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.explorer(4.11.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager$CheckoutStateEvent" kind="CHANGED" message="The superinterfaces set has been expanded (org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager$CheckoutEvent) for interface org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager.CheckoutStateEvent" newModifiers="1545" oldModifiers="1545" restrictions="3" type_name="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager$CheckoutStateEvent">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager.CheckoutStateEvent"/>
-            <message_argument value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager$CheckoutEvent"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.spi.cdo.CDOSessionProtocol" kind="CHANGED" message="The superinterfaces set has been expanded (org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager$BranchLoader5) for interface org.eclipse.emf.spi.cdo.CDOSessionProtocol" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.spi.cdo.CDOSessionProtocol">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.spi.cdo.CDOSessionProtocol"/>
-            <message_argument value="org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager$BranchLoader5"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.net4j(4.5.0)" element_type="CLASS_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.cdo.server.net4j.FailoverAgent$Protocol" kind="CHANGED" message="The superinterfaces set has been expanded (org.eclipse.net4j.signal.ISignalProtocol$WithSignalCounters) for class org.eclipse.emf.cdo.server.net4j.FailoverAgent.Protocol" newModifiers="9" oldModifiers="9" restrictions="0" type_name="org.eclipse.emf.cdo.server.net4j.FailoverAgent$Protocol">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.server.net4j.FailoverAgent.Protocol"/>
-            <message_argument value="org.eclipse.net4j.signal.ISignalProtocol$WithSignalCounters"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.net4j(4.5.0)" element_type="CLASS_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.cdo.server.net4j.FailoverMonitor$AgentProtocol" kind="CHANGED" message="The superinterfaces set has been expanded (org.eclipse.net4j.signal.ISignalProtocol$WithSignalCounters) for class org.eclipse.emf.cdo.server.net4j.FailoverMonitor.AgentProtocol" newModifiers="9" oldModifiers="9" restrictions="0" type_name="org.eclipse.emf.cdo.server.net4j.FailoverMonitor$AgentProtocol">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.server.net4j.FailoverMonitor.AgentProtocol"/>
-            <message_argument value="org.eclipse.net4j.signal.ISignalProtocol$WithSignalCounters"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.net4j(4.5.0)" element_type="CLASS_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.cdo.server.net4j.FailoverMonitor$ClientProtocol" kind="CHANGED" message="The superinterfaces set has been expanded (org.eclipse.net4j.signal.ISignalProtocol$WithSignalCounters) for class org.eclipse.emf.cdo.server.net4j.FailoverMonitor.ClientProtocol" newModifiers="9" oldModifiers="9" restrictions="0" type_name="org.eclipse.emf.cdo.server.net4j.FailoverMonitor$ClientProtocol">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.server.net4j.FailoverMonitor.ClientProtocol"/>
-            <message_argument value="org.eclipse.net4j.signal.ISignalProtocol$WithSignalCounters"/>
         </message_arguments>
     </delta>
     <delta compatible="true" componentId="org.eclipse.net4j(4.13.0)" element_type="CLASS_ELEMENT_TYPE" flags="15" key="org.eclipse.net4j.signal.SignalProtocol" kind="CHANGED" message="The superinterfaces set has been expanded (org.eclipse.net4j.signal.ISignalProtocol$WithSignalCounters) for class org.eclipse.net4j.signal.SignalProtocol" newModifiers="33" oldModifiers="33" restrictions="0" type_name="org.eclipse.net4j.signal.SignalProtocol">
@@ -2883,18 +2863,6 @@
             <message_argument value="org.eclipse.net4j.signal.ISignalProtocol$WithSignalCounters"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.spi.cdo.InternalCDOViewSet" kind="CHANGED" message="The superinterfaces set has been expanded (org.eclipse.net4j.util.concurrent.IExecutorServiceProvider) for interface org.eclipse.emf.spi.cdo.InternalCDOViewSet" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.spi.cdo.InternalCDOViewSet">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.spi.cdo.InternalCDOViewSet"/>
-            <message_argument value="org.eclipse.net4j.util.concurrent.IExecutorServiceProvider"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.15.0)" element_type="CLASS_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.cdo.view.CDOViewEventProducer" kind="CHANGED" message="The superinterfaces set has been expanded (org.eclipse.net4j.util.event.IListener$NotifierAware) for class org.eclipse.emf.cdo.view.CDOViewEventProducer" newModifiers="33" oldModifiers="33" restrictions="0" type_name="org.eclipse.emf.cdo.view.CDOViewEventProducer">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.view.CDOViewEventProducer"/>
-            <message_argument value="org.eclipse.net4j.util.event.IListener$NotifierAware"/>
-        </message_arguments>
-    </delta>
     <delta compatible="true" componentId="org.eclipse.net4j.util(3.16.0)" element_type="CLASS_ELEMENT_TYPE" flags="15" key="org.eclipse.net4j.util.container.SelfAttachingContainerListener" kind="CHANGED" message="The superinterfaces set has been expanded (org.eclipse.net4j.util.event.IListener$NotifierAware) for class org.eclipse.net4j.util.container.SelfAttachingContainerListener" newModifiers="33" oldModifiers="33" restrictions="0" type_name="org.eclipse.net4j.util.container.SelfAttachingContainerListener">
         <message_arguments>
             <message_argument value="org.eclipse.net4j.util.container.SelfAttachingContainerListener"/>
@@ -2905,24 +2873,6 @@
         <message_arguments>
             <message_argument value="org.eclipse.net4j.util.container.SelfAttachingContainerListener.Delegating"/>
             <message_argument value="org.eclipse.net4j.util.event.IListener$NotifierAware"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.cdo.spi.server.InternalFailoverParticipant" kind="CHANGED" message="The superinterfaces set has been expanded (org.eclipse.net4j.util.security.operations.OperationAuthorizer,org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager$BranchLoader5) for interface org.eclipse.emf.cdo.spi.server.InternalFailoverParticipant" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.InternalFailoverParticipant">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.spi.server.InternalFailoverParticipant"/>
-            <message_argument value="org.eclipse.net4j.util.security.operations.OperationAuthorizer,org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager$BranchLoader5"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.cdo.spi.server.InternalRepository" kind="CHANGED" message="The superinterfaces set has been expanded (org.eclipse.net4j.util.security.operations.OperationAuthorizer,org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager$BranchLoader5) for interface org.eclipse.emf.cdo.spi.server.InternalRepository" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.InternalRepository">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.spi.server.InternalRepository"/>
-            <message_argument value="org.eclipse.net4j.util.security.operations.OperationAuthorizer,org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager$BranchLoader5"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.15.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.cdo.spi.server.InternalSynchronizableRepository" kind="CHANGED" message="The superinterfaces set has been expanded (org.eclipse.net4j.util.security.operations.OperationAuthorizer,org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager$BranchLoader5) for interface org.eclipse.emf.cdo.spi.server.InternalSynchronizableRepository" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.InternalSynchronizableRepository">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.spi.server.InternalSynchronizableRepository"/>
-            <message_argument value="org.eclipse.net4j.util.security.operations.OperationAuthorizer,org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager$BranchLoader5"/>
         </message_arguments>
     </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.15.0)" element_type="FIELD_ELEMENT_TYPE" flags="46" key="revisionManager" kind="CHANGED" message="The type of the non-visible field org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider.revisionManager has been changed" newModifiers="20" oldModifiers="2" restrictions="0" type_name="org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider">
@@ -3006,6 +2956,12 @@
     <delta compatible="true" componentId="org.eclipse.emf.cdo(4.15.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.emf.cdo.view.CDOViewSetHandler" kind="ADDED" message="The type org.eclipse.emf.cdo.view.CDOViewSetHandler has been added to org.eclipse.emf.cdo_4.15.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.view.CDOViewSetHandler">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.view.CDOViewSetHandler"/>
+            <message_argument value="org.eclipse.emf.cdo_4.15.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.15.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.emf.spi.cdo.CDOLockStateCache" kind="ADDED" message="The type org.eclipse.emf.spi.cdo.CDOLockStateCache has been added to org.eclipse.emf.cdo_4.15.0" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.spi.cdo.CDOLockStateCache">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.spi.cdo.CDOLockStateCache"/>
             <message_argument value="org.eclipse.emf.cdo_4.15.0"/>
         </message_arguments>
     </delta>

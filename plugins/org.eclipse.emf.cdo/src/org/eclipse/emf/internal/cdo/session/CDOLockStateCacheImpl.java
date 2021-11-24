@@ -277,7 +277,7 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
   public void removeLockStates(CDOBranch branch, Collection<CDOID> ids, Consumer<CDOLockState> consumer)
   {
     ConcurrentMap<CDOID, OwnerInfo> infos = getOwnerInfoMap(branch);
-  
+
     for (CDOID id : ids)
     {
       OwnerInfo info = infos.remove(id);
@@ -347,7 +347,7 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
   {
     synchronized (branches)
     {
-      if (branches.add(branch))
+      if (branches.addAndGet(branch, 1) == 1)
       {
         if (!branch.isMainBranch())
         {
@@ -364,7 +364,7 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
   {
     synchronized (branches)
     {
-      if (branches.remove(branch)) // OK because branches is a HashBag.
+      if (branches.removeAndGet(branch, 1) == 0)
       {
         if (!branch.isMainBranch())
         {

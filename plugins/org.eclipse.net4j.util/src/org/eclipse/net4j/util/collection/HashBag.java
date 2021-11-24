@@ -94,6 +94,22 @@ public final class HashBag<T> implements Set<T>
     return false;
   }
 
+  /**
+   * @since 3.16
+   */
+  public int addAndGet(T o, int count)
+  {
+    Counter counter = map.get(o);
+    if (counter == null)
+    {
+      counter = new Counter(count);
+      map.put(o, counter);
+      return count;
+    }
+
+    return counter.incValue(count);
+  }
+
   @Override
   public boolean addAll(Collection<? extends T> c)
   {
@@ -158,6 +174,27 @@ public final class HashBag<T> implements Set<T>
     }
 
     return true;
+  }
+
+  /**
+   * @since 3.16
+   */
+  public int removeAndGet(Object o, int count)
+  {
+    Counter counter = map.get(o);
+    if (counter == null)
+    {
+      return 0;
+    }
+
+    int newValue = counter.decValue(count);
+    if (newValue <= 0)
+    {
+      map.remove(o);
+      return 0;
+    }
+
+    return newValue;
   }
 
   @Override

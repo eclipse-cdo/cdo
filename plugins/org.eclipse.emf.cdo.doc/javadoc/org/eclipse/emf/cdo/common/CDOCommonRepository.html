@@ -28,7 +28,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":6,"i11":6,"i12":6,"i13":6,"i14":6,"i15":38,"i16":6,"i17":6};
+var data = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":6,"i11":6,"i12":6,"i13":6,"i14":6,"i15":6,"i16":38,"i17":6,"i18":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -317,33 +317,38 @@ extends <a href="util/CDOTimeProvider.html" title="interface in org.eclipse.emf.
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isAuthorizingOperations()">isAuthorizingOperations</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i12" class="altColor">
+<td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isEnsuringReferentialIntegrity()">isEnsuringReferentialIntegrity</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns <code>true</code> if this repository ensures referential integrity, <code>false</code> otherwise.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isSerializingCommits()">isSerializingCommits</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns <code>true</code> if this repository serializes commits, <code>false</code> otherwise.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isSupportingAudits()">isSupportingAudits</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns <code>true</code> if this repository supports auditing, <code>false</code> otherwise.</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isSupportingBranches()">isSupportingBranches</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns <code>true</code> if this repository supports branching, <code>false</code> otherwise.</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isSupportingEcore()">isSupportingEcore</a></span>()</code></th>
 <td class="colLast">
@@ -352,14 +357,14 @@ extends <a href="util/CDOTimeProvider.html" title="interface in org.eclipse.emf.
 </div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isSupportingUnits()">isSupportingUnits</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns <code>true</code> if this repository supports units, <code>false</code> otherwise.</div>
 </td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#waitWhileInitial(org.eclipse.core.runtime.IProgressMonitor)">waitWhileInitial</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IProgressMonitor</a>&nbsp;monitor)</code></th>
 <td class="colLast">&nbsp;</td>
@@ -592,6 +597,19 @@ boolean&nbsp;isSupportingEcore()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.0</dd>
+</dl>
+</li>
+</ul>
+<a id="isAuthorizingOperations()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isAuthorizingOperations</h4>
+<pre class="methodSignature">boolean&nbsp;isAuthorizingOperations()</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.15</dd>
 </dl>
 </li>
 </ul>

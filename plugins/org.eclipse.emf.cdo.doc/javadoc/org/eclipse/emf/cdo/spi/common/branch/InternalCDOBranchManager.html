@@ -28,7 +28,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":1,"i10":6,"i11":6,"i12":6,"i13":38,"i14":6,"i15":6,"i16":6,"i17":38,"i18":6,"i19":6,"i20":6,"i21":6,"i22":38};
+var data = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":1,"i11":6,"i12":6,"i13":38,"i14":6,"i15":38,"i16":6,"i17":6,"i18":6,"i19":38,"i20":6,"i21":6,"i22":6,"i23":6,"i24":38};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -190,6 +190,13 @@ extends <a href="../../../common/branch/CDOBranchManager.html" title="interface 
 </td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>static interface&nbsp;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="InternalCDOBranchManager.BranchLoader5.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager.BranchLoader5</a></span></code></th>
+<td class="colLast">
+<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="InternalCDOBranchManager.TagChangeKind.html" title="enum in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager.TagChangeKind</a></span></code></th>
 <td class="colLast">&nbsp;</td>
@@ -200,7 +207,7 @@ extends <a href="../../../common/branch/CDOBranchManager.html" title="interface 
 <!--   -->
 </a>
 <h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.emf.cdo.common.branch.<a href="../../../common/branch/CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager</a></h3>
-<code><a href="../../../common/branch/CDOBranchManager.CDOTagList.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager.CDOTagList</a></code></li>
+<code><a href="../../../common/branch/CDOBranchManager.CDOTagList.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager.CDOTagList</a>, <a href="../../../common/branch/CDOBranchManager.EventAdapter.html" title="class in org.eclipse.emf.cdo.common.branch">CDOBranchManager.EventAdapter</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.net4j.util.lifecycle.ILifecycle">
@@ -250,18 +257,24 @@ extends <a href="../../../common/branch/CDOBranchManager.html" title="interface 
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
+<td class="colFirst"><code><a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#deleteBranches(int,org.eclipse.net4j.util.om.monitor.OMMonitor)">deleteBranches</a></span>&#8203;(int&nbsp;id,
+              org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#deleteTag(org.eclipse.emf.cdo.common.branch.CDOBranchTag)">deleteTag</a></span>&#8203;(<a href="../../../common/branch/CDOBranchTag.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchTag</a>&nbsp;tag)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="InternalCDOBranch.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranch</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getBranch(int)">getBranch</a></span>&#8203;(int&nbsp;branchID)</code></th>
 <td class="colLast">
 <div class="block">Returns the branch with the given unique integer ID.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="InternalCDOBranch.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranch</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getBranch(int,java.lang.String,org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch,long)">getBranch</a></span>&#8203;(int&nbsp;id,
          java.lang.String&nbsp;name,
@@ -269,55 +282,66 @@ extends <a href="../../../common/branch/CDOBranchManager.html" title="interface 
          long&nbsp;baseTimeStamp)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="InternalCDOBranch.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranch</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getBranch(int,org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader.BranchInfo)">getBranch</a></span>&#8203;(int&nbsp;id,
          <a href="InternalCDOBranchManager.BranchLoader.BranchInfo.html" title="class in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager.BranchLoader.BranchInfo</a>&nbsp;branchInfo)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="InternalCDOBranch.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranch</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getBranch(java.lang.String)">getBranch</a></span>&#8203;(java.lang.String&nbsp;path)</code></th>
 <td class="colLast">
 <div class="block">Returns the branch with the given absolute path.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="InternalCDOBranchManager.BranchLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager.BranchLoader</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getBranchLoader()">getBranchLoader</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="InternalCDOBranch.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranch</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMainBranch()">getMainBranch</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the main branch of the branch tree managed by this branch manager.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>static <a href="InternalCDOBranchManager.TagChangeKind.html" title="enum in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager.TagChangeKind</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTagChangeKind(java.lang.String,java.lang.String,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">getTagChangeKind</a></span>&#8203;(java.lang.String&nbsp;oldName,
                 java.lang.String&nbsp;newName,
                 <a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTagModCount()">getTagModCount</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code><a href="../../../common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTimeProvider()">getTimeProvider</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#handleBranchChanged(org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch,org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind)">handleBranchChanged</a></span>&#8203;(<a href="InternalCDOBranch.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranch</a>&nbsp;branch,
                    <a href="../../../common/branch/CDOBranchChangedEvent.ChangeKind.html" title="enum in org.eclipse.emf.cdo.common.branch">CDOBranchChangedEvent.ChangeKind</a>&nbsp;changeKind)</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.15 use <a href="#handleBranchChanged(org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch,org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind,int...)"><code>handleBranchChanged(InternalCDOBranch, ChangeKind, int...)</code></a>.</div>
+</div>
+</td>
+</tr>
+<tr id="i14" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#handleBranchChanged(org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch,org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind,int...)">handleBranchChanged</a></span>&#8203;(<a href="InternalCDOBranch.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranch</a>&nbsp;branch,
+                   <a href="../../../common/branch/CDOBranchChangedEvent.ChangeKind.html" title="enum in org.eclipse.emf.cdo.common.branch">CDOBranchChangedEvent.ChangeKind</a>&nbsp;changeKind,
+                   int...&nbsp;branchIDs)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#handleBranchCreated(org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch)">handleBranchCreated</a></span>&#8203;(<a href="InternalCDOBranch.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranch</a>&nbsp;branch)</code></th>
 <td class="colLast">
@@ -326,7 +350,7 @@ extends <a href="../../../common/branch/CDOBranchManager.html" title="interface 
 </div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#handleTagChanged(int,java.lang.String,java.lang.String,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">handleTagChanged</a></span>&#8203;(int&nbsp;modCount,
                 java.lang.String&nbsp;oldName,
@@ -334,50 +358,50 @@ extends <a href="../../../common/branch/CDOBranchManager.html" title="interface 
                 <a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#initMainBranch(boolean,long)">initMainBranch</a></span>&#8203;(boolean&nbsp;local,
               long&nbsp;timestamp)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#moveTag(org.eclipse.emf.cdo.common.branch.CDOBranchTag,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">moveTag</a></span>&#8203;(<a href="../../../common/branch/CDOBranchTag.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchTag</a>&nbsp;tag,
        <a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#renameBranch(org.eclipse.emf.cdo.common.branch.CDOBranch,java.lang.String)">renameBranch</a></span>&#8203;(<a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
             java.lang.String&nbsp;newName)</code></th>
 <td class="colLast">
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">as of 4.4 use <a href="../../../common/branch/CDOBranch.html#setName(java.lang.String)"><code>CDOBranch.setName(String)</code></a>.</div>
+<div class="deprecationComment">As of 4.4 use <a href="../../../common/branch/CDOBranch.html#setName(java.lang.String)"><code>CDOBranch.setName(String)</code></a>.</div>
 </div>
 </td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i20" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#renameTag(java.lang.String,java.lang.String)">renameTag</a></span>&#8203;(java.lang.String&nbsp;oldName,
          java.lang.String&nbsp;newName)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i19" class="rowColor">
+<tr id="i21" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setBranchLoader(org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader)">setBranchLoader</a></span>&#8203;(<a href="InternalCDOBranchManager.BranchLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager.BranchLoader</a>&nbsp;branchLoader)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i20" class="altColor">
+<tr id="i22" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRepository(org.eclipse.emf.cdo.common.CDOCommonRepository)">setRepository</a></span>&#8203;(<a href="../../../common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a>&nbsp;repository)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i21" class="rowColor">
+<tr id="i23" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTagModCount(int)">setTagModCount</a></span>&#8203;(int&nbsp;tagModCount)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i22" class="altColor">
+<tr id="i24" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTimeProvider(org.eclipse.emf.cdo.common.util.CDOTimeProvider)">setTimeProvider</a></span>&#8203;(<a href="../../../common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a>&nbsp;timeProvider)</code></th>
 <td class="colLast">
@@ -392,7 +416,7 @@ extends <a href="../../../common/branch/CDOBranchManager.html" title="interface 
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.branch.<a href="../../../common/branch/CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager</a></h3>
-<code><a href="../../../common/branch/CDOBranchManager.html#createTag(java.lang.String,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">createTag</a>, <a href="../../../common/branch/CDOBranchManager.html#getBranches(int,int,org.eclipse.emf.cdo.common.branch.CDOBranchHandler)">getBranches</a>, <a href="../../../common/branch/CDOBranchManager.html#getRepository()">getRepository</a>, <a href="../../../common/branch/CDOBranchManager.html#getTag(java.lang.String)">getTag</a>, <a href="../../../common/branch/CDOBranchManager.html#getTagList()">getTagList</a></code></li>
+<code><a href="../../../common/branch/CDOBranchManager.html#createTag(java.lang.String,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">createTag</a>, <a href="../../../common/branch/CDOBranchManager.html#getBranches(int)">getBranches</a>, <a href="../../../common/branch/CDOBranchManager.html#getBranches(int,int,org.eclipse.emf.cdo.common.branch.CDOBranchHandler)">getBranches</a>, <a href="../../../common/branch/CDOBranchManager.html#getRepository()">getRepository</a>, <a href="../../../common/branch/CDOBranchManager.html#getTag(java.lang.String)">getTag</a>, <a href="../../../common/branch/CDOBranchManager.html#getTagList()">getTagList</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.lifecycle.ILifecycle">
@@ -582,6 +606,20 @@ void&nbsp;setTimeProvider&#8203;(<a href="../../../common/util/CDOTimeProvider.h
                                long&nbsp;baseTimeStamp)</pre>
 </li>
 </ul>
+<a id="deleteBranches(int,org.eclipse.net4j.util.om.monitor.OMMonitor)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>deleteBranches</h4>
+<pre class="methodSignature"><a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>[]&nbsp;deleteBranches&#8203;(int&nbsp;id,
+                           org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.15</dd>
+</dl>
+</li>
+</ul>
 <a id="renameBranch(org.eclipse.emf.cdo.common.branch.CDOBranch,java.lang.String)">
 <!--   -->
 </a>
@@ -592,7 +630,7 @@ void&nbsp;setTimeProvider&#8203;(<a href="../../../common/util/CDOTimeProvider.h
 void&nbsp;renameBranch&#8203;(<a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
                   java.lang.String&nbsp;newName)</pre>
 <div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">as of 4.4 use <a href="../../../common/branch/CDOBranch.html#setName(java.lang.String)"><code>CDOBranch.setName(String)</code></a>.</div>
+<div class="deprecationComment">As of 4.4 use <a href="../../../common/branch/CDOBranch.html#setName(java.lang.String)"><code>CDOBranch.setName(String)</code></a>.</div>
 </div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -619,11 +657,30 @@ void&nbsp;handleBranchCreated&#8203;(<a href="InternalCDOBranch.html" title="int
 <ul class="blockList">
 <li class="blockList">
 <h4>handleBranchChanged</h4>
-<pre class="methodSignature">void&nbsp;handleBranchChanged&#8203;(<a href="InternalCDOBranch.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranch</a>&nbsp;branch,
+<pre class="methodSignature">@Deprecated
+void&nbsp;handleBranchChanged&#8203;(<a href="InternalCDOBranch.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranch</a>&nbsp;branch,
                          <a href="../../../common/branch/CDOBranchChangedEvent.ChangeKind.html" title="enum in org.eclipse.emf.cdo.common.branch">CDOBranchChangedEvent.ChangeKind</a>&nbsp;changeKind)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.15 use <a href="#handleBranchChanged(org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch,org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind,int...)"><code>handleBranchChanged(InternalCDOBranch, ChangeKind, int...)</code></a>.</div>
+</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.3</dd>
+</dl>
+</li>
+</ul>
+<a id="handleBranchChanged(org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch,org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind,int...)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>handleBranchChanged</h4>
+<pre class="methodSignature">void&nbsp;handleBranchChanged&#8203;(<a href="InternalCDOBranch.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranch</a>&nbsp;branch,
+                         <a href="../../../common/branch/CDOBranchChangedEvent.ChangeKind.html" title="enum in org.eclipse.emf.cdo.common.branch">CDOBranchChangedEvent.ChangeKind</a>&nbsp;changeKind,
+                         int...&nbsp;branchIDs)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.15</dd>
 </dl>
 </li>
 </ul>

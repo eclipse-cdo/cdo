@@ -28,7 +28,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6};
+var data = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -229,7 +229,7 @@ extends org.eclipse.net4j.util.event.INotifier</pre>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a></code></td>
+<td class="colFirst"><code>org.eclipse.emf.ecore.EClass</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getObjectType(org.eclipse.emf.cdo.common.id.CDOID)">getObjectType</a></span>&#8203;(<a href="../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></th>
 <td class="colLast">
 <div class="block">Returns the <a href="CDORevision.html#getEClass()"><code>type</code></a> of an object if a revision for that object is in the revision
@@ -237,7 +237,7 @@ extends org.eclipse.net4j.util.event.INotifier</pre>
 </td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a></code></td>
+<td class="colFirst"><code>org.eclipse.emf.ecore.EClass</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getObjectType(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchManager)">getObjectType</a></span>&#8203;(<a href="../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
              <a href="../branch/CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager</a>&nbsp;branchManagerForLoadOnDemand)</code></th>
 <td class="colLast">
@@ -280,8 +280,21 @@ extends org.eclipse.net4j.util.event.INotifier</pre>
 </td>
 </tr>
 <tr id="i8" class="altColor">
+<td class="colFirst"><code>java.util.List&lt;<a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean,java.util.List)">getRevisions</a></span>&#8203;(java.util.List&lt;<a href="../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
+            <a href="../branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+            int&nbsp;referenceChunk,
+            int&nbsp;prefetchDepth,
+            boolean&nbsp;loadOnDemand,
+            java.util.List&lt;<a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&nbsp;additionalRevisions)</code></th>
+<td class="colLast">
+<div class="block">Returns the <a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> with the given <a href="../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>IDs</code></a> at the given <a href="../branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch point</code></a> (branch + timestamp), optionally demand loading them if they are not already in the
+ <a href="CDORevisionCache.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>cache</code></a>.</div>
+</td>
+</tr>
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#handleRevisions(org.eclipse.emf.ecore.EClass,org.eclipse.emf.cdo.common.branch.CDOBranch,boolean,long,boolean,org.eclipse.emf.cdo.common.revision.CDORevisionHandler)">handleRevisions</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;eClass,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#handleRevisions(org.eclipse.emf.ecore.EClass,org.eclipse.emf.cdo.common.branch.CDOBranch,boolean,long,boolean,org.eclipse.emf.cdo.common.revision.CDORevisionHandler)">handleRevisions</a></span>&#8203;(org.eclipse.emf.ecore.EClass&nbsp;eClass,
                <a href="../branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
                boolean&nbsp;exactBranch,
                long&nbsp;timeStamp,
@@ -319,14 +332,14 @@ extends org.eclipse.net4j.util.event.INotifier</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getObjectType</h4>
-<pre class="methodSignature"><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;getObjectType&#8203;(<a href="../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</pre>
+<pre class="methodSignature">org.eclipse.emf.ecore.EClass&nbsp;getObjectType&#8203;(<a href="../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</pre>
 <div class="block">Returns the <a href="CDORevision.html#getEClass()"><code>type</code></a> of an object if a revision for that object is in the revision
  cache, <code>null</code> otherwise.
  <p>
  Same as calling <a href="#getObjectType(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchManager)"><code>getObjectType(id, null)</code></a>.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eClass()" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>EObject.eClass()</code></a>, 
+<dd><code>EObject.eClass()</code>, 
 <a href="#getObjectType(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchManager)"><code>getObjectType(CDOID, CDOBranchManager)</code></a></dd>
 </dl>
 </li>
@@ -337,8 +350,8 @@ extends org.eclipse.net4j.util.event.INotifier</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getObjectType</h4>
-<pre class="methodSignature"><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;getObjectType&#8203;(<a href="../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
-                     <a href="../branch/CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager</a>&nbsp;branchManagerForLoadOnDemand)</pre>
+<pre class="methodSignature">org.eclipse.emf.ecore.EClass&nbsp;getObjectType&#8203;(<a href="../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+                                           <a href="../branch/CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager</a>&nbsp;branchManagerForLoadOnDemand)</pre>
 <div class="block">Returns the <a href="CDORevision.html#getEClass()"><code>type</code></a> of an object.
  <p>
  If no revision for that object is found in the revision cache the following is tried:
@@ -356,7 +369,7 @@ extends org.eclipse.net4j.util.event.INotifier</pre>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.1</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eClass()" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>EObject.eClass()</code></a>, 
+<dd><code>EObject.eClass()</code>, 
 <a href="#getObjectType(org.eclipse.emf.cdo.common.id.CDOID)"><code>getObjectType(CDOID)</code></a></dd>
 </dl>
 </li>
@@ -439,6 +452,40 @@ extends org.eclipse.net4j.util.event.INotifier</pre>
 </dl>
 </li>
 </ul>
+<a id="getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean,java.util.List)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getRevisions</h4>
+<pre class="methodSignature">java.util.List&lt;<a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&nbsp;getRevisions&#8203;(java.util.List&lt;<a href="../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
+                                         <a href="../branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+                                         int&nbsp;referenceChunk,
+                                         int&nbsp;prefetchDepth,
+                                         boolean&nbsp;loadOnDemand,
+                                         java.util.List&lt;<a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&nbsp;additionalRevisions)</pre>
+<div class="block">Returns the <a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> with the given <a href="../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>IDs</code></a> at the given <a href="../branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch point</code></a> (branch + timestamp), optionally demand loading them if they are not already in the
+ <a href="CDORevisionCache.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>cache</code></a>.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>referenceChunk</code> - The number of target <a href="../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>IDs</code></a> to load for each many-valued reference in the returned revisions,
+          or <a href="CDORevision.html#UNCHUNKED"><code>CDORevision.UNCHUNKED</code></a> for all such list elements (IDs).</dd>
+<dd><code>prefetchDepth</code> - The number of nested containment levels to load revisions for in one round trip. Use the symbolic
+          constants <a href="CDORevision.html#DEPTH_INFINITE"><code>CDORevision.DEPTH_INFINITE</code></a> to prefetch all contained revisions or
+          <a href="CDORevision.html#DEPTH_NONE"><code>CDORevision.DEPTH_NONE</code></a> to not prefetch anything. Only the explicitly requested revisions are
+          returned by this method. If additional revisions are prefetched they are placed in the revision cache to
+          speed up subsequent calls to this method.</dd>
+<dd><code>loadOnDemand</code> - If one or more of the requested revisions is/are not contained in the revision cache it depends on this
+          parameter's value whether the revision(s) is/are loaded from the server or <code>null</code> is placed in
+          the list that is returned.</dd>
+<dd><code>additionalRevisions</code> - If non-<code>null</code>, a list to add additionally prefetched revisions to.</dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.15</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="#getRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean)"><code>getRevision(CDOID, CDOBranchPoint, int, int, boolean)</code></a></dd>
+</dl>
+</li>
+</ul>
 <a id="containsRevisionByVersion(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchVersion)">
 <!--   -->
 </a>
@@ -502,7 +549,7 @@ extends org.eclipse.net4j.util.event.INotifier</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>handleRevisions</h4>
-<pre class="methodSignature">void&nbsp;handleRevisions&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;eClass,
+<pre class="methodSignature">void&nbsp;handleRevisions&#8203;(org.eclipse.emf.ecore.EClass&nbsp;eClass,
                      <a href="../branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
                      boolean&nbsp;exactBranch,
                      long&nbsp;timeStamp,

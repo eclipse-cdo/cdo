@@ -28,7 +28,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":42,"i6":10,"i7":10,"i8":10,"i9":42};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":42,"i8":10,"i9":10,"i10":10,"i11":42};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -233,6 +233,16 @@ extends <a href="SafeHandler.html" title="class in org.eclipse.net4j.util.ui.han
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
+<td class="colFirst"><code>protected java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getErrorMessage(java.lang.Exception)">getErrorMessage</a></span>&#8203;(java.lang.Exception&nbsp;ex)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i6" class="altColor">
+<td class="colFirst"><code>protected java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getErrorTitle(java.lang.Exception)">getErrorTitle</a></span>&#8203;(java.lang.Exception&nbsp;ex)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>protected int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTotalWork()">getTotalWork</a></span>()</code></th>
 <td class="colLast">
@@ -241,22 +251,22 @@ extends <a href="SafeHandler.html" title="class in org.eclipse.net4j.util.ui.han
 </div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#preRun()">preRun</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#preRun(org.eclipse.core.commands.ExecutionEvent)">preRun</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/ExecutionEvent.html?is-external=true" title="class or interface in org.eclipse.core.commands" class="externalLink">ExecutionEvent</a>&nbsp;event)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>protected java.lang.Object</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#safeExecute(org.eclipse.core.commands.ExecutionEvent)">safeExecute</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/commands/ExecutionEvent.html?is-external=true" title="class or interface in org.eclipse.core.commands" class="externalLink">ExecutionEvent</a>&nbsp;event)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTotalWork(int)">setTotalWork</a></span>&#8203;(int&nbsp;totalWork)</code></th>
 <td class="colLast">
@@ -377,6 +387,32 @@ protected final&nbsp;void&nbsp;setTotalWork&#8203;(int&nbsp;totalWork)</pre>
 <dd><code><a href="SafeHandler.html#safeExecute(org.eclipse.core.commands.ExecutionEvent)">safeExecute</a></code>&nbsp;in class&nbsp;<code><a href="SafeHandler.html" title="class in org.eclipse.net4j.util.ui.handlers">SafeHandler</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.lang.Exception</code></dd>
+</dl>
+</li>
+</ul>
+<a id="getErrorTitle(java.lang.Exception)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getErrorTitle</h4>
+<pre class="methodSignature">protected&nbsp;java.lang.String&nbsp;getErrorTitle&#8203;(java.lang.Exception&nbsp;ex)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.12</dd>
+</dl>
+</li>
+</ul>
+<a id="getErrorMessage(java.lang.Exception)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getErrorMessage</h4>
+<pre class="methodSignature">protected&nbsp;java.lang.String&nbsp;getErrorMessage&#8203;(java.lang.Exception&nbsp;ex)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.12</dd>
 </dl>
 </li>
 </ul>

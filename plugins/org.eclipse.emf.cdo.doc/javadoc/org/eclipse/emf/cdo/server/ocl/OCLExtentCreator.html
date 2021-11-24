@@ -129,9 +129,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dl>
 <hr>
 <pre>public interface <span class="typeNameLabel">OCLExtentCreator</span></pre>
-<div class="block">Creates extents of <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>classes</code></a>.
+<div class="block">Creates extents of <code>classes</code>.
  <p>
- The <a href="#createExtent(org.eclipse.emf.ecore.EClass,java.util.concurrent.atomic.AtomicBoolean)"><code>extent</code></a> of a <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>class</code></a> X is the set of all <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>objects</code></a> with <code>object.getEClass() == X</code>.</div>
+ The <a href="#createExtent(org.eclipse.emf.ecore.EClass,java.util.concurrent.atomic.AtomicBoolean)"><code>extent</code></a> of a <code>class</code> X is the set of all <code>objects</code> with <code>object.getEClass() == X</code>.</div>
 <dl>
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>Eike Stepper</dd>
@@ -157,8 +157,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>java.util.Set&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createExtent(org.eclipse.emf.ecore.EClass,java.util.concurrent.atomic.AtomicBoolean)">createExtent</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;cls,
+<td class="colFirst"><code>java.util.Set&lt;org.eclipse.emf.ecore.EObject&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createExtent(org.eclipse.emf.ecore.EClass,java.util.concurrent.atomic.AtomicBoolean)">createExtent</a></span>&#8203;(org.eclipse.emf.ecore.EClass&nbsp;cls,
             java.util.concurrent.atomic.AtomicBoolean&nbsp;canceled)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
@@ -185,8 +185,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockListLast">
 <li class="blockList">
 <h4>createExtent</h4>
-<pre class="methodSignature">java.util.Set&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&gt;&nbsp;createExtent&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;cls,
-                                    java.util.concurrent.atomic.AtomicBoolean&nbsp;canceled)</pre>
+<pre class="methodSignature">java.util.Set&lt;org.eclipse.emf.ecore.EObject&gt;&nbsp;createExtent&#8203;(org.eclipse.emf.ecore.EClass&nbsp;cls,
+                                                          java.util.concurrent.atomic.AtomicBoolean&nbsp;canceled)</pre>
 </li>
 </ul>
 </li>

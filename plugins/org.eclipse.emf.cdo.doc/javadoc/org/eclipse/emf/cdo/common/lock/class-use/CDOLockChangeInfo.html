@@ -190,6 +190,19 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
                     <a href="../CDOLockChangeInfo.Operation.html" title="enum in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo.Operation</a>&nbsp;op,
                     org.eclipse.net4j.util.concurrent.IRWLockManager.LockType&nbsp;lockType,
                     <a href="../CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a>[]&nbsp;newLockStates)</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.15 use the faster <a href="../CDOLockUtil.html#createLockChangeInfo(org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.lock.CDOLockOwner,org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo.Operation,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,java.util.Collection)"><code>CDOLockUtil.createLockChangeInfo(CDOBranchPoint, CDOLockOwner, Operation, LockType, Collection)</code></a> method.</div>
+</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static <a href="../CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOLockUtil.</span><code><span class="memberNameLink"><a href="../CDOLockUtil.html#createLockChangeInfo(org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.lock.CDOLockOwner,org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo.Operation,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,java.util.Collection)">createLockChangeInfo</a></span>&#8203;(<a href="../../branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+                    <a href="../CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;lockOwner,
+                    <a href="../CDOLockChangeInfo.Operation.html" title="enum in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo.Operation</a>&nbsp;op,
+                    org.eclipse.net4j.util.concurrent.IRWLockManager.LockType&nbsp;lockType,
+                    java.util.Collection&lt;? extends <a href="../CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a>&gt;&nbsp;newLockStates)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </tbody>

@@ -138,7 +138,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <hr>
 <pre>protected static final class <span class="typeNameLabel">OCLQueryHandler.ContextParameter</span>
 extends java.lang.Object</pre>
-<div class="block">An abstraction of the <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>classifier</code></a> and/or <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>obejct</code></a> of an OCL query context parameter.</div>
+<div class="block">An abstraction of the <code>classifier</code> and/or <code>obejct</code> of an OCL query context parameter.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
@@ -170,8 +170,8 @@ extends java.lang.Object</pre>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(org.eclipse.emf.ecore.EClassifier,org.eclipse.emf.ecore.EObject)">ContextParameter</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClassifier</a>&nbsp;classifier,
-                <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&nbsp;object)</code></th>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(org.eclipse.emf.ecore.EClassifier,org.eclipse.emf.ecore.EObject)">ContextParameter</a></span>&#8203;(org.eclipse.emf.ecore.EClassifier&nbsp;classifier,
+                org.eclipse.emf.ecore.EObject&nbsp;object)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -193,17 +193,17 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>protected static <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClassifier</a></code></td>
+<td class="colFirst"><code>protected static org.eclipse.emf.ecore.EClassifier</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getArbitraryContextClassifier(org.eclipse.emf.cdo.common.model.CDOPackageRegistry)">getArbitraryContextClassifier</a></span>&#8203;(<a href="../../common/model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a>&nbsp;packageRegistry)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClassifier</a></code></td>
+<td class="colFirst"><code>org.eclipse.emf.ecore.EClassifier</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getClassifier()">getClassifier</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a></code></td>
+<td class="colFirst"><code>org.eclipse.emf.ecore.EObject</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getObject()">getObject</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
@@ -247,8 +247,8 @@ extends java.lang.Object</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>ContextParameter</h4>
-<pre>public&nbsp;ContextParameter&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClassifier</a>&nbsp;classifier,
-                        <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&nbsp;object)</pre>
+<pre>public&nbsp;ContextParameter&#8203;(org.eclipse.emf.ecore.EClassifier&nbsp;classifier,
+                        org.eclipse.emf.ecore.EObject&nbsp;object)</pre>
 </li>
 </ul>
 </li>
@@ -267,7 +267,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getClassifier</h4>
-<pre class="methodSignature">public&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClassifier</a>&nbsp;getClassifier()</pre>
+<pre class="methodSignature">public&nbsp;org.eclipse.emf.ecore.EClassifier&nbsp;getClassifier()</pre>
 </li>
 </ul>
 <a id="getObject()">
@@ -276,7 +276,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getObject</h4>
-<pre class="methodSignature">public&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&nbsp;getObject()</pre>
+<pre class="methodSignature">public&nbsp;org.eclipse.emf.ecore.EObject&nbsp;getObject()</pre>
 </li>
 </ul>
 <a id="getArbitraryContextClassifier(org.eclipse.emf.cdo.common.model.CDOPackageRegistry)">
@@ -285,7 +285,7 @@ extends java.lang.Object</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getArbitraryContextClassifier</h4>
-<pre class="methodSignature">protected static&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClassifier</a>&nbsp;getArbitraryContextClassifier&#8203;(<a href="../../common/model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a>&nbsp;packageRegistry)</pre>
+<pre class="methodSignature">protected static&nbsp;org.eclipse.emf.ecore.EClassifier&nbsp;getArbitraryContextClassifier&#8203;(<a href="../../common/model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a>&nbsp;packageRegistry)</pre>
 </li>
 </ul>
 </li>

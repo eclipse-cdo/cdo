@@ -28,7 +28,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":9,"i3":41,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":41,"i11":9,"i12":9,"i13":9,"i14":9,"i15":9,"i16":9,"i17":9,"i18":9,"i19":9,"i20":9,"i21":9,"i22":9,"i23":9,"i24":9,"i25":9,"i26":9,"i27":9,"i28":9,"i29":9,"i30":9,"i31":9};
+var data = {"i0":9,"i1":9,"i2":9,"i3":41,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":41,"i11":9,"i12":9,"i13":9,"i14":9,"i15":9,"i16":9,"i17":9,"i18":9,"i19":9,"i20":9,"i21":9,"i22":9,"i23":9,"i24":9,"i25":9,"i26":9,"i27":9,"i28":9,"i29":9,"i30":9,"i31":9,"i32":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -220,7 +220,7 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>static <a href="delta/CDOListFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOListFeatureDelta</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#compareLists(org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.ecore.EStructuralFeature)">compareLists</a></span>&#8203;(<a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;originRevision,
             <a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;dirtyRevision,
-            <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&nbsp;feature)</code></th>
+            org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
@@ -238,7 +238,7 @@ extends java.lang.Object</pre>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createCDOFeatureMapEntry()">createCDOFeatureMapEntry</a></span>()</code></th>
 <td class="colLast">
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">As of 4.5 <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/FeatureMap.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.util" class="externalLink"><code>feature maps</code></a> are no longer supported.</div>
+<div class="deprecationComment">As of 4.5 <code>feature maps</code> are no longer supported.</div>
 </div>
 </td>
 </tr>
@@ -285,12 +285,12 @@ extends java.lang.Object</pre>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
-<td class="colFirst"><code>static <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/FeatureMap.Entry.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.util" class="externalLink">FeatureMap.Entry</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createFeatureMapEntry(org.eclipse.emf.ecore.EStructuralFeature,java.lang.Object)">createFeatureMapEntry</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&nbsp;feature,
+<td class="colFirst"><code>static org.eclipse.emf.ecore.util.FeatureMap.Entry</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createFeatureMapEntry(org.eclipse.emf.ecore.EStructuralFeature,java.lang.Object)">createFeatureMapEntry</a></span>&#8203;(org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature,
                      java.lang.Object&nbsp;value)</code></th>
 <td class="colLast">
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">As of 4.5 <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/FeatureMap.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.util" class="externalLink"><code>feature maps</code></a> are no longer supported.</div>
+<div class="deprecationComment">As of 4.5 <code>feature maps</code> are no longer supported.</div>
 </div>
 </td>
 </tr>
@@ -377,49 +377,54 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i24" class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getResourceNodeName(org.eclipse.emf.cdo.common.revision.CDORevision)">getResourceNodeName</a></span>&#8203;(<a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i25" class="rowColor">
+<td class="colFirst"><code>static java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getResourceNodePath(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.revision.CDORevisionProvider)">getResourceNodePath</a></span>&#8203;(<a href="../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
                    <a href="CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;provider)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i25" class="rowColor">
+<tr id="i26" class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getResourceNodePath(org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevisionProvider)">getResourceNodePath</a></span>&#8203;(<a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
                    <a href="CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;provider)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i26" class="altColor">
+<tr id="i27" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#handleParentRevisions(org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevisionProvider,org.eclipse.emf.cdo.common.revision.CDORevisionHandler)">handleParentRevisions</a></span>&#8203;(<a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
                      <a href="CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;provider,
                      <a href="CDORevisionHandler.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionHandler</a>&nbsp;handler)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i27" class="rowColor">
+<tr id="i28" class="altColor">
 <td class="colFirst"><code>static boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isContained(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.revision.CDORevisionProvider)">isContained</a></span>&#8203;(<a href="../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;child,
            <a href="../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;container,
            <a href="CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;provider)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i28" class="altColor">
+<tr id="i29" class="rowColor">
 <td class="colFirst"><code>static boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isContained(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.revision.CDORevisionProvider)">isContained</a></span>&#8203;(<a href="../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;child,
            <a href="../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;container,
            <a href="CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;provider)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i29" class="rowColor">
+<tr id="i30" class="altColor">
 <td class="colFirst"><code>static boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isTreeRestructuring(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta%5B%5D)">isTreeRestructuring</a></span>&#8203;(<a href="../../spi/common/revision/InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a>[]&nbsp;deltas)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i30" class="altColor">
+<tr id="i31" class="rowColor">
 <td class="colFirst"><code>static <a href="CDORevisionKey.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionKey</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parseRevisionKey(java.lang.String,org.eclipse.emf.cdo.common.branch.CDOBranchManager)">parseRevisionKey</a></span>&#8203;(java.lang.String&nbsp;source,
                 <a href="../branch/CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager</a>&nbsp;branchManager)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i31" class="rowColor">
+<tr id="i32" class="altColor">
 <td class="colFirst"><code>static java.lang.Object</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#remapID(java.lang.Object,java.util.Map,boolean)">remapID</a></span>&#8203;(java.lang.Object&nbsp;value,
        java.util.Map&lt;<a href="../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,&#8203;<a href="../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;idMappings,
@@ -601,10 +606,10 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>createFeatureMapEntry</h4>
 <pre class="methodSignature">@Deprecated
-public static&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/FeatureMap.Entry.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.util" class="externalLink">FeatureMap.Entry</a>&nbsp;createFeatureMapEntry&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&nbsp;feature,
-                                                     java.lang.Object&nbsp;value)</pre>
+public static&nbsp;org.eclipse.emf.ecore.util.FeatureMap.Entry&nbsp;createFeatureMapEntry&#8203;(org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature,
+                                                                                java.lang.Object&nbsp;value)</pre>
 <div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">As of 4.5 <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/FeatureMap.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.util" class="externalLink"><code>feature maps</code></a> are no longer supported.</div>
+<div class="deprecationComment">As of 4.5 <code>feature maps</code> are no longer supported.</div>
 </div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -621,7 +626,7 @@ public static&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc
 <pre class="methodSignature">@Deprecated
 public static&nbsp;<a href="../../spi/common/revision/CDOFeatureMapEntry.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">CDOFeatureMapEntry</a>&nbsp;createCDOFeatureMapEntry()</pre>
 <div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">As of 4.5 <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/FeatureMap.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.util" class="externalLink"><code>feature maps</code></a> are no longer supported.</div>
+<div class="deprecationComment">As of 4.5 <code>feature maps</code> are no longer supported.</div>
 </div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -864,6 +869,19 @@ public static&nbsp;<a href="../../spi/common/revision/CDOFeatureMapEntry.html" t
 </dl>
 </li>
 </ul>
+<a id="getResourceNodeName(org.eclipse.emf.cdo.common.revision.CDORevision)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getResourceNodeName</h4>
+<pre class="methodSignature">public static&nbsp;java.lang.String&nbsp;getResourceNodeName&#8203;(<a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.15</dd>
+</dl>
+</li>
+</ul>
 <a id="getResourceNodePath(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.revision.CDORevisionProvider)">
 <!--   -->
 </a>
@@ -900,7 +918,7 @@ public static&nbsp;<a href="../../spi/common/revision/CDOFeatureMapEntry.html" t
 <h4>compareLists</h4>
 <pre class="methodSignature">public static&nbsp;<a href="delta/CDOListFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOListFeatureDelta</a>&nbsp;compareLists&#8203;(<a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;originRevision,
                                                <a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;dirtyRevision,
-                                               <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&nbsp;feature)</pre>
+                                               org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.8</dd>

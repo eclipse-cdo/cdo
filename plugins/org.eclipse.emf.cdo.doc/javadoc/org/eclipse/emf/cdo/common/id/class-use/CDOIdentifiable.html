@@ -108,15 +108,27 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tbody>
 <tr class="altColor">
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.common.lock">org.eclipse.emf.cdo.common.lock</a></th>
+<td class="colLast">
+<div class="block">Common concepts for dealing with durable locks and views.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.common.revision">org.eclipse.emf.cdo.common.revision</a></th>
 <td class="colLast">
 <div class="block">Common concepts for dealing with revisions and revision lists.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.common.revision.delta">org.eclipse.emf.cdo.common.revision.delta</a></th>
 <td class="colLast">
 <div class="block">Common concepts for dealing with revision deltas and feature deltas.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.spi.common.lock">org.eclipse.emf.cdo.spi.common.lock</a></th>
+<td class="colLast">
+<div class="block">Common service provider interfaces and useful base implementations for dealing with object locks.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -130,6 +142,30 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </li>
 <li class="blockList">
 <ul class="blockList">
+<li class="blockList">
+<section role="region"><a id="org.eclipse.emf.cdo.common.lock">
+<!--   -->
+</a>
+<h3>Uses of <a href="../CDOIdentifiable.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIdentifiable</a> in <a href="../../lock/package-summary.html">org.eclipse.emf.cdo.common.lock</a></h3>
+<table class="useSummary">
+<caption><span>Subinterfaces of <a href="../CDOIdentifiable.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIdentifiable</a> in <a href="../../lock/package-summary.html">org.eclipse.emf.cdo.common.lock</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>interface&nbsp;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../lock/CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a></span></code></th>
+<td class="colLast">
+<div class="block">A client-side representation of <i>all</i> the locks on a single CDOObject.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+</li>
 <li class="blockList">
 <section role="region"><a id="org.eclipse.emf.cdo.common.revision">
 <!--   -->
@@ -161,7 +197,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <td class="colFirst"><code>interface&nbsp;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a></span></code></th>
 <td class="colLast">
-<div class="block">Encapsulates the immutable system information of a <b>single</b> CDO <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>object</code></a> between two
+<div class="block">Encapsulates the immutable system information of a <b>single</b> CDO <code>object</code> between two
  <a href="../../commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>commits</code></a> in a <a href="../../branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch</code></a> and provides access to its modeled
  <a href="../../revision/CDORevisionData.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>data</code></a>.</div>
 </td>
@@ -204,6 +240,45 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <td class="colLast">
 <div class="block">Represents the change delta between two <a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> of a CDO object.</div>
 </td>
+</tr>
+</tbody>
+</table>
+</section>
+</li>
+<li class="blockList">
+<section role="region"><a id="org.eclipse.emf.cdo.spi.common.lock">
+<!--   -->
+</a>
+<h3>Uses of <a href="../CDOIdentifiable.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIdentifiable</a> in <a href="../../../spi/common/lock/package-summary.html">org.eclipse.emf.cdo.spi.common.lock</a></h3>
+<table class="useSummary">
+<caption><span>Subinterfaces of <a href="../CDOIdentifiable.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIdentifiable</a> in <a href="../../../spi/common/lock/package-summary.html">org.eclipse.emf.cdo.spi.common.lock</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>interface&nbsp;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../spi/common/lock/InternalCDOLockState.html" title="interface in org.eclipse.emf.cdo.spi.common.lock">InternalCDOLockState</a></span></code></th>
+<td class="colLast">
+<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+</td>
+</tr>
+</tbody>
+</table>
+<table class="useSummary">
+<caption><span>Classes in <a href="../../../spi/common/lock/package-summary.html">org.eclipse.emf.cdo.spi.common.lock</a> that implement <a href="../CDOIdentifiable.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIdentifiable</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>class&nbsp;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../spi/common/lock/AbstractCDOLockState.html" title="class in org.eclipse.emf.cdo.spi.common.lock">AbstractCDOLockState</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>

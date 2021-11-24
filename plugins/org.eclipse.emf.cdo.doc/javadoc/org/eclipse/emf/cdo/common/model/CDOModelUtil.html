@@ -185,13 +185,13 @@ implements <a href="CDOModelConstants.html" title="interface in org.eclipse.emf.
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#checkCrossResourceURIs(org.eclipse.emf.ecore.EPackage)">checkCrossResourceURIs</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage</a>&nbsp;ePackage)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#checkCrossResourceURIs(org.eclipse.emf.ecore.EPackage)">checkCrossResourceURIs</a></span>&#8203;(org.eclipse.emf.ecore.EPackage&nbsp;ePackage)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#checkNoFeatureMaps(java.lang.StringBuilder,org.eclipse.emf.ecore.EPackage,boolean)">checkNoFeatureMaps</a></span>&#8203;(java.lang.StringBuilder&nbsp;builder,
-                  <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage</a>&nbsp;ePackage,
+                  org.eclipse.emf.ecore.EPackage&nbsp;ePackage,
                   boolean&nbsp;checkFeatureMapEntries)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
@@ -217,8 +217,8 @@ implements <a href="CDOModelConstants.html" title="interface in org.eclipse.emf.
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code>static <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>[]</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAllPersistentFeatures(org.eclipse.emf.ecore.EClass)">getAllPersistentFeatures</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;eClass)</code></th>
+<td class="colFirst"><code>static org.eclipse.emf.ecore.EStructuralFeature[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAllPersistentFeatures(org.eclipse.emf.ecore.EClass)">getAllPersistentFeatures</a></span>&#8203;(org.eclipse.emf.ecore.EClass&nbsp;eClass)</code></th>
 <td class="colLast">
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>
 <div class="deprecationComment">As of 4.2 use <code>CDOModelUtil.getClassInfo(eClass).getAllPersistentFeatures()</code>.</div>
@@ -227,14 +227,14 @@ implements <a href="CDOModelConstants.html" title="interface in org.eclipse.emf.
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>static <a href="CDOClassInfo.html" title="interface in org.eclipse.emf.cdo.common.model">CDOClassInfo</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getClassInfo(org.eclipse.emf.ecore.EClass)">getClassInfo</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;eClass)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getClassInfo(org.eclipse.emf.ecore.EClass)">getClassInfo</a></span>&#8203;(org.eclipse.emf.ecore.EClass&nbsp;eClass)</code></th>
 <td class="colLast">
-<div class="block">Returns additional CDO infos for an <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>EClass</code></a>.</div>
+<div class="block">Returns additional CDO infos for an <code>EClass</code>.</div>
 </td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>static <a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCoreType(org.eclipse.emf.ecore.EClassifier)">getCoreType</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClassifier</a>&nbsp;eDataType)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCoreType(org.eclipse.emf.ecore.EClassifier)">getCoreType</a></span>&#8203;(org.eclipse.emf.ecore.EClassifier&nbsp;eDataType)</code></th>
 <td class="colLast">
 <div class="block">Core types includes also complex data like EAnnotation, and EEnum</div>
 </td>
@@ -251,8 +251,8 @@ implements <a href="CDOModelConstants.html" title="interface in org.eclipse.emf.
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i11" class="rowColor">
-<td class="colFirst"><code>static java.util.Map&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>,&#8203;java.util.List&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&gt;&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSubTypes(org.eclipse.emf.ecore.EPackage.Registry)">getSubTypes</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.Registry.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage.Registry</a>&nbsp;packageRegistry)</code></th>
+<td class="colFirst"><code>static java.util.Map&lt;org.eclipse.emf.ecore.EClass,&#8203;java.util.List&lt;org.eclipse.emf.ecore.EClass&gt;&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSubTypes(org.eclipse.emf.ecore.EPackage.Registry)">getSubTypes</a></span>&#8203;(org.eclipse.emf.ecore.EPackage.Registry&nbsp;packageRegistry)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i12" class="altColor">
@@ -262,12 +262,12 @@ implements <a href="CDOModelConstants.html" title="interface in org.eclipse.emf.
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code>static <a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getType(org.eclipse.emf.ecore.EClassifier)">getType</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClassifier</a>&nbsp;classifier)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getType(org.eclipse.emf.ecore.EClassifier)">getType</a></span>&#8203;(org.eclipse.emf.ecore.EClassifier&nbsp;classifier)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code>static <a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getType(org.eclipse.emf.ecore.EStructuralFeature)">getType</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&nbsp;feature)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getType(org.eclipse.emf.ecore.EStructuralFeature)">getType</a></span>&#8203;(org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i15" class="rowColor">
@@ -277,47 +277,47 @@ implements <a href="CDOModelConstants.html" title="interface in org.eclipse.emf.
 </tr>
 <tr id="i16" class="altColor">
 <td class="colFirst"><code>static boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isCorePackage(org.eclipse.emf.ecore.EPackage)">isCorePackage</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage</a>&nbsp;ePackage)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isCorePackage(org.eclipse.emf.ecore.EPackage)">isCorePackage</a></span>&#8203;(org.eclipse.emf.ecore.EPackage&nbsp;ePackage)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i17" class="rowColor">
 <td class="colFirst"><code>static boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isLob(org.eclipse.emf.ecore.EClassifier)">isLob</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClassifier</a>&nbsp;eClassifier)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isLob(org.eclipse.emf.ecore.EClassifier)">isLob</a></span>&#8203;(org.eclipse.emf.ecore.EClassifier&nbsp;eClassifier)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i18" class="altColor">
 <td class="colFirst"><code>static boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isResource(org.eclipse.emf.ecore.EClass)">isResource</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;eClass)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isResource(org.eclipse.emf.ecore.EClass)">isResource</a></span>&#8203;(org.eclipse.emf.ecore.EClass&nbsp;eClass)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i19" class="rowColor">
 <td class="colFirst"><code>static boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isResourceFolder(org.eclipse.emf.ecore.EClass)">isResourceFolder</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;eClass)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isResourceFolder(org.eclipse.emf.ecore.EClass)">isResourceFolder</a></span>&#8203;(org.eclipse.emf.ecore.EClass&nbsp;eClass)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i20" class="altColor">
 <td class="colFirst"><code>static boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isResourceNode(org.eclipse.emf.ecore.EClass)">isResourceNode</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;eClass)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isResourceNode(org.eclipse.emf.ecore.EClass)">isResourceNode</a></span>&#8203;(org.eclipse.emf.ecore.EClass&nbsp;eClass)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i21" class="rowColor">
 <td class="colFirst"><code>static boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isResourcePackage(org.eclipse.emf.ecore.EPackage)">isResourcePackage</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage</a>&nbsp;ePackage)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isResourcePackage(org.eclipse.emf.ecore.EPackage)">isResourcePackage</a></span>&#8203;(org.eclipse.emf.ecore.EPackage&nbsp;ePackage)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i22" class="altColor">
 <td class="colFirst"><code>static boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isResourcePathFeature(org.eclipse.emf.ecore.EStructuralFeature)">isResourcePathFeature</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&nbsp;eStructuralFeature)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isResourcePathFeature(org.eclipse.emf.ecore.EStructuralFeature)">isResourcePathFeature</a></span>&#8203;(org.eclipse.emf.ecore.EStructuralFeature&nbsp;eStructuralFeature)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i23" class="rowColor">
 <td class="colFirst"><code>static boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isRoot(org.eclipse.emf.ecore.EClass)">isRoot</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;eClass)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isRoot(org.eclipse.emf.ecore.EClass)">isRoot</a></span>&#8203;(org.eclipse.emf.ecore.EClass&nbsp;eClass)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i24" class="altColor">
 <td class="colFirst"><code>static boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isSystemPackage(org.eclipse.emf.ecore.EPackage)">isSystemPackage</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage</a>&nbsp;ePackage)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isSystemPackage(org.eclipse.emf.ecore.EPackage)">isSystemPackage</a></span>&#8203;(org.eclipse.emf.ecore.EPackage&nbsp;ePackage)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i25" class="rowColor">
@@ -327,22 +327,22 @@ implements <a href="CDOModelConstants.html" title="interface in org.eclipse.emf.
 </tr>
 <tr id="i26" class="altColor">
 <td class="colFirst"><code>static boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isTypesPackage(org.eclipse.emf.ecore.EPackage)">isTypesPackage</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage</a>&nbsp;ePackage)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isTypesPackage(org.eclipse.emf.ecore.EPackage)">isTypesPackage</a></span>&#8203;(org.eclipse.emf.ecore.EPackage&nbsp;ePackage)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i27" class="rowColor">
-<td class="colFirst"><code>static <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage</a></code></td>
+<td class="colFirst"><code>static org.eclipse.emf.ecore.EPackage</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readPackage(org.eclipse.net4j.util.io.ExtendedDataInput,org.eclipse.emf.ecore.resource.ResourceSet,boolean)">readPackage</a></span>&#8203;(org.eclipse.net4j.util.io.ExtendedDataInput&nbsp;in,
-           <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource" class="externalLink">ResourceSet</a>&nbsp;resourceSet,
+           org.eclipse.emf.ecore.resource.ResourceSet&nbsp;resourceSet,
            boolean&nbsp;lookForResource)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i28" class="altColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#writePackage(org.eclipse.net4j.util.io.ExtendedDataOutput,org.eclipse.emf.ecore.EPackage,boolean,org.eclipse.emf.ecore.EPackage.Registry)">writePackage</a></span>&#8203;(org.eclipse.net4j.util.io.ExtendedDataOutput&nbsp;out,
-            <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage</a>&nbsp;ePackage,
+            org.eclipse.emf.ecore.EPackage&nbsp;ePackage,
             boolean&nbsp;zipped,
-            <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.Registry.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage.Registry</a>&nbsp;packageRegistry)</code></th>
+            org.eclipse.emf.ecore.EPackage.Registry&nbsp;packageRegistry)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -375,7 +375,7 @@ implements <a href="CDOModelConstants.html" title="interface in org.eclipse.emf.
 <ul class="blockList">
 <li class="blockList">
 <h4>isCorePackage</h4>
-<pre class="methodSignature">public static&nbsp;boolean&nbsp;isCorePackage&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage</a>&nbsp;ePackage)</pre>
+<pre class="methodSignature">public static&nbsp;boolean&nbsp;isCorePackage&#8203;(org.eclipse.emf.ecore.EPackage&nbsp;ePackage)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
@@ -388,7 +388,7 @@ implements <a href="CDOModelConstants.html" title="interface in org.eclipse.emf.
 <ul class="blockList">
 <li class="blockList">
 <h4>isRoot</h4>
-<pre class="methodSignature">public static&nbsp;boolean&nbsp;isRoot&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;eClass)</pre>
+<pre class="methodSignature">public static&nbsp;boolean&nbsp;isRoot&#8203;(org.eclipse.emf.ecore.EClass&nbsp;eClass)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
@@ -401,7 +401,7 @@ implements <a href="CDOModelConstants.html" title="interface in org.eclipse.emf.
 <ul class="blockList">
 <li class="blockList">
 <h4>isResourcePackage</h4>
-<pre class="methodSignature">public static&nbsp;boolean&nbsp;isResourcePackage&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage</a>&nbsp;ePackage)</pre>
+<pre class="methodSignature">public static&nbsp;boolean&nbsp;isResourcePackage&#8203;(org.eclipse.emf.ecore.EPackage&nbsp;ePackage)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
@@ -414,7 +414,7 @@ implements <a href="CDOModelConstants.html" title="interface in org.eclipse.emf.
 <ul class="blockList">
 <li class="blockList">
 <h4>isResource</h4>
-<pre class="methodSignature">public static&nbsp;boolean&nbsp;isResource&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;eClass)</pre>
+<pre class="methodSignature">public static&nbsp;boolean&nbsp;isResource&#8203;(org.eclipse.emf.ecore.EClass&nbsp;eClass)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
@@ -427,7 +427,7 @@ implements <a href="CDOModelConstants.html" title="interface in org.eclipse.emf.
 <ul class="blockList">
 <li class="blockList">
 <h4>isResourceFolder</h4>
-<pre class="methodSignature">public static&nbsp;boolean&nbsp;isResourceFolder&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;eClass)</pre>
+<pre class="methodSignature">public static&nbsp;boolean&nbsp;isResourceFolder&#8203;(org.eclipse.emf.ecore.EClass&nbsp;eClass)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
@@ -440,7 +440,7 @@ implements <a href="CDOModelConstants.html" title="interface in org.eclipse.emf.
 <ul class="blockList">
 <li class="blockList">
 <h4>isResourceNode</h4>
-<pre class="methodSignature">public static&nbsp;boolean&nbsp;isResourceNode&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;eClass)</pre>
+<pre class="methodSignature">public static&nbsp;boolean&nbsp;isResourceNode&#8203;(org.eclipse.emf.ecore.EClass&nbsp;eClass)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
@@ -453,7 +453,7 @@ implements <a href="CDOModelConstants.html" title="interface in org.eclipse.emf.
 <ul class="blockList">
 <li class="blockList">
 <h4>isResourcePathFeature</h4>
-<pre class="methodSignature">public static&nbsp;boolean&nbsp;isResourcePathFeature&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&nbsp;eStructuralFeature)</pre>
+<pre class="methodSignature">public static&nbsp;boolean&nbsp;isResourcePathFeature&#8203;(org.eclipse.emf.ecore.EStructuralFeature&nbsp;eStructuralFeature)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.3</dd>
@@ -466,7 +466,7 @@ implements <a href="CDOModelConstants.html" title="interface in org.eclipse.emf.
 <ul class="blockList">
 <li class="blockList">
 <h4>isTypesPackage</h4>
-<pre class="methodSignature">public static&nbsp;boolean&nbsp;isTypesPackage&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage</a>&nbsp;ePackage)</pre>
+<pre class="methodSignature">public static&nbsp;boolean&nbsp;isTypesPackage&#8203;(org.eclipse.emf.ecore.EPackage&nbsp;ePackage)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.0</dd>
@@ -479,7 +479,7 @@ implements <a href="CDOModelConstants.html" title="interface in org.eclipse.emf.
 <ul class="blockList">
 <li class="blockList">
 <h4>isSystemPackage</h4>
-<pre class="methodSignature">public static&nbsp;boolean&nbsp;isSystemPackage&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage</a>&nbsp;ePackage)</pre>
+<pre class="methodSignature">public static&nbsp;boolean&nbsp;isSystemPackage&#8203;(org.eclipse.emf.ecore.EPackage&nbsp;ePackage)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
@@ -505,7 +505,7 @@ implements <a href="CDOModelConstants.html" title="interface in org.eclipse.emf.
 <ul class="blockList">
 <li class="blockList">
 <h4>isLob</h4>
-<pre class="methodSignature">public static&nbsp;boolean&nbsp;isLob&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClassifier</a>&nbsp;eClassifier)</pre>
+<pre class="methodSignature">public static&nbsp;boolean&nbsp;isLob&#8203;(org.eclipse.emf.ecore.EClassifier&nbsp;eClassifier)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.0</dd>
@@ -518,7 +518,7 @@ implements <a href="CDOModelConstants.html" title="interface in org.eclipse.emf.
 <ul class="blockList">
 <li class="blockList">
 <h4>getType</h4>
-<pre class="methodSignature">public static&nbsp;<a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a>&nbsp;getType&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&nbsp;feature)</pre>
+<pre class="methodSignature">public static&nbsp;<a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a>&nbsp;getType&#8203;(org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
@@ -544,7 +544,7 @@ implements <a href="CDOModelConstants.html" title="interface in org.eclipse.emf.
 <ul class="blockList">
 <li class="blockList">
 <h4>getType</h4>
-<pre class="methodSignature">public static&nbsp;<a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a>&nbsp;getType&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClassifier</a>&nbsp;classifier)</pre>
+<pre class="methodSignature">public static&nbsp;<a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a>&nbsp;getType&#8203;(org.eclipse.emf.ecore.EClassifier&nbsp;classifier)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
@@ -557,7 +557,7 @@ implements <a href="CDOModelConstants.html" title="interface in org.eclipse.emf.
 <ul class="blockList">
 <li class="blockList">
 <h4>getCoreType</h4>
-<pre class="methodSignature">public static&nbsp;<a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a>&nbsp;getCoreType&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClassifier</a>&nbsp;eDataType)</pre>
+<pre class="methodSignature">public static&nbsp;<a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a>&nbsp;getCoreType&#8203;(org.eclipse.emf.ecore.EClassifier&nbsp;eDataType)</pre>
 <div class="block">Core types includes also complex data like EAnnotation, and EEnum</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -611,8 +611,8 @@ implements <a href="CDOModelConstants.html" title="interface in org.eclipse.emf.
 <ul class="blockList">
 <li class="blockList">
 <h4>getClassInfo</h4>
-<pre class="methodSignature">public static&nbsp;<a href="CDOClassInfo.html" title="interface in org.eclipse.emf.cdo.common.model">CDOClassInfo</a>&nbsp;getClassInfo&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;eClass)</pre>
-<div class="block">Returns additional CDO infos for an <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>EClass</code></a>.
+<pre class="methodSignature">public static&nbsp;<a href="CDOClassInfo.html" title="interface in org.eclipse.emf.cdo.common.model">CDOClassInfo</a>&nbsp;getClassInfo&#8203;(org.eclipse.emf.ecore.EClass&nbsp;eClass)</pre>
+<div class="block">Returns additional CDO infos for an <code>EClass</code>.
  <p>
  This operation is somewhat expensive because it synchronizes on the EClass and iterates over all adapters.
  Whenever possible use <a href="../revision/CDORevision.html#getClassInfo()"><code>CDORevision.getClassInfo()</code></a> or <code>InternalCDOObject.getClassInfo()</code>.</div>
@@ -629,11 +629,11 @@ implements <a href="CDOModelConstants.html" title="interface in org.eclipse.emf.
 <li class="blockList">
 <h4>getAllPersistentFeatures</h4>
 <pre class="methodSignature">@Deprecated
-public static&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>[]&nbsp;getAllPersistentFeatures&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;eClass)</pre>
+public static&nbsp;org.eclipse.emf.ecore.EStructuralFeature[]&nbsp;getAllPersistentFeatures&#8203;(org.eclipse.emf.ecore.EClass&nbsp;eClass)</pre>
 <div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
 <div class="deprecationComment">As of 4.2 use <code>CDOModelUtil.getClassInfo(eClass).getAllPersistentFeatures()</code>.</div>
 </div>
-<div class="block">Returns all persistent <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>features</code></a> of an <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>EClass</code></a>.
+<div class="block">Returns all persistent <code>features</code> of an <code>EClass</code>.
  <p>
  This operation is somewhat expensive because it synchronizes on the EClass and iterates over all adapters.</div>
 <dl>
@@ -689,10 +689,10 @@ public static&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc
 <ul class="blockList">
 <li class="blockList">
 <h4>readPackage</h4>
-<pre class="methodSignature">public static&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage</a>&nbsp;readPackage&#8203;(org.eclipse.net4j.util.io.ExtendedDataInput&nbsp;in,
-                                   <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource" class="externalLink">ResourceSet</a>&nbsp;resourceSet,
-                                   boolean&nbsp;lookForResource)
-                            throws java.io.IOException</pre>
+<pre class="methodSignature">public static&nbsp;org.eclipse.emf.ecore.EPackage&nbsp;readPackage&#8203;(org.eclipse.net4j.util.io.ExtendedDataInput&nbsp;in,
+                                                         org.eclipse.emf.ecore.resource.ResourceSet&nbsp;resourceSet,
+                                                         boolean&nbsp;lookForResource)
+                                                  throws java.io.IOException</pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.io.IOException</code></dd>
@@ -708,9 +708,9 @@ public static&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc
 <li class="blockList">
 <h4>writePackage</h4>
 <pre class="methodSignature">public static&nbsp;void&nbsp;writePackage&#8203;(org.eclipse.net4j.util.io.ExtendedDataOutput&nbsp;out,
-                                <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage</a>&nbsp;ePackage,
+                                org.eclipse.emf.ecore.EPackage&nbsp;ePackage,
                                 boolean&nbsp;zipped,
-                                <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.Registry.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage.Registry</a>&nbsp;packageRegistry)
+                                org.eclipse.emf.ecore.EPackage.Registry&nbsp;packageRegistry)
                          throws java.io.IOException</pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -726,7 +726,7 @@ public static&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc
 <ul class="blockList">
 <li class="blockList">
 <h4>checkCrossResourceURIs</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;checkCrossResourceURIs&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage</a>&nbsp;ePackage)</pre>
+<pre class="methodSignature">public static&nbsp;void&nbsp;checkCrossResourceURIs&#8203;(org.eclipse.emf.ecore.EPackage&nbsp;ePackage)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
@@ -740,7 +740,7 @@ public static&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc
 <li class="blockList">
 <h4>checkNoFeatureMaps</h4>
 <pre class="methodSignature">public static&nbsp;void&nbsp;checkNoFeatureMaps&#8203;(java.lang.StringBuilder&nbsp;builder,
-                                      <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage</a>&nbsp;ePackage,
+                                      org.eclipse.emf.ecore.EPackage&nbsp;ePackage,
                                       boolean&nbsp;checkFeatureMapEntries)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -771,7 +771,7 @@ public static&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getSubTypes</h4>
-<pre class="methodSignature">public static&nbsp;java.util.Map&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>,&#8203;java.util.List&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&gt;&gt;&nbsp;getSubTypes&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.Registry.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage.Registry</a>&nbsp;packageRegistry)</pre>
+<pre class="methodSignature">public static&nbsp;java.util.Map&lt;org.eclipse.emf.ecore.EClass,&#8203;java.util.List&lt;org.eclipse.emf.ecore.EClass&gt;&gt;&nbsp;getSubTypes&#8203;(org.eclipse.emf.ecore.EPackage.Registry&nbsp;packageRegistry)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.0</dd>

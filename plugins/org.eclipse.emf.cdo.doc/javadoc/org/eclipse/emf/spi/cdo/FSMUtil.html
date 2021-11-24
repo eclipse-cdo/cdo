@@ -169,17 +169,17 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>static <a href="InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#adaptLegacy(org.eclipse.emf.ecore.InternalEObject)">adaptLegacy</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">InternalEObject</a>&nbsp;object)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#adaptLegacy(org.eclipse.emf.ecore.InternalEObject)">adaptLegacy</a></span>&#8203;(org.eclipse.emf.ecore.InternalEObject&nbsp;object)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>static <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">Adapter</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLegacyAdapter(org.eclipse.emf.common.util.EList)">getLegacyAdapter</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">EList</a>&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">Adapter</a>&gt;&nbsp;adapters)</code></th>
+<td class="colFirst"><code>static org.eclipse.emf.common.notify.Adapter</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLegacyAdapter(org.eclipse.emf.common.util.EList)">getLegacyAdapter</a></span>&#8203;(org.eclipse.emf.common.util.EList&lt;org.eclipse.emf.common.notify.Adapter&gt;&nbsp;adapters)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>static <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">Adapter</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLegacyAdapter(org.eclipse.emf.ecore.EObject)">getLegacyAdapter</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&nbsp;object)</code></th>
+<td class="colFirst"><code>static org.eclipse.emf.common.notify.Adapter</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLegacyAdapter(org.eclipse.emf.ecore.EObject)">getLegacyAdapter</a></span>&#8203;(org.eclipse.emf.ecore.EObject&nbsp;object)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
@@ -199,7 +199,7 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>static boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isNative(org.eclipse.emf.ecore.EObject)">isNative</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&nbsp;eObject)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isNative(org.eclipse.emf.ecore.EObject)">isNative</a></span>&#8203;(org.eclipse.emf.ecore.EObject&nbsp;eObject)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
@@ -308,7 +308,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>isNative</h4>
-<pre class="methodSignature">public static&nbsp;boolean&nbsp;isNative&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&nbsp;eObject)</pre>
+<pre class="methodSignature">public static&nbsp;boolean&nbsp;isNative&#8203;(org.eclipse.emf.ecore.EObject&nbsp;eObject)</pre>
 </li>
 </ul>
 <a id="adapt(java.lang.Object,org.eclipse.emf.cdo.view.CDOView)">
@@ -327,7 +327,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>adaptLegacy</h4>
-<pre class="methodSignature">public static&nbsp;<a href="InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;adaptLegacy&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">InternalEObject</a>&nbsp;object)</pre>
+<pre class="methodSignature">public static&nbsp;<a href="InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;adaptLegacy&#8203;(org.eclipse.emf.ecore.InternalEObject&nbsp;object)</pre>
 </li>
 </ul>
 <a id="getLegacyAdapter(org.eclipse.emf.ecore.EObject)">
@@ -336,7 +336,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getLegacyAdapter</h4>
-<pre class="methodSignature">public static&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">Adapter</a>&nbsp;getLegacyAdapter&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&nbsp;object)</pre>
+<pre class="methodSignature">public static&nbsp;org.eclipse.emf.common.notify.Adapter&nbsp;getLegacyAdapter&#8203;(org.eclipse.emf.ecore.EObject&nbsp;object)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.4</dd>
@@ -349,7 +349,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getLegacyAdapter</h4>
-<pre class="methodSignature">public static&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">Adapter</a>&nbsp;getLegacyAdapter&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">EList</a>&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">Adapter</a>&gt;&nbsp;adapters)</pre>
+<pre class="methodSignature">public static&nbsp;org.eclipse.emf.common.notify.Adapter&nbsp;getLegacyAdapter&#8203;(org.eclipse.emf.common.util.EList&lt;org.eclipse.emf.common.notify.Adapter&gt;&nbsp;adapters)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.4</dd>

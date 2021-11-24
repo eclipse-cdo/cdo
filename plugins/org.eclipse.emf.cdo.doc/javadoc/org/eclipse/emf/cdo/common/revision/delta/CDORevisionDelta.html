@@ -207,13 +207,13 @@ extends <a href="../CDORevisionKey.html" title="interface in org.eclipse.emf.cdo
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#accept(org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor,java.util.function.Predicate)">accept</a></span>&#8203;(<a href="CDOFeatureDeltaVisitor.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDeltaVisitor</a>&nbsp;visitor,
-      java.util.function.Predicate&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&gt;&nbsp;filter)</code></th>
+      java.util.function.Predicate&lt;org.eclipse.emf.ecore.EStructuralFeature&gt;&nbsp;filter)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#accept(org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor,org.eclipse.net4j.util.Predicate)">accept</a></span>&#8203;(<a href="CDOFeatureDeltaVisitor.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDeltaVisitor</a>&nbsp;visitor,
-      org.eclipse.net4j.util.Predicate&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&gt;&nbsp;filter)</code></th>
+      org.eclipse.net4j.util.Predicate&lt;org.eclipse.emf.ecore.EStructuralFeature&gt;&nbsp;filter)</code></th>
 <td class="colLast">
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>
 <div class="deprecationComment">As of 4.9 use <a href="#accept(org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor,java.util.function.Predicate)"><code>accept(CDOFeatureDeltaVisitor, java.util.function.Predicate)</code></a>.</div>
@@ -243,13 +243,13 @@ extends <a href="../CDORevisionKey.html" title="interface in org.eclipse.emf.cdo
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a></code></td>
+<td class="colFirst"><code>org.eclipse.emf.ecore.EClass</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getEClass()">getEClass</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getFeatureDelta(org.eclipse.emf.ecore.EStructuralFeature)">getFeatureDelta</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&nbsp;feature)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getFeatureDelta(org.eclipse.emf.ecore.EStructuralFeature)">getFeatureDelta</a></span>&#8203;(org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
@@ -342,7 +342,7 @@ extends <a href="../CDORevisionKey.html" title="interface in org.eclipse.emf.cdo
 <ul class="blockList">
 <li class="blockList">
 <h4>getEClass</h4>
-<pre class="methodSignature"><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;getEClass()</pre>
+<pre class="methodSignature">org.eclipse.emf.ecore.EClass&nbsp;getEClass()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
@@ -407,7 +407,7 @@ extends <a href="../CDORevisionKey.html" title="interface in org.eclipse.emf.cdo
 <ul class="blockList">
 <li class="blockList">
 <h4>getFeatureDelta</h4>
-<pre class="methodSignature"><a href="CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;getFeatureDelta&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&nbsp;feature)</pre>
+<pre class="methodSignature"><a href="CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;getFeatureDelta&#8203;(org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.0</dd>
@@ -471,7 +471,7 @@ void&nbsp;apply&#8203;(<a href="../CDORevision.html" title="interface in org.ecl
 <h4>accept</h4>
 <pre class="methodSignature">@Deprecated
 void&nbsp;accept&#8203;(<a href="CDOFeatureDeltaVisitor.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDeltaVisitor</a>&nbsp;visitor,
-            org.eclipse.net4j.util.Predicate&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&gt;&nbsp;filter)</pre>
+            org.eclipse.net4j.util.Predicate&lt;org.eclipse.emf.ecore.EStructuralFeature&gt;&nbsp;filter)</pre>
 <div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
 <div class="deprecationComment">As of 4.9 use <a href="#accept(org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor,java.util.function.Predicate)"><code>accept(CDOFeatureDeltaVisitor, java.util.function.Predicate)</code></a>.</div>
 </div>
@@ -488,7 +488,7 @@ void&nbsp;accept&#8203;(<a href="CDOFeatureDeltaVisitor.html" title="interface i
 <li class="blockList">
 <h4>accept</h4>
 <pre class="methodSignature">void&nbsp;accept&#8203;(<a href="CDOFeatureDeltaVisitor.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDeltaVisitor</a>&nbsp;visitor,
-            java.util.function.Predicate&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&gt;&nbsp;filter)</pre>
+            java.util.function.Predicate&lt;org.eclipse.emf.ecore.EStructuralFeature&gt;&nbsp;filter)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.9</dd>

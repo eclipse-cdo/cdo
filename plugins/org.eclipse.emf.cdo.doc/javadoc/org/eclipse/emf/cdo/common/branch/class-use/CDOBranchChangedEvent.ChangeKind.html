@@ -184,6 +184,17 @@ the order they are declared.</div>
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">InternalCDOBranchManager.</span><code><span class="memberNameLink"><a href="../../../spi/common/branch/InternalCDOBranchManager.html#handleBranchChanged(org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch,org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind)">handleBranchChanged</a></span>&#8203;(<a href="../../../spi/common/branch/InternalCDOBranch.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranch</a>&nbsp;branch,
                    <a href="../CDOBranchChangedEvent.ChangeKind.html" title="enum in org.eclipse.emf.cdo.common.branch">CDOBranchChangedEvent.ChangeKind</a>&nbsp;changeKind)</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.15 use <a href="../../../spi/common/branch/InternalCDOBranchManager.html#handleBranchChanged(org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch,org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind,int...)"><code>InternalCDOBranchManager.handleBranchChanged(InternalCDOBranch, ChangeKind, int...)</code></a>.</div>
+</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalCDOBranchManager.</span><code><span class="memberNameLink"><a href="../../../spi/common/branch/InternalCDOBranchManager.html#handleBranchChanged(org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch,org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind,int...)">handleBranchChanged</a></span>&#8203;(<a href="../../../spi/common/branch/InternalCDOBranch.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranch</a>&nbsp;branch,
+                   <a href="../CDOBranchChangedEvent.ChangeKind.html" title="enum in org.eclipse.emf.cdo.common.branch">CDOBranchChangedEvent.ChangeKind</a>&nbsp;changeKind,
+                   int...&nbsp;branchIDs)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
@@ -205,8 +216,25 @@ the order they are declared.</div>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalSession.</span><code><span class="memberNameLink"><a href="../../../spi/server/InternalSession.html#sendBranchNotification(org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind,org.eclipse.emf.cdo.common.branch.CDOBranch...)">sendBranchNotification</a></span>&#8203;(<a href="../CDOBranchChangedEvent.ChangeKind.html" title="enum in org.eclipse.emf.cdo.common.branch">CDOBranchChangedEvent.ChangeKind</a>&nbsp;changeKind,
+                      <a href="../CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>...&nbsp;branches)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">InternalSession.</span><code><span class="memberNameLink"><a href="../../../spi/server/InternalSession.html#sendBranchNotification(org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch,org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind)">sendBranchNotification</a></span>&#8203;(<a href="../../../spi/common/branch/InternalCDOBranch.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranch</a>&nbsp;branch,
                       <a href="../CDOBranchChangedEvent.ChangeKind.html" title="enum in org.eclipse.emf.cdo.common.branch">CDOBranchChangedEvent.ChangeKind</a>&nbsp;changeKind)</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.15 use <a href="../../../spi/server/InternalSession.html#sendBranchNotification(org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind,org.eclipse.emf.cdo.common.branch.CDOBranch...)"><code>InternalSession.sendBranchNotification(ChangeKind, CDOBranch...)</code></a>.</div>
+</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalSessionManager.</span><code><span class="memberNameLink"><a href="../../../spi/server/InternalSessionManager.html#sendBranchNotification(org.eclipse.emf.cdo.spi.server.InternalSession,org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind,org.eclipse.emf.cdo.common.branch.CDOBranch...)">sendBranchNotification</a></span>&#8203;(<a href="../../../spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
+                      <a href="../CDOBranchChangedEvent.ChangeKind.html" title="enum in org.eclipse.emf.cdo.common.branch">CDOBranchChangedEvent.ChangeKind</a>&nbsp;changeKind,
+                      <a href="../CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>...&nbsp;branches)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
@@ -214,13 +242,27 @@ the order they are declared.</div>
 <th class="colSecond" scope="row"><span class="typeNameLabel">InternalSessionManager.</span><code><span class="memberNameLink"><a href="../../../spi/server/InternalSessionManager.html#sendBranchNotification(org.eclipse.emf.cdo.spi.server.InternalSession,org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch,org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind)">sendBranchNotification</a></span>&#8203;(<a href="../../../spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
                       <a href="../../../spi/common/branch/InternalCDOBranch.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranch</a>&nbsp;branch,
                       <a href="../CDOBranchChangedEvent.ChangeKind.html" title="enum in org.eclipse.emf.cdo.common.branch">CDOBranchChangedEvent.ChangeKind</a>&nbsp;changeKind)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.15 use <a href="../../../spi/server/InternalSessionManager.html#sendBranchNotification(org.eclipse.emf.cdo.spi.server.InternalSession,org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind,org.eclipse.emf.cdo.common.branch.CDOBranch...)"><code>InternalSessionManager.sendBranchNotification(InternalSession, ChangeKind, CDOBranch...)</code></a>.</div>
+</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">ISessionProtocol.</span><code><span class="memberNameLink"><a href="../../../spi/server/ISessionProtocol.html#sendBranchNotification(org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind,org.eclipse.emf.cdo.common.branch.CDOBranch...)">sendBranchNotification</a></span>&#8203;(<a href="../CDOBranchChangedEvent.ChangeKind.html" title="enum in org.eclipse.emf.cdo.common.branch">CDOBranchChangedEvent.ChangeKind</a>&nbsp;changeKind,
+                      <a href="../CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>...&nbsp;branches)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">ISessionProtocol.</span><code><span class="memberNameLink"><a href="../../../spi/server/ISessionProtocol.html#sendBranchNotification(org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch,org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind)">sendBranchNotification</a></span>&#8203;(<a href="../../../spi/common/branch/InternalCDOBranch.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranch</a>&nbsp;branch,
                       <a href="../CDOBranchChangedEvent.ChangeKind.html" title="enum in org.eclipse.emf.cdo.common.branch">CDOBranchChangedEvent.ChangeKind</a>&nbsp;changeKind)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.15 use <a href="../../../spi/server/ISessionProtocol.html#sendBranchNotification(org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind,org.eclipse.emf.cdo.common.branch.CDOBranch...)"><code>ISessionProtocol.sendBranchNotification(ChangeKind, CDOBranch...)</code></a>.</div>
+</div>
+</td>
 </tr>
 </tbody>
 </table>

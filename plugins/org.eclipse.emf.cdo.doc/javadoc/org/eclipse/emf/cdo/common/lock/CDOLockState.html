@@ -124,11 +124,20 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <dl>
+<dt>All Superinterfaces:</dt>
+<dd><code><a href="../branch/CDOBranchProvider.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchProvider</a></code>, <code><a href="../revision/CDOIDAndBranch.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndBranch</a></code>, <code><a href="../id/CDOIdentifiable.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIdentifiable</a></code></dd>
+</dl>
+<dl>
 <dt>All Known Subinterfaces:</dt>
 <dd><code><a href="../../spi/common/lock/InternalCDOLockState.html" title="interface in org.eclipse.emf.cdo.spi.common.lock">InternalCDOLockState</a></code></dd>
 </dl>
+<dl>
+<dt>All Known Implementing Classes:</dt>
+<dd><code><a href="../../spi/common/lock/AbstractCDOLockState.html" title="class in org.eclipse.emf.cdo.spi.common.lock">AbstractCDOLockState</a></code></dd>
+</dl>
 <hr>
-<pre>public interface <span class="typeNameLabel">CDOLockState</span></pre>
+<pre>public interface <span class="typeNameLabel">CDOLockState</span>
+extends <a href="../revision/CDOIDAndBranch.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndBranch</a></pre>
 <div class="block">A client-side representation of <i>all</i> the locks on a single CDOObject.
  <p>
  As an individual lock is always owned by view, which in turn is owned by a session, the methods on this interface
@@ -226,6 +235,20 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 </table>
+<ul class="blockList">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.cdo.common.revision.CDOIDAndBranch">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.revision.<a href="../revision/CDOIDAndBranch.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndBranch</a></h3>
+<code><a href="../revision/CDOIDAndBranch.html#getBranch()">getBranch</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.cdo.common.id.CDOIdentifiable">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.id.<a href="../id/CDOIdentifiable.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIdentifiable</a></h3>
+<code><a href="../id/CDOIdentifiable.html#getID()">getID</a></code></li>
+</ul>
 </li>
 </ul>
 </section>

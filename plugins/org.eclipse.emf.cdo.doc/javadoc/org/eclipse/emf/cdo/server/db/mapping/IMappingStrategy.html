@@ -268,8 +268,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code><a href="IListMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IListMapping</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createListMapping(org.eclipse.emf.ecore.EClass,org.eclipse.emf.ecore.EStructuralFeature)">createListMapping</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;containingClass,
-                 <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&nbsp;feature)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createListMapping(org.eclipse.emf.ecore.EClass,org.eclipse.emf.ecore.EStructuralFeature)">createListMapping</a></span>&#8203;(org.eclipse.emf.ecore.EClass&nbsp;containingClass,
+                 org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)</code></th>
 <td class="colLast">
 <div class="block">Factory for value mappings of multi-valued-attributes.</div>
 </td>
@@ -285,27 +285,27 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="ITypeMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createValueMapping(org.eclipse.emf.ecore.EStructuralFeature)">createValueMapping</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&nbsp;feature)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createValueMapping(org.eclipse.emf.ecore.EStructuralFeature)">createValueMapping</a></span>&#8203;(org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)</code></th>
 <td class="colLast">
 <div class="block">Factory for value mappings of single-valued attributes.</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="IClassMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IClassMapping</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getClassMapping(org.eclipse.emf.ecore.EClass)">getClassMapping</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;eClass)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getClassMapping(org.eclipse.emf.ecore.EClass)">getClassMapping</a></span>&#8203;(org.eclipse.emf.ecore.EClass&nbsp;eClass)</code></th>
 <td class="colLast">
 <div class="block">Look up an existing class mapping for the given class.</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>java.util.Map&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>,&#8203;<a href="IClassMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IClassMapping</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.Map&lt;org.eclipse.emf.ecore.EClass,&#8203;<a href="IClassMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IClassMapping</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getClassMappings()">getClassMappings</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns all class mappings of this strategy.</div>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code>java.util.Map&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>,&#8203;<a href="IClassMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IClassMapping</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.Map&lt;org.eclipse.emf.ecore.EClass,&#8203;<a href="IClassMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IClassMapping</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getClassMappings(boolean)">getClassMappings</a></span>&#8203;(boolean&nbsp;createOnDemand)</code></th>
 <td class="colLast">
 <div class="block">Returns all class mappings of this strategy.</div>
@@ -313,7 +313,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getFieldName(org.eclipse.emf.ecore.EStructuralFeature)">getFieldName</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&nbsp;feature)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getFieldName(org.eclipse.emf.ecore.EStructuralFeature)">getFieldName</a></span>&#8203;(org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)</code></th>
 <td class="colLast">
 <div class="block">Create a suitable column name which can be used to map the given element.</div>
 </td>
@@ -338,15 +338,15 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTableName(org.eclipse.emf.ecore.EClass,org.eclipse.emf.ecore.EStructuralFeature)">getTableName</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;containingClass,
-            <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&nbsp;feature)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTableName(org.eclipse.emf.ecore.EClass,org.eclipse.emf.ecore.EStructuralFeature)">getTableName</a></span>&#8203;(org.eclipse.emf.ecore.EClass&nbsp;containingClass,
+            org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)</code></th>
 <td class="colLast">
 <div class="block">Create a suitable table name which can be used to map the given element.</div>
 </td>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTableName(org.eclipse.emf.ecore.ENamedElement)">getTableName</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/ENamedElement.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">ENamedElement</a>&nbsp;element)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTableName(org.eclipse.emf.ecore.ENamedElement)">getTableName</a></span>&#8203;(org.eclipse.emf.ecore.ENamedElement&nbsp;element)</code></th>
 <td class="colLast">
 <div class="block">Create a suitable table name which can be used to map the given element.</div>
 </td>
@@ -354,7 +354,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <tr id="i12" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#handleRevisions(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.ecore.EClass,org.eclipse.emf.cdo.common.branch.CDOBranch,long,boolean,org.eclipse.emf.cdo.common.revision.CDORevisionHandler)">handleRevisions</a></span>&#8203;(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
-               <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;eClass,
+               org.eclipse.emf.ecore.EClass&nbsp;eClass,
                <a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
                long&nbsp;timeStamp,
                boolean&nbsp;exactTime,
@@ -678,7 +678,7 @@ static final&nbsp;java.lang.String PROP_COLUMN_TYPE_MODIFIER</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>createValueMapping</h4>
-<pre class="methodSignature"><a href="ITypeMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</a>&nbsp;createValueMapping&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&nbsp;feature)</pre>
+<pre class="methodSignature"><a href="ITypeMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</a>&nbsp;createValueMapping&#8203;(org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)</pre>
 <div class="block">Factory for value mappings of single-valued attributes.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -694,8 +694,8 @@ static final&nbsp;java.lang.String PROP_COLUMN_TYPE_MODIFIER</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>createListMapping</h4>
-<pre class="methodSignature"><a href="IListMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IListMapping</a>&nbsp;createListMapping&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;containingClass,
-                               <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&nbsp;feature)</pre>
+<pre class="methodSignature"><a href="IListMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IListMapping</a>&nbsp;createListMapping&#8203;(org.eclipse.emf.ecore.EClass&nbsp;containingClass,
+                               org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)</pre>
 <div class="block">Factory for value mappings of multi-valued-attributes.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -710,7 +710,7 @@ static final&nbsp;java.lang.String PROP_COLUMN_TYPE_MODIFIER</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getTableName</h4>
-<pre class="methodSignature">java.lang.String&nbsp;getTableName&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/ENamedElement.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">ENamedElement</a>&nbsp;element)</pre>
+<pre class="methodSignature">java.lang.String&nbsp;getTableName&#8203;(org.eclipse.emf.ecore.ENamedElement&nbsp;element)</pre>
 <div class="block">Create a suitable table name which can be used to map the given element. Should only be called by mapping classes.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -727,8 +727,8 @@ static final&nbsp;java.lang.String PROP_COLUMN_TYPE_MODIFIER</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getTableName</h4>
-<pre class="methodSignature">java.lang.String&nbsp;getTableName&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;containingClass,
-                              <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&nbsp;feature)</pre>
+<pre class="methodSignature">java.lang.String&nbsp;getTableName&#8203;(org.eclipse.emf.ecore.EClass&nbsp;containingClass,
+                              org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)</pre>
 <div class="block">Create a suitable table name which can be used to map the given element. Should only be called by mapping classes.
  Should only be called by mapping classes.</div>
 <dl>
@@ -746,7 +746,7 @@ static final&nbsp;java.lang.String PROP_COLUMN_TYPE_MODIFIER</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getFieldName</h4>
-<pre class="methodSignature">java.lang.String&nbsp;getFieldName&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&nbsp;feature)</pre>
+<pre class="methodSignature">java.lang.String&nbsp;getFieldName&#8203;(org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)</pre>
 <div class="block">Create a suitable column name which can be used to map the given element. Should only be called by mapping classes.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -799,7 +799,7 @@ static final&nbsp;java.lang.String PROP_COLUMN_TYPE_MODIFIER</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getClassMapping</h4>
-<pre class="methodSignature"><a href="IClassMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IClassMapping</a>&nbsp;getClassMapping&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;eClass)</pre>
+<pre class="methodSignature"><a href="IClassMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IClassMapping</a>&nbsp;getClassMapping&#8203;(org.eclipse.emf.ecore.EClass&nbsp;eClass)</pre>
 <div class="block">Look up an existing class mapping for the given class. Before this method is called, the class mapping must have
  been initialized by calling <a href="#createMapping(java.sql.Connection,org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit%5B%5D,org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>createMapping(Connection, InternalCDOPackageUnit[], OMMonitor)</code></a> on its
  containing package.</div>
@@ -817,7 +817,7 @@ static final&nbsp;java.lang.String PROP_COLUMN_TYPE_MODIFIER</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getClassMappings</h4>
-<pre class="methodSignature">java.util.Map&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>,&#8203;<a href="IClassMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IClassMapping</a>&gt;&nbsp;getClassMappings()</pre>
+<pre class="methodSignature">java.util.Map&lt;org.eclipse.emf.ecore.EClass,&#8203;<a href="IClassMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IClassMapping</a>&gt;&nbsp;getClassMappings()</pre>
 <div class="block">Returns all class mappings of this strategy.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -831,7 +831,7 @@ static final&nbsp;java.lang.String PROP_COLUMN_TYPE_MODIFIER</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getClassMappings</h4>
-<pre class="methodSignature">java.util.Map&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>,&#8203;<a href="IClassMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IClassMapping</a>&gt;&nbsp;getClassMappings&#8203;(boolean&nbsp;createOnDemand)</pre>
+<pre class="methodSignature">java.util.Map&lt;org.eclipse.emf.ecore.EClass,&#8203;<a href="IClassMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IClassMapping</a>&gt;&nbsp;getClassMappings&#8203;(boolean&nbsp;createOnDemand)</pre>
 <div class="block">Returns all class mappings of this strategy.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -1010,7 +1010,7 @@ static final&nbsp;java.lang.String PROP_COLUMN_TYPE_MODIFIER</pre>
 <li class="blockList">
 <h4>handleRevisions</h4>
 <pre class="methodSignature">void&nbsp;handleRevisions&#8203;(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
-                     <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;eClass,
+                     org.eclipse.emf.ecore.EClass&nbsp;eClass,
                      <a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
                      long&nbsp;timeStamp,
                      boolean&nbsp;exactTime,

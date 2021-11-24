@@ -28,7 +28,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6};
+var data = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -125,7 +125,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><code><a href="branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a></code>, <code><a href="branch/CDOBranchProvider.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchProvider</a></code>, <code><a href="lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a></code>, <code><a href="revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a></code>, <code><a href="util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a></code>, <code>org.eclipse.net4j.util.collection.Closeable</code>, <code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IAdaptable</a></code>, <code>org.eclipse.net4j.util.options.IOptionsContainer</code>, <code>org.eclipse.net4j.util.properties.IPropertiesContainer</code></dd>
+<dd><code><a href="branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a></code>, <code><a href="branch/CDOBranchProvider.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchProvider</a></code>, <code><a href="revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a></code>, <code><a href="util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a></code>, <code>org.eclipse.net4j.util.collection.Closeable</code>, <code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IAdaptable</a></code>, <code>org.eclipse.net4j.util.options.IOptionsContainer</code>, <code>org.eclipse.net4j.util.properties.IPropertiesContainer</code></dd>
 </dl>
 <dl>
 <dt>All Known Subinterfaces:</dt>
@@ -137,7 +137,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dl>
 <hr>
 <pre>public interface <span class="typeNameLabel">CDOCommonView</span>
-extends <a href="lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>, <a href="branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>, <a href="revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>, org.eclipse.net4j.util.options.IOptionsContainer, org.eclipse.net4j.util.properties.IPropertiesContainer, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IAdaptable</a>, org.eclipse.net4j.util.collection.Closeable</pre>
+extends <a href="branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>, <a href="revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>, org.eclipse.net4j.util.options.IOptionsContainer, org.eclipse.net4j.util.properties.IPropertiesContainer, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IAdaptable</a>, org.eclipse.net4j.util.collection.Closeable</pre>
 <div class="block">Abstracts the information about CDO views that is common to both client and server side.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -217,26 +217,41 @@ extends <a href="lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code><a href="lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLockOwner()">getLockOwner</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="CDOCommonSession.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSession()">getSession</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSessionID()">getSessionID</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getViewID()">getViewID</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isDurableView()">isDurableView</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isHistorical()">isHistorical</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isReadOnly()">isReadOnly</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="CDOCommonView.Options.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView.Options</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#options()">options</a></span>()</code></th>
 <td class="colLast">
@@ -250,13 +265,6 @@ extends <a href="lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.branch.<a href="branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a></h3>
 <code><a href="branch/CDOBranchPoint.html#getBranch()">getBranch</a>, <a href="branch/CDOBranchPoint.html#getTimeStamp()">getTimeStamp</a></code></li>
-</ul>
-<ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.cdo.common.lock.CDOLockOwner">
-<!--   -->
-</a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.lock.<a href="lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a></h3>
-<code><a href="lock/CDOLockOwner.html#getSessionID()">getSessionID</a>, <a href="lock/CDOLockOwner.html#isDurableView()">isDurableView</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.cdo.common.revision.CDORevisionProvider">
@@ -302,6 +310,19 @@ extends <a href="lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a id="getSessionID()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getSessionID</h4>
+<pre class="methodSignature">int&nbsp;getSessionID()</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.15</dd>
+</dl>
+</li>
+</ul>
 <a id="getViewID()">
 <!--   -->
 </a>
@@ -309,12 +330,6 @@ extends <a href="lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo
 <li class="blockList">
 <h4>getViewID</h4>
 <pre class="methodSignature">int&nbsp;getViewID()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="lock/CDOLockOwner.html#getViewID()">getViewID</a></code>&nbsp;in interface&nbsp;<code><a href="lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a></code></dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>the ID identifying the view within the session</dd>
-</dl>
 </li>
 </ul>
 <a id="isReadOnly()">
@@ -360,10 +375,34 @@ extends <a href="lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo
 <h4>getDurableLockingID</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getDurableLockingID()</pre>
 <dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="lock/CDOLockOwner.html#getDurableLockingID()">getDurableLockingID</a></code>&nbsp;in interface&nbsp;<code><a href="lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.0</dd>
+</dl>
+</li>
+</ul>
+<a id="isDurableView()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isDurableView</h4>
+<pre class="methodSignature">boolean&nbsp;isDurableView()</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.15</dd>
+</dl>
+</li>
+</ul>
+<a id="getLockOwner()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getLockOwner</h4>
+<pre class="methodSignature"><a href="lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;getLockOwner()</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.15</dd>
 </dl>
 </li>
 </ul>

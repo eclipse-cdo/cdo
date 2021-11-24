@@ -246,7 +246,7 @@ implements <a href="CDOViewProvider.CDOViewProvider2.html" title="interface in o
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPath(org.eclipse.emf.common.util.URI)">getPath</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">URI</a>&nbsp;uri)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPath(org.eclipse.emf.common.util.URI)">getPath</a></span>&#8203;(org.eclipse.emf.common.util.URI&nbsp;uri)</code></th>
 <td class="colLast">
 <div class="block">Should be overridden for non-canonical URI formats!</div>
 </td>
@@ -266,7 +266,7 @@ implements <a href="CDOViewProvider.CDOViewProvider2.html" title="interface in o
 </td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">URI</a></code></td>
+<td class="colFirst"><code>org.eclipse.emf.common.util.URI</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getResourceURI(org.eclipse.emf.cdo.view.CDOView,java.lang.String)">getResourceURI</a></span>&#8203;(<a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
               java.lang.String&nbsp;path)</code></th>
 <td class="colLast">
@@ -274,20 +274,20 @@ implements <a href="CDOViewProvider.CDOViewProvider2.html" title="interface in o
 </td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">URI</a></code></td>
+<td class="colFirst"><code>org.eclipse.emf.common.util.URI</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getViewURI(org.eclipse.emf.cdo.view.CDOView)">getViewURI</a></span>&#8203;(<a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">URI</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getViewURI(org.eclipse.emf.common.util.URI)">getViewURI</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">URI</a>&nbsp;uri)</code></th>
+<td class="colFirst"><code>org.eclipse.emf.common.util.URI</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getViewURI(org.eclipse.emf.common.util.URI)">getViewURI</a></span>&#8203;(org.eclipse.emf.common.util.URI&nbsp;uri)</code></th>
 <td class="colLast">
 <div class="block">Should be overridden for non-canonical URI formats!</div>
 </td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#matchesRegex(org.eclipse.emf.common.util.URI)">matchesRegex</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">URI</a>&nbsp;uri)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#matchesRegex(org.eclipse.emf.common.util.URI)">matchesRegex</a></span>&#8203;(org.eclipse.emf.common.util.URI&nbsp;uri)</code></th>
 <td class="colLast">
 <div class="block">Checks if the URI matches with the regular expression of this provider</div>
 </td>
@@ -431,7 +431,7 @@ implements <a href="CDOViewProvider.CDOViewProvider2.html" title="interface in o
 <ul class="blockList">
 <li class="blockList">
 <h4>matchesRegex</h4>
-<pre class="methodSignature">public&nbsp;boolean&nbsp;matchesRegex&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">URI</a>&nbsp;uri)</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;matchesRegex&#8203;(org.eclipse.emf.common.util.URI&nbsp;uri)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="CDOViewProvider.html#matchesRegex(org.eclipse.emf.common.util.URI)">CDOViewProvider</a></code></span></div>
 <div class="block">Checks if the URI matches with the regular expression of this provider</div>
 <dl>
@@ -446,8 +446,8 @@ implements <a href="CDOViewProvider.CDOViewProvider2.html" title="interface in o
 <ul class="blockList">
 <li class="blockList">
 <h4>getResourceURI</h4>
-<pre class="methodSignature">public&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">URI</a>&nbsp;getResourceURI&#8203;(<a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
-                          java.lang.String&nbsp;path)</pre>
+<pre class="methodSignature">public&nbsp;org.eclipse.emf.common.util.URI&nbsp;getResourceURI&#8203;(<a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
+                                                      java.lang.String&nbsp;path)</pre>
 <div class="block">Must be overridden for non-canonical URI formats!</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
@@ -463,7 +463,7 @@ implements <a href="CDOViewProvider.CDOViewProvider2.html" title="interface in o
 <ul class="blockList">
 <li class="blockList">
 <h4>getViewURI</h4>
-<pre class="methodSignature">public&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">URI</a>&nbsp;getViewURI&#8203;(<a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view)</pre>
+<pre class="methodSignature">public&nbsp;org.eclipse.emf.common.util.URI&nbsp;getViewURI&#8203;(<a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="CDOViewProvider.CDOViewProvider2.html#getViewURI(org.eclipse.emf.cdo.view.CDOView)">getViewURI</a></code>&nbsp;in interface&nbsp;<code><a href="CDOViewProvider.CDOViewProvider2.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider.CDOViewProvider2</a></code></dd>
@@ -478,7 +478,7 @@ implements <a href="CDOViewProvider.CDOViewProvider2.html" title="interface in o
 <ul class="blockList">
 <li class="blockList">
 <h4>getViewURI</h4>
-<pre class="methodSignature">public&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">URI</a>&nbsp;getViewURI&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">URI</a>&nbsp;uri)</pre>
+<pre class="methodSignature">public&nbsp;org.eclipse.emf.common.util.URI&nbsp;getViewURI&#8203;(org.eclipse.emf.common.util.URI&nbsp;uri)</pre>
 <div class="block">Should be overridden for non-canonical URI formats!</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
@@ -494,7 +494,7 @@ implements <a href="CDOViewProvider.CDOViewProvider2.html" title="interface in o
 <ul class="blockList">
 <li class="blockList">
 <h4>getPath</h4>
-<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getPath&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">URI</a>&nbsp;uri)</pre>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getPath&#8203;(org.eclipse.emf.common.util.URI&nbsp;uri)</pre>
 <div class="block">Should be overridden for non-canonical URI formats!</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>

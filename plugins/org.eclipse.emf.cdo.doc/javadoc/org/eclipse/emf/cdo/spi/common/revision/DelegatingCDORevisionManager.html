@@ -28,8 +28,8 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":6,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
+var data = {"i0":42,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":6,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -143,7 +143,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><code><a href="../../../common/revision/CDORevisionCacheAdder.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCacheAdder</a></code>, <code><a href="../../../common/revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionManager</a></code>, <code><a href="InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a></code>, <code>org.eclipse.net4j.util.event.INotifier</code>, <code>org.eclipse.net4j.util.event.INotifier.INotifier2</code>, <code>org.eclipse.net4j.util.lifecycle.IDeactivateable</code>, <code>org.eclipse.net4j.util.lifecycle.ILifecycle</code>, <code>org.eclipse.net4j.util.lifecycle.ILifecycle.DeferrableActivation</code></dd>
+<dd><code><a href="../../../common/revision/CDORevisionCacheAdder.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCacheAdder</a></code>, <code><a href="../../../common/revision/CDORevisionInterner.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionInterner</a></code>, <code><a href="../../../common/revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionManager</a></code>, <code><a href="InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a></code>, <code>org.eclipse.net4j.util.event.INotifier</code>, <code>org.eclipse.net4j.util.event.INotifier.INotifier2</code>, <code>org.eclipse.net4j.util.lifecycle.IDeactivateable</code>, <code>org.eclipse.net4j.util.lifecycle.ILifecycle</code>, <code>org.eclipse.net4j.util.lifecycle.ILifecycle.DeferrableActivation</code></dd>
 </dl>
 <hr>
 <pre>public abstract class <span class="typeNameLabel">DelegatingCDORevisionManager</span>
@@ -188,7 +188,7 @@ implements <a href="InternalCDORevisionManager.html" title="interface in org.ecl
 <!--   -->
 </a>
 <h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.emf.cdo.spi.common.revision.<a href="InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a></h3>
-<code><a href="InternalCDORevisionManager.RevisionLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLoader</a>, <a href="InternalCDORevisionManager.RevisionLoader2.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLoader2</a>, <a href="InternalCDORevisionManager.RevisionLocker.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLocker</a></code></li>
+<code><a href="InternalCDORevisionManager.RevisionLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLoader</a>, <a href="InternalCDORevisionManager.RevisionLoader2.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLoader2</a>, <a href="InternalCDORevisionManager.RevisionLoader3.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLoader3</a>, <a href="InternalCDORevisionManager.RevisionLocker.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLocker</a></code></li>
 </ul>
 </li>
 </ul>
@@ -239,7 +239,7 @@ implements <a href="InternalCDORevisionManager.html" title="interface in org.ecl
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t6" class="tableTab"><span><a href="javascript:show(32);">Deprecated Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colSecond" scope="col">Method</th>
@@ -249,7 +249,7 @@ implements <a href="InternalCDORevisionManager.html" title="interface in org.ecl
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addRevision(org.eclipse.emf.cdo.common.revision.CDORevision)">addRevision</a></span>&#8203;(<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</code></th>
 <td class="colLast">
-<div class="block">Adds the given revision to this cache.</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
@@ -283,29 +283,50 @@ implements <a href="InternalCDORevisionManager.html" title="interface in org.ecl
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
+<td class="colFirst"><code><a href="InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getBaseRevision(org.eclipse.emf.cdo.common.revision.CDORevision,int,boolean)">getBaseRevision</a></span>&#8203;(<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
+               int&nbsp;referenceChunk,
+               boolean&nbsp;loadOnDemand)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="InternalCDORevisionCache.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionCache</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCache()">getCache</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>protected abstract <a href="InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDelegate()">getDelegate</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="../../../common/revision/CDORevisionFactory.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionFactory</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getFactory()">getFactory</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i8" class="altColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a></code></td>
+<tr id="i9" class="rowColor">
+<td class="colFirst"><code><a href="../../../common/branch/CDOBranchPointRange.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPointRange</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getObjectLifetime(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">getObjectLifetime</a></span>&#8203;(<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+                 <a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i10" class="altColor">
+<td class="colFirst"><code>org.eclipse.emf.ecore.EClass</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getObjectType(org.eclipse.emf.cdo.common.id.CDOID)">getObjectType</a></span>&#8203;(<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></th>
 <td class="colLast">
 <div class="block">Returns the <a href="../../../common/revision/CDORevision.html#getEClass()"><code>type</code></a> of an object if a revision for that object is in the revision
  cache, <code>null</code> otherwise.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i11" class="rowColor">
+<td class="colFirst"><code>org.eclipse.emf.ecore.EClass</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getObjectType(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchManager)">getObjectType</a></span>&#8203;(<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+             <a href="../../../common/branch/CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager</a>&nbsp;branchManagerForLoadOnDemand)</code></th>
+<td class="colLast">
+<div class="block">Returns the <a href="../../../common/revision/CDORevision.html#getEClass()"><code>type</code></a> of an object.</div>
+</td>
+</tr>
+<tr id="i12" class="altColor">
 <td class="colFirst"><code><a href="InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean)">getRevision</a></span>&#8203;(<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
            <a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
@@ -317,7 +338,7 @@ implements <a href="InternalCDORevisionManager.html" title="interface in org.ecl
  point</code></a> (branch + timestamp), optionally demand loading it if it is not already in the <a href="../../../common/revision/CDORevisionCache.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>cache</code></a>.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code><a href="InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision%5B%5D)">getRevision</a></span>&#8203;(<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
            <a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
@@ -327,7 +348,7 @@ implements <a href="InternalCDORevisionManager.html" title="interface in org.ecl
            <a href="SyntheticCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">SyntheticCDORevision</a>[]&nbsp;synthetics)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code><a href="InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRevisionByVersion(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchVersion,int,boolean)">getRevisionByVersion</a></span>&#8203;(<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
                     <a href="../../../common/branch/CDOBranchVersion.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchVersion</a>&nbsp;branchVersion,
@@ -338,17 +359,17 @@ implements <a href="InternalCDORevisionManager.html" title="interface in org.ecl
  <a href="../../../common/revision/CDORevisionCache.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>cache</code></a>.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code><a href="InternalCDORevisionManager.RevisionLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLoader</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRevisionLoader()">getRevisionLoader</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code><a href="InternalCDORevisionManager.RevisionLocker.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLocker</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRevisionLocker()">getRevisionLocker</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean)">getRevisions</a></span>&#8203;(java.util.List&lt;<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
             <a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
@@ -360,7 +381,31 @@ implements <a href="InternalCDORevisionManager.html" title="interface in org.ecl
  <a href="../../../common/revision/CDORevisionCache.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>cache</code></a>.</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i18" class="altColor">
+<td class="colFirst"><code>java.util.List&lt;<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean,boolean,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision%5B%5D)">getRevisions</a></span>&#8203;(java.util.List&lt;<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
+            <a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+            int&nbsp;referenceChunk,
+            int&nbsp;prefetchDepth,
+            boolean&nbsp;prefetchLockStates,
+            boolean&nbsp;loadOnDemand,
+            <a href="SyntheticCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">SyntheticCDORevision</a>[]&nbsp;synthetics)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i19" class="rowColor">
+<td class="colFirst"><code>java.util.List&lt;<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean,java.util.List)">getRevisions</a></span>&#8203;(java.util.List&lt;<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
+            <a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+            int&nbsp;referenceChunk,
+            int&nbsp;prefetchDepth,
+            boolean&nbsp;loadOnDemand,
+            java.util.List&lt;<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&nbsp;additionalRevisions)</code></th>
+<td class="colLast">
+<div class="block">Returns the <a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> with the given <a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>IDs</code></a> at the given <a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch point</code></a> (branch + timestamp), optionally demand loading them if they are not already in the
+ <a href="../../../common/revision/CDORevisionCache.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>cache</code></a>.</div>
+</td>
+</tr>
+<tr id="i20" class="altColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision%5B%5D)">getRevisions</a></span>&#8203;(java.util.List&lt;<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
             <a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
@@ -370,22 +415,49 @@ implements <a href="InternalCDORevisionManager.html" title="interface in org.ecl
             <a href="SyntheticCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">SyntheticCDORevision</a>[]&nbsp;synthetics)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i21" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#handleRevisions(org.eclipse.emf.ecore.EClass,org.eclipse.emf.cdo.common.branch.CDOBranch,boolean,long,boolean,org.eclipse.emf.cdo.common.revision.CDORevisionHandler)">handleRevisions</a></span>&#8203;(org.eclipse.emf.ecore.EClass&nbsp;eClass,
+               <a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
+               boolean&nbsp;exactBranch,
+               long&nbsp;timeStamp,
+               boolean&nbsp;exactTime,
+               <a href="../../../common/revision/CDORevisionHandler.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionHandler</a>&nbsp;handler)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i22" class="altColor">
+<td class="colFirst"><code><a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#internRevision(org.eclipse.emf.cdo.common.revision.CDORevision)">internRevision</a></span>&#8203;(<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</code></th>
+<td class="colLast">
+<div class="block">Interns the given revision and returns either the given revision or
+ a revision with the same <a href="../../../common/revision/CDORevisionKey.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>key</code></a> that was interned previously.</div>
+</td>
+</tr>
+<tr id="i23" class="rowColor">
 <td class="colFirst"><code>protected boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isDelegatingLifecycle()">isDelegatingLifecycle</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i24" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isSupportingAudits()">isSupportingAudits</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i25" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isSupportingBranches()">isSupportingBranches</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i19" class="rowColor">
+<tr id="i26" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#prefetchRevisions(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,boolean,java.util.function.Consumer)">prefetchRevisions</a></span>&#8203;(<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+                 <a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+                 int&nbsp;prefetchDepth,
+                 boolean&nbsp;prefetchLockStates,
+                 java.util.function.Consumer&lt;<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&nbsp;consumer)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i27" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#reviseLatest(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranch)">reviseLatest</a></span>&#8203;(<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
             <a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch)</code></th>
@@ -393,39 +465,39 @@ implements <a href="InternalCDORevisionManager.html" title="interface in org.ecl
 <div class="block">Called on client via postCommit when there is no version of detached objects available.</div>
 </td>
 </tr>
-<tr id="i20" class="altColor">
+<tr id="i28" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#reviseVersion(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchVersion,long)">reviseVersion</a></span>&#8203;(<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
              <a href="../../../common/branch/CDOBranchVersion.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchVersion</a>&nbsp;branchVersion,
              long&nbsp;timeStamp)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i21" class="rowColor">
+<tr id="i29" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setCache(org.eclipse.emf.cdo.common.revision.CDORevisionCache)">setCache</a></span>&#8203;(<a href="../../../common/revision/CDORevisionCache.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCache</a>&nbsp;cache)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i22" class="altColor">
+<tr id="i30" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setFactory(org.eclipse.emf.cdo.common.revision.CDORevisionFactory)">setFactory</a></span>&#8203;(<a href="../../../common/revision/CDORevisionFactory.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionFactory</a>&nbsp;factory)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i23" class="rowColor">
+<tr id="i31" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRevisionLoader(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLoader)">setRevisionLoader</a></span>&#8203;(<a href="InternalCDORevisionManager.RevisionLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLoader</a>&nbsp;revisionLoader)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i24" class="altColor">
+<tr id="i32" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRevisionLocker(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLocker)">setRevisionLocker</a></span>&#8203;(<a href="InternalCDORevisionManager.RevisionLocker.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLocker</a>&nbsp;revisionLocker)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i25" class="rowColor">
+<tr id="i33" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSupportingAudits(boolean)">setSupportingAudits</a></span>&#8203;(boolean&nbsp;on)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i26" class="altColor">
+<tr id="i34" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSupportingBranches(boolean)">setSupportingBranches</a></span>&#8203;(boolean&nbsp;on)</code></th>
 <td class="colLast">&nbsp;</td>
@@ -453,13 +525,6 @@ implements <a href="InternalCDORevisionManager.html" title="interface in org.ecl
 <code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, wait, wait, wait</code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.cdo.common.revision.CDORevisionManager">
-<!--   -->
-</a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.revision.<a href="../../../common/revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionManager</a></h3>
-<code><a href="../../../common/revision/CDORevisionManager.html#getObjectLifetime(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">getObjectLifetime</a>, <a href="../../../common/revision/CDORevisionManager.html#getObjectType(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchManager)">getObjectType</a>, <a href="../../../common/revision/CDORevisionManager.html#handleRevisions(org.eclipse.emf.ecore.EClass,org.eclipse.emf.cdo.common.branch.CDOBranch,boolean,long,boolean,org.eclipse.emf.cdo.common.revision.CDORevisionHandler)">handleRevisions</a></code></li>
-</ul>
-<ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.lifecycle.ILifecycle">
 <!--   -->
 </a>
@@ -472,13 +537,6 @@ implements <a href="InternalCDORevisionManager.html" title="interface in org.ecl
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.event.INotifier</h3>
 <code>addListener, getListeners, hasListeners, removeListener</code></li>
-</ul>
-<ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager">
-<!--   -->
-</a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.spi.common.revision.<a href="InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a></h3>
-<code><a href="InternalCDORevisionManager.html#getBaseRevision(org.eclipse.emf.cdo.common.revision.CDORevision,int,boolean)">getBaseRevision</a></code></li>
 </ul>
 </li>
 </ul>
@@ -683,14 +741,38 @@ implements <a href="InternalCDORevisionManager.html" title="interface in org.ecl
 <ul class="blockList">
 <li class="blockList">
 <h4>addRevision</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;addRevision&#8203;(<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</pre>
+<pre class="methodSignature">@Deprecated
+public&nbsp;void&nbsp;addRevision&#8203;(<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../common/revision/CDORevisionCacheAdder.html#addRevision(org.eclipse.emf.cdo.common.revision.CDORevision)">CDORevisionCacheAdder</a></code></span></div>
 <div class="block">Adds the given revision to this cache.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../common/revision/CDORevisionCacheAdder.html#addRevision(org.eclipse.emf.cdo.common.revision.CDORevision)">addRevision</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/revision/CDORevisionCacheAdder.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCacheAdder</a></code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="InternalCDORevisionManager.html#addRevision(org.eclipse.emf.cdo.common.revision.CDORevision)">addRevision</a></code>&nbsp;in interface&nbsp;<code><a href="InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.0</dd>
+</dl>
+</li>
+</ul>
+<a id="internRevision(org.eclipse.emf.cdo.common.revision.CDORevision)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>internRevision</h4>
+<pre class="methodSignature">public&nbsp;<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;internRevision&#8203;(<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../common/revision/CDORevisionInterner.html#internRevision(org.eclipse.emf.cdo.common.revision.CDORevision)">CDORevisionInterner</a></code></span></div>
+<div class="block">Interns the given revision and returns either the given revision or
+ a revision with the same <a href="../../../common/revision/CDORevisionKey.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>key</code></a> that was interned previously.
+ <p>
+ The returned revision is only different from the passed revision if this interner
+ contains a previously cached, different revision instance with an equal
+ <a href="../../../common/revision/CDORevisionKey.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision key</code></a>.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../common/revision/CDORevisionInterner.html#internRevision(org.eclipse.emf.cdo.common.revision.CDORevision)">internRevision</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/revision/CDORevisionInterner.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionInterner</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -741,7 +823,7 @@ implements <a href="InternalCDORevisionManager.html" title="interface in org.ecl
 <ul class="blockList">
 <li class="blockList">
 <h4>getObjectType</h4>
-<pre class="methodSignature">public&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;getObjectType&#8203;(<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</pre>
+<pre class="methodSignature">public&nbsp;org.eclipse.emf.ecore.EClass&nbsp;getObjectType&#8203;(<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../common/revision/CDORevisionManager.html#getObjectType(org.eclipse.emf.cdo.common.id.CDOID)">CDORevisionManager</a></code></span></div>
 <div class="block">Returns the <a href="../../../common/revision/CDORevision.html#getEClass()"><code>type</code></a> of an object if a revision for that object is in the revision
  cache, <code>null</code> otherwise.
@@ -751,8 +833,68 @@ implements <a href="InternalCDORevisionManager.html" title="interface in org.ecl
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../common/revision/CDORevisionManager.html#getObjectType(org.eclipse.emf.cdo.common.id.CDOID)">getObjectType</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionManager</a></code></dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eClass()" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>EObject.eClass()</code></a>, 
+<dd><code>EObject.eClass()</code>, 
 <a href="../../../common/revision/CDORevisionManager.html#getObjectType(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchManager)"><code>CDORevisionManager.getObjectType(CDOID, CDOBranchManager)</code></a></dd>
+</dl>
+</li>
+</ul>
+<a id="getObjectType(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchManager)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getObjectType</h4>
+<pre class="methodSignature">public&nbsp;org.eclipse.emf.ecore.EClass&nbsp;getObjectType&#8203;(<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+                                                  <a href="../../../common/branch/CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager</a>&nbsp;branchManagerForLoadOnDemand)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../common/revision/CDORevisionManager.html#getObjectType(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchManager)">CDORevisionManager</a></code></span></div>
+<div class="block">Returns the <a href="../../../common/revision/CDORevision.html#getEClass()"><code>type</code></a> of an object.
+ <p>
+ If no revision for that object is found in the revision cache the following is tried:
+ <ol>
+ <li>If <code>branchManagerForLoadOnDemand</code> is not <code>null</code> the first revision of the object in the
+ main branch is loaded from the server and its type is returned.
+ <li>Otherwise (i.e., if <code>branchManagerForLoadOnDemand</code> is <code>null</code> or the object does not
+ exist) <code>null</code> is returned.
+ </ol>
+ <p>
+ A <a href="../../../common/branch/CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch manager</code></a> is required instead of just a boolean value to specify whether to
+ demand-load or not because this revision manager must be able to access the
+ <a href="../../../common/branch/CDOBranchManager.html#getMainBranch()"><code>main branch</code></a> while demand-loading.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../common/revision/CDORevisionManager.html#getObjectType(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchManager)">getObjectType</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionManager</a></code></dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><code>EObject.eClass()</code>, 
+<a href="../../../common/revision/CDORevisionManager.html#getObjectType(org.eclipse.emf.cdo.common.id.CDOID)"><code>CDORevisionManager.getObjectType(CDOID)</code></a></dd>
+</dl>
+</li>
+</ul>
+<a id="getObjectLifetime(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getObjectLifetime</h4>
+<pre class="methodSignature">public&nbsp;<a href="../../../common/branch/CDOBranchPointRange.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPointRange</a>&nbsp;getObjectLifetime&#8203;(<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+                                             <a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../common/revision/CDORevisionManager.html#getObjectLifetime(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">getObjectLifetime</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionManager</a></code></dd>
+</dl>
+</li>
+</ul>
+<a id="getBaseRevision(org.eclipse.emf.cdo.common.revision.CDORevision,int,boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getBaseRevision</h4>
+<pre class="methodSignature">public&nbsp;<a href="InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;getBaseRevision&#8203;(<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
+                                           int&nbsp;referenceChunk,
+                                           boolean&nbsp;loadOnDemand)</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="InternalCDORevisionManager.html#getBaseRevision(org.eclipse.emf.cdo.common.revision.CDORevision,int,boolean)">getBaseRevision</a></code>&nbsp;in interface&nbsp;<code><a href="InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -885,6 +1027,96 @@ implements <a href="InternalCDORevisionManager.html" title="interface in org.ecl
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="InternalCDORevisionManager.html#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision%5B%5D)">getRevisions</a></code>&nbsp;in interface&nbsp;<code><a href="InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a></code></dd>
+</dl>
+</li>
+</ul>
+<a id="getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean,boolean,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision[])">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getRevisions</h4>
+<pre class="methodSignature">public&nbsp;java.util.List&lt;<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&nbsp;getRevisions&#8203;(java.util.List&lt;<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
+                                                <a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+                                                int&nbsp;referenceChunk,
+                                                int&nbsp;prefetchDepth,
+                                                boolean&nbsp;prefetchLockStates,
+                                                boolean&nbsp;loadOnDemand,
+                                                <a href="SyntheticCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">SyntheticCDORevision</a>[]&nbsp;synthetics)</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="InternalCDORevisionManager.html#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean,boolean,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision%5B%5D)">getRevisions</a></code>&nbsp;in interface&nbsp;<code><a href="InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a></code></dd>
+</dl>
+</li>
+</ul>
+<a id="getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean,java.util.List)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getRevisions</h4>
+<pre class="methodSignature">public&nbsp;java.util.List&lt;<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&nbsp;getRevisions&#8203;(java.util.List&lt;<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
+                                                <a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+                                                int&nbsp;referenceChunk,
+                                                int&nbsp;prefetchDepth,
+                                                boolean&nbsp;loadOnDemand,
+                                                java.util.List&lt;<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&nbsp;additionalRevisions)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../common/revision/CDORevisionManager.html#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean,java.util.List)">CDORevisionManager</a></code></span></div>
+<div class="block">Returns the <a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> with the given <a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>IDs</code></a> at the given <a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch point</code></a> (branch + timestamp), optionally demand loading them if they are not already in the
+ <a href="../../../common/revision/CDORevisionCache.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>cache</code></a>.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../common/revision/CDORevisionManager.html#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean,java.util.List)">getRevisions</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionManager</a></code></dd>
+<dd><code>referenceChunk</code> - The number of target <a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>IDs</code></a> to load for each many-valued reference in the returned revisions,
+          or <a href="../../../common/revision/CDORevision.html#UNCHUNKED"><code>CDORevision.UNCHUNKED</code></a> for all such list elements (IDs).</dd>
+<dd><code>prefetchDepth</code> - The number of nested containment levels to load revisions for in one round trip. Use the symbolic
+          constants <a href="../../../common/revision/CDORevision.html#DEPTH_INFINITE"><code>CDORevision.DEPTH_INFINITE</code></a> to prefetch all contained revisions or
+          <a href="../../../common/revision/CDORevision.html#DEPTH_NONE"><code>CDORevision.DEPTH_NONE</code></a> to not prefetch anything. Only the explicitly requested revisions are
+          returned by this method. If additional revisions are prefetched they are placed in the revision cache to
+          speed up subsequent calls to this method.</dd>
+<dd><code>loadOnDemand</code> - If one or more of the requested revisions is/are not contained in the revision cache it depends on this
+          parameter's value whether the revision(s) is/are loaded from the server or <code>null</code> is placed in
+          the list that is returned.</dd>
+<dd><code>additionalRevisions</code> - If non-<code>null</code>, a list to add additionally prefetched revisions to.</dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.15</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../common/revision/CDORevisionManager.html#getRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean)"><code>CDORevisionManager.getRevision(CDOID, CDOBranchPoint, int, int, boolean)</code></a></dd>
+</dl>
+</li>
+</ul>
+<a id="prefetchRevisions(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,boolean,java.util.function.Consumer)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>prefetchRevisions</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;prefetchRevisions&#8203;(<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+                              <a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+                              int&nbsp;prefetchDepth,
+                              boolean&nbsp;prefetchLockStates,
+                              java.util.function.Consumer&lt;<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&nbsp;consumer)</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="InternalCDORevisionManager.html#prefetchRevisions(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,boolean,java.util.function.Consumer)">prefetchRevisions</a></code>&nbsp;in interface&nbsp;<code><a href="InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a></code></dd>
+</dl>
+</li>
+</ul>
+<a id="handleRevisions(org.eclipse.emf.ecore.EClass,org.eclipse.emf.cdo.common.branch.CDOBranch,boolean,long,boolean,org.eclipse.emf.cdo.common.revision.CDORevisionHandler)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>handleRevisions</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;handleRevisions&#8203;(org.eclipse.emf.ecore.EClass&nbsp;eClass,
+                            <a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
+                            boolean&nbsp;exactBranch,
+                            long&nbsp;timeStamp,
+                            boolean&nbsp;exactTime,
+                            <a href="../../../common/revision/CDORevisionHandler.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionHandler</a>&nbsp;handler)</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../common/revision/CDORevisionManager.html#handleRevisions(org.eclipse.emf.ecore.EClass,org.eclipse.emf.cdo.common.branch.CDOBranch,boolean,long,boolean,org.eclipse.emf.cdo.common.revision.CDORevisionHandler)">handleRevisions</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionManager</a></code></dd>
 </dl>
 </li>
 </ul>

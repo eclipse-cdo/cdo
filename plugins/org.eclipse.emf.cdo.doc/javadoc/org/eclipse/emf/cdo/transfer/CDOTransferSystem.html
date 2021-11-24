@@ -205,8 +205,8 @@ extends java.lang.Object</pre>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource" class="externalLink">Resource</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createModel(org.eclipse.emf.ecore.resource.ResourceSet,org.eclipse.core.runtime.IPath)">createModel</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource" class="externalLink">ResourceSet</a>&nbsp;resourceSet,
+<td class="colFirst"><code>org.eclipse.emf.ecore.resource.Resource</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createModel(org.eclipse.emf.ecore.resource.ResourceSet,org.eclipse.core.runtime.IPath)">createModel</a></span>&#8203;(org.eclipse.emf.ecore.resource.ResourceSet&nbsp;resourceSet,
            <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IPath.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IPath</a>&nbsp;path)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
@@ -235,7 +235,7 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>abstract <a href="CDOTransferElement.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransferElement</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getElement(org.eclipse.emf.common.util.URI)">getElement</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">URI</a>&nbsp;uri)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getElement(org.eclipse.emf.common.util.URI)">getElement</a></span>&#8203;(org.eclipse.emf.common.util.URI&nbsp;uri)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
@@ -244,7 +244,7 @@ extends java.lang.Object</pre>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
-<td class="colFirst"><code>abstract <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">URI</a></code></td>
+<td class="colFirst"><code>abstract org.eclipse.emf.common.util.URI</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getURI(org.eclipse.core.runtime.IPath)">getURI</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IPath.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IPath</a>&nbsp;path)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
@@ -254,13 +254,13 @@ extends java.lang.Object</pre>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i11" class="rowColor">
-<td class="colFirst"><code>protected <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource" class="externalLink">ResourceSet</a></code></td>
+<td class="colFirst"><code>protected org.eclipse.emf.ecore.resource.ResourceSet</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#provideResourceSet()">provideResourceSet</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#saveModels(org.eclipse.emf.common.util.EList,org.eclipse.core.runtime.IProgressMonitor)">saveModels</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">EList</a>&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource" class="externalLink">Resource</a>&gt;&nbsp;resources,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#saveModels(org.eclipse.emf.common.util.EList,org.eclipse.core.runtime.IProgressMonitor)">saveModels</a></span>&#8203;(org.eclipse.emf.common.util.EList&lt;org.eclipse.emf.ecore.resource.Resource&gt;&nbsp;resources,
           <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IProgressMonitor</a>&nbsp;monitor)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
@@ -322,7 +322,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>provideResourceSet</h4>
-<pre class="methodSignature">protected&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource" class="externalLink">ResourceSet</a>&nbsp;provideResourceSet()</pre>
+<pre class="methodSignature">protected&nbsp;org.eclipse.emf.ecore.resource.ResourceSet&nbsp;provideResourceSet()</pre>
 </li>
 </ul>
 <a id="isReadOnly()">
@@ -349,7 +349,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getURI</h4>
-<pre class="methodSignature">public abstract&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">URI</a>&nbsp;getURI&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IPath.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IPath</a>&nbsp;path)</pre>
+<pre class="methodSignature">public abstract&nbsp;org.eclipse.emf.common.util.URI&nbsp;getURI&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IPath.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IPath</a>&nbsp;path)</pre>
 </li>
 </ul>
 <a id="getElement(java.lang.String)">
@@ -376,7 +376,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getElement</h4>
-<pre class="methodSignature">public abstract&nbsp;<a href="CDOTransferElement.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransferElement</a>&nbsp;getElement&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">URI</a>&nbsp;uri)</pre>
+<pre class="methodSignature">public abstract&nbsp;<a href="CDOTransferElement.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransferElement</a>&nbsp;getElement&#8203;(org.eclipse.emf.common.util.URI&nbsp;uri)</pre>
 </li>
 </ul>
 <a id="createFolder(org.eclipse.core.runtime.IPath)">
@@ -394,8 +394,8 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>createModel</h4>
-<pre class="methodSignature">public&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource" class="externalLink">Resource</a>&nbsp;createModel&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource" class="externalLink">ResourceSet</a>&nbsp;resourceSet,
-                            <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IPath.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IPath</a>&nbsp;path)</pre>
+<pre class="methodSignature">public&nbsp;org.eclipse.emf.ecore.resource.Resource&nbsp;createModel&#8203;(org.eclipse.emf.ecore.resource.ResourceSet&nbsp;resourceSet,
+                                                           <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IPath.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IPath</a>&nbsp;path)</pre>
 </li>
 </ul>
 <a id="createBinary(org.eclipse.core.runtime.IPath,java.io.InputStream,org.eclipse.core.runtime.IProgressMonitor)">
@@ -427,7 +427,7 @@ extends java.lang.Object</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>saveModels</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;saveModels&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">EList</a>&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource" class="externalLink">Resource</a>&gt;&nbsp;resources,
+<pre class="methodSignature">public&nbsp;void&nbsp;saveModels&#8203;(org.eclipse.emf.common.util.EList&lt;org.eclipse.emf.ecore.resource.Resource&gt;&nbsp;resources,
                        <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IProgressMonitor</a>&nbsp;monitor)</pre>
 </li>
 </ul>

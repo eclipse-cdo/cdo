@@ -28,7 +28,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":9,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":9,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -308,27 +308,33 @@ implements <a href="IRWOLockManager.html" title="interface in org.eclipse.net4j.
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLockStates(java.util.Collection,java.util.function.BiConsumer)">getLockStates</a></span>&#8203;(java.util.Collection&lt;<a href="RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</a>&gt;&nbsp;keys,
+             java.util.function.BiConsumer&lt;<a href="RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</a>,&#8203;<a href="RWOLockManager.LockState.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</a>&lt;<a href="RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</a>,&#8203;<a href="RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</a>&gt;&gt;&nbsp;consumer)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>protected java.util.Map&lt;<a href="RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</a>,&#8203;<a href="RWOLockManager.LockState.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</a>&lt;<a href="RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</a>,&#8203;<a href="RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</a>&gt;&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getObjectToLocksMap()">getObjectToLocksMap</a></span>()</code></th>
 <td class="colLast">
 <div class="block">All access to the returned map must be properly synchronized on this <a href="RWOLockManager.html" title="class in org.eclipse.net4j.util.concurrent"><code>RWOLockManager</code></a>.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hasLock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,OBJECT)">hasLock</a></span>&#8203;(<a href="IRWLockManager.LockType.html" title="enum in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
        <a href="RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</a>&nbsp;context,
        <a href="RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</a>&nbsp;objectToLock)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hasLockByOthers(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,OBJECT)">hasLockByOthers</a></span>&#8203;(<a href="IRWLockManager.LockType.html" title="enum in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
                <a href="RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</a>&nbsp;context,
                <a href="RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</a>&nbsp;objectToLock)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#lock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,java.util.Collection,long)">lock</a></span>&#8203;(<a href="IRWLockManager.LockType.html" title="enum in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
     <a href="RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</a>&nbsp;context,
@@ -336,7 +342,7 @@ implements <a href="IRWOLockManager.html" title="interface in org.eclipse.net4j.
     long&nbsp;timeout)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#lock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,OBJECT,long)">lock</a></span>&#8203;(<a href="IRWLockManager.LockType.html" title="enum in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
     <a href="RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</a>&nbsp;context,
@@ -344,7 +350,7 @@ implements <a href="IRWOLockManager.html" title="interface in org.eclipse.net4j.
     long&nbsp;timeout)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="RWOLockManager.LockState.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</a>&lt;<a href="RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</a>,&#8203;<a href="RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</a>&gt;&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#lock2(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,java.util.Collection,long)">lock2</a></span>&#8203;(<a href="IRWLockManager.LockType.html" title="enum in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
      <a href="RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</a>&nbsp;context,
@@ -354,25 +360,25 @@ implements <a href="IRWOLockManager.html" title="interface in org.eclipse.net4j.
 <div class="block">Adds locks of the given type, owned by the given context on the given objects.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setLockState(OBJECT,org.eclipse.net4j.util.concurrent.RWOLockManager.LockState)">setLockState</a></span>&#8203;(<a href="RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</a>&nbsp;key,
             <a href="RWOLockManager.LockState.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</a>&lt;<a href="RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</a>,&#8203;<a href="RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</a>&gt;&nbsp;lockState)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setUnlockAll(boolean)">setUnlockAll</a></span>&#8203;(boolean&nbsp;on)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#unlock(CONTEXT)">unlock</a></span>&#8203;(<a href="RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</a>&nbsp;context)</code></th>
 <td class="colLast">
 <div class="block">Attempts to release all locks(read and write) for a given context.</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#unlock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,java.util.Collection)">unlock</a></span>&#8203;(<a href="IRWLockManager.LockType.html" title="enum in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
       <a href="RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</a>&nbsp;context,
@@ -381,14 +387,14 @@ implements <a href="IRWOLockManager.html" title="interface in org.eclipse.net4j.
 <div class="block">Attempts to release for a given locktype, context and objects.</div>
 </td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="RWOLockManager.LockState.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</a>&lt;<a href="RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</a>,&#8203;<a href="RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</a>&gt;&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#unlock2(CONTEXT)">unlock2</a></span>&#8203;(<a href="RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</a>&nbsp;context)</code></th>
 <td class="colLast">
 <div class="block">Removes all locks owned by the given context on any objects.</div>
 </td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="RWOLockManager.LockState.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</a>&lt;<a href="RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</a>,&#8203;<a href="RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</a>&gt;&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#unlock2(CONTEXT,java.util.Collection)">unlock2</a></span>&#8203;(<a href="RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</a>&nbsp;context,
        java.util.Collection&lt;? extends <a href="RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</a>&gt;&nbsp;objectsToUnlock)</code></th>
@@ -396,7 +402,7 @@ implements <a href="IRWOLockManager.html" title="interface in org.eclipse.net4j.
 <div class="block">Removes all locks owned by the given context.</div>
 </td>
 </tr>
-<tr id="i19" class="rowColor">
+<tr id="i20" class="altColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="RWOLockManager.LockState.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</a>&lt;<a href="RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</a>,&#8203;<a href="RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</a>&gt;&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#unlock2(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,java.util.Collection)">unlock2</a></span>&#8203;(<a href="IRWLockManager.LockType.html" title="enum in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
        <a href="RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</a>&nbsp;context,
@@ -726,6 +732,20 @@ implements <a href="IRWOLockManager.html" title="interface in org.eclipse.net4j.
 <li class="blockList">
 <h4>getLockState</h4>
 <pre class="methodSignature">public&nbsp;<a href="RWOLockManager.LockState.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</a>&lt;<a href="RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</a>,&#8203;<a href="RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</a>&gt;&nbsp;getLockState&#8203;(<a href="RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</a>&nbsp;key)</pre>
+</li>
+</ul>
+<a id="getLockStates(java.util.Collection,java.util.function.BiConsumer)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getLockStates</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;getLockStates&#8203;(java.util.Collection&lt;<a href="RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</a>&gt;&nbsp;keys,
+                          java.util.function.BiConsumer&lt;<a href="RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</a>,&#8203;<a href="RWOLockManager.LockState.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</a>&lt;<a href="RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</a>,&#8203;<a href="RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</a>&gt;&gt;&nbsp;consumer)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.16</dd>
+</dl>
 </li>
 </ul>
 <a id="getLockStates()">

@@ -28,7 +28,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6};
+var data = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -125,11 +125,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><code><a href="../../../common/revision/CDOAllRevisionsProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOAllRevisionsProvider</a></code>, <code><a href="../../../common/revision/CDORevisionCache.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCache</a></code>, <code><a href="../../../common/revision/CDORevisionCacheAdder.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCacheAdder</a></code>, <code>org.eclipse.net4j.util.lifecycle.IDeactivateable</code>, <code>org.eclipse.net4j.util.lifecycle.ILifecycle</code>, <code>org.eclipse.net4j.util.event.INotifier</code></dd>
+<dd><code><a href="../../../common/revision/CDOAllRevisionsProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOAllRevisionsProvider</a></code>, <code><a href="../../../common/revision/CDORevisionCache.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCache</a></code>, <code><a href="../../../common/revision/CDORevisionCacheAdder.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCacheAdder</a></code>, <code><a href="../../../common/revision/CDORevisionInterner.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionInterner</a></code>, <code>org.eclipse.net4j.util.lifecycle.IDeactivateable</code>, <code>org.eclipse.net4j.util.lifecycle.ILifecycle</code>, <code>org.eclipse.net4j.util.event.INotifier</code></dd>
 </dl>
 <hr>
 <pre>public interface <span class="typeNameLabel">InternalCDORevisionCache</span>
-extends <a href="../../../common/revision/CDORevisionCache.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCache</a>, <a href="../../../common/revision/CDOAllRevisionsProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOAllRevisionsProvider</a>, org.eclipse.net4j.util.lifecycle.ILifecycle</pre>
+extends <a href="../../../common/revision/CDORevisionCache.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCache</a>, <a href="../../../common/revision/CDORevisionInterner.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionInterner</a>, <a href="../../../common/revision/CDOAllRevisionsProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOAllRevisionsProvider</a>, org.eclipse.net4j.util.lifecycle.ILifecycle</pre>
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -159,7 +159,7 @@ extends <a href="../../../common/revision/CDORevisionCache.html" title="interfac
 <!--   -->
 </a>
 <h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.emf.cdo.common.revision.<a href="../../../common/revision/CDORevisionCache.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCache</a></h3>
-<code><a href="../../../common/revision/CDORevisionCache.EvictionEvent.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCache.EvictionEvent</a></code></li>
+<code><a href="../../../common/revision/CDORevisionCache.AdditionEvent.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCache.AdditionEvent</a>, <a href="../../../common/revision/CDORevisionCache.EvictionEvent.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCache.EvictionEvent</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.net4j.util.lifecycle.ILifecycle">
@@ -237,6 +237,11 @@ extends <a href="../../../common/revision/CDORevisionCache.html" title="interfac
               <a href="../../../common/branch/CDOBranchVersion.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchVersion</a>&nbsp;branchVersion)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeRevisions(org.eclipse.emf.cdo.common.branch.CDOBranch...)">removeRevisions</a></span>&#8203;(<a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>...&nbsp;branches)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.cdo.common.revision.CDOAllRevisionsProvider">
@@ -250,14 +255,14 @@ extends <a href="../../../common/revision/CDORevisionCache.html" title="interfac
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.revision.<a href="../../../common/revision/CDORevisionCache.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCache</a></h3>
-<code><a href="../../../common/revision/CDORevisionCache.html#forEachCurrentRevision(java.util.function.Consumer)">forEachCurrentRevision</a>, <a href="../../../common/revision/CDORevisionCache.html#getCurrentRevisions()">getCurrentRevisions</a>, <a href="../../../common/revision/CDORevisionCache.html#getObjectType(org.eclipse.emf.cdo.common.id.CDOID)">getObjectType</a>, <a href="../../../common/revision/CDORevisionCache.html#getRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">getRevision</a>, <a href="../../../common/revision/CDORevisionCache.html#getRevisionByVersion(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchVersion)">getRevisionByVersion</a></code></li>
+<code><a href="../../../common/revision/CDORevisionCache.html#addRevision(org.eclipse.emf.cdo.common.revision.CDORevision)">addRevision</a>, <a href="../../../common/revision/CDORevisionCache.html#forEachCurrentRevision(java.util.function.Consumer)">forEachCurrentRevision</a>, <a href="../../../common/revision/CDORevisionCache.html#forEachRevision(java.util.function.Consumer)">forEachRevision</a>, <a href="../../../common/revision/CDORevisionCache.html#forEachValidRevision(org.eclipse.emf.cdo.common.branch.CDOBranchPoint,boolean,java.util.function.Consumer)">forEachValidRevision</a>, <a href="../../../common/revision/CDORevisionCache.html#getCurrentRevisions()">getCurrentRevisions</a>, <a href="../../../common/revision/CDORevisionCache.html#getObjectType(org.eclipse.emf.cdo.common.id.CDOID)">getObjectType</a>, <a href="../../../common/revision/CDORevisionCache.html#getRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">getRevision</a>, <a href="../../../common/revision/CDORevisionCache.html#getRevisionByVersion(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchVersion)">getRevisionByVersion</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.cdo.common.revision.CDORevisionInterner">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.revision.<a href="../../../common/revision/CDORevisionCacheAdder.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCacheAdder</a></h3>
-<code><a href="../../../common/revision/CDORevisionCacheAdder.html#addRevision(org.eclipse.emf.cdo.common.revision.CDORevision)">addRevision</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.revision.<a href="../../../common/revision/CDORevisionInterner.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionInterner</a></h3>
+<code><a href="../../../common/revision/CDORevisionInterner.html#internRevision(org.eclipse.emf.cdo.common.revision.CDORevision)">internRevision</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.lifecycle.ILifecycle">
@@ -306,6 +311,19 @@ extends <a href="../../../common/revision/CDORevisionCache.html" title="interfac
 <h4>removeRevision</h4>
 <pre class="methodSignature"><a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;removeRevision&#8203;(<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
                            <a href="../../../common/branch/CDOBranchVersion.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchVersion</a>&nbsp;branchVersion)</pre>
+</li>
+</ul>
+<a id="removeRevisions(org.eclipse.emf.cdo.common.branch.CDOBranch...)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>removeRevisions</h4>
+<pre class="methodSignature">void&nbsp;removeRevisions&#8203;(<a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>...&nbsp;branches)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.15</dd>
+</dl>
 </li>
 </ul>
 <a id="clear()">

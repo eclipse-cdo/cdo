@@ -195,7 +195,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <td class="colFirst"><code><a href="../CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">CDOObject.</span><code><span class="memberNameLink"><a href="../../../CDOObject.html#cdoLockState()">cdoLockState</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Returns the <a href="../CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock"><code>CDOLockState</code></a> of this object.</div>
+<div class="block">Returns the <a href="../CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock"><code>lock state</code></a> of this object, or <code>null</code> if this object is <a href="../../../CDOState.html#TRANSIENT"><code>transient</code></a>.</div>
 </td>
 </tr>
 </tbody>
@@ -217,28 +217,56 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a></code></td>
-<th class="colSecond" scope="row"><span class="typeNameLabel">CDOLockUtil.</span><code><span class="memberNameLink"><a href="../CDOLockUtil.html#copyLockState(org.eclipse.emf.cdo.common.lock.CDOLockState)">copyLockState</a></span>&#8203;(<a href="../CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a>&nbsp;lockState)</code></th>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOLockUtil.</span><code><span class="memberNameLink"><a href="../CDOLockUtil.html#convertLockState(org.eclipse.net4j.util.concurrent.RWOLockManager.LockState)">convertLockState</a></span>&#8203;(org.eclipse.net4j.util.concurrent.RWOLockManager.LockState&lt;java.lang.Object,&#8203;? extends <a href="../../CDOCommonView.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView</a>&gt;&nbsp;lockState)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code>static <a href="../CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOLockUtil.</span><code><span class="memberNameLink"><a href="../CDOLockUtil.html#copyLockState(org.eclipse.emf.cdo.common.lock.CDOLockState)">copyLockState</a></span>&#8203;(<a href="../CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a>&nbsp;lockState)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code>static <a href="../CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">CDOLockUtil.</span><code><span class="memberNameLink"><a href="../CDOLockUtil.html#copyLockState(org.eclipse.emf.cdo.common.lock.CDOLockState,java.lang.Object)">copyLockState</a></span>&#8203;(<a href="../CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a>&nbsp;lockState,
              java.lang.Object&nbsp;lockedObject)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>static <a href="../CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">CDOLockUtil.</span><code><span class="memberNameLink"><a href="../CDOLockUtil.html#createLockState(java.lang.Object)">createLockState</a></span>&#8203;(java.lang.Object&nbsp;target)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>static <a href="../CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">CDOLockUtil.</span><code><span class="memberNameLink"><a href="../CDOLockUtil.html#createLockState(org.eclipse.net4j.util.concurrent.RWOLockManager.LockState)">createLockState</a></span>&#8203;(org.eclipse.net4j.util.concurrent.RWOLockManager.LockState&lt;java.lang.Object,&#8203;? extends <a href="../../CDOCommonView.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView</a>&gt;&nbsp;lockState)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.15 use <a href="../CDOLockUtil.html#convertLockState(org.eclipse.net4j.util.concurrent.RWOLockManager.LockState)"><code>CDOLockUtil.convertLockState(LockState)</code></a>.</div>
+</div>
+</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a>[]</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">CDOLockChangeInfo.</span><code><span class="memberNameLink"><a href="../CDOLockChangeInfo.html#getLockStates()">getLockStates</a></span>()</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.15 use the faster <a href="../CDOLockChangeInfo.html#getNewLockStates()"><code>CDOLockChangeInfo.getNewLockStates()</code></a> method.</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<table class="useSummary">
+<caption><span>Methods in <a href="../package-summary.html">org.eclipse.emf.cdo.common.lock</a> that return types with arguments of type <a href="../CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>java.util.List&lt;<a href="../CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a>&gt;</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOLockChangeInfo.</span><code><span class="memberNameLink"><a href="../CDOLockChangeInfo.html#getNewLockStates()">getNewLockStates</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
@@ -280,6 +308,29 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
                     <a href="../CDOLockChangeInfo.Operation.html" title="enum in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo.Operation</a>&nbsp;op,
                     org.eclipse.net4j.util.concurrent.IRWLockManager.LockType&nbsp;lockType,
                     <a href="../CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a>[]&nbsp;newLockStates)</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.15 use the faster <a href="../CDOLockUtil.html#createLockChangeInfo(org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.lock.CDOLockOwner,org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo.Operation,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,java.util.Collection)"><code>CDOLockUtil.createLockChangeInfo(CDOBranchPoint, CDOLockOwner, Operation, LockType, Collection)</code></a> method.</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<table class="useSummary">
+<caption><span>Method parameters in <a href="../package-summary.html">org.eclipse.emf.cdo.common.lock</a> with type arguments of type <a href="../CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOLockUtil.</span><code><span class="memberNameLink"><a href="../CDOLockUtil.html#createLockChangeInfo(org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.lock.CDOLockOwner,org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo.Operation,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,java.util.Collection)">createLockChangeInfo</a></span>&#8203;(<a href="../../branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+                    <a href="../CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;lockOwner,
+                    <a href="../CDOLockChangeInfo.Operation.html" title="enum in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo.Operation</a>&nbsp;op,
+                    org.eclipse.net4j.util.concurrent.IRWLockManager.LockType&nbsp;lockType,
+                    java.util.Collection&lt;? extends <a href="../CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a>&gt;&nbsp;newLockStates)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
@@ -367,6 +418,21 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <td class="colLast">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
+</tr>
+</tbody>
+</table>
+<table class="useSummary">
+<caption><span>Classes in <a href="../../../spi/common/lock/package-summary.html">org.eclipse.emf.cdo.spi.common.lock</a> that implement <a href="../CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>class&nbsp;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../spi/common/lock/AbstractCDOLockState.html" title="class in org.eclipse.emf.cdo.spi.common.lock">AbstractCDOLockState</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
@@ -528,7 +594,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">CDOPushTransaction.</span><code><span class="memberNameLink"><a href="../../../transaction/CDOPushTransaction.html#refreshLockStates(java.util.function.Consumer)">refreshLockStates</a></span>&#8203;(java.util.function.Consumer&lt;<a href="../CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a>&gt;&nbsp;consumer)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+</td>
 </tr>
 </tbody>
 </table>
@@ -628,6 +696,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tbody>
 <tr class="altColor">
+<td class="colFirst"><code><a href="../CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOLockStateCache.</span><code><span class="memberNameLink"><a href="../../../../spi/cdo/CDOLockStateCache.html#getLockState(org.eclipse.emf.cdo.common.branch.CDOBranch,org.eclipse.emf.cdo.common.id.CDOID)">getLockState</a></span>&#8203;(<a href="../../branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
+            <a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a>[]</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">CDOSessionProtocol.</span><code><span class="memberNameLink"><a href="../../../../spi/cdo/CDOSessionProtocol.html#getLockStates(int,java.util.Collection)">getLockStates</a></span>&#8203;(int&nbsp;viewID,
              java.util.Collection&lt;<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids)</code></th>
@@ -637,11 +711,17 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a>[]</code></td>
-<th class="colSecond" scope="row"><span class="typeNameLabel">CDOSessionProtocol.</span><code><span class="memberNameLink"><a href="../../../../spi/cdo/CDOSessionProtocol.html#getLockStates(int,java.util.Collection,int)">getLockStates</a></span>&#8203;(int&nbsp;viewID,
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOSessionProtocol.</span><code><span class="memberNameLink"><a href="../../../../spi/cdo/CDOSessionProtocol.html#getLockStates(int,java.util.Collection,int)">getLockStates</a></span>&#8203;(int&nbsp;branchID,
              java.util.Collection&lt;<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
              int&nbsp;depth)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a>[]</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalCDOView.</span><code><span class="memberNameLink"><a href="../../../../spi/cdo/InternalCDOView.html#getLockStates(java.util.Collection,boolean)">getLockStates</a></span>&#8203;(java.util.Collection&lt;<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
+             boolean&nbsp;loadOnDemand)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
@@ -679,7 +759,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <th class="colSecond" scope="row"><span class="typeNameLabel">InternalCDOView.</span><code><span class="memberNameLink"><a href="../../../../spi/cdo/InternalCDOView.html#updateLockStates(org.eclipse.emf.cdo.common.lock.CDOLockState%5B%5D,boolean,java.util.function.Consumer)">updateLockStates</a></span>&#8203;(<a href="../CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a>[]&nbsp;newLockStates,
                 boolean&nbsp;loadObjectsOnDemand,
                 java.util.function.Consumer&lt;<a href="../CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a>&gt;&nbsp;consumer)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.15 use <a href="../../../../spi/cdo/InternalCDOView.html#updateLockStates(java.util.Collection,boolean,java.util.function.Consumer)"><code>InternalCDOView.updateLockStates(Collection, boolean, Consumer)</code></a>.</div>
+</div>
+</td>
 </tr>
 </tbody>
 </table>
@@ -693,10 +777,71 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><span class="typeNameLabel">InternalCDOView.</span><code><span class="memberNameLink"><a href="../../../../spi/cdo/InternalCDOView.html#updateLockStates(org.eclipse.emf.cdo.common.lock.CDOLockState%5B%5D,boolean,java.util.function.Consumer)">updateLockStates</a></span>&#8203;(<a href="../CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a>[]&nbsp;newLockStates,
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOLockStateCache.</span><code><span class="memberNameLink"><a href="../../../../spi/cdo/CDOLockStateCache.html#addLockStates(org.eclipse.emf.cdo.common.branch.CDOBranch,java.util.Collection,java.util.function.Consumer)">addLockStates</a></span>&#8203;(<a href="../../branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
+             java.util.Collection&lt;? extends <a href="../CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a>&gt;&nbsp;newLockStates,
+             java.util.function.Consumer&lt;<a href="../CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a>&gt;&nbsp;consumer)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOLockStateCache.</span><code><span class="memberNameLink"><a href="../../../../spi/cdo/CDOLockStateCache.html#addLockStates(org.eclipse.emf.cdo.common.branch.CDOBranch,java.util.Collection,java.util.function.Consumer)">addLockStates</a></span>&#8203;(<a href="../../branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
+             java.util.Collection&lt;? extends <a href="../CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a>&gt;&nbsp;newLockStates,
+             java.util.function.Consumer&lt;<a href="../CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a>&gt;&nbsp;consumer)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOLockStateCache.</span><code><span class="memberNameLink"><a href="../../../../spi/cdo/CDOLockStateCache.html#forEachLockState(org.eclipse.emf.cdo.common.branch.CDOBranch,org.eclipse.emf.cdo.common.lock.CDOLockOwner,java.util.function.Consumer)">forEachLockState</a></span>&#8203;(<a href="../../branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
+                <a href="../CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;owner,
+                java.util.function.Consumer&lt;<a href="../CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a>&gt;&nbsp;consumer)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOLockStateCache.</span><code><span class="memberNameLink"><a href="../../../../spi/cdo/CDOLockStateCache.html#getLockStates(org.eclipse.emf.cdo.common.branch.CDOBranch,java.util.Collection,boolean,java.util.function.Consumer)">getLockStates</a></span>&#8203;(<a href="../../branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
+             java.util.Collection&lt;<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
+             boolean&nbsp;loadOnDemand,
+             java.util.function.Consumer&lt;<a href="../CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a>&gt;&nbsp;consumer)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOLockStateCache.</span><code><span class="memberNameLink"><a href="../../../../spi/cdo/CDOLockStateCache.html#removeLockStates(org.eclipse.emf.cdo.common.branch.CDOBranch,java.util.Collection,java.util.function.Consumer)">removeLockStates</a></span>&#8203;(<a href="../../branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
+                java.util.Collection&lt;<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
+                java.util.function.Consumer&lt;<a href="../CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a>&gt;&nbsp;consumer)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOLockStateCache.</span><code><span class="memberNameLink"><a href="../../../../spi/cdo/CDOLockStateCache.html#removeOwner(org.eclipse.emf.cdo.common.branch.CDOBranch,org.eclipse.emf.cdo.common.lock.CDOLockOwner,java.util.function.Consumer)">removeOwner</a></span>&#8203;(<a href="../../branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
+           <a href="../CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;owner,
+           java.util.function.Consumer&lt;<a href="../CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a>&gt;&nbsp;changeConsumer)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalCDOView.</span><code><span class="memberNameLink"><a href="../../../../spi/cdo/InternalCDOView.html#updateLockStates(java.util.Collection,boolean,java.util.function.Consumer)">updateLockStates</a></span>&#8203;(java.util.Collection&lt;? extends <a href="../CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a>&gt;&nbsp;newLockStates,
                 boolean&nbsp;loadObjectsOnDemand,
                 java.util.function.Consumer&lt;<a href="../CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a>&gt;&nbsp;consumer)</code></th>
 <td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalCDOView.</span><code><span class="memberNameLink"><a href="../../../../spi/cdo/InternalCDOView.html#updateLockStates(java.util.Collection,boolean,java.util.function.Consumer)">updateLockStates</a></span>&#8203;(java.util.Collection&lt;? extends <a href="../CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a>&gt;&nbsp;newLockStates,
+                boolean&nbsp;loadObjectsOnDemand,
+                java.util.function.Consumer&lt;<a href="../CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a>&gt;&nbsp;consumer)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalCDOView.</span><code><span class="memberNameLink"><a href="../../../../spi/cdo/InternalCDOView.html#updateLockStates(org.eclipse.emf.cdo.common.lock.CDOLockState%5B%5D,boolean,java.util.function.Consumer)">updateLockStates</a></span>&#8203;(<a href="../CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a>[]&nbsp;newLockStates,
+                boolean&nbsp;loadObjectsOnDemand,
+                java.util.function.Consumer&lt;<a href="../CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a>&gt;&nbsp;consumer)</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.15 use <a href="../../../../spi/cdo/InternalCDOView.html#updateLockStates(java.util.Collection,boolean,java.util.function.Consumer)"><code>InternalCDOView.updateLockStates(Collection, boolean, Consumer)</code></a>.</div>
+</div>
+</td>
 </tr>
 </tbody>
 </table>

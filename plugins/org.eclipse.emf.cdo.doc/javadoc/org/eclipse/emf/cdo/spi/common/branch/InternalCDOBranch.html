@@ -28,7 +28,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":6};
+var data = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":6,"i11":6,"i12":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -155,6 +155,13 @@ extends <a href="../../../common/branch/CDOBranch.html" title="interface in org.
 </a>
 <h3>Nested Class Summary</h3>
 <ul class="blockList">
+<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.emf.cdo.common.branch.CDOBranch">
+<!--   -->
+</a>
+<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.emf.cdo.common.branch.<a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a></h3>
+<code><a href="../../../common/branch/CDOBranch.BranchDeletedEvent.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch.BranchDeletedEvent</a></code></li>
+</ul>
+<ul class="blockList">
 <li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.net4j.util.container.IContainer">
 <!--   -->
 </a>
@@ -273,9 +280,19 @@ extends <a href="../../../common/branch/CDOBranch.html" title="interface in org.
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeChild(org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch)">removeChild</a></span>&#8203;(<a href="InternalCDOBranch.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranch</a>&nbsp;branch)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i11" class="rowColor">
+<td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setBranchInfo(java.lang.String,org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch,long)">setBranchInfo</a></span>&#8203;(java.lang.String&nbsp;name,
              <a href="InternalCDOBranch.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranch</a>&nbsp;baseBranch,
              long&nbsp;baseTimeStamp)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i12" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDeleted()">setDeleted</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -284,7 +301,7 @@ extends <a href="../../../common/branch/CDOBranch.html" title="interface in org.
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.branch.<a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a></h3>
-<code><a href="../../../common/branch/CDOBranch.html#getBase()">getBase</a>, <a href="../../../common/branch/CDOBranch.html#getBasePath()">getBasePath</a>, <a href="../../../common/branch/CDOBranch.html#getHead()">getHead</a>, <a href="../../../common/branch/CDOBranch.html#getID()">getID</a>, <a href="../../../common/branch/CDOBranch.html#getName()">getName</a>, <a href="../../../common/branch/CDOBranch.html#getPathName()">getPathName</a>, <a href="../../../common/branch/CDOBranch.html#getPoint(long)">getPoint</a>, <a href="../../../common/branch/CDOBranch.html#getVersion(int)">getVersion</a>, <a href="../../../common/branch/CDOBranch.html#isLocal()">isLocal</a>, <a href="../../../common/branch/CDOBranch.html#isMainBranch()">isMainBranch</a>, <a href="../../../common/branch/CDOBranch.html#rename(java.lang.String)">rename</a>, <a href="../../../common/branch/CDOBranch.html#setName(java.lang.String)">setName</a></code></li>
+<code><a href="../../../common/branch/CDOBranch.html#delete(org.eclipse.net4j.util.om.monitor.OMMonitor)">delete</a>, <a href="../../../common/branch/CDOBranch.html#fireDeletedEvent()">fireDeletedEvent</a>, <a href="../../../common/branch/CDOBranch.html#getBase()">getBase</a>, <a href="../../../common/branch/CDOBranch.html#getBasePath()">getBasePath</a>, <a href="../../../common/branch/CDOBranch.html#getHead()">getHead</a>, <a href="../../../common/branch/CDOBranch.html#getID()">getID</a>, <a href="../../../common/branch/CDOBranch.html#getName()">getName</a>, <a href="../../../common/branch/CDOBranch.html#getPathName()">getPathName</a>, <a href="../../../common/branch/CDOBranch.html#getPoint(long)">getPoint</a>, <a href="../../../common/branch/CDOBranch.html#getVersion(int)">getVersion</a>, <a href="../../../common/branch/CDOBranch.html#isDeleted()">isDeleted</a>, <a href="../../../common/branch/CDOBranch.html#isLocal()">isLocal</a>, <a href="../../../common/branch/CDOBranch.html#isMainBranch()">isMainBranch</a>, <a href="../../../common/branch/CDOBranch.html#rename(java.lang.String)">rename</a>, <a href="../../../common/branch/CDOBranch.html#setName(java.lang.String)">setName</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.cdo.common.branch.CDOBranchPoint">
@@ -475,6 +492,32 @@ extends <a href="../../../common/branch/CDOBranch.html" title="interface in org.
 <li class="blockList">
 <h4>addChild</h4>
 <pre class="methodSignature">void&nbsp;addChild&#8203;(<a href="InternalCDOBranch.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranch</a>&nbsp;branch)</pre>
+</li>
+</ul>
+<a id="removeChild(org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>removeChild</h4>
+<pre class="methodSignature">void&nbsp;removeChild&#8203;(<a href="InternalCDOBranch.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranch</a>&nbsp;branch)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.15</dd>
+</dl>
+</li>
+</ul>
+<a id="setDeleted()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setDeleted</h4>
+<pre class="methodSignature">void&nbsp;setDeleted()</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.15</dd>
+</dl>
 </li>
 </ul>
 <a id="basicSetName(java.lang.String)">

@@ -28,7 +28,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":42,"i9":42,"i10":42,"i11":10,"i12":42,"i13":42,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":42,"i26":42,"i27":42,"i28":42,"i29":42,"i30":42,"i31":10,"i32":10,"i33":10,"i34":42,"i35":10,"i36":10,"i37":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":42,"i10":42,"i11":42,"i12":10,"i13":42,"i14":42,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":42,"i28":42,"i29":42,"i30":42,"i31":42,"i32":42,"i33":10,"i34":10,"i35":10,"i36":42,"i37":10,"i38":10,"i39":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -211,7 +211,7 @@ implements <a href="../../cdo/common/CDOCommonRepository.html" title="interface 
                  <a href="../../cdo/common/CDOCommonRepository.IDGenerationLocation.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.IDGenerationLocation</a>&nbsp;repositoryIDGenerationLocation)</code></th>
 <td class="colLast">
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">as of 4.4 use <a href="#%3Cinit%3E(org.eclipse.emf.cdo.common.protocol.CDODataInput,int)"><code>OpenSessionResult(CDODataInput, int)</code></a>.</div>
+<div class="deprecationComment">As of 4.4 use <a href="#%3Cinit%3E(org.eclipse.emf.cdo.common.protocol.CDODataInput,int)"><code>OpenSessionResult(CDODataInput, int)</code></a>.</div>
 </div>
 </td>
 </tr>
@@ -239,216 +239,226 @@ implements <a href="../../cdo/common/CDOCommonRepository.html" title="interface 
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
+<td class="colFirst"><code>java.lang.String[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAuthorizationResults()">getAuthorizationResults</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="../../cdo/common/CDOCommonRepository.CommitInfoStorage.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.CommitInfoStorage</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCommitInfoStorage()">getCommitInfoStorage</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i1" class="rowColor">
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCreationTime()">getCreationTime</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the creation time of this repository.</div>
 </td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="../../cdo/common/CDOCommonRepository.IDGenerationLocation.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.IDGenerationLocation</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIDGenerationLocation()">getIDGenerationLocation</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLastUpdateTime()">getLastUpdateTime</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getName()">getName</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the name of this repository.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>java.util.Set&lt;<a href="../../cdo/common/id/CDOID.ObjectType.html" title="enum in org.eclipse.emf.cdo.common.id">CDOID.ObjectType</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getObjectIDTypes()">getObjectIDTypes</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the type of CDOIDs created by the store of this repository.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOpeningTime()">getOpeningTime</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="../../cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPackageUnits()">getPackageUnits</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRepositoryCreationTime()">getRepositoryCreationTime</a></span>()</code></th>
 <td class="colLast">
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">as of 4.5 use <a href="#getCreationTime()"><code>getCreationTime()</code></a>.</div>
-</div>
-</td>
-</tr>
-<tr id="i9" class="rowColor">
-<td class="colFirst"><code><a href="../../cdo/common/CDOCommonRepository.IDGenerationLocation.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.IDGenerationLocation</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRepositoryIDGenerationLocation()">getRepositoryIDGenerationLocation</a></span>()</code></th>
-<td class="colLast">
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">as of 4.5 use <a href="#getIDGenerationLocation()"><code>getIDGenerationLocation()</code></a>.</div>
+<div class="deprecationComment">As of 4.5 use <a href="#getCreationTime()"><code>getCreationTime()</code></a>.</div>
 </div>
 </td>
 </tr>
 <tr id="i10" class="altColor">
-<td class="colFirst"><code><a href="../../cdo/common/CDOCommonRepository.State.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.State</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRepositoryState()">getRepositoryState</a></span>()</code></th>
+<td class="colFirst"><code><a href="../../cdo/common/CDOCommonRepository.IDGenerationLocation.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.IDGenerationLocation</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRepositoryIDGenerationLocation()">getRepositoryIDGenerationLocation</a></span>()</code></th>
 <td class="colLast">
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">as of 4.5 use <a href="#getState()"><code>getState()</code></a>.</div>
+<div class="deprecationComment">As of 4.5 use <a href="#getIDGenerationLocation()"><code>getIDGenerationLocation()</code></a>.</div>
 </div>
 </td>
 </tr>
 <tr id="i11" class="rowColor">
+<td class="colFirst"><code><a href="../../cdo/common/CDOCommonRepository.State.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.State</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRepositoryState()">getRepositoryState</a></span>()</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.5 use <a href="#getState()"><code>getState()</code></a>.</div>
+</div>
+</td>
+</tr>
+<tr id="i12" class="altColor">
 <td class="colFirst"><code><a href="CDOSessionProtocol.RepositoryTimeResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.RepositoryTimeResult</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRepositoryTimeResult()">getRepositoryTimeResult</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code><a href="../../cdo/common/CDOCommonRepository.Type.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.Type</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRepositoryType()">getRepositoryType</a></span>()</code></th>
 <td class="colLast">
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">as of 4.5 use <a href="#getType()"><code>getType()</code></a>.</div>
-</div>
-</td>
-</tr>
-<tr id="i13" class="rowColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRepositoryUUID()">getRepositoryUUID</a></span>()</code></th>
-<td class="colLast">
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">as of 4.5 use <a href="#getUUID()"><code>getUUID()</code></a>.</div>
+<div class="deprecationComment">As of 4.5 use <a href="#getType()"><code>getType()</code></a>.</div>
 </div>
 </td>
 </tr>
 <tr id="i14" class="altColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRepositoryUUID()">getRepositoryUUID</a></span>()</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.5 use <a href="#getUUID()"><code>getUUID()</code></a>.</div>
+</div>
+</td>
+</tr>
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code><a href="../../cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRootResourceID()">getRootResourceID</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the ID of the root resource of this repository.</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSessionID()">getSessionID</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code><a href="../../cdo/common/CDOCommonRepository.State.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.State</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getState()">getState</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the state of this repository.</div>
 </td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getStoreType()">getStoreType</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the type of the store of this repository.</div>
 </td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTagModCount()">getTagModCount</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i19" class="rowColor">
+<tr id="i20" class="altColor">
 <td class="colFirst"><code>long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTimeStamp()">getTimeStamp</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i20" class="altColor">
+<tr id="i21" class="rowColor">
 <td class="colFirst"><code><a href="../../cdo/common/CDOCommonRepository.Type.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.Type</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getType()">getType</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the type of this repository.</div>
 </td>
 </tr>
-<tr id="i21" class="rowColor">
+<tr id="i22" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getUserID()">getUserID</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i22" class="altColor">
+<tr id="i23" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getUUID()">getUUID</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the UUID of this repository.</div>
 </td>
 </tr>
-<tr id="i23" class="rowColor">
+<tr id="i24" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isAuthenticating()">isAuthenticating</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns <code>true</code> if this repository requires user authentication, <code>false</code> otherwise.</div>
 </td>
 </tr>
-<tr id="i24" class="altColor">
+<tr id="i25" class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isAuthorizingOperations()">isAuthorizingOperations</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i26" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isEnsuringReferentialIntegrity()">isEnsuringReferentialIntegrity</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns <code>true</code> if this repository ensures referential integrity, <code>false</code> otherwise.</div>
 </td>
 </tr>
-<tr id="i25" class="rowColor">
+<tr id="i27" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isRepositoryAuthenticating()">isRepositoryAuthenticating</a></span>()</code></th>
 <td class="colLast">
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">as of 4.5 use <a href="#isAuthenticating()"><code>isAuthenticating()</code></a>.</div>
-</div>
-</td>
-</tr>
-<tr id="i26" class="altColor">
-<td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isRepositoryEnsuringReferentialIntegrity()">isRepositoryEnsuringReferentialIntegrity</a></span>()</code></th>
-<td class="colLast">
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">as of 4.5 use <a href="#isEnsuringReferentialIntegrity()"><code>isEnsuringReferentialIntegrity()</code></a>.</div>
-</div>
-</td>
-</tr>
-<tr id="i27" class="rowColor">
-<td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isRepositorySerializingCommits()">isRepositorySerializingCommits</a></span>()</code></th>
-<td class="colLast">
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">as of 4.5 use <a href="#isSerializingCommits()"><code>isSerializingCommits()</code></a>.</div>
+<div class="deprecationComment">As of 4.5 use <a href="#isAuthenticating()"><code>isAuthenticating()</code></a>.</div>
 </div>
 </td>
 </tr>
 <tr id="i28" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isRepositorySupportingAudits()">isRepositorySupportingAudits</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isRepositoryEnsuringReferentialIntegrity()">isRepositoryEnsuringReferentialIntegrity</a></span>()</code></th>
 <td class="colLast">
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">as of 4.5 use <a href="#isSupportingAudits()"><code>isSupportingAudits()</code></a>.</div>
+<div class="deprecationComment">As of 4.5 use <a href="#isEnsuringReferentialIntegrity()"><code>isEnsuringReferentialIntegrity()</code></a>.</div>
 </div>
 </td>
 </tr>
 <tr id="i29" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isRepositorySupportingBranches()">isRepositorySupportingBranches</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isRepositorySerializingCommits()">isRepositorySerializingCommits</a></span>()</code></th>
 <td class="colLast">
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">as of 4.5 use <a href="#isSupportingBranches()"><code>isSupportingBranches()</code></a>.</div>
+<div class="deprecationComment">As of 4.5 use <a href="#isSerializingCommits()"><code>isSerializingCommits()</code></a>.</div>
 </div>
 </td>
 </tr>
 <tr id="i30" class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isRepositorySupportingAudits()">isRepositorySupportingAudits</a></span>()</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.5 use <a href="#isSupportingAudits()"><code>isSupportingAudits()</code></a>.</div>
+</div>
+</td>
+</tr>
+<tr id="i31" class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isRepositorySupportingBranches()">isRepositorySupportingBranches</a></span>()</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.5 use <a href="#isSupportingBranches()"><code>isSupportingBranches()</code></a>.</div>
+</div>
+</td>
+</tr>
+<tr id="i32" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isRepositorySupportingEcore()">isRepositorySupportingEcore</a></span>()</code></th>
 <td class="colLast">
@@ -457,28 +467,28 @@ implements <a href="../../cdo/common/CDOCommonRepository.html" title="interface 
 </div>
 </td>
 </tr>
-<tr id="i31" class="rowColor">
+<tr id="i33" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isSerializingCommits()">isSerializingCommits</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns <code>true</code> if this repository serializes commits, <code>false</code> otherwise.</div>
 </td>
 </tr>
-<tr id="i32" class="altColor">
+<tr id="i34" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isSupportingAudits()">isSupportingAudits</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns <code>true</code> if this repository supports auditing, <code>false</code> otherwise.</div>
 </td>
 </tr>
-<tr id="i33" class="rowColor">
+<tr id="i35" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isSupportingBranches()">isSupportingBranches</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns <code>true</code> if this repository supports branching, <code>false</code> otherwise.</div>
 </td>
 </tr>
-<tr id="i34" class="altColor">
+<tr id="i36" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isSupportingEcore()">isSupportingEcore</a></span>()</code></th>
 <td class="colLast">
@@ -487,19 +497,19 @@ implements <a href="../../cdo/common/CDOCommonRepository.html" title="interface 
 </div>
 </td>
 </tr>
-<tr id="i35" class="rowColor">
+<tr id="i37" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isSupportingUnits()">isSupportingUnits</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns <code>true</code> if this repository supports units, <code>false</code> otherwise.</div>
 </td>
 </tr>
-<tr id="i36" class="altColor">
+<tr id="i38" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRepositoryTimeResult(org.eclipse.emf.spi.cdo.CDOSessionProtocol.RepositoryTimeResult)">setRepositoryTimeResult</a></span>&#8203;(<a href="CDOSessionProtocol.RepositoryTimeResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.RepositoryTimeResult</a>&nbsp;repositoryTimeResult)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i37" class="rowColor">
+<tr id="i39" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#waitWhileInitial(org.eclipse.core.runtime.IProgressMonitor)">waitWhileInitial</a></span>&#8203;(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">IProgressMonitor</a>&nbsp;monitor)</code></th>
 <td class="colLast">&nbsp;</td>
@@ -582,7 +592,7 @@ public&nbsp;OpenSessionResult&#8203;(int&nbsp;sessionID,
                          boolean&nbsp;repositoryEnsuringReferentialIntegrity,
                          <a href="../../cdo/common/CDOCommonRepository.IDGenerationLocation.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.IDGenerationLocation</a>&nbsp;repositoryIDGenerationLocation)</pre>
 <div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">as of 4.4 use <a href="#%3Cinit%3E(org.eclipse.emf.cdo.common.protocol.CDODataInput,int)"><code>OpenSessionResult(CDODataInput, int)</code></a>.</div>
+<div class="deprecationComment">As of 4.4 use <a href="#%3Cinit%3E(org.eclipse.emf.cdo.common.protocol.CDODataInput,int)"><code>OpenSessionResult(CDODataInput, int)</code></a>.</div>
 </div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -881,6 +891,21 @@ public&nbsp;boolean&nbsp;isSupportingEcore()</pre>
 </dl>
 </li>
 </ul>
+<a id="isAuthorizingOperations()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isAuthorizingOperations</h4>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;isAuthorizingOperations()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../cdo/common/CDOCommonRepository.html#isAuthorizingOperations()">isAuthorizingOperations</a></code>&nbsp;in interface&nbsp;<code><a href="../../cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a></code></dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.15</dd>
+</dl>
+</li>
+</ul>
 <a id="getIDGenerationLocation()">
 <!--   -->
 </a>
@@ -908,6 +933,19 @@ public&nbsp;boolean&nbsp;isSupportingEcore()</pre>
 <dd><code><a href="../../cdo/common/CDOCommonRepository.html#getCommitInfoStorage()">getCommitInfoStorage</a></code>&nbsp;in interface&nbsp;<code><a href="../../cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.6</dd>
+</dl>
+</li>
+</ul>
+<a id="getAuthorizationResults()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getAuthorizationResults</h4>
+<pre class="methodSignature">public&nbsp;java.lang.String[]&nbsp;getAuthorizationResults()</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.15</dd>
 </dl>
 </li>
 </ul>
@@ -1016,7 +1054,7 @@ public&nbsp;boolean&nbsp;isSupportingEcore()</pre>
 <pre class="methodSignature">@Deprecated
 public&nbsp;java.lang.String&nbsp;getRepositoryUUID()</pre>
 <div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">as of 4.5 use <a href="#getUUID()"><code>getUUID()</code></a>.</div>
+<div class="deprecationComment">As of 4.5 use <a href="#getUUID()"><code>getUUID()</code></a>.</div>
 </div>
 </li>
 </ul>
@@ -1029,7 +1067,7 @@ public&nbsp;java.lang.String&nbsp;getRepositoryUUID()</pre>
 <pre class="methodSignature">@Deprecated
 public&nbsp;<a href="../../cdo/common/CDOCommonRepository.Type.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.Type</a>&nbsp;getRepositoryType()</pre>
 <div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">as of 4.5 use <a href="#getType()"><code>getType()</code></a>.</div>
+<div class="deprecationComment">As of 4.5 use <a href="#getType()"><code>getType()</code></a>.</div>
 </div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -1046,7 +1084,7 @@ public&nbsp;<a href="../../cdo/common/CDOCommonRepository.Type.html" title="enum
 <pre class="methodSignature">@Deprecated
 public&nbsp;<a href="../../cdo/common/CDOCommonRepository.State.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.State</a>&nbsp;getRepositoryState()</pre>
 <div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">as of 4.5 use <a href="#getState()"><code>getState()</code></a>.</div>
+<div class="deprecationComment">As of 4.5 use <a href="#getState()"><code>getState()</code></a>.</div>
 </div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -1063,7 +1101,7 @@ public&nbsp;<a href="../../cdo/common/CDOCommonRepository.State.html" title="enu
 <pre class="methodSignature">@Deprecated
 public&nbsp;long&nbsp;getRepositoryCreationTime()</pre>
 <div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">as of 4.5 use <a href="#getCreationTime()"><code>getCreationTime()</code></a>.</div>
+<div class="deprecationComment">As of 4.5 use <a href="#getCreationTime()"><code>getCreationTime()</code></a>.</div>
 </div>
 </li>
 </ul>
@@ -1076,7 +1114,7 @@ public&nbsp;long&nbsp;getRepositoryCreationTime()</pre>
 <pre class="methodSignature">@Deprecated
 public&nbsp;boolean&nbsp;isRepositoryAuthenticating()</pre>
 <div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">as of 4.5 use <a href="#isAuthenticating()"><code>isAuthenticating()</code></a>.</div>
+<div class="deprecationComment">As of 4.5 use <a href="#isAuthenticating()"><code>isAuthenticating()</code></a>.</div>
 </div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -1093,7 +1131,7 @@ public&nbsp;boolean&nbsp;isRepositoryAuthenticating()</pre>
 <pre class="methodSignature">@Deprecated
 public&nbsp;boolean&nbsp;isRepositorySupportingAudits()</pre>
 <div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">as of 4.5 use <a href="#isSupportingAudits()"><code>isSupportingAudits()</code></a>.</div>
+<div class="deprecationComment">As of 4.5 use <a href="#isSupportingAudits()"><code>isSupportingAudits()</code></a>.</div>
 </div>
 </li>
 </ul>
@@ -1106,7 +1144,7 @@ public&nbsp;boolean&nbsp;isRepositorySupportingAudits()</pre>
 <pre class="methodSignature">@Deprecated
 public&nbsp;boolean&nbsp;isRepositorySupportingBranches()</pre>
 <div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">as of 4.5 use <a href="#isSupportingBranches()"><code>isSupportingBranches()</code></a>.</div>
+<div class="deprecationComment">As of 4.5 use <a href="#isSupportingBranches()"><code>isSupportingBranches()</code></a>.</div>
 </div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -1136,7 +1174,7 @@ public&nbsp;boolean&nbsp;isRepositorySupportingEcore()</pre>
 <pre class="methodSignature">@Deprecated
 public&nbsp;boolean&nbsp;isRepositorySerializingCommits()</pre>
 <div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">as of 4.5 use <a href="#isSerializingCommits()"><code>isSerializingCommits()</code></a>.</div>
+<div class="deprecationComment">As of 4.5 use <a href="#isSerializingCommits()"><code>isSerializingCommits()</code></a>.</div>
 </div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -1153,7 +1191,7 @@ public&nbsp;boolean&nbsp;isRepositorySerializingCommits()</pre>
 <pre class="methodSignature">@Deprecated
 public&nbsp;boolean&nbsp;isRepositoryEnsuringReferentialIntegrity()</pre>
 <div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">as of 4.5 use <a href="#isEnsuringReferentialIntegrity()"><code>isEnsuringReferentialIntegrity()</code></a>.</div>
+<div class="deprecationComment">As of 4.5 use <a href="#isEnsuringReferentialIntegrity()"><code>isEnsuringReferentialIntegrity()</code></a>.</div>
 </div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -1170,7 +1208,7 @@ public&nbsp;boolean&nbsp;isRepositoryEnsuringReferentialIntegrity()</pre>
 <pre class="methodSignature">@Deprecated
 public&nbsp;<a href="../../cdo/common/CDOCommonRepository.IDGenerationLocation.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.IDGenerationLocation</a>&nbsp;getRepositoryIDGenerationLocation()</pre>
 <div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">as of 4.5 use <a href="#getIDGenerationLocation()"><code>getIDGenerationLocation()</code></a>.</div>
+<div class="deprecationComment">As of 4.5 use <a href="#getIDGenerationLocation()"><code>getIDGenerationLocation()</code></a>.</div>
 </div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>

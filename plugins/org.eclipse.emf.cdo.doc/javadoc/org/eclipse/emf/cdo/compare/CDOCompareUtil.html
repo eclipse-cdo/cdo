@@ -139,7 +139,7 @@ extends java.lang.Object</pre>
  Two different <code>scopes</code> are supported:
  <ul>
  <li><a href="CDOComparisonScope.AllContents.html" title="class in org.eclipse.emf.cdo.compare"><code>CDOComparisonScope.AllContents</code></a> takes an arbitrary <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>object</code></a> (including <a href="../eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resource nodes</code></a>)
- and returns <code>matches</code> for <b>all</b> elements of its <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eAllContents()" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>content tree</code></a>. This scope has the advantage that the comparison can
+ and returns <code>matches</code> for <b>all</b> elements of its <code>content tree</code>. This scope has the advantage that the comparison can
  be rooted at specific objects that are different from (below of) the root resource. The disadvantage is that all the transitive children of this specific object are
  matched, whether they differ or not. Major parts of huge repositories can be loaded to the client side easily, if no attention is paid.
  The following method returns comparisons that are based on this scope algorithm:
@@ -159,7 +159,7 @@ extends java.lang.Object</pre>
  inspecting the <a href="../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch tree</code></a> and used if its different from the left or right side.
  <p>
  The <code>matcher</code> used by the comparisons is based on an <a href="CDOCompare.CDOIDFunction.html" title="class in org.eclipse.emf.cdo.compare"><code>ID function</code></a> that considers the <a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>CDOID</code></a>s of the <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a>.
- <a href="../eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>Resources</code></a> and <a href="../eresource/CDOResourceFolder.html" title="interface in org.eclipse.emf.cdo.eresource"><code>folders</code></a> are treated as normal <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>EObject</code></a>s.</div>
+ <a href="../eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>Resources</code></a> and <a href="../eresource/CDOResourceFolder.html" title="interface in org.eclipse.emf.cdo.eresource"><code>folders</code></a> are treated as normal <code>EObject</code>s.</div>
 <dl>
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>Eike Stepper</dd>
@@ -213,7 +213,7 @@ extends java.lang.Object</pre>
        <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView,
        <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView)</code></th>
 <td class="colLast">
-<div class="block">Takes an arbitrary <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>object</code></a> (including <a href="../eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resource nodes</code></a>) and returns <code>matches</code> for <b>all</b> elements of its <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eAllContents()" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>content tree</code></a>.</div>
+<div class="block">Takes an arbitrary <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>object</code></a> (including <a href="../eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resource nodes</code></a>) and returns <code>matches</code> for <b>all</b> elements of its <code>content tree</code>.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
@@ -223,7 +223,7 @@ extends java.lang.Object</pre>
        <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView,
        <a href="../view/CDOViewOpener.html" title="interface in org.eclipse.emf.cdo.view">CDOViewOpener</a>&nbsp;viewOpener)</code></th>
 <td class="colLast">
-<div class="block">Takes an arbitrary <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>object</code></a> (including <a href="../eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resource nodes</code></a>) and returns <code>matches</code> for <b>all</b> elements of its <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eAllContents()" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>content tree</code></a>.</div>
+<div class="block">Takes an arbitrary <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>object</code></a> (including <a href="../eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resource nodes</code></a>) and returns <code>matches</code> for <b>all</b> elements of its <code>content tree</code>.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
@@ -345,7 +345,7 @@ extends java.lang.Object</pre>
 <pre class="methodSignature">public static&nbsp;org.eclipse.emf.compare.Comparison&nbsp;compare&#8203;(<a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;left,
                                                          <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView,
                                                          <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView)</pre>
-<div class="block">Takes an arbitrary <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>object</code></a> (including <a href="../eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resource nodes</code></a>) and returns <code>matches</code> for <b>all</b> elements of its <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eAllContents()" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>content tree</code></a>. This scope has the advantage that the comparison can
+<div class="block">Takes an arbitrary <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>object</code></a> (including <a href="../eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resource nodes</code></a>) and returns <code>matches</code> for <b>all</b> elements of its <code>content tree</code>. This scope has the advantage that the comparison can
  be rooted at specific objects that are different from (below of) the root resource. The disadvantage is that all the transitive children of this specific object are
  matched, whether they differ or not. Major parts of huge repositories can be loaded to the client side easily, if no attention is paid.</div>
 </li>
@@ -360,7 +360,7 @@ extends java.lang.Object</pre>
                                                          <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView,
                                                          <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView,
                                                          <a href="../view/CDOViewOpener.html" title="interface in org.eclipse.emf.cdo.view">CDOViewOpener</a>&nbsp;viewOpener)</pre>
-<div class="block">Takes an arbitrary <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>object</code></a> (including <a href="../eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resource nodes</code></a>) and returns <code>matches</code> for <b>all</b> elements of its <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eAllContents()" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>content tree</code></a>. This scope has the advantage that the comparison can
+<div class="block">Takes an arbitrary <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>object</code></a> (including <a href="../eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resource nodes</code></a>) and returns <code>matches</code> for <b>all</b> elements of its <code>content tree</code>. This scope has the advantage that the comparison can
  be rooted at specific objects that are different from (below of) the root resource. The disadvantage is that all the transitive children of this specific object are
  matched, whether they differ or not. Major parts of huge repositories can be loaded to the client side easily, if no attention is paid.</div>
 <dl>

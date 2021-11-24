@@ -28,8 +28,8 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":42,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":42,"i12":10};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -145,7 +145,7 @@ extends java.lang.Object
 implements <a href="OCLExtentCreator.html" title="interface in org.eclipse.emf.cdo.server.ocl">OCLExtentCreator</a></pre>
 <div class="block">An OCL <a href="OCLExtentCreator.html" title="interface in org.eclipse.emf.cdo.server.ocl"><code>extent creator</code></a> implementation for CDO.
  <p>
- The <a href="#createExtent(org.eclipse.emf.ecore.EClass,java.util.concurrent.atomic.AtomicBoolean)"><code>extent</code></a> of a <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>class</code></a> X is the set of all <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>objects</code></a> with <code>object.getEClass() == X</code>.</div>
+ The <a href="#createExtent(org.eclipse.emf.ecore.EClass,java.util.concurrent.atomic.AtomicBoolean)"><code>extent</code></a> of a <code>class</code> X is the set of all <code>objects</code> with <code>object.getEClass() == X</code>.</div>
 <dl>
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>Eike Stepper</dd>
@@ -210,21 +210,21 @@ implements <a href="OCLExtentCreator.html" title="interface in org.eclipse.emf.c
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t6" class="tableTab"><span><a href="javascript:show(32);">Deprecated Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colSecond" scope="col">Method</th>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>java.util.Set&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createExtent(org.eclipse.emf.ecore.EClass,java.util.concurrent.atomic.AtomicBoolean)">createExtent</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;eClass,
+<td class="colFirst"><code>java.util.Set&lt;org.eclipse.emf.ecore.EObject&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createExtent(org.eclipse.emf.ecore.EClass,java.util.concurrent.atomic.AtomicBoolean)">createExtent</a></span>&#8203;(org.eclipse.emf.ecore.EClass&nbsp;eClass,
             java.util.concurrent.atomic.AtomicBoolean&nbsp;canceled)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>protected java.util.Set&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createExtent(org.eclipse.emf.ecore.EClass,org.eclipse.emf.cdo.server.IStoreAccessor,org.eclipse.emf.cdo.common.branch.CDOBranch,long,java.util.concurrent.atomic.AtomicBoolean)">createExtent</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;eClass,
+<td class="colFirst"><code>protected java.util.Set&lt;org.eclipse.emf.ecore.EObject&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createExtent(org.eclipse.emf.ecore.EClass,org.eclipse.emf.cdo.server.IStoreAccessor,org.eclipse.emf.cdo.common.branch.CDOBranch,long,java.util.concurrent.atomic.AtomicBoolean)">createExtent</a></span>&#8203;(org.eclipse.emf.ecore.EClass&nbsp;eClass,
             <a href="../IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor</a>&nbsp;accessor,
             <a href="../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
             long&nbsp;timeStamp,
@@ -233,7 +233,7 @@ implements <a href="OCLExtentCreator.html" title="interface in org.eclipse.emf.c
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createExtent(org.eclipse.emf.ecore.EClass,org.eclipse.emf.cdo.server.IStoreAccessor,org.eclipse.emf.cdo.common.branch.CDOBranch,long,java.util.concurrent.atomic.AtomicBoolean,org.eclipse.emf.cdo.common.revision.CDORevisionHandler)">createExtent</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;eClass,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createExtent(org.eclipse.emf.ecore.EClass,org.eclipse.emf.cdo.server.IStoreAccessor,org.eclipse.emf.cdo.common.branch.CDOBranch,long,java.util.concurrent.atomic.AtomicBoolean,org.eclipse.emf.cdo.common.revision.CDORevisionHandler)">createExtent</a></span>&#8203;(org.eclipse.emf.ecore.EClass&nbsp;eClass,
             <a href="../IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor</a>&nbsp;accessor,
             <a href="../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
             long&nbsp;timeStamp,
@@ -247,42 +247,60 @@ implements <a href="OCLExtentCreator.html" title="interface in org.eclipse.emf.c
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>protected <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a></code></td>
+<td class="colFirst"><code>protected org.eclipse.emf.ecore.EObject</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getEObject(org.eclipse.emf.cdo.common.id.CDOID)">getEObject</a></span>&#8203;(<a href="../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="../../common/revision/CDORevisionCacheAdder.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCacheAdder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRevisionCacheAdder()">getRevisionCacheAdder</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.4 use <a href="#getRevisionInterner()"><code>getRevisionInterner()</code></a>.</div>
+</div>
+</td>
 </tr>
 <tr id="i6" class="altColor">
+<td class="colFirst"><code><a href="../../common/revision/CDORevisionInterner.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionInterner</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRevisionInterner()">getRevisionInterner</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getView()">getView</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#handleRevisions(org.eclipse.emf.ecore.EClass,org.eclipse.emf.cdo.server.IStoreAccessor,org.eclipse.emf.cdo.common.branch.CDOBranch,long,org.eclipse.emf.cdo.common.revision.CDORevisionHandler)">handleRevisions</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;eClass,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#handleRevisions(org.eclipse.emf.ecore.EClass,org.eclipse.emf.cdo.server.IStoreAccessor,org.eclipse.emf.cdo.common.branch.CDOBranch,long,org.eclipse.emf.cdo.common.revision.CDORevisionHandler)">handleRevisions</a></span>&#8203;(org.eclipse.emf.ecore.EClass&nbsp;eClass,
                <a href="../IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor</a>&nbsp;accessor,
                <a href="../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
                long&nbsp;timeStamp,
                <a href="../../common/revision/CDORevisionHandler.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionHandler</a>&nbsp;revisionHandler)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>protected boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isDetached(org.eclipse.emf.cdo.common.id.CDOID)">isDetached</a></span>&#8203;(<a href="../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setChangeSetData(org.eclipse.emf.cdo.common.commit.CDOChangeSetData)">setChangeSetData</a></span>&#8203;(<a href="../../common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;changeSetData)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRevisionCacheAdder(org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder)">setRevisionCacheAdder</a></span>&#8203;(<a href="../../common/revision/CDORevisionCacheAdder.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCacheAdder</a>&nbsp;revisionCacheAdder)</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.4 use <a href="#setRevisionInterner(org.eclipse.emf.cdo.common.revision.CDORevisionInterner)"><code>setRevisionInterner(CDORevisionInterner)</code></a>.</div>
+</div>
+</td>
+</tr>
+<tr id="i12" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRevisionInterner(org.eclipse.emf.cdo.common.revision.CDORevisionInterner)">setRevisionInterner</a></span>&#8203;(<a href="../../common/revision/CDORevisionInterner.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionInterner</a>&nbsp;revisionInterner)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -355,13 +373,43 @@ implements <a href="OCLExtentCreator.html" title="interface in org.eclipse.emf.c
 <pre class="methodSignature">public&nbsp;void&nbsp;setChangeSetData&#8203;(<a href="../../common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;changeSetData)</pre>
 </li>
 </ul>
+<a id="getRevisionInterner()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getRevisionInterner</h4>
+<pre class="methodSignature">public&nbsp;<a href="../../common/revision/CDORevisionInterner.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionInterner</a>&nbsp;getRevisionInterner()</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.4</dd>
+</dl>
+</li>
+</ul>
+<a id="setRevisionInterner(org.eclipse.emf.cdo.common.revision.CDORevisionInterner)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setRevisionInterner</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setRevisionInterner&#8203;(<a href="../../common/revision/CDORevisionInterner.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionInterner</a>&nbsp;revisionInterner)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.4</dd>
+</dl>
+</li>
+</ul>
 <a id="getRevisionCacheAdder()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getRevisionCacheAdder</h4>
-<pre class="methodSignature">public&nbsp;<a href="../../common/revision/CDORevisionCacheAdder.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCacheAdder</a>&nbsp;getRevisionCacheAdder()</pre>
+<pre class="methodSignature">@Deprecated
+public&nbsp;<a href="../../common/revision/CDORevisionCacheAdder.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCacheAdder</a>&nbsp;getRevisionCacheAdder()</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.4 use <a href="#getRevisionInterner()"><code>getRevisionInterner()</code></a>.</div>
+</div>
 </li>
 </ul>
 <a id="setRevisionCacheAdder(org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder)">
@@ -370,7 +418,11 @@ implements <a href="OCLExtentCreator.html" title="interface in org.eclipse.emf.c
 <ul class="blockList">
 <li class="blockList">
 <h4>setRevisionCacheAdder</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setRevisionCacheAdder&#8203;(<a href="../../common/revision/CDORevisionCacheAdder.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCacheAdder</a>&nbsp;revisionCacheAdder)</pre>
+<pre class="methodSignature">@Deprecated
+public&nbsp;void&nbsp;setRevisionCacheAdder&#8203;(<a href="../../common/revision/CDORevisionCacheAdder.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCacheAdder</a>&nbsp;revisionCacheAdder)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.4 use <a href="#setRevisionInterner(org.eclipse.emf.cdo.common.revision.CDORevisionInterner)"><code>setRevisionInterner(CDORevisionInterner)</code></a>.</div>
+</div>
 </li>
 </ul>
 <a id="createExtent(org.eclipse.emf.ecore.EClass,java.util.concurrent.atomic.AtomicBoolean)">
@@ -379,8 +431,8 @@ implements <a href="OCLExtentCreator.html" title="interface in org.eclipse.emf.c
 <ul class="blockList">
 <li class="blockList">
 <h4>createExtent</h4>
-<pre class="methodSignature">public&nbsp;java.util.Set&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&gt;&nbsp;createExtent&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;eClass,
-                                           java.util.concurrent.atomic.AtomicBoolean&nbsp;canceled)</pre>
+<pre class="methodSignature">public&nbsp;java.util.Set&lt;org.eclipse.emf.ecore.EObject&gt;&nbsp;createExtent&#8203;(org.eclipse.emf.ecore.EClass&nbsp;eClass,
+                                                                 java.util.concurrent.atomic.AtomicBoolean&nbsp;canceled)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="OCLExtentCreator.html#createExtent(org.eclipse.emf.ecore.EClass,java.util.concurrent.atomic.AtomicBoolean)">createExtent</a></code>&nbsp;in interface&nbsp;<code><a href="OCLExtentCreator.html" title="interface in org.eclipse.emf.cdo.server.ocl">OCLExtentCreator</a></code></dd>
@@ -393,11 +445,11 @@ implements <a href="OCLExtentCreator.html" title="interface in org.eclipse.emf.c
 <ul class="blockList">
 <li class="blockList">
 <h4>createExtent</h4>
-<pre class="methodSignature">protected&nbsp;java.util.Set&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&gt;&nbsp;createExtent&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;eClass,
-                                              <a href="../IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor</a>&nbsp;accessor,
-                                              <a href="../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
-                                              long&nbsp;timeStamp,
-                                              java.util.concurrent.atomic.AtomicBoolean&nbsp;canceled)</pre>
+<pre class="methodSignature">protected&nbsp;java.util.Set&lt;org.eclipse.emf.ecore.EObject&gt;&nbsp;createExtent&#8203;(org.eclipse.emf.ecore.EClass&nbsp;eClass,
+                                                                    <a href="../IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor</a>&nbsp;accessor,
+                                                                    <a href="../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
+                                                                    long&nbsp;timeStamp,
+                                                                    java.util.concurrent.atomic.AtomicBoolean&nbsp;canceled)</pre>
 </li>
 </ul>
 <a id="createExtent(org.eclipse.emf.ecore.EClass,org.eclipse.emf.cdo.server.IStoreAccessor,org.eclipse.emf.cdo.common.branch.CDOBranch,long,java.util.concurrent.atomic.AtomicBoolean,org.eclipse.emf.cdo.common.revision.CDORevisionHandler)">
@@ -406,7 +458,7 @@ implements <a href="OCLExtentCreator.html" title="interface in org.eclipse.emf.c
 <ul class="blockList">
 <li class="blockList">
 <h4>createExtent</h4>
-<pre class="methodSignature">protected&nbsp;void&nbsp;createExtent&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;eClass,
+<pre class="methodSignature">protected&nbsp;void&nbsp;createExtent&#8203;(org.eclipse.emf.ecore.EClass&nbsp;eClass,
                             <a href="../IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor</a>&nbsp;accessor,
                             <a href="../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
                             long&nbsp;timeStamp,
@@ -424,7 +476,7 @@ implements <a href="OCLExtentCreator.html" title="interface in org.eclipse.emf.c
 <ul class="blockList">
 <li class="blockList">
 <h4>handleRevisions</h4>
-<pre class="methodSignature">protected&nbsp;void&nbsp;handleRevisions&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;eClass,
+<pre class="methodSignature">protected&nbsp;void&nbsp;handleRevisions&#8203;(org.eclipse.emf.ecore.EClass&nbsp;eClass,
                                <a href="../IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor</a>&nbsp;accessor,
                                <a href="../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
                                long&nbsp;timeStamp,
@@ -450,8 +502,8 @@ implements <a href="OCLExtentCreator.html" title="interface in org.eclipse.emf.c
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getEObject</h4>
-<pre class="methodSignature">protected&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&nbsp;getEObject&#8203;(<a href="../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)
-                      throws <a href="../../util/ObjectNotFoundException.html" title="class in org.eclipse.emf.cdo.util">ObjectNotFoundException</a></pre>
+<pre class="methodSignature">protected&nbsp;org.eclipse.emf.ecore.EObject&nbsp;getEObject&#8203;(<a href="../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)
+                                            throws <a href="../../util/ObjectNotFoundException.html" title="class in org.eclipse.emf.cdo.util">ObjectNotFoundException</a></pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../util/ObjectNotFoundException.html" title="class in org.eclipse.emf.cdo.util">ObjectNotFoundException</a></code></dd>

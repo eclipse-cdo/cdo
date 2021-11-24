@@ -124,7 +124,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/Switch.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.util" class="externalLink">org.eclipse.emf.ecore.util.Switch</a>&lt;T&gt;</li>
+<li>org.eclipse.emf.ecore.util.Switch&lt;T&gt;</li>
 <li>
 <ul class="inheritance">
 <li>org.eclipse.emf.cdo.expressions.util.ExpressionsSwitch&lt;T&gt;</li>
@@ -138,10 +138,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <hr>
 <pre>public class <span class="typeNameLabel">ExpressionsSwitch&lt;T&gt;</span>
-extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/Switch.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.util" class="externalLink">Switch</a>&lt;T&gt;</pre>
+extends org.eclipse.emf.ecore.util.Switch&lt;T&gt;</pre>
 <div class="block"><!-- begin-user-doc -->
  The <b>Switch</b> for the model's inheritance hierarchy.
- It supports the call <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/Switch.html?is-external=true#doSwitch(org.eclipse.emf.ecore.EObject)" title="class or interface in org.eclipse.emf.ecore.util" class="externalLink"><code>doSwitch(object)</code></a>
+ It supports the call <code>doSwitch(object)</code>
  to invoke the <code>caseXXX</code> method for each class of the model,
  starting with the actual class of the object
  and proceeding up the inheritance hierarchy
@@ -379,7 +379,7 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/e
 </tr>
 <tr id="i22" class="altColor">
 <td class="colFirst"><code><a href="ExpressionsSwitch.html" title="type parameter in ExpressionsSwitch">T</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#defaultCase(org.eclipse.emf.ecore.EObject)">defaultCase</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&nbsp;object)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#defaultCase(org.eclipse.emf.ecore.EObject)">defaultCase</a></span>&#8203;(org.eclipse.emf.ecore.EObject&nbsp;object)</code></th>
 <td class="colLast">
 <div class="block">Returns the result of interpreting the object as an instance of '<em>EObject</em>'.</div>
 </td>
@@ -387,14 +387,14 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/e
 <tr id="i23" class="rowColor">
 <td class="colFirst"><code>protected <a href="ExpressionsSwitch.html" title="type parameter in ExpressionsSwitch">T</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#doSwitch(int,org.eclipse.emf.ecore.EObject)">doSwitch</a></span>&#8203;(int&nbsp;classifierID,
-        <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&nbsp;theEObject)</code></th>
+        org.eclipse.emf.ecore.EObject&nbsp;theEObject)</code></th>
 <td class="colLast">
 <div class="block">Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.</div>
 </td>
 </tr>
 <tr id="i24" class="altColor">
 <td class="colFirst"><code>protected boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isSwitchFor(org.eclipse.emf.ecore.EPackage)">isSwitchFor</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage</a>&nbsp;ePackage)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isSwitchFor(org.eclipse.emf.ecore.EPackage)">isSwitchFor</a></span>&#8203;(org.eclipse.emf.ecore.EPackage&nbsp;ePackage)</code></th>
 <td class="colLast">
 <div class="block">Checks whether this is a switch for the given package.</div>
 </td>
@@ -404,8 +404,8 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/e
 <li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.ecore.util.Switch">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.emf.ecore.util.<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/Switch.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.util" class="externalLink">Switch</a></h3>
-<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/Switch.html?is-external=true#doSwitch(org.eclipse.emf.ecore.EClass,org.eclipse.emf.ecore.EObject)" title="class or interface in org.eclipse.emf.ecore.util" class="externalLink">doSwitch</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/Switch.html?is-external=true#doSwitch(org.eclipse.emf.ecore.EObject)" title="class or interface in org.eclipse.emf.ecore.util" class="externalLink">doSwitch</a></code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.emf.ecore.util.Switch</h3>
+<code>doSwitch, doSwitch</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
@@ -486,13 +486,13 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/e
 <ul class="blockList">
 <li class="blockList">
 <h4>isSwitchFor</h4>
-<pre class="methodSignature">protected&nbsp;boolean&nbsp;isSwitchFor&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage</a>&nbsp;ePackage)</pre>
+<pre class="methodSignature">protected&nbsp;boolean&nbsp;isSwitchFor&#8203;(org.eclipse.emf.ecore.EPackage&nbsp;ePackage)</pre>
 <div class="block">Checks whether this is a switch for the given package.
  <!-- begin-user-doc -->
  <!-- end-user-doc --></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/Switch.html?is-external=true#isSwitchFor(org.eclipse.emf.ecore.EPackage)" title="class or interface in org.eclipse.emf.ecore.util" class="externalLink">isSwitchFor</a></code>&nbsp;in class&nbsp;<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/Switch.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.util" class="externalLink">Switch</a>&lt;<a href="ExpressionsSwitch.html" title="type parameter in ExpressionsSwitch">T</a>&gt;</code></dd>
+<dd><code>isSwitchFor</code>&nbsp;in class&nbsp;<code>org.eclipse.emf.ecore.util.Switch&lt;<a href="ExpressionsSwitch.html" title="type parameter in ExpressionsSwitch">T</a>&gt;</code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>ePackage</code> - the package in question.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -508,13 +508,13 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/e
 <li class="blockList">
 <h4>doSwitch</h4>
 <pre class="methodSignature">protected&nbsp;<a href="ExpressionsSwitch.html" title="type parameter in ExpressionsSwitch">T</a>&nbsp;doSwitch&#8203;(int&nbsp;classifierID,
-                     <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&nbsp;theEObject)</pre>
+                     org.eclipse.emf.ecore.EObject&nbsp;theEObject)</pre>
 <div class="block">Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
  <!-- begin-user-doc -->
  <!-- end-user-doc --></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/Switch.html?is-external=true#doSwitch(int,org.eclipse.emf.ecore.EObject)" title="class or interface in org.eclipse.emf.ecore.util" class="externalLink">doSwitch</a></code>&nbsp;in class&nbsp;<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/Switch.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.util" class="externalLink">Switch</a>&lt;<a href="ExpressionsSwitch.html" title="type parameter in ExpressionsSwitch">T</a>&gt;</code></dd>
+<dd><code>doSwitch</code>&nbsp;in class&nbsp;<code>org.eclipse.emf.ecore.util.Switch&lt;<a href="ExpressionsSwitch.html" title="type parameter in ExpressionsSwitch">T</a>&gt;</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the first non-null result returned by a <code>caseXXX</code> call.</dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
@@ -539,7 +539,7 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/e
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the result of interpreting the object as an instance of '<em>Expression</em>'.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/Switch.html?is-external=true#doSwitch(org.eclipse.emf.ecore.EObject)" title="class or interface in org.eclipse.emf.ecore.util" class="externalLink"><code>doSwitch(EObject)</code></a></dd>
+<dd><code>doSwitch(EObject)</code></dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
@@ -562,7 +562,7 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/e
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the result of interpreting the object as an instance of '<em>Value</em>'.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/Switch.html?is-external=true#doSwitch(org.eclipse.emf.ecore.EObject)" title="class or interface in org.eclipse.emf.ecore.util" class="externalLink"><code>doSwitch(EObject)</code></a></dd>
+<dd><code>doSwitch(EObject)</code></dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
@@ -585,7 +585,7 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/e
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the result of interpreting the object as an instance of '<em>Boolean Value</em>'.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/Switch.html?is-external=true#doSwitch(org.eclipse.emf.ecore.EObject)" title="class or interface in org.eclipse.emf.ecore.util" class="externalLink"><code>doSwitch(EObject)</code></a></dd>
+<dd><code>doSwitch(EObject)</code></dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
@@ -608,7 +608,7 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/e
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the result of interpreting the object as an instance of '<em>Byte Value</em>'.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/Switch.html?is-external=true#doSwitch(org.eclipse.emf.ecore.EObject)" title="class or interface in org.eclipse.emf.ecore.util" class="externalLink"><code>doSwitch(EObject)</code></a></dd>
+<dd><code>doSwitch(EObject)</code></dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
@@ -631,7 +631,7 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/e
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the result of interpreting the object as an instance of '<em>Short Value</em>'.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/Switch.html?is-external=true#doSwitch(org.eclipse.emf.ecore.EObject)" title="class or interface in org.eclipse.emf.ecore.util" class="externalLink"><code>doSwitch(EObject)</code></a></dd>
+<dd><code>doSwitch(EObject)</code></dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
@@ -654,7 +654,7 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/e
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the result of interpreting the object as an instance of '<em>Int Value</em>'.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/Switch.html?is-external=true#doSwitch(org.eclipse.emf.ecore.EObject)" title="class or interface in org.eclipse.emf.ecore.util" class="externalLink"><code>doSwitch(EObject)</code></a></dd>
+<dd><code>doSwitch(EObject)</code></dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
@@ -677,7 +677,7 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/e
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the result of interpreting the object as an instance of '<em>Long Value</em>'.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/Switch.html?is-external=true#doSwitch(org.eclipse.emf.ecore.EObject)" title="class or interface in org.eclipse.emf.ecore.util" class="externalLink"><code>doSwitch(EObject)</code></a></dd>
+<dd><code>doSwitch(EObject)</code></dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
@@ -700,7 +700,7 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/e
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the result of interpreting the object as an instance of '<em>Float Value</em>'.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/Switch.html?is-external=true#doSwitch(org.eclipse.emf.ecore.EObject)" title="class or interface in org.eclipse.emf.ecore.util" class="externalLink"><code>doSwitch(EObject)</code></a></dd>
+<dd><code>doSwitch(EObject)</code></dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
@@ -723,7 +723,7 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/e
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the result of interpreting the object as an instance of '<em>Double Value</em>'.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/Switch.html?is-external=true#doSwitch(org.eclipse.emf.ecore.EObject)" title="class or interface in org.eclipse.emf.ecore.util" class="externalLink"><code>doSwitch(EObject)</code></a></dd>
+<dd><code>doSwitch(EObject)</code></dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
@@ -746,7 +746,7 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/e
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the result of interpreting the object as an instance of '<em>Char Value</em>'.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/Switch.html?is-external=true#doSwitch(org.eclipse.emf.ecore.EObject)" title="class or interface in org.eclipse.emf.ecore.util" class="externalLink"><code>doSwitch(EObject)</code></a></dd>
+<dd><code>doSwitch(EObject)</code></dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
@@ -769,7 +769,7 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/e
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the result of interpreting the object as an instance of '<em>String Value</em>'.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/Switch.html?is-external=true#doSwitch(org.eclipse.emf.ecore.EObject)" title="class or interface in org.eclipse.emf.ecore.util" class="externalLink"><code>doSwitch(EObject)</code></a></dd>
+<dd><code>doSwitch(EObject)</code></dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
@@ -792,7 +792,7 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/e
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the result of interpreting the object as an instance of '<em>Invocation</em>'.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/Switch.html?is-external=true#doSwitch(org.eclipse.emf.ecore.EObject)" title="class or interface in org.eclipse.emf.ecore.util" class="externalLink"><code>doSwitch(EObject)</code></a></dd>
+<dd><code>doSwitch(EObject)</code></dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
@@ -815,7 +815,7 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/e
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the result of interpreting the object as an instance of '<em>Function Invocation</em>'.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/Switch.html?is-external=true#doSwitch(org.eclipse.emf.ecore.EObject)" title="class or interface in org.eclipse.emf.ecore.util" class="externalLink"><code>doSwitch(EObject)</code></a></dd>
+<dd><code>doSwitch(EObject)</code></dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
@@ -838,7 +838,7 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/e
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the result of interpreting the object as an instance of '<em>Member Invocation</em>'.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/Switch.html?is-external=true#doSwitch(org.eclipse.emf.ecore.EObject)" title="class or interface in org.eclipse.emf.ecore.util" class="externalLink"><code>doSwitch(EObject)</code></a></dd>
+<dd><code>doSwitch(EObject)</code></dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
@@ -861,7 +861,7 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/e
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the result of interpreting the object as an instance of '<em>Access</em>'.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/Switch.html?is-external=true#doSwitch(org.eclipse.emf.ecore.EObject)" title="class or interface in org.eclipse.emf.ecore.util" class="externalLink"><code>doSwitch(EObject)</code></a></dd>
+<dd><code>doSwitch(EObject)</code></dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
@@ -884,7 +884,7 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/e
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the result of interpreting the object as an instance of '<em>Static Access</em>'.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/Switch.html?is-external=true#doSwitch(org.eclipse.emf.ecore.EObject)" title="class or interface in org.eclipse.emf.ecore.util" class="externalLink"><code>doSwitch(EObject)</code></a></dd>
+<dd><code>doSwitch(EObject)</code></dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
@@ -907,7 +907,7 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/e
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the result of interpreting the object as an instance of '<em>Member Access</em>'.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/Switch.html?is-external=true#doSwitch(org.eclipse.emf.ecore.EObject)" title="class or interface in org.eclipse.emf.ecore.util" class="externalLink"><code>doSwitch(EObject)</code></a></dd>
+<dd><code>doSwitch(EObject)</code></dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
@@ -930,7 +930,7 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/e
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the result of interpreting the object as an instance of '<em>Context Access</em>'.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/Switch.html?is-external=true#doSwitch(org.eclipse.emf.ecore.EObject)" title="class or interface in org.eclipse.emf.ecore.util" class="externalLink"><code>doSwitch(EObject)</code></a></dd>
+<dd><code>doSwitch(EObject)</code></dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
@@ -953,7 +953,7 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/e
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the result of interpreting the object as an instance of '<em>Contained Object</em>'.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/Switch.html?is-external=true#doSwitch(org.eclipse.emf.ecore.EObject)" title="class or interface in org.eclipse.emf.ecore.util" class="externalLink"><code>doSwitch(EObject)</code></a></dd>
+<dd><code>doSwitch(EObject)</code></dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
@@ -976,7 +976,7 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/e
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the result of interpreting the object as an instance of '<em>Linked Object</em>'.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/Switch.html?is-external=true#doSwitch(org.eclipse.emf.ecore.EObject)" title="class or interface in org.eclipse.emf.ecore.util" class="externalLink"><code>doSwitch(EObject)</code></a></dd>
+<dd><code>doSwitch(EObject)</code></dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
@@ -999,7 +999,7 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/e
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the result of interpreting the object as an instance of '<em>Linked Expression</em>'.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/Switch.html?is-external=true#doSwitch(org.eclipse.emf.ecore.EObject)" title="class or interface in org.eclipse.emf.ecore.util" class="externalLink"><code>doSwitch(EObject)</code></a></dd>
+<dd><code>doSwitch(EObject)</code></dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
@@ -1022,7 +1022,7 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/e
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the result of interpreting the object as an instance of '<em>List Construction</em>'.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/Switch.html?is-external=true#doSwitch(org.eclipse.emf.ecore.EObject)" title="class or interface in org.eclipse.emf.ecore.util" class="externalLink"><code>doSwitch(EObject)</code></a></dd>
+<dd><code>doSwitch(EObject)</code></dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>
@@ -1033,7 +1033,7 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/e
 <ul class="blockListLast">
 <li class="blockList">
 <h4>defaultCase</h4>
-<pre class="methodSignature">public&nbsp;<a href="ExpressionsSwitch.html" title="type parameter in ExpressionsSwitch">T</a>&nbsp;defaultCase&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&nbsp;object)</pre>
+<pre class="methodSignature">public&nbsp;<a href="ExpressionsSwitch.html" title="type parameter in ExpressionsSwitch">T</a>&nbsp;defaultCase&#8203;(org.eclipse.emf.ecore.EObject&nbsp;object)</pre>
 <div class="block">Returns the result of interpreting the object as an instance of '<em>EObject</em>'.
  <!-- begin-user-doc -->
  This implementation returns null;
@@ -1041,13 +1041,13 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/e
  <!-- end-user-doc --></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/Switch.html?is-external=true#defaultCase(org.eclipse.emf.ecore.EObject)" title="class or interface in org.eclipse.emf.ecore.util" class="externalLink">defaultCase</a></code>&nbsp;in class&nbsp;<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/Switch.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.util" class="externalLink">Switch</a>&lt;<a href="ExpressionsSwitch.html" title="type parameter in ExpressionsSwitch">T</a>&gt;</code></dd>
+<dd><code>defaultCase</code>&nbsp;in class&nbsp;<code>org.eclipse.emf.ecore.util.Switch&lt;<a href="ExpressionsSwitch.html" title="type parameter in ExpressionsSwitch">T</a>&gt;</code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>object</code> - the target of the switch.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the result of interpreting the object as an instance of '<em>EObject</em>'.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/Switch.html?is-external=true#doSwitch(org.eclipse.emf.ecore.EObject)" title="class or interface in org.eclipse.emf.ecore.util" class="externalLink"><code>Switch.doSwitch(org.eclipse.emf.ecore.EObject)</code></a></dd>
+<dd><code>Switch.doSwitch(org.eclipse.emf.ecore.EObject)</code></dd>
 <dt><span class="simpleTagLabel">Generated</span></dt>
 </dl>
 </li>

@@ -28,7 +28,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6};
+var data = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -167,7 +167,7 @@ extends <a href="../session/CDOSession.Options.html" title="interface in org.ecl
 <!--   -->
 </a>
 <h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.emf.cdo.common.<a href="../common/CDOCommonSession.Options.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession.Options</a></h3>
-<code><a href="../common/CDOCommonSession.Options.LockNotificationMode.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonSession.Options.LockNotificationMode</a>, <a href="../common/CDOCommonSession.Options.LockNotificationModeEvent.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession.Options.LockNotificationModeEvent</a>, <a href="../common/CDOCommonSession.Options.PassiveUpdateEvent.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession.Options.PassiveUpdateEvent</a>, <a href="../common/CDOCommonSession.Options.PassiveUpdateMode.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonSession.Options.PassiveUpdateMode</a></code></li>
+<code><a href="../common/CDOCommonSession.Options.LockNotificationEvent.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession.Options.LockNotificationEvent</a>, <a href="../common/CDOCommonSession.Options.LockNotificationMode.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonSession.Options.LockNotificationMode</a>, <a href="../common/CDOCommonSession.Options.LockNotificationModeEvent.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession.Options.LockNotificationModeEvent</a>, <a href="../common/CDOCommonSession.Options.PassiveUpdateEvent.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession.Options.PassiveUpdateEvent</a>, <a href="../common/CDOCommonSession.Options.PassiveUpdateMode.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonSession.Options.PassiveUpdateMode</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.emf.cdo.session.CDOSession.Options">
@@ -223,18 +223,28 @@ extends <a href="../session/CDOSession.Options.html" title="interface in org.ecl
 </td>
 </tr>
 <tr id="i3" class="rowColor">
+<td class="colFirst"><code>long</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSignalTimeout()">getSignalTimeout</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setCommitTimeout(int)">setCommitTimeout</a></span>&#8203;(int&nbsp;commitTimeout)</code></th>
 <td class="colLast">
 <div class="block">Sets the timeout for commit operations in <b>seconds</b>.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setProgressInterval(int)">setProgressInterval</a></span>&#8203;(int&nbsp;progressInterval)</code></th>
 <td class="colLast">
 <div class="block">Sets the interval for progress reports of commit operations in <b>seconds</b>.</div>
 </td>
+</tr>
+<tr id="i6" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSignalTimeout(long)">setSignalTimeout</a></span>&#8203;(long&nbsp;signalTimeout)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -242,7 +252,7 @@ extends <a href="../session/CDOSession.Options.html" title="interface in org.ecl
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.<a href="../common/CDOCommonSession.Options.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession.Options</a></h3>
-<code><a href="../common/CDOCommonSession.Options.html#getLockNotificationMode()">getLockNotificationMode</a>, <a href="../common/CDOCommonSession.Options.html#getPassiveUpdateMode()">getPassiveUpdateMode</a>, <a href="../common/CDOCommonSession.Options.html#isPassiveUpdateEnabled()">isPassiveUpdateEnabled</a>, <a href="../common/CDOCommonSession.Options.html#setLockNotificationMode(org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode)">setLockNotificationMode</a>, <a href="../common/CDOCommonSession.Options.html#setPassiveUpdateEnabled(boolean)">setPassiveUpdateEnabled</a>, <a href="../common/CDOCommonSession.Options.html#setPassiveUpdateMode(org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode)">setPassiveUpdateMode</a></code></li>
+<code><a href="../common/CDOCommonSession.Options.html#getLockNotificationMode()">getLockNotificationMode</a>, <a href="../common/CDOCommonSession.Options.html#getPassiveUpdateMode()">getPassiveUpdateMode</a>, <a href="../common/CDOCommonSession.Options.html#isLockNotificationEnabled()">isLockNotificationEnabled</a>, <a href="../common/CDOCommonSession.Options.html#isPassiveUpdateEnabled()">isPassiveUpdateEnabled</a>, <a href="../common/CDOCommonSession.Options.html#setLockNotificationEnabled(boolean)">setLockNotificationEnabled</a>, <a href="../common/CDOCommonSession.Options.html#setLockNotificationMode(org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode)">setLockNotificationMode</a>, <a href="../common/CDOCommonSession.Options.html#setPassiveUpdateEnabled(boolean)">setPassiveUpdateEnabled</a>, <a href="../common/CDOCommonSession.Options.html#setPassiveUpdateMode(org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode)">setPassiveUpdateMode</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.cdo.session.CDOSession.Options">
@@ -283,6 +293,32 @@ extends <a href="../session/CDOSession.Options.html" title="interface in org.ecl
 <pre class="methodSignature">org.eclipse.net4j.signal.ISignalProtocol&lt;<a href="CDONet4jSession.html" title="interface in org.eclipse.emf.cdo.net4j">CDONet4jSession</a>&gt;&nbsp;getNet4jProtocol()</pre>
 <div class="block">Returns the Net4j <a href="../../spi/cdo/CDOSessionProtocol.html" title="interface in org.eclipse.emf.spi.cdo"><code>protocol</code></a> instance that represents the underlying
  <em>signalling connection</em> to the repository of this session.</div>
+</li>
+</ul>
+<a id="getSignalTimeout()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getSignalTimeout</h4>
+<pre class="methodSignature">long&nbsp;getSignalTimeout()</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.5</dd>
+</dl>
+</li>
+</ul>
+<a id="setSignalTimeout(long)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setSignalTimeout</h4>
+<pre class="methodSignature">void&nbsp;setSignalTimeout&#8203;(long&nbsp;signalTimeout)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.5</dd>
+</dl>
 </li>
 </ul>
 <a id="getCommitTimeout()">

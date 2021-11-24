@@ -163,21 +163,21 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMetaID(org.eclipse.emf.ecore.EModelElement,long)">getMetaID</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EModelElement.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EModelElement</a>&nbsp;modelElement,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMetaID(org.eclipse.emf.ecore.EModelElement,long)">getMetaID</a></span>&#8203;(org.eclipse.emf.ecore.EModelElement&nbsp;modelElement,
          long&nbsp;commitTime)</code></th>
 <td class="colLast">
-<div class="block">Returns the meta ID of the given <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EModelElement.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>EModelElement</code></a>.</div>
+<div class="block">Returns the meta ID of the given <code>EModelElement</code>.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EModelElement.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EModelElement</a></code></td>
+<td class="colFirst"><code>org.eclipse.emf.ecore.EModelElement</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMetaInstance(org.eclipse.emf.cdo.common.id.CDOID)">getMetaInstance</a></span>&#8203;(<a href="../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></th>
 <td class="colLast">
-<div class="block">Returns the <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EModelElement.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>EModelElement</code></a> referred to by the given ID.</div>
+<div class="block">Returns the <code>EModelElement</code> referred to by the given ID.</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage</a>[]</code></td>
+<td class="colFirst"><code>org.eclipse.emf.ecore.EPackage[]</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#loadPackageUnit(java.sql.Connection,org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit)">loadPackageUnit</a></span>&#8203;(java.sql.Connection&nbsp;connection,
                <a href="../../spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>&nbsp;packageUnit)</code></th>
 <td class="colLast">
@@ -240,9 +240,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <h4>getMetaID</h4>
-<pre class="methodSignature"><a href="../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;getMetaID&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EModelElement.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EModelElement</a>&nbsp;modelElement,
+<pre class="methodSignature"><a href="../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;getMetaID&#8203;(org.eclipse.emf.ecore.EModelElement&nbsp;modelElement,
                 long&nbsp;commitTime)</pre>
-<div class="block">Returns the meta ID of the given <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EModelElement.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>EModelElement</code></a>. <code> getMetaID(getMetaInstance(x))</code> yields
+<div class="block">Returns the meta ID of the given <code>EModelElement</code>. <code> getMetaID(getMetaInstance(x))</code> yields
  <code>x</code></div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -260,8 +260,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <h4>getMetaInstance</h4>
-<pre class="methodSignature"><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EModelElement.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EModelElement</a>&nbsp;getMetaInstance&#8203;(<a href="../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</pre>
-<div class="block">Returns the <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EModelElement.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>EModelElement</code></a> referred to by the given ID. <code> getMetaInstance(getMetaID(m))</code> yields
+<pre class="methodSignature">org.eclipse.emf.ecore.EModelElement&nbsp;getMetaInstance&#8203;(<a href="../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</pre>
+<div class="block">Returns the <code>EModelElement</code> referred to by the given ID. <code> getMetaInstance(getMetaID(m))</code> yields
  <code>m</code></div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -275,8 +275,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <h4>loadPackageUnit</h4>
-<pre class="methodSignature"><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage</a>[]&nbsp;loadPackageUnit&#8203;(java.sql.Connection&nbsp;connection,
-                           <a href="../../spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>&nbsp;packageUnit)</pre>
+<pre class="methodSignature">org.eclipse.emf.ecore.EPackage[]&nbsp;loadPackageUnit&#8203;(java.sql.Connection&nbsp;connection,
+                                                 <a href="../../spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>&nbsp;packageUnit)</pre>
 <div class="block">Loads a package unit from the database.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>

@@ -196,7 +196,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <th class="colSecond" scope="row"><span class="typeNameLabel">CDOObject.</span><code><span class="memberNameLink"><a href="../../CDOObject.html#cdoDirectResource()">cdoDirectResource</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the directly containing <a href="../CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resource</code></a> of this object, or <code>null</code> if this object is
- not an element of the <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html?is-external=true#getContents()" title="class or interface in org.eclipse.emf.ecore.resource" class="externalLink"><code>contents</code></a> list of any CDO resource.</div>
+ not an element of the <code>contents</code> list of any CDO resource.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -425,7 +425,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code>static java.util.Map&lt;java.lang.String,&#8203;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&gt;</code></td>
+<td class="colFirst"><code>static java.util.Map&lt;java.lang.String,&#8203;org.eclipse.emf.ecore.EObject&gt;</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">CDOUtil.</span><code><span class="memberNameLink"><a href="../../util/CDOUtil.html#getIntrinsicIDToEObjectMap(org.eclipse.emf.cdo.eresource.CDOResource)">getIntrinsicIDToEObjectMap</a></span>&#8203;(<a href="../CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResource</a>&nbsp;resource)</code></th>
 <td class="colLast">
 <div class="block">Returns the map used to cache the EObject that is identified by the <a href="../impl/CDOResourceImpl.html#getEObjectByID(java.lang.String)"><code>value</code></a>
@@ -435,7 +435,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <tr class="rowColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">CDOUtil.</span><code><span class="memberNameLink"><a href="../../util/CDOUtil.html#setIntrinsicIDToEObjectMap(org.eclipse.emf.cdo.eresource.CDOResource,java.util.Map)">setIntrinsicIDToEObjectMap</a></span>&#8203;(<a href="../CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResource</a>&nbsp;resource,
-                          java.util.Map&lt;java.lang.String,&#8203;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&gt;&nbsp;intrinsicIDToEObjectMap)</code></th>
+                          java.util.Map&lt;java.lang.String,&#8203;org.eclipse.emf.ecore.EObject&gt;&nbsp;intrinsicIDToEObjectMap)</code></th>
 <td class="colLast">
 <div class="block">Sets the map used to cache the EObject identified by the value of its ID feature.</div>
 </td>
@@ -568,9 +568,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><span class="typeNameLabel">CDOStore.</span><code><span class="memberNameLink"><a href="../../../spi/cdo/CDOStore.html#setContainer(org.eclipse.emf.ecore.InternalEObject,org.eclipse.emf.cdo.eresource.CDOResource,org.eclipse.emf.ecore.InternalEObject,int)">setContainer</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">InternalEObject</a>&nbsp;eObject,
+<th class="colSecond" scope="row"><span class="typeNameLabel">CDOStore.</span><code><span class="memberNameLink"><a href="../../../spi/cdo/CDOStore.html#setContainer(org.eclipse.emf.ecore.InternalEObject,org.eclipse.emf.cdo.eresource.CDOResource,org.eclipse.emf.ecore.InternalEObject,int)">setContainer</a></span>&#8203;(org.eclipse.emf.ecore.InternalEObject&nbsp;eObject,
             <a href="../CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResource</a>&nbsp;newResource,
-            <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">InternalEObject</a>&nbsp;newEContainer,
+            org.eclipse.emf.ecore.InternalEObject&nbsp;newEContainer,
             int&nbsp;newContainerFeatureID)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>

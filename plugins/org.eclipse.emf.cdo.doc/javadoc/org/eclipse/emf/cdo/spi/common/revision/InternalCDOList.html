@@ -125,7 +125,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><code><a href="../../../common/revision/CDOList.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOList</a></code>, <code>java.util.Collection&lt;java.lang.Object&gt;</code>, <code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">EList</a>&lt;java.lang.Object&gt;</code>, <code>java.lang.Iterable&lt;java.lang.Object&gt;</code>, <code>java.util.List&lt;java.lang.Object&gt;</code>, <code>org.eclipse.net4j.util.collection.MoveableList&lt;java.lang.Object&gt;</code></dd>
+<dd><code><a href="../../../common/revision/CDOList.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOList</a></code>, <code>java.util.Collection&lt;java.lang.Object&gt;</code>, <code>org.eclipse.emf.common.util.EList&lt;java.lang.Object&gt;</code>, <code>java.lang.Iterable&lt;java.lang.Object&gt;</code>, <code>java.util.List&lt;java.lang.Object&gt;</code>, <code>org.eclipse.net4j.util.collection.MoveableList&lt;java.lang.Object&gt;</code></dd>
 </dl>
 <dl>
 <dt>All Known Subinterfaces:</dt>
@@ -212,14 +212,14 @@ extends <a href="../../../common/revision/CDOList.html" title="interface in org.
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#adjustReferences(org.eclipse.emf.cdo.spi.common.revision.CDOReferenceAdjuster,org.eclipse.emf.ecore.EStructuralFeature)">adjustReferences</a></span>&#8203;(<a href="CDOReferenceAdjuster.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">CDOReferenceAdjuster</a>&nbsp;adjuster,
-                <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&nbsp;feature)</code></th>
+                org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)</code></th>
 <td class="colLast">
 <div class="block">Adjusts references according to the passed adjuster and resynchronizes indexes.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="InternalCDOList.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDOList</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clone(org.eclipse.emf.ecore.EClassifier)">clone</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClassifier</a>&nbsp;classifier)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clone(org.eclipse.emf.ecore.EClassifier)">clone</a></span>&#8203;(org.eclipse.emf.ecore.EClassifier&nbsp;classifier)</code></th>
 <td class="colLast">
 <div class="block">Clones the list.</div>
 </td>
@@ -254,8 +254,8 @@ extends <a href="../../../common/revision/CDOList.html" title="interface in org.
 <li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.common.util.EList">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.emf.common.util.<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">EList</a></h3>
-<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html?is-external=true#move(int,int)" title="class or interface in org.eclipse.emf.common.util" class="externalLink">move</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html?is-external=true#move(int,E)" title="class or interface in org.eclipse.emf.common.util" class="externalLink">move</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.emf.common.util.EList</h3>
+<code>move, move</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.java.lang.Iterable">
@@ -320,7 +320,7 @@ extends <a href="../../../common/revision/CDOList.html" title="interface in org.
 <li class="blockList">
 <h4>adjustReferences</h4>
 <pre class="methodSignature">boolean&nbsp;adjustReferences&#8203;(<a href="CDOReferenceAdjuster.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">CDOReferenceAdjuster</a>&nbsp;adjuster,
-                         <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&nbsp;feature)</pre>
+                         org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)</pre>
 <div class="block">Adjusts references according to the passed adjuster and resynchronizes indexes.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -334,7 +334,7 @@ extends <a href="../../../common/revision/CDOList.html" title="interface in org.
 <ul class="blockList">
 <li class="blockList">
 <h4>clone</h4>
-<pre class="methodSignature"><a href="InternalCDOList.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDOList</a>&nbsp;clone&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClassifier</a>&nbsp;classifier)</pre>
+<pre class="methodSignature"><a href="InternalCDOList.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDOList</a>&nbsp;clone&#8203;(org.eclipse.emf.ecore.EClassifier&nbsp;classifier)</pre>
 <div class="block">Clones the list.</div>
 </li>
 </ul>

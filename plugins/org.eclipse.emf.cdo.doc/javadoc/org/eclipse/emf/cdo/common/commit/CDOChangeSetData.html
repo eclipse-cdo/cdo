@@ -28,7 +28,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":6,"i1":18,"i2":18,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6};
+var data = {"i0":6,"i1":18,"i2":18,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -184,41 +184,48 @@ extends <a href="CDOChangeKindProvider.html" title="interface in org.eclipse.emf
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>java.util.List&lt;<a href="../revision/CDORevisionKey.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionKey</a>&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getChangedObjects()">getChangedObjects</a></span>()</code></th>
+<td class="colFirst"><code>java.util.List&lt;<a href="../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAffectedIDs()">getAffectedIDs</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Returns a collection of revision keys denoting which (original) revisions have been changed in the context of a
- commit operation.</div>
+<div class="block">Returns a list of ids denoting which revisions have been added, changed, or revised in the context of a commit operation.</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
+<td class="colFirst"><code>java.util.List&lt;<a href="../revision/CDORevisionKey.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionKey</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getChangedObjects()">getChangedObjects</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Returns a list of revision keys denoting which (original) revisions have been changed in the context of a
+ commit operation.</div>
+</td>
+</tr>
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>java.util.Map&lt;<a href="../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,&#8203;<a href="CDOChangeKind.html" title="enum in org.eclipse.emf.cdo.common.commit">CDOChangeKind</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getChangeKinds()">getChangeKinds</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="../revision/CDOIDAndVersion.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndVersion</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDetachedObjects()">getDetachedObjects</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Returns a collection of keys denoting which revisions have been revised (corresponds to detached objects) in the
+<div class="block">Returns a list of keys denoting which revisions have been revised (corresponds to detached objects) in the
  context of a commit operation.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="../revision/CDOIDAndVersion.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndVersion</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNewObjects()">getNewObjects</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Returns a collection of keys denoting which revisions have been added in the context of a commit operation.</div>
+<div class="block">Returns a list of keys denoting which revisions have been added in the context of a commit operation.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isEmpty()">isEmpty</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns <code>true</code>, if this change set data does not contain any changes, <code>false</code> otherwise.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#merge(org.eclipse.emf.cdo.common.commit.CDOChangeSetData)">merge</a></span>&#8203;(<a href="CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;changeSetData)</code></th>
 <td class="colLast">
@@ -294,7 +301,7 @@ extends <a href="CDOChangeKindProvider.html" title="interface in org.eclipse.emf
 <li class="blockList">
 <h4>getNewObjects</h4>
 <pre class="methodSignature">java.util.List&lt;<a href="../revision/CDOIDAndVersion.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndVersion</a>&gt;&nbsp;getNewObjects()</pre>
-<div class="block">Returns a collection of keys denoting which revisions have been added in the context of a commit operation.
+<div class="block">Returns a list of keys denoting which revisions have been added in the context of a commit operation.
  Depending on various conditions like change subscriptions particular elements can also be full <a href="../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a>.</div>
 </li>
 </ul>
@@ -305,7 +312,7 @@ extends <a href="CDOChangeKindProvider.html" title="interface in org.eclipse.emf
 <li class="blockList">
 <h4>getChangedObjects</h4>
 <pre class="methodSignature">java.util.List&lt;<a href="../revision/CDORevisionKey.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionKey</a>&gt;&nbsp;getChangedObjects()</pre>
-<div class="block">Returns a collection of revision keys denoting which (original) revisions have been changed in the context of a
+<div class="block">Returns a list of revision keys denoting which (original) revisions have been changed in the context of a
  commit operation. Depending on various conditions like change subscriptions particular elements can also be full
  <a href="../revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta"><code>revision deltas</code></a>.</div>
 </li>
@@ -317,9 +324,23 @@ extends <a href="CDOChangeKindProvider.html" title="interface in org.eclipse.emf
 <li class="blockList">
 <h4>getDetachedObjects</h4>
 <pre class="methodSignature">java.util.List&lt;<a href="../revision/CDOIDAndVersion.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndVersion</a>&gt;&nbsp;getDetachedObjects()</pre>
-<div class="block">Returns a collection of keys denoting which revisions have been revised (corresponds to detached objects) in the
+<div class="block">Returns a list of keys denoting which revisions have been revised (corresponds to detached objects) in the
  context of a commit operation. Depending on various conditions the version part of particular elements can be
  <a href="../branch/CDOBranchVersion.html#UNSPECIFIED_VERSION"><code>unspecified</code></a>.</div>
+</li>
+</ul>
+<a id="getAffectedIDs()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getAffectedIDs</h4>
+<pre class="methodSignature">java.util.List&lt;<a href="../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;getAffectedIDs()</pre>
+<div class="block">Returns a list of ids denoting which revisions have been added, changed, or revised in the context of a commit operation.</div>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.15</dd>
+</dl>
 </li>
 </ul>
 <a id="getChangeKinds()">

@@ -192,7 +192,7 @@ extends <a href="../../../common/model/CDOPackageUnit.html" title="interface in 
 <td class="colFirst"><code><a href="InternalCDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageInfo</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPackageInfo(java.lang.String)">getPackageInfo</a></span>&#8203;(java.lang.String&nbsp;packageURI)</code></th>
 <td class="colLast">
-<div class="block">Returns the <a href="../../../common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package info</code></a> object that describes the <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>package</code></a> with the given
+<div class="block">Returns the <a href="../../../common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package info</code></a> object that describes the <code>package</code> with the given
  namespace URI, or <code>null</code> if this package unit does not contain a package with this URI.</div>
 </td>
 </tr>
@@ -215,13 +215,13 @@ extends <a href="../../../common/model/CDOPackageUnit.html" title="interface in 
 <td class="colFirst"><code><a href="InternalCDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageInfo</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTopLevelPackageInfo()">getTopLevelPackageInfo</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Returns the <a href="../../../common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package info</code></a> object that describes the top level <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>package</code></a> of the
+<div class="block">Returns the <a href="../../../common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package info</code></a> object that describes the top level <code>package</code> of the
  nested package tree structure described by this package unit.</div>
 </td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#init(org.eclipse.emf.ecore.EPackage)">init</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage</a>&nbsp;ePackage)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#init(org.eclipse.emf.ecore.EPackage)">init</a></span>&#8203;(org.eclipse.emf.ecore.EPackage&nbsp;ePackage)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
@@ -238,7 +238,7 @@ extends <a href="../../../common/model/CDOPackageUnit.html" title="interface in 
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#read(org.eclipse.emf.cdo.common.protocol.CDODataInput,org.eclipse.emf.ecore.resource.ResourceSet)">read</a></span>&#8203;(<a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a>&nbsp;in,
-    <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource" class="externalLink">ResourceSet</a>&nbsp;resourceSet)</code></th>
+    org.eclipse.emf.ecore.resource.ResourceSet&nbsp;resourceSet)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
@@ -362,7 +362,7 @@ extends <a href="../../../common/model/CDOPackageUnit.html" title="interface in 
 <h4>getTopLevelPackageInfo</h4>
 <pre class="methodSignature"><a href="InternalCDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageInfo</a>&nbsp;getTopLevelPackageInfo()</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../common/model/CDOPackageUnit.html#getTopLevelPackageInfo()">CDOPackageUnit</a></code></span></div>
-<div class="block">Returns the <a href="../../../common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package info</code></a> object that describes the top level <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>package</code></a> of the
+<div class="block">Returns the <a href="../../../common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package info</code></a> object that describes the top level <code>package</code> of the
  nested package tree structure described by this package unit.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
@@ -378,7 +378,7 @@ extends <a href="../../../common/model/CDOPackageUnit.html" title="interface in 
 <h4>getPackageInfo</h4>
 <pre class="methodSignature"><a href="InternalCDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageInfo</a>&nbsp;getPackageInfo&#8203;(java.lang.String&nbsp;packageURI)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../common/model/CDOPackageUnit.html#getPackageInfo(java.lang.String)">CDOPackageUnit</a></code></span></div>
-<div class="block">Returns the <a href="../../../common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package info</code></a> object that describes the <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>package</code></a> with the given
+<div class="block">Returns the <a href="../../../common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package info</code></a> object that describes the <code>package</code> with the given
  namespace URI, or <code>null</code> if this package unit does not contain a package with this URI.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
@@ -462,7 +462,7 @@ extends <a href="../../../common/model/CDOPackageUnit.html" title="interface in 
 <li class="blockList">
 <h4>read</h4>
 <pre class="methodSignature">void&nbsp;read&#8203;(<a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a>&nbsp;in,
-          <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource" class="externalLink">ResourceSet</a>&nbsp;resourceSet)
+          org.eclipse.emf.ecore.resource.ResourceSet&nbsp;resourceSet)
    throws java.io.IOException</pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -491,7 +491,7 @@ extends <a href="../../../common/model/CDOPackageUnit.html" title="interface in 
 <ul class="blockList">
 <li class="blockList">
 <h4>init</h4>
-<pre class="methodSignature">void&nbsp;init&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage</a>&nbsp;ePackage)</pre>
+<pre class="methodSignature">void&nbsp;init&#8203;(org.eclipse.emf.ecore.EPackage&nbsp;ePackage)</pre>
 </li>
 </ul>
 <a id="dispose()">

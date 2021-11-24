@@ -171,7 +171,7 @@ extends java.lang.Object</pre>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CDOCompare.CDOFeatureFilter.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare.CDOFeatureFilter</a></span></code></th>
 <td class="colLast">
 <div class="block">A CDO-specific <code>feature filter</code> that uses <a href="../common/model/EMFUtil.html#isPersistent(org.eclipse.emf.ecore.EStructuralFeature)"><code>EMFUtil.isPersistent()</code></a>
- to determine whether a <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>feature</code></a> is <a href="CDOCompare.CDOFeatureFilter.html#isTransient(org.eclipse.emf.ecore.EStructuralFeature)"><code>transient</code></a>, or not.</div>
+ to determine whether a <code>feature</code> is <a href="CDOCompare.CDOFeatureFilter.html#isTransient(org.eclipse.emf.ecore.EStructuralFeature)"><code>transient</code></a>, or not.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -185,14 +185,14 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>static class&nbsp;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CDOCompare.CDOMatchEngine.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare.CDOMatchEngine</a></span></code></th>
 <td class="colLast">
-<div class="block">A <code>match engine</code> that treats <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource" class="externalLink"><code>resources</code></a> as <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>EObjects</code></a>.</div>
+<div class="block">A <code>match engine</code> that treats <code>resources</code> as <code>EObjects</code>.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CDOCompare.CDOMatcher.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare.CDOMatcher</a></span></code></th>
 <td class="colLast">
-<div class="block">A <code>matcher</code> that treats <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource" class="externalLink"><code>resources</code></a> as <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>EObjects</code></a>.</div>
+<div class="block">A <code>matcher</code> that treats <code>resources</code> as <code>EObjects</code>.</div>
 </td>
 </tr>
 </table>
@@ -288,7 +288,7 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>protected org.eclipse.emf.compare.match.eobject.IdentifierEObjectMatcher</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createMatcher(com.google.common.base.Function)">createMatcher</a></span>&#8203;(com.google.common.base.Function&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>,&#8203;java.lang.String&gt;&nbsp;idFunction)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createMatcher(com.google.common.base.Function)">createMatcher</a></span>&#8203;(com.google.common.base.Function&lt;org.eclipse.emf.ecore.EObject,&#8203;java.lang.String&gt;&nbsp;idFunction)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i11" class="rowColor">
@@ -373,7 +373,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>createMatcher</h4>
-<pre class="methodSignature">protected&nbsp;org.eclipse.emf.compare.match.eobject.IdentifierEObjectMatcher&nbsp;createMatcher&#8203;(com.google.common.base.Function&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>,&#8203;java.lang.String&gt;&nbsp;idFunction)</pre>
+<pre class="methodSignature">protected&nbsp;org.eclipse.emf.compare.match.eobject.IdentifierEObjectMatcher&nbsp;createMatcher&#8203;(com.google.common.base.Function&lt;org.eclipse.emf.ecore.EObject,&#8203;java.lang.String&gt;&nbsp;idFunction)</pre>
 </li>
 </ul>
 <a id="createEqualityHelperFactory()">

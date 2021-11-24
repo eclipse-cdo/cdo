@@ -129,7 +129,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dl>
 <hr>
 <pre>public interface <span class="typeNameLabel">CDOAdapterPolicy</span></pre>
-<div class="block">A policy that allows to specify valid <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink"><code>Adapter</code></a> / <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>EObject</code></a> combinations.</div>
+<div class="block">A policy that allows to specify valid <code>Adapter</code> / <code>EObject</code> combinations.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
@@ -201,8 +201,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isValid(org.eclipse.emf.ecore.EObject,org.eclipse.emf.common.notify.Adapter)">isValid</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&nbsp;eObject,
-       <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">Adapter</a>&nbsp;adapter)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isValid(org.eclipse.emf.ecore.EObject,org.eclipse.emf.common.notify.Adapter)">isValid</a></span>&#8203;(org.eclipse.emf.ecore.EObject&nbsp;eObject,
+       org.eclipse.emf.common.notify.Adapter&nbsp;adapter)</code></th>
 <td class="colLast">
 <div class="block">Returns <code>true</code> if the given adapter on the given object should trigger a certain operation or behavior,
  <code>false</code> otherwise.</div>
@@ -272,8 +272,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockListLast">
 <li class="blockList">
 <h4>isValid</h4>
-<pre class="methodSignature">boolean&nbsp;isValid&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&nbsp;eObject,
-                <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">Adapter</a>&nbsp;adapter)</pre>
+<pre class="methodSignature">boolean&nbsp;isValid&#8203;(org.eclipse.emf.ecore.EObject&nbsp;eObject,
+                org.eclipse.emf.common.notify.Adapter&nbsp;adapter)</pre>
 <div class="block">Returns <code>true</code> if the given adapter on the given object should trigger a certain operation or behavior,
  <code>false</code> otherwise.</div>
 <dl>

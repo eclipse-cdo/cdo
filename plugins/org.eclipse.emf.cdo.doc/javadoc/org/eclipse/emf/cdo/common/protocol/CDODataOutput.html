@@ -229,7 +229,7 @@ extends org.eclipse.net4j.util.io.ExtendedDataOutput</pre>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#writeCDOClassifierRef(org.eclipse.emf.ecore.EClassifier)">writeCDOClassifierRef</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClassifier</a>&nbsp;eClassifier)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#writeCDOClassifierRef(org.eclipse.emf.ecore.EClassifier)">writeCDOClassifierRef</a></span>&#8203;(org.eclipse.emf.ecore.EClassifier&nbsp;eClassifier)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
@@ -244,13 +244,13 @@ extends org.eclipse.net4j.util.io.ExtendedDataOutput</pre>
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#writeCDOFeatureDelta(org.eclipse.emf.ecore.EClass,org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">writeCDOFeatureDelta</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;owner,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#writeCDOFeatureDelta(org.eclipse.emf.ecore.EClass,org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">writeCDOFeatureDelta</a></span>&#8203;(org.eclipse.emf.ecore.EClass&nbsp;owner,
                     <a href="../revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureDelta)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#writeCDOFeatureValue(org.eclipse.emf.ecore.EStructuralFeature,java.lang.Object)">writeCDOFeatureValue</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&nbsp;feature,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#writeCDOFeatureValue(org.eclipse.emf.ecore.EStructuralFeature,java.lang.Object)">writeCDOFeatureValue</a></span>&#8203;(org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature,
                     java.lang.Object&nbsp;value)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
@@ -276,8 +276,8 @@ extends org.eclipse.net4j.util.io.ExtendedDataOutput</pre>
 </tr>
 <tr id="i18" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#writeCDOList(org.eclipse.emf.ecore.EClass,org.eclipse.emf.ecore.EStructuralFeature,org.eclipse.emf.cdo.common.revision.CDOList,int)">writeCDOList</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;owner,
-            <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&nbsp;feature,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#writeCDOList(org.eclipse.emf.ecore.EClass,org.eclipse.emf.ecore.EStructuralFeature,org.eclipse.emf.cdo.common.revision.CDOList,int)">writeCDOList</a></span>&#8203;(org.eclipse.emf.ecore.EClass&nbsp;owner,
+            org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature,
             <a href="../revision/CDOList.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOList</a>&nbsp;list,
             int&nbsp;referenceChunk)</code></th>
 <td class="colLast">&nbsp;</td>
@@ -580,7 +580,7 @@ extends org.eclipse.net4j.util.io.ExtendedDataOutput</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>writeCDOClassifierRef</h4>
-<pre class="methodSignature">void&nbsp;writeCDOClassifierRef&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClassifier</a>&nbsp;eClassifier)
+<pre class="methodSignature">void&nbsp;writeCDOClassifierRef&#8203;(org.eclipse.emf.ecore.EClassifier&nbsp;eClassifier)
                     throws java.io.IOException</pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -831,8 +831,8 @@ extends org.eclipse.net4j.util.io.ExtendedDataOutput</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>writeCDOList</h4>
-<pre class="methodSignature">void&nbsp;writeCDOList&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;owner,
-                  <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&nbsp;feature,
+<pre class="methodSignature">void&nbsp;writeCDOList&#8203;(org.eclipse.emf.ecore.EClass&nbsp;owner,
+                  org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature,
                   <a href="../revision/CDOList.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOList</a>&nbsp;list,
                   int&nbsp;referenceChunk)
            throws java.io.IOException</pre>
@@ -848,7 +848,7 @@ extends org.eclipse.net4j.util.io.ExtendedDataOutput</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>writeCDOFeatureValue</h4>
-<pre class="methodSignature">void&nbsp;writeCDOFeatureValue&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&nbsp;feature,
+<pre class="methodSignature">void&nbsp;writeCDOFeatureValue&#8203;(org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature,
                           java.lang.Object&nbsp;value)
                    throws java.io.IOException</pre>
 <dl>
@@ -877,7 +877,7 @@ extends org.eclipse.net4j.util.io.ExtendedDataOutput</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>writeCDOFeatureDelta</h4>
-<pre class="methodSignature">void&nbsp;writeCDOFeatureDelta&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;owner,
+<pre class="methodSignature">void&nbsp;writeCDOFeatureDelta&#8203;(org.eclipse.emf.ecore.EClass&nbsp;owner,
                           <a href="../revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureDelta)
                    throws java.io.IOException</pre>
 <dl>

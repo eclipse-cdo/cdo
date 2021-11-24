@@ -222,7 +222,7 @@ implements <a href="InternalCDORevision.html" title="interface in org.eclipse.em
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected </code></td>
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(org.eclipse.emf.ecore.EClass)">AbstractCDORevision</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;eClass)</code></th>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(org.eclipse.emf.ecore.EClass)">AbstractCDORevision</a></span>&#8203;(org.eclipse.emf.ecore.EClass&nbsp;eClass)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -251,13 +251,13 @@ implements <a href="InternalCDORevision.html" title="interface in org.eclipse.em
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#accept(org.eclipse.emf.cdo.common.revision.CDORevisionValueVisitor,java.util.function.Predicate)">accept</a></span>&#8203;(<a href="../../../common/revision/CDORevisionValueVisitor.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionValueVisitor</a>&nbsp;visitor,
-      java.util.function.Predicate&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&gt;&nbsp;filter)</code></th>
+      java.util.function.Predicate&lt;org.eclipse.emf.ecore.EStructuralFeature&gt;&nbsp;filter)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#accept(org.eclipse.emf.cdo.common.revision.CDORevisionValueVisitor,org.eclipse.net4j.util.Predicate)">accept</a></span>&#8203;(<a href="../../../common/revision/CDORevisionValueVisitor.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionValueVisitor</a>&nbsp;visitor,
-      org.eclipse.net4j.util.Predicate&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&gt;&nbsp;filter)</code></th>
+      org.eclipse.net4j.util.Predicate&lt;org.eclipse.emf.ecore.EStructuralFeature&gt;&nbsp;filter)</code></th>
 <td class="colLast">
 <div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 </td>
@@ -279,7 +279,7 @@ implements <a href="InternalCDORevision.html" title="interface in org.eclipse.em
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code>protected <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>[]</code></td>
+<td class="colFirst"><code>protected org.eclipse.emf.ecore.EStructuralFeature[]</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAllPersistentFeatures()">getAllPersistentFeatures</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
@@ -289,25 +289,25 @@ implements <a href="InternalCDORevision.html" title="interface in org.eclipse.em
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a></code></td>
+<td class="colFirst"><code>org.eclipse.emf.ecore.EClass</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getEClass()">getEClass</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>protected int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getFeatureIndex(org.eclipse.emf.ecore.EStructuralFeature)">getFeatureIndex</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&nbsp;feature)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getFeatureIndex(org.eclipse.emf.ecore.EStructuralFeature)">getFeatureIndex</a></span>&#8203;(org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="../../../common/revision/CDOList.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOList</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getList(org.eclipse.emf.ecore.EStructuralFeature)">getList</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&nbsp;feature)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getList(org.eclipse.emf.ecore.EStructuralFeature)">getList</a></span>&#8203;(org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)</code></th>
 <td class="colLast">
 <div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 </td>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code><a href="../../../common/revision/CDOList.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOList</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getList(org.eclipse.emf.ecore.EStructuralFeature,int)">getList</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&nbsp;feature,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getList(org.eclipse.emf.ecore.EStructuralFeature,int)">getList</a></span>&#8203;(org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature,
        int&nbsp;initialCapacity)</code></th>
 <td class="colLast">
 <div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
@@ -330,7 +330,7 @@ implements <a href="InternalCDORevision.html" title="interface in org.eclipse.em
 </tr>
 <tr id="i15" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#initClassInfo(org.eclipse.emf.ecore.EClass)">initClassInfo</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;eClass)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#initClassInfo(org.eclipse.emf.ecore.EClass)">initClassInfo</a></span>&#8203;(org.eclipse.emf.ecore.EClass&nbsp;eClass)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i16" class="altColor">
@@ -486,7 +486,7 @@ implements <a href="InternalCDORevision.html" title="interface in org.eclipse.em
 <ul class="blockList">
 <li class="blockList">
 <h4>AbstractCDORevision</h4>
-<pre>protected&nbsp;AbstractCDORevision&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;eClass)</pre>
+<pre>protected&nbsp;AbstractCDORevision&#8203;(org.eclipse.emf.ecore.EClass&nbsp;eClass)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
@@ -539,7 +539,7 @@ implements <a href="InternalCDORevision.html" title="interface in org.eclipse.em
 <ul class="blockList">
 <li class="blockList">
 <h4>getEClass</h4>
-<pre class="methodSignature">public final&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;getEClass()</pre>
+<pre class="methodSignature">public final&nbsp;org.eclipse.emf.ecore.EClass&nbsp;getEClass()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../common/revision/CDORevision.html#getEClass()">getEClass</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a></code></dd>
@@ -740,7 +740,7 @@ implements <a href="InternalCDORevision.html" title="interface in org.eclipse.em
 <h4>accept</h4>
 <pre class="methodSignature">@Deprecated
 public&nbsp;void&nbsp;accept&#8203;(<a href="../../../common/revision/CDORevisionValueVisitor.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionValueVisitor</a>&nbsp;visitor,
-                   org.eclipse.net4j.util.Predicate&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&gt;&nbsp;filter)</pre>
+                   org.eclipse.net4j.util.Predicate&lt;org.eclipse.emf.ecore.EStructuralFeature&gt;&nbsp;filter)</pre>
 <div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
@@ -757,7 +757,7 @@ public&nbsp;void&nbsp;accept&#8203;(<a href="../../../common/revision/CDORevisio
 <li class="blockList">
 <h4>accept</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;accept&#8203;(<a href="../../../common/revision/CDORevisionValueVisitor.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionValueVisitor</a>&nbsp;visitor,
-                   java.util.function.Predicate&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&gt;&nbsp;filter)</pre>
+                   java.util.function.Predicate&lt;org.eclipse.emf.ecore.EStructuralFeature&gt;&nbsp;filter)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../common/revision/CDORevisionData.html#accept(org.eclipse.emf.cdo.common.revision.CDORevisionValueVisitor,java.util.function.Predicate)">accept</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/revision/CDORevisionData.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionData</a></code></dd>
@@ -828,7 +828,7 @@ public&nbsp;void&nbsp;accept&#8203;(<a href="../../../common/revision/CDORevisio
 <li class="blockList">
 <h4>getList</h4>
 <pre class="methodSignature">@Deprecated
-public&nbsp;<a href="../../../common/revision/CDOList.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOList</a>&nbsp;getList&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&nbsp;feature)</pre>
+public&nbsp;<a href="../../../common/revision/CDOList.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOList</a>&nbsp;getList&#8203;(org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)</pre>
 <div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
@@ -843,7 +843,7 @@ public&nbsp;<a href="../../../common/revision/CDOList.html" title="interface in 
 <li class="blockList">
 <h4>getList</h4>
 <pre class="methodSignature">@Deprecated
-public&nbsp;<a href="../../../common/revision/CDOList.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOList</a>&nbsp;getList&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&nbsp;feature,
+public&nbsp;<a href="../../../common/revision/CDOList.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOList</a>&nbsp;getList&#8203;(org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature,
                        int&nbsp;initialCapacity)</pre>
 <div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <dl>
@@ -858,7 +858,7 @@ public&nbsp;<a href="../../../common/revision/CDOList.html" title="interface in 
 <ul class="blockList">
 <li class="blockList">
 <h4>initClassInfo</h4>
-<pre class="methodSignature">protected&nbsp;void&nbsp;initClassInfo&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;eClass)</pre>
+<pre class="methodSignature">protected&nbsp;void&nbsp;initClassInfo&#8203;(org.eclipse.emf.ecore.EClass&nbsp;eClass)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
@@ -871,7 +871,7 @@ public&nbsp;<a href="../../../common/revision/CDOList.html" title="interface in 
 <ul class="blockList">
 <li class="blockList">
 <h4>getAllPersistentFeatures</h4>
-<pre class="methodSignature">protected&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>[]&nbsp;getAllPersistentFeatures()</pre>
+<pre class="methodSignature">protected&nbsp;org.eclipse.emf.ecore.EStructuralFeature[]&nbsp;getAllPersistentFeatures()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
@@ -884,7 +884,7 @@ public&nbsp;<a href="../../../common/revision/CDOList.html" title="interface in 
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getFeatureIndex</h4>
-<pre class="methodSignature">protected&nbsp;int&nbsp;getFeatureIndex&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&nbsp;feature)</pre>
+<pre class="methodSignature">protected&nbsp;int&nbsp;getFeatureIndex&#8203;(org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>

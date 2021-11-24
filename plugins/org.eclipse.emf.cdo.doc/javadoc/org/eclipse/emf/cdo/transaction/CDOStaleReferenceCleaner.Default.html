@@ -225,7 +225,7 @@ implements <a href="CDOStaleReferenceCleaner.html" title="interface in org.eclip
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#cleanStaleReferences(java.util.Collection)">cleanStaleReferences</a></span>&#8203;(java.util.Collection&lt;org.eclipse.net4j.util.collection.Pair&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.Setting.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature.Setting</a>,&#8203;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&gt;&gt;&nbsp;objectsToBeRemoved)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#cleanStaleReferences(java.util.Collection)">cleanStaleReferences</a></span>&#8203;(java.util.Collection&lt;org.eclipse.net4j.util.collection.Pair&lt;org.eclipse.emf.ecore.EStructuralFeature.Setting,&#8203;org.eclipse.emf.ecore.EObject&gt;&gt;&nbsp;objectsToBeRemoved)</code></th>
 <td class="colLast">
 <div class="block">Clean the stale references created on invalidation.</div>
 </td>
@@ -279,14 +279,14 @@ implements <a href="CDOStaleReferenceCleaner.html" title="interface in org.eclip
 <ul class="blockListLast">
 <li class="blockList">
 <h4>cleanStaleReferences</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;cleanStaleReferences&#8203;(java.util.Collection&lt;org.eclipse.net4j.util.collection.Pair&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.Setting.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature.Setting</a>,&#8203;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&gt;&gt;&nbsp;objectsToBeRemoved)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;cleanStaleReferences&#8203;(java.util.Collection&lt;org.eclipse.net4j.util.collection.Pair&lt;org.eclipse.emf.ecore.EStructuralFeature.Setting,&#8203;org.eclipse.emf.ecore.EObject&gt;&gt;&nbsp;objectsToBeRemoved)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="CDOStaleReferenceCleaner.html#cleanStaleReferences(java.util.Collection)">CDOStaleReferenceCleaner</a></code></span></div>
 <div class="block">Clean the stale references created on invalidation.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="CDOStaleReferenceCleaner.html#cleanStaleReferences(java.util.Collection)">cleanStaleReferences</a></code>&nbsp;in interface&nbsp;<code><a href="CDOStaleReferenceCleaner.html" title="interface in org.eclipse.emf.cdo.transaction">CDOStaleReferenceCleaner</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>objectsToBeRemoved</code> - <code>Collection</code> of <code>Pair</code> from <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.Setting.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>EStructuralFeature.Setting</code></a> to detached objects</dd>
+<dd><code>objectsToBeRemoved</code> - <code>Collection</code> of <code>Pair</code> from <code>EStructuralFeature.Setting</code> to detached objects</dd>
 </dl>
 </li>
 </ul>

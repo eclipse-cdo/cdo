@@ -144,7 +144,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <pre>public static class <span class="typeNameLabel">CDOCompare.CDOFeatureFilter</span>
 extends org.eclipse.emf.compare.diff.FeatureFilter</pre>
 <div class="block">A CDO-specific <code>feature filter</code> that uses <a href="../common/model/EMFUtil.html#isPersistent(org.eclipse.emf.ecore.EStructuralFeature)"><code>EMFUtil.isPersistent()</code></a>
- to determine whether a <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>feature</code></a> is <a href="#isTransient(org.eclipse.emf.ecore.EStructuralFeature)"><code>transient</code></a>, or not.</div>
+ to determine whether a <code>feature</code> is <a href="#isTransient(org.eclipse.emf.ecore.EStructuralFeature)"><code>transient</code></a>, or not.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.5</dd>
@@ -194,14 +194,14 @@ extends org.eclipse.emf.compare.diff.FeatureFilter</pre>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>protected boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isIgnoredAttribute(org.eclipse.emf.ecore.EAttribute)">isIgnoredAttribute</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EAttribute.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EAttribute</a>&nbsp;attribute)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isIgnoredAttribute(org.eclipse.emf.ecore.EAttribute)">isIgnoredAttribute</a></span>&#8203;(org.eclipse.emf.ecore.EAttribute&nbsp;attribute)</code></th>
 <td class="colLast">
 <div class="block">TODO Remove this copied method when EMFCompare bug 570625 is resolved and released.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>protected boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isTransient(org.eclipse.emf.ecore.EStructuralFeature)">isTransient</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&nbsp;feature)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isTransient(org.eclipse.emf.ecore.EStructuralFeature)">isTransient</a></span>&#8203;(org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -260,7 +260,7 @@ extends org.eclipse.emf.compare.diff.FeatureFilter</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>isIgnoredAttribute</h4>
-<pre class="methodSignature">protected&nbsp;boolean&nbsp;isIgnoredAttribute&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EAttribute.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EAttribute</a>&nbsp;attribute)</pre>
+<pre class="methodSignature">protected&nbsp;boolean&nbsp;isIgnoredAttribute&#8203;(org.eclipse.emf.ecore.EAttribute&nbsp;attribute)</pre>
 <div class="block">TODO Remove this copied method when EMFCompare bug 570625 is resolved and released.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
@@ -274,7 +274,7 @@ extends org.eclipse.emf.compare.diff.FeatureFilter</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>isTransient</h4>
-<pre class="methodSignature">protected&nbsp;boolean&nbsp;isTransient&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&nbsp;feature)</pre>
+<pre class="methodSignature">protected&nbsp;boolean&nbsp;isTransient&#8203;(org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>isTransient</code>&nbsp;in class&nbsp;<code>org.eclipse.emf.compare.diff.FeatureFilter</code></dd>

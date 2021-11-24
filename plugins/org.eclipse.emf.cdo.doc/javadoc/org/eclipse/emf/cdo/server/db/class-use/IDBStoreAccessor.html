@@ -229,6 +229,13 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">IBranchDeletionSupport.</span><code><span class="memberNameLink"><a href="../mapping/IBranchDeletionSupport.html#deleteBranches(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.net4j.db.Batch,java.lang.String)">deleteBranches</a></span>&#8203;(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+              org.eclipse.net4j.db.Batch&nbsp;batch,
+              java.lang.String&nbsp;idList)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">IClassMapping.</span><code><span class="memberNameLink"><a href="../mapping/IClassMapping.html#detachObject(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.id.CDOID,int,org.eclipse.emf.cdo.common.branch.CDOBranch,long,org.eclipse.net4j.util.om.monitor.OMMonitor)">detachObject</a></span>&#8203;(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
             <a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
             int&nbsp;version,
@@ -239,7 +246,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Detaches (deletes) a CDO object leaving a "ghost" revision behind.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">IClassMapping.</span><code><span class="memberNameLink"><a href="../mapping/IClassMapping.html#handleRevisions(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.branch.CDOBranch,long,boolean,org.eclipse.emf.cdo.common.revision.CDORevisionHandler)">handleRevisions</a></span>&#8203;(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
                <a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
@@ -253,10 +260,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  The <code>branch</code> parameter is <code>null</code> or equal to <code>revision.getBranch()</code>.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">IMappingStrategy.</span><code><span class="memberNameLink"><a href="../mapping/IMappingStrategy.html#handleRevisions(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.ecore.EClass,org.eclipse.emf.cdo.common.branch.CDOBranch,long,boolean,org.eclipse.emf.cdo.common.revision.CDORevisionHandler)">handleRevisions</a></span>&#8203;(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
-               <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;eClass,
+               org.eclipse.emf.ecore.EClass&nbsp;eClass,
                <a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
                long&nbsp;timeStamp,
                boolean&nbsp;exactTime,
@@ -268,7 +275,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  The <code>eClass</code> parameter is <code>null</code> or equal to <code>revision.getEClass()</code>.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">IListMapping.</span><code><span class="memberNameLink"><a href="../mapping/IListMapping.html#objectDetached(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.id.CDOID,long)">objectDetached</a></span>&#8203;(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
               <a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
@@ -277,14 +284,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Hook with which a list mapping is notified that a containing object has been revised.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">IMappingStrategy2.</span><code><span class="memberNameLink"><a href="../mapping/IMappingStrategy2.html#postProcessRevisions(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext,org.eclipse.net4j.util.om.monitor.OMMonitor)">postProcessRevisions</a></span>&#8203;(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
                     <a href="../../IStoreAccessor.CommitContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.CommitContext</a>&nbsp;context,
                     org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">IListMappingDeltaSupport.</span><code><span class="memberNameLink"><a href="../mapping/IListMappingDeltaSupport.html#processDelta(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.id.CDOID,int,int,int,long,org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta)">processDelta</a></span>&#8203;(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
             <a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
@@ -297,7 +304,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Process a set of CDOFeatureDeltas for a many-valued feature.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">IMappingStrategy.</span><code><span class="memberNameLink"><a href="../mapping/IMappingStrategy.html#queryResources(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.server.IStoreAccessor.QueryResourcesContext)">queryResources</a></span>&#8203;(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
               <a href="../../IStoreAccessor.QueryResourcesContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.QueryResourcesContext</a>&nbsp;context)</code></th>
@@ -305,7 +312,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Executes a resource query.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>java.sql.ResultSet</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">IListMappingUnitSupport.</span><code><span class="memberNameLink"><a href="../mapping/IListMappingUnitSupport.html#queryUnitEntries(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.server.db.IIDHandler,long,org.eclipse.emf.cdo.common.id.CDOID)">queryUnitEntries</a></span>&#8203;(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
                 <a href="../IIDHandler.html" title="interface in org.eclipse.emf.cdo.server.db">IIDHandler</a>&nbsp;idHandler,
@@ -313,7 +320,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
                 <a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;rootID)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">IClassMapping.</span><code><span class="memberNameLink"><a href="../mapping/IClassMapping.html#queryXRefs(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext,java.lang.String)">queryXRefs</a></span>&#8203;(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
           <a href="../../IStoreAccessor.QueryXRefsContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.QueryXRefsContext</a>&nbsp;context,
@@ -322,7 +329,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Retrieve cross-references from DB</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">IListMapping.</span><code><span class="memberNameLink"><a href="../mapping/IListMapping.html#queryXRefs(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,java.lang.String,java.lang.String,org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext,java.lang.String)">queryXRefs</a></span>&#8203;(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
           java.lang.String&nbsp;mainTableName,
@@ -333,7 +340,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Retrieve cross-references from DB.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">IMappingStrategy.</span><code><span class="memberNameLink"><a href="../mapping/IMappingStrategy.html#queryXRefs(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext)">queryXRefs</a></span>&#8203;(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
           <a href="../../IStoreAccessor.QueryXRefsContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.QueryXRefsContext</a>&nbsp;context)</code></th>
@@ -341,7 +348,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Executes a cross reference query.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">IMappingStrategy.</span><code><span class="memberNameLink"><a href="../mapping/IMappingStrategy.html#rawExport(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.protocol.CDODataOutput,int,int,long,long)">rawExport</a></span>&#8203;(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
          <a href="../../../common/protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
@@ -351,7 +358,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
          long&nbsp;lastCommitTime)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">IMappingStrategy.</span><code><span class="memberNameLink"><a href="../mapping/IMappingStrategy.html#rawImport(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.protocol.CDODataInput,long,long,org.eclipse.net4j.util.om.monitor.OMMonitor)">rawImport</a></span>&#8203;(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
          <a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a>&nbsp;in,
@@ -360,7 +367,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
          org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>java.util.Set&lt;<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">IClassMapping.</span><code><span class="memberNameLink"><a href="../mapping/IClassMapping.html#readChangeSet(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment%5B%5D)">readChangeSet</a></span>&#8203;(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
              <a href="../../../spi/common/commit/CDOChangeSetSegment.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDOChangeSetSegment</a>[]&nbsp;segments)</code></th>
@@ -368,7 +375,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Returns a set of CDOIDs that have at least one revision in any of the passed branches and time ranges.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>java.util.Set&lt;<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">IMappingStrategy.</span><code><span class="memberNameLink"><a href="../mapping/IMappingStrategy.html#readChangeSet(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.net4j.util.om.monitor.OMMonitor,org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment%5B%5D)">readChangeSet</a></span>&#8203;(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
              org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor,
@@ -377,14 +384,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Returns a set of CDOIDs that have at least one revision in any of the passed branches and time ranges.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>org.eclipse.net4j.util.collection.CloseableIterator&lt;<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">IMappingStrategy.</span><code><span class="memberNameLink"><a href="../mapping/IMappingStrategy.html#readObjectIDs(org.eclipse.emf.cdo.server.db.IDBStoreAccessor)">readObjectIDs</a></span>&#8203;(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor)</code></th>
 <td class="colLast">
 <div class="block">Get an iterator over all instances of objects in the store.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../common/model/CDOClassifierRef.html" title="class in org.eclipse.emf.cdo.common.model">CDOClassifierRef</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">IMappingStrategy.</span><code><span class="memberNameLink"><a href="../mapping/IMappingStrategy.html#readObjectType(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.id.CDOID)">readObjectType</a></span>&#8203;(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
               <a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></th>
@@ -392,7 +399,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Read the type (i.e.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">IClassMapping.</span><code><span class="memberNameLink"><a href="../mapping/IClassMapping.html#readRevision(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,int)">readRevision</a></span>&#8203;(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
             <a href="../../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision,
@@ -401,7 +408,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Read a revision.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">IClassMappingAuditSupport.</span><code><span class="memberNameLink"><a href="../mapping/IClassMappingAuditSupport.html#readRevisionByVersion(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,int)">readRevisionByVersion</a></span>&#8203;(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;storeAccessor,
                      <a href="../../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision,
@@ -410,7 +417,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Read a specific version of a revision.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">IClassMappingUnitSupport.</span><code><span class="memberNameLink"><a href="../mapping/IClassMappingUnitSupport.html#readUnitRevisions(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.revision.CDORevisionHandler)">readUnitRevisions</a></span>&#8203;(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
                  <a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
@@ -418,7 +425,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
                  <a href="../../../common/revision/CDORevisionHandler.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionHandler</a>&nbsp;revisionHandler)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">IListMapping.</span><code><span class="memberNameLink"><a href="../mapping/IListMapping.html#readValues(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,int)">readValues</a></span>&#8203;(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
           <a href="../../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision,
@@ -427,7 +434,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Read the list size and the complete list or the first part of it.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">IClassMapping.</span><code><span class="memberNameLink"><a href="../mapping/IClassMapping.html#writeRevision(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,boolean,boolean,org.eclipse.net4j.util.om.monitor.OMMonitor)">writeRevision</a></span>&#8203;(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
              <a href="../../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision,
@@ -438,7 +445,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Write the revision data to the database.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">IClassMappingDeltaSupport.</span><code><span class="memberNameLink"><a href="../mapping/IClassMappingDeltaSupport.html#writeRevisionDelta(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta,long,org.eclipse.net4j.util.om.monitor.OMMonitor)">writeRevisionDelta</a></span>&#8203;(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
                   <a href="../../../spi/common/revision/InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a>&nbsp;delta,
@@ -448,7 +455,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Write a revision delta.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">IListMapping.</span><code><span class="memberNameLink"><a href="../mapping/IListMapping.html#writeValues(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)">writeValues</a></span>&#8203;(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
            <a href="../../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision)</code></th>
@@ -456,7 +463,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Write a complete list of values to the database.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">IListMapping4.</span><code><span class="memberNameLink"><a href="../mapping/IListMapping4.html#writeValues(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.revision.CDORevision,boolean,boolean)">writeValues</a></span>&#8203;(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
            <a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,

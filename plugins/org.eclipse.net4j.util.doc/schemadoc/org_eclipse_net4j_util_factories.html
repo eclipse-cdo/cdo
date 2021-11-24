@@ -15,7 +15,7 @@
 <h6 class="CaptionFigColumn SchemaHeader">Description: </h6>[Enter description of this extension point.]<p></p>
 <h6 class="CaptionFigColumn SchemaHeader">Configuration Markup:</h6>
 <p></p>
-<p class="code SchemaDtd">&lt;!ELEMENT <a name="e.extension">extension</a> (<a href="#e.factory">factory</a>+)&gt;</p>
+<p class="code SchemaDtd">&lt;!ELEMENT <a name="e.extension">extension</a> (<a href="#e.factory">factory</a>* , <a href="#e.factories">factories</a>*)&gt;</p>
 <p class="code SchemaDtd">&lt;!ATTLIST extension</p>
 <p class="code SchemaDtdAttlist">point&nbsp;CDATA #REQUIRED</p>
 <p class="code SchemaDtdAttlist">id&nbsp;&nbsp;&nbsp;&nbsp;CDATA #IMPLIED</p>
@@ -34,6 +34,22 @@
 <li><b>type</b> - </li>
 <li><b>class</b> - </li>
 </ul>
+<br><p class="code SchemaDtd">&lt;!ELEMENT <a name="e.factories">factories</a> (<a href="#e.type">type</a>+)&gt;</p>
+<p class="code SchemaDtd">&lt;!ATTLIST factories</p>
+<p class="code SchemaDtdAttlist">productGroup&nbsp;CDATA #REQUIRED</p>
+<p class="code SchemaDtdAttlist">class&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CDATA #REQUIRED&gt;</p>
+<p></p>
+<ul class="ConfigMarkupAttlistDesc">
+<li><b>productGroup</b> - </li>
+<li><b>class</b> - </li>
+</ul>
+<br><p class="code SchemaDtd">&lt;!ELEMENT <a name="e.type">type</a> EMPTY&gt;</p>
+<p class="code SchemaDtd">&lt;!ATTLIST type</p>
+<p class="code SchemaDtdAttlist">value&nbsp;CDATA #REQUIRED&gt;</p>
+<p></p>
+<ul class="ConfigMarkupAttlistDesc">
+<li><b>value</b> - </li>
+</ul>
 <br><h6 class="CaptionFigColumn SchemaHeader">Examples: </h6>[Enter extension point usage example here.]
 <p></p>
 
@@ -45,7 +61,7 @@
 
 <br>
 <p class="note SchemaCopyright">
-Copyright (c) 2007, 2012 Eike Stepper (Loehne, Germany) and others.<br>
+Copyright (c) 2007, 2012, 2021 Eike Stepper (Loehne, Germany) and others.<br>
 All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a>
 
 </p>

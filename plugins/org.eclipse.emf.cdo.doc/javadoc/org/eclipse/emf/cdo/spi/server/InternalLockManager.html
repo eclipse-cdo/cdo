@@ -28,7 +28,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":38,"i11":6,"i12":6,"i13":6,"i14":6,"i15":6,"i16":38,"i17":38,"i18":6,"i19":6,"i20":6};
+var data = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":6,"i11":38,"i12":6,"i13":6,"i14":6,"i15":6,"i16":6,"i17":38,"i18":38,"i19":6,"i20":6,"i21":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -258,11 +258,17 @@ extends org.eclipse.net4j.util.concurrent.IRWOLockManager&lt;java.lang.Object,&#
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLockStates(java.util.Collection,java.util.function.BiConsumer)">getLockStates</a></span>&#8203;(java.util.Collection&lt;java.lang.Object&gt;&nbsp;keys,
+             java.util.function.BiConsumer&lt;java.lang.Object,&#8203;org.eclipse.net4j.util.concurrent.RWOLockManager.LockState&lt;java.lang.Object,&#8203;<a href="../../server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&gt;&gt;&nbsp;consumer)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRepository()">getRepository</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#lock(boolean,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,org.eclipse.emf.cdo.server.IView,java.util.Collection,long)">lock</a></span>&#8203;(boolean&nbsp;explicit,
     org.eclipse.net4j.util.concurrent.IRWLockManager.LockType&nbsp;type,
@@ -273,7 +279,7 @@ extends org.eclipse.net4j.util.concurrent.IRWOLockManager&lt;java.lang.Object,&#
 <div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>java.util.List&lt;org.eclipse.net4j.util.concurrent.RWOLockManager.LockState&lt;java.lang.Object,&#8203;<a href="../../server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&gt;&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#lock2(boolean,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,org.eclipse.emf.cdo.server.IView,java.util.Collection,boolean,long)">lock2</a></span>&#8203;(boolean&nbsp;explicit,
      org.eclipse.net4j.util.concurrent.IRWLockManager.LockType&nbsp;type,
@@ -283,7 +289,7 @@ extends org.eclipse.net4j.util.concurrent.IRWOLockManager&lt;java.lang.Object,&#
      long&nbsp;timeout)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code><a href="../../server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#openView(org.eclipse.emf.cdo.server.ISession,int,boolean,java.lang.String)">openView</a></span>&#8203;(<a href="../../server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session,
         int&nbsp;viewID,
@@ -291,23 +297,23 @@ extends org.eclipse.net4j.util.concurrent.IRWOLockManager&lt;java.lang.Object,&#
         java.lang.String&nbsp;durableLockingID)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#reloadLocks()">reloadLocks</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setLockState(java.lang.Object,org.eclipse.net4j.util.concurrent.RWOLockManager.LockState)">setLockState</a></span>&#8203;(java.lang.Object&nbsp;key,
             org.eclipse.net4j.util.concurrent.RWOLockManager.LockState&lt;java.lang.Object,&#8203;<a href="../../server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&gt;&nbsp;lockState)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRepository(org.eclipse.emf.cdo.spi.server.InternalRepository)">setRepository</a></span>&#8203;(<a href="InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#unlock(boolean,org.eclipse.emf.cdo.server.IView)">unlock</a></span>&#8203;(boolean&nbsp;explicit,
       <a href="../../server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&nbsp;context)</code></th>
@@ -315,7 +321,7 @@ extends org.eclipse.net4j.util.concurrent.IRWOLockManager&lt;java.lang.Object,&#
 <div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 </td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#unlock(boolean,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,org.eclipse.emf.cdo.server.IView,java.util.Collection)">unlock</a></span>&#8203;(boolean&nbsp;explicit,
       org.eclipse.net4j.util.concurrent.IRWLockManager.LockType&nbsp;type,
@@ -325,13 +331,13 @@ extends org.eclipse.net4j.util.concurrent.IRWOLockManager&lt;java.lang.Object,&#
 <div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 </td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>java.util.List&lt;org.eclipse.net4j.util.concurrent.RWOLockManager.LockState&lt;java.lang.Object,&#8203;<a href="../../server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&gt;&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#unlock2(boolean,org.eclipse.emf.cdo.server.IView)">unlock2</a></span>&#8203;(boolean&nbsp;explicit,
        <a href="../../server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&nbsp;context)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i19" class="rowColor">
+<tr id="i20" class="altColor">
 <td class="colFirst"><code>java.util.List&lt;org.eclipse.net4j.util.concurrent.RWOLockManager.LockState&lt;java.lang.Object,&#8203;<a href="../../server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&gt;&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#unlock2(boolean,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,org.eclipse.emf.cdo.server.IView,java.util.Collection,boolean)">unlock2</a></span>&#8203;(boolean&nbsp;explicit,
        org.eclipse.net4j.util.concurrent.IRWLockManager.LockType&nbsp;type,
@@ -340,7 +346,7 @@ extends org.eclipse.net4j.util.concurrent.IRWOLockManager&lt;java.lang.Object,&#
        boolean&nbsp;recursive)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i20" class="altColor">
+<tr id="i21" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateLockArea(org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockArea)">updateLockArea</a></span>&#8203;(<a href="../../common/lock/IDurableLockingManager.LockArea.html" title="interface in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockArea</a>&nbsp;lockArea)</code></th>
 <td class="colLast">&nbsp;</td>
@@ -516,7 +522,7 @@ void&nbsp;unlock&#8203;(boolean&nbsp;explicit,
             <a href="../../server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&nbsp;context,
             java.util.Collection&lt;? extends java.lang.Object&gt;&nbsp;objects)</pre>
 <div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
-<div class="block">Attempts to release for a given locktype, view and objects.</div>
+<div class="block">Attempts to release for a given lock type, view and objects.</div>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.lang.IllegalMonitorStateException</code> - Unlocking objects without lock.</dd>
@@ -652,6 +658,20 @@ void&nbsp;unlock&#8203;(boolean&nbsp;explicit,
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.1</dd>
+</dl>
+</li>
+</ul>
+<a id="getLockStates(java.util.Collection,java.util.function.BiConsumer)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getLockStates</h4>
+<pre class="methodSignature">void&nbsp;getLockStates&#8203;(java.util.Collection&lt;java.lang.Object&gt;&nbsp;keys,
+                   java.util.function.BiConsumer&lt;java.lang.Object,&#8203;org.eclipse.net4j.util.concurrent.RWOLockManager.LockState&lt;java.lang.Object,&#8203;<a href="../../server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&gt;&gt;&nbsp;consumer)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.15</dd>
 </dl>
 </li>
 </ul>

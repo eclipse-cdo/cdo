@@ -706,6 +706,23 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </a>
 <h3>Uses of <a href="../CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a> in <a href="../../../spi/common/revision/package-summary.html">org.eclipse.emf.cdo.spi.common.revision</a></h3>
 <table class="useSummary">
+<caption><span>Subinterfaces of <a href="../CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a> in <a href="../../../spi/common/revision/package-summary.html">org.eclipse.emf.cdo.spi.common.revision</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>interface&nbsp;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../spi/common/revision/CDORevisionProviderWithSynthetics.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">CDORevisionProviderWithSynthetics</a></span></code></th>
+<td class="colLast">
+<div class="block">A revision provider that can also provide <a href="../../../spi/common/revision/SyntheticCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision"><code>synthetic revisions</code></a>.</div>
+</td>
+</tr>
+</tbody>
+</table>
+<table class="useSummary">
 <caption><span>Classes in <a href="../../../spi/common/revision/package-summary.html">org.eclipse.emf.cdo.spi.common.revision</a> that implement <a href="../CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
@@ -717,7 +734,15 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <td class="colFirst"><code>class&nbsp;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../spi/common/revision/ManagedRevisionProvider.html" title="class in org.eclipse.emf.cdo.spi.common.revision">ManagedRevisionProvider</a></span></code></th>
 <td class="colLast">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">A revision provider backed by a <a href="../CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision manager</code></a> that provides revisions which are
+ <a href="../CDORevision.html#isValid(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)"><code>valid</code></a> at the configured <a href="../../../spi/common/revision/ManagedRevisionProvider.html#getBranchPoint()"><code>branch point</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static class&nbsp;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../spi/common/revision/ManagedRevisionProvider.WithSynthetics.html" title="class in org.eclipse.emf.cdo.spi.common.revision">ManagedRevisionProvider.WithSynthetics</a></span></code></th>
+<td class="colLast">
+<div class="block">A managed revision provider that can also provide <a href="../../../spi/common/revision/SyntheticCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision"><code>synthetic revisions</code></a>.</div>
 </td>
 </tr>
 </tbody>

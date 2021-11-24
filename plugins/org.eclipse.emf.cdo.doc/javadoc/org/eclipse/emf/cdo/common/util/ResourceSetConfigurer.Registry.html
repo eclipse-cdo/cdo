@@ -28,7 +28,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -210,18 +210,26 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code><a href="ResourceSetConfigurer.Registry.ResourceSetConfiguration.html" title="class in org.eclipse.emf.cdo.common.util">ResourceSetConfigurer.Registry.ResourceSetConfiguration</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#configureResourceSet(org.eclipse.emf.ecore.resource.ResourceSet,java.lang.Object)">configureResourceSet</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource" class="externalLink">ResourceSet</a>&nbsp;resourceSet,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#configureResourceSet(org.eclipse.emf.ecore.resource.ResourceSet,java.lang.Object)">configureResourceSet</a></span>&#8203;(org.eclipse.emf.ecore.resource.ResourceSet&nbsp;resourceSet,
                     java.lang.Object&nbsp;context)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="ResourceSetConfigurer.Registry.ResourceSetConfiguration.html" title="class in org.eclipse.emf.cdo.common.util">ResourceSetConfigurer.Registry.ResourceSetConfiguration</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#configureResourceSet(org.eclipse.emf.ecore.resource.ResourceSet,java.lang.Object,org.eclipse.net4j.util.container.IManagedContainer)">configureResourceSet</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource" class="externalLink">ResourceSet</a>&nbsp;resourceSet,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#configureResourceSet(org.eclipse.emf.ecore.resource.ResourceSet,java.lang.Object,org.eclipse.net4j.util.container.IManagedContainer)">configureResourceSet</a></span>&#8203;(org.eclipse.emf.ecore.resource.ResourceSet&nbsp;resourceSet,
                     java.lang.Object&nbsp;context,
                     org.eclipse.net4j.util.container.IManagedContainer&nbsp;container)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
+<td class="colFirst"><code><a href="ResourceSetConfigurer.Registry.ResourceSetConfiguration.html" title="class in org.eclipse.emf.cdo.common.util">ResourceSetConfigurer.Registry.ResourceSetConfiguration</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#configureResourceSet(org.eclipse.emf.ecore.resource.ResourceSet,java.lang.Object,org.eclipse.net4j.util.container.IManagedContainer,java.lang.String)">configureResourceSet</a></span>&#8203;(org.eclipse.emf.ecore.resource.ResourceSet&nbsp;resourceSet,
+                    java.lang.Object&nbsp;context,
+                    org.eclipse.net4j.util.container.IManagedContainer&nbsp;container,
+                    java.lang.String&nbsp;type)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="ResourceSetConfigurer.html" title="interface in org.eclipse.emf.cdo.common.util">ResourceSetConfigurer</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getConfigurer(org.eclipse.net4j.util.container.IManagedContainer,java.lang.String)">getConfigurer</a></span>&#8203;(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container,
              java.lang.String&nbsp;type)</code></th>
@@ -286,9 +294,25 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>configureResourceSet</h4>
-<pre class="methodSignature">public&nbsp;<a href="ResourceSetConfigurer.Registry.ResourceSetConfiguration.html" title="class in org.eclipse.emf.cdo.common.util">ResourceSetConfigurer.Registry.ResourceSetConfiguration</a>&nbsp;configureResourceSet&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource" class="externalLink">ResourceSet</a>&nbsp;resourceSet,
+<pre class="methodSignature">public&nbsp;<a href="ResourceSetConfigurer.Registry.ResourceSetConfiguration.html" title="class in org.eclipse.emf.cdo.common.util">ResourceSetConfigurer.Registry.ResourceSetConfiguration</a>&nbsp;configureResourceSet&#8203;(org.eclipse.emf.ecore.resource.ResourceSet&nbsp;resourceSet,
                                                                                     java.lang.Object&nbsp;context,
                                                                                     org.eclipse.net4j.util.container.IManagedContainer&nbsp;container)</pre>
+</li>
+</ul>
+<a id="configureResourceSet(org.eclipse.emf.ecore.resource.ResourceSet,java.lang.Object,org.eclipse.net4j.util.container.IManagedContainer,java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>configureResourceSet</h4>
+<pre class="methodSignature">public&nbsp;<a href="ResourceSetConfigurer.Registry.ResourceSetConfiguration.html" title="class in org.eclipse.emf.cdo.common.util">ResourceSetConfigurer.Registry.ResourceSetConfiguration</a>&nbsp;configureResourceSet&#8203;(org.eclipse.emf.ecore.resource.ResourceSet&nbsp;resourceSet,
+                                                                                    java.lang.Object&nbsp;context,
+                                                                                    org.eclipse.net4j.util.container.IManagedContainer&nbsp;container,
+                                                                                    java.lang.String&nbsp;type)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.15</dd>
+</dl>
 </li>
 </ul>
 <a id="configureResourceSet(org.eclipse.emf.ecore.resource.ResourceSet,java.lang.Object)">
@@ -297,7 +321,7 @@ extends java.lang.Object</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>configureResourceSet</h4>
-<pre class="methodSignature">public&nbsp;<a href="ResourceSetConfigurer.Registry.ResourceSetConfiguration.html" title="class in org.eclipse.emf.cdo.common.util">ResourceSetConfigurer.Registry.ResourceSetConfiguration</a>&nbsp;configureResourceSet&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource" class="externalLink">ResourceSet</a>&nbsp;resourceSet,
+<pre class="methodSignature">public&nbsp;<a href="ResourceSetConfigurer.Registry.ResourceSetConfiguration.html" title="class in org.eclipse.emf.cdo.common.util">ResourceSetConfigurer.Registry.ResourceSetConfiguration</a>&nbsp;configureResourceSet&#8203;(org.eclipse.emf.ecore.resource.ResourceSet&nbsp;resourceSet,
                                                                                     java.lang.Object&nbsp;context)</pre>
 </li>
 </ul>

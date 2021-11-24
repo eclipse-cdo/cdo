@@ -131,8 +131,13 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt>All Known Implementing Classes:</dt>
 <dd><code><a href="handler/AsyncCommitInfoHandler.html" title="class in org.eclipse.emf.cdo.common.commit.handler">AsyncCommitInfoHandler</a></code>, <code><a href="handler/BinaryCommitInfoLog.html" title="class in org.eclipse.emf.cdo.common.commit.handler">BinaryCommitInfoLog</a></code>, <code><a href="handler/TextCommitInfoLog.html" title="class in org.eclipse.emf.cdo.common.commit.handler">TextCommitInfoLog</a></code></dd>
 </dl>
+<dl>
+<dt>Functional Interface:</dt>
+<dd>This is a functional interface and can therefore be used as the assignment target for a lambda expression or method reference.</dd>
+</dl>
 <hr>
-<pre>public interface <span class="typeNameLabel">CDOCommitInfoHandler</span></pre>
+<pre>@FunctionalInterface
+public interface <span class="typeNameLabel">CDOCommitInfoHandler</span></pre>
 <div class="block">A call-back interface that indicates the ability to <i>handle</i> <a href="CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>commit infos</code></a> that are passed
  from other entities.</div>
 <dl>

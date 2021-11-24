@@ -168,7 +168,7 @@ implements <a href="../IQueryHandler.html" title="interface in org.eclipse.emf.c
 <td class="colFirst"><code>protected static class&nbsp;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="OCLQueryHandler.ContextParameter.html" title="class in org.eclipse.emf.cdo.server.ocl">OCLQueryHandler.ContextParameter</a></span></code></th>
 <td class="colLast">
-<div class="block">An abstraction of the <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>classifier</code></a> and/or <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>obejct</code></a> of an OCL query context parameter.</div>
+<div class="block">An abstraction of the <code>classifier</code> and/or <code>obejct</code> of an OCL query context parameter.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -200,7 +200,7 @@ implements <a href="../IQueryHandler.html" title="interface in org.eclipse.emf.c
 <td class="colFirst"><code>static java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#IMPLICIT_ROOT_CLASS_PARAMETER">IMPLICIT_ROOT_CLASS_PARAMETER</a></span></code></th>
 <td class="colLast">
-<div class="block">Query parameter indicating the <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>EClass</code></a> to set as the implicit root class of the type
+<div class="block">Query parameter indicating the <code>EClass</code> to set as the implicit root class of the type
  hierarchy.</div>
 </td>
 </tr>
@@ -255,8 +255,8 @@ implements <a href="../IQueryHandler.html" title="interface in org.eclipse.emf.c
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addEnvironmentVariable(org.eclipse.ocl.Environment,org.eclipse.ocl.expressions.Variable)">addEnvironmentVariable</a></span>&#8203;(org.eclipse.ocl.Environment&lt;?,&#8203;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClassifier</a>,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;org.eclipse.ocl.ecore.Constraint,&#8203;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>,&#8203;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&gt;&nbsp;environment,
-                      org.eclipse.ocl.expressions.Variable&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClassifier</a>,&#8203;?&gt;&nbsp;variable)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addEnvironmentVariable(org.eclipse.ocl.Environment,org.eclipse.ocl.expressions.Variable)">addEnvironmentVariable</a></span>&#8203;(org.eclipse.ocl.Environment&lt;?,&#8203;org.eclipse.emf.ecore.EClassifier,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;org.eclipse.ocl.ecore.Constraint,&#8203;org.eclipse.emf.ecore.EClass,&#8203;org.eclipse.emf.ecore.EObject&gt;&nbsp;environment,
+                      org.eclipse.ocl.expressions.Variable&lt;org.eclipse.emf.ecore.EClassifier,&#8203;?&gt;&nbsp;variable)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
@@ -274,24 +274,24 @@ implements <a href="../IQueryHandler.html" title="interface in org.eclipse.emf.c
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>protected org.eclipse.ocl.expressions.OCLExpression&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClassifier</a>&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createInitExpression(org.eclipse.ocl.types.OCLStandardLibrary,org.eclipse.emf.cdo.common.model.CDOPackageRegistry,java.lang.Object)">createInitExpression</a></span>&#8203;(org.eclipse.ocl.types.OCLStandardLibrary&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClassifier</a>&gt;&nbsp;stdLib,
+<td class="colFirst"><code>protected org.eclipse.ocl.expressions.OCLExpression&lt;org.eclipse.emf.ecore.EClassifier&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createInitExpression(org.eclipse.ocl.types.OCLStandardLibrary,org.eclipse.emf.cdo.common.model.CDOPackageRegistry,java.lang.Object)">createInitExpression</a></span>&#8203;(org.eclipse.ocl.types.OCLStandardLibrary&lt;org.eclipse.emf.ecore.EClassifier&gt;&nbsp;stdLib,
                     <a href="../../common/model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a>&nbsp;packageRegistry,
                     java.lang.Object&nbsp;value)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>protected org.eclipse.ocl.OCL&lt;?,&#8203;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClassifier</a>,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;org.eclipse.ocl.ecore.Constraint,&#8203;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>,&#8203;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&gt;</code></td>
+<td class="colFirst"><code>protected org.eclipse.ocl.OCL&lt;?,&#8203;org.eclipse.emf.ecore.EClassifier,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;org.eclipse.ocl.ecore.Constraint,&#8203;org.eclipse.emf.ecore.EClass,&#8203;org.eclipse.emf.ecore.EObject&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createOCL(org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.server.ocl.CDOExtentMap)">createOCL</a></span>&#8203;(<a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
          <a href="CDOExtentMap.html" title="class in org.eclipse.emf.cdo.server.ocl">CDOExtentMap</a>&nbsp;extentMap)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code>protected org.eclipse.ocl.Query&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClassifier</a>,&#8203;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>,&#8203;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&gt;</code></td>
+<td class="colFirst"><code>protected org.eclipse.ocl.Query&lt;org.eclipse.emf.ecore.EClassifier,&#8203;org.eclipse.emf.ecore.EClass,&#8203;org.eclipse.emf.ecore.EObject&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createQuery(org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.common.util.CDOQueryInfo,org.eclipse.emf.cdo.server.ocl.OCLQueryHandler.ContextParameter,org.eclipse.ocl.OCL)">createQuery</a></span>&#8203;(<a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
            <a href="../../common/util/CDOQueryInfo.html" title="interface in org.eclipse.emf.cdo.common.util">CDOQueryInfo</a>&nbsp;info,
            <a href="OCLQueryHandler.ContextParameter.html" title="class in org.eclipse.emf.cdo.server.ocl">OCLQueryHandler.ContextParameter</a>&nbsp;contextParameter,
-           org.eclipse.ocl.OCL&lt;?,&#8203;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClassifier</a>,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;org.eclipse.ocl.ecore.Constraint,&#8203;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>,&#8203;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&gt;&nbsp;ocl)</code></th>
+           org.eclipse.ocl.OCL&lt;?,&#8203;org.eclipse.emf.ecore.EClassifier,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;org.eclipse.ocl.ecore.Constraint,&#8203;org.eclipse.emf.ecore.EClass,&#8203;org.eclipse.emf.ecore.EObject&gt;&nbsp;ocl)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
@@ -301,8 +301,8 @@ implements <a href="../IQueryHandler.html" title="interface in org.eclipse.emf.c
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>protected java.lang.Object</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#evaluate(org.eclipse.ocl.Query,org.eclipse.emf.ecore.EObject)">evaluate</a></span>&#8203;(org.eclipse.ocl.Query&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClassifier</a>,&#8203;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>,&#8203;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&gt;&nbsp;query,
-        <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&nbsp;object)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#evaluate(org.eclipse.ocl.Query,org.eclipse.emf.ecore.EObject)">evaluate</a></span>&#8203;(org.eclipse.ocl.Query&lt;org.eclipse.emf.ecore.EClassifier,&#8203;org.eclipse.emf.ecore.EClass,&#8203;org.eclipse.emf.ecore.EObject&gt;&nbsp;query,
+        org.eclipse.emf.ecore.EObject&nbsp;object)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
@@ -316,7 +316,7 @@ implements <a href="../IQueryHandler.html" title="interface in org.eclipse.emf.c
 </td>
 </tr>
 <tr id="i9" class="rowColor">
-<td class="colFirst"><code>protected <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClassifier</a></code></td>
+<td class="colFirst"><code>protected org.eclipse.emf.ecore.EClassifier</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getArbitraryContextClassifier(org.eclipse.emf.cdo.common.model.CDOPackageRegistry)">getArbitraryContextClassifier</a></span>&#8203;(<a href="../../common/model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a>&nbsp;packageRegistry)</code></th>
 <td class="colLast">
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>
@@ -331,19 +331,19 @@ implements <a href="../IQueryHandler.html" title="interface in org.eclipse.emf.c
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i11" class="rowColor">
-<td class="colFirst"><code>protected <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a></code></td>
+<td class="colFirst"><code>protected org.eclipse.emf.ecore.EClass</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getImplicitRootClass()">getImplicitRootClass</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code>protected <a href="../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRevision(org.eclipse.emf.ecore.EObject,org.eclipse.emf.cdo.view.CDOView)">getRevision</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&nbsp;object,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRevision(org.eclipse.emf.ecore.EObject,org.eclipse.emf.cdo.view.CDOView)">getRevision</a></span>&#8203;(org.eclipse.emf.ecore.EObject&nbsp;object,
            <a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#initEnvironment(org.eclipse.ocl.Environment,org.eclipse.emf.cdo.common.model.CDOPackageRegistry,java.util.Map)">initEnvironment</a></span>&#8203;(org.eclipse.ocl.Environment&lt;?,&#8203;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClassifier</a>,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;org.eclipse.ocl.ecore.Constraint,&#8203;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>,&#8203;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&gt;&nbsp;environment,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#initEnvironment(org.eclipse.ocl.Environment,org.eclipse.emf.cdo.common.model.CDOPackageRegistry,java.util.Map)">initEnvironment</a></span>&#8203;(org.eclipse.ocl.Environment&lt;?,&#8203;org.eclipse.emf.ecore.EClassifier,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;org.eclipse.ocl.ecore.Constraint,&#8203;org.eclipse.emf.ecore.EClass,&#8203;org.eclipse.emf.ecore.EObject&gt;&nbsp;environment,
                <a href="../../common/model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a>&nbsp;packageRegistry,
                java.util.Map&lt;java.lang.String,&#8203;java.lang.Object&gt;&nbsp;parameters)</code></th>
 <td class="colLast">&nbsp;</td>
@@ -381,7 +381,7 @@ implements <a href="../IQueryHandler.html" title="interface in org.eclipse.emf.c
 <tr id="i19" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setOCLQueryParameters(java.util.Map,org.eclipse.ocl.Query)">setOCLQueryParameters</a></span>&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.lang.Object&gt;&nbsp;parameters,
-                     org.eclipse.ocl.Query&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClassifier</a>,&#8203;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>,&#8203;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&gt;&nbsp;query)</code></th>
+                     org.eclipse.ocl.Query&lt;org.eclipse.emf.ecore.EClassifier,&#8203;org.eclipse.emf.ecore.EClass,&#8203;org.eclipse.emf.ecore.EObject&gt;&nbsp;query)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -443,7 +443,7 @@ implements <a href="../IQueryHandler.html" title="interface in org.eclipse.emf.c
 <li class="blockList">
 <h4>IMPLICIT_ROOT_CLASS_PARAMETER</h4>
 <pre>public static final&nbsp;java.lang.String IMPLICIT_ROOT_CLASS_PARAMETER</pre>
-<div class="block">Query parameter indicating the <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>EClass</code></a> to set as the implicit root class of the type
+<div class="block">Query parameter indicating the <code>EClass</code> to set as the implicit root class of the type
  hierarchy.  The default is <code>null</code>.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -517,7 +517,7 @@ implements <a href="../IQueryHandler.html" title="interface in org.eclipse.emf.c
 <ul class="blockList">
 <li class="blockList">
 <h4>getRevision</h4>
-<pre class="methodSignature">protected&nbsp;<a href="../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;getRevision&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&nbsp;object,
+<pre class="methodSignature">protected&nbsp;<a href="../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;getRevision&#8203;(org.eclipse.emf.ecore.EObject&nbsp;object,
                                   <a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view)</pre>
 </li>
 </ul>
@@ -527,8 +527,8 @@ implements <a href="../IQueryHandler.html" title="interface in org.eclipse.emf.c
 <ul class="blockList">
 <li class="blockList">
 <h4>evaluate</h4>
-<pre class="methodSignature">protected&nbsp;java.lang.Object&nbsp;evaluate&#8203;(org.eclipse.ocl.Query&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClassifier</a>,&#8203;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>,&#8203;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&gt;&nbsp;query,
-                                    <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&nbsp;object)</pre>
+<pre class="methodSignature">protected&nbsp;java.lang.Object&nbsp;evaluate&#8203;(org.eclipse.ocl.Query&lt;org.eclipse.emf.ecore.EClassifier,&#8203;org.eclipse.emf.ecore.EClass,&#8203;org.eclipse.emf.ecore.EObject&gt;&nbsp;query,
+                                    org.eclipse.emf.ecore.EObject&nbsp;object)</pre>
 </li>
 </ul>
 <a id="createExtentMap(org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.common.commit.CDOChangeSetData,org.eclipse.emf.cdo.server.IQueryContext)">
@@ -557,8 +557,8 @@ implements <a href="../IQueryHandler.html" title="interface in org.eclipse.emf.c
 <ul class="blockList">
 <li class="blockList">
 <h4>createOCL</h4>
-<pre class="methodSignature">protected&nbsp;org.eclipse.ocl.OCL&lt;?,&#8203;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClassifier</a>,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;org.eclipse.ocl.ecore.Constraint,&#8203;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>,&#8203;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&gt;&nbsp;createOCL&#8203;(<a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
-                                                                                                                                                                                       <a href="CDOExtentMap.html" title="class in org.eclipse.emf.cdo.server.ocl">CDOExtentMap</a>&nbsp;extentMap)</pre>
+<pre class="methodSignature">protected&nbsp;org.eclipse.ocl.OCL&lt;?,&#8203;org.eclipse.emf.ecore.EClassifier,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;org.eclipse.ocl.ecore.Constraint,&#8203;org.eclipse.emf.ecore.EClass,&#8203;org.eclipse.emf.ecore.EObject&gt;&nbsp;createOCL&#8203;(<a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
+                                                                                                                                                                                                                                                         <a href="CDOExtentMap.html" title="class in org.eclipse.emf.cdo.server.ocl">CDOExtentMap</a>&nbsp;extentMap)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
@@ -571,16 +571,16 @@ implements <a href="../IQueryHandler.html" title="interface in org.eclipse.emf.c
 <ul class="blockList">
 <li class="blockList">
 <h4>createQuery</h4>
-<pre class="methodSignature">protected&nbsp;org.eclipse.ocl.Query&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClassifier</a>,&#8203;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>,&#8203;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&gt;&nbsp;createQuery&#8203;(<a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
-                                                                                    <a href="../../common/util/CDOQueryInfo.html" title="interface in org.eclipse.emf.cdo.common.util">CDOQueryInfo</a>&nbsp;info,
-                                                                                    <a href="OCLQueryHandler.ContextParameter.html" title="class in org.eclipse.emf.cdo.server.ocl">OCLQueryHandler.ContextParameter</a>&nbsp;contextParameter,
-                                                                                    org.eclipse.ocl.OCL&lt;?,&#8203;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClassifier</a>,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;org.eclipse.ocl.ecore.Constraint,&#8203;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>,&#8203;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&gt;&nbsp;ocl)
-                                                                             throws org.eclipse.ocl.ParserException,
-                                                                                    <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/DiagnosticException.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">DiagnosticException</a></pre>
+<pre class="methodSignature">protected&nbsp;org.eclipse.ocl.Query&lt;org.eclipse.emf.ecore.EClassifier,&#8203;org.eclipse.emf.ecore.EClass,&#8203;org.eclipse.emf.ecore.EObject&gt;&nbsp;createQuery&#8203;(<a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
+                                                                                                                                                      <a href="../../common/util/CDOQueryInfo.html" title="interface in org.eclipse.emf.cdo.common.util">CDOQueryInfo</a>&nbsp;info,
+                                                                                                                                                      <a href="OCLQueryHandler.ContextParameter.html" title="class in org.eclipse.emf.cdo.server.ocl">OCLQueryHandler.ContextParameter</a>&nbsp;contextParameter,
+                                                                                                                                                      org.eclipse.ocl.OCL&lt;?,&#8203;org.eclipse.emf.ecore.EClassifier,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;org.eclipse.ocl.ecore.Constraint,&#8203;org.eclipse.emf.ecore.EClass,&#8203;org.eclipse.emf.ecore.EObject&gt;&nbsp;ocl)
+                                                                                                                                               throws org.eclipse.ocl.ParserException,
+                                                                                                                                                      org.eclipse.emf.common.util.DiagnosticException</pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>org.eclipse.ocl.ParserException</code></dd>
-<dd><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/DiagnosticException.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">DiagnosticException</a></code></dd>
+<dd><code>org.eclipse.emf.common.util.DiagnosticException</code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
@@ -593,7 +593,7 @@ implements <a href="../IQueryHandler.html" title="interface in org.eclipse.emf.c
 <li class="blockList">
 <h4>getArbitraryContextClassifier</h4>
 <pre class="methodSignature">@Deprecated
-protected&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClassifier</a>&nbsp;getArbitraryContextClassifier&#8203;(<a href="../../common/model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a>&nbsp;packageRegistry)</pre>
+protected&nbsp;org.eclipse.emf.ecore.EClassifier&nbsp;getArbitraryContextClassifier&#8203;(<a href="../../common/model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a>&nbsp;packageRegistry)</pre>
 <div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
 <div class="deprecationComment">As of 4.2 no longer supported.</div>
 </div>
@@ -605,7 +605,7 @@ protected&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.1
 <ul class="blockList">
 <li class="blockList">
 <h4>initEnvironment</h4>
-<pre class="methodSignature">protected&nbsp;void&nbsp;initEnvironment&#8203;(org.eclipse.ocl.Environment&lt;?,&#8203;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClassifier</a>,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;org.eclipse.ocl.ecore.Constraint,&#8203;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>,&#8203;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&gt;&nbsp;environment,
+<pre class="methodSignature">protected&nbsp;void&nbsp;initEnvironment&#8203;(org.eclipse.ocl.Environment&lt;?,&#8203;org.eclipse.emf.ecore.EClassifier,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;org.eclipse.ocl.ecore.Constraint,&#8203;org.eclipse.emf.ecore.EClass,&#8203;org.eclipse.emf.ecore.EObject&gt;&nbsp;environment,
                                <a href="../../common/model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a>&nbsp;packageRegistry,
                                java.util.Map&lt;java.lang.String,&#8203;java.lang.Object&gt;&nbsp;parameters)</pre>
 </li>
@@ -616,7 +616,7 @@ protected&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.1
 <ul class="blockList">
 <li class="blockList">
 <h4>getImplicitRootClass</h4>
-<pre class="methodSignature">protected&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;getImplicitRootClass()</pre>
+<pre class="methodSignature">protected&nbsp;org.eclipse.emf.ecore.EClass&nbsp;getImplicitRootClass()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
@@ -629,9 +629,9 @@ protected&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.1
 <ul class="blockList">
 <li class="blockList">
 <h4>createInitExpression</h4>
-<pre class="methodSignature">protected&nbsp;org.eclipse.ocl.expressions.OCLExpression&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClassifier</a>&gt;&nbsp;createInitExpression&#8203;(org.eclipse.ocl.types.OCLStandardLibrary&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClassifier</a>&gt;&nbsp;stdLib,
-                                                                                      <a href="../../common/model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a>&nbsp;packageRegistry,
-                                                                                      java.lang.Object&nbsp;value)</pre>
+<pre class="methodSignature">protected&nbsp;org.eclipse.ocl.expressions.OCLExpression&lt;org.eclipse.emf.ecore.EClassifier&gt;&nbsp;createInitExpression&#8203;(org.eclipse.ocl.types.OCLStandardLibrary&lt;org.eclipse.emf.ecore.EClassifier&gt;&nbsp;stdLib,
+                                                                                                            <a href="../../common/model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a>&nbsp;packageRegistry,
+                                                                                                            java.lang.Object&nbsp;value)</pre>
 </li>
 </ul>
 <a id="addEnvironmentVariable(org.eclipse.ocl.Environment,org.eclipse.ocl.expressions.Variable)">
@@ -640,8 +640,8 @@ protected&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.1
 <ul class="blockList">
 <li class="blockList">
 <h4>addEnvironmentVariable</h4>
-<pre class="methodSignature">protected&nbsp;void&nbsp;addEnvironmentVariable&#8203;(org.eclipse.ocl.Environment&lt;?,&#8203;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClassifier</a>,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;org.eclipse.ocl.ecore.Constraint,&#8203;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>,&#8203;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&gt;&nbsp;environment,
-                                      org.eclipse.ocl.expressions.Variable&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClassifier</a>,&#8203;?&gt;&nbsp;variable)</pre>
+<pre class="methodSignature">protected&nbsp;void&nbsp;addEnvironmentVariable&#8203;(org.eclipse.ocl.Environment&lt;?,&#8203;org.eclipse.emf.ecore.EClassifier,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;?,&#8203;org.eclipse.ocl.ecore.Constraint,&#8203;org.eclipse.emf.ecore.EClass,&#8203;org.eclipse.emf.ecore.EObject&gt;&nbsp;environment,
+                                      org.eclipse.ocl.expressions.Variable&lt;org.eclipse.emf.ecore.EClassifier,&#8203;?&gt;&nbsp;variable)</pre>
 </li>
 </ul>
 <a id="getContextParameter(org.eclipse.emf.cdo.common.util.CDOQueryInfo,org.eclipse.emf.cdo.view.CDOView)">
@@ -711,7 +711,7 @@ protected&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.1
 <li class="blockList">
 <h4>setOCLQueryParameters</h4>
 <pre class="methodSignature">protected&nbsp;void&nbsp;setOCLQueryParameters&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.lang.Object&gt;&nbsp;parameters,
-                                     org.eclipse.ocl.Query&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClassifier</a>,&#8203;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>,&#8203;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&gt;&nbsp;query)</pre>
+                                     org.eclipse.ocl.Query&lt;org.eclipse.emf.ecore.EClassifier,&#8203;org.eclipse.emf.ecore.EClass,&#8203;org.eclipse.emf.ecore.EObject&gt;&nbsp;query)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>

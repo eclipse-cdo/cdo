@@ -21,6 +21,7 @@ org.eclipse.net4j.util.properties
 org.eclipse.net4j.util.ref
 org.eclipse.net4j.util.registry
 org.eclipse.net4j.util.security
+org.eclipse.net4j.util.security.operations
 org.eclipse.net4j.util.transaction
 org.eclipse.net4j.util.ui
 org.eclipse.net4j.util.ui.actions

@@ -154,7 +154,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <pre>public class <span class="typeNameLabel">CDOPackageRegistryPopulator</span>
 extends org.eclipse.net4j.util.concurrent.Worker</pre>
 <div class="block">Populates a <a href="#getTarget()"><code>target</code></a> package registry by asynchronously polling a <a href="#getSource()"><code>source</code></a>
- package registry for new <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>EPackage</code></a> registrations.</div>
+ package registry for new <code>EPackage</code> registrations.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
@@ -185,7 +185,7 @@ extends org.eclipse.net4j.util.concurrent.Worker</pre>
 <td class="colFirst"><code>static class&nbsp;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CDOPackageRegistryPopulator.Descriptor.html" title="class in org.eclipse.emf.cdo.common.model">CDOPackageRegistryPopulator.Descriptor</a></span></code></th>
 <td class="colLast">
-<div class="block">A package <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.Descriptor.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>descriptor</code></a> that resolves <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>packages</code></a> from
+<div class="block">A package <code>descriptor</code> that resolves <code>packages</code> from
  a <a href="CDOPackageRegistryPopulator.Descriptor.html#getSource()"><code>source </code></a> package registry.</div>
 </td>
 </tr>
@@ -269,7 +269,7 @@ extends org.eclipse.net4j.util.concurrent.Worker</pre>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(org.eclipse.emf.ecore.EPackage.Registry,org.eclipse.emf.cdo.common.model.CDOPackageRegistry)">CDOPackageRegistryPopulator</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.Registry.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage.Registry</a>&nbsp;source,
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(org.eclipse.emf.ecore.EPackage.Registry,org.eclipse.emf.cdo.common.model.CDOPackageRegistry)">CDOPackageRegistryPopulator</a></span>&#8203;(org.eclipse.emf.ecore.EPackage.Registry&nbsp;source,
                            <a href="CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a>&nbsp;target)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
@@ -302,7 +302,7 @@ extends org.eclipse.net4j.util.concurrent.Worker</pre>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.Registry.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage.Registry</a></code></td>
+<td class="colFirst"><code>org.eclipse.emf.ecore.EPackage.Registry</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSource()">getSource</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
@@ -328,7 +328,7 @@ extends org.eclipse.net4j.util.concurrent.Worker</pre>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>static boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#populate(org.eclipse.emf.ecore.EPackage.Registry,org.eclipse.emf.cdo.common.model.CDOPackageRegistry)">populate</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.Registry.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage.Registry</a>&nbsp;source,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#populate(org.eclipse.emf.ecore.EPackage.Registry,org.eclipse.emf.cdo.common.model.CDOPackageRegistry)">populate</a></span>&#8203;(org.eclipse.emf.ecore.EPackage.Registry&nbsp;source,
         <a href="CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a>&nbsp;target)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
@@ -432,7 +432,7 @@ extends org.eclipse.net4j.util.concurrent.Worker</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>CDOPackageRegistryPopulator</h4>
-<pre>public&nbsp;CDOPackageRegistryPopulator&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.Registry.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage.Registry</a>&nbsp;source,
+<pre>public&nbsp;CDOPackageRegistryPopulator&#8203;(org.eclipse.emf.ecore.EPackage.Registry&nbsp;source,
                                    <a href="CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a>&nbsp;target)</pre>
 </li>
 </ul>
@@ -452,7 +452,7 @@ extends org.eclipse.net4j.util.concurrent.Worker</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getSource</h4>
-<pre class="methodSignature">public&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.Registry.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage.Registry</a>&nbsp;getSource()</pre>
+<pre class="methodSignature">public&nbsp;org.eclipse.emf.ecore.EPackage.Registry&nbsp;getSource()</pre>
 </li>
 </ul>
 <a id="getTarget()">
@@ -551,7 +551,7 @@ extends org.eclipse.net4j.util.concurrent.Worker</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>populate</h4>
-<pre class="methodSignature">public static&nbsp;boolean&nbsp;populate&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.Registry.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage.Registry</a>&nbsp;source,
+<pre class="methodSignature">public static&nbsp;boolean&nbsp;populate&#8203;(org.eclipse.emf.ecore.EPackage.Registry&nbsp;source,
                                <a href="CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a>&nbsp;target)</pre>
 </li>
 </ul>

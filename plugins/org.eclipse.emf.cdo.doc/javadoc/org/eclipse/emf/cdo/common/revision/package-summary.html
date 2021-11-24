@@ -138,7 +138,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <tr class="altColor">
 <th class="colFirst" scope="row"><a href="CDOList.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOList</a></th>
 <td class="colLast">
-<div class="block">A <code>moveable</code> <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink"><code>EList</code></a>.</div>
+<div class="block">A <code>moveable</code> <code>EList</code>.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -163,7 +163,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <tr class="altColor">
 <th class="colFirst" scope="row"><a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a></th>
 <td class="colLast">
-<div class="block">Encapsulates the immutable system information of a <b>single</b> CDO <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>object</code></a> between two
+<div class="block">Encapsulates the immutable system information of a <b>single</b> CDO <code>object</code> between two
  <a href="../commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>commits</code></a> in a <a href="../branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch</code></a> and provides access to its modeled
  <a href="CDORevisionData.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>data</code></a>.</div>
 </td>
@@ -176,36 +176,46 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colFirst" scope="row"><a href="CDORevisionCache.AdditionEvent.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCache.AdditionEvent</a></th>
+<td class="colLast">
+<div class="block">An <code>event</code> fired from a <a href="CDORevisionCache.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision cache</code></a> when a <a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision</code></a> is added to it.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colFirst" scope="row"><a href="CDORevisionCache.EvictionEvent.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCache.EvictionEvent</a></th>
 <td class="colLast">
 <div class="block">An <code>event</code> fired from a <a href="CDORevisionCache.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision cache</code></a> for <a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> that
  are evicted because they are no longer strongly referenced when free memory runs low.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colFirst" scope="row"><a href="CDORevisionCacheAdder.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCacheAdder</a></th>
 <td class="colLast">
 <div class="block">An entity that <a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> can be added to.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><a href="CDORevisionData.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionData</a></th>
 <td class="colLast">
 <div class="block">Encapsulates the modeled information and the EMF system values of a <a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision</code></a>.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colFirst" scope="row"><a href="CDORevisionFactory.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionFactory</a></th>
 <td class="colLast">
 <div class="block">Creates <a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision</code></a> instances.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><a href="CDORevisionHandler.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionHandler</a></th>
 <td class="colLast">
 <div class="block">A call-back interface that indicates the ability to <i>handle</i> <a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> that are passed from
  other entities.</div>
 </td>
+</tr>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="CDORevisionInterner.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionInterner</a></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><a href="CDORevisionKey.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionKey</a></th>

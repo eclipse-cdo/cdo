@@ -28,7 +28,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":6,"i1":6,"i2":6,"i3":6};
+var data = {"i0":6,"i1":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -125,7 +125,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><code>org.eclipse.net4j.util.event.IEvent</code></dd>
+<dd><code><a href="CDOCheckoutManager.CheckoutEvent.html" title="interface in org.eclipse.emf.cdo.explorer.checkouts">CDOCheckoutManager.CheckoutEvent</a></code>, <code>org.eclipse.net4j.util.event.IEvent</code></dd>
 </dl>
 <dl>
 <dt>Enclosing interface:</dt>
@@ -133,7 +133,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dl>
 <hr>
 <pre>public static interface <span class="typeNameLabel">CDOCheckoutManager.CheckoutStateEvent</span>
-extends org.eclipse.net4j.util.event.IEvent</pre>
+extends <a href="CDOCheckoutManager.CheckoutEvent.html" title="interface in org.eclipse.emf.cdo.explorer.checkouts">CDOCheckoutManager.CheckoutEvent</a></pre>
 <dl>
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>Eike Stepper</dd>
@@ -163,26 +163,23 @@ extends org.eclipse.net4j.util.event.IEvent</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code><a href="CDOCheckout.html" title="interface in org.eclipse.emf.cdo.explorer.checkouts">CDOCheckout</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCheckout()">getCheckout</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="CDOCheckout.State.html" title="enum in org.eclipse.emf.cdo.explorer.checkouts">CDOCheckout.State</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNewState()">getNewState</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="CDOCheckout.State.html" title="enum in org.eclipse.emf.cdo.explorer.checkouts">CDOCheckout.State</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOldState()">getOldState</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
-<td class="colFirst"><code><a href="CDOCheckoutManager.html" title="interface in org.eclipse.emf.cdo.explorer.checkouts">CDOCheckoutManager</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSource()">getSource</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
 </table>
+<ul class="blockList">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager.CheckoutEvent">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.explorer.checkouts.<a href="CDOCheckoutManager.CheckoutEvent.html" title="interface in org.eclipse.emf.cdo.explorer.checkouts">CDOCheckoutManager.CheckoutEvent</a></h3>
+<code><a href="CDOCheckoutManager.CheckoutEvent.html#getCheckout()">getCheckout</a>, <a href="CDOCheckoutManager.CheckoutEvent.html#getSource()">getSource</a></code></li>
+</ul>
 </li>
 </ul>
 </section>
@@ -199,28 +196,6 @@ extends org.eclipse.net4j.util.event.IEvent</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="getSource()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getSource</h4>
-<pre class="methodSignature"><a href="CDOCheckoutManager.html" title="interface in org.eclipse.emf.cdo.explorer.checkouts">CDOCheckoutManager</a>&nbsp;getSource()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>getSource</code>&nbsp;in interface&nbsp;<code>org.eclipse.net4j.util.event.IEvent</code></dd>
-</dl>
-</li>
-</ul>
-<a id="getCheckout()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getCheckout</h4>
-<pre class="methodSignature"><a href="CDOCheckout.html" title="interface in org.eclipse.emf.cdo.explorer.checkouts">CDOCheckout</a>&nbsp;getCheckout()</pre>
-</li>
-</ul>
 <a id="getOldState()">
 <!--   -->
 </a>

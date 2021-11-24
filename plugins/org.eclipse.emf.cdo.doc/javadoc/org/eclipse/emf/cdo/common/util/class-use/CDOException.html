@@ -186,29 +186,34 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../CDOClassNotFoundException.html" title="class in org.eclipse.emf.cdo.common.util">CDOClassNotFoundException</a></span></code></th>
-<td class="colLast">
-<div class="block">A <a href="../CDOException.html" title="class in org.eclipse.emf.cdo.common.util"><code>CDOException</code></a> to indicate that an <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>EClass</code></a> is not available for an <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>EPackage</code></a> in the current <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.Registry.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>EPackage.Registry</code></a>.</div>
-</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../AuthorizationException.html" title="class in org.eclipse.emf.cdo.common.util">AuthorizationException</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code>class&nbsp;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../CDOClassNotFoundException.html" title="class in org.eclipse.emf.cdo.common.util">CDOClassNotFoundException</a></span></code></th>
+<td class="colLast">
+<div class="block">A <a href="../CDOException.html" title="class in org.eclipse.emf.cdo.common.util"><code>CDOException</code></a> to indicate that an <code>EClass</code> is not available for an <code>EPackage</code> in the current <code>EPackage.Registry</code>.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../CDODuplicateResourceException.html" title="class in org.eclipse.emf.cdo.common.util">CDODuplicateResourceException</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../CDOPackageNotFoundException.html" title="class in org.eclipse.emf.cdo.common.util">CDOPackageNotFoundException</a></span></code></th>
 <td class="colLast">
-<div class="block">A <a href="../CDOException.html" title="class in org.eclipse.emf.cdo.common.util"><code>CDOException</code></a> to indicate that an <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>EPackage</code></a> is not available in the current <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.Registry.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>EPackage.Registry</code></a>.</div>
+<div class="block">A <a href="../CDOException.html" title="class in org.eclipse.emf.cdo.common.util"><code>CDOException</code></a> to indicate that an <code>EPackage</code> is not available in the current <code>EPackage.Registry</code>.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../CDOResourceNodeNotFoundException.html" title="class in org.eclipse.emf.cdo.common.util">CDOResourceNodeNotFoundException</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../TransportException.html" title="class in org.eclipse.emf.cdo.common.util">TransportException</a></span></code></th>
 <td class="colLast">
@@ -286,7 +291,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../util/DanglingReferenceException.html" title="class in org.eclipse.emf.cdo.util">DanglingReferenceException</a></span></code></th>
 <td class="colLast">
 <div class="block">An unchecked exception being thrown from <a href="../../../transaction/CDOUserTransaction.html#commit()"><code>CDOUserTransaction.commit()</code></a> if the commit <a href="../../commit/CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>change
- set</code></a> is referencing <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>objects</code></a> that are not contained by any <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource" class="externalLink"><code>resource</code></a> before the server
+ set</code></a> is referencing <code>objects</code> that are not contained by any <code>resource</code> before the server
  is contacted.</div>
 </td>
 </tr>
@@ -301,7 +306,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <td class="colFirst"><code>class&nbsp;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../util/InvalidURIException.html" title="class in org.eclipse.emf.cdo.util">InvalidURIException</a></span></code></th>
 <td class="colLast">
-<div class="block">An unchecked exception being thrown to indicate problems with the <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink"><code>URI</code></a> of a <a href="../../../eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resource</code></a>.</div>
+<div class="block">An unchecked exception being thrown to indicate problems with the <code>URI</code> of a <a href="../../../eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resource</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">

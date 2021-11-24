@@ -125,11 +125,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">Adapter</a></code>, <code><a href="../../cdo/view/CDOViewSet.html" title="interface in org.eclipse.emf.cdo.view">CDOViewSet</a></code>, <code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notifier.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">Notifier</a></code></dd>
+<dd><code>org.eclipse.emf.common.notify.Adapter</code>, <code><a href="../../cdo/view/CDOViewSet.html" title="interface in org.eclipse.emf.cdo.view">CDOViewSet</a></code>, <code>org.eclipse.net4j.util.concurrent.IExecutorServiceProvider</code>, <code>org.eclipse.emf.common.notify.Notifier</code></dd>
 </dl>
 <hr>
 <pre>public interface <span class="typeNameLabel">InternalCDOViewSet</span>
-extends <a href="../../cdo/view/CDOViewSet.html" title="interface in org.eclipse.emf.cdo.view">CDOViewSet</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">Adapter</a></pre>
+extends <a href="../../cdo/view/CDOViewSet.html" title="interface in org.eclipse.emf.cdo.view">CDOViewSet</a>, org.eclipse.emf.common.notify.Adapter, org.eclipse.net4j.util.concurrent.IExecutorServiceProvider</pre>
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -158,8 +158,8 @@ extends <a href="../../cdo/view/CDOViewSet.html" title="interface in org.eclipse
 <li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.emf.common.notify.Adapter">
 <!--   -->
 </a>
-<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.emf.common.notify.<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">Adapter</a></h3>
-<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.Internal.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">Adapter.Internal</a></code></li>
+<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.emf.common.notify.Adapter</h3>
+<code>org.eclipse.emf.common.notify.Adapter.Internal</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.emf.cdo.view.CDOViewSet">
@@ -214,7 +214,7 @@ extends <a href="../../cdo/view/CDOViewSet.html" title="interface in org.eclipse
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#resolveView(org.eclipse.emf.common.util.URI)">resolveView</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">URI</a>&nbsp;viewURI)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#resolveView(org.eclipse.emf.common.util.URI)">resolveView</a></span>&#8203;(org.eclipse.emf.common.util.URI&nbsp;viewURI)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -222,8 +222,8 @@ extends <a href="../../cdo/view/CDOViewSet.html" title="interface in org.eclipse
 <li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.common.notify.Adapter">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.emf.common.notify.<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">Adapter</a></h3>
-<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true#getTarget()" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">getTarget</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true#isAdapterForType(java.lang.Object)" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">isAdapterForType</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true#notifyChanged(org.eclipse.emf.common.notify.Notification)" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">notifyChanged</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true#setTarget(org.eclipse.emf.common.notify.Notifier)" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">setTarget</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.emf.common.notify.Adapter</h3>
+<code>getTarget, isAdapterForType, notifyChanged, setTarget</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.cdo.view.CDOViewSet">
@@ -233,11 +233,18 @@ extends <a href="../../cdo/view/CDOViewSet.html" title="interface in org.eclipse
 <code><a href="../../cdo/view/CDOViewSet.html#getDefaultClearAdapterPolicy()">getDefaultClearAdapterPolicy</a>, <a href="../../cdo/view/CDOViewSet.html#getPackageRegistry()">getPackageRegistry</a>, <a href="../../cdo/view/CDOViewSet.html#getResourceFactory()">getResourceFactory</a>, <a href="../../cdo/view/CDOViewSet.html#getResourceSet()">getResourceSet</a>, <a href="../../cdo/view/CDOViewSet.html#getViews()">getViews</a>, <a href="../../cdo/view/CDOViewSet.html#setDefaultClearAdapterPolicy(org.eclipse.emf.cdo.view.CDOAdapterPolicy)">setDefaultClearAdapterPolicy</a></code></li>
 </ul>
 <ul class="blockList">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.concurrent.IExecutorServiceProvider">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.concurrent.IExecutorServiceProvider</h3>
+<code>getExecutorService</code></li>
+</ul>
+<ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.common.notify.Notifier">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.emf.common.notify.<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notifier.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">Notifier</a></h3>
-<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notifier.html?is-external=true#eAdapters()" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">eAdapters</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notifier.html?is-external=true#eDeliver()" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">eDeliver</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notifier.html?is-external=true#eNotify(org.eclipse.emf.common.notify.Notification)" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">eNotify</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notifier.html?is-external=true#eSetDeliver(boolean)" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">eSetDeliver</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.emf.common.notify.Notifier</h3>
+<code>eAdapters, eDeliver, eNotify, eSetDeliver</code></li>
 </ul>
 </li>
 </ul>
@@ -292,7 +299,7 @@ extends <a href="../../cdo/view/CDOViewSet.html" title="interface in org.eclipse
 <ul class="blockList">
 <li class="blockList">
 <h4>resolveView</h4>
-<pre class="methodSignature"><a href="InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a>&nbsp;resolveView&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">URI</a>&nbsp;viewURI)</pre>
+<pre class="methodSignature"><a href="InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a>&nbsp;resolveView&#8203;(org.eclipse.emf.common.util.URI&nbsp;viewURI)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../cdo/view/CDOViewSet.html#resolveView(org.eclipse.emf.common.util.URI)">resolveView</a></code>&nbsp;in interface&nbsp;<code><a href="../../cdo/view/CDOViewSet.html" title="interface in org.eclipse.emf.cdo.view">CDOViewSet</a></code></dd>

@@ -28,8 +28,8 @@
     catch(err) {
     }
 //-->
-var data = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
+var data = {"i0":38,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -168,6 +168,13 @@ extends <a href="CDORevisionCacheAdder.html" title="interface in org.eclipse.emf
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static interface&nbsp;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CDORevisionCache.AdditionEvent.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCache.AdditionEvent</a></span></code></th>
+<td class="colLast">
+<div class="block">An <code>event</code> fired from a <a href="CDORevisionCache.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision cache</code></a> when a <a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision</code></a> is added to it.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static interface&nbsp;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CDORevisionCache.EvictionEvent.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCache.EvictionEvent</a></span></code></th>
 <td class="colLast">
 <div class="block">An <code>event</code> fired from a <a href="CDORevisionCache.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision cache</code></a> for <a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> that
@@ -216,7 +223,7 @@ extends <a href="CDORevisionCacheAdder.html" title="interface in org.eclipse.emf
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t6" class="tableTab"><span><a href="javascript:show(32);">Deprecated Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colSecond" scope="col">Method</th>
@@ -224,43 +231,62 @@ extends <a href="CDORevisionCacheAdder.html" title="interface in org.eclipse.emf
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addRevision(org.eclipse.emf.cdo.common.revision.CDORevision)">addRevision</a></span>&#8203;(<a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.15 use <a href="CDORevisionInterner.html#internRevision(org.eclipse.emf.cdo.common.revision.CDORevision)"><code>CDORevisionInterner.internRevision(CDORevision)</code></a>.</div>
+</div>
+</td>
+</tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#forEachCurrentRevision(java.util.function.Consumer)">forEachCurrentRevision</a></span>&#8203;(java.util.function.Consumer&lt;<a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&nbsp;consumer)</code></th>
 <td class="colLast">
 <div class="block">Passes each <a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision</code></a> that is current into the given consumer.</div>
 </td>
 </tr>
-<tr id="i1" class="rowColor">
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#forEachRevision(java.util.function.Consumer)">forEachRevision</a></span>&#8203;(java.util.function.Consumer&lt;<a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&nbsp;consumer)</code></th>
+<td class="colLast">
+<div class="block">Passes each <a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision</code></a> into the given consumer.</div>
+</td>
+</tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#forEachValidRevision(org.eclipse.emf.cdo.common.branch.CDOBranchPoint,boolean,java.util.function.Consumer)">forEachValidRevision</a></span>&#8203;(<a href="../branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+                    boolean&nbsp;considerBranchBases,
+                    java.util.function.Consumer&lt;<a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&nbsp;consumer)</code></th>
+<td class="colLast">
+<div class="block">Passes each <a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision</code></a> that is valid at the given <a href="../branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch point</code></a>
+ (or optionally at the base ranch points) into the given consumer.</div>
+</td>
+</tr>
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCurrentRevisions()">getCurrentRevisions</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns a list of <a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> that are current.</div>
 </td>
 </tr>
-<tr id="i2" class="altColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a></code></td>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>org.eclipse.emf.ecore.EClass</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getObjectType(org.eclipse.emf.cdo.common.id.CDOID)">getObjectType</a></span>&#8203;(<a href="../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">getRevision</a></span>&#8203;(<a href="../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
            <a href="../branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRevisionByVersion(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchVersion)">getRevisionByVersion</a></span>&#8203;(<a href="../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
                     <a href="../branch/CDOBranchVersion.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchVersion</a>&nbsp;branchVersion)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
-<ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder">
-<!--   -->
-</a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.revision.<a href="CDORevisionCacheAdder.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCacheAdder</a></h3>
-<code><a href="CDORevisionCacheAdder.html#addRevision(org.eclipse.emf.cdo.common.revision.CDORevision)">addRevision</a></code></li>
-</ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.event.INotifier">
 <!--   -->
@@ -313,7 +339,7 @@ extends <a href="CDORevisionCacheAdder.html" title="interface in org.eclipse.emf
 <ul class="blockList">
 <li class="blockList">
 <h4>getObjectType</h4>
-<pre class="methodSignature"><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a>&nbsp;getObjectType&#8203;(<a href="../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</pre>
+<pre class="methodSignature">org.eclipse.emf.ecore.EClass&nbsp;getObjectType&#8203;(<a href="../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</pre>
 </li>
 </ul>
 <a id="getRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">
@@ -361,7 +387,7 @@ extends <a href="CDORevisionCacheAdder.html" title="interface in org.eclipse.emf
 <a id="forEachCurrentRevision(java.util.function.Consumer)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>forEachCurrentRevision</h4>
 <pre class="methodSignature">void&nbsp;forEachCurrentRevision&#8203;(java.util.function.Consumer&lt;<a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&nbsp;consumer)</pre>
@@ -369,6 +395,56 @@ extends <a href="CDORevisionCacheAdder.html" title="interface in org.eclipse.emf
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.9</dd>
+</dl>
+</li>
+</ul>
+<a id="forEachValidRevision(org.eclipse.emf.cdo.common.branch.CDOBranchPoint,boolean,java.util.function.Consumer)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>forEachValidRevision</h4>
+<pre class="methodSignature">void&nbsp;forEachValidRevision&#8203;(<a href="../branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+                          boolean&nbsp;considerBranchBases,
+                          java.util.function.Consumer&lt;<a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&nbsp;consumer)</pre>
+<div class="block">Passes each <a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision</code></a> that is valid at the given <a href="../branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch point</code></a>
+ (or optionally at the base ranch points) into the given consumer.</div>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.15</dd>
+</dl>
+</li>
+</ul>
+<a id="forEachRevision(java.util.function.Consumer)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>forEachRevision</h4>
+<pre class="methodSignature">void&nbsp;forEachRevision&#8203;(java.util.function.Consumer&lt;<a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&nbsp;consumer)</pre>
+<div class="block">Passes each <a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision</code></a> into the given consumer.</div>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.15</dd>
+</dl>
+</li>
+</ul>
+<a id="addRevision(org.eclipse.emf.cdo.common.revision.CDORevision)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>addRevision</h4>
+<pre class="methodSignature">@Deprecated
+void&nbsp;addRevision&#8203;(<a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.15 use <a href="CDORevisionInterner.html#internRevision(org.eclipse.emf.cdo.common.revision.CDORevision)"><code>CDORevisionInterner.internRevision(CDORevision)</code></a>.</div>
+</div>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="CDORevisionCacheAdder.html#addRevision(org.eclipse.emf.cdo.common.revision.CDORevision)">CDORevisionCacheAdder</a></code></span></div>
+<div class="block">Adds the given revision to this cache.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="CDORevisionCacheAdder.html#addRevision(org.eclipse.emf.cdo.common.revision.CDORevision)">addRevision</a></code>&nbsp;in interface&nbsp;<code><a href="CDORevisionCacheAdder.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCacheAdder</a></code></dd>
 </dl>
 </li>
 </ul>

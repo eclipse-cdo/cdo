@@ -258,66 +258,72 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="rowColor">
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.spi.common.lock">org.eclipse.emf.cdo.spi.common.lock</a></th>
+<td class="colLast">
+<div class="block">Common service provider interfaces and useful base implementations for dealing with object locks.</div>
+</td>
+</tr>
+<tr class="altColor">
 <th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.spi.common.protocol">org.eclipse.emf.cdo.spi.common.protocol</a></th>
 <td class="colLast">
 <div class="block">Common base implementations for dealing with I/O of CDO data structures.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.spi.common.revision">org.eclipse.emf.cdo.spi.common.revision</a></th>
 <td class="colLast">
 <div class="block">Common service provider interfaces and useful base implementations for dealing with revisions and deltas.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.spi.server">org.eclipse.emf.cdo.spi.server</a></th>
 <td class="colLast">
 <div class="block">Server service provider interfaces and useful base implementations.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.spi.workspace">org.eclipse.emf.cdo.spi.workspace</a></th>
 <td class="colLast">
 <div class="block">Server provider interfaces (SPI) for CDO <a href="../../workspace/CDOWorkspace.html" title="interface in org.eclipse.emf.cdo.workspace"><code>workspaces</code></a>.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.transaction">org.eclipse.emf.cdo.transaction</a></th>
 <td class="colLast">
 <div class="block">Client concepts for dealing with transactions, distributed transactions and their save points.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.ui">org.eclipse.emf.cdo.ui</a></th>
 <td class="colLast">
 <div class="block">Reusable UI components specific to the CDO Model Repository.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.ui.compare">org.eclipse.emf.cdo.ui.compare</a></th>
 <td class="colLast">
 <div class="block">Classes that help to open EMF Compare user interfaces on CDO models.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.ui.widgets">org.eclipse.emf.cdo.ui.widgets</a></th>
 <td class="colLast">
 <div class="block">A library with reusable widgets.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.util">org.eclipse.emf.cdo.util</a></th>
 <td class="colLast">
 <div class="block">Client utility classes, some common interfaces and exceptions.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.view">org.eclipse.emf.cdo.view</a></th>
 <td class="colLast">
 <div class="block">Client concepts for dealing with views, view sets, queries, CDO objects and EMF resource sets.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colFirst" scope="row"><a href="#org.eclipse.emf.spi.cdo">org.eclipse.emf.spi.cdo</a></th>
 <td class="colLast">
 <div class="block">Client service provider interfaces and useful base implementations.</div>
@@ -1064,13 +1070,44 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="rowColor">
+<th class="colFirst" scope="row"><a href="class-use/CDOBranchManager.html#org.eclipse.emf.cdo.spi.common.commit">CDOBranchManager</a></th>
+<td class="colLast">
+<div class="block">Manages a tree of <a href="CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branches</code></a> and notifies about changes in this branch tree.</div>
+</td>
+</tr>
+<tr class="altColor">
 <th class="colFirst" scope="row"><a href="class-use/CDOBranchPoint.html#org.eclipse.emf.cdo.spi.common.commit">CDOBranchPoint</a></th>
 <td class="colLast">
 <div class="block">A <a href="CDOBranchPoint.html#getTimeStamp()"><code>point in time</code></a> in a particular <a href="CDOBranchPoint.html#getBranch()"><code>branch</code></a>.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><a href="class-use/CDOBranchProvider.html#org.eclipse.emf.cdo.spi.common.commit">CDOBranchProvider</a></th>
+<td class="colLast">
+<div class="block">Provides the consumer with a <a href="CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch</code></a>.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList"><a id="org.eclipse.emf.cdo.spi.common.lock">
+<!--   -->
+</a>
+<table class="useSummary">
+<caption><span>Classes in <a href="package-summary.html">org.eclipse.emf.cdo.common.branch</a> used by <a href="../../spi/common/lock/package-summary.html">org.eclipse.emf.cdo.spi.common.lock</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="class-use/CDOBranch.html#org.eclipse.emf.cdo.spi.common.lock">CDOBranch</a></th>
+<td class="colLast">
+<div class="block">Represents a <i>stream of changes</i> that is isolated from other streams of changes.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><a href="class-use/CDOBranchProvider.html#org.eclipse.emf.cdo.spi.common.lock">CDOBranchProvider</a></th>
 <td class="colLast">
 <div class="block">Provides the consumer with a <a href="CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch</code></a>.</div>
 </td>

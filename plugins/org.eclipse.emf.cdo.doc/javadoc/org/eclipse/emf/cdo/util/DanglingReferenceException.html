@@ -159,7 +159,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <pre>public class <span class="typeNameLabel">DanglingReferenceException</span>
 extends <a href="../common/util/CDOException.html" title="class in org.eclipse.emf.cdo.common.util">CDOException</a></pre>
 <div class="block">An unchecked exception being thrown from <a href="../transaction/CDOUserTransaction.html#commit()"><code>CDOUserTransaction.commit()</code></a> if the commit <a href="../common/commit/CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>change
- set</code></a> is referencing <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>objects</code></a> that are not contained by any <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource" class="externalLink"><code>resource</code></a> before the server
+ set</code></a> is referencing <code>objects</code> that are not contained by any <code>resource</code> before the server
  is contacted.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -193,7 +193,7 @@ extends <a href="../common/util/CDOException.html" title="class in org.eclipse.e
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(org.eclipse.emf.ecore.EObject)">DanglingReferenceException</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&nbsp;object)</code></th>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(org.eclipse.emf.ecore.EObject)">DanglingReferenceException</a></span>&#8203;(org.eclipse.emf.ecore.EObject&nbsp;object)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -215,7 +215,7 @@ extends <a href="../common/util/CDOException.html" title="class in org.eclipse.e
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a></code></td>
+<td class="colFirst"><code>org.eclipse.emf.ecore.EObject</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTarget()">getTarget</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
@@ -256,7 +256,7 @@ extends <a href="../common/util/CDOException.html" title="class in org.eclipse.e
 <ul class="blockListLast">
 <li class="blockList">
 <h4>DanglingReferenceException</h4>
-<pre>public&nbsp;DanglingReferenceException&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&nbsp;object)</pre>
+<pre>public&nbsp;DanglingReferenceException&#8203;(org.eclipse.emf.ecore.EObject&nbsp;object)</pre>
 </li>
 </ul>
 </li>
@@ -275,7 +275,7 @@ extends <a href="../common/util/CDOException.html" title="class in org.eclipse.e
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getTarget</h4>
-<pre class="methodSignature">public&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&nbsp;getTarget()</pre>
+<pre class="methodSignature">public&nbsp;org.eclipse.emf.ecore.EObject&nbsp;getTarget()</pre>
 </li>
 </ul>
 </li>

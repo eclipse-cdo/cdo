@@ -125,7 +125,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><code><a href="Assignee.html" title="interface in org.eclipse.emf.cdo.security">Assignee</a></code>, <code><a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a></code>, <code><a href="../common/id/CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a></code>, <code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a></code>, <code><a href="../etypes/ModelElement.html" title="interface in org.eclipse.emf.cdo.etypes">ModelElement</a></code>, <code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notifier.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">Notifier</a></code>, <code><a href="SecurityElement.html" title="interface in org.eclipse.emf.cdo.security">SecurityElement</a></code>, <code><a href="SecurityItem.html" title="interface in org.eclipse.emf.cdo.security">SecurityItem</a></code></dd>
+<dd><code><a href="Assignee.html" title="interface in org.eclipse.emf.cdo.security">Assignee</a></code>, <code><a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a></code>, <code><a href="../common/id/CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a></code>, <code>org.eclipse.emf.ecore.EObject</code>, <code><a href="../etypes/ModelElement.html" title="interface in org.eclipse.emf.cdo.etypes">ModelElement</a></code>, <code>org.eclipse.emf.common.notify.Notifier</code>, <code><a href="SecurityElement.html" title="interface in org.eclipse.emf.cdo.security">SecurityElement</a></code>, <code><a href="SecurityItem.html" title="interface in org.eclipse.emf.cdo.security">SecurityItem</a></code></dd>
 </dl>
 <dl>
 <dt>All Known Implementing Classes:</dt>
@@ -191,6 +191,11 @@ extends <a href="Assignee.html" title="interface in org.eclipse.emf.cdo.security
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ADMINISTRATOR">ADMINISTRATOR</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ADMINISTRATOR_DEFAULT_PASSWORD">ADMINISTRATOR_DEFAULT_PASSWORD</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
 </table>
 </li>
 </ul>
@@ -210,21 +215,21 @@ extends <a href="Assignee.html" title="interface in org.eclipse.emf.cdo.security
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">EList</a>&lt;<a href="Group.html" title="interface in org.eclipse.emf.cdo.security">Group</a>&gt;</code></td>
+<td class="colFirst"><code>org.eclipse.emf.common.util.EList&lt;<a href="Group.html" title="interface in org.eclipse.emf.cdo.security">Group</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAllGroups()">getAllGroups</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the value of the '<em><b>All Groups</b></em>' reference list.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">EList</a>&lt;<a href="Permission.html" title="interface in org.eclipse.emf.cdo.security">Permission</a>&gt;</code></td>
+<td class="colFirst"><code>org.eclipse.emf.common.util.EList&lt;<a href="Permission.html" title="interface in org.eclipse.emf.cdo.security">Permission</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAllPermissions()">getAllPermissions</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the value of the '<em><b>All Permissions</b></em>' reference list.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">EList</a>&lt;<a href="Role.html" title="interface in org.eclipse.emf.cdo.security">Role</a>&gt;</code></td>
+<td class="colFirst"><code>org.eclipse.emf.common.util.EList&lt;<a href="Role.html" title="interface in org.eclipse.emf.cdo.security">Role</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAllRoles()">getAllRoles</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the value of the '<em><b>All Roles</b></em>' reference list.</div>
@@ -259,7 +264,7 @@ extends <a href="Assignee.html" title="interface in org.eclipse.emf.cdo.security
 </td>
 </tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">EList</a>&lt;<a href="Group.html" title="interface in org.eclipse.emf.cdo.security">Group</a>&gt;</code></td>
+<td class="colFirst"><code>org.eclipse.emf.common.util.EList&lt;<a href="Group.html" title="interface in org.eclipse.emf.cdo.security">Group</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getGroups()">getGroups</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the value of the '<em><b>Groups</b></em>' reference list.</div>
@@ -287,7 +292,7 @@ extends <a href="Assignee.html" title="interface in org.eclipse.emf.cdo.security
 </td>
 </tr>
 <tr id="i11" class="rowColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">EList</a>&lt;<a href="Role.html" title="interface in org.eclipse.emf.cdo.security">Role</a>&gt;</code></td>
+<td class="colFirst"><code>org.eclipse.emf.common.util.EList&lt;<a href="Role.html" title="interface in org.eclipse.emf.cdo.security">Role</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getUnassignedRoles()">getUnassignedRoles</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the value of the '<em><b>Unassigned Roles</b></em>' reference list.</div>
@@ -361,8 +366,8 @@ extends <a href="Assignee.html" title="interface in org.eclipse.emf.cdo.security
 <li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.ecore.EObject">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.emf.ecore.<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a></h3>
-<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eAllContents()" title="class or interface in org.eclipse.emf.ecore" class="externalLink">eAllContents</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eClass()" title="class or interface in org.eclipse.emf.ecore" class="externalLink">eClass</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eContainer()" title="class or interface in org.eclipse.emf.ecore" class="externalLink">eContainer</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eContainingFeature()" title="class or interface in org.eclipse.emf.ecore" class="externalLink">eContainingFeature</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eContainmentFeature()" title="class or interface in org.eclipse.emf.ecore" class="externalLink">eContainmentFeature</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eContents()" title="class or interface in org.eclipse.emf.ecore" class="externalLink">eContents</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eCrossReferences()" title="class or interface in org.eclipse.emf.ecore" class="externalLink">eCrossReferences</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eGet(org.eclipse.emf.ecore.EStructuralFeature)" title="class or interface in org.eclipse.emf.ecore" class="externalLink">eGet</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eGet(org.eclipse.emf.ecore.EStructuralFeature,boolean)" title="class or interface in org.eclipse.emf.ecore" class="externalLink">eGet</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eInvoke(org.eclipse.emf.ecore.EOperation,org.eclipse.emf.common.util.EList)" title="class or interface in org.eclipse.emf.ecore" class="externalLink">eInvoke</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eIsProxy()" title="class or interface in org.eclipse.emf.ecore" class="externalLink">eIsProxy</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eIsSet(org.eclipse.emf.ecore.EStructuralFeature)" title="class or interface in org.eclipse.emf.ecore" class="externalLink">eIsSet</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eResource()" title="class or interface in org.eclipse.emf.ecore" class="externalLink">eResource</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eSet(org.eclipse.emf.ecore.EStructuralFeature,java.lang.Object)" title="class or interface in org.eclipse.emf.ecore" class="externalLink">eSet</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eUnset(org.eclipse.emf.ecore.EStructuralFeature)" title="class or interface in org.eclipse.emf.ecore" class="externalLink">eUnset</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.emf.ecore.EObject</h3>
+<code>eAllContents, eClass, eContainer, eContainingFeature, eContainmentFeature, eContents, eCrossReferences, eGet, eGet, eInvoke, eIsProxy, eIsSet, eResource, eSet, eUnset</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.cdo.etypes.ModelElement">
@@ -375,8 +380,8 @@ extends <a href="Assignee.html" title="interface in org.eclipse.emf.cdo.security
 <li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.common.notify.Notifier">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.emf.common.notify.<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notifier.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">Notifier</a></h3>
-<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notifier.html?is-external=true#eAdapters()" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">eAdapters</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notifier.html?is-external=true#eDeliver()" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">eDeliver</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notifier.html?is-external=true#eNotify(org.eclipse.emf.common.notify.Notification)" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">eNotify</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notifier.html?is-external=true#eSetDeliver(boolean)" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">eSetDeliver</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.emf.common.notify.Notifier</h3>
+<code>eAdapters, eDeliver, eNotify, eSetDeliver</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.cdo.security.SecurityElement">
@@ -404,7 +409,7 @@ extends <a href="Assignee.html" title="interface in org.eclipse.emf.cdo.security
 <a id="ADMINISTRATOR">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>ADMINISTRATOR</h4>
 <pre>static final&nbsp;java.lang.String ADMINISTRATOR</pre>
@@ -413,6 +418,21 @@ extends <a href="Assignee.html" title="interface in org.eclipse.emf.cdo.security
 <dd>4.3</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../../constant-values.html#org.eclipse.emf.cdo.security.User.ADMINISTRATOR">Constant Field Values</a></dd>
+</dl>
+</li>
+</ul>
+<a id="ADMINISTRATOR_DEFAULT_PASSWORD">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>ADMINISTRATOR_DEFAULT_PASSWORD</h4>
+<pre>static final&nbsp;java.lang.String ADMINISTRATOR_DEFAULT_PASSWORD</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.6</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../../../constant-values.html#org.eclipse.emf.cdo.security.User.ADMINISTRATOR_DEFAULT_PASSWORD">Constant Field Values</a></dd>
 </dl>
 </li>
 </ul>
@@ -432,7 +452,7 @@ extends <a href="Assignee.html" title="interface in org.eclipse.emf.cdo.security
 <ul class="blockList">
 <li class="blockList">
 <h4>getGroups</h4>
-<pre class="methodSignature"><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">EList</a>&lt;<a href="Group.html" title="interface in org.eclipse.emf.cdo.security">Group</a>&gt;&nbsp;getGroups()</pre>
+<pre class="methodSignature">org.eclipse.emf.common.util.EList&lt;<a href="Group.html" title="interface in org.eclipse.emf.cdo.security">Group</a>&gt;&nbsp;getGroups()</pre>
 <div class="block">Returns the value of the '<em><b>Groups</b></em>' reference list.
  The list contents are of type <a href="Group.html" title="interface in org.eclipse.emf.cdo.security"><code>Group</code></a>.
  It is bidirectional and its opposite is '<a href="Group.html#getUsers()"><code><em>Users</em></code></a>'.
@@ -460,7 +480,7 @@ extends <a href="Assignee.html" title="interface in org.eclipse.emf.cdo.security
 <ul class="blockList">
 <li class="blockList">
 <h4>getAllGroups</h4>
-<pre class="methodSignature"><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">EList</a>&lt;<a href="Group.html" title="interface in org.eclipse.emf.cdo.security">Group</a>&gt;&nbsp;getAllGroups()</pre>
+<pre class="methodSignature">org.eclipse.emf.common.util.EList&lt;<a href="Group.html" title="interface in org.eclipse.emf.cdo.security">Group</a>&gt;&nbsp;getAllGroups()</pre>
 <div class="block">Returns the value of the '<em><b>All Groups</b></em>' reference list.
  The list contents are of type <a href="Group.html" title="interface in org.eclipse.emf.cdo.security"><code>Group</code></a>.
  <!-- begin-user-doc -->
@@ -486,7 +506,7 @@ extends <a href="Assignee.html" title="interface in org.eclipse.emf.cdo.security
 <ul class="blockList">
 <li class="blockList">
 <h4>getAllRoles</h4>
-<pre class="methodSignature"><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">EList</a>&lt;<a href="Role.html" title="interface in org.eclipse.emf.cdo.security">Role</a>&gt;&nbsp;getAllRoles()</pre>
+<pre class="methodSignature">org.eclipse.emf.common.util.EList&lt;<a href="Role.html" title="interface in org.eclipse.emf.cdo.security">Role</a>&gt;&nbsp;getAllRoles()</pre>
 <div class="block">Returns the value of the '<em><b>All Roles</b></em>' reference list.
  The list contents are of type <a href="Role.html" title="interface in org.eclipse.emf.cdo.security"><code>Role</code></a>.
  <!-- begin-user-doc -->
@@ -512,7 +532,7 @@ extends <a href="Assignee.html" title="interface in org.eclipse.emf.cdo.security
 <ul class="blockList">
 <li class="blockList">
 <h4>getAllPermissions</h4>
-<pre class="methodSignature"><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">EList</a>&lt;<a href="Permission.html" title="interface in org.eclipse.emf.cdo.security">Permission</a>&gt;&nbsp;getAllPermissions()</pre>
+<pre class="methodSignature">org.eclipse.emf.common.util.EList&lt;<a href="Permission.html" title="interface in org.eclipse.emf.cdo.security">Permission</a>&gt;&nbsp;getAllPermissions()</pre>
 <div class="block">Returns the value of the '<em><b>All Permissions</b></em>' reference list.
  The list contents are of type <a href="Permission.html" title="interface in org.eclipse.emf.cdo.security"><code>Permission</code></a>.
  <!-- begin-user-doc -->
@@ -538,7 +558,7 @@ extends <a href="Assignee.html" title="interface in org.eclipse.emf.cdo.security
 <ul class="blockList">
 <li class="blockList">
 <h4>getUnassignedRoles</h4>
-<pre class="methodSignature"><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util" class="externalLink">EList</a>&lt;<a href="Role.html" title="interface in org.eclipse.emf.cdo.security">Role</a>&gt;&nbsp;getUnassignedRoles()</pre>
+<pre class="methodSignature">org.eclipse.emf.common.util.EList&lt;<a href="Role.html" title="interface in org.eclipse.emf.cdo.security">Role</a>&gt;&nbsp;getUnassignedRoles()</pre>
 <div class="block">Returns the value of the '<em><b>Unassigned Roles</b></em>' reference list.
  The list contents are of type <a href="Role.html" title="interface in org.eclipse.emf.cdo.security"><code>Role</code></a>.
  <!-- begin-user-doc -->

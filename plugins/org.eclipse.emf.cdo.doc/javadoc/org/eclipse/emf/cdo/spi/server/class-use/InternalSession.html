@@ -231,22 +231,36 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalRepository.PostActivateable.</span><code><span class="memberNameLink"><a href="../InternalRepository.PostActivateable.html#doPostActivate(org.eclipse.emf.cdo.spi.server.InternalSession)">doPostActivate</a></span>&#8203;(<a href="../InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;session)</code></th>
+<td class="colLast">
+<div class="block">Called by a <a href="../../../server/IRepository.html" title="interface in org.eclipse.emf.cdo.server"><code>repository</code></a> when it is fully activated.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">InternalRepository.</span><code><span class="memberNameLink"><a href="../InternalRepository.html#notifyReadAccessHandlers(org.eclipse.emf.cdo.spi.server.InternalSession,org.eclipse.emf.cdo.common.revision.CDORevision%5B%5D,java.util.List)">notifyReadAccessHandlers</a></span>&#8203;(<a href="../InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;session,
                         <a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>[]&nbsp;revisions,
                         java.util.List&lt;<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&nbsp;additionalRevisions)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">InternalSessionManager.</span><code><span class="memberNameLink"><a href="../InternalSessionManager.html#openedOnClientSide(org.eclipse.emf.cdo.spi.server.InternalSession)">openedOnClientSide</a></span>&#8203;(<a href="../InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;session)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>static <a href="../InternalView.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalView</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">SyncingUtil.</span><code><span class="memberNameLink"><a href="../SyncingUtil.html#openViewWithLockArea(org.eclipse.emf.cdo.spi.server.InternalSession,org.eclipse.emf.cdo.spi.server.InternalLockManager,org.eclipse.emf.cdo.common.branch.CDOBranch,java.lang.String)">openViewWithLockArea</a></span>&#8203;(<a href="../InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;session,
                     <a href="../InternalLockManager.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalLockManager</a>&nbsp;lockManager,
                     <a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;viewedBranch,
                     java.lang.String&nbsp;lockAreaID)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalSessionManager.</span><code><span class="memberNameLink"><a href="../InternalSessionManager.html#sendBranchNotification(org.eclipse.emf.cdo.spi.server.InternalSession,org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind,org.eclipse.emf.cdo.common.branch.CDOBranch...)">sendBranchNotification</a></span>&#8203;(<a href="../InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
+                      <a href="../../../common/branch/CDOBranchChangedEvent.ChangeKind.html" title="enum in org.eclipse.emf.cdo.common.branch">CDOBranchChangedEvent.ChangeKind</a>&nbsp;changeKind,
+                      <a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>...&nbsp;branches)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
@@ -264,7 +278,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <th class="colSecond" scope="row"><span class="typeNameLabel">InternalSessionManager.</span><code><span class="memberNameLink"><a href="../InternalSessionManager.html#sendBranchNotification(org.eclipse.emf.cdo.spi.server.InternalSession,org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch,org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind)">sendBranchNotification</a></span>&#8203;(<a href="../InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
                       <a href="../../common/branch/InternalCDOBranch.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranch</a>&nbsp;branch,
                       <a href="../../../common/branch/CDOBranchChangedEvent.ChangeKind.html" title="enum in org.eclipse.emf.cdo.common.branch">CDOBranchChangedEvent.ChangeKind</a>&nbsp;changeKind)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">As of 4.15 use <a href="../InternalSessionManager.html#sendBranchNotification(org.eclipse.emf.cdo.spi.server.InternalSession,org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind,org.eclipse.emf.cdo.common.branch.CDOBranch...)"><code>InternalSessionManager.sendBranchNotification(InternalSession, ChangeKind, CDOBranch...)</code></a>.</div>
+</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>

@@ -28,7 +28,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -203,16 +203,21 @@ extends org.eclipse.net4j.util.event.Event</pre>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code>long</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDuration()">getDuration</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>java.lang.Exception</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getException()">getException</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="Signal.html" title="class in org.eclipse.net4j.signal">Signal</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSignal()">getSignal</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="ISignalProtocol.html" title="interface in org.eclipse.net4j.signal">ISignalProtocol</a>&lt;<a href="SignalFinishedEvent.html" title="type parameter in SignalFinishedEvent">INFRA_STRUCTURE</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSource()">getSource</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
@@ -279,6 +284,19 @@ extends org.eclipse.net4j.util.event.Event</pre>
 <li class="blockList">
 <h4>getException</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Exception&nbsp;getException()</pre>
+</li>
+</ul>
+<a id="getDuration()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getDuration</h4>
+<pre class="methodSignature">public&nbsp;long&nbsp;getDuration()</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.13</dd>
+</dl>
 </li>
 </ul>
 <a id="formatAdditionalParameters()">

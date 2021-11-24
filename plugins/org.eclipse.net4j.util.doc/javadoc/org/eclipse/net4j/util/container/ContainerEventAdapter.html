@@ -28,7 +28,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -89,7 +89,7 @@ loadScripts(document, 'script');</script>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
@@ -151,6 +151,23 @@ implements <a href="../event/IListener.html" title="interface in org.eclipse.net
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+<section role="region">
+<ul class="blockList">
+<li class="blockList"><a id="nested.class.summary">
+<!--   -->
+</a>
+<h3>Nested Class Summary</h3>
+<ul class="blockList">
+<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.net4j.util.event.IListener">
+<!--   -->
+</a>
+<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.event.<a href="../event/IListener.html" title="interface in org.eclipse.net4j.util.event">IListener</a></h3>
+<code><a href="../event/IListener.NotifierAware.html" title="interface in org.eclipse.net4j.util.event">IListener.NotifierAware</a></code></li>
+</ul>
+</li>
+</ul>
+</section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <section role="region">
 <ul class="blockList">
@@ -207,16 +224,41 @@ implements <a href="../event/IListener.html" title="interface in org.eclipse.net
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#notifyOtherEvent(org.eclipse.net4j.util.event.IEvent)">notifyOtherEvent</a></span>&#8203;(<a href="../event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#notifyLifecycleEvent(org.eclipse.net4j.util.lifecycle.ILifecycleEvent)">notifyLifecycleEvent</a></span>&#8203;(<a href="../lifecycle/ILifecycleEvent.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycleEvent</a>&nbsp;event)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
+<td class="colFirst"><code>protected void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#notifyOtherEvent(org.eclipse.net4j.util.event.IEvent)">notifyOtherEvent</a></span>&#8203;(<a href="../event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>protected void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onAboutToActivate(org.eclipse.net4j.util.lifecycle.ILifecycle)">onAboutToActivate</a></span>&#8203;(<a href="../lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a>&nbsp;lifecycle)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i6" class="altColor">
+<td class="colFirst"><code>protected void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onAboutToDeactivate(org.eclipse.net4j.util.lifecycle.ILifecycle)">onAboutToDeactivate</a></span>&#8203;(<a href="../lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a>&nbsp;lifecycle)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code>protected void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onActivated(org.eclipse.net4j.util.lifecycle.ILifecycle)">onActivated</a></span>&#8203;(<a href="../lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a>&nbsp;lifecycle)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onAdded(org.eclipse.net4j.util.container.IContainer,E)">onAdded</a></span>&#8203;(<a href="IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;<a href="ContainerEventAdapter.html" title="type parameter in ContainerEventAdapter">E</a>&gt;&nbsp;container,
        <a href="ContainerEventAdapter.html" title="type parameter in ContainerEventAdapter">E</a>&nbsp;element)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i9" class="rowColor">
+<td class="colFirst"><code>protected void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onDeactivated(org.eclipse.net4j.util.lifecycle.ILifecycle)">onDeactivated</a></span>&#8203;(<a href="../lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a>&nbsp;lifecycle)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onRemoved(org.eclipse.net4j.util.container.IContainer,E)">onRemoved</a></span>&#8203;(<a href="IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;<a href="ContainerEventAdapter.html" title="type parameter in ContainerEventAdapter">E</a>&gt;&nbsp;container,
          <a href="ContainerEventAdapter.html" title="type parameter in ContainerEventAdapter">E</a>&nbsp;element)</code></th>
@@ -313,6 +355,19 @@ implements <a href="../event/IListener.html" title="interface in org.eclipse.net
 <pre class="methodSignature">protected&nbsp;void&nbsp;notifyContainerEvent&#8203;(<a href="IContainerEvent.html" title="interface in org.eclipse.net4j.util.container">IContainerEvent</a>&lt;<a href="ContainerEventAdapter.html" title="type parameter in ContainerEventAdapter">E</a>&gt;&nbsp;event)</pre>
 </li>
 </ul>
+<a id="notifyLifecycleEvent(org.eclipse.net4j.util.lifecycle.ILifecycleEvent)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>notifyLifecycleEvent</h4>
+<pre class="methodSignature">protected&nbsp;void&nbsp;notifyLifecycleEvent&#8203;(<a href="../lifecycle/ILifecycleEvent.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycleEvent</a>&nbsp;event)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.16</dd>
+</dl>
+</li>
+</ul>
 <a id="notifyOtherEvent(org.eclipse.net4j.util.event.IEvent)">
 <!--   -->
 </a>
@@ -339,11 +394,63 @@ implements <a href="../event/IListener.html" title="interface in org.eclipse.net
 </a><a id="onRemoved(org.eclipse.net4j.util.container.IContainer,E)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>onRemoved</h4>
 <pre class="methodSignature">protected&nbsp;void&nbsp;onRemoved&#8203;(<a href="IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;<a href="ContainerEventAdapter.html" title="type parameter in ContainerEventAdapter">E</a>&gt;&nbsp;container,
                          <a href="ContainerEventAdapter.html" title="type parameter in ContainerEventAdapter">E</a>&nbsp;element)</pre>
+</li>
+</ul>
+<a id="onAboutToActivate(org.eclipse.net4j.util.lifecycle.ILifecycle)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>onAboutToActivate</h4>
+<pre class="methodSignature">protected&nbsp;void&nbsp;onAboutToActivate&#8203;(<a href="../lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a>&nbsp;lifecycle)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.16</dd>
+</dl>
+</li>
+</ul>
+<a id="onActivated(org.eclipse.net4j.util.lifecycle.ILifecycle)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>onActivated</h4>
+<pre class="methodSignature">protected&nbsp;void&nbsp;onActivated&#8203;(<a href="../lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a>&nbsp;lifecycle)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.16</dd>
+</dl>
+</li>
+</ul>
+<a id="onAboutToDeactivate(org.eclipse.net4j.util.lifecycle.ILifecycle)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>onAboutToDeactivate</h4>
+<pre class="methodSignature">protected&nbsp;void&nbsp;onAboutToDeactivate&#8203;(<a href="../lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a>&nbsp;lifecycle)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.16</dd>
+</dl>
+</li>
+</ul>
+<a id="onDeactivated(org.eclipse.net4j.util.lifecycle.ILifecycle)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>onDeactivated</h4>
+<pre class="methodSignature">protected&nbsp;void&nbsp;onDeactivated&#8203;(<a href="../lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a>&nbsp;lifecycle)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.16</dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -397,7 +504,7 @@ implements <a href="../event/IListener.html" title="interface in org.eclipse.net
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>

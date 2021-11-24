@@ -125,7 +125,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">Adapter</a></code>, <code><a href="../../../common/model/CDOClassInfo.html" title="interface in org.eclipse.emf.cdo.common.model">CDOClassInfo</a></code></dd>
+<dd><code>org.eclipse.emf.common.notify.Adapter</code>, <code><a href="../../../common/model/CDOClassInfo.html" title="interface in org.eclipse.emf.cdo.common.model">CDOClassInfo</a></code></dd>
 </dl>
 <hr>
 <pre>public interface <span class="typeNameLabel">InternalCDOClassInfo</span>
@@ -166,7 +166,7 @@ extends <a href="../../../common/model/CDOClassInfo.html" title="interface in or
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="InternalCDOClassInfo.PersistenceFilter.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOClassInfo.PersistenceFilter</a></span></code></th>
 <td class="colLast">
 <div class="block">Encapsulation of a rule for filtering the persistent values
- of a <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">feature</a> in some model element.</div>
+ of a feature in some model element.</div>
 </td>
 </tr>
 </table>
@@ -174,8 +174,8 @@ extends <a href="../../../common/model/CDOClassInfo.html" title="interface in or
 <li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.emf.common.notify.Adapter">
 <!--   -->
 </a>
-<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.emf.common.notify.<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">Adapter</a></h3>
-<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.Internal.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">Adapter.Internal</a></code></li>
+<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.emf.common.notify.Adapter</h3>
+<code>org.eclipse.emf.common.notify.Adapter.Internal</code></li>
 </ul>
 </li>
 </ul>
@@ -219,7 +219,7 @@ extends <a href="../../../common/model/CDOClassInfo.html" title="interface in or
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code><a href="InternalCDOClassInfo.PersistenceFilter.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOClassInfo.PersistenceFilter</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPersistenceFilter(org.eclipse.emf.ecore.EStructuralFeature)">getPersistenceFilter</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&nbsp;feature)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPersistenceFilter(org.eclipse.emf.ecore.EStructuralFeature)">getPersistenceFilter</a></span>&#8203;(org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)</code></th>
 <td class="colLast">
 <div class="block">Obtains a rule that filters/transforms the persist values of the given
  <code>feature</code>.</div>
@@ -229,14 +229,14 @@ extends <a href="../../../common/model/CDOClassInfo.html" title="interface in or
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPersistentFeatureIndex(int)">getPersistentFeatureIndex</a></span>&#8203;(int&nbsp;featureID)</code></th>
 <td class="colLast">
-<div class="block">Returns the index of the specified <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>feature</code></a> in the <code>CDORevisionImpl.values</code> array, never <a href="#NO_SLOT"><code>NO_SLOT</code></a>.</div>
+<div class="block">Returns the index of the specified <code>feature</code> in the <code>CDORevisionImpl.values</code> array, never <a href="#NO_SLOT"><code>NO_SLOT</code></a>.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPersistentFeatureIndex(org.eclipse.emf.ecore.EStructuralFeature)">getPersistentFeatureIndex</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&nbsp;feature)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPersistentFeatureIndex(org.eclipse.emf.ecore.EStructuralFeature)">getPersistentFeatureIndex</a></span>&#8203;(org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)</code></th>
 <td class="colLast">
-<div class="block">Returns the index of the specified <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>feature</code></a> in the <code>CDORevisionImpl.values</code> array, never <a href="#NO_SLOT"><code>NO_SLOT</code></a>.</div>
+<div class="block">Returns the index of the specified <code>feature</code> in the <code>CDORevisionImpl.values</code> array, never <a href="#NO_SLOT"><code>NO_SLOT</code></a>.</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
@@ -248,7 +248,7 @@ extends <a href="../../../common/model/CDOClassInfo.html" title="interface in or
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSettingsFeatureCount()">getSettingsFeatureCount</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Returns the number of <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>features</code></a> whose values are <b>always</b> stored in the
+<div class="block">Returns the number of <code>features</code> whose values are <b>always</b> stored in the
  <code>CDOObjectImpl.eSettings</code> array, whether an object is in <code>CDOState.TRANSIENT</code> or not.</div>
 </td>
 </tr>
@@ -256,15 +256,15 @@ extends <a href="../../../common/model/CDOClassInfo.html" title="interface in or
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSettingsFeatureIndex(int)">getSettingsFeatureIndex</a></span>&#8203;(int&nbsp;featureID)</code></th>
 <td class="colLast">
-<div class="block">Returns the index of the specified <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>feature</code></a> in the <code>CDOObjectImpl.eSettings</code> array,
- or <a href="#NO_SLOT"><code>NO_SLOT</code></a> if the feature is <a href="../../../common/model/EMFUtil.html#isPersistent(org.eclipse.emf.ecore.EStructuralFeature)"><code>non-transient</code></a> or <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/ETypedElement.html?is-external=true#isMany()" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>single-valued</code></a>.</div>
+<div class="block">Returns the index of the specified <code>feature</code> in the <code>CDOObjectImpl.eSettings</code> array,
+ or <a href="#NO_SLOT"><code>NO_SLOT</code></a> if the feature is <a href="../../../common/model/EMFUtil.html#isPersistent(org.eclipse.emf.ecore.EStructuralFeature)"><code>non-transient</code></a> or <code>single-valued</code>.</div>
 </td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTransientFeatureCount()">getTransientFeatureCount</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Returns the number of <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>features</code></a> whose values are additionally stored in the <code>CDOObjectImpl.eSettings</code> array,
+<div class="block">Returns the number of <code>features</code> whose values are additionally stored in the <code>CDOObjectImpl.eSettings</code> array,
  if an object is in <code>CDOState.TRANSIENT</code>.</div>
 </td>
 </tr>
@@ -272,13 +272,13 @@ extends <a href="../../../common/model/CDOClassInfo.html" title="interface in or
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTransientFeatureIndex(int)">getTransientFeatureIndex</a></span>&#8203;(int&nbsp;featureID)</code></th>
 <td class="colLast">
-<div class="block">Returns the index of the specified <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>feature</code></a> in the <code>CDOObjectImpl.eSettings</code> array,
- or <a href="#NO_SLOT"><code>NO_SLOT</code></a> if the feature is <a href="../../../common/model/EMFUtil.html#isPersistent(org.eclipse.emf.ecore.EStructuralFeature)"><code>transient</code></a> or <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/ETypedElement.html?is-external=true#isMany()" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>many-valued</code></a></div>
+<div class="block">Returns the index of the specified <code>feature</code> in the <code>CDOObjectImpl.eSettings</code> array,
+ or <a href="#NO_SLOT"><code>NO_SLOT</code></a> if the feature is <a href="../../../common/model/EMFUtil.html#isPersistent(org.eclipse.emf.ecore.EStructuralFeature)"><code>transient</code></a> or <code>many-valued</code></div>
 </td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTransientFeatureIndex(org.eclipse.emf.ecore.EStructuralFeature)">getTransientFeatureIndex</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&nbsp;feature)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTransientFeatureIndex(org.eclipse.emf.ecore.EStructuralFeature)">getTransientFeatureIndex</a></span>&#8203;(org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -286,8 +286,8 @@ extends <a href="../../../common/model/CDOClassInfo.html" title="interface in or
 <li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.common.notify.Adapter">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.emf.common.notify.<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">Adapter</a></h3>
-<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true#getTarget()" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">getTarget</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true#isAdapterForType(java.lang.Object)" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">isAdapterForType</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true#notifyChanged(org.eclipse.emf.common.notify.Notification)" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">notifyChanged</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true#setTarget(org.eclipse.emf.common.notify.Notifier)" title="class or interface in org.eclipse.emf.common.notify" class="externalLink">setTarget</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.emf.common.notify.Adapter</h3>
+<code>getTarget, isAdapterForType, notifyChanged, setTarget</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.cdo.common.model.CDOClassInfo">
@@ -350,9 +350,9 @@ extends <a href="../../../common/model/CDOClassInfo.html" title="interface in or
 <ul class="blockList">
 <li class="blockList">
 <h4>getPersistentFeatureIndex</h4>
-<pre class="methodSignature">int&nbsp;getPersistentFeatureIndex&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&nbsp;feature)
+<pre class="methodSignature">int&nbsp;getPersistentFeatureIndex&#8203;(org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)
                        throws java.lang.IllegalArgumentException</pre>
-<div class="block">Returns the index of the specified <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>feature</code></a> in the <code>CDORevisionImpl.values</code> array, never <a href="#NO_SLOT"><code>NO_SLOT</code></a>.</div>
+<div class="block">Returns the index of the specified <code>feature</code> in the <code>CDORevisionImpl.values</code> array, never <a href="#NO_SLOT"><code>NO_SLOT</code></a>.</div>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.lang.IllegalArgumentException</code> - if the specified feature is <b>not</b> <a href="../../../common/model/CDOClassInfo.html#isPersistent(int)"><code>persistent</code></a>.</dd>
@@ -369,7 +369,7 @@ extends <a href="../../../common/model/CDOClassInfo.html" title="interface in or
 <h4>getPersistentFeatureIndex</h4>
 <pre class="methodSignature">int&nbsp;getPersistentFeatureIndex&#8203;(int&nbsp;featureID)
                        throws java.lang.IllegalArgumentException</pre>
-<div class="block">Returns the index of the specified <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>feature</code></a> in the <code>CDORevisionImpl.values</code> array, never <a href="#NO_SLOT"><code>NO_SLOT</code></a>.</div>
+<div class="block">Returns the index of the specified <code>feature</code> in the <code>CDORevisionImpl.values</code> array, never <a href="#NO_SLOT"><code>NO_SLOT</code></a>.</div>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.lang.IllegalArgumentException</code> - if the specified feature is <b>not</b> <a href="../../../common/model/CDOClassInfo.html#isPersistent(int)"><code>persistent</code></a>.</dd>
@@ -385,10 +385,10 @@ extends <a href="../../../common/model/CDOClassInfo.html" title="interface in or
 <li class="blockList">
 <h4>getSettingsFeatureCount</h4>
 <pre class="methodSignature">int&nbsp;getSettingsFeatureCount()</pre>
-<div class="block">Returns the number of <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>features</code></a> whose values are <b>always</b> stored in the
+<div class="block">Returns the number of <code>features</code> whose values are <b>always</b> stored in the
  <code>CDOObjectImpl.eSettings</code> array, whether an object is in <code>CDOState.TRANSIENT</code> or not.
  <p>
- These are the <a href="../../../common/model/EMFUtil.html#isPersistent(org.eclipse.emf.ecore.EStructuralFeature)"><code>transient</code></a> and/or <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/ETypedElement.html?is-external=true#isMany()" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>many-valued</code></a> features.</div>
+ These are the <a href="../../../common/model/EMFUtil.html#isPersistent(org.eclipse.emf.ecore.EStructuralFeature)"><code>transient</code></a> and/or <code>many-valued</code> features.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="#getSettingsFeatureIndex(int)"><code>getSettingsFeatureIndex(int)</code></a></dd>
@@ -402,8 +402,8 @@ extends <a href="../../../common/model/CDOClassInfo.html" title="interface in or
 <li class="blockList">
 <h4>getSettingsFeatureIndex</h4>
 <pre class="methodSignature">int&nbsp;getSettingsFeatureIndex&#8203;(int&nbsp;featureID)</pre>
-<div class="block">Returns the index of the specified <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>feature</code></a> in the <code>CDOObjectImpl.eSettings</code> array,
- or <a href="#NO_SLOT"><code>NO_SLOT</code></a> if the feature is <a href="../../../common/model/EMFUtil.html#isPersistent(org.eclipse.emf.ecore.EStructuralFeature)"><code>non-transient</code></a> or <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/ETypedElement.html?is-external=true#isMany()" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>single-valued</code></a>.</div>
+<div class="block">Returns the index of the specified <code>feature</code> in the <code>CDOObjectImpl.eSettings</code> array,
+ or <a href="#NO_SLOT"><code>NO_SLOT</code></a> if the feature is <a href="../../../common/model/EMFUtil.html#isPersistent(org.eclipse.emf.ecore.EStructuralFeature)"><code>non-transient</code></a> or <code>single-valued</code>.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="#getSettingsFeatureCount()"><code>getSettingsFeatureCount()</code></a></dd>
@@ -417,10 +417,10 @@ extends <a href="../../../common/model/CDOClassInfo.html" title="interface in or
 <li class="blockList">
 <h4>getTransientFeatureCount</h4>
 <pre class="methodSignature">int&nbsp;getTransientFeatureCount()</pre>
-<div class="block">Returns the number of <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>features</code></a> whose values are additionally stored in the <code>CDOObjectImpl.eSettings</code> array,
+<div class="block">Returns the number of <code>features</code> whose values are additionally stored in the <code>CDOObjectImpl.eSettings</code> array,
  if an object is in <code>CDOState.TRANSIENT</code>.
  <p>
- These are the <a href="../../../common/model/EMFUtil.html#isPersistent(org.eclipse.emf.ecore.EStructuralFeature)"><code>non-transient</code></a> and/or <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/ETypedElement.html?is-external=true#isMany()" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>single-valued</code></a> features.</div>
+ These are the <a href="../../../common/model/EMFUtil.html#isPersistent(org.eclipse.emf.ecore.EStructuralFeature)"><code>non-transient</code></a> and/or <code>single-valued</code> features.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="#getTransientFeatureIndex(int)"><code>getTransientFeatureIndex(int)</code></a></dd>
@@ -434,8 +434,8 @@ extends <a href="../../../common/model/CDOClassInfo.html" title="interface in or
 <li class="blockList">
 <h4>getTransientFeatureIndex</h4>
 <pre class="methodSignature">int&nbsp;getTransientFeatureIndex&#8203;(int&nbsp;featureID)</pre>
-<div class="block">Returns the index of the specified <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>feature</code></a> in the <code>CDOObjectImpl.eSettings</code> array,
- or <a href="#NO_SLOT"><code>NO_SLOT</code></a> if the feature is <a href="../../../common/model/EMFUtil.html#isPersistent(org.eclipse.emf.ecore.EStructuralFeature)"><code>transient</code></a> or <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/ETypedElement.html?is-external=true#isMany()" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>many-valued</code></a></div>
+<div class="block">Returns the index of the specified <code>feature</code> in the <code>CDOObjectImpl.eSettings</code> array,
+ or <a href="#NO_SLOT"><code>NO_SLOT</code></a> if the feature is <a href="../../../common/model/EMFUtil.html#isPersistent(org.eclipse.emf.ecore.EStructuralFeature)"><code>transient</code></a> or <code>many-valued</code></div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="#getTransientFeatureCount()"><code>getTransientFeatureCount()</code></a></dd>
@@ -448,7 +448,7 @@ extends <a href="../../../common/model/CDOClassInfo.html" title="interface in or
 <ul class="blockList">
 <li class="blockList">
 <h4>getTransientFeatureIndex</h4>
-<pre class="methodSignature">int&nbsp;getTransientFeatureIndex&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&nbsp;feature)</pre>
+<pre class="methodSignature">int&nbsp;getTransientFeatureIndex&#8203;(org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)</pre>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="#getTransientFeatureIndex(int)"><code>getTransientFeatureIndex(int)</code></a></dd>
@@ -461,7 +461,7 @@ extends <a href="../../../common/model/CDOClassInfo.html" title="interface in or
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getPersistenceFilter</h4>
-<pre class="methodSignature"><a href="InternalCDOClassInfo.PersistenceFilter.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOClassInfo.PersistenceFilter</a>&nbsp;getPersistenceFilter&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&nbsp;feature)</pre>
+<pre class="methodSignature"><a href="InternalCDOClassInfo.PersistenceFilter.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOClassInfo.PersistenceFilter</a>&nbsp;getPersistenceFilter&#8203;(org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)</pre>
 <div class="block">Obtains a rule that filters/transforms the persist values of the given
  <code>feature</code>.</div>
 <dl>

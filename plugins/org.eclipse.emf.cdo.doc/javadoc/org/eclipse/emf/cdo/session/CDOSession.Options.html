@@ -223,7 +223,7 @@ extends <a href="../common/CDOCommonSession.Options.html" title="interface in or
 <!--   -->
 </a>
 <h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.emf.cdo.common.<a href="../common/CDOCommonSession.Options.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession.Options</a></h3>
-<code><a href="../common/CDOCommonSession.Options.LockNotificationMode.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonSession.Options.LockNotificationMode</a>, <a href="../common/CDOCommonSession.Options.LockNotificationModeEvent.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession.Options.LockNotificationModeEvent</a>, <a href="../common/CDOCommonSession.Options.PassiveUpdateEvent.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession.Options.PassiveUpdateEvent</a>, <a href="../common/CDOCommonSession.Options.PassiveUpdateMode.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonSession.Options.PassiveUpdateMode</a></code></li>
+<code><a href="../common/CDOCommonSession.Options.LockNotificationEvent.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession.Options.LockNotificationEvent</a>, <a href="../common/CDOCommonSession.Options.LockNotificationMode.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonSession.Options.LockNotificationMode</a>, <a href="../common/CDOCommonSession.Options.LockNotificationModeEvent.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession.Options.LockNotificationModeEvent</a>, <a href="../common/CDOCommonSession.Options.PassiveUpdateEvent.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession.Options.PassiveUpdateEvent</a>, <a href="../common/CDOCommonSession.Options.PassiveUpdateMode.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonSession.Options.PassiveUpdateMode</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.net4j.util.event.INotifier">
@@ -299,7 +299,7 @@ extends <a href="../common/CDOCommonSession.Options.html" title="interface in or
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDelegableViewLockEnabled(boolean)">setDelegableViewLockEnabled</a></span>&#8203;(boolean&nbsp;delegableViewLockEnabled)</code></th>
 <td class="colLast">
-<div class="block">This method is useful, for example, if EMF <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink"><code>adapters</code></a> call <code>Display.syncExec()</code> in response to CDO notifications.</div>
+<div class="block">This method is useful, for example, if EMF <code>adapters</code> call <code>Display.syncExec()</code> in response to CDO notifications.</div>
 </td>
 </tr>
 <tr id="i8" class="altColor">
@@ -327,7 +327,7 @@ extends <a href="../common/CDOCommonSession.Options.html" title="interface in or
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.<a href="../common/CDOCommonSession.Options.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession.Options</a></h3>
-<code><a href="../common/CDOCommonSession.Options.html#getLockNotificationMode()">getLockNotificationMode</a>, <a href="../common/CDOCommonSession.Options.html#getPassiveUpdateMode()">getPassiveUpdateMode</a>, <a href="../common/CDOCommonSession.Options.html#isPassiveUpdateEnabled()">isPassiveUpdateEnabled</a>, <a href="../common/CDOCommonSession.Options.html#setLockNotificationMode(org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode)">setLockNotificationMode</a>, <a href="../common/CDOCommonSession.Options.html#setPassiveUpdateEnabled(boolean)">setPassiveUpdateEnabled</a>, <a href="../common/CDOCommonSession.Options.html#setPassiveUpdateMode(org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode)">setPassiveUpdateMode</a></code></li>
+<code><a href="../common/CDOCommonSession.Options.html#getLockNotificationMode()">getLockNotificationMode</a>, <a href="../common/CDOCommonSession.Options.html#getPassiveUpdateMode()">getPassiveUpdateMode</a>, <a href="../common/CDOCommonSession.Options.html#isLockNotificationEnabled()">isLockNotificationEnabled</a>, <a href="../common/CDOCommonSession.Options.html#isPassiveUpdateEnabled()">isPassiveUpdateEnabled</a>, <a href="../common/CDOCommonSession.Options.html#setLockNotificationEnabled(boolean)">setLockNotificationEnabled</a>, <a href="../common/CDOCommonSession.Options.html#setLockNotificationMode(org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode)">setLockNotificationMode</a>, <a href="../common/CDOCommonSession.Options.html#setPassiveUpdateEnabled(boolean)">setPassiveUpdateEnabled</a>, <a href="../common/CDOCommonSession.Options.html#setPassiveUpdateMode(org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode)">setPassiveUpdateMode</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.event.INotifier">
@@ -498,7 +498,7 @@ extends <a href="../common/CDOCommonSession.Options.html" title="interface in or
 <li class="blockList">
 <h4>setDelegableViewLockEnabled</h4>
 <pre class="methodSignature">void&nbsp;setDelegableViewLockEnabled&#8203;(boolean&nbsp;delegableViewLockEnabled)</pre>
-<div class="block">This method is useful, for example, if EMF <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify" class="externalLink"><code>adapters</code></a> call <code>Display.syncExec()</code> in response to CDO notifications.
+<div class="block">This method is useful, for example, if EMF <code>adapters</code> call <code>Display.syncExec()</code> in response to CDO notifications.
  In these cases a <code>DelegableReentrantLock</code> can be injected into the new <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a>,
  which does not deadlock when both CDO's invalidation thread and the display thread acquire the view lock.</div>
 <dl>

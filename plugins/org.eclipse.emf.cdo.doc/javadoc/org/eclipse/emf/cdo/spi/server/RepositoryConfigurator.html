@@ -28,7 +28,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":9,"i16":9,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":9};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":9,"i18":9,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -215,175 +215,187 @@ implements org.eclipse.net4j.util.container.IManagedContainerProvider</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code><a href="../../server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>[]</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#configure(java.io.File)">configure</a></span>&#8203;(java.io.File&nbsp;configFile)</code></th>
+<td class="colFirst"><code>protected void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addOperationAuthorizers(org.eclipse.emf.cdo.spi.server.InternalRepository,org.w3c.dom.Element)">addOperationAuthorizers</a></span>&#8203;(<a href="InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository,
+                       org.w3c.dom.Element&nbsp;repositoryConfig)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="../../server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>[]</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#configure(java.io.Reader)">configure</a></span>&#8203;(java.io.Reader&nbsp;configReader)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#configure(java.io.File)">configure</a></span>&#8203;(java.io.File&nbsp;configFile)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
+<td class="colFirst"><code><a href="../../server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#configure(java.io.Reader)">configure</a></span>&#8203;(java.io.Reader&nbsp;configReader)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>protected <a href="../../server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>[]</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#configure(org.w3c.dom.Document)">configure</a></span>&#8203;(org.w3c.dom.Document&nbsp;document)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>protected <a href="../../server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createStore(java.lang.String,java.util.Map,org.w3c.dom.Element)">createStore</a></span>&#8203;(java.lang.String&nbsp;repositoryName,
            java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;repositoryProperties,
            org.w3c.dom.Element&nbsp;storeConfig)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>protected java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAttribute(org.w3c.dom.Element,java.lang.String)">getAttribute</a></span>&#8203;(org.w3c.dom.Element&nbsp;element,
             java.lang.String&nbsp;name)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>protected org.eclipse.net4j.util.security.IAuthenticator</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAuthenticator(java.lang.String,java.lang.String)">getAuthenticator</a></span>&#8203;(java.lang.String&nbsp;type,
                 java.lang.String&nbsp;description)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>protected org.eclipse.net4j.util.security.IAuthenticator</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAuthenticator(org.w3c.dom.Element)">getAuthenticator</a></span>&#8203;(org.w3c.dom.Element&nbsp;authenticatorConfig)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>protected org.w3c.dom.Element</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAuthenticatorConfig(org.w3c.dom.Element)">getAuthenticatorConfig</a></span>&#8203;(org.w3c.dom.Element&nbsp;repositoryConfig)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>protected org.w3c.dom.Element</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getChildElement(org.w3c.dom.Element,java.lang.String)">getChildElement</a></span>&#8203;(org.w3c.dom.Element&nbsp;element,
                java.lang.String&nbsp;name)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>org.eclipse.net4j.util.container.IManagedContainer</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getContainer()">getContainer</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>protected &lt;T&gt;&nbsp;T</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getContainerElement(org.w3c.dom.Element,java.lang.String)">getContainerElement</a></span>&#8203;(org.w3c.dom.Element&nbsp;element,
                    java.lang.String&nbsp;defaultType)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>protected org.w3c.dom.Document</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDocument(java.io.File)">getDocument</a></span>&#8203;(java.io.File&nbsp;configFile)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>protected org.w3c.dom.Document</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDocument(java.io.Reader)">getDocument</a></span>&#8203;(java.io.Reader&nbsp;configReader)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i13" class="rowColor">
-<td class="colFirst"><code>protected <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage</a>[]</code></td>
+<tr id="i14" class="altColor">
+<td class="colFirst"><code>protected org.eclipse.emf.ecore.EPackage[]</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInitialPackages(org.w3c.dom.Element)">getInitialPackages</a></span>&#8203;(org.w3c.dom.Element&nbsp;repositoryConfig)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i15" class="rowColor">
+<td class="colFirst"><code>protected org.eclipse.net4j.util.security.operations.OperationAuthorizer&lt;<a href="../../server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOperationAuthorizer(java.lang.String,java.lang.String)">getOperationAuthorizer</a></span>&#8203;(java.lang.String&nbsp;type,
+                      java.lang.String&nbsp;description)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getParameter(java.lang.String)">getParameter</a></span>&#8203;(java.lang.String&nbsp;key)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>static java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getProperties(org.w3c.dom.Element,int)">getProperties</a></span>&#8203;(org.w3c.dom.Element&nbsp;element,
              int&nbsp;levels)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code>static java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getProperties(org.w3c.dom.Element,int,java.util.Map)">getProperties</a></span>&#8203;(org.w3c.dom.Element&nbsp;element,
              int&nbsp;levels,
              java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;parameters)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>protected <a href="../../server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRepository(java.lang.String)">getRepository</a></span>&#8203;(java.lang.String&nbsp;repositoryType)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i20" class="altColor">
 <td class="colFirst"><code>protected <a href="../../server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRepository(org.w3c.dom.Element)">getRepository</a></span>&#8203;(org.w3c.dom.Element&nbsp;repositoryConfig)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i19" class="rowColor">
+<tr id="i21" class="rowColor">
 <td class="colFirst"><code>java.util.Map&lt;java.lang.String,&#8203;<a href="../../server/IRepositoryFactory.html" title="interface in org.eclipse.emf.cdo.server">IRepositoryFactory</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRepositoryFactories()">getRepositoryFactories</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i20" class="altColor">
+<tr id="i22" class="altColor">
 <td class="colFirst"><code>protected <a href="../../server/IRepositoryFactory.html" title="interface in org.eclipse.emf.cdo.server">IRepositoryFactory</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRepositoryFactory(java.lang.String)">getRepositoryFactory</a></span>&#8203;(java.lang.String&nbsp;type)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i21" class="rowColor">
+<tr id="i23" class="rowColor">
 <td class="colFirst"><code>protected org.w3c.dom.Element</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getStoreConfig(org.w3c.dom.Element)">getStoreConfig</a></span>&#8203;(org.w3c.dom.Element&nbsp;repositoryConfig)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i22" class="altColor">
+<tr id="i24" class="altColor">
 <td class="colFirst"><code>java.util.Map&lt;java.lang.String,&#8203;<a href="../../server/IStoreFactory.html" title="interface in org.eclipse.emf.cdo.server">IStoreFactory</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getStoreFactories()">getStoreFactories</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i23" class="rowColor">
+<tr id="i25" class="rowColor">
 <td class="colFirst"><code>protected <a href="../../server/IStoreFactory.html" title="interface in org.eclipse.emf.cdo.server">IStoreFactory</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getStoreFactory(java.lang.String)">getStoreFactory</a></span>&#8203;(java.lang.String&nbsp;type)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i24" class="altColor">
+<tr id="i26" class="altColor">
 <td class="colFirst"><code>protected org.eclipse.net4j.util.security.IUserManager</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getUserManager(java.lang.String,java.lang.String)">getUserManager</a></span>&#8203;(java.lang.String&nbsp;type,
               java.lang.String&nbsp;description)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i25" class="rowColor">
+<tr id="i27" class="rowColor">
 <td class="colFirst"><code>protected org.eclipse.net4j.util.security.IUserManager</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getUserManager(org.w3c.dom.Element)">getUserManager</a></span>&#8203;(org.w3c.dom.Element&nbsp;userManagerConfig)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i26" class="altColor">
+<tr id="i28" class="altColor">
 <td class="colFirst"><code>protected org.w3c.dom.Element</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getUserManagerConfig(org.w3c.dom.Element)">getUserManagerConfig</a></span>&#8203;(org.w3c.dom.Element&nbsp;repositoryConfig)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i27" class="rowColor">
+<tr id="i29" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setActivityLog(org.eclipse.emf.cdo.spi.server.InternalRepository,org.w3c.dom.Element)">setActivityLog</a></span>&#8203;(<a href="InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository,
               org.w3c.dom.Element&nbsp;repositoryConfig)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i28" class="altColor">
+<tr id="i30" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAuthenticator(org.eclipse.emf.cdo.spi.server.InternalRepository,org.w3c.dom.Element)">setAuthenticator</a></span>&#8203;(<a href="InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository,
                 org.w3c.dom.Element&nbsp;repositoryConfig)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i29" class="rowColor">
+<tr id="i31" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setParameter(java.lang.String,java.lang.String)">setParameter</a></span>&#8203;(java.lang.String&nbsp;key,
             java.lang.String&nbsp;value)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i30" class="altColor">
+<tr id="i32" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setUserManager(org.eclipse.emf.cdo.spi.server.InternalRepository,org.w3c.dom.Element)">setUserManager</a></span>&#8203;(<a href="InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository,
               org.w3c.dom.Element&nbsp;repositoryConfig)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i31" class="rowColor">
+<tr id="i33" class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#substituteParameters(java.lang.String,java.util.Map)">substituteParameters</a></span>&#8203;(java.lang.String&nbsp;value,
                     java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;parameters)</code></th>
@@ -761,6 +773,40 @@ implements org.eclipse.net4j.util.container.IManagedContainerProvider</pre>
 </dl>
 </li>
 </ul>
+<a id="addOperationAuthorizers(org.eclipse.emf.cdo.spi.server.InternalRepository,org.w3c.dom.Element)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addOperationAuthorizers</h4>
+<pre class="methodSignature">protected&nbsp;void&nbsp;addOperationAuthorizers&#8203;(<a href="InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository,
+                                       org.w3c.dom.Element&nbsp;repositoryConfig)
+                                throws <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">CoreException</a></pre>
+<dl>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">CoreException</a></code></dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.15</dd>
+</dl>
+</li>
+</ul>
+<a id="getOperationAuthorizer(java.lang.String,java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getOperationAuthorizer</h4>
+<pre class="methodSignature">protected&nbsp;org.eclipse.net4j.util.security.operations.OperationAuthorizer&lt;<a href="../../server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&gt;&nbsp;getOperationAuthorizer&#8203;(java.lang.String&nbsp;type,
+                                                                                                          java.lang.String&nbsp;description)
+                                                                                                   throws <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">CoreException</a></pre>
+<dl>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime" class="externalLink">CoreException</a></code></dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.15</dd>
+</dl>
+</li>
+</ul>
 <a id="setActivityLog(org.eclipse.emf.cdo.spi.server.InternalRepository,org.w3c.dom.Element)">
 <!--   -->
 </a>
@@ -781,7 +827,7 @@ implements org.eclipse.net4j.util.container.IManagedContainerProvider</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getInitialPackages</h4>
-<pre class="methodSignature">protected&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EPackage</a>[]&nbsp;getInitialPackages&#8203;(org.w3c.dom.Element&nbsp;repositoryConfig)</pre>
+<pre class="methodSignature">protected&nbsp;org.eclipse.emf.ecore.EPackage[]&nbsp;getInitialPackages&#8203;(org.w3c.dom.Element&nbsp;repositoryConfig)</pre>
 </li>
 </ul>
 <a id="getStoreConfig(org.w3c.dom.Element)">

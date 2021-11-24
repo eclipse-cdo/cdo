@@ -130,7 +130,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <hr>
 <pre>public static interface <span class="typeNameLabel">InternalCDOClassInfo.PersistenceFilter</span></pre>
 <div class="block">Encapsulation of a rule for filtering the persistent values
- of a <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">feature</a> in some model element.
+ of a feature in some model element.
  Some models (such as UML's Activity metaclass) require partial persistence
  of features, persisting a subset of the values in a feature that are also
  in some other feature (the filtering feature). Other models may apply other
@@ -158,7 +158,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>java.lang.Object</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPersistableValue(org.eclipse.emf.ecore.EObject,java.lang.Object)">getPersistableValue</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&nbsp;owner,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPersistableValue(org.eclipse.emf.ecore.EObject,java.lang.Object)">getPersistableValue</a></span>&#8203;(org.eclipse.emf.ecore.EObject&nbsp;owner,
                    java.lang.Object&nbsp;value)</code></th>
 <td class="colLast">
 <div class="block">Get a subset or other transformation of the specified <code>value</code> of
@@ -188,7 +188,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getPersistableValue</h4>
-<pre class="methodSignature">java.lang.Object&nbsp;getPersistableValue&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&nbsp;owner,
+<pre class="methodSignature">java.lang.Object&nbsp;getPersistableValue&#8203;(org.eclipse.emf.ecore.EObject&nbsp;owner,
                                      java.lang.Object&nbsp;value)</pre>
 <div class="block">Get a subset or other transformation of the specified <code>value</code> of
  a persistable feature, based on its dependencies.</div>

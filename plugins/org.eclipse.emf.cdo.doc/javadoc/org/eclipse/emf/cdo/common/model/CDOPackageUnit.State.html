@@ -181,14 +181,14 @@ extends java.lang.Enum&lt;<a href="CDOPackageUnit.State.html" title="enum in org
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#LOADED">LOADED</a></span></code></th>
 <td class="colLast">
-<div class="block">The state of a <a href="CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package unit</code></a> after the described <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>packages</code></a> are loaded or
- wired from the <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.Registry.html?is-external=true#INSTANCE" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>global package registry</code></a>.</div>
+<div class="block">The state of a <a href="CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package unit</code></a> after the described <code>packages</code> are loaded or
+ wired from the <code>global package registry</code>.</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#NEW">NEW</a></span></code></th>
 <td class="colLast">
-<div class="block">The state of a <a href="CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package unit</code></a> after one of its described <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>packages</code></a> is newly
+<div class="block">The state of a <a href="CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package unit</code></a> after one of its described <code>packages</code> is newly
  attached to a transactional <a href="CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package registry</code></a>, but before the associated transaction is
  committed.</div>
 </td>
@@ -270,7 +270,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>NEW</h4>
 <pre>public static final&nbsp;<a href="CDOPackageUnit.State.html" title="enum in org.eclipse.emf.cdo.common.model">CDOPackageUnit.State</a> NEW</pre>
-<div class="block">The state of a <a href="CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package unit</code></a> after one of its described <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>packages</code></a> is newly
+<div class="block">The state of a <a href="CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package unit</code></a> after one of its described <code>packages</code> is newly
  attached to a transactional <a href="CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package registry</code></a>, but before the associated transaction is
  committed. A <a href="#NEW"><code>NEW</code></a> package unit can only transition to <a href="#LOADED"><code>LOADED</code></a> or <a href="#DISPOSED"><code>DISPOSED</code></a>.</div>
 </li>
@@ -282,8 +282,8 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>LOADED</h4>
 <pre>public static final&nbsp;<a href="CDOPackageUnit.State.html" title="enum in org.eclipse.emf.cdo.common.model">CDOPackageUnit.State</a> LOADED</pre>
-<div class="block">The state of a <a href="CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package unit</code></a> after the described <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>packages</code></a> are loaded or
- wired from the <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.Registry.html?is-external=true#INSTANCE" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>global package registry</code></a>. A <a href="#LOADED"><code>LOADED</code></a> package unit can only
+<div class="block">The state of a <a href="CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package unit</code></a> after the described <code>packages</code> are loaded or
+ wired from the <code>global package registry</code>. A <a href="#LOADED"><code>LOADED</code></a> package unit can only
  transition to <a href="#DISPOSED"><code>DISPOSED</code></a>.</div>
 </li>
 </ul>

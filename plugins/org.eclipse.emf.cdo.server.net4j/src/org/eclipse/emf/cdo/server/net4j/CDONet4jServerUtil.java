@@ -40,4 +40,12 @@ public final class CDONet4jServerUtil
   {
     prepareContainer(container, new ContainerRepositoryProvider(container));
   }
+
+  /**
+   * @since 4.5
+   */
+  public static FailoverMonitor getFailoverMonitor(IManagedContainer container, String type, String group)
+  {
+    return container.getElementOrNull(FailoverMonitor.PRODUCT_GROUP, type, group);
+  }
 }

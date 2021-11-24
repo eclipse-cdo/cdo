@@ -187,6 +187,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h3>Serialized Fields</h3>
 <ul class="blockList">
 <li class="blockList">
+<h4>duration</h4>
+<pre>long duration</pre>
+</li>
+<li class="blockList">
 <h4>exception</h4>
 <pre>java.lang.Exception exception</pre>
 </li>
@@ -272,7 +276,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList"><a id="org.eclipse.net4j.ws.jetty.Net4jWebSocketServlet">
 <!--   -->
 </a>
-<h3>Class <a href="org/eclipse/net4j/ws/jetty/Net4jWebSocketServlet.html" title="class in org.eclipse.net4j.ws.jetty">org.eclipse.net4j.ws.jetty.Net4jWebSocketServlet</a> extends org.eclipse.jetty.websocket.servlet.WebSocketServlet implements Serializable</h3>
+<h3>Class <a href="org/eclipse/net4j/ws/jetty/Net4jWebSocketServlet.html" title="class in org.eclipse.net4j.ws.jetty">org.eclipse.net4j.ws.jetty.Net4jWebSocketServlet</a> extends org.eclipse.jetty.websocket.server.JettyWebSocketServlet implements Serializable</h3>
 <dl class="nameValue">
 <dt>serialVersionUID:</dt>
 <dd>1L</dd>
@@ -300,6 +304,30 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockListLast">
 <h4>size</h4>
 <pre>java.util.concurrent.atomic.AtomicInteger size</pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a id="org.eclipse.spi.net4j.Protocol.InfraStructureChangedEvent">
+<!--   -->
+</a>
+<h3>Class <a href="org/eclipse/spi/net4j/Protocol.InfraStructureChangedEvent.html" title="class in org.eclipse.spi.net4j">org.eclipse.spi.net4j.Protocol.InfraStructureChangedEvent</a> extends org.eclipse.net4j.util.event.Event implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>1L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>newInfraStructure</h4>
+<pre><a href="org/eclipse/spi/net4j/Protocol.html" title="type parameter in Protocol">INFRA_STRUCTURE</a> newInfraStructure</pre>
+</li>
+<li class="blockListLast">
+<h4>oldInfraStructure</h4>
+<pre><a href="org/eclipse/spi/net4j/Protocol.html" title="type parameter in Protocol">INFRA_STRUCTURE</a> oldInfraStructure</pre>
 </li>
 </ul>
 </li>

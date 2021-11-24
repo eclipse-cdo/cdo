@@ -189,7 +189,7 @@ implements <a href="CDOReference.html" title="interface in org.eclipse.emf.cdo.c
 <tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.ecore.EStructuralFeature,int)">CDOIDReference</a></span>&#8203;(<a href="CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;targetID,
               <a href="CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;sourceID,
-              <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&nbsp;sourceReference,
+              org.eclipse.emf.ecore.EStructuralFeature&nbsp;sourceReference,
               int&nbsp;sourceIndex)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
@@ -216,7 +216,7 @@ implements <a href="CDOReference.html" title="interface in org.eclipse.emf.cdo.c
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a></code></td>
+<td class="colFirst"><code>org.eclipse.emf.ecore.EStructuralFeature</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSourceFeature()">getSourceFeature</a></span>()</code></th>
 <td class="colLast">
 <div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
@@ -233,10 +233,10 @@ implements <a href="CDOReference.html" title="interface in org.eclipse.emf.cdo.c
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EReference</a></code></td>
+<td class="colFirst"><code>org.eclipse.emf.ecore.EReference</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSourceReference()">getSourceReference</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Returns the source <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>EReference</code></a>.</div>
+<div class="block">Returns the source <code>EReference</code>.</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
@@ -286,7 +286,7 @@ implements <a href="CDOReference.html" title="interface in org.eclipse.emf.cdo.c
 <h4>CDOIDReference</h4>
 <pre>public&nbsp;CDOIDReference&#8203;(<a href="CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;targetID,
                       <a href="CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;sourceID,
-                      <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&nbsp;sourceReference,
+                      org.eclipse.emf.ecore.EStructuralFeature&nbsp;sourceReference,
                       int&nbsp;sourceIndex)</pre>
 </li>
 </ul>
@@ -361,10 +361,10 @@ implements <a href="CDOReference.html" title="interface in org.eclipse.emf.cdo.c
 <li class="blockList">
 <h4>getSourceFeature</h4>
 <pre class="methodSignature">@Deprecated
-public&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&nbsp;getSourceFeature()</pre>
+public&nbsp;org.eclipse.emf.ecore.EStructuralFeature&nbsp;getSourceFeature()</pre>
 <div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="CDOReference.html#getSourceFeature()">CDOReference</a></code></span></div>
-<div class="block">Returns the source <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>EReference</code></a>.</div>
+<div class="block">Returns the source <code>EReference</code>.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="CDOReference.html#getSourceFeature()">getSourceFeature</a></code>&nbsp;in interface&nbsp;<code><a href="CDOReference.html" title="interface in org.eclipse.emf.cdo.common.id">CDOReference</a>&lt;<a href="CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;</code></dd>
@@ -377,9 +377,9 @@ public&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/o
 <ul class="blockList">
 <li class="blockList">
 <h4>getSourceReference</h4>
-<pre class="methodSignature">public&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EReference</a>&nbsp;getSourceReference()</pre>
+<pre class="methodSignature">public&nbsp;org.eclipse.emf.ecore.EReference&nbsp;getSourceReference()</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="CDOReference.html#getSourceReference()">CDOReference</a></code></span></div>
-<div class="block">Returns the source <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>EReference</code></a>.</div>
+<div class="block">Returns the source <code>EReference</code>.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="CDOReference.html#getSourceReference()">getSourceReference</a></code>&nbsp;in interface&nbsp;<code><a href="CDOReference.html" title="interface in org.eclipse.emf.cdo.common.id">CDOReference</a>&lt;<a href="CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;</code></dd>

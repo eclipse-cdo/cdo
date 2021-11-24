@@ -147,7 +147,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <hr>
 <pre>public static class <span class="typeNameLabel">CDOCompare.CDOMatcher</span>
 extends org.eclipse.emf.compare.match.eobject.IdentifierEObjectMatcher</pre>
-<div class="block">A <code>matcher</code> that treats <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource" class="externalLink"><code>resources</code></a> as <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>EObjects</code></a>.</div>
+<div class="block">A <code>matcher</code> that treats <code>resources</code> as <code>EObjects</code>.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.3</dd>
@@ -191,7 +191,7 @@ extends org.eclipse.emf.compare.match.eobject.IdentifierEObjectMatcher</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.google.common.base.Function)">CDOMatcher</a></span>&#8203;(com.google.common.base.Function&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>,&#8203;java.lang.String&gt;&nbsp;idComputation)</code></th>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.google.common.base.Function)">CDOMatcher</a></span>&#8203;(com.google.common.base.Function&lt;org.eclipse.emf.ecore.EObject,&#8203;java.lang.String&gt;&nbsp;idComputation)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -213,18 +213,18 @@ extends org.eclipse.emf.compare.match.eobject.IdentifierEObjectMatcher</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>protected <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getParentEObject(org.eclipse.emf.ecore.EObject)">getParentEObject</a></span>&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&nbsp;eObject)</code></th>
+<td class="colFirst"><code>protected org.eclipse.emf.ecore.EObject</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getParentEObject(org.eclipse.emf.ecore.EObject)">getParentEObject</a></span>&#8203;(org.eclipse.emf.ecore.EObject&nbsp;eObject)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>protected java.util.Set&lt;org.eclipse.emf.compare.Match&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#matchPerId(java.util.Iterator,java.util.Iterator,java.util.Iterator,java.util.List,java.util.List,java.util.List)">matchPerId</a></span>&#8203;(java.util.Iterator&lt;? extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&gt;&nbsp;leftEObjects,
-          java.util.Iterator&lt;? extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&gt;&nbsp;rightEObjects,
-          java.util.Iterator&lt;? extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&gt;&nbsp;originEObjects,
-          java.util.List&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&gt;&nbsp;leftEObjectsNoID,
-          java.util.List&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&gt;&nbsp;rightEObjectsNoID,
-          java.util.List&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&gt;&nbsp;originEObjectsNoID)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#matchPerId(java.util.Iterator,java.util.Iterator,java.util.Iterator,java.util.List,java.util.List,java.util.List)">matchPerId</a></span>&#8203;(java.util.Iterator&lt;? extends org.eclipse.emf.ecore.EObject&gt;&nbsp;leftEObjects,
+          java.util.Iterator&lt;? extends org.eclipse.emf.ecore.EObject&gt;&nbsp;rightEObjects,
+          java.util.Iterator&lt;? extends org.eclipse.emf.ecore.EObject&gt;&nbsp;originEObjects,
+          java.util.List&lt;org.eclipse.emf.ecore.EObject&gt;&nbsp;leftEObjectsNoID,
+          java.util.List&lt;org.eclipse.emf.ecore.EObject&gt;&nbsp;rightEObjectsNoID,
+          java.util.List&lt;org.eclipse.emf.ecore.EObject&gt;&nbsp;originEObjectsNoID)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -264,7 +264,7 @@ extends org.eclipse.emf.compare.match.eobject.IdentifierEObjectMatcher</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>CDOMatcher</h4>
-<pre>public&nbsp;CDOMatcher&#8203;(com.google.common.base.Function&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>,&#8203;java.lang.String&gt;&nbsp;idComputation)</pre>
+<pre>public&nbsp;CDOMatcher&#8203;(com.google.common.base.Function&lt;org.eclipse.emf.ecore.EObject,&#8203;java.lang.String&gt;&nbsp;idComputation)</pre>
 </li>
 </ul>
 </li>
@@ -283,7 +283,7 @@ extends org.eclipse.emf.compare.match.eobject.IdentifierEObjectMatcher</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getParentEObject</h4>
-<pre class="methodSignature">protected&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&nbsp;getParentEObject&#8203;(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&nbsp;eObject)</pre>
+<pre class="methodSignature">protected&nbsp;org.eclipse.emf.ecore.EObject&nbsp;getParentEObject&#8203;(org.eclipse.emf.ecore.EObject&nbsp;eObject)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>getParentEObject</code>&nbsp;in class&nbsp;<code>org.eclipse.emf.compare.match.eobject.IdentifierEObjectMatcher</code></dd>
@@ -296,12 +296,12 @@ extends org.eclipse.emf.compare.match.eobject.IdentifierEObjectMatcher</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>matchPerId</h4>
-<pre class="methodSignature">protected&nbsp;java.util.Set&lt;org.eclipse.emf.compare.Match&gt;&nbsp;matchPerId&#8203;(java.util.Iterator&lt;? extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&gt;&nbsp;leftEObjects,
-                                                                  java.util.Iterator&lt;? extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&gt;&nbsp;rightEObjects,
-                                                                  java.util.Iterator&lt;? extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&gt;&nbsp;originEObjects,
-                                                                  java.util.List&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&gt;&nbsp;leftEObjectsNoID,
-                                                                  java.util.List&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&gt;&nbsp;rightEObjectsNoID,
-                                                                  java.util.List&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EObject</a>&gt;&nbsp;originEObjectsNoID)</pre>
+<pre class="methodSignature">protected&nbsp;java.util.Set&lt;org.eclipse.emf.compare.Match&gt;&nbsp;matchPerId&#8203;(java.util.Iterator&lt;? extends org.eclipse.emf.ecore.EObject&gt;&nbsp;leftEObjects,
+                                                                  java.util.Iterator&lt;? extends org.eclipse.emf.ecore.EObject&gt;&nbsp;rightEObjects,
+                                                                  java.util.Iterator&lt;? extends org.eclipse.emf.ecore.EObject&gt;&nbsp;originEObjects,
+                                                                  java.util.List&lt;org.eclipse.emf.ecore.EObject&gt;&nbsp;leftEObjectsNoID,
+                                                                  java.util.List&lt;org.eclipse.emf.ecore.EObject&gt;&nbsp;rightEObjectsNoID,
+                                                                  java.util.List&lt;org.eclipse.emf.ecore.EObject&gt;&nbsp;originEObjectsNoID)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>matchPerId</code>&nbsp;in class&nbsp;<code>org.eclipse.emf.compare.match.eobject.IdentifierEObjectMatcher</code></dd>

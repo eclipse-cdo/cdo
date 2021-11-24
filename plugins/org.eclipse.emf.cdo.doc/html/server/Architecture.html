@@ -35,7 +35,7 @@ function windowTitle()
  <p>
  While technically a CDO repository depends on EMF this dependency is not of equal importance as it is in a CDO
  application. In particular the generated application models are not required to be deployed to the server because a
- CDO repository accesses models reflectively and the model objects are not implemented as <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" target="_blank" title="Interface in org.eclipse.emf.ecore"><code>EObjects</code></a> on
+ CDO repository accesses models reflectively and the model objects are not implemented as EObject EObjects on
  the server.
  <p>
  The following diagram illustrates the major building blocks of a CDO repository: <p align="center"><img src="repository-architecture.png">
@@ -61,7 +61,7 @@ function windowTitle()
  <ul>
  <li>a <a href="../../javadoc/org/eclipse/emf/cdo/common/revision/CDORevision.html" title="Interface in org.eclipse.emf.cdo.common.revision"><code>revision</code></a> <a href="../../javadoc/org/eclipse/emf/cdo/common/revision/CDORevisionManager.html" title="Interface in org.eclipse.emf.cdo.common.revision"><code>manager</code></a> and <a href="../../javadoc/org/eclipse/emf/cdo/common/revision/CDORevisionCache.html" title="Interface in org.eclipse.emf.cdo.common.revision"><code>cache</code></a>,
  <li>a <a href="../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="Interface in org.eclipse.emf.cdo.common.branch"><code>branch</code></a> <a href="../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranchManager.html" title="Interface in org.eclipse.emf.cdo.common.branch"><code>manager</code></a>,
- <li>a <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" target="_blank" title="Interface in org.eclipse.emf.ecore"><code>package</code></a> <a href="../../javadoc/org/eclipse/emf/cdo/common/model/CDOPackageRegistry.html" title="Interface in org.eclipse.emf.cdo.common.model"><code>registry</code></a>,
+ <li>a EPackage package <a href="../../javadoc/org/eclipse/emf/cdo/common/model/CDOPackageRegistry.html" title="Interface in org.eclipse.emf.cdo.common.model"><code>registry</code></a>,
  <li>a <a href="../../javadoc/org/eclipse/emf/cdo/CDOLock.html" title="Interface in org.eclipse.emf.cdo"><code>lock</code></a> <a href="../../javadoc/org/eclipse/emf/cdo/server/ILockingManager.html" title="Interface in org.eclipse.emf.cdo.server"><code>manager</code></a>,
  <li>a <a href="../../javadoc/org/eclipse/emf/cdo/session/CDOSession.html" title="Interface in org.eclipse.emf.cdo.session"><code>session</code></a> <a href="../../javadoc/org/eclipse/emf/cdo/server/ISessionManager.html" title="Interface in org.eclipse.emf.cdo.server"><code>manager</code></a>,
  <li>a <a href="../../javadoc/org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="Interface in org.eclipse.emf.cdo.common.commit"><code>commit info</code></a> <a href="../../javadoc/org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html" title="Interface in org.eclipse.emf.cdo.common.commit"><code>manager</code></a>,

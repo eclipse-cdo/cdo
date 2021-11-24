@@ -137,7 +137,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dl>
 <dl>
 <dt>Direct Known Subclasses:</dt>
-<dd><code><a href="../security/AuthenticatorFactory.html" title="class in org.eclipse.net4j.util.security">AuthenticatorFactory</a></code>, <code><a href="../security/CredentialsProviderFactory.html" title="class in org.eclipse.net4j.util.security">CredentialsProviderFactory</a></code>, <code><a href="../concurrent/DelegableReentrantLock.DelegateDetector.Factory.html" title="class in org.eclipse.net4j.util.concurrent">DelegableReentrantLock.DelegateDetector.Factory</a></code>, <code><a href="../ui/container/ElementWizardFactory.html" title="class in org.eclipse.net4j.util.ui.container">ElementWizardFactory</a></code>, <code><a href="../concurrent/ExecutorServiceFactory.html" title="class in org.eclipse.net4j.util.concurrent">ExecutorServiceFactory</a></code>, <code><a href="FactoryDescriptor.html" title="class in org.eclipse.net4j.util.factory">FactoryDescriptor</a></code>, <code><a href="../confirmation/IConfirmationProvider.Factory.html" title="class in org.eclipse.net4j.util.confirmation">IConfirmationProvider.Factory</a></code>, <code><a href="../io/IStreamWrapper.Factory.html" title="class in org.eclipse.net4j.util.io">IStreamWrapper.Factory</a></code>, <code><a href="../ui/MenuFiller.Factory.html" title="class in org.eclipse.net4j.util.ui">MenuFiller.Factory</a></code>, <code><a href="../security/NegotiatorFactory.html" title="class in org.eclipse.net4j.util.security">NegotiatorFactory</a></code>, <code><a href="PropertiesFactory.html" title="class in org.eclipse.net4j.util.factory">PropertiesFactory</a></code>, <code><a href="../security/RandomizerFactory.html" title="class in org.eclipse.net4j.util.security">RandomizerFactory</a></code>, <code><a href="../concurrent/TimerLifecycle.DaemonFactory.html" title="class in org.eclipse.net4j.util.concurrent">TimerLifecycle.DaemonFactory</a></code>, <code><a href="../security/UserManagerFactory.html" title="class in org.eclipse.net4j.util.security">UserManagerFactory</a></code></dd>
+<dd><code><a href="../security/AuthenticatorFactory.html" title="class in org.eclipse.net4j.util.security">AuthenticatorFactory</a></code>, <code><a href="../security/operations/AuthorizableOperationFactory.html" title="class in org.eclipse.net4j.util.security.operations">AuthorizableOperationFactory</a></code>, <code><a href="../security/CredentialsProviderFactory.html" title="class in org.eclipse.net4j.util.security">CredentialsProviderFactory</a></code>, <code><a href="../concurrent/DelegableReentrantLock.DelegateDetector.Factory.html" title="class in org.eclipse.net4j.util.concurrent">DelegableReentrantLock.DelegateDetector.Factory</a></code>, <code><a href="../ui/container/ElementWizardFactory.html" title="class in org.eclipse.net4j.util.ui.container">ElementWizardFactory</a></code>, <code><a href="../concurrent/ExecutorServiceFactory.html" title="class in org.eclipse.net4j.util.concurrent">ExecutorServiceFactory</a></code>, <code><a href="FactoryDescriptor.html" title="class in org.eclipse.net4j.util.factory">FactoryDescriptor</a></code>, <code><a href="../confirmation/IConfirmationProvider.Factory.html" title="class in org.eclipse.net4j.util.confirmation">IConfirmationProvider.Factory</a></code>, <code><a href="../io/IStreamWrapper.Factory.html" title="class in org.eclipse.net4j.util.io">IStreamWrapper.Factory</a></code>, <code><a href="../ui/MenuFiller.Factory.html" title="class in org.eclipse.net4j.util.ui">MenuFiller.Factory</a></code>, <code><a href="../security/NegotiatorFactory.html" title="class in org.eclipse.net4j.util.security">NegotiatorFactory</a></code>, <code><a href="../security/operations/OperationAuthorizerFactory.html" title="class in org.eclipse.net4j.util.security.operations">OperationAuthorizerFactory</a></code>, <code><a href="PropertiesFactory.html" title="class in org.eclipse.net4j.util.factory">PropertiesFactory</a></code>, <code><a href="../security/RandomizerFactory.html" title="class in org.eclipse.net4j.util.security">RandomizerFactory</a></code>, <code><a href="../concurrent/TimerLifecycle.DaemonFactory.html" title="class in org.eclipse.net4j.util.concurrent">TimerLifecycle.DaemonFactory</a></code>, <code><a href="../security/UserManagerFactory.html" title="class in org.eclipse.net4j.util.security">UserManagerFactory</a></code></dd>
 </dl>
 <hr>
 <pre>public abstract class <span class="typeNameLabel">Factory</span>
@@ -168,11 +168,15 @@ implements <a href="IFactory.html" title="interface in org.eclipse.net4j.util.fa
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String)">Factory</a></span>&#8203;(java.lang.String&nbsp;productGroup)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String,java.lang.String)">Factory</a></span>&#8203;(java.lang.String&nbsp;productGroup,
        java.lang.String&nbsp;type)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(org.eclipse.net4j.util.factory.FactoryKey)">Factory</a></span>&#8203;(<a href="FactoryKey.html" title="class in org.eclipse.net4j.util.factory">FactoryKey</a>&nbsp;key)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
@@ -262,11 +266,24 @@ implements <a href="IFactory.html" title="interface in org.eclipse.net4j.util.fa
 <a id="&lt;init&gt;(java.lang.String,java.lang.String)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>Factory</h4>
 <pre>public&nbsp;Factory&#8203;(java.lang.String&nbsp;productGroup,
                java.lang.String&nbsp;type)</pre>
+</li>
+</ul>
+<a id="&lt;init&gt;(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>Factory</h4>
+<pre>public&nbsp;Factory&#8203;(java.lang.String&nbsp;productGroup)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.16</dd>
+</dl>
 </li>
 </ul>
 </li>

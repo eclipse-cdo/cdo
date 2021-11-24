@@ -130,7 +130,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li>javax.servlet.http.HttpServlet</li>
 <li>
 <ul class="inheritance">
-<li>org.eclipse.jetty.websocket.servlet.WebSocketServlet</li>
+<li>org.eclipse.jetty.websocket.server.JettyWebSocketServlet</li>
 <li>
 <ul class="inheritance">
 <li>org.eclipse.net4j.ws.jetty.Net4jWebSocketServlet</li>
@@ -152,7 +152,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dl>
 <hr>
 <pre>public class <span class="typeNameLabel">Net4jWebSocketServlet</span>
-extends org.eclipse.jetty.websocket.servlet.WebSocketServlet</pre>
+extends org.eclipse.jetty.websocket.server.JettyWebSocketServlet</pre>
 <dl>
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>Eike Stepper</dd>
@@ -202,16 +202,16 @@ extends org.eclipse.jetty.websocket.servlet.WebSocketServlet</pre>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#configure(org.eclipse.jetty.websocket.servlet.WebSocketServletFactory)">configure</a></span>&#8203;(org.eclipse.jetty.websocket.servlet.WebSocketServletFactory&nbsp;factory)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#configure(org.eclipse.jetty.websocket.server.JettyWebSocketServletFactory)">configure</a></span>&#8203;(org.eclipse.jetty.websocket.server.JettyWebSocketServletFactory&nbsp;factory)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.jetty.websocket.servlet.WebSocketServlet">
+<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.jetty.websocket.server.JettyWebSocketServlet">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.jetty.websocket.servlet.WebSocketServlet</h3>
-<code>destroy, init, service</code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.jetty.websocket.server.JettyWebSocketServlet</h3>
+<code>init, service</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.javax.servlet.http.HttpServlet">
@@ -225,7 +225,7 @@ extends org.eclipse.jetty.websocket.servlet.WebSocketServlet</pre>
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;javax.servlet.GenericServlet</h3>
-<code>getInitParameter, getInitParameterNames, getServletConfig, getServletContext, getServletInfo, getServletName, init, log, log</code></li>
+<code>destroy, getInitParameter, getInitParameterNames, getServletConfig, getServletContext, getServletInfo, getServletName, init, log, log</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
@@ -269,16 +269,16 @@ extends org.eclipse.jetty.websocket.servlet.WebSocketServlet</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="configure(org.eclipse.jetty.websocket.servlet.WebSocketServletFactory)">
+<a id="configure(org.eclipse.jetty.websocket.server.JettyWebSocketServletFactory)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>configure</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;configure&#8203;(org.eclipse.jetty.websocket.servlet.WebSocketServletFactory&nbsp;factory)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;configure&#8203;(org.eclipse.jetty.websocket.server.JettyWebSocketServletFactory&nbsp;factory)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>configure</code>&nbsp;in class&nbsp;<code>org.eclipse.jetty.websocket.servlet.WebSocketServlet</code></dd>
+<dd><code>configure</code>&nbsp;in class&nbsp;<code>org.eclipse.jetty.websocket.server.JettyWebSocketServlet</code></dd>
 </dl>
 </li>
 </ul>

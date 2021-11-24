@@ -28,6 +28,7 @@
       <topic label="org.eclipse.net4j.util.ref" href="javadoc/org/eclipse/net4j/util/ref/package-summary.html" icon="package" />
       <topic label="org.eclipse.net4j.util.registry" href="javadoc/org/eclipse/net4j/util/registry/package-summary.html" icon="package" />
       <topic label="org.eclipse.net4j.util.security" href="javadoc/org/eclipse/net4j/util/security/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.util.security.operations" href="javadoc/org/eclipse/net4j/util/security/operations/package-summary.html" icon="package" />
       <topic label="org.eclipse.net4j.util.transaction" href="javadoc/org/eclipse/net4j/util/transaction/package-summary.html" icon="package" />
     </topic>
     <topic label="Net4j Utilities UI" href="javadoc/org/eclipse/net4j/util/ui/package-summary.html" icon="plugin">

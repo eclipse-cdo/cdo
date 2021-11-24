@@ -156,12 +156,18 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.spi.common.commit">org.eclipse.emf.cdo.spi.common.commit</a></th>
+<td class="colLast">
+<div class="block">Common service provider interfaces and useful base implementations for dealing with commits and change sets.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.spi.common.protocol">org.eclipse.emf.cdo.spi.common.protocol</a></th>
 <td class="colLast">
 <div class="block">Common base implementations for dealing with I/O of CDO data structures.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colFirst" scope="row"><a href="#org.eclipse.emf.cdo.spi.common.revision">org.eclipse.emf.cdo.spi.common.revision</a></th>
 <td class="colLast">
 <div class="block">Common service provider interfaces and useful base implementations for dealing with revisions and deltas.</div>
@@ -256,7 +262,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EClass</a></code></td>
+<td class="colFirst"><code>org.eclipse.emf.ecore.EClass</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">CDORevisionManager.</span><code><span class="memberNameLink"><a href="../../revision/CDORevisionManager.html#getObjectType(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchManager)">getObjectType</a></span>&#8203;(<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
              <a href="../CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager</a>&nbsp;branchManagerForLoadOnDemand)</code></th>
 <td class="colLast">
@@ -483,6 +489,43 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </section>
 </li>
 <li class="blockList">
+<section role="region"><a id="org.eclipse.emf.cdo.spi.common.commit">
+<!--   -->
+</a>
+<h3>Uses of <a href="../CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager</a> in <a href="../../../spi/common/commit/package-summary.html">org.eclipse.emf.cdo.spi.common.commit</a></h3>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../../spi/common/commit/package-summary.html">org.eclipse.emf.cdo.spi.common.commit</a> that return <a href="../CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalCDOCommitInfoManager.</span><code><span class="memberNameLink"><a href="../../../spi/common/commit/InternalCDOCommitInfoManager.html#getBranchManager()">getBranchManager</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../../spi/common/commit/package-summary.html">org.eclipse.emf.cdo.spi.common.commit</a> with parameters of type <a href="../CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InternalCDOCommitInfoManager.</span><code><span class="memberNameLink"><a href="../../../spi/common/commit/InternalCDOCommitInfoManager.html#setBranchManager(org.eclipse.emf.cdo.common.branch.CDOBranchManager)">setBranchManager</a></span>&#8203;(<a href="../CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager</a>&nbsp;branchManager)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</section>
+</li>
+<li class="blockList">
 <section role="region"><a id="org.eclipse.emf.cdo.spi.common.protocol">
 <!--   -->
 </a>
@@ -535,6 +578,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">StubCDORevision.</span><code><span class="memberNameLink"><a href="../../../spi/common/revision/StubCDORevision.html#adjustBranches(org.eclipse.emf.cdo.common.branch.CDOBranchManager)">adjustBranches</a></span>&#8203;(<a href="../CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager</a>&nbsp;newBranchManager)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>org.eclipse.emf.ecore.EClass</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">DelegatingCDORevisionManager.</span><code><span class="memberNameLink"><a href="../../../spi/common/revision/DelegatingCDORevisionManager.html#getObjectType(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchManager)">getObjectType</a></span>&#8203;(<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+             <a href="../CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager</a>&nbsp;branchManagerForLoadOnDemand)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </tbody>

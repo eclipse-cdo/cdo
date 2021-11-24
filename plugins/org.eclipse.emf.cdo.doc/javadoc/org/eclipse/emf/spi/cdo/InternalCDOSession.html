@@ -28,7 +28,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":38,"i1":6,"i2":38,"i3":6,"i4":38,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":6,"i11":6,"i12":6,"i13":6,"i14":6,"i15":6,"i16":38,"i17":38,"i18":38,"i19":6,"i20":38,"i21":6,"i22":6,"i23":6,"i24":38,"i25":38,"i26":38,"i27":6,"i28":6,"i29":6,"i30":6,"i31":6,"i32":6,"i33":38,"i34":6,"i35":6,"i36":6,"i37":6,"i38":6,"i39":6,"i40":6,"i41":6,"i42":6,"i43":6,"i44":6,"i45":6,"i46":6,"i47":6,"i48":6,"i49":6,"i50":6,"i51":6};
+var data = {"i0":38,"i1":6,"i2":38,"i3":6,"i4":38,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":6,"i11":6,"i12":6,"i13":6,"i14":6,"i15":6,"i16":6,"i17":38,"i18":38,"i19":38,"i20":6,"i21":38,"i22":6,"i23":6,"i24":6,"i25":6,"i26":38,"i27":38,"i28":38,"i29":6,"i30":6,"i31":6,"i32":6,"i33":6,"i34":6,"i35":38,"i36":6,"i37":6,"i38":6,"i39":6,"i40":6,"i41":6,"i42":6,"i43":6,"i44":6,"i45":6,"i46":6,"i47":6,"i48":6,"i49":6,"i50":6,"i51":6,"i52":6,"i53":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -308,6 +308,11 @@ extends <a href="../../cdo/session/CDOSession.html" title="interface in org.ecli
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
+<td class="colFirst"><code><a href="CDOLockStateCache.html" title="interface in org.eclipse.emf.spi.cdo">CDOLockStateCache</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLockStateCache()">getLockStateCache</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="InternalCDOSession.MergeData.html" title="class in org.eclipse.emf.spi.cdo">InternalCDOSession.MergeData</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMergeData(org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,boolean)">getMergeData</a></span>&#8203;(<a href="../../cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;target,
             <a href="../../cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source,
@@ -315,7 +320,7 @@ extends <a href="../../cdo/session/CDOSession.html" title="interface in org.ecli
             boolean&nbsp;computeChangeSets)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code><a href="InternalCDOSession.MergeData.html" title="class in org.eclipse.emf.spi.cdo">InternalCDOSession.MergeData</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMergeData(org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,boolean)">getMergeData</a></span>&#8203;(<a href="../../cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;target,
             <a href="../../cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source,
@@ -324,15 +329,15 @@ extends <a href="../../cdo/session/CDOSession.html" title="interface in org.ecli
             boolean&nbsp;computeChangeSets)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code><a href="../../cdo/spi/common/model/InternalCDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageRegistry</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPackageRegistry()">getPackageRegistry</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Returns the EMF <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.Registry.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>package registry</code></a> that is used by all <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>objects</code></a> of all
+<div class="block">Returns the EMF <code>package registry</code> that is used by all <code>objects</code> of all
  <a href="../../cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a> of this session.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code><a href="InternalCDORemoteSessionManager.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDORemoteSessionManager</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRemoteSessionManager()">getRemoteSessionManager</a></span>()</code></th>
 <td class="colLast">
@@ -340,7 +345,7 @@ extends <a href="../../cdo/session/CDOSession.html" title="interface in org.ecli
  sessions served by the repository of this local session.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code><a href="../../cdo/spi/common/revision/InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRevisionManager()">getRevisionManager</a></span>()</code></th>
 <td class="colLast">
@@ -348,19 +353,19 @@ extends <a href="../../cdo/session/CDOSession.html" title="interface in org.ecli
  repository of this session.</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code><a href="CDOSessionProtocol.html" title="interface in org.eclipse.emf.spi.cdo">CDOSessionProtocol</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSessionProtocol()">getSessionProtocol</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code><a href="InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a>[]</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getViews()">getViews</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns an array of all open <a href="../../cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a> and <a href="../../cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transactions</code></a> of this session.</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#handleBranchNotification(org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch)">handleBranchNotification</a></span>&#8203;(<a href="../../cdo/spi/common/branch/InternalCDOBranch.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranch</a>&nbsp;branch)</code></th>
 <td class="colLast">
@@ -369,7 +374,7 @@ extends <a href="../../cdo/session/CDOSession.html" title="interface in org.ecli
 </div>
 </td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#handleCommitNotification(org.eclipse.emf.cdo.common.commit.CDOCommitInfo)">handleCommitNotification</a></span>&#8203;(<a href="../../cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;commitInfo)</code></th>
 <td class="colLast">
@@ -378,7 +383,7 @@ extends <a href="../../cdo/session/CDOSession.html" title="interface in org.ecli
 </div>
 </td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#handleCommitNotification(org.eclipse.emf.cdo.common.commit.CDOCommitInfo,boolean)">handleCommitNotification</a></span>&#8203;(<a href="../../cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;commitInfo,
                         boolean&nbsp;clearResourcePathCache)</code></th>
@@ -388,12 +393,12 @@ extends <a href="../../cdo/session/CDOSession.html" title="interface in org.ecli
 </div>
 </td>
 </tr>
-<tr id="i19" class="rowColor">
+<tr id="i20" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#handleCommitNotification(org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo)">handleCommitNotification</a></span>&#8203;(<a href="../../cdo/common/protocol/CDOProtocol.CommitNotificationInfo.html" title="class in org.eclipse.emf.cdo.common.protocol">CDOProtocol.CommitNotificationInfo</a>&nbsp;info)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i20" class="altColor">
+<tr id="i21" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#handleLockNotification(org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo,org.eclipse.emf.spi.cdo.InternalCDOView)">handleLockNotification</a></span>&#8203;(<a href="../../cdo/common/lock/CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a>&nbsp;lockChangeInfo,
                       <a href="InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a>&nbsp;sender)</code></th>
@@ -403,26 +408,31 @@ extends <a href="../../cdo/session/CDOSession.html" title="interface in org.ecli
 </div>
 </td>
 </tr>
-<tr id="i21" class="rowColor">
+<tr id="i22" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#handleLockNotification(org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo,org.eclipse.emf.spi.cdo.InternalCDOView,boolean)">handleLockNotification</a></span>&#8203;(<a href="../../cdo/common/lock/CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a>&nbsp;lockChangeInfo,
                       <a href="InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a>&nbsp;sender,
                       boolean&nbsp;async)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i22" class="altColor">
+<tr id="i23" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#handleRepositoryStateChanged(org.eclipse.emf.cdo.common.CDOCommonRepository.State,org.eclipse.emf.cdo.common.CDOCommonRepository.State)">handleRepositoryStateChanged</a></span>&#8203;(<a href="../../cdo/common/CDOCommonRepository.State.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.State</a>&nbsp;oldState,
                             <a href="../../cdo/common/CDOCommonRepository.State.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.State</a>&nbsp;newState)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i23" class="rowColor">
+<tr id="i24" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#handleRepositoryTypeChanged(org.eclipse.emf.cdo.common.CDOCommonRepository.Type,org.eclipse.emf.cdo.common.CDOCommonRepository.Type)">handleRepositoryTypeChanged</a></span>&#8203;(<a href="../../cdo/common/CDOCommonRepository.Type.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.Type</a>&nbsp;oldType,
                            <a href="../../cdo/common/CDOCommonRepository.Type.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.Type</a>&nbsp;newType)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i24" class="altColor">
+<tr id="i25" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#handleViewClosed(int)">handleViewClosed</a></span>&#8203;(int&nbsp;viewID)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i26" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#invalidate(org.eclipse.emf.cdo.common.commit.CDOCommitInfo,org.eclipse.emf.spi.cdo.InternalCDOTransaction)">invalidate</a></span>&#8203;(<a href="../../cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;commitInfo,
           <a href="InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a>&nbsp;sender)</code></th>
@@ -432,7 +442,7 @@ extends <a href="../../cdo/session/CDOSession.html" title="interface in org.ecli
 </div>
 </td>
 </tr>
-<tr id="i25" class="rowColor">
+<tr id="i27" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#invalidate(org.eclipse.emf.cdo.common.commit.CDOCommitInfo,org.eclipse.emf.spi.cdo.InternalCDOTransaction,boolean)">invalidate</a></span>&#8203;(<a href="../../cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;commitInfo,
           <a href="InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a>&nbsp;sender,
@@ -443,7 +453,7 @@ extends <a href="../../cdo/session/CDOSession.html" title="interface in org.ecli
 </div>
 </td>
 </tr>
-<tr id="i26" class="altColor">
+<tr id="i28" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#invalidate(org.eclipse.emf.cdo.common.commit.CDOCommitInfo,org.eclipse.emf.spi.cdo.InternalCDOTransaction,boolean,byte,java.util.Map)">invalidate</a></span>&#8203;(<a href="../../cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;commitInfo,
           <a href="InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a>&nbsp;sender,
@@ -456,17 +466,17 @@ extends <a href="../../cdo/session/CDOSession.html" title="interface in org.ecli
 </div>
 </td>
 </tr>
-<tr id="i27" class="rowColor">
+<tr id="i29" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#invalidate(org.eclipse.emf.spi.cdo.InternalCDOSession.InvalidationData)">invalidate</a></span>&#8203;(<a href="InternalCDOSession.InvalidationData.html" title="class in org.eclipse.emf.spi.cdo">InternalCDOSession.InvalidationData</a>&nbsp;invalidationData)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i28" class="altColor">
+<tr id="i30" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isSticky()">isSticky</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i29" class="rowColor">
+<tr id="i31" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#processRefreshSessionResult(org.eclipse.emf.spi.cdo.CDOSessionProtocol.RefreshSessionResult,org.eclipse.emf.cdo.common.branch.CDOBranch,java.util.List,java.util.Map)">processRefreshSessionResult</a></span>&#8203;(<a href="CDOSessionProtocol.RefreshSessionResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.RefreshSessionResult</a>&nbsp;result,
                            <a href="../../cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
@@ -474,27 +484,27 @@ extends <a href="../../cdo/session/CDOSession.html" title="interface in org.ecli
                            java.util.Map&lt;<a href="../../cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>,&#8203;java.util.Map&lt;<a href="../../cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,&#8203;<a href="../../cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&gt;&gt;&nbsp;viewedRevisions)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i30" class="altColor">
+<tr id="i32" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#resetCredentials(java.lang.String)">resetCredentials</a></span>&#8203;(java.lang.String&nbsp;userID)</code></th>
 <td class="colLast">
 <div class="block">Initiates (possibly interactive) reset of credentials for the specified user.</div>
 </td>
 </tr>
-<tr id="i31" class="rowColor">
+<tr id="i33" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#resolveAllElementProxies(org.eclipse.emf.cdo.common.revision.CDORevision)">resolveAllElementProxies</a></span>&#8203;(<a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i32" class="altColor">
+<tr id="i34" class="altColor">
 <td class="colFirst"><code>java.lang.Object</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#resolveElementProxy(org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.ecore.EStructuralFeature,int,int)">resolveElementProxy</a></span>&#8203;(<a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
-                   <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&nbsp;feature,
+                   org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature,
                    int&nbsp;accessIndex,
                    int&nbsp;serverIndex)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i33" class="rowColor">
+<tr id="i35" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAuthenticator(org.eclipse.emf.cdo.common.protocol.CDOAuthenticator)">setAuthenticator</a></span>&#8203;(<a href="../../cdo/common/protocol/CDOAuthenticator.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDOAuthenticator</a>&nbsp;authenticator)</code></th>
 <td class="colLast">
@@ -503,93 +513,93 @@ extends <a href="../../cdo/session/CDOSession.html" title="interface in org.ecli
 </div>
 </td>
 </tr>
-<tr id="i34" class="altColor">
+<tr id="i36" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setBranchManager(org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager)">setBranchManager</a></span>&#8203;(<a href="../../cdo/spi/common/branch/InternalCDOBranchManager.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager</a>&nbsp;branchManager)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i35" class="rowColor">
+<tr id="i37" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setCommitInfoManager(org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager)">setCommitInfoManager</a></span>&#8203;(<a href="../../cdo/spi/common/commit/InternalCDOCommitInfoManager.html" title="interface in org.eclipse.emf.cdo.spi.common.commit">InternalCDOCommitInfoManager</a>&nbsp;commitInfoManager)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i36" class="altColor">
+<tr id="i38" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setCommittedSinceLastRefresh(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">setCommittedSinceLastRefresh</a></span>&#8203;(<a href="../../cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
                             <a href="../../cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i37" class="rowColor">
+<tr id="i39" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setCredentialsProvider(org.eclipse.net4j.util.security.IPasswordCredentialsProvider)">setCredentialsProvider</a></span>&#8203;(org.eclipse.net4j.util.security.IPasswordCredentialsProvider&nbsp;credentialsProvider)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i38" class="altColor">
+<tr id="i40" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setExceptionHandler(org.eclipse.emf.cdo.session.CDOSession.ExceptionHandler)">setExceptionHandler</a></span>&#8203;(<a href="../../cdo/session/CDOSession.ExceptionHandler.html" title="interface in org.eclipse.emf.cdo.session">CDOSession.ExceptionHandler</a>&nbsp;exceptionHandler)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i39" class="rowColor">
+<tr id="i41" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setFetchRuleManager(org.eclipse.emf.cdo.view.CDOFetchRuleManager)">setFetchRuleManager</a></span>&#8203;(<a href="../../cdo/view/CDOFetchRuleManager.html" title="interface in org.eclipse.emf.cdo.view">CDOFetchRuleManager</a>&nbsp;fetchRuleManager)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i40" class="altColor">
+<tr id="i42" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setIDGenerator(org.eclipse.emf.cdo.common.id.CDOIDGenerator)">setIDGenerator</a></span>&#8203;(<a href="../../cdo/common/id/CDOIDGenerator.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDGenerator</a>&nbsp;idGenerator)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i41" class="rowColor">
+<tr id="i43" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setLastUpdateTime(long)">setLastUpdateTime</a></span>&#8203;(long&nbsp;lastUpdateTime)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i42" class="altColor">
+<tr id="i44" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setMainBranchLocal(boolean)">setMainBranchLocal</a></span>&#8203;(boolean&nbsp;mainBranchLocal)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i43" class="rowColor">
+<tr id="i45" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPackageRegistry(org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry)">setPackageRegistry</a></span>&#8203;(<a href="../../cdo/spi/common/model/InternalCDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageRegistry</a>&nbsp;packageRegistry)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i44" class="altColor">
+<tr id="i46" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRemoteSessionManager(org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager)">setRemoteSessionManager</a></span>&#8203;(<a href="InternalCDORemoteSessionManager.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDORemoteSessionManager</a>&nbsp;remoteSessionManager)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i45" class="rowColor">
+<tr id="i47" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRepositoryInfo(org.eclipse.emf.cdo.session.CDORepositoryInfo)">setRepositoryInfo</a></span>&#8203;(<a href="../../cdo/session/CDORepositoryInfo.html" title="interface in org.eclipse.emf.cdo.session">CDORepositoryInfo</a>&nbsp;repositoryInfo)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i46" class="altColor">
+<tr id="i48" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRevisionManager(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager)">setRevisionManager</a></span>&#8203;(<a href="../../cdo/spi/common/revision/InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a>&nbsp;revisionManager)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i47" class="rowColor">
+<tr id="i49" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSessionID(int)">setSessionID</a></span>&#8203;(int&nbsp;sessionID)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i48" class="altColor">
+<tr id="i50" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSessionProtocol(org.eclipse.emf.spi.cdo.CDOSessionProtocol)">setSessionProtocol</a></span>&#8203;(<a href="CDOSessionProtocol.html" title="interface in org.eclipse.emf.spi.cdo">CDOSessionProtocol</a>&nbsp;sessionProtocol)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i49" class="rowColor">
+<tr id="i51" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setUserID(java.lang.String)">setUserID</a></span>&#8203;(java.lang.String&nbsp;userID)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i50" class="altColor">
+<tr id="i52" class="altColor">
 <td class="colFirst"><code>java.lang.Object</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#startLocalCommit()">startLocalCommit</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i51" class="rowColor">
+<tr id="i53" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#viewDetached(org.eclipse.emf.spi.cdo.InternalCDOView)">viewDetached</a></span>&#8203;(<a href="InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a>&nbsp;view)</code></th>
 <td class="colLast">&nbsp;</td>
@@ -600,7 +610,7 @@ extends <a href="../../cdo/session/CDOSession.html" title="interface in org.ecli
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.<a href="../../cdo/common/CDOCommonSession.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession</a></h3>
-<code><a href="../../cdo/common/CDOCommonSession.html#getOpeningTime()">getOpeningTime</a>, <a href="../../cdo/common/CDOCommonSession.html#getSessionID()">getSessionID</a>, <a href="../../cdo/common/CDOCommonSession.html#getView(int)">getView</a></code></li>
+<code><a href="../../cdo/common/CDOCommonSession.html#authorizeOperations(org.eclipse.net4j.util.security.operations.AuthorizableOperation...)">authorizeOperations</a>, <a href="../../cdo/common/CDOCommonSession.html#getOpeningTime()">getOpeningTime</a>, <a href="../../cdo/common/CDOCommonSession.html#getSessionID()">getSessionID</a>, <a href="../../cdo/common/CDOCommonSession.html#getView(int)">getView</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.cdo.spi.common.revision.CDORevisionUnchunker">
@@ -794,6 +804,19 @@ extends <a href="../../cdo/session/CDOSession.html" title="interface in org.ecli
 </dl>
 </li>
 </ul>
+<a id="getLockStateCache()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getLockStateCache</h4>
+<pre class="methodSignature"><a href="CDOLockStateCache.html" title="interface in org.eclipse.emf.spi.cdo">CDOLockStateCache</a>&nbsp;getLockStateCache()</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.15</dd>
+</dl>
+</li>
+</ul>
 <a id="getAuthenticator()">
 <!--   -->
 </a>
@@ -849,10 +872,10 @@ void&nbsp;setAuthenticator&#8203;(<a href="../../cdo/common/protocol/CDOAuthenti
 <h4>getPackageRegistry</h4>
 <pre class="methodSignature"><a href="../../cdo/spi/common/model/InternalCDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageRegistry</a>&nbsp;getPackageRegistry()</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../cdo/session/CDOSession.html#getPackageRegistry()">CDOSession</a></code></span></div>
-<div class="block">Returns the EMF <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.Registry.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>package registry</code></a> that is used by all <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>objects</code></a> of all
+<div class="block">Returns the EMF <code>package registry</code> that is used by all <code>objects</code> of all
  <a href="../../cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a> of this session.
  <p>
- This registry is managed by the <a href="../../cdo/common/model/CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package unit manager</code></a> of this session. All <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink"><code>packages</code></a> that are already persisted in the repository of this session are automatically registered with this
+ This registry is managed by the <a href="../../cdo/common/model/CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package unit manager</code></a> of this session. All <code>packages</code> that are already persisted in the repository of this session are automatically registered with this
  registry. New packages can be locally registered with this registry and are committed to the repository through a
  <a href="../../cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a>, if needed.</div>
 <dl>
@@ -1130,7 +1153,7 @@ void&nbsp;setAuthenticator&#8203;(<a href="../../cdo/common/protocol/CDOAuthenti
 <li class="blockList">
 <h4>resolveElementProxy</h4>
 <pre class="methodSignature">java.lang.Object&nbsp;resolveElementProxy&#8203;(<a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
-                                     <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore" class="externalLink">EStructuralFeature</a>&nbsp;feature,
+                                     org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature,
                                      int&nbsp;accessIndex,
                                      int&nbsp;serverIndex)</pre>
 <dl>
@@ -1275,6 +1298,19 @@ void&nbsp;handleLockNotification&#8203;(<a href="../../cdo/common/lock/CDOLockCh
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.12</dd>
+</dl>
+</li>
+</ul>
+<a id="handleViewClosed(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>handleViewClosed</h4>
+<pre class="methodSignature">void&nbsp;handleViewClosed&#8203;(int&nbsp;viewID)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.15</dd>
 </dl>
 </li>
 </ul>

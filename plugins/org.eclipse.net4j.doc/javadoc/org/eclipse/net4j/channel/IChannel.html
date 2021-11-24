@@ -28,7 +28,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6};
+var data = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -260,27 +260,42 @@ extends <a href="../ILocationAware.html" title="interface in org.eclipse.net4j">
 </td>
 </tr>
 <tr id="i3" class="rowColor">
+<td class="colFirst"><code>long</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getReceivedBytes()">getReceivedBytes</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Returns the number of bytes that are received from the <a href="IChannelMultiplexer.html" title="interface in org.eclipse.net4j.channel"><code>multiplexer</code></a> of this channel
+ <b>and</b> are passed on to the <a href="#getReceiveHandler()"><code>receive handler</code></a> of this channel.</div>
+</td>
+</tr>
+<tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="../buffer/IBufferHandler.html" title="interface in org.eclipse.net4j.buffer">IBufferHandler</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getReceiveHandler()">getReceiveHandler</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the <code>IBufferHandler</code> that handles buffers received from the peer channel.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSentBuffers()">getSentBuffers</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the number of <a href="../buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer"><code>buffers</code></a> that are sent to the <a href="IChannelMultiplexer.html" title="interface in org.eclipse.net4j.channel"><code>multiplexer</code></a> of this channel.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
+<td class="colFirst"><code>long</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSentBytes()">getSentBytes</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Returns the number of bytes that are sent to the <a href="IChannelMultiplexer.html" title="interface in org.eclipse.net4j.channel"><code>multiplexer</code></a> of this channel.</div>
+</td>
+</tr>
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sendBuffer(org.eclipse.net4j.buffer.IBuffer)">sendBuffer</a></span>&#8203;(<a href="../buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</code></th>
 <td class="colLast">
 <div class="block">Asynchronously sends the given buffer to the receive handler of the peer channel.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setReceiveHandler(org.eclipse.net4j.buffer.IBufferHandler)">setReceiveHandler</a></span>&#8203;(<a href="../buffer/IBufferHandler.html" title="interface in org.eclipse.net4j.buffer">IBufferHandler</a>&nbsp;receiveHandler)</code></th>
 <td class="colLast">
@@ -413,10 +428,24 @@ extends <a href="../ILocationAware.html" title="interface in org.eclipse.net4j">
 </dl>
 </li>
 </ul>
+<a id="getSentBytes()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getSentBytes</h4>
+<pre class="methodSignature">long&nbsp;getSentBytes()</pre>
+<div class="block">Returns the number of bytes that are sent to the <a href="IChannelMultiplexer.html" title="interface in org.eclipse.net4j.channel"><code>multiplexer</code></a> of this channel.</div>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.13</dd>
+</dl>
+</li>
+</ul>
 <a id="getReceivedBuffers()">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getReceivedBuffers</h4>
 <pre class="methodSignature">long&nbsp;getReceivedBuffers()</pre>
@@ -425,6 +454,21 @@ extends <a href="../ILocationAware.html" title="interface in org.eclipse.net4j">
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.10</dd>
+</dl>
+</li>
+</ul>
+<a id="getReceivedBytes()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getReceivedBytes</h4>
+<pre class="methodSignature">long&nbsp;getReceivedBytes()</pre>
+<div class="block">Returns the number of bytes that are received from the <a href="IChannelMultiplexer.html" title="interface in org.eclipse.net4j.channel"><code>multiplexer</code></a> of this channel
+ <b>and</b> are passed on to the <a href="#getReceiveHandler()"><code>receive handler</code></a> of this channel.</div>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.13</dd>
 </dl>
 </li>
 </ul>

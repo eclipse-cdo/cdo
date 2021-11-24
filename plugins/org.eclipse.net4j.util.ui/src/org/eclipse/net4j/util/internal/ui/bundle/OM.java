@@ -57,7 +57,7 @@ public abstract class OM
     protected void doStart() throws Exception
     {
       UIUtil.syncExec(() -> {
-        // Bug xxxxxx: If the classes below are first accesses from a non-UI thread SWT throws "Invalid thread access".
+        // Bug 577425: If the classes below are first accesses from a non-UI thread SWT throws "Invalid thread access".
         ContainerItemProvider.PENDING_COLOR.isDisposed();
         ContainerItemProvider.PENDING_IMAGE.isDisposed();
         ContainerItemProvider.ERROR_IMAGE.isDisposed();

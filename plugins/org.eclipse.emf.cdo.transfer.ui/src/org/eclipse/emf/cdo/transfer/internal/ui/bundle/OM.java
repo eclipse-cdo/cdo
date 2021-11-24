@@ -53,7 +53,7 @@ public abstract class OM
       INSTANCE = this;
 
       UIUtil.syncExec(() -> {
-        // Bug xxxxxx: If the classes below are first accesses from a non-UI thread SWT throws "Invalid thread access".
+        // Bug 577425: If the classes below are first accesses from a non-UI thread SWT throws "Invalid thread access".
         TransferLabelProvider.GRAY.isDisposed();
         UnmappedModelsLabelProvider.GRAY.isDisposed();
       });

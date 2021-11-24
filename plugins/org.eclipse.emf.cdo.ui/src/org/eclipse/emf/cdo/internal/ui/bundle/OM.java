@@ -153,7 +153,7 @@ public abstract class OM
       CDOEditorOpener.Registry.INSTANCE.activate();
 
       UIUtil.syncExec(() -> {
-        // Bug xxxxxx: If the classes below are first accesses from a non-UI thread SWT throws "Invalid thread access".
+        // Bug 577425: If the classes below are first accesses from a non-UI thread SWT throws "Invalid thread access".
         PackageRegistryDialog.PRODUCT_GROUP.toString();
         CDOLabelProvider.getColor(null);
       });

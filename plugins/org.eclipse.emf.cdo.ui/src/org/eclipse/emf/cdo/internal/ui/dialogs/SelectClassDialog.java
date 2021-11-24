@@ -319,10 +319,6 @@ public class SelectClassDialog extends TitleAreaDialog
    */
   private static final class PackageLabelProvider extends LabelProvider
   {
-    private static final Image PACKAGE_IMAGE = SharedIcons.getImage(SharedIcons.OBJ_EPACKAGE);
-
-    private static final Image UNKNOWN_IMAGE = SharedIcons.getImage(SharedIcons.OBJ_EPACKAGE_UNKNOWN);
-
     private final Viewer viewer;
 
     public PackageLabelProvider(Viewer viewer)
@@ -338,10 +334,10 @@ public class SelectClassDialog extends TitleAreaDialog
       Object value = registry.get(nsURI);
       if (value instanceof EPackage)
       {
-        return PACKAGE_IMAGE;
+        return SharedIcons.getImage(SharedIcons.OBJ_EPACKAGE);
       }
 
-      return UNKNOWN_IMAGE;
+      return SharedIcons.getImage(SharedIcons.OBJ_EPACKAGE_UNKNOWN);
     }
   }
 
@@ -435,8 +431,6 @@ public class SelectClassDialog extends TitleAreaDialog
    */
   private static final class ClassLabelProvider extends LabelProvider
   {
-    private static final Image CLASS_IMAGE = SharedIcons.getImage(SharedIcons.OBJ_ECLASS);
-
     private final ComposedAdapterFactory adapterFactory;
 
     private final ILabelProvider labelProvider;
@@ -473,7 +467,7 @@ public class SelectClassDialog extends TitleAreaDialog
         //$FALL-THROUGH$
       }
 
-      return CLASS_IMAGE;
+      return SharedIcons.getImage(SharedIcons.OBJ_ECLASS);
     }
 
     @Override

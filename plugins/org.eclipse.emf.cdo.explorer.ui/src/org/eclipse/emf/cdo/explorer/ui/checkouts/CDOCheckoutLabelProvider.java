@@ -41,7 +41,7 @@ import org.eclipse.ui.navigator.ICommonLabelProvider;
  */
 public class CDOCheckoutLabelProvider extends LabelProvider implements ICommonLabelProvider, IColorProvider, IStyledLabelProvider
 {
-  private static final Image ERROR_IMAGE = PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJS_ERROR_TSK);
+  public static final Image ERROR_IMAGE = PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJS_ERROR_TSK);
 
   private static final IEditorRegistry EDITOR_REGISTRY = PlatformUI.getWorkbench().getEditorRegistry();
 

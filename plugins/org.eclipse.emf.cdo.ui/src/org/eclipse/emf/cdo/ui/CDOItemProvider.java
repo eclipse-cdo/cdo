@@ -124,8 +124,6 @@ import java.util.Set;
  */
 public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
 {
-  private static final IEditorRegistry EDITOR_REGISTRY = PlatformUI.getWorkbench().getEditorRegistry();
-
   private IPropertyListener editorRegistryListener;
 
   private final ElementListener elementListener = new ElementListener();
@@ -154,7 +152,7 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
 
     if (editorRegistryListener != null)
     {
-      EDITOR_REGISTRY.removePropertyListener(editorRegistryListener);
+      PlatformUI.getWorkbench().getEditorRegistry().removePropertyListener(editorRegistryListener);
       resourceManager = null;
     }
 
@@ -461,7 +459,7 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
     if (obj instanceof CDOResourceLeaf)
     {
       String name = ((CDOResourceLeaf)obj).getName();
-      IEditorDescriptor editorDescriptor = EDITOR_REGISTRY.getDefaultEditor(name);
+      IEditorDescriptor editorDescriptor = PlatformUI.getWorkbench().getEditorRegistry().getDefaultEditor(name);
       if (editorDescriptor != null && !CDOEditorUtil.TEXT_EDITOR_ID.equals(editorDescriptor.getId()))
       {
         Image image = getWorkbenchImage(name);
@@ -495,13 +493,15 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
    */
   protected Image getWorkbenchImage(String name)
   {
-    ImageDescriptor imageDescriptor = EDITOR_REGISTRY.getImageDescriptor(name);
+    IEditorRegistry editorRegistry = PlatformUI.getWorkbench().getEditorRegistry();
+
+    ImageDescriptor imageDescriptor = editorRegistry.getImageDescriptor(name);
     if (imageDescriptor != null)
     {
       if (editorRegistryListener == null)
       {
         editorRegistryListener = new EditorRegistryListener(this);
-        EDITOR_REGISTRY.addPropertyListener(editorRegistryListener);
+        editorRegistry.addPropertyListener(editorRegistryListener);
       }
 
       ResourceManager resourceManager = getResourceManager();
@@ -837,6 +837,11 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
    */
   public static ImageDescriptor getViewImageDescriptor(CDOView view)
   {
+    if (view == null)
+    {
+      return null;
+    }
+
     if (view.isReadOnly())
     {
       if (view.getTimeStamp() != CDOView.UNSPECIFIED_DATE)
@@ -855,6 +860,11 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
    */
   public static Image getViewImage(CDOView view)
   {
+    if (view == null)
+    {
+      return null;
+    }
+
     if (view.isReadOnly())
     {
       if (view.getTimeStamp() != CDOView.UNSPECIFIED_DATE)

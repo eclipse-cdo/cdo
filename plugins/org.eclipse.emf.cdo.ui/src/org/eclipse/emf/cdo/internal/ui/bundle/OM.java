@@ -11,8 +11,10 @@
  */
 package org.eclipse.emf.cdo.internal.ui.bundle;
 
+import org.eclipse.emf.cdo.internal.ui.dialogs.PackageRegistryDialog;
 import org.eclipse.emf.cdo.ui.CDOEditorOpener;
 import org.eclipse.emf.cdo.ui.CDOLabelDecorator;
+import org.eclipse.emf.cdo.ui.CDOLabelProvider;
 import org.eclipse.emf.cdo.ui.OverlayImage;
 
 import org.eclipse.net4j.util.om.OMBundle;
@@ -22,6 +24,7 @@ import org.eclipse.net4j.util.om.pref.OMPreference;
 import org.eclipse.net4j.util.om.pref.OMPreferences;
 import org.eclipse.net4j.util.om.trace.OMTracer;
 import org.eclipse.net4j.util.ui.UIActivator;
+import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.emf.common.CommonPlugin;
 import org.eclipse.emf.common.util.URI;
@@ -148,6 +151,12 @@ public abstract class OM
     protected void doStart() throws Exception
     {
       CDOEditorOpener.Registry.INSTANCE.activate();
+
+      UIUtil.syncExec(() -> {
+        // Bug xxxxxx: If the classes below are first accesses from a non-UI thread SWT throws "Invalid thread access".
+        PackageRegistryDialog.PRODUCT_GROUP.toString();
+        CDOLabelProvider.getColor(null);
+      });
     }
 
     @Override

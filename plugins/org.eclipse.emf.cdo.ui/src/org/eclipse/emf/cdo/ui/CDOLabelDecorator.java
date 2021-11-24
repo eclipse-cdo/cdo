@@ -60,10 +60,6 @@ public class CDOLabelDecorator implements ILabelDecorator
 
   public static final String DECORATOR_ID = "org.eclipse.emf.cdo.ui.CDOLabelDecorator"; //$NON-NLS-1$
 
-  private static final Image LOCK_OVERLAY = SharedIcons.getImage(SharedIcons.OVR_LOCK);
-
-  private static final Image LOCK_SELF_OVERLAY = SharedIcons.getImage(SharedIcons.OVR_LOCK_SELF);
-
   private static final String PROP_DISABLE_LOCK_DECORATION = "org.eclipse.emf.cdo.ui.CDOLabelDecorator.DISABLE_LOCK_DECORATION";
 
   private static final boolean DEFAULT_DISABLE_LOCK_DECORATION = OMPlatform.INSTANCE.isProperty(PROP_DISABLE_LOCK_DECORATION);
@@ -229,11 +225,11 @@ public class CDOLabelDecorator implements ILabelDecorator
               {
                 if (owner == view.getLockOwner())
                 {
-                  image = OM.getOverlayImage(image, LOCK_SELF_OVERLAY, 10, 0);
+                  image = OM.getOverlayImage(image, SharedIcons.getImage(SharedIcons.OVR_LOCK_SELF), 10, 0);
                 }
                 else
                 {
-                  image = OM.getOverlayImage(image, LOCK_OVERLAY, 10, 0);
+                  image = OM.getOverlayImage(image, SharedIcons.getImage(SharedIcons.OVR_LOCK), 10, 0);
                 }
               }
             }

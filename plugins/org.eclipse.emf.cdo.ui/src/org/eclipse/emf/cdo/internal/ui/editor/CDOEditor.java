@@ -228,8 +228,6 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, CDOEditor.class);
 
-  private static final Image ERROR_IMAGE = PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJS_ERROR_TSK);
-
   private static final Field PROPERTY_SHEET_PAGE_VIEWER_FIELD = getPropertySheetPageViewerField();
 
   private static final Field CONTENT_OUTLINE_PAGE_VIEWER_FIELD = getContentOutlinePageViewerField();
@@ -1672,7 +1670,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
           }
         }
 
-        return ERROR_IMAGE;
+        return PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJS_ERROR_TSK);
       }
 
       @Override

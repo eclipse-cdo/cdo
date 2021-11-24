@@ -33,7 +33,7 @@ import org.eclipse.swt.graphics.Image;
  */
 public class CDOCheckoutLabelDecorator extends BaseLabelDecorator
 {
-  private static final Image ERROR_OVERLAY = SharedIcons.getImage(SharedIcons.OVR_ERROR);
+  public static final Image ERROR_OVERLAY = SharedIcons.getImage(SharedIcons.OVR_ERROR);
 
   public CDOCheckoutLabelDecorator()
   {

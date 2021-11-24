@@ -11,11 +11,14 @@
  */
 package org.eclipse.emf.cdo.ui.internal.compare.bundle;
 
+import org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil;
+
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.trace.OMTracer;
 import org.eclipse.net4j.util.ui.UIActivator;
+import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
@@ -64,6 +67,15 @@ public abstract class OM
     {
       super(BUNDLE);
       INSTANCE = this;
+    }
+
+    @Override
+    protected void doStart() throws Exception
+    {
+      UIUtil.syncExec(() -> {
+        // Bug xxxxxx: If the classes below are first accesses from a non-UI thread SWT throws "Invalid thread access".
+        CDOCompareEditorUtil.COMPARE_IMAGE.isDisposed();
+      });
     }
   }
 }

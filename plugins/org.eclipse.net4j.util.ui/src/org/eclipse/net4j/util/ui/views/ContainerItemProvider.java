@@ -52,20 +52,9 @@ import java.util.Objects;
  */
 public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends ItemProvider<CONTAINER>
 {
-  /**
-   * @since 3.5
-   */
-  public static final Color PENDING_COLOR = UIUtil.getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY);
+  private static Color pendingColor;
 
-  /**
-   * @since 3.5
-   */
-  public static final Image PENDING_IMAGE = SharedIcons.getImage(SharedIcons.OBJ_PENDING);
-
-  /**
-   * @since 3.5
-   */
-  public static final Image ERROR_IMAGE = SharedIcons.getImage(SharedIcons.OBJ_ERROR);
+  private static Image pendingImage;
 
   private Map<Object, Node> nodes = new HashMap<>();
 
@@ -410,7 +399,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
   {
     if (obj instanceof ContainerItemProvider.SlowElement)
     {
-      return PENDING_COLOR;
+      return pendingColor();
     }
 
     return super.getForeground(obj);
@@ -421,15 +410,41 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
   {
     if (obj instanceof ContainerItemProvider.SlowElement)
     {
-      return PENDING_IMAGE;
+      return pendingImage();
     }
 
     if (obj instanceof ContainerItemProvider.ErrorElement)
     {
-      return ERROR_IMAGE;
+      return UIUtil.errorImage();
     }
 
     return super.getImage(obj);
+  }
+
+  /**
+   * @since 3.12
+   */
+  public static Color pendingColor()
+  {
+    if (pendingColor == null)
+    {
+      pendingColor = UIUtil.getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY);
+    }
+
+    return pendingColor;
+  }
+
+  /**
+   * @since 3.12
+   */
+  public static Image pendingImage()
+  {
+    if (pendingImage == null)
+    {
+      pendingImage = SharedIcons.getImage(SharedIcons.OBJ_PENDING);
+    }
+
+    return pendingImage;
   }
 
   /**
@@ -970,28 +985,6 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
   /**
    * @author Eike Stepper
    * @since 3.1
-   * @deprecated As of 3.5 use {@link SlowElement}.
-   */
-  @Deprecated
-  public class LazyElement extends SlowElement
-  {
-    /**
-     * @since 3.5
-     */
-    public LazyElement(IContainer<Object> container, String text)
-    {
-      super(container, text);
-    }
-
-    public LazyElement(IContainer<Object> container)
-    {
-      this(container, getSlowText(container));
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   * @since 3.1
    */
   public class ErrorElement
   {
@@ -1013,4 +1006,47 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
       return getErrorText(container);
     }
   }
+
+  /**
+   * @author Eike Stepper
+   * @since 3.1
+   * @deprecated As of 3.5 use {@link SlowElement}.
+   */
+  @Deprecated
+  public class LazyElement extends SlowElement
+  {
+    /**
+     * @since 3.5
+     */
+    public LazyElement(IContainer<Object> container, String text)
+    {
+      super(container, text);
+    }
+
+    public LazyElement(IContainer<Object> container)
+    {
+      this(container, getSlowText(container));
+    }
+  }
+
+  /**
+   * @since 3.5
+   * @deprecated As of 3.12 use {@link #pendingColor()}.
+   */
+  @Deprecated
+  public static final Color PENDING_COLOR = UIUtil.getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY);
+
+  /**
+   * @since 3.5
+   * @deprecated As of 3.12 use {@link #pendingImage()}.
+   */
+  @Deprecated
+  public static final Image PENDING_IMAGE = SharedIcons.getImage(SharedIcons.OBJ_PENDING);
+
+  /**
+   * @since 3.5
+   * @deprecated As of 3.12 use {@link UIUtil#errorImage()}.
+   */
+  @Deprecated
+  public static final Image ERROR_IMAGE = SharedIcons.getImage(SharedIcons.OBJ_ERROR);
 }

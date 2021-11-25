@@ -15,8 +15,6 @@ import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.trace.OMTracer;
 import org.eclipse.net4j.util.ui.UIActivator;
-import org.eclipse.net4j.util.ui.UIUtil;
-import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 
@@ -51,17 +49,6 @@ public abstract class OM
     {
       super(BUNDLE);
       INSTANCE = this;
-    }
-
-    @Override
-    protected void doStart() throws Exception
-    {
-      UIUtil.syncExec(() -> {
-        // Bug 577425: If the classes below are first accessed from a non-UI thread SWT throws "Invalid thread access".
-        ContainerItemProvider.PENDING_COLOR.isDisposed();
-        ContainerItemProvider.PENDING_IMAGE.isDisposed();
-        ContainerItemProvider.ERROR_IMAGE.isDisposed();
-      });
     }
   }
 }

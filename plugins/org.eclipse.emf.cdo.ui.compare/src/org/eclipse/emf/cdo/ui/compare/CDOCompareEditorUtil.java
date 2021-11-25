@@ -96,8 +96,10 @@ public final class CDOCompareEditorUtil
 {
   /**
    * @since 4.6
+   * @deprecated As of 4.7 use {@link #compareImage()}.
    */
-  public static final Image COMPARE_IMAGE = OM.getImage("icons/compare.gif");
+  @Deprecated
+  public static final Image COMPARE_IMAGE = null;
 
   /**
    * @since 4.4
@@ -119,8 +121,23 @@ public final class CDOCompareEditorUtil
 
   private static final ThreadLocal<List<Runnable>> DISPOSE_RUNNABLES = new ThreadLocal<>();
 
+  private static Image compareImage;
+
   private CDOCompareEditorUtil()
   {
+  }
+
+  /**
+   * @since 4.7
+   */
+  public static Image compareImage()
+  {
+    if (compareImage == null)
+    {
+      compareImage = OM.getImage("icons/compare.gif");
+    }
+
+    return compareImage;
   }
 
   /**
@@ -849,7 +866,7 @@ public final class CDOCompareEditorUtil
     @Override
     public Image getTitleImage()
     {
-      return COMPARE_IMAGE;
+      return compareImage();
     }
 
     public void setDisposeRunnables(List<Runnable> disposeRunnables)

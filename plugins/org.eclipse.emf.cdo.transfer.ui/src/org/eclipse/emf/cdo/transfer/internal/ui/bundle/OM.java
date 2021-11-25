@@ -10,15 +10,11 @@
  */
 package org.eclipse.emf.cdo.transfer.internal.ui.bundle;
 
-import org.eclipse.emf.cdo.transfer.ui.TransferLabelProvider;
-import org.eclipse.emf.cdo.transfer.ui.swt.TransferDetailsComposite.UnmappedModelsLabelProvider;
-
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.trace.OMTracer;
 import org.eclipse.net4j.util.ui.UIActivator;
-import org.eclipse.net4j.util.ui.UIUtil;
 
 /**
  * The <em>Operations & Maintenance</em> class of this bundle.
@@ -51,12 +47,6 @@ public abstract class OM
     protected void doStart() throws Exception
     {
       INSTANCE = this;
-
-      UIUtil.syncExec(() -> {
-        // Bug 577425: If the classes below are first accessed from a non-UI thread SWT throws "Invalid thread access".
-        TransferLabelProvider.GRAY.isDisposed();
-        UnmappedModelsLabelProvider.GRAY.isDisposed();
-      });
     }
 
     @Override

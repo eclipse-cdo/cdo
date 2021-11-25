@@ -37,9 +37,9 @@ import org.eclipse.swt.graphics.Image;
  */
 public class TransferLabelProvider extends LabelProvider implements ITableLabelProvider, ITableColorProvider
 {
-  public static final Color GRAY = UIUtil.getDisplay().getSystemColor(SWT.COLOR_GRAY);
+  public static final Color GRAY = UIUtil.initResource(display -> display.getSystemColor(SWT.COLOR_GRAY));
 
-  public static final Color RED = UIUtil.getDisplay().getSystemColor(SWT.COLOR_RED);
+  public static final Color RED = UIUtil.initResource(display -> display.getSystemColor(SWT.COLOR_RED));
 
   private CDOTransfer transfer;
 

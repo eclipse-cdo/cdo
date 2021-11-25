@@ -587,9 +587,11 @@ public class TransferDetailsComposite extends Composite implements IListener
    */
   public static class UnmappedModelsLabelProvider extends LabelProvider implements IColorProvider
   {
-    public static final Color GRAY = UIUtil.getDisplay().getSystemColor(SWT.COLOR_GRAY);
+    @Deprecated
+    public static final Color GRAY = null;
 
-    public static final Color RED = UIUtil.getDisplay().getSystemColor(SWT.COLOR_RED);
+    @Deprecated
+    public static final Color RED = null;
 
     private CDOTransfer transfer;
 
@@ -627,11 +629,11 @@ public class TransferDetailsComposite extends Composite implements IListener
         ModelTransferResolution resolution = context.getResolution(uri);
         if (resolution != null) // TODO Test type of resolution
         {
-          return GRAY;
+          return UIUtil.grayColor();
         }
       }
 
-      return RED;
+      return UIUtil.redColor();
     }
 
     @Override

@@ -65,8 +65,6 @@ public class PackageRegistryDialog extends TitleAreaDialog
 
   private static final String TITLE = Messages.getString("PackageRegistryDialog.0"); //$NON-NLS-1$
 
-  private static final Color GRAY = UIUtil.getDisplay().getSystemColor(SWT.COLOR_GRAY);
-
   private IWorkbenchPage page;
 
   private CDOSession session;
@@ -306,7 +304,7 @@ public class PackageRegistryDialog extends TitleAreaDialog
         return null;
       }
 
-      return GRAY;
+      return UIUtil.grayColor();
     }
   }
 

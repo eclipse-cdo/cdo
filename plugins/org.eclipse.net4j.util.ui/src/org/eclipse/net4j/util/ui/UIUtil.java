@@ -50,6 +50,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Widget;
+import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
@@ -63,6 +64,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
  * @author Eike Stepper
@@ -74,8 +76,53 @@ public final class UIUtil
    */
   public static final String ERROR_LOG_ID = "org.eclipse.pde.runtime.LogView"; //$NON-NLS-1$
 
+  private static Color redColor;
+
+  private static Color grayColor;
+
+  private static Image errorImage;
+
   private UIUtil()
   {
+  }
+
+  /**
+   * @since 3.12
+   */
+  public static Color redColor()
+  {
+    if (redColor == null)
+    {
+      redColor = UIUtil.getDisplay().getSystemColor(SWT.COLOR_RED);
+    }
+
+    return redColor;
+  }
+
+  /**
+   * @since 3.12
+   */
+  public static Color grayColor()
+  {
+    if (grayColor == null)
+    {
+      grayColor = UIUtil.getDisplay().getSystemColor(SWT.COLOR_GRAY);
+    }
+
+    return grayColor;
+  }
+
+  /**
+   * @since 3.12
+   */
+  public static Image errorImage()
+  {
+    if (errorImage == null)
+    {
+      errorImage = PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJS_ERROR_TSK);
+    }
+
+    return errorImage;
   }
 
   /**
@@ -560,6 +607,34 @@ public final class UIUtil
         gd.horizontalIndent = horizontalIndent;
       }
     }
+  }
+
+  /**
+   * @since 3.12
+   */
+  public static <T> T initResource(Function<Display, T> initializer)
+  {
+    Display display = getDisplay();
+    if (display == null)
+    {
+      OM.LOG.warn("Display is not available");
+      return null;
+    }
+
+    Object[] result = { null };
+
+    try
+    {
+      syncExec(() -> result[0] = initializer.apply(display));
+    }
+    catch (Throwable ex)
+    {
+      OM.LOG.warn(ex);
+    }
+
+    @SuppressWarnings("unchecked")
+    T value = (T)result[0];
+    return value;
   }
 
   /**

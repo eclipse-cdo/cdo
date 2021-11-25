@@ -33,8 +33,6 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.ui.ISharedImages;
-import org.eclipse.ui.PlatformUI;
 
 /**
  * A {@link org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider AdapterFactoryLabelProvider} specialization
@@ -49,13 +47,7 @@ import org.eclipse.ui.PlatformUI;
  */
 public class CDOLabelProvider extends AdapterFactoryLabelProvider implements IColorProvider, IFontProvider
 {
-  private static final Color COLOR_PERMISSION_NONE = UIUtil.getDisplay().getSystemColor(SWT.COLOR_GRAY);
-
-  private static final Color COLOR_PERMISSION_READ = UIUtil.getDisplay().getSystemColor(SWT.COLOR_DARK_CYAN);
-
-  private static final Color COLOR_CONFLICT = UIUtil.getDisplay().getSystemColor(SWT.COLOR_RED);
-
-  private static final Image ERROR_IMAGE = PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJS_ERROR_TSK);
+  private static Color readPermissionColor;
 
   private Font bold;
 
@@ -132,7 +124,7 @@ public class CDOLabelProvider extends AdapterFactoryLabelProvider implements ICo
     }
     catch (Exception ex)
     {
-      return ERROR_IMAGE;
+      return getErrorImage();
     }
   }
 
@@ -222,17 +214,17 @@ public class CDOLabelProvider extends AdapterFactoryLabelProvider implements ICo
       {
         if (object.cdoConflict())
         {
-          return COLOR_CONFLICT;
+          return getConflictColor();
         }
 
         CDOPermission permission = object.cdoPermission();
         switch (permission)
         {
         case NONE:
-          return COLOR_PERMISSION_NONE;
+          return getNoPermissionColor();
 
         case READ:
-          return COLOR_PERMISSION_READ;
+          return getReadPermissionColor();
 
         default:
           //$FALL-THROUGH$
@@ -245,5 +237,30 @@ public class CDOLabelProvider extends AdapterFactoryLabelProvider implements ICo
 
     // Use default
     return null;
+  }
+
+  private static Color getNoPermissionColor()
+  {
+    return UIUtil.grayColor();
+  }
+
+  private static Color getReadPermissionColor()
+  {
+    if (readPermissionColor == null)
+    {
+      readPermissionColor = UIUtil.getDisplay().getSystemColor(SWT.COLOR_DARK_CYAN);
+    }
+
+    return readPermissionColor;
+  }
+
+  private static Color getConflictColor()
+  {
+    return UIUtil.redColor();
+  }
+
+  private static Image getErrorImage()
+  {
+    return UIUtil.errorImage();
   }
 }

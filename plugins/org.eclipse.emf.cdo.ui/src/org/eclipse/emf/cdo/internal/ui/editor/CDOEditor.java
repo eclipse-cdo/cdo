@@ -1653,7 +1653,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
         {
           if (element instanceof ViewerUtil.Pending)
           {
-            return ContainerItemProvider.PENDING_IMAGE;
+            return ContainerItemProvider.pendingImage();
           }
 
           Image image = super.getImage(element);

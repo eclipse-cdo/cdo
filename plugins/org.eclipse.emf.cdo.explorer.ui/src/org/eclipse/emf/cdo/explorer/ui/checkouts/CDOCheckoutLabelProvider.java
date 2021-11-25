@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.internal.ui.ViewerUtil;
 import org.eclipse.emf.cdo.transfer.CDOTransferElement;
 
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 
 import org.eclipse.emf.ecore.EClass;
@@ -226,12 +227,12 @@ public class CDOCheckoutLabelProvider extends LabelProvider implements ICommonLa
   {
     if (object instanceof ViewerUtil.Pending)
     {
-      return ContainerItemProvider.PENDING_IMAGE;
+      return ContainerItemProvider.pendingImage();
     }
 
     if (object instanceof ViewerUtil.Error)
     {
-      return ContainerItemProvider.ERROR_IMAGE;
+      return UIUtil.errorImage();
     }
 
     try

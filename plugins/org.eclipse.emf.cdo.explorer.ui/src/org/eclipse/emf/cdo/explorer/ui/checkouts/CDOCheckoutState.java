@@ -361,7 +361,7 @@ public final class CDOCheckoutState
       {
         if (object instanceof ViewerUtil.Pending)
         {
-          return ContainerItemProvider.PENDING_COLOR;
+          return ContainerItemProvider.pendingColor();
         }
 
         if (object instanceof CDOObject)
@@ -508,7 +508,7 @@ public final class CDOCheckoutState
 
           if (element instanceof ViewerUtil.Pending)
           {
-            return ContainerItemProvider.PENDING_IMAGE;
+            return ContainerItemProvider.pendingImage();
           }
 
           if (element instanceof CDOElement)

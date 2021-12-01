@@ -87,28 +87,28 @@
             <message_argument value="getLockStates()"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.15.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="createLockChangeInfo(JLorg/eclipse/emf/cdo/common/lock/CDOLockOwner;Lorg/eclipse/emf/cdo/common/branch/CDOBranch;Lorg/eclipse/emf/cdo/common/lock/CDOLockChangeInfo$Operation;Lorg/eclipse/net4j/util/concurrent/IRWLockManager$LockType;[Lorg/eclipse/emf/cdo/common/lock/CDOLockState;)Lorg/eclipse/emf/cdo/common/lock/CDOLockChangeInfo;" kind="ADDED" message="The deprecation modifiers has been added to org.eclipse.emf.cdo.common.lock.CDOLockUtil.createLockChangeInfo(long, CDOLockOwner, CDOBranch, CDOLockChangeInfo.Operation, IRWLockManager.LockType, CDOLockState[])" newModifiers="1048585" oldModifiers="9" restrictions="2" type_name="org.eclipse.emf.cdo.common.lock.CDOLockUtil">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.common.lock.CDOLockUtil"/>
-            <message_argument value="createLockChangeInfo(long, CDOLockOwner, CDOBranch, CDOLockChangeInfo.Operation, IRWLockManager.LockType, CDOLockState[])"/>
-        </message_arguments>
-    </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.15.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="createLockState(Lorg/eclipse/net4j/util/concurrent/RWOLockManager$LockState&lt;Ljava/lang/Object;+Lorg/eclipse/emf/cdo/common/CDOCommonView;&gt;;)Lorg/eclipse/emf/cdo/common/lock/CDOLockState;" kind="ADDED" message="The deprecation modifiers has been added to org.eclipse.emf.cdo.common.lock.CDOLockUtil.createLockState(RWOLockManager.LockState&lt;Object,? extends CDOCommonView&gt;)" newModifiers="1048585" oldModifiers="9" restrictions="2" type_name="org.eclipse.emf.cdo.common.lock.CDOLockUtil">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.common.lock.CDOLockUtil"/>
             <message_argument value="createLockState(RWOLockManager.LockState&lt;Object,? extends CDOCommonView&gt;)"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.ocl(4.4.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="setRevisionCacheAdder(Lorg/eclipse/emf/cdo/common/revision/CDORevisionCacheAdder;)V" kind="ADDED" message="The deprecation modifiers has been added to org.eclipse.emf.cdo.server.ocl.CDOExtentCreator.setRevisionCacheAdder(CDORevisionCacheAdder)" newModifiers="1048577" oldModifiers="1" restrictions="0" type_name="org.eclipse.emf.cdo.server.ocl.CDOExtentCreator">
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.15.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="createLockChangeInfo(JLorg/eclipse/emf/cdo/common/lock/CDOLockOwner;Lorg/eclipse/emf/cdo/common/branch/CDOBranch;Lorg/eclipse/emf/cdo/common/lock/CDOLockChangeInfo$Operation;Lorg/eclipse/net4j/util/concurrent/IRWLockManager$LockType;[Lorg/eclipse/emf/cdo/common/lock/CDOLockState;)Lorg/eclipse/emf/cdo/common/lock/CDOLockChangeInfo;" kind="ADDED" message="The deprecation modifiers has been added to org.eclipse.emf.cdo.common.lock.CDOLockUtil.createLockChangeInfo(long, CDOLockOwner, CDOBranch, CDOLockChangeInfo.Operation, IRWLockManager.LockType, CDOLockState[])" newModifiers="1048585" oldModifiers="9" restrictions="2" type_name="org.eclipse.emf.cdo.common.lock.CDOLockUtil">
         <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.server.ocl.CDOExtentCreator"/>
-            <message_argument value="setRevisionCacheAdder(CDORevisionCacheAdder)"/>
+            <message_argument value="org.eclipse.emf.cdo.common.lock.CDOLockUtil"/>
+            <message_argument value="createLockChangeInfo(long, CDOLockOwner, CDOBranch, CDOLockChangeInfo.Operation, IRWLockManager.LockType, CDOLockState[])"/>
         </message_arguments>
     </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.server.ocl(4.4.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="getRevisionCacheAdder()Lorg/eclipse/emf/cdo/common/revision/CDORevisionCacheAdder;" kind="ADDED" message="The deprecation modifiers has been added to org.eclipse.emf.cdo.server.ocl.CDOExtentCreator.getRevisionCacheAdder()" newModifiers="1048577" oldModifiers="1" restrictions="0" type_name="org.eclipse.emf.cdo.server.ocl.CDOExtentCreator">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.server.ocl.CDOExtentCreator"/>
             <message_argument value="getRevisionCacheAdder()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.ocl(4.4.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="setRevisionCacheAdder(Lorg/eclipse/emf/cdo/common/revision/CDORevisionCacheAdder;)V" kind="ADDED" message="The deprecation modifiers has been added to org.eclipse.emf.cdo.server.ocl.CDOExtentCreator.setRevisionCacheAdder(CDORevisionCacheAdder)" newModifiers="1048577" oldModifiers="1" restrictions="0" type_name="org.eclipse.emf.cdo.server.ocl.CDOExtentCreator">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.ocl.CDOExtentCreator"/>
+            <message_argument value="setRevisionCacheAdder(CDORevisionCacheAdder)"/>
         </message_arguments>
     </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.15.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="handleBranchChanged(Lorg/eclipse/emf/cdo/spi/common/branch/InternalCDOBranch;Lorg/eclipse/emf/cdo/common/branch/CDOBranchChangedEvent$ChangeKind;)V" kind="ADDED" message="The deprecation modifiers has been added to org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.handleBranchChanged(InternalCDOBranch, CDOBranchChangedEvent.ChangeKind)" newModifiers="1049601" oldModifiers="1025" restrictions="3" type_name="org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager">
@@ -147,16 +147,16 @@
             <message_argument value="sendBranchNotification(InternalCDOBranch, CDOBranchChangedEvent.ChangeKind)"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.15.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="sendBranchNotification(Lorg/eclipse/emf/cdo/spi/common/branch/InternalCDOBranch;Lorg/eclipse/emf/cdo/common/branch/CDOBranchChangedEvent$ChangeKind;)V" kind="ADDED" message="The deprecation modifiers has been added to org.eclipse.emf.cdo.spi.server.InternalSession.sendBranchNotification(InternalCDOBranch, CDOBranchChangedEvent.ChangeKind)" newModifiers="1049601" oldModifiers="1025" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.InternalSession">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.spi.server.InternalSession"/>
-            <message_argument value="sendBranchNotification(InternalCDOBranch, CDOBranchChangedEvent.ChangeKind)"/>
-        </message_arguments>
-    </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.15.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="viewClosed(Lorg/eclipse/emf/cdo/spi/server/InternalView;)V" kind="ADDED" message="The deprecation modifiers has been added to org.eclipse.emf.cdo.spi.server.InternalSession.viewClosed(InternalView)" newModifiers="1049601" oldModifiers="1025" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.InternalSession">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.spi.server.InternalSession"/>
             <message_argument value="viewClosed(InternalView)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.15.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="sendBranchNotification(Lorg/eclipse/emf/cdo/spi/common/branch/InternalCDOBranch;Lorg/eclipse/emf/cdo/common/branch/CDOBranchChangedEvent$ChangeKind;)V" kind="ADDED" message="The deprecation modifiers has been added to org.eclipse.emf.cdo.spi.server.InternalSession.sendBranchNotification(InternalCDOBranch, CDOBranchChangedEvent.ChangeKind)" newModifiers="1049601" oldModifiers="1025" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.InternalSession">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.InternalSession"/>
+            <message_argument value="sendBranchNotification(InternalCDOBranch, CDOBranchChangedEvent.ChangeKind)"/>
         </message_arguments>
     </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.15.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="sendBranchNotification(Lorg/eclipse/emf/cdo/spi/server/InternalSession;Lorg/eclipse/emf/cdo/spi/common/branch/InternalCDOBranch;Lorg/eclipse/emf/cdo/common/branch/CDOBranchChangedEvent$ChangeKind;)V" kind="ADDED" message="The deprecation modifiers has been added to org.eclipse.emf.cdo.spi.server.InternalSessionManager.sendBranchNotification(InternalSession, InternalCDOBranch, CDOBranchChangedEvent.ChangeKind)" newModifiers="1049601" oldModifiers="1025" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.InternalSessionManager">
@@ -169,6 +169,24 @@
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.transaction.CDOPushTransaction"/>
             <message_argument value="refreshLockStates(Consumer&lt;CDOLockState&gt;)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.transfer.ui(4.4.1)" element_type="FIELD_ELEMENT_TYPE" flags="72" key="GRAY" kind="ADDED" message="The deprecation modifiers has been added to org.eclipse.emf.cdo.transfer.ui.swt.TransferDetailsComposite.UnmappedModelsLabelProvider.GRAY" newModifiers="1048601" oldModifiers="25" restrictions="0" type_name="org.eclipse.emf.cdo.transfer.ui.swt.TransferDetailsComposite$UnmappedModelsLabelProvider">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.transfer.ui.swt.TransferDetailsComposite.UnmappedModelsLabelProvider"/>
+            <message_argument value="GRAY"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.transfer.ui(4.4.1)" element_type="FIELD_ELEMENT_TYPE" flags="72" key="RED" kind="ADDED" message="The deprecation modifiers has been added to org.eclipse.emf.cdo.transfer.ui.swt.TransferDetailsComposite.UnmappedModelsLabelProvider.RED" newModifiers="1048601" oldModifiers="25" restrictions="0" type_name="org.eclipse.emf.cdo.transfer.ui.swt.TransferDetailsComposite$UnmappedModelsLabelProvider">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.transfer.ui.swt.TransferDetailsComposite.UnmappedModelsLabelProvider"/>
+            <message_argument value="RED"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui.compare(4.7.0)" element_type="FIELD_ELEMENT_TYPE" flags="72" key="COMPARE_IMAGE" kind="ADDED" message="The deprecation modifiers has been added to org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil.COMPARE_IMAGE" newModifiers="1048601" oldModifiers="25" restrictions="2" type_name="org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil"/>
+            <message_argument value="COMPARE_IMAGE"/>
         </message_arguments>
     </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo(4.15.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="cdoInternalPostDetach(Z)V" kind="ADDED" message="The deprecation modifiers has been added to org.eclipse.emf.internal.cdo.CDOObjectImpl.cdoInternalPostDetach(boolean)" newModifiers="1048577" oldModifiers="1" restrictions="0" type_name="org.eclipse.emf.internal.cdo.CDOObjectImpl">
@@ -199,6 +217,24 @@
         <message_arguments>
             <message_argument value="org.eclipse.net4j.util.container.SelfAttachingContainerListener"/>
             <message_argument value="shouldAttach(Object)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util.ui(3.12.0)" element_type="FIELD_ELEMENT_TYPE" flags="72" key="PENDING_IMAGE" kind="ADDED" message="The deprecation modifiers has been added to org.eclipse.net4j.util.ui.views.ContainerItemProvider.PENDING_IMAGE" newModifiers="1048601" oldModifiers="25" restrictions="0" type_name="org.eclipse.net4j.util.ui.views.ContainerItemProvider">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.ui.views.ContainerItemProvider"/>
+            <message_argument value="PENDING_IMAGE"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util.ui(3.12.0)" element_type="FIELD_ELEMENT_TYPE" flags="72" key="ERROR_IMAGE" kind="ADDED" message="The deprecation modifiers has been added to org.eclipse.net4j.util.ui.views.ContainerItemProvider.ERROR_IMAGE" newModifiers="1048601" oldModifiers="25" restrictions="0" type_name="org.eclipse.net4j.util.ui.views.ContainerItemProvider">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.ui.views.ContainerItemProvider"/>
+            <message_argument value="ERROR_IMAGE"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util.ui(3.12.0)" element_type="FIELD_ELEMENT_TYPE" flags="72" key="PENDING_COLOR" kind="ADDED" message="The deprecation modifiers has been added to org.eclipse.net4j.util.ui.views.ContainerItemProvider.PENDING_COLOR" newModifiers="1048601" oldModifiers="25" restrictions="0" type_name="org.eclipse.net4j.util.ui.views.ContainerItemProvider">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.ui.views.ContainerItemProvider"/>
+            <message_argument value="PENDING_COLOR"/>
         </message_arguments>
     </delta>
     <delta compatible="true" componentId="org.eclipse.net4j.ws(1.1.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="13" key="org.eclipse.net4j.ws" kind="REMOVED" message="The execution environment JavaSE-1.8 has been removed from org.eclipse.net4j.ws_1.1.0" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
@@ -927,6 +963,13 @@
             <message_argument value="4.11.0"/>
         </message_arguments>
     </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui.compare(4.7.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="60" key="org.eclipse.emf.cdo.ui.compare" kind="CHANGED" message="The minor version has been changed for the api component org.eclipse.emf.cdo.ui.compare (from version 4.6.2 to 4.7.0)" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.ui.compare"/>
+            <message_argument value="4.6.2"/>
+            <message_argument value="4.7.0"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.ui.shared(4.6.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="60" key="org.eclipse.emf.cdo.ui.shared" kind="CHANGED" message="The minor version has been changed for the api component org.eclipse.emf.cdo.ui.shared (from version 4.5.0 to 4.6.0)" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.ui.shared"/>
@@ -1088,6 +1131,36 @@
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransactionCommentator"/>
             <message_argument value="appendBranchPoint(StringBuilder, CDOBranchPoint)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.11.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="getConflictColor()Lorg/eclipse/swt/graphics/Color;" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.ui.CDOLabelProvider.getConflictColor() has been added" newModifiers="10" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.ui.CDOLabelProvider">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.ui.CDOLabelProvider"/>
+            <message_argument value="getConflictColor()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.11.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="getErrorImage()Lorg/eclipse/swt/graphics/Image;" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.ui.CDOLabelProvider.getErrorImage() has been added" newModifiers="10" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.ui.CDOLabelProvider">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.ui.CDOLabelProvider"/>
+            <message_argument value="getErrorImage()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.11.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="getNoPermissionColor()Lorg/eclipse/swt/graphics/Color;" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.ui.CDOLabelProvider.getNoPermissionColor() has been added" newModifiers="10" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.ui.CDOLabelProvider">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.ui.CDOLabelProvider"/>
+            <message_argument value="getNoPermissionColor()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.11.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="getReadPermissionColor()Lorg/eclipse/swt/graphics/Color;" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.ui.CDOLabelProvider.getReadPermissionColor() has been added" newModifiers="10" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.ui.CDOLabelProvider">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.ui.CDOLabelProvider"/>
+            <message_argument value="getReadPermissionColor()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui.compare(4.7.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="compareImage()Lorg/eclipse/swt/graphics/Image;" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil.compareImage() has been added" newModifiers="9" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil"/>
+            <message_argument value="compareImage()"/>
         </message_arguments>
     </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.11.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="getBranchViewerInput(Lorg/eclipse/emf/cdo/common/branch/CDOBranchPoint;)Ljava/lang/Object;" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.ui.widgets.ComposeBranchPointComposite.getBranchViewerInput(CDOBranchPoint) has been added" newModifiers="4" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.ui.widgets.ComposeBranchPointComposite">
@@ -1282,6 +1355,30 @@
             <message_argument value="removeAll(BiPredicate&lt;K,V&gt;)"/>
         </message_arguments>
     </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util.ui(3.12.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="errorImage()Lorg/eclipse/swt/graphics/Image;" kind="ADDED" message="The non-abstract method org.eclipse.net4j.util.ui.UIUtil.errorImage() has been added" newModifiers="9" oldModifiers="0" restrictions="2" type_name="org.eclipse.net4j.util.ui.UIUtil">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.ui.UIUtil"/>
+            <message_argument value="errorImage()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util.ui(3.12.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="grayColor()Lorg/eclipse/swt/graphics/Color;" kind="ADDED" message="The non-abstract method org.eclipse.net4j.util.ui.UIUtil.grayColor() has been added" newModifiers="9" oldModifiers="0" restrictions="2" type_name="org.eclipse.net4j.util.ui.UIUtil">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.ui.UIUtil"/>
+            <message_argument value="grayColor()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util.ui(3.12.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="initResource&lt;T:Ljava/lang/Object;&gt;(Ljava/util/function/Function&lt;Lorg/eclipse/swt/widgets/Display;TT;&gt;;)TT;" kind="ADDED" message="The non-abstract method org.eclipse.net4j.util.ui.UIUtil.initResource(Function&lt;Display,T&gt;) has been added" newModifiers="9" oldModifiers="0" restrictions="2" type_name="org.eclipse.net4j.util.ui.UIUtil">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.ui.UIUtil"/>
+            <message_argument value="initResource(Function&lt;Display,T&gt;)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util.ui(3.12.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="redColor()Lorg/eclipse/swt/graphics/Color;" kind="ADDED" message="The non-abstract method org.eclipse.net4j.util.ui.UIUtil.redColor() has been added" newModifiers="9" oldModifiers="0" restrictions="2" type_name="org.eclipse.net4j.util.ui.UIUtil">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.ui.UIUtil"/>
+            <message_argument value="redColor()"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.net4j.util.ui(3.12.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="getErrorMessage(Ljava/lang/Exception;)Ljava/lang/String;" kind="ADDED" message="The non-abstract method org.eclipse.net4j.util.ui.actions.LongRunningAction.getErrorMessage(Exception) has been added" newModifiers="4" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.ui.actions.LongRunningAction">
         <message_arguments>
             <message_argument value="org.eclipse.net4j.util.ui.actions.LongRunningAction"/>
@@ -1318,6 +1415,18 @@
             <message_argument value="getErrorTitle(Exception)"/>
         </message_arguments>
     </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util.ui(3.12.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="pendingColor()Lorg/eclipse/swt/graphics/Color;" kind="ADDED" message="The non-abstract method org.eclipse.net4j.util.ui.views.ContainerItemProvider.pendingColor() has been added" newModifiers="9" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.ui.views.ContainerItemProvider">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.ui.views.ContainerItemProvider"/>
+            <message_argument value="pendingColor()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util.ui(3.12.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="pendingImage()Lorg/eclipse/swt/graphics/Image;" kind="ADDED" message="The non-abstract method org.eclipse.net4j.util.ui.views.ContainerItemProvider.pendingImage() has been added" newModifiers="9" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.ui.views.ContainerItemProvider">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.ui.views.ContainerItemProvider"/>
+            <message_argument value="pendingImage()"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.net4j(4.13.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="fireCountersChangedEvent()V" kind="ADDED" message="The non-abstract method org.eclipse.spi.net4j.Channel.fireCountersChangedEvent() has been added" newModifiers="2" oldModifiers="0" restrictions="0" type_name="org.eclipse.spi.net4j.Channel">
         <message_arguments>
             <message_argument value="org.eclipse.spi.net4j.Channel"/>
@@ -1352,6 +1461,30 @@
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.ui.CDOLabelDecorator"/>
             <message_argument value="LOCK_SELF_OVERLAY"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.11.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="COLOR_CONFLICT" kind="REMOVED" message="The non-visible field org.eclipse.emf.cdo.ui.CDOLabelProvider.COLOR_CONFLICT has been removed" newModifiers="0" oldModifiers="26" restrictions="0" type_name="org.eclipse.emf.cdo.ui.CDOLabelProvider">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.ui.CDOLabelProvider"/>
+            <message_argument value="COLOR_CONFLICT"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.11.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="COLOR_PERMISSION_NONE" kind="REMOVED" message="The non-visible field org.eclipse.emf.cdo.ui.CDOLabelProvider.COLOR_PERMISSION_NONE has been removed" newModifiers="0" oldModifiers="26" restrictions="0" type_name="org.eclipse.emf.cdo.ui.CDOLabelProvider">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.ui.CDOLabelProvider"/>
+            <message_argument value="COLOR_PERMISSION_NONE"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.11.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="COLOR_PERMISSION_READ" kind="REMOVED" message="The non-visible field org.eclipse.emf.cdo.ui.CDOLabelProvider.COLOR_PERMISSION_READ has been removed" newModifiers="0" oldModifiers="26" restrictions="0" type_name="org.eclipse.emf.cdo.ui.CDOLabelProvider">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.ui.CDOLabelProvider"/>
+            <message_argument value="COLOR_PERMISSION_READ"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.11.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="ERROR_IMAGE" kind="REMOVED" message="The non-visible field org.eclipse.emf.cdo.ui.CDOLabelProvider.ERROR_IMAGE has been removed" newModifiers="0" oldModifiers="26" restrictions="0" type_name="org.eclipse.emf.cdo.ui.CDOLabelProvider">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.ui.CDOLabelProvider"/>
+            <message_argument value="ERROR_IMAGE"/>
         </message_arguments>
     </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.11.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="branchManagerListener" kind="ADDED" message="The non-visible field org.eclipse.emf.cdo.ui.widgets.CommitHistoryComposite.Input.branchManagerListener has been added" newModifiers="18" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.ui.widgets.CommitHistoryComposite$Input">
@@ -2734,10 +2867,22 @@
             <message_argument value="PROP_DISABLE_LOCK_DECORATION"/>
         </message_arguments>
     </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.11.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="readPermissionColor" kind="ADDED" message="The static field org.eclipse.emf.cdo.ui.CDOLabelProvider.readPermissionColor has been added" newModifiers="10" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.ui.CDOLabelProvider">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.ui.CDOLabelProvider"/>
+            <message_argument value="readPermissionColor"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.11.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="SERVER_SECURITY" kind="ADDED" message="The static field org.eclipse.emf.cdo.ui.Support.SERVER_SECURITY has been added" newModifiers="25" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.ui.Support">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.ui.Support"/>
             <message_argument value="SERVER_SECURITY"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui.compare(4.7.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="compareImage" kind="ADDED" message="The static field org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil.compareImage has been added" newModifiers="10" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil"/>
+            <message_argument value="compareImage"/>
         </message_arguments>
     </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.ui.shared(4.6.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="OVR_SECURITY" kind="ADDED" message="The static field org.eclipse.emf.cdo.ui.shared.SharedIcons.OVR_SECURITY has been added" newModifiers="25" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.ui.shared.SharedIcons">
@@ -2812,9 +2957,44 @@
             <message_argument value="ELEM_TYPE"/>
         </message_arguments>
     </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util.ui(3.12.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="errorImage" kind="ADDED" message="The static field org.eclipse.net4j.util.ui.UIUtil.errorImage has been added" newModifiers="10" oldModifiers="0" restrictions="2" type_name="org.eclipse.net4j.util.ui.UIUtil">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.ui.UIUtil"/>
+            <message_argument value="errorImage"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util.ui(3.12.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="grayColor" kind="ADDED" message="The static field org.eclipse.net4j.util.ui.UIUtil.grayColor has been added" newModifiers="10" oldModifiers="0" restrictions="2" type_name="org.eclipse.net4j.util.ui.UIUtil">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.ui.UIUtil"/>
+            <message_argument value="grayColor"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util.ui(3.12.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="redColor" kind="ADDED" message="The static field org.eclipse.net4j.util.ui.UIUtil.redColor has been added" newModifiers="10" oldModifiers="0" restrictions="2" type_name="org.eclipse.net4j.util.ui.UIUtil">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.ui.UIUtil"/>
+            <message_argument value="redColor"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util.ui(3.12.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="pendingColor" kind="ADDED" message="The static field org.eclipse.net4j.util.ui.views.ContainerItemProvider.pendingColor has been added" newModifiers="10" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.ui.views.ContainerItemProvider">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.ui.views.ContainerItemProvider"/>
+            <message_argument value="pendingColor"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util.ui(3.12.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="pendingImage" kind="ADDED" message="The static field org.eclipse.net4j.util.ui.views.ContainerItemProvider.pendingImage has been added" newModifiers="10" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.ui.views.ContainerItemProvider">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.ui.views.ContainerItemProvider"/>
+            <message_argument value="pendingImage"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.11.0)" element_type="CLASS_ELEMENT_TYPE" flags="7" key="org.eclipse.emf.cdo.ui.CDOItemProvider" kind="REMOVED" message="The static initializer has been removed from org.eclipse.emf.cdo.ui.CDOItemProvider" newModifiers="0" oldModifiers="8" restrictions="0" type_name="org.eclipse.emf.cdo.ui.CDOItemProvider">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.ui.CDOItemProvider"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.11.0)" element_type="CLASS_ELEMENT_TYPE" flags="7" key="org.eclipse.emf.cdo.ui.CDOLabelProvider" kind="REMOVED" message="The static initializer has been removed from org.eclipse.emf.cdo.ui.CDOLabelProvider" newModifiers="0" oldModifiers="8" restrictions="0" type_name="org.eclipse.emf.cdo.ui.CDOLabelProvider">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.ui.CDOLabelProvider"/>
         </message_arguments>
     </delta>
     <delta compatible="true" componentId="org.eclipse.net4j.ws(1.2.0)" element_type="CLASS_ELEMENT_TYPE" flags="7" key="org.eclipse.net4j.ws.jetty.Net4jWebSocketServlet" kind="REMOVED" message="The static initializer has been removed from org.eclipse.net4j.ws.jetty.Net4jWebSocketServlet" newModifiers="0" oldModifiers="8" restrictions="0" type_name="org.eclipse.net4j.ws.jetty.Net4jWebSocketServlet">

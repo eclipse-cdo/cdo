@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDReference;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
+import org.eclipse.emf.cdo.common.lock.CDOLockDelta;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockArea;
@@ -48,7 +49,9 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 
 /**
  * Provides I/O methods for writing various CDO data types and concepts to streams.
@@ -187,6 +190,63 @@ public interface CDODataOutput extends ExtendedDataOutput
    * @since 4.1
    */
   public void writeCDOLockState(CDOLockState lockState) throws IOException;
+
+  /**
+   * @since 4.15
+   */
+  default void writeCDOLockStates(List<CDOLockState> lockStates, Predicate<CDOLockState> filter) throws IOException
+  {
+    if (filter != null)
+    {
+      for (CDOLockState lockState : lockStates)
+      {
+        if (filter.test(lockState))
+        {
+          writeCDOLockState(lockState);
+        }
+      }
+    }
+    else
+    {
+      for (CDOLockState state : lockStates)
+      {
+        writeCDOLockState(state);
+      }
+    }
+
+    writeCDOLockState(null);
+  }
+
+  /**
+   * @since 4.15
+   */
+  public void writeCDOLockDelta(CDOLockDelta lockDelta) throws IOException;
+
+  /**
+   * @since 4.15
+   */
+  default void writeCDOLockDeltas(List<CDOLockDelta> lockDeltas, Predicate<CDOLockDelta> filter) throws IOException
+  {
+    if (filter != null)
+    {
+      for (CDOLockDelta lockDelta : lockDeltas)
+      {
+        if (filter.test(lockDelta))
+        {
+          writeCDOLockDelta(lockDelta);
+        }
+      }
+    }
+    else
+    {
+      for (CDOLockDelta lockDelta : lockDeltas)
+      {
+        writeCDOLockDelta(lockDelta);
+      }
+    }
+
+    writeCDOLockDelta(null);
+  }
 
   /**
    * @since 4.1

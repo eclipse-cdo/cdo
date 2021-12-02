@@ -34,6 +34,7 @@ import org.eclipse.emf.cdo.common.lob.CDOClob;
 import org.eclipse.emf.cdo.common.lob.CDOLobInfo;
 import org.eclipse.emf.cdo.common.lob.CDOLobStore;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
+import org.eclipse.emf.cdo.common.lock.CDOLockDelta;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
@@ -95,13 +96,12 @@ import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.messages.Messages;
 import org.eclipse.emf.internal.cdo.object.CDOFactoryImpl;
 import org.eclipse.emf.internal.cdo.session.remote.CDORemoteSessionManagerImpl;
-import org.eclipse.emf.internal.cdo.util.DefaultLocksChangedEvent;
+import org.eclipse.emf.internal.cdo.util.AbstractLocksChangedEvent;
 
 import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
-import org.eclipse.net4j.util.concurrent.IRWLockManager;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.concurrent.IRWOLockManager;
 import org.eclipse.net4j.util.concurrent.RWOLockManager;
@@ -153,6 +153,7 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -687,7 +688,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   {
     try
     {
-      lockManager.lock(LockType.WRITE, key, this, IRWLockManager.WAIT);
+      lockManager.lock(key, singletonCollection, LockType.WRITE, 1, IRWOLockManager.NO_TIMEOUT, null, null);
     }
     catch (InterruptedException ex)
     {
@@ -698,7 +699,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   @Override
   public void releaseAtomicRequestLock(Object key)
   {
-    lockManager.unlock(LockType.WRITE, key, singletonCollection);
+    lockManager.unlock(key, singletonCollection, LockType.WRITE, 1, null, null);
   }
 
   @Override
@@ -1172,8 +1173,9 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       }
       else
       {
-        List<CDOLockState> lockStates = lockChangeInfo.getNewLockStates();
-        lockStateCache.addLockStates(branch, lockStates, null);
+        CDOLockDelta[] lockDeltas = lockChangeInfo.getLockDeltas();
+        CDOLockState[] lockStates = lockChangeInfo.getLockStates();
+        lockStateCache.updateLockStates(branch, Arrays.asList(lockDeltas), Arrays.asList(lockStates), null);
       }
     }
 
@@ -2763,7 +2765,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
    * @author Caspar De Groot
    * @since 4.1
    */
-  private final class SessionLocksChangedEvent extends DefaultLocksChangedEvent implements CDOSessionLocksChangedEvent
+  private final class SessionLocksChangedEvent extends AbstractLocksChangedEvent implements CDOSessionLocksChangedEvent
   {
     private static final long serialVersionUID = 1L;
 
@@ -2776,6 +2778,12 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     public CDOSession getSource()
     {
       return (CDOSession)super.getSource();
+    }
+
+    @Override
+    protected InternalCDOSession getSession()
+    {
+      return (InternalCDOSession)getSource();
     }
 
     @Override

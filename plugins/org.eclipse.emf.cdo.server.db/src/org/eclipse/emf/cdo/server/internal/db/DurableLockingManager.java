@@ -31,6 +31,7 @@ import org.eclipse.net4j.db.Batch;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBConnection;
 import org.eclipse.net4j.db.IDBDatabase;
 import org.eclipse.net4j.db.IDBDatabase.RunnableWithSchema;
 import org.eclipse.net4j.db.IDBPreparedStatement;
@@ -134,7 +135,8 @@ public class DurableLockingManager extends Lifecycle implements IBranchDeletionS
       }
     }
 
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlInsertLockArea, ReuseProbability.LOW);
+    IDBConnection connection = accessor.getDBConnection();
+    IDBPreparedStatement stmt = connection.prepareStatement(sqlInsertLockArea, ReuseProbability.LOW);
 
     try
     {
@@ -167,7 +169,8 @@ public class DurableLockingManager extends Lifecycle implements IBranchDeletionS
 
   private void insertLocks(DBStoreAccessor accessor, String durableLockingID, Map<CDOID, LockGrade> locks)
   {
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlInsertLock, ReuseProbability.MEDIUM);
+    IDBConnection connection = accessor.getDBConnection();
+    IDBPreparedStatement stmt = connection.prepareStatement(sqlInsertLock, ReuseProbability.MEDIUM);
 
     try
     {
@@ -196,7 +199,8 @@ public class DurableLockingManager extends Lifecycle implements IBranchDeletionS
 
   public LockArea getLockArea(DBStoreAccessor accessor, String durableLockingID) throws LockAreaNotFoundException
   {
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlSelectLockArea, ReuseProbability.MEDIUM);
+    IDBConnection connection = accessor.getDBConnection();
+    IDBPreparedStatement stmt = connection.prepareStatement(sqlSelectLockArea, ReuseProbability.MEDIUM);
     ResultSet resultSet = null;
 
     try
@@ -229,6 +233,7 @@ public class DurableLockingManager extends Lifecycle implements IBranchDeletionS
 
   public void getLockAreas(DBStoreAccessor accessor, String userIDPrefix, Handler handler)
   {
+    IDBConnection connection = accessor.getDBConnection();
     IDBPreparedStatement stmt = null;
     ResultSet resultSet = null;
 
@@ -236,11 +241,11 @@ public class DurableLockingManager extends Lifecycle implements IBranchDeletionS
     {
       if (userIDPrefix.length() == 0)
       {
-        stmt = accessor.getDBConnection().prepareStatement(sqlSelectAllLockAreas, ReuseProbability.MEDIUM);
+        stmt = connection.prepareStatement(sqlSelectAllLockAreas, ReuseProbability.MEDIUM);
       }
       else
       {
-        stmt = accessor.getDBConnection().prepareStatement(sqlSelectLockAreas, ReuseProbability.MEDIUM);
+        stmt = connection.prepareStatement(sqlSelectLockAreas, ReuseProbability.MEDIUM);
         stmt.setString(1, userIDPrefix + "%");
       }
 
@@ -275,7 +280,8 @@ public class DurableLockingManager extends Lifecycle implements IBranchDeletionS
   {
     unlockWithoutCommit(accessor, durableLockingID);
 
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlDeleteLockArea, ReuseProbability.LOW);
+    IDBConnection connection = accessor.getDBConnection();
+    IDBPreparedStatement stmt = connection.prepareStatement(sqlDeleteLockArea, ReuseProbability.LOW);
 
     try
     {
@@ -309,18 +315,21 @@ public class DurableLockingManager extends Lifecycle implements IBranchDeletionS
 
   public void unlock(DBStoreAccessor accessor, String durableLockingID, LockType type, Collection<? extends Object> objectsToUnlock)
   {
-    changeLocks(accessor, durableLockingID, type, objectsToUnlock, false);
-  }
-
-  public void unlock(DBStoreAccessor accessor, String durableLockingID)
-  {
-    unlockWithoutCommit(accessor, durableLockingID);
-    commit(accessor);
+    if (objectsToUnlock == null)
+    {
+      unlockWithoutCommit(accessor, durableLockingID);
+      commit(accessor);
+    }
+    else
+    {
+      changeLocks(accessor, durableLockingID, type, objectsToUnlock, false);
+    }
   }
 
   private void unlockWithoutCommit(DBStoreAccessor accessor, String durableLockingID)
   {
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlDeleteLocks, ReuseProbability.MEDIUM);
+    IDBConnection connection = accessor.getDBConnection();
+    IDBPreparedStatement stmt = connection.prepareStatement(sqlDeleteLocks, ReuseProbability.MEDIUM);
 
     try
     {
@@ -432,7 +441,8 @@ public class DurableLockingManager extends Lifecycle implements IBranchDeletionS
 
   private Map<CDOID, LockGrade> getLockMap(DBStoreAccessor accessor, String durableLockingID)
   {
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlSelectLocks, ReuseProbability.MEDIUM);
+    IDBConnection connection = accessor.getDBConnection();
+    IDBPreparedStatement stmt = connection.prepareStatement(sqlSelectLocks, ReuseProbability.MEDIUM);
     ResultSet resultSet = null;
 
     try
@@ -469,12 +479,15 @@ public class DurableLockingManager extends Lifecycle implements IBranchDeletionS
       return;
     }
 
-    String sql = on ? sqlInsertLock : sqlDeleteLock;
+    String sqlInsertOrDelete = on ? sqlInsertLock : sqlDeleteLock;
 
-    IDBPreparedStatement stmtSelect = accessor.getDBConnection().prepareStatement(sqlSelectLock, ReuseProbability.MEDIUM);
-    IDBPreparedStatement stmtInsertOrDelete = accessor.getDBConnection().prepareStatement(sql, ReuseProbability.MEDIUM);
-    IDBPreparedStatement stmtUpdate = accessor.getDBConnection().prepareStatement(sqlUpdateLock, ReuseProbability.MEDIUM);
+    IDBConnection connection = accessor.getDBConnection();
+    IDBPreparedStatement stmtSelect = connection.prepareStatement(sqlSelectLock, ReuseProbability.MEDIUM);
+    IDBPreparedStatement stmtInsertOrDelete = connection.prepareStatement(sqlInsertOrDelete, ReuseProbability.MEDIUM);
+    IDBPreparedStatement stmtUpdate = connection.prepareStatement(sqlUpdateLock, ReuseProbability.MEDIUM);
     ResultSet resultSet = null;
+
+    InternalLockManager lockManager = accessor.getStore().getRepository().getLockingManager();
 
     try
     {
@@ -482,7 +495,6 @@ public class DurableLockingManager extends Lifecycle implements IBranchDeletionS
       stmtInsertOrDelete.setString(1, durableLockingID);
       stmtUpdate.setString(2, durableLockingID);
 
-      InternalLockManager lockManager = accessor.getStore().getRepository().getLockingManager();
       for (Object key : keys)
       {
         CDOID id = lockManager.getLockKeyID(key);
@@ -515,7 +527,7 @@ public class DurableLockingManager extends Lifecycle implements IBranchDeletionS
         }
       }
 
-      accessor.getDBConnection().commit();
+      connection.commit();
     }
     catch (SQLException e)
     {
@@ -574,7 +586,8 @@ public class DurableLockingManager extends Lifecycle implements IBranchDeletionS
   {
     try
     {
-      accessor.getDBConnection().commit();
+      IDBConnection connection = accessor.getDBConnection();
+      connection.commit();
     }
     catch (SQLException ex)
     {

@@ -74,6 +74,15 @@ public final class CollectionUtil
   /**
    * @since 3.16
    */
+  public static <T> T first(Collection<? extends T> c)
+  {
+    Iterator<? extends T> it = c.iterator();
+    return it.hasNext() ? it.next() : null;
+  }
+
+  /**
+   * @since 3.16
+   */
   public static <K, V> List<K> removeAll(Map<K, V> map, BiPredicate<K, V> predicate)
   {
     List<K> keys = new ArrayList<>();

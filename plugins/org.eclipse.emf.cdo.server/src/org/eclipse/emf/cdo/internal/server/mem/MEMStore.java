@@ -160,13 +160,6 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
   }
 
   @Override
-  @Deprecated
-  public boolean isLocal(CDOID id)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
   public void ensureLastObjectID(CDOID id)
   {
     if (getRepository().getIDGenerationLocation() == IDGenerationLocation.CLIENT)
@@ -275,7 +268,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
   @Override
   public synchronized CDOBranch[] deleteBranches(int branchID, OMMonitor monitor)
   {
-    Set<CDOBranch> branches = getRepository().getBranchManager().getBranches(branchID);
+    Set<CDOBranch> deletedBranches = getRepository().getBranchManager().getBranches(branchID);
 
     monitor.begin(revisions.size());
 
@@ -284,7 +277,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
       Map.Entry<Object, List<InternalCDORevision>> entry = it.next();
 
       CDOBranch revisionBranch = getBranch(entry.getKey());
-      if (branches.contains(revisionBranch))
+      if (deletedBranches.contains(revisionBranch))
       {
         it.remove();
       }
@@ -292,26 +285,31 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
       monitor.worked();
     }
 
-    for (CDOBranch b : branches)
+    for (Iterator<CommitInfo> it = commitInfos.iterator(); it.hasNext();)
     {
-      branchInfos.remove(b.getID());
+      CommitInfo commitInfo = it.next();
+      if (deletedBranches.contains(commitInfo.getBranch()))
+      {
+        it.remove();
+      }
     }
 
-    return branches.toArray(new CDOBranch[branches.size()]);
-  }
+    for (Iterator<Map.Entry<String, LockArea>> it = lockAreas.entrySet().iterator(); it.hasNext();)
+    {
+      Map.Entry<String, LockArea> entry = it.next();
+      LockArea lockArea = entry.getValue();
+      if (deletedBranches.contains(lockArea.getBranch()))
+      {
+        it.remove();
+      }
+    }
 
-  @Override
-  @Deprecated
-  public void deleteBranch(int branchID)
-  {
-    throw new UnsupportedOperationException();
-  }
+    for (CDOBranch branch : deletedBranches)
+    {
+      branchInfos.remove(branch.getID());
+    }
 
-  @Override
-  @Deprecated
-  public void renameBranch(int branchID, String newName)
-  {
-    throw new UnsupportedOperationException();
+    return deletedBranches.toArray(new CDOBranch[deletedBranches.size()]);
   }
 
   @Override
@@ -978,28 +976,31 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
     LockArea area = getLockArea(durableLockingID);
     Map<CDOID, LockGrade> locks = area.getLocks();
 
-    InternalLockManager lockManager = getRepository().getLockingManager();
-    for (Object objectToUnlock : objectsToUnlock)
+    if (objectsToUnlock == null)
     {
-      CDOID id = lockManager.getLockKeyID(objectToUnlock);
-      LockGrade grade = locks.get(id);
-      if (grade != null)
+      locks.clear();
+    }
+    else
+    {
+      InternalLockManager lockManager = getRepository().getLockingManager();
+      for (Object objectToUnlock : objectsToUnlock)
       {
-        grade = grade.getUpdated(type, false);
-        if (grade == LockGrade.NONE)
+        CDOID id = lockManager.getLockKeyID(objectToUnlock);
+        LockGrade grade = locks.get(id);
+        if (grade != null)
         {
-          locks.remove(id);
+          grade = grade.getUpdated(type, false);
+          if (grade == LockGrade.NONE)
+          {
+            locks.remove(id);
+          }
+          else
+          {
+            locks.put(id, grade);
+          }
         }
       }
     }
-  }
-
-  @Override
-  public synchronized void unlock(String durableLockingID)
-  {
-    LockArea area = getLockArea(durableLockingID);
-    Map<CDOID, LockGrade> locks = area.getLocks();
-    locks.clear();
   }
 
   public synchronized void queryLobs(List<byte[]> ids)
@@ -1516,5 +1517,33 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
     {
       return MessageFormat.format("CommitInfo[{0}, {1}, {2}, {3}, {4}, {5}]", branch, getTimeStamp(), previousTimeStamp, userID, comment, mergeSource);
     }
+  }
+
+  @Override
+  @Deprecated
+  public boolean isLocal(CDOID id)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void deleteBranch(int branchID)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void renameBranch(int branchID, String newName)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void unlock(String durableLockingID)
+  {
+    throw new UnsupportedOperationException();
   }
 }

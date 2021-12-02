@@ -10,8 +10,12 @@
  */
 package org.eclipse.emf.cdo.spi.common.lock;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.lock.CDOLockDelta;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
+
+import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 
 /**
  * If the meaning of this type isn't clear, there really should be more of a description here...
@@ -30,43 +34,83 @@ public interface InternalCDOLockState extends CDOLockState
   @Deprecated
   public static final CDOLockState UNLOCKED = null;
 
-  public void addReadLockOwner(CDOLockOwner lockOwner);
-
-  public boolean removeReadLockOwner(CDOLockOwner lockOwner);
-
-  public void setWriteLockOwner(CDOLockOwner lockOwner);
-
-  public void setWriteOptionOwner(CDOLockOwner lockOwner);
-
   /**
-   * @since 4.4
+   * @since 4.15
    */
-  public boolean removeOwner(CDOLockOwner lockOwner);
+  public CDOLockDelta addOwner(CDOLockOwner owner, LockType type);
 
   /**
    * @since 4.15
    */
-  public boolean remapOwner(CDOLockOwner oldLockOwner, CDOLockOwner newLockOwner);
+  public CDOLockDelta removeOwner(CDOLockOwner owner, LockType type);
+
+  /**
+   * @since 4.15
+   */
+  public CDOLockDelta[] clearOwner(CDOLockOwner owner);
+
+  /**
+   * @since 4.15
+   */
+  public CDOLockDelta[] remapOwner(CDOLockOwner oldOwner, CDOLockOwner newOwner);
+
+  /**
+   * @since 4.15
+   */
+  public void remapID(CDOID newID);
+
+  /**
+   * @deprecated As of 4.15 use {@link #addOwner(CDOLockOwner, LockType) addOwner(owner, LockType.READ)}.
+   */
+  @Deprecated
+  public void addReadLockOwner(CDOLockOwner owner);
+
+  /**
+   * @deprecated As of 4.15 use {@link #removeOwner(CDOLockOwner, LockType) removeOwner(owner, LockType.READ)}.
+   */
+  @Deprecated
+  public boolean removeReadLockOwner(CDOLockOwner owner);
+
+  /**
+   * @deprecated As of 4.15 use {@link #addOwner(CDOLockOwner, LockType) addOwner(owner, LockType.WRITE)}
+   * or {@link #removeOwner(CDOLockOwner, LockType) removeOwner(owner, LockType.WRITE)}.
+   */
+  @Deprecated
+  public void setWriteLockOwner(CDOLockOwner owner);
+
+  /**
+   * @deprecated As of 4.15 use {@link #addOwner(CDOLockOwner, LockType) addOwner(owner, LockType.OPTION)}.
+   * or {@link #removeOwner(CDOLockOwner, LockType) removeOwner(owner, LockType.OPTION)}.
+   */
+  @Deprecated
+  public void setWriteOptionOwner(CDOLockOwner owner);
+
+  /**
+   * @since 4.4
+   * @deprecated As of 4.16 use {@link #clearOwner(CDOLockOwner)}.
+   */
+  @Deprecated
+  public boolean removeOwner(CDOLockOwner owner);
 
   /**
    * Update the {@link CDOLockOwner lockOwners} of this lock state from the one passed in.
    *
    * @since 4.5
+   * @deprecated As of 4.15 not supported anymore.
    */
+  @Deprecated
   public void updateFrom(CDOLockState source);
 
   /**
    * @since 4.2
-   * @deprecated As of 4.5 use {@link InternalCDOLockState#updateFrom(CDOLockState)} instead.
-   * The lockedObject field cannot be changed because it is used to compute the hash code.
-   * Instantiate a new {@link CDOLockState} object if you want to update the lockedObject field.
+   * @deprecated As of 4.5 not supported anymore.
    */
   @Deprecated
   public void updateFrom(Object object, CDOLockState source);
 
   /**
    * @since 4.2
-   * @deprecated As of 4.15 no longer used.
+   * @deprecated As of 4.15 not supported anymore.
    */
   @Deprecated
   public void dispose();

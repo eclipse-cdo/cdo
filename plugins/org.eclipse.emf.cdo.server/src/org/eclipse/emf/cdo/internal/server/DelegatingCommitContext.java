@@ -15,7 +15,9 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDReference;
+import org.eclipse.emf.cdo.common.lock.CDOLockDelta;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
+import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitData;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
@@ -33,6 +35,7 @@ import org.eclipse.emf.ecore.EClass;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 /**
  * @author Eike Stepper
@@ -150,13 +153,6 @@ public abstract class DelegatingCommitContext implements IStoreAccessor.CommitCo
   }
 
   @Override
-  @Deprecated
-  public boolean isAutoReleaseLocksEnabled()
-  {
-    return getDelegate().isAutoReleaseLocksEnabled();
-  }
-
-  @Override
   public CDOLockState[] getLocksOnNewObjects()
   {
     return getDelegate().getLocksOnNewObjects();
@@ -166,6 +162,18 @@ public abstract class DelegatingCommitContext implements IStoreAccessor.CommitCo
   public CDOID[] getIDsToUnlock()
   {
     return getDelegate().getIDsToUnlock();
+  }
+
+  @Override
+  public List<CDOLockDelta> getLockDeltas()
+  {
+    return getDelegate().getLockDeltas();
+  }
+
+  @Override
+  public List<CDOLockState> getLockStates()
+  {
+    return getDelegate().getLockStates();
   }
 
   @Override
@@ -187,12 +195,6 @@ public abstract class DelegatingCommitContext implements IStoreAccessor.CommitCo
   }
 
   @Override
-  public List<LockState<Object, IView>> getPostCommmitLockStates()
-  {
-    return getDelegate().getPostCommmitLockStates();
-  }
-
-  @Override
   public byte getRollbackReason()
   {
     return getDelegate().getRollbackReason();
@@ -208,5 +210,80 @@ public abstract class DelegatingCommitContext implements IStoreAccessor.CommitCo
   public List<CDOIDReference> getXRefs()
   {
     return getDelegate().getXRefs();
+  }
+
+  @Override
+  public CDOBranchPoint getCommitMergeSource()
+  {
+    return getDelegate().getCommitMergeSource();
+  }
+
+  @Override
+  public byte getSecurityImpact()
+  {
+    return getDelegate().getSecurityImpact();
+  }
+
+  @Override
+  public Map<CDOID, InternalCDORevision> getOldRevisions()
+  {
+    return getDelegate().getOldRevisions();
+  }
+
+  @Override
+  public Map<CDOID, InternalCDORevision> getNewRevisions()
+  {
+    return getDelegate().getNewRevisions();
+  }
+
+  @Override
+  public CommitData getOriginalCommmitData()
+  {
+    return getDelegate().getOriginalCommmitData();
+  }
+
+  @Override
+  public <T> T getData(Object key)
+  {
+    return getDelegate().getData(key);
+  }
+
+  @Override
+  public <T> T setData(Object key, T data)
+  {
+    return getDelegate().setData(key, data);
+  }
+
+  @Override
+  public void modify(Consumer<ModificationContext> modifier)
+  {
+    getDelegate().modify(modifier);
+  }
+
+  @Override
+  @Deprecated
+  public boolean isAutoReleaseLocksEnabled()
+  {
+    return getDelegate().isAutoReleaseLocksEnabled();
+  }
+
+  @Override
+  @Deprecated
+  public List<LockState<Object, IView>> getPostCommmitLockStates()
+  {
+    return getDelegate().getPostCommmitLockStates();
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  @SuppressWarnings("unused")
+  private static final class InternalCompletenessChecker extends DelegatingCommitContext
+  {
+    @Override
+    protected CommitContext getDelegate()
+    {
+      return null;
+    }
   }
 }

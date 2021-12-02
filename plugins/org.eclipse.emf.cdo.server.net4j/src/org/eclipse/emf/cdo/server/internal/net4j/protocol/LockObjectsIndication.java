@@ -12,7 +12,6 @@
  */
 package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
-import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
@@ -72,6 +71,7 @@ public class LockObjectsIndication extends CDOServerWriteIndication
     out.writeBoolean(result.isSuccessful());
     out.writeBoolean(result.isTimedOut());
     out.writeBoolean(result.isWaitForUpdate());
+    out.writeXLong(result.getTimestamp());
     out.writeXLong(result.getRequiredTimestamp());
 
     CDORevisionKey[] staleRevisions = result.getStaleRevisions();
@@ -81,13 +81,7 @@ public class LockObjectsIndication extends CDOServerWriteIndication
       out.writeCDORevisionKey(revKey);
     }
 
-    out.writeXLong(result.getTimestamp());
-
-    CDOLockState[] newLockStates = result.getNewLockStates();
-    out.writeXInt(newLockStates.length);
-    for (CDOLockState lockState : newLockStates)
-    {
-      out.writeCDOLockState(lockState);
-    }
+    out.writeCDOLockDeltas(result.getLockDeltas(), null);
+    out.writeCDOLockStates(result.getLockStates(), null);
   }
 }

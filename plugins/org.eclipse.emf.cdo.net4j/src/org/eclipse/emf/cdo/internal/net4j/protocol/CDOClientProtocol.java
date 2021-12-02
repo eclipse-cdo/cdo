@@ -28,6 +28,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.lob.CDOLob;
 import org.eclipse.emf.cdo.common.lob.CDOLobInfo;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
+import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockGrade;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -86,6 +87,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 /**
@@ -197,20 +199,6 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
   }
 
   @Override
-  @Deprecated
-  public void deleteBranch(int branchID)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  @Deprecated
-  public void renameBranch(int branchID, String newName)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
   public void renameBranch(int branchID, String oldName, String newName)
   {
     send(new RenameBranchRequest(this, branchID, oldName, newName));
@@ -246,13 +234,6 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
     return send(new LoadChunkRequest(this, revision, feature, accessIndex, fetchIndex, fromIndex, toIndex));
   }
 
-  @Deprecated
-  @Override
-  public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth)
-  {
-    throw new UnsupportedOperationException();
-  }
-
   @Override
   public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth,
       boolean prefetchLockStates)
@@ -286,9 +267,9 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
   }
 
   @Override
-  public CDOBranchPoint openView(int viewID, boolean readOnly, String durableLockingID)
+  public CDOBranchPoint openView(int viewID, boolean readOnly, String durableLockingID, BiConsumer<CDOID, LockGrade> consumer)
   {
-    return send(new OpenViewRequest(this, viewID, readOnly, durableLockingID));
+    return send(new OpenViewRequest(this, viewID, readOnly, durableLockingID, consumer));
   }
 
   @Override
@@ -327,14 +308,6 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
     {
       return false;
     }
-  }
-
-  @Override
-  @Deprecated
-  public LockObjectsResult lockObjects(List<InternalCDORevision> revisions, int viewID, CDOBranch viewedBranch, LockType lockType, long timeout)
-      throws InterruptedException
-  {
-    throw new UnsupportedOperationException();
   }
 
   @Override
@@ -480,25 +453,9 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
   }
 
   @Override
-  @Deprecated
-  public CommitTransactionResult commitTransaction(int transactionID, String comment, boolean releaseLocks, CDOIDProvider idProvider, CDOCommitData commitData,
-      Collection<CDOLob<?>> lobs, OMMonitor monitor)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
   public CommitTransactionResult commitTransaction(InternalCDOCommitContext context, OMMonitor monitor)
   {
     return send(new CommitTransactionRequest(this, context), monitor);
-  }
-
-  @Override
-  @Deprecated
-  public CommitTransactionResult commitDelegation(CDOBranch branch, String userID, String comment, CDOCommitData commitData,
-      Map<CDOID, EClass> detachedObjectTypes, Collection<CDOLob<?>> lobs, OMMonitor monitor)
-  {
-    throw new UnsupportedOperationException();
   }
 
   @Override
@@ -574,14 +531,6 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
   }
 
   @Override
-  @Deprecated
-  public Set<CDOID> loadMergeData(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo, CDORevisionAvailabilityInfo targetBaseInfo,
-      CDORevisionAvailabilityInfo sourceBaseInfo)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
   public MergeDataResult loadMergeData2(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo,
       CDORevisionAvailabilityInfo targetBaseInfo, CDORevisionAvailabilityInfo sourceBaseInfo)
   {
@@ -589,14 +538,7 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
   }
 
   @Override
-  @Deprecated
-  public CDOLockState[] getLockStates(int branchID, Collection<CDOID> ids)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public CDOLockState[] getLockStates(int branchID, Collection<CDOID> ids, int depth)
+  public List<CDOLockState> getLockStates2(int branchID, Collection<CDOID> ids, int depth)
   {
     return send(new LockStateRequest(this, branchID, ids, depth));
   }
@@ -623,13 +565,6 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
   public String[] authorizeOperations(AuthorizableOperation[] operations)
   {
     return send(new AuthorizeOperationsRequest(this, operations));
-  }
-
-  @Override
-  @Deprecated
-  public void requestChangeCredentials()
-  {
-    throw new UnsupportedOperationException();
   }
 
   @Override
@@ -763,5 +698,86 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
     {
       REVISION_LOADING.stop(request);
     }
+  }
+
+  @Override
+  @Deprecated
+  public CDOBranchPoint openView(int viewID, boolean readOnly, String durableLockingID)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void deleteBranch(int branchID)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void renameBranch(int branchID, String newName)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public LockObjectsResult lockObjects(List<InternalCDORevision> revisions, int viewID, CDOBranch viewedBranch, LockType lockType, long timeout)
+      throws InterruptedException
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public CommitTransactionResult commitTransaction(int transactionID, String comment, boolean releaseLocks, CDOIDProvider idProvider, CDOCommitData commitData,
+      Collection<CDOLob<?>> lobs, OMMonitor monitor)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public CommitTransactionResult commitDelegation(CDOBranch branch, String userID, String comment, CDOCommitData commitData,
+      Map<CDOID, EClass> detachedObjectTypes, Collection<CDOLob<?>> lobs, OMMonitor monitor)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public Set<CDOID> loadMergeData(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo, CDORevisionAvailabilityInfo targetBaseInfo,
+      CDORevisionAvailabilityInfo sourceBaseInfo)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public CDOLockState[] getLockStates(int branchID, Collection<CDOID> ids)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public CDOLockState[] getLockStates(int branchID, Collection<CDOID> ids, int depth)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void requestChangeCredentials()
+  {
+    throw new UnsupportedOperationException();
   }
 }

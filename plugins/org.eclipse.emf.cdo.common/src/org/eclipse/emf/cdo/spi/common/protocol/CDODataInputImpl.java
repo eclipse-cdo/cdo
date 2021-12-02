@@ -26,7 +26,7 @@ import org.eclipse.emf.cdo.common.lob.CDOLob;
 import org.eclipse.emf.cdo.common.lob.CDOLobStore;
 import org.eclipse.emf.cdo.common.lob.CDOLobUtil;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
-import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo.Operation;
+import org.eclipse.emf.cdo.common.lock.CDOLockDelta;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
@@ -338,18 +338,10 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
 
     CDOBranchPoint branchPoint = readCDOBranchPoint();
     CDOLockOwner lockOwner = readCDOLockOwner();
-    Operation operation = readEnum(Operation.class);
-    LockType lockType = readCDOLockType();
+    List<CDOLockDelta> lockDeltas = readCDOLockDeltas();
+    List<CDOLockState> lockStates = readCDOLockStates();
 
-    int n = readXInt();
-    List<CDOLockState> lockStates = new ArrayList<>(n);
-
-    for (int i = 0; i < n; i++)
-    {
-      lockStates.add(readCDOLockState());
-    }
-
-    return CDOLockUtil.createLockChangeInfo(branchPoint, lockOwner, operation, lockType, lockStates);
+    return CDOLockUtil.createLockChangeInfo(branchPoint, lockOwner, lockDeltas, lockStates);
   }
 
   @Override
@@ -377,6 +369,11 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
   public CDOLockOwner readCDOLockOwner() throws IOException
   {
     int session = readXInt();
+    if (session == CDOLockUtil.DURABLE_SESSION_ID - 1)
+    {
+      return null;
+    }
+
     int view = readXInt();
     String lockAreaID = readString();
     return CDOLockUtil.createLockOwner(session, view, lockAreaID);
@@ -411,24 +408,54 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     for (int i = 0; i < nReadLockOwners; i++)
     {
       CDOLockOwner lockOwner = readCDOLockOwner();
-      lockState.addReadLockOwner(lockOwner);
+      lockState.addOwner(lockOwner, LockType.READ);
     }
 
     boolean hasWriteLock = readBoolean();
     if (hasWriteLock)
     {
       CDOLockOwner lockOwner = readCDOLockOwner();
-      lockState.setWriteLockOwner(lockOwner);
+      lockState.addOwner(lockOwner, LockType.WRITE);
     }
 
     boolean hasWriteOption = readBoolean();
     if (hasWriteOption)
     {
       CDOLockOwner lockOwner = readCDOLockOwner();
-      lockState.setWriteOptionOwner(lockOwner);
+      lockState.addOwner(lockOwner, LockType.OPTION);
     }
 
     return lockState;
+  }
+
+  @Override
+  public CDOLockDelta readCDOLockDelta() throws IOException
+  {
+    byte opcode = readByte();
+    if (opcode == -1)
+    {
+      return null;
+    }
+
+    Object target;
+    CDOID id = readCDOID();
+
+    if (opcode >= 10)
+    {
+      opcode -= 10;
+      CDOBranch branch = readCDOBranch();
+      target = CDOIDUtil.createIDAndBranch(id, branch);
+    }
+    else
+    {
+      target = id;
+    }
+
+    LockType type = LockType.values()[opcode];
+    CDOLockOwner oldOwner = readCDOLockOwner();
+    CDOLockOwner newOwner = readCDOLockOwner();
+
+    return CDOLockUtil.createLockDelta(target, type, oldOwner, newOwner);
   }
 
   @Override

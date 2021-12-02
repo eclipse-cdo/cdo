@@ -12,10 +12,11 @@ package org.eclipse.emf.cdo.common.lock;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.id.CDOID;
 
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * Represents a change in the lock state of a set of objects. Instances are meant to be sent from the server to the
@@ -28,12 +29,6 @@ import java.util.List;
  */
 public interface CDOLockChangeInfo extends CDOBranchPoint
 {
-  /**
-   * @return <code>true</code> if this instance signals that all {@link CDOLockState lock states} must be invalidated,
-   *         <code>false</code> otherwise
-   */
-  public boolean isInvalidateAll();
-
   /**
    * @return The branch at which the lock changes took place, same as <code>getView().getBranch()</code>.
    */
@@ -48,31 +43,54 @@ public interface CDOLockChangeInfo extends CDOBranchPoint
   public long getTimeStamp();
 
   /**
-   * @return the type of lock operation that caused the lock changes
-   */
-  public Operation getOperation();
-
-  /**
-   * @return the type of locks that were affected by the lock operation
-   */
-  public LockType getLockType();
-
-  /**
    * @return The view, represented as a {@link CDOLockOwner}, that authored the lock changes.
    */
   public CDOLockOwner getLockOwner();
 
   /**
-   * @return The new lock states of the objects that were affected by the change
-   * @deprecated As of 4.15 use the faster {@link #getNewLockStates()} method.
+   * @since 4.15
    */
-  @Deprecated
+  public CDOLockDelta[] getLockDeltas();
+
+  /**
+   * @return The new lock states of the objects that were affected by the change
+   */
   public CDOLockState[] getLockStates();
 
   /**
    * @since 4.15
    */
-  public List<CDOLockState> getNewLockStates();
+  public Set<Operation> getOperations();
+
+  /**
+   * @since 4.15
+   */
+  public Set<LockType> getLockTypes();
+
+  /**
+   * @since 4.15
+   */
+  public Set<CDOID> getAffectedIDs();
+
+  /**
+   * @return <code>true</code> if this instance signals that all {@link CDOLockState lock states} must be invalidated,
+   *         <code>false</code> otherwise
+   */
+  public boolean isInvalidateAll();
+
+  /**
+   * @return the type of lock operation that caused the lock changes
+   * @deprecated As of 4.15 use {@link #getOperations()}.
+   */
+  @Deprecated
+  public Operation getOperation();
+
+  /**
+   * @return the type of locks that were affected by the lock operation
+   * @deprecated As of 4.15 use {@link #getLockTypes()}.
+   */
+  @Deprecated
+  public LockType getLockType();
 
   /**
    * Enumerates the possible locking operations.

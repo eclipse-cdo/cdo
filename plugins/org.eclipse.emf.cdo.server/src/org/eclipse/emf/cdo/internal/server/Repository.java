@@ -15,7 +15,6 @@
  */
 package org.eclipse.emf.cdo.internal.server;
 
-import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchHandler;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager.CDOTagList;
@@ -33,6 +32,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lob.CDOLobHandler;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo.Operation;
+import org.eclipse.emf.cdo.common.lock.CDOLockDelta;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
@@ -57,6 +57,8 @@ import org.eclipse.emf.cdo.common.util.RepositoryTypeChangedEvent;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.etypes.EtypesPackage;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
+import org.eclipse.emf.cdo.internal.server.LockingManager.LockDeltaCollector;
+import org.eclipse.emf.cdo.internal.server.LockingManager.LockStateCollector;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
@@ -118,7 +120,7 @@ import org.eclipse.net4j.util.collection.MoveableList;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
-import org.eclipse.net4j.util.concurrent.RWOLockManager.LockState;
+import org.eclipse.net4j.util.concurrent.IRWOLockManager;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -146,7 +148,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -171,7 +172,9 @@ import java.util.stream.Collectors;
  */
 public class Repository extends Container<Object> implements InternalRepository
 {
-  public static final CDOLockState[] NO_LOCK_STATES = new CDOLockState[0];
+  private static final List<CDOLockDelta> NO_LOCK_DELTAS = Collections.emptyList();
+
+  private static final List<CDOLockState> NO_LOCK_STATES = Collections.emptyList();
 
   private static final int UNCHUNKED = CDORevision.UNCHUNKED;
 
@@ -421,13 +424,6 @@ public class Repository extends Container<Object> implements InternalRepository
   }
 
   @Override
-  @Deprecated
-  public boolean isSupportingEcore()
-  {
-    return true;
-  }
-
-  @Override
   public boolean isSerializingCommits()
   {
     return serializingCommits;
@@ -613,20 +609,6 @@ public class Repository extends Container<Object> implements InternalRepository
   }
 
   @Override
-  @Deprecated
-  public void deleteBranch(int branchID)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  @Deprecated
-  public void renameBranch(int branchID, String newName)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
   public void renameBranch(int branchID, String oldName, String newName)
   {
     if (!isSupportingBranches())
@@ -760,13 +742,6 @@ public class Repository extends Container<Object> implements InternalRepository
   {
     IStoreAccessor accessor = StoreThreadLocal.getAccessor();
     return accessor.loadCommitData(timeStamp);
-  }
-
-  @Override
-  @Deprecated
-  public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth)
-  {
-    throw new UnsupportedOperationException();
   }
 
   @Override
@@ -1383,17 +1358,6 @@ public class Repository extends Container<Object> implements InternalRepository
     this.commitManager = commitManager;
   }
 
-  /**
-   * @since 2.0
-   * @deprecated
-   */
-  @Override
-  @Deprecated
-  public InternalLockManager getLockManager()
-  {
-    return getLockingManager();
-  }
-
   @Override
   public InternalLockManager getLockingManager()
   {
@@ -1535,45 +1499,11 @@ public class Repository extends Container<Object> implements InternalRepository
   }
 
   @Override
-  @Deprecated
-  public void sendCommitNotification(InternalSession sender, CDOCommitInfo commitInfo)
-  {
-    sendCommitNotification(sender, commitInfo, true);
-  }
-
-  @Override
-  @Deprecated
-  public CDOCommitInfoHandler[] getCommitInfoHandlers()
-  {
-    return commitInfoManager.getCommitInfoHandlers();
-  }
-
-  @Override
-  @Deprecated
-  public void addCommitInfoHandler(CDOCommitInfoHandler handler)
-  {
-    commitInfoManager.addCommitInfoHandler(handler);
-  }
-
-  @Override
-  @Deprecated
-  public void removeCommitInfoHandler(CDOCommitInfoHandler handler)
-  {
-    commitInfoManager.removeCommitInfoHandler(handler);
-  }
-
-  @Override
-  @Deprecated
-  public void sendCommitNotification(InternalSession sender, CDOCommitInfo commitInfo, boolean clearResourcePathCache)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
   public void sendCommitNotification(CommitNotificationInfo info)
   {
     CDOCommitInfo commitInfo = info.getCommitInfo();
     boolean isFailureCommitInfo = commitInfo.getBranch() == null;
+
     if (isFailureCommitInfo || !commitInfo.isEmpty() || info.getLockChangeInfo() != null)
     {
       sessionManager.sendCommitNotification(info);
@@ -1994,17 +1924,6 @@ public class Repository extends Container<Object> implements InternalRepository
   }
 
   @Override
-  @Deprecated
-  public Set<CDOID> getMergeData(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo, CDORevisionAvailabilityInfo targetBaseInfo,
-      CDORevisionAvailabilityInfo sourceBaseInfo, OMMonitor monitor)
-  {
-    MergeDataResult result = getMergeData2(targetInfo, sourceInfo, targetBaseInfo, sourceBaseInfo, monitor);
-    Set<CDOID> ids = result.getTargetIDs();
-    ids.addAll(result.getSourceIDs());
-    return ids;
-  }
-
-  @Override
   public MergeDataResult getMergeData2(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo,
       CDORevisionAvailabilityInfo targetBaseInfo, CDORevisionAvailabilityInfo sourceBaseInfo, OMMonitor monitor)
   {
@@ -2283,81 +2202,6 @@ public class Repository extends Container<Object> implements InternalRepository
     }
   }
 
-  public static List<Object> revisionKeysToObjects(List<CDORevisionKey> revisionKeys, CDOBranch viewedBranch, boolean isSupportingBranches)
-  {
-    List<Object> lockables = new ArrayList<>();
-    for (CDORevisionKey revKey : revisionKeys)
-    {
-      CDOID id = revKey.getID();
-      if (isSupportingBranches)
-      {
-        lockables.add(CDOIDUtil.createIDAndBranch(id, viewedBranch));
-      }
-      else
-      {
-        lockables.add(id);
-      }
-    }
-
-    return lockables;
-  }
-
-  @Override
-  public LockObjectsResult lock(InternalView view, LockType lockType, List<CDORevisionKey> revKeys, boolean recursive, long timeout)
-  {
-    List<Object> lockables = revisionKeysToObjects(revKeys, view.getBranch(), isSupportingBranches());
-    return lock(view, lockType, lockables, revKeys, recursive, timeout);
-  }
-
-  protected LockObjectsResult lock(InternalView view, LockType type, List<Object> lockables, List<CDORevisionKey> loadedRevs, boolean recursive, long timeout)
-  {
-    List<LockState<Object, IView>> newLockStates = null;
-
-    try
-    {
-      newLockStates = getLockingManager().lock2(true, type, view, lockables, recursive, timeout);
-    }
-    catch (TimeoutRuntimeException ex)
-    {
-      return new LockObjectsResult(false, true, false, 0, new CDORevisionKey[0], NO_LOCK_STATES, getTimeStamp());
-    }
-    catch (InterruptedException ex)
-    {
-      throw WrappedException.wrap(ex);
-    }
-
-    long[] requiredTimestamp = { 0L };
-    CDORevisionKey[] staleRevisionsArray = null;
-
-    try
-    {
-      staleRevisionsArray = checkStaleRevisions(view, loadedRevs, lockables, type, requiredTimestamp);
-    }
-    catch (IllegalArgumentException e)
-    {
-      getLockingManager().unlock2(true, type, view, lockables, recursive);
-      throw e;
-    }
-
-    // If some of the clients' revisions are stale and it has passiveUpdates disabled,
-    // then the locks are useless so we release them and report the stale revisions
-    //
-    InternalSession session = view.getSession();
-    boolean staleNoUpdate = staleRevisionsArray.length > 0 && !session.isPassiveUpdateEnabled();
-    if (staleNoUpdate)
-    {
-      getLockingManager().unlock2(true, type, view, lockables, recursive);
-      return new LockObjectsResult(false, false, false, requiredTimestamp[0], staleRevisionsArray, NO_LOCK_STATES, getTimeStamp());
-    }
-
-    CDOLockState[] array = toCDOLockStates(newLockStates);
-    List<CDOLockState> cdoLockStates = Arrays.asList(array);
-    sendLockNotifications(view, Operation.LOCK, type, cdoLockStates);
-
-    boolean waitForUpdate = staleRevisionsArray.length > 0;
-    return new LockObjectsResult(true, false, waitForUpdate, requiredTimestamp[0], staleRevisionsArray, array, getTimeStamp());
-  }
-
   private CDORevisionKey[] checkStaleRevisions(InternalView view, List<CDORevisionKey> revisionKeys, List<Object> objectsToLock, LockType lockType,
       long[] requiredTimestamp)
   {
@@ -2392,39 +2236,82 @@ public class Repository extends Container<Object> implements InternalRepository
     return staleRevisionsArray;
   }
 
-  private void sendLockNotifications(IView view, Operation operation, LockType lockType, Collection<? extends CDOLockState> cdoLockStates)
+  private void sendLockNotifications(IView view, List<CDOLockDelta> lockDeltas, List<CDOLockState> lockStates)
   {
     CDOBranchPoint branchPoint = view.getBranch().getPoint(getTimeStamp());
     CDOLockOwner lockOwner = view.getLockOwner();
-    CDOLockChangeInfo lockChangeInfo = CDOLockUtil.createLockChangeInfo(branchPoint, lockOwner, operation, lockType, cdoLockStates);
+    CDOLockChangeInfo lockChangeInfo = CDOLockUtil.createLockChangeInfo(branchPoint, lockOwner, lockDeltas, lockStates);
 
     InternalSession sender = (InternalSession)view.getSession();
     sessionManager.sendLockNotification(sender, lockChangeInfo);
   }
 
-  // TODO (CD) This doesn't really belong here.. but getting it into CDOLockUtil isn't possible
-  public static CDOLockState[] toCDOLockStates(Collection<? extends LockState<Object, IView>> lockStates)
+  @Override
+  public LockObjectsResult lock(InternalView view, LockType lockType, List<CDORevisionKey> revKeys, boolean recursive, long timeout)
   {
-    CDOLockState[] cdoLockStates = new CDOLockState[lockStates.size()];
-    int i = 0;
+    List<Object> lockables = revisionKeysToObjects(revKeys, view.getBranch(), isSupportingBranches());
+    return doLock(view, lockType, lockables, revKeys, recursive, timeout);
+  }
 
-    for (LockState<Object, ? extends CDOCommonView> lockState : lockStates)
+  protected LockObjectsResult doLock(InternalView view, LockType lockType, List<Object> lockables, List<CDORevisionKey> loadedRevs, boolean recursive,
+      long timeout)
+  {
+    LockDeltaCollector lockDeltas = new LockDeltaCollector(Operation.LOCK);
+    LockStateCollector lockStates = new LockStateCollector();
+
+    try
     {
-      CDOLockState cdoLockState = CDOLockUtil.convertLockState(lockState);
-      cdoLockStates[i++] = cdoLockState;
+      lockingManager.lock(view, lockables, lockType, 1, timeout, recursive, true, lockDeltas, lockStates);
+    }
+    catch (TimeoutRuntimeException ex)
+    {
+      return new LockObjectsResult(false, true, false, 0, new CDORevisionKey[0], NO_LOCK_DELTAS, NO_LOCK_STATES, getTimeStamp());
+    }
+    catch (InterruptedException ex)
+    {
+      throw WrappedException.wrap(ex);
     }
 
-    return cdoLockStates;
+    long[] requiredTimestamp = { 0L };
+    CDORevisionKey[] staleRevisionsArray = null;
+
+    try
+    {
+      staleRevisionsArray = checkStaleRevisions(view, loadedRevs, lockables, lockType, requiredTimestamp);
+    }
+    catch (IllegalArgumentException ex)
+    {
+      lockingManager.unlock(view, lockables, lockType, 1, recursive, true, null, null);
+      throw ex;
+    }
+
+    // If some of the clients' revisions are stale and it has passiveUpdates disabled,
+    // then the locks are useless so we release them and report the stale revisions
+    //
+    InternalSession session = view.getSession();
+    boolean staleNoUpdate = staleRevisionsArray.length > 0 && !session.isPassiveUpdateEnabled();
+    if (staleNoUpdate)
+    {
+      lockingManager.unlock(view, lockables, lockType, 1, recursive, true, null, null);
+      return new LockObjectsResult(false, false, false, requiredTimestamp[0], staleRevisionsArray, NO_LOCK_DELTAS, NO_LOCK_STATES, getTimeStamp());
+    }
+
+    sendLockNotifications(view, lockDeltas, lockStates);
+
+    boolean waitForUpdate = staleRevisionsArray.length > 0;
+    return new LockObjectsResult(true, false, waitForUpdate, requiredTimestamp[0], staleRevisionsArray, lockDeltas, lockStates, getTimeStamp());
   }
 
   @Override
   public UnlockObjectsResult unlock(InternalView view, LockType lockType, List<CDOID> objectIDs, boolean recursive)
   {
     List<Object> unlockables = null;
+
     if (objectIDs != null)
     {
       unlockables = new ArrayList<>(objectIDs.size());
       CDOBranch branch = view.getBranch();
+
       for (CDOID id : objectIDs)
       {
         Object key = supportingBranches ? CDOIDUtil.createIDAndBranch(id, branch) : id;
@@ -2432,26 +2319,26 @@ public class Repository extends Container<Object> implements InternalRepository
       }
     }
 
-    return doUnlock(view, lockType, unlockables, recursive);
+    return doUnlock(view, lockType, unlockables, recursive, 1);
   }
 
-  protected UnlockObjectsResult doUnlock(InternalView view, LockType lockType, List<Object> unlockables, boolean recursive)
+  @Override
+  public UnlockObjectsResult unlock(InternalView view)
   {
-    List<LockState<Object, IView>> newLockStates = null;
-    if (lockType == null) // Signals an unlock-all operation
-    {
-      newLockStates = getLockingManager().unlock2(true, view);
-    }
-    else
-    {
-      newLockStates = getLockingManager().unlock2(true, lockType, view, unlockables, recursive);
-    }
+    return doUnlock(view, null, null, false, IRWOLockManager.ALL_LOCKS);
+  }
+
+  protected UnlockObjectsResult doUnlock(InternalView view, LockType lockType, List<Object> unlockables, boolean recursive, int count)
+  {
+    LockDeltaCollector lockDeltas = new LockDeltaCollector(Operation.UNLOCK);
+    LockStateCollector lockStates = new LockStateCollector();
+
+    lockingManager.unlock(view, unlockables, lockType, count, recursive, true, lockDeltas, lockStates);
+
+    sendLockNotifications(view, lockDeltas, lockStates);
 
     long timestamp = getTimeStamp();
-    CDOLockState[] cdoLockStates = toCDOLockStates(newLockStates);
-    sendLockNotifications(view, Operation.UNLOCK, lockType, Arrays.asList(cdoLockStates));
-
-    return new UnlockObjectsResult(cdoLockStates, timestamp);
+    return new UnlockObjectsResult(timestamp, lockDeltas, lockStates);
   }
 
   @Override
@@ -2566,13 +2453,6 @@ public class Repository extends Container<Object> implements InternalRepository
     {
       optimisticLockingTimeout = Long.valueOf(valueTimeout);
     }
-  }
-
-  @Override
-  @Deprecated
-  public void initSystemPackages()
-  {
-    initSystemPackages(true);
   }
 
   @Override
@@ -3040,6 +2920,25 @@ public class Repository extends Container<Object> implements InternalRepository
     super.doDeactivate();
   }
 
+  public static List<Object> revisionKeysToObjects(List<CDORevisionKey> revisionKeys, CDOBranch viewedBranch, boolean isSupportingBranches)
+  {
+    List<Object> lockables = new ArrayList<>();
+    for (CDORevisionKey revKey : revisionKeys)
+    {
+      CDOID id = revKey.getID();
+      if (isSupportingBranches)
+      {
+        lockables.add(CDOIDUtil.createIDAndBranch(id, viewedBranch));
+      }
+      else
+      {
+        lockables.add(id);
+      }
+    }
+
+    return lockables;
+  }
+
   public static Repository get(String uuid)
   {
     synchronized (REPOSITORIES)
@@ -3101,9 +3000,9 @@ public class Repository extends Container<Object> implements InternalRepository
         setCommitManager(createCommitManager());
       }
 
-      if (getLockManager() == null)
+      if (getLockingManager() == null)
       {
-        setLockingManager(createLockManager());
+        setLockingManager(createLockingManager());
       }
 
       if (getUnitManager() == null)
@@ -3159,15 +3058,94 @@ public class Repository extends Container<Object> implements InternalRepository
       return new UnitManager(this);
     }
 
-    @Deprecated
-    protected InternalLockManager createLockManager()
-    {
-      return createLockingManager();
-    }
-
     public LockingManager createLockingManager()
     {
       return new LockingManager();
     }
+  }
+
+  @Override
+  @Deprecated
+  public boolean isSupportingEcore()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void deleteBranch(int branchID)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void renameBranch(int branchID, String newName)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public InternalLockManager getLockManager()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void sendCommitNotification(InternalSession sender, CDOCommitInfo commitInfo)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public CDOCommitInfoHandler[] getCommitInfoHandlers()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void addCommitInfoHandler(CDOCommitInfoHandler handler)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void removeCommitInfoHandler(CDOCommitInfoHandler handler)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void sendCommitNotification(InternalSession sender, CDOCommitInfo commitInfo, boolean clearResourcePathCache)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public Set<CDOID> getMergeData(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo, CDORevisionAvailabilityInfo targetBaseInfo,
+      CDORevisionAvailabilityInfo sourceBaseInfo, OMMonitor monitor)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void initSystemPackages()
+  {
+    throw new UnsupportedOperationException();
   }
 }

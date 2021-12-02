@@ -28,6 +28,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.lob.CDOLob;
 import org.eclipse.emf.cdo.common.lob.CDOLobInfo;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
+import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockGrade;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -77,6 +78,7 @@ import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 /**
@@ -190,14 +192,14 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
   }
 
   @Override
-  public CDOBranchPoint openView(int viewID, boolean readOnly, String durableLockingID)
+  public CDOBranchPoint openView(int viewID, boolean readOnly, String durableLockingID, BiConsumer<CDOID, LockGrade> consumer)
   {
     int attempt = 0;
     for (;;)
     {
       try
       {
-        return delegate.openView(viewID, readOnly, durableLockingID);
+        return delegate.openView(viewID, readOnly, durableLockingID, consumer);
       }
       catch (Exception ex)
       {
@@ -301,14 +303,6 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
   }
 
   @Override
-  @Deprecated
-  public CommitTransactionResult commitTransaction(int transactionID, String comment, boolean releaseLocks, CDOIDProvider idProvider, CDOCommitData commitData,
-      Collection<CDOLob<?>> lobs, OMMonitor monitor)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
   public CommitTransactionResult commitTransaction(InternalCDOCommitContext context, OMMonitor monitor)
   {
     int attempt = 0;
@@ -323,14 +317,6 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
         handleException(++attempt, ex);
       }
     }
-  }
-
-  @Override
-  @Deprecated
-  public CommitTransactionResult commitDelegation(CDOBranch branch, String userID, String comment, CDOCommitData commitData,
-      Map<CDOID, EClass> detachedObjectTypes, Collection<CDOLob<?>> lobs, OMMonitor monitor)
-  {
-    throw new UnsupportedOperationException();
   }
 
   @Override
@@ -471,21 +457,14 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
   }
 
   @Override
-  @Deprecated
-  public CDOLockState[] getLockStates(int branchID, Collection<CDOID> ids)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public CDOLockState[] getLockStates(int branchID, Collection<CDOID> ids, int depth)
+  public List<CDOLockState> getLockStates2(int branchID, Collection<CDOID> ids, int depth)
   {
     int attempt = 0;
     for (;;)
     {
       try
       {
-        return delegate.getLockStates(branchID, ids, depth);
+        return delegate.getLockStates2(branchID, ids, depth);
       }
       catch (Exception ex)
       {
@@ -649,20 +628,6 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
   }
 
   @Override
-  @Deprecated
-  public void deleteBranch(int branchID)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  @Deprecated
-  public void renameBranch(int branchID, String newName)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
   public void renameBranch(int branchID, String oldName, String newName)
   {
     int attempt = 0;
@@ -768,13 +733,6 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
   }
 
   @Override
-  @Deprecated
-  public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
   public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth,
       boolean prefetchLockStates)
   {
@@ -824,14 +782,6 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
         handleException(++attempt, ex);
       }
     }
-  }
-
-  @Override
-  @Deprecated
-  public LockObjectsResult lockObjects(List<InternalCDORevision> viewedRevisions, int viewID, CDOBranch viewedBranch, LockType lockType, long timeout)
-      throws InterruptedException
-  {
-    throw new UnsupportedOperationException();
   }
 
   /**
@@ -982,13 +932,6 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
   }
 
   @Override
-  @Deprecated
-  public void unlockObjects(CDOView view, Collection<CDOID> objectIDs, LockType lockType)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
   public UnlockObjectsResult unlockObjects2(CDOView view, Collection<CDOID> objectIDs, LockType lockType, boolean recursive)
   {
     int attempt = 0;
@@ -1110,14 +1053,6 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
   }
 
   @Override
-  @Deprecated
-  public Set<CDOID> loadMergeData(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo, CDORevisionAvailabilityInfo targetBaseInfo,
-      CDORevisionAvailabilityInfo sourceBaseInfo)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
   public MergeDataResult loadMergeData2(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo,
       CDORevisionAvailabilityInfo targetBaseInfo, CDORevisionAvailabilityInfo sourceBaseInfo)
   {
@@ -1167,13 +1102,6 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
         handleException(++attempt, ex);
       }
     }
-  }
-
-  @Override
-  @Deprecated
-  public void requestChangeCredentials()
-  {
-    throw new UnsupportedOperationException();
   }
 
   @Override
@@ -1265,5 +1193,93 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     {
       throw WrappedException.wrap(ex);
     }
+  }
+
+  @Override
+  @Deprecated
+  public CDOBranchPoint openView(int viewID, boolean readOnly, String durableLockingID)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public CommitTransactionResult commitTransaction(int transactionID, String comment, boolean releaseLocks, CDOIDProvider idProvider, CDOCommitData commitData,
+      Collection<CDOLob<?>> lobs, OMMonitor monitor)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public CommitTransactionResult commitDelegation(CDOBranch branch, String userID, String comment, CDOCommitData commitData,
+      Map<CDOID, EClass> detachedObjectTypes, Collection<CDOLob<?>> lobs, OMMonitor monitor)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public CDOLockState[] getLockStates(int branchID, Collection<CDOID> ids)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public CDOLockState[] getLockStates(int branchID, Collection<CDOID> ids, int depth)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void deleteBranch(int branchID)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void renameBranch(int branchID, String newName)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public LockObjectsResult lockObjects(List<InternalCDORevision> viewedRevisions, int viewID, CDOBranch viewedBranch, LockType lockType, long timeout)
+      throws InterruptedException
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void unlockObjects(CDOView view, Collection<CDOID> objectIDs, LockType lockType)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public Set<CDOID> loadMergeData(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo, CDORevisionAvailabilityInfo targetBaseInfo,
+      CDORevisionAvailabilityInfo sourceBaseInfo)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void requestChangeCredentials()
+  {
+    throw new UnsupportedOperationException();
   }
 }

@@ -19,15 +19,24 @@ import org.eclipse.emf.cdo.server.IView;
 
 import org.eclipse.net4j.util.concurrent.IRWOLockManager;
 import org.eclipse.net4j.util.concurrent.RWOLockManager.LockState;
+import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 /**
  * The type of the to-be-locked objects is either {@link CDOIDAndBranch} or {@link CDOID}, depending on whether
  * branching is supported by the repository or not.
+ * <p>
+ * The following features are supported in addition to {@link IRWOLockManager}:
+ * <ul>
+ * <li> Recursive locking
+ * <li> Distinction between explicit and implicit locking
+ * <li> Durable locking
+ * </ul>
  *
  * @author Eike Stepper
  * @since 3.0
@@ -43,11 +52,6 @@ public interface InternalLockManager extends IRWOLockManager<Object, IView>, ILo
   /**
    * @since 4.0
    */
-  public Object getLockEntryObject(Object key);
-
-  /**
-   * @since 4.0
-   */
   public Object getLockKey(CDOID id, CDOBranch branch);
 
   /**
@@ -56,49 +60,29 @@ public interface InternalLockManager extends IRWOLockManager<Object, IView>, ILo
   public CDOID getLockKeyID(Object key);
 
   /**
+   * @since 4.15
+   */
+  public CDOBranch getLockKeyBranch(Object key);
+
+  /**
    * @since 4.0
    */
   public Map<CDOID, LockGrade> getLocks(IView view);
 
   /**
-   * @since 4.0
+   * @since 4.15
    */
-  @Deprecated
-  public void lock(boolean explicit, LockType type, IView context, Collection<? extends Object> objects, long timeout) throws InterruptedException;
+  public long lock(IView view, Collection<? extends Object> objects, LockType lockType, int count, long timeout, //
+      boolean recursive, boolean explicit, //
+      LockDeltaHandler<Object, IView> deltaHandler, Consumer<LockState<Object, IView>> stateHandler) //
+      throws InterruptedException, TimeoutRuntimeException;
 
   /**
-   * @since 4.1
+   * @since 4.15
    */
-  public List<LockState<Object, IView>> lock2(boolean explicit, LockType type, IView context, Collection<? extends Object> objects, boolean recursive,
-      long timeout) throws InterruptedException;
-
-  /**
-   * Attempts to release for a given lock type, view and objects.
-   *
-   * @throws IllegalMonitorStateException
-   *           Unlocking objects without lock.
-   * @since 4.0
-   */
-  @Deprecated
-  public void unlock(boolean explicit, LockType type, IView context, Collection<? extends Object> objects);
-
-  /**
-   * @since 4.1
-   */
-  public List<LockState<Object, IView>> unlock2(boolean explicit, LockType type, IView context, Collection<? extends Object> objects, boolean recursive);
-
-  /**
-   * Attempts to release all locks(read and write) for a given view.
-   *
-   * @since 4.0
-   */
-  @Deprecated
-  public void unlock(boolean explicit, IView context);
-
-  /**
-   * @since 4.1
-   */
-  public List<LockState<Object, IView>> unlock2(boolean explicit, IView context);
+  public long unlock(IView view, Collection<? extends Object> objects, LockType lockType, int count, //
+      boolean recursive, boolean explicit, //
+      LockDeltaHandler<Object, IView> deltaHandler, Consumer<LockState<Object, IView>> stateHandler);
 
   /**
    * @since 4.0
@@ -113,13 +97,13 @@ public interface InternalLockManager extends IRWOLockManager<Object, IView>, ILo
   /**
    * @since 4.1
    */
-  // TODO (CD) I've also added this to DurableLocking2 Refactoring opportunity?
   public void updateLockArea(LockArea lockArea);
 
   /**
-   * @since 4.0
+   * @since 4.15
    */
-  public IView openView(ISession session, int viewID, boolean readOnly, String durableLockingID);
+  public void openView(ISession session, int viewID, boolean readOnly, String durableLockingID, Consumer<IView> viewConsumer,
+      BiConsumer<CDOID, LockGrade> lockConsumer);
 
   /**
    * @since 4.1
@@ -137,17 +121,86 @@ public interface InternalLockManager extends IRWOLockManager<Object, IView>, ILo
   public void getLockStates(Collection<Object> keys, BiConsumer<Object, LockState<Object, IView>> consumer);
 
   /**
-   * @since 4.4
+   * @since 4.15
    */
-  public List<LockState<Object, IView>> getLockStates();
-
-  /**
-   * @since 4.1
-   */
-  public void setLockState(Object key, LockState<Object, IView> lockState);
+  public void getLockStates(Consumer<LockState<Object, IView>> consumer);
 
   /**
    * @since 4.1
    */
   public void reloadLocks();
+
+  @Deprecated
+  public List<LockState<Object, IView>> getLockStates();
+
+  @Deprecated
+  public void setLockState(Object key, LockState<Object, IView> lockState);
+
+  @Deprecated
+  public Object getLockEntryObject(Object key);
+
+  @Deprecated
+  public void lock(boolean explicit, LockType type, IView view, Collection<? extends Object> objects, long timeout) throws InterruptedException;
+
+  @Override
+  @Deprecated
+  public void lock(LockType type, IView context, Collection<? extends Object> objectsToLock, long timeout) throws InterruptedException;
+
+  @Override
+  @Deprecated
+  public void lock(LockType type, IView context, Object objectToLock, long timeout) throws InterruptedException;
+
+  @Deprecated
+  public List<LockState<Object, IView>> lock2(boolean explicit, LockType type, IView view, Collection<? extends Object> objects, boolean recursive,
+      long timeout) throws InterruptedException;
+
+  @Override
+  @Deprecated
+  public List<LockState<Object, IView>> lock2(LockType type, IView context, Collection<? extends Object> objectsToLock, long timeout)
+      throws InterruptedException;
+
+  @Deprecated
+  public void unlock(boolean explicit, LockType type, IView view, Collection<? extends Object> objects);
+
+  @Deprecated
+  public void unlock(boolean explicit, IView view);
+
+  @Override
+  @Deprecated
+  public void unlock(LockType type, IView context, Collection<? extends Object> objectsToUnlock);
+
+  @Override
+  @Deprecated
+  public void unlock(IView context);
+
+  @Deprecated
+  public List<LockState<Object, IView>> unlock2(boolean explicit, IView view);
+
+  @Deprecated
+  public List<LockState<Object, IView>> unlock2(boolean explicit, LockType type, IView view, Collection<? extends Object> objects, boolean recursive);
+
+  @Override
+  @Deprecated
+  public List<LockState<Object, IView>> unlock2(LockType type, IView context, Collection<? extends Object> objectsToUnlock);
+
+  @Override
+  @Deprecated
+  public List<LockState<Object, IView>> unlock2(IView context, Collection<? extends Object> objectsToUnlock);
+
+  @Override
+  @Deprecated
+  public List<LockState<Object, IView>> unlock2(IView context);
+
+  @Override
+  @Deprecated
+  public long lock(IView context, Collection<? extends Object> objects, LockType lockType, int count, long timeout,
+      LockDeltaHandler<Object, IView> deltaHandler, Consumer<LockState<Object, IView>> stateHandler) throws InterruptedException, TimeoutRuntimeException;
+
+  @Override
+  @Deprecated
+  public long unlock(IView context, Collection<? extends Object> objects, LockType lockType, int count, LockDeltaHandler<Object, IView> deltaHandler,
+      Consumer<LockState<Object, IView>> stateHandler);
+
+  @Deprecated
+  public IView openView(ISession session, int viewID, boolean readOnly, String durableLockingID);
 }

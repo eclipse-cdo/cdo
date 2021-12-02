@@ -22,8 +22,10 @@ import java.util.Collection;
  */
 public interface IRWLockManager<OBJECT, CONTEXT>
 {
+  @Deprecated
   public static final int WAIT = 0;
 
+  @Deprecated
   public static final int NO_WAIT = 1;
 
   public void lock(LockType type, CONTEXT context, Collection<? extends OBJECT> objectsToLock, long timeout) throws InterruptedException;
@@ -31,7 +33,7 @@ public interface IRWLockManager<OBJECT, CONTEXT>
   public void lock(LockType type, CONTEXT context, OBJECT objectToLock, long timeout) throws InterruptedException;
 
   /**
-   * Attempts to release for a given locktype, context and objects.
+   * Attempts to release for a given lock type, context and objects.
    *
    * @throws IllegalMonitorStateException
    *           Unlocking objects without lock.
@@ -57,6 +59,6 @@ public interface IRWLockManager<OBJECT, CONTEXT>
     /**
      * @since 3.2
      */
-    OPTION
+    OPTION;
   }
 }

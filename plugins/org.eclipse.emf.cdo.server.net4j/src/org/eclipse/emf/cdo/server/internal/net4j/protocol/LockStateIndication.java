@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
+import org.eclipse.emf.cdo.internal.server.LockingManager.LockStateCollector;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider;
@@ -34,7 +35,6 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -42,9 +42,15 @@ import java.util.Collection;
  */
 public class LockStateIndication extends CDOServerReadIndication
 {
-  private Collection<CDOLockState> existingLockStates;
+  private final LockStateCollector existingLockStates = new LockStateCollector();
+
+  private InternalLockManager lockManager;
+
+  private CDOBranch branch;
 
   private int prefetchDepth = CDOLockState.DEPTH_NONE;
+
+  private CDORevisionProvider revisionProvider;
 
   public LockStateIndication(CDOServerProtocol protocol)
   {
@@ -56,13 +62,10 @@ public class LockStateIndication extends CDOServerReadIndication
   {
     InternalRepository repository = getRepository();
     CDOBranchManager branchManager = repository.getBranchManager();
-    InternalLockManager lockManager = repository.getLockingManager();
+    lockManager = repository.getLockingManager();
 
     int branchID = in.readXInt();
-    CDOBranch branch = branchManager.getBranch(branchID);
-
-    existingLockStates = new ArrayList<>();
-    CDORevisionProvider revisionProvider;
+    branch = branchManager.getBranch(branchID);
 
     int idsLength = in.readXInt();
     if (idsLength < 0)
@@ -73,32 +76,26 @@ public class LockStateIndication extends CDOServerReadIndication
       CDORevisionManager revisionManager = repository.getRevisionManager();
       revisionProvider = new ManagedRevisionProvider(revisionManager, branch.getHead());
     }
-    else
-    {
-      revisionProvider = null;
-    }
 
     if (idsLength == 0)
     {
-      Collection<LockState<Object, IView>> lockStates = lockManager.getLockStates();
-      for (LockState<Object, IView> lockState : lockStates)
-      {
-        existingLockStates.add(CDOLockUtil.convertLockState(lockState));
-      }
+      lockManager.getLockStates(existingLockStates);
     }
     else
     {
+      int depth = prefetchDepth >= CDOLockState.DEPTH_NONE ? prefetchDepth : Integer.MAX_VALUE;
+
       for (int i = 0; i < idsLength; i++)
       {
         CDOID id = in.readCDOID();
-        prefetchLockStates(lockManager, prefetchDepth >= CDOLockState.DEPTH_NONE ? prefetchDepth : Integer.MAX_VALUE, id, branch, revisionProvider);
+        prefetchLockStates(depth, id);
       }
     }
   }
 
-  private void prefetchLockStates(InternalLockManager lockManager, int depth, CDOID id, CDOBranch branch, CDORevisionProvider revisionProvider)
+  private void prefetchLockStates(int depth, CDOID id)
   {
-    addLockState(lockManager, id, branch);
+    addLockState(id);
 
     if (depth > CDOLockState.DEPTH_NONE)
     {
@@ -121,7 +118,7 @@ public class LockStateIndication extends CDOServerReadIndication
             Object value = revision.getValue(reference);
             if (value instanceof CDOID)
             {
-              prefetchLockStates(lockManager, depth, (CDOID)value, branch, revisionProvider);
+              prefetchLockStates(depth, (CDOID)value);
             }
             else if (value instanceof Collection<?>)
             {
@@ -133,7 +130,7 @@ public class LockStateIndication extends CDOServerReadIndication
                 // instanceof CDOID. (See bug 339313.)
                 if (e instanceof CDOID)
                 {
-                  prefetchLockStates(lockManager, depth, (CDOID)e, branch, revisionProvider);
+                  prefetchLockStates(depth, (CDOID)e);
                 }
               }
             }
@@ -143,7 +140,7 @@ public class LockStateIndication extends CDOServerReadIndication
     }
   }
 
-  private void addLockState(InternalLockManager lockManager, CDOID id, CDOBranch branch)
+  private void addLockState(CDOID id)
   {
     Object key = lockManager.getLockKey(id, branch);
 
@@ -157,10 +154,6 @@ public class LockStateIndication extends CDOServerReadIndication
   @Override
   protected void responding(CDODataOutput out) throws IOException
   {
-    out.writeXInt(existingLockStates.size());
-    for (CDOLockState lockState : existingLockStates)
-    {
-      out.writeCDOLockState(lockState);
-    }
+    out.writeCDOLockStates(existingLockStates, null);
   }
 }

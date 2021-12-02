@@ -943,7 +943,7 @@ public class BranchingTest extends AbstractCDOTest
   }
 
   @CleanRepositoriesBefore(reason = "Revision counting")
-  public void testhandleRevisionsAfterDetachInSubBranch() throws Exception
+  public void testHandleRevisionsAfterDetachInSubBranch() throws Exception
   {
     String name = getBranchName("subBranch");
 

@@ -12,7 +12,8 @@ package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
-import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo.Operation;
+import org.eclipse.emf.cdo.common.lock.CDOLockDelta;
+import org.eclipse.emf.cdo.common.lock.CDOLockDelta.Kind;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -33,6 +34,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -116,14 +118,21 @@ public class Bugzilla_469301_Test extends AbstractCDOTest
     controlListener.waitFor(1, DEFAULT_TIMEOUT);
 
     CDOViewLocksChangedEvent event = (CDOViewLocksChangedEvent)controlListener.getEvents().get(0);
-    assertEquals(operation, event.getOperation());
-    assertEquals(LockType.WRITE, event.getLockType());
+    assertEquals(Collections.singleton(operation), event.getOperations());
+    assertEquals(Collections.singleton(LockType.WRITE), event.getLockTypes());
     assertEquals(lockOwner, event.getLockOwner());
-    assertEquals(2, event.getNewLockStates().size());
+    assertEquals(2, event.getLockDeltas().length);
 
-    for (CDOLockState lockState : event.getNewLockStates())
+    for (CDOLockDelta lockDelta : event.getLockDeltas())
     {
-      assertEquals(event.getOperation() == Operation.LOCK ? lockOwner : null, lockState.getWriteLockOwner());
+      if (lockDelta.getKind() == Kind.ADDED)
+      {
+        assertEquals(lockOwner, lockDelta.getNewOwner());
+      }
+      else
+      {
+        assertEquals(lockOwner, lockDelta.getOldOwner());
+      }
     }
 
     controlListener.clearEvents();

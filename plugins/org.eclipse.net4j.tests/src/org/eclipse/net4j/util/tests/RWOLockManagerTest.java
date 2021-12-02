@@ -8,65 +8,52 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests;
+package org.eclipse.net4j.util.tests;
 
-import org.eclipse.emf.cdo.CDOLock;
-import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
-import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.tests.model1.SalesOrder;
-import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.util.CDOUtil;
-
+import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
+import org.eclipse.net4j.util.concurrent.RWOLockManager;
+import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.io.IOUtil;
 
+import java.util.Collections;
+import java.util.Set;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeoutException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Eike Stepper
  */
-public class LockingSequenceTest extends AbstractLockingTest
+public class RWOLockManagerTest extends AbstractOMTest
 {
   private static final int USERS = 10;
 
-  private static final int ALLOCATIONS = 30;
+  private static final int ALLOCATIONS = 10;
 
   private static final int RETRIES = 5;
 
-  @Override
-  protected void doSetUp() throws Exception
+  private static final Set<Object> EXCLUSIVE_RESOURCE = Collections.singleton(new Object()
   {
-    disableConsole();
-    super.doSetUp();
-  }
+    @Override
+    public String toString()
+    {
+      return "EXCLUSIVE_RESOURCE";
+    }
+  });
 
-  @Override
-  protected void doTearDown() throws Exception
+  public void testRWOLockManager() throws Exception
   {
-    disableConsole();
-    super.doTearDown();
-  }
-
-  public void testSafeCounter() throws Exception
-  {
-    disableConsole();
-    SalesOrder sequence = getModel1Factory().createSalesOrder();
-    sequence.setId(-1);
-
-    CDOSession session = openSession();
-    CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(getResourcePath("/res1"));
-    resource.getContents().add(sequence);
-    transaction.commit();
+    AtomicInteger resource = new AtomicInteger(-1);
+    RWOLockManager<Object, User> lockManager = new RWOLockManager<>();
 
     User[] users = new User[USERS];
-    CountDownLatch latch = new CountDownLatch(USERS);
-    CDOLockOwner[] allocators = new CDOLockOwner[USERS * ALLOCATIONS];
+    User[] allocators = new User[USERS * ALLOCATIONS];
+
+    CountDownLatch started = new CountDownLatch(1);
+    CountDownLatch finished = new CountDownLatch(USERS);
 
     for (int userID = 0; userID < USERS; userID++)
     {
-      users[userID] = new User(latch, allocators, session.openTransaction(), sequence);
+      users[userID] = new User(userID, started, finished, allocators, lockManager, resource);
     }
 
     for (int userID = 0; userID < USERS; userID++)
@@ -74,7 +61,8 @@ public class LockingSequenceTest extends AbstractLockingTest
       users[userID].start();
     }
 
-    await(latch);
+    started.countDown();
+    await(finished);
     IOUtil.OUT().println("FINISHED");
 
     Exception exception = null;
@@ -101,23 +89,27 @@ public class LockingSequenceTest extends AbstractLockingTest
    */
   private static final class User extends Thread
   {
-    private final CountDownLatch latch;
+    private final CountDownLatch started;
 
-    private final CDOLockOwner[] allocators;
+    private final CountDownLatch finished;
 
-    private final CDOTransaction transaction;
+    private final User[] allocators;
 
-    private final SalesOrder sequence;
+    private final RWOLockManager<Object, User> lockManager;
+
+    private final AtomicInteger resource;
 
     private Exception exception;
 
-    public User(CountDownLatch latch, CDOLockOwner[] allocators, CDOTransaction transaction, SalesOrder sequence)
+    public User(int userID, CountDownLatch started, CountDownLatch finished, User[] allocators, RWOLockManager<Object, User> lockManager,
+        AtomicInteger resource)
     {
-      super(transaction.getLockOwner().toString());
-      this.latch = latch;
+      super("User-" + userID);
+      this.started = started;
+      this.finished = finished;
       this.allocators = allocators;
-      this.transaction = transaction;
-      this.sequence = transaction.getObject(sequence);
+      this.lockManager = lockManager;
+      this.resource = resource;
     }
 
     public Exception getException()
@@ -128,19 +120,20 @@ public class LockingSequenceTest extends AbstractLockingTest
     @Override
     public void run()
     {
+      await(started);
+
       try
       {
-        CDOLock lock = CDOUtil.getCDOObject(sequence).cdoWriteLock();
         for (int allocation = 0; allocation < ALLOCATIONS; allocation++)
         {
           for (int retry = RETRIES; retry >= 0; --retry)
           {
             try
             {
-              lock.lock(1000);
+              lockManager.lock(this, EXCLUSIVE_RESOURCE, LockType.WRITE, 1, 10000000, null, null);
               break;
             }
-            catch (TimeoutException ex)
+            catch (TimeoutRuntimeException ex)
             {
               if (retry == 0)
               {
@@ -150,36 +143,46 @@ public class LockingSequenceTest extends AbstractLockingTest
 
               msg("Lock timed out. Trying again...");
             }
+            catch (InterruptedException ex)
+            {
+              exception = ex;
+              return;
+            }
           }
 
           try
           {
-            int id = sequence.getId() + 1;
+            int id = resource.get() + 1;
             if (allocators[id] != null)
             {
               throw new IllegalStateException(id + " already allocated by " + allocators[id]);
             }
 
-            allocators[id] = transaction.getLockOwner();
-            sequence.setId(id);
-            msg("Allocated " + id);
-
-            transaction.commit();
-            msg("Committed");
-            // yield();
+            allocators[id] = this;
+            resource.set(id);
+            msg("ALLOCATED " + id);
           }
           catch (Exception ex)
           {
             exception = ex;
             return;
           }
+          finally
+          {
+            lockManager.unlock(this, EXCLUSIVE_RESOURCE, LockType.WRITE, 1, null, null);
+          }
         }
       }
       finally
       {
-        transaction.close();
-        latch.countDown();
+        finished.countDown();
       }
+    }
+
+    @Override
+    public String toString()
+    {
+      return getName();
     }
 
     private void msg(String string)

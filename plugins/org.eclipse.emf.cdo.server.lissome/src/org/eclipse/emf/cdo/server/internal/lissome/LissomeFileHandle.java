@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDReference;
 import org.eclipse.emf.cdo.common.lob.CDOLobStore;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
+import org.eclipse.emf.cdo.common.lock.CDOLockDelta;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockArea;
@@ -499,6 +500,12 @@ public class LissomeFileHandle extends DataInputOutputFile implements CDODataInp
   }
 
   @Override
+  public CDOLockDelta readCDOLockDelta() throws IOException
+  {
+    return in().readCDOLockDelta();
+  }
+
+  @Override
   public CDOLockState readCDOLockState() throws IOException
   {
     return in().readCDOLockState();
@@ -819,6 +826,12 @@ public class LissomeFileHandle extends DataInputOutputFile implements CDODataInp
   public void writeCDOLockState(CDOLockState lockState) throws IOException
   {
     out().writeCDOLockState(lockState);
+  }
+
+  @Override
+  public void writeCDOLockDelta(CDOLockDelta lockDelta) throws IOException
+  {
+    out().writeCDOLockDelta(lockDelta);
   }
 
   @Override

@@ -415,6 +415,11 @@ public interface CDOProtocolConstants
 
   public static final int RELEASE_ALL_LOCKS = -1;
 
+  /**
+   * @since 4.15
+   */
+  public static final long DEFAULT_OPTIMISTIC_LOCKING_TIMEOUT = -2;
+
   // //////////////////////////////////////////////////////////////////////
   // Remote Sessions
 

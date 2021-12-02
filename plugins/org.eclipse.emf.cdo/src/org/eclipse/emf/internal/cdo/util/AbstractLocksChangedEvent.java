@@ -12,22 +12,21 @@ package org.eclipse.emf.internal.cdo.util;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
+import org.eclipse.emf.cdo.common.lock.CDOLockDelta;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
+import org.eclipse.emf.cdo.spi.common.lock.AbstractCDOLockChangeInfo;
 
-import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
-import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.INotifier;
 
+import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
-
-import java.util.List;
 
 /**
  * @author Caspar De Groot
  * @since 4.1
  */
-public class DefaultLocksChangedEvent extends Event implements CDOLockChangeInfo
+public abstract class AbstractLocksChangedEvent extends AbstractCDOLockChangeInfo
 {
   private static final long serialVersionUID = 1L;
 
@@ -35,7 +34,7 @@ public class DefaultLocksChangedEvent extends Event implements CDOLockChangeInfo
 
   private final CDOLockChangeInfo lockChangeInfo;
 
-  public DefaultLocksChangedEvent(INotifier notifier, InternalCDOView sender, CDOLockChangeInfo lockChangeInfo)
+  public AbstractLocksChangedEvent(INotifier notifier, InternalCDOView sender, CDOLockChangeInfo lockChangeInfo)
   {
     super(notifier);
     this.sender = sender;
@@ -60,34 +59,21 @@ public class DefaultLocksChangedEvent extends Event implements CDOLockChangeInfo
   }
 
   @Override
-  public final Operation getOperation()
-  {
-    return lockChangeInfo.getOperation();
-  }
-
-  @Override
-  public final LockType getLockType()
-  {
-    return lockChangeInfo.getLockType();
-  }
-
-  @Override
-  public final CDOLockOwner getLockOwner()
+  public CDOLockOwner getLockOwner()
   {
     return lockChangeInfo.getLockOwner();
   }
 
-  @Deprecated
   @Override
-  public final CDOLockState[] getLockStates()
+  public final CDOLockDelta[] getLockDeltas()
   {
-    return lockChangeInfo.getLockStates();
+    return lockChangeInfo.getLockDeltas();
   }
 
   @Override
-  public List<CDOLockState> getNewLockStates()
+  public CDOLockState[] getLockStates()
   {
-    return lockChangeInfo.getNewLockStates();
+    return lockChangeInfo.getLockStates();
   }
 
   @Override
@@ -96,14 +82,11 @@ public class DefaultLocksChangedEvent extends Event implements CDOLockChangeInfo
     return lockChangeInfo.isInvalidateAll();
   }
 
-  protected final CDOLockChangeInfo getLockChangeInfo()
-  {
-    return lockChangeInfo;
-  }
-
   @Override
   protected String formatAdditionalParameters()
   {
-    return "sender=" + getSender() + ", " + getLockChangeInfo();
+    return "sender=" + sender + ", " + lockChangeInfo;
   }
+
+  protected abstract InternalCDOSession getSession();
 }

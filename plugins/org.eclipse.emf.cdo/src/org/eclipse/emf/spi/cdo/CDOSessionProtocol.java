@@ -27,7 +27,9 @@ import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lob.CDOLob;
 import org.eclipse.emf.cdo.common.lob.CDOLobInfo;
+import org.eclipse.emf.cdo.common.lock.CDOLockDelta;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
+import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockGrade;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol;
@@ -52,7 +54,6 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLoader3;
 import org.eclipse.emf.cdo.view.CDOView;
 
-import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.collection.UnionSet;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -78,6 +79,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.BiConsumer;
 
 /**
  * If the meaning of this type isn't clear, there really should be more of a description here...
@@ -135,9 +137,9 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   public void openView(int viewID, boolean readOnly, CDOBranchPoint branchPoint);
 
   /**
-   * @since 4.0
+   * @since 4.15
    */
-  public CDOBranchPoint openView(int viewID, boolean readOnly, String durableLockingID);
+  public CDOBranchPoint openView(int viewID, boolean readOnly, String durableLockingID, BiConsumer<CDOID, LockGrade> consumer);
 
   /**
    * @since 4.0
@@ -157,14 +159,6 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   public boolean cancelQuery(int queryId);
 
   /**
-   * @since 4.0
-   * @deprecated Not called anymore. Use {@link #lockObjects2(List, int, CDOBranch, LockType, boolean, long)} instead.
-   */
-  @Deprecated
-  public LockObjectsResult lockObjects(List<InternalCDORevision> viewedRevisions, int viewID, CDOBranch viewedBranch, LockType lockType, long timeout)
-      throws InterruptedException;
-
-  /**
    * @since 4.1
    */
   public LockObjectsResult lockObjects2(List<CDORevisionKey> revisionKeys, int viewID, CDOBranch viewedBranch, LockType lockType, boolean recursive,
@@ -175,13 +169,6 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
    */
   public LockObjectsResult delegateLockObjects(String lockAreaID, List<CDORevisionKey> revisionKeys, CDOBranch viewedBranch, LockType lockType,
       boolean recursive, long timeout) throws InterruptedException;
-
-  /**
-   * @since 3.0
-   * @deprecated Not called anymore. Use {@link #unlockObjects2(CDOView, Collection, LockType, boolean)} instead.
-   */
-  @Deprecated
-  public void unlockObjects(CDOView view, Collection<CDOID> objectIDs, LockType lockType);
 
   /**
    * @since 4.1
@@ -214,25 +201,9 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   public void loadLob(CDOLobInfo info, Object outputStreamOrWriter) throws IOException;
 
   /**
-   * @since 4.0
-   * @deprecated Not called anymore. Use {@link #commitTransaction(InternalCDOCommitContext, OMMonitor)} instead.
-   */
-  @Deprecated
-  public CommitTransactionResult commitTransaction(int transactionID, String comment, boolean releaseLocks, CDOIDProvider idProvider, CDOCommitData commitData,
-      Collection<CDOLob<?>> lobs, OMMonitor monitor);
-
-  /**
    * @since 4.1
    */
   public CommitTransactionResult commitTransaction(InternalCDOCommitContext context, OMMonitor monitor);
-
-  /**
-   * @since 4.0
-   * @deprecated Not called anymore. Use {@link #commitDelegation(InternalCDOCommitContext, OMMonitor)} instead.
-   */
-  @Deprecated
-  public CommitTransactionResult commitDelegation(CDOBranch branch, String userID, String comment, CDOCommitData commitData,
-      Map<CDOID, EClass> detachedObjectTypes, Collection<CDOLob<?>> lobs, OMMonitor monitor);
 
   /**
    * @since 4.1
@@ -292,30 +263,15 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   public CDOChangeSetData[] loadChangeSets(CDOBranchPointRange... ranges);
 
   /**
-   * @since 4.0
-   * @deprecated As of 4.6 use {@link #loadMergeData2(CDORevisionAvailabilityInfo, CDORevisionAvailabilityInfo, CDORevisionAvailabilityInfo, CDORevisionAvailabilityInfo)}.
-   */
-  @Deprecated
-  public Set<CDOID> loadMergeData(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo, CDORevisionAvailabilityInfo targetBaseInfo,
-      CDORevisionAvailabilityInfo sourceBaseInfo);
-
-  /**
    * @since 4.6
    */
   public MergeDataResult loadMergeData2(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo,
       CDORevisionAvailabilityInfo targetBaseInfo, CDORevisionAvailabilityInfo sourceBaseInfo);
 
   /**
-   * @since 4.1
-   * @deprecated Not called anymore. Use {@link #getLockStates(int, Collection, int)} instead.
+   * @since 4.15
    */
-  @Deprecated
-  public CDOLockState[] getLockStates(int viewID, Collection<CDOID> ids);
-
-  /**
-   * @since 4.4
-   */
-  public CDOLockState[] getLockStates(int branchID, Collection<CDOID> ids, int depth);
+  public List<CDOLockState> getLockStates2(int branchID, Collection<CDOID> ids, int depth);
 
   /**
    * @since 4.1
@@ -331,19 +287,6 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
    * @since 4.15
    */
   public String[] authorizeOperations(AuthorizableOperation[] operations);
-
-  /**
-   * Requests that the server initiate the change-credentials protocol.
-   * This is an optional session protocol operation.
-   *
-   * @since 4.3
-   * @deprecated As of 4.13 use {@link #requestChangeServerPassword(AtomicReference)}.
-   *
-   * @throws UnsupportedOperationException if the session protocol implementation does
-   *         not support requesting change of credentials
-   */
-  @Deprecated
-  public void requestChangeCredentials();
 
   /**
    * Requests that the server initiate the change-credentials protocol.
@@ -1094,7 +1037,9 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
     private CDOReferenceAdjuster referenceAdjuster;
 
-    private CDOLockState[] newLockStates;
+    private List<CDOLockDelta> lockDeltas;
+
+    private List<CDOLockState> lockStates;
 
     private boolean clearResourcePathCache;
 
@@ -1320,20 +1265,35 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     }
 
     /**
-     * @since 4.1
+     * @since 4.15
      */
-    public CDOLockState[] getNewLockStates()
+    public List<CDOLockDelta> getLockDeltas()
     {
-      return newLockStates;
+      return lockDeltas;
     }
 
     /**
-     * @since 4.1
+     * @since 4.15
      */
-    public void setNewLockStates(CDOLockState[] newLockStates)
+    public void setLockDeltas(List<CDOLockDelta> lockDeltas)
     {
-      CheckUtil.checkArg(newLockStates, "newLockStates");
-      this.newLockStates = newLockStates;
+      this.lockDeltas = lockDeltas;
+    }
+
+    /**
+     * @since 4.15
+     */
+    public List<CDOLockState> getLockStates()
+    {
+      return lockStates;
+    }
+
+    /**
+     * @since 4.15
+     */
+    public void setLockStates(List<CDOLockState> lockStates)
+    {
+      this.lockStates = lockStates;
     }
 
     /**
@@ -1376,6 +1336,26 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     protected PostCommitReferenceAdjuster createReferenceAdjuster()
     {
       return new PostCommitReferenceAdjuster(idProvider, new CDOIDMapper(idMappings));
+    }
+
+    /**
+     * @since 4.1
+     * @deprecated As of 4.15 use {@link #getLockDeltas()}.
+     */
+    @Deprecated
+    public CDOLockState[] getNewLockStates()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    /**
+     * @since 4.1
+     * @deprecated As of 4.15 use {@link #setLockStates(List)}.
+     */
+    @Deprecated
+    public void setNewLockStates(CDOLockState[] newLockStates)
+    {
+      throw new UnsupportedOperationException();
     }
 
     /**
@@ -1423,38 +1403,35 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
    */
   public static final class LockObjectsResult
   {
-    private boolean successful;
+    private final boolean successful;
 
-    private boolean timedOut;
+    private final boolean timedOut;
 
-    private boolean waitForUpdate;
+    private final boolean waitForUpdate;
 
-    private long requiredTimestamp;
+    private final long requiredTimestamp;
 
-    private long timestamp;
+    private final long timestamp;
 
-    private CDORevisionKey[] staleRevisions;
+    private final CDORevisionKey[] staleRevisions;
 
-    private CDOLockState[] newLockStates;
+    private final List<CDOLockDelta> lockDeltas;
 
-    @Deprecated
-    public LockObjectsResult(boolean successful, boolean timedOut, boolean waitForUpdate, long requiredTimestamp, CDORevisionKey[] staleRevisions)
-    {
-      throw new AssertionError("Deprecated");
-    }
+    private final List<CDOLockState> lockStates;
 
     /**
-     * @since 4.1
+     * @since 4.15
      */
     public LockObjectsResult(boolean successful, boolean timedOut, boolean waitForUpdate, long requiredTimestamp, CDORevisionKey[] staleRevisions,
-        CDOLockState[] newLockStates, long timestamp)
+        List<CDOLockDelta> lockDeltas, List<CDOLockState> lockStates, long timestamp)
     {
       this.successful = successful;
       this.timedOut = timedOut;
       this.waitForUpdate = waitForUpdate;
       this.requiredTimestamp = requiredTimestamp;
       this.staleRevisions = staleRevisions;
-      this.newLockStates = newLockStates;
+      this.lockDeltas = lockDeltas;
+      this.lockStates = lockStates;
       this.timestamp = timestamp;
     }
 
@@ -1478,25 +1455,59 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
       return requiredTimestamp;
     }
 
-    public CDORevisionKey[] getStaleRevisions()
-    {
-      return staleRevisions;
-    }
-
-    /**
-     * @since 4.1
-     */
-    public CDOLockState[] getNewLockStates()
-    {
-      return newLockStates;
-    }
-
     /**
      * @since 4.1
      */
     public long getTimestamp()
     {
       return timestamp;
+    }
+
+    public CDORevisionKey[] getStaleRevisions()
+    {
+      return staleRevisions;
+    }
+
+    /**
+     * @since 4.15
+     */
+    public List<CDOLockDelta> getLockDeltas()
+    {
+      return lockDeltas;
+    }
+
+    /**
+     * @since 4.15
+     */
+    public List<CDOLockState> getLockStates()
+    {
+      return lockStates;
+    }
+
+    /**
+     * @since 4.1
+     * @deprecated As of 4.15 use {@link #getLockStates()}.
+     */
+    @Deprecated
+    public CDOLockState[] getNewLockStates()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Deprecated
+    public LockObjectsResult(boolean successful, boolean timedOut, boolean waitForUpdate, long requiredTimestamp, CDORevisionKey[] staleRevisions)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    /**
+     * @since 4.1
+     */
+    @Deprecated
+    public LockObjectsResult(boolean successful, boolean timedOut, boolean waitForUpdate, long requiredTimestamp, CDORevisionKey[] staleRevisions,
+        CDOLockState[] newLockStates, long timestamp)
+    {
+      throw new UnsupportedOperationException();
     }
   }
 
@@ -1507,23 +1518,87 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
    */
   public static final class UnlockObjectsResult
   {
-    private CDOLockState[] newLockStates;
+    private final long timestamp;
 
-    private long timestamp;
+    private final List<CDOLockDelta> lockDeltas;
 
-    public UnlockObjectsResult(CDOLockState[] newLockStates, long timestamp)
+    private final List<CDOLockState> lockStates;
+
+    /**
+     * @since 4.15
+     */
+    public UnlockObjectsResult(long timestamp, List<CDOLockDelta> lockDeltas, List<CDOLockState> lockStates)
     {
-      this.newLockStates = newLockStates;
-    }
-
-    public CDOLockState[] getNewLockStates()
-    {
-      return newLockStates;
+      this.timestamp = timestamp;
+      this.lockDeltas = lockDeltas;
+      this.lockStates = lockStates;
     }
 
     public long getTimestamp()
     {
       return timestamp;
     }
+
+    /**
+     * @since 4.15
+     */
+    public List<CDOLockDelta> getLockDeltas()
+    {
+      return lockDeltas;
+    }
+
+    /**
+     * @since 4.15
+     */
+    public List<CDOLockState> getLockStates()
+    {
+      return lockStates;
+    }
+
+    @Deprecated
+    public UnlockObjectsResult(CDOLockState[] newLockStates, long timestamp)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    /**
+     * @deprecated As of 4.15 use {@link #getLockStates()}.
+     */
+    @Deprecated
+    public CDOLockState[] getNewLockStates()
+    {
+      throw new UnsupportedOperationException();
+    }
   }
+
+  @Deprecated
+  public LockObjectsResult lockObjects(List<InternalCDORevision> viewedRevisions, int viewID, CDOBranch viewedBranch, LockType lockType, long timeout)
+      throws InterruptedException;
+
+  @Deprecated
+  public void unlockObjects(CDOView view, Collection<CDOID> objectIDs, LockType lockType);
+
+  @Deprecated
+  public CommitTransactionResult commitTransaction(int transactionID, String comment, boolean releaseLocks, CDOIDProvider idProvider, CDOCommitData commitData,
+      Collection<CDOLob<?>> lobs, OMMonitor monitor);
+
+  @Deprecated
+  public CommitTransactionResult commitDelegation(CDOBranch branch, String userID, String comment, CDOCommitData commitData,
+      Map<CDOID, EClass> detachedObjectTypes, Collection<CDOLob<?>> lobs, OMMonitor monitor);
+
+  @Deprecated
+  public Set<CDOID> loadMergeData(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo, CDORevisionAvailabilityInfo targetBaseInfo,
+      CDORevisionAvailabilityInfo sourceBaseInfo);
+
+  @Deprecated
+  public CDOLockState[] getLockStates(int viewID, Collection<CDOID> ids);
+
+  @Deprecated
+  public CDOLockState[] getLockStates(int branchID, Collection<CDOID> ids, int depth);
+
+  @Deprecated
+  public CDOBranchPoint openView(int viewID, boolean readOnly, String durableLockingID);
+
+  @Deprecated
+  public void requestChangeCredentials();
 }

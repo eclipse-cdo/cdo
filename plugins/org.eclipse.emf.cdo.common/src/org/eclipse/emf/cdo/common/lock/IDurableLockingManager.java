@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 
 import java.util.Map;
+import java.util.function.Consumer;
 
 /**
  * Manages all persistent aspects of durable CDO views such as {@link CDOBranchPoint branch point} and acquired locks.
@@ -198,8 +199,38 @@ public interface IDurableLockingManager
       return (value & 4) != 0;
     }
 
+    /**
+     * @since 4.15
+     */
+    public void forEachLockType(Consumer<LockType> consumer)
+    {
+      if (consumer != null)
+      {
+        if (isRead())
+        {
+          consumer.accept(LockType.READ);
+        }
+
+        if (isWrite())
+        {
+          consumer.accept(LockType.WRITE);
+        }
+
+        if (isOption())
+        {
+          consumer.accept(LockType.OPTION);
+        }
+      }
+    }
+
     public LockGrade getUpdated(LockType type, boolean on)
     {
+      if (type == null && !on)
+      {
+        // Unlock all types.
+        return NONE;
+      }
+
       int mask = getMask(type);
 
       if (on)

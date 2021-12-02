@@ -11,11 +11,14 @@
  */
 package org.eclipse.emf.cdo;
 
+import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.concurrent.IRWLockManager;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
+import org.eclipse.net4j.util.concurrent.IRWOLockManager;
 
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.locks.Lock;
@@ -31,9 +34,10 @@ import java.util.concurrent.locks.Lock;
  */
 public interface CDOLock extends Lock
 {
-  public static final int WAIT = IRWLockManager.WAIT;
-
-  public static final int NO_WAIT = IRWLockManager.NO_WAIT;
+  /**
+   * @since 4.15
+   */
+  public static final long NO_TIMEOUT = IRWOLockManager.NO_TIMEOUT;
 
   /**
    * @since 4.8
@@ -71,4 +75,15 @@ public interface CDOLock extends Lock
    * from the requesting one), <code>false</code> otherwise.
    */
   public boolean isLockedByOthers();
+
+  /**
+   * @since 4.15
+   */
+  public Set<CDOLockOwner> getOwners();
+
+  @Deprecated
+  public static final int WAIT = IRWLockManager.WAIT;
+
+  @Deprecated
+  public static final int NO_WAIT = IRWLockManager.NO_WAIT;
 }

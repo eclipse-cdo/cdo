@@ -55,54 +55,54 @@ public class LockStateCacheTest extends AbstractCDOTest
     InternalCDOLockState lockState4 = getLockState(cache, view4);
 
     // Write lock.
-    lockState1.setWriteLockOwner(owner1);
+    lockState1.addOwner(owner1, LockType.WRITE);
     assertEquals(owner1, lockState1.getWriteLockOwner());
     assertEquals(owner1, lockState2.getWriteLockOwner());
     assertEquals(owner1, lockState3.getWriteLockOwner());
     assertEquals(owner1, lockState4.getWriteLockOwner());
 
     // Another write lock is not possible.
-    assertException(IllegalStateException.class, () -> lockState2.setWriteLockOwner(owner2));
+    assertException(IllegalStateException.class, () -> lockState2.addOwner(owner2, LockType.WRITE));
 
     // A read lock is not possible.
-    assertException(IllegalStateException.class, () -> lockState3.addReadLockOwner(owner3));
+    assertException(IllegalStateException.class, () -> lockState3.addOwner(owner3, LockType.READ));
 
     // A write option is not possible.
-    assertException(IllegalStateException.class, () -> lockState4.setWriteOptionOwner(owner4));
+    assertException(IllegalStateException.class, () -> lockState4.addOwner(owner4, LockType.OPTION));
 
     // Release write lock.
-    lockState1.setWriteLockOwner(null);
+    lockState1.removeOwner(owner1, LockType.WRITE);
     assertEquals(null, lockState1.getWriteLockOwner());
 
     // Read lock first time.
-    lockState1.addReadLockOwner(owner1);
+    lockState1.addOwner(owner1, LockType.READ);
     assertEquals(1, lockState1.getReadLockOwners().size());
     assertTrue(lockState1.getReadLockOwners().contains(owner1));
 
     // A write lock is not possible.
-    assertException(IllegalStateException.class, () -> lockState4.setWriteLockOwner(owner4));
+    assertException(IllegalStateException.class, () -> lockState4.addOwner(owner4, LockType.WRITE));
 
     // Read lock second time.
-    lockState1.addReadLockOwner(owner2);
+    lockState1.addOwner(owner2, LockType.READ);
     assertEquals(2, lockState1.getReadLockOwners().size());
     assertTrue(lockState1.getReadLockOwners().contains(owner1));
     assertTrue(lockState1.getReadLockOwners().contains(owner2));
 
     // A write lock is not possible.
-    assertException(IllegalStateException.class, () -> lockState4.setWriteLockOwner(owner4));
+    assertException(IllegalStateException.class, () -> lockState4.addOwner(owner4, LockType.WRITE));
 
     // Read lock third time.
-    lockState1.addReadLockOwner(owner3);
+    lockState1.addOwner(owner3, LockType.READ);
     assertEquals(3, lockState1.getReadLockOwners().size());
     assertTrue(lockState1.getReadLockOwners().contains(owner1));
     assertTrue(lockState1.getReadLockOwners().contains(owner2));
     assertTrue(lockState1.getReadLockOwners().contains(owner3));
 
     // A write lock is not possible.
-    assertException(IllegalStateException.class, () -> lockState4.setWriteLockOwner(owner4));
+    assertException(IllegalStateException.class, () -> lockState4.addOwner(owner4, LockType.WRITE));
 
     // Write option.
-    lockState1.setWriteOptionOwner(owner1);
+    lockState1.addOwner(owner1, LockType.OPTION);
     assertEquals(3, lockState1.getReadLockOwners().size());
     assertTrue(lockState1.getReadLockOwners().contains(owner1));
     assertTrue(lockState1.getReadLockOwners().contains(owner2));
@@ -457,7 +457,7 @@ public class LockStateCacheTest extends AbstractCDOTest
     // Write locked by same owner.
     initial(1, 0) //
         .modify(0, 0, 1) //
-        .verify(IllegalStateException.class);
+        .verify(1, 0, 1);
 
     // Write locked by same owner and read locked by same owner.
     initial(1, 0, 1) //
@@ -840,36 +840,36 @@ public class LockStateCacheTest extends AbstractCDOTest
         int reader = readers[i];
         if (reader > 0)
         {
-          lockState.addReadLockOwner(lockOwners[reader]);
+          lockState.addOwner(lockOwners[reader], LockType.READ);
         }
         else
         {
-          lockState.removeReadLockOwner(lockOwners[-reader]);
+          lockState.removeOwner(lockOwners[-reader], LockType.READ);
         }
       }
 
       if (writer == -1)
       {
-        lockState.setWriteLockOwner(null);
+        lockState.removeOwner(lockState.getWriteLockOwner(), LockType.WRITE);
       }
       else if (writer > 0)
       {
-        lockState.setWriteLockOwner(lockOwners[writer]);
+        lockState.addOwner(lockOwners[writer], LockType.WRITE);
       }
 
       if (optioner == -1)
       {
-        lockState.setWriteOptionOwner(null);
+        lockState.removeOwner(lockState.getWriteOptionOwner(), LockType.OPTION);
       }
       else if (optioner > 0)
       {
-        lockState.setWriteOptionOwner(lockOwners[optioner]);
+        lockState.addOwner(lockOwners[optioner], LockType.OPTION);
       }
     }
 
     private void update(int ownerToRemove)
     {
-      lockState.removeOwner(lockOwners[ownerToRemove]);
+      lockState.clearOwner(lockOwners[ownerToRemove]);
     }
 
     public TestExecution modify(int writer, int optioner, int... readers)

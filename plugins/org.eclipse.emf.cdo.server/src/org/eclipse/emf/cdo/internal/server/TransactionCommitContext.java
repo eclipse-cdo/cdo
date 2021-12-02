@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDReference;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo.Operation;
+import org.eclipse.emf.cdo.common.lock.CDOLockDelta;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
@@ -49,6 +50,8 @@ import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.internal.common.commit.FailureCommitInfo;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
+import org.eclipse.emf.cdo.internal.server.LockingManager.LockDeltaCollector;
+import org.eclipse.emf.cdo.internal.server.LockingManager.LockStateCollector;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
@@ -82,11 +85,10 @@ import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.IndexedList;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
-import org.eclipse.net4j.util.concurrent.RWOLockManager;
+import org.eclipse.net4j.util.concurrent.IRWOLockManager;
 import org.eclipse.net4j.util.concurrent.RWOLockManager.LockState;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
-import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -97,7 +99,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -125,8 +126,6 @@ public class TransactionCommitContext implements InternalCommitContext
   private final CDOBranch branch;
 
   private InternalRepository repository;
-
-  private InternalLockManager lockManager;
 
   private InternalCDOPackageRegistry repositoryPackageRegistry;
 
@@ -180,10 +179,6 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private CommitData originalCommmitData;
 
-  private Set<Object> lockedObjects = new HashSet<>();
-
-  private List<CDOID> lockedTargets;
-
   private Map<CDOID, CDOID> idMappings = CDOIDUtil.createMap();
 
   private CDOReferenceAdjuster idMapper = new CDOIDMapper(idMappings);
@@ -202,17 +197,48 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private ExtendedDataInputStream lobs;
 
-  private CDOLockState[] locksOnNewObjects = Repository.NO_LOCK_STATES;
+  private long optimisticLockingTimeout;
 
+  private InternalLockManager lockManager;
+
+  /**
+   * The keys of objects that are locked in lockObjects().
+   */
+  private Set<Object> lockedObjects = new HashSet<>();
+
+  /**
+   * The IDs of referenced objects that are locked in lockObjects(), only relevant if ensuringReferentialIntegrity.
+   */
+  private List<CDOID> lockedTargets;
+
+  /**
+   * The lock states on new objects that the client wants to keep after the commit.
+   */
+  private CDOLockState[] locksOnNewObjects = CDOLockUtil.NO_LOCK_STATES;
+
+  /**
+   * The IDs of objects that the client wants to release after the commit, as per autoReleaseLocks.
+   */
   private CDOID[] idsToUnlock = new CDOID[0];
+
+  /**
+   * The lock deltas that are visible after the commit.
+   */
+  private final LockDeltaCollector lockDeltas = new LockDeltaCollector();
+
+  /**
+   * The lock states that are visible after the commit.
+   */
+  private final LockStateCollector lockStates = new LockStateCollector();
+
+  /**
+   * The lock state changes that are visible after the commit.
+   */
+  private CDOLockChangeInfo lockChangeInfo;
 
   private Map<Object, Object> data;
 
   private CommitNotificationInfo commitNotificationInfo = new CommitNotificationInfo();
-
-  private CDOLockChangeInfo lockChangeInfo;
-
-  private final List<LockState<Object, IView>> postCommitLockStates = new ArrayList<>();
 
   private boolean allowModify;
 
@@ -659,6 +685,12 @@ public class TransactionCommitContext implements InternalCommitContext
   }
 
   @Override
+  public void setOptimisticLockingTimeout(long optimisticLockingTimeout)
+  {
+    this.optimisticLockingTimeout = optimisticLockingTimeout;
+  }
+
+  @Override
   public void setCommitNumber(int commitNumber)
   {
     this.commitNumber = commitNumber;
@@ -686,20 +718,6 @@ public class TransactionCommitContext implements InternalCommitContext
   public void setLobs(ExtendedDataInputStream in)
   {
     lobs = in;
-  }
-
-  @Override
-  @Deprecated
-  public boolean isAutoReleaseLocksEnabled()
-  {
-    return false;
-  }
-
-  @Override
-  @Deprecated
-  public void setAutoReleaseLocksEnabled(boolean on)
-  {
-    // Do nothing.
   }
 
   @Override
@@ -868,12 +886,6 @@ public class TransactionCommitContext implements InternalCommitContext
     }
   }
 
-  @Override
-  public List<LockState<Object, IView>> getPostCommmitLockStates()
-  {
-    return postCommitLockStates;
-  }
-
   protected void handleException(Throwable throwable)
   {
     try
@@ -955,20 +967,22 @@ public class TransactionCommitContext implements InternalCommitContext
     return timeStamp;
   }
 
-  /**
-   * @deprecated Does not seem to be used.
-   */
-  @Deprecated
-  protected void setTimeStamp(long timeStamp)
-  {
-    repository.forceCommitTimeStamp(timeStamp, new Monitor());
-    this.timeStamp = timeStamp;
-  }
-
   @Override
   public long getPreviousTimeStamp()
   {
     return previousTimeStamp;
+  }
+
+  @Override
+  public List<CDOLockDelta> getLockDeltas()
+  {
+    return lockDeltas;
+  }
+
+  @Override
+  public List<CDOLockState> getLockStates()
+  {
+    return lockStates;
   }
 
   @Override
@@ -1195,11 +1209,13 @@ public class TransactionCommitContext implements InternalCommitContext
       {
         try
         {
-          long timeout = repository.getOptimisticLockingTimeout();
+          long timeout = optimisticLockingTimeout == CDOProtocolConstants.DEFAULT_OPTIMISTIC_LOCKING_TIMEOUT //
+              ? repository.getOptimisticLockingTimeout() //
+              : optimisticLockingTimeout;
 
           // First lock all objects (incl. possible ref targets).
-          // This is a transient operation, it does not check for existence!
-          lockManager.lock2(LockType.WRITE, transaction, lockedObjects, timeout);
+          // This is a transient operation, it does not check for existence of the ref targets!
+          lockManager.lock(transaction, lockedObjects, LockType.WRITE, 1, timeout, false, false, null, null);
         }
         catch (Exception ex)
         {
@@ -1254,7 +1270,7 @@ public class TransactionCommitContext implements InternalCommitContext
       Object key = lockManager.getLockKey(id, branch);
       lockedObjects.add(key);
 
-      // Let this object be checked for existance after it has been locked
+      // Let this object be checked for existence after it has been locked
       if (lockedTargets == null)
       {
         lockedTargets = new ArrayList<>();
@@ -1665,6 +1681,10 @@ public class TransactionCommitContext implements InternalCommitContext
     return accessor;
   }
 
+  /**
+   * Called from commit().
+   * Remembers the lockChangeInfo for postCommit().
+   */
   protected void updateInfraStructure(OMMonitor monitor)
   {
     try
@@ -1678,18 +1698,21 @@ public class TransactionCommitContext implements InternalCommitContext
       InternalCDOCommitInfoManager commitInfoManager = repository.getCommitInfoManager();
       commitInfoManager.setLastCommitOfBranch(branch, timeStamp);
 
-      releaseImplicitLocks();
+      releaseImplicitLocks(); // These have no visible impact outside of this commit.
       monitor.worked();
 
-      acquireLocksOnNewObjects();
+      CDOLockOwner lockOwner = CDOLockUtil.createLockOwner(transaction);
+
+      acquireLocksOnNewObjects(lockOwner);
       monitor.worked();
 
-      autoReleaseExplicitLocks();
+      autoReleaseExplicitLocks(lockOwner);
       monitor.worked();
 
-      if (!postCommitLockStates.isEmpty())
+      if (!lockDeltas.isEmpty())
       {
-        lockChangeInfo = createLockChangeInfo(postCommitLockStates);
+        CDOBranchPoint branchPoint = getBranchPoint();
+        lockChangeInfo = CDOLockUtil.createLockChangeInfo(branchPoint, lockOwner, lockDeltas, lockStates);
       }
 
       repository.notifyWriteAccessHandlers(transaction, this, false, monitor.fork());
@@ -1704,24 +1727,24 @@ public class TransactionCommitContext implements InternalCommitContext
     }
   }
 
-  protected synchronized void releaseImplicitLocks()
+  protected void releaseImplicitLocks()
   {
     // Unlock objects locked during commit
     if (!lockedObjects.isEmpty())
     {
-      lockManager.unlock2(LockType.WRITE, transaction, lockedObjects);
+      lockManager.unlock(transaction, lockedObjects, LockType.WRITE, 1, false, false, null, null);
       lockedObjects.clear();
     }
   }
 
-  protected void acquireLocksOnNewObjects() throws InterruptedException
+  protected void acquireLocksOnNewObjects(CDOLockOwner lockOwner) throws InterruptedException
   {
-    final CDOLockOwner owner = CDOLockUtil.createLockOwner(transaction);
-    final boolean mapIDs = transaction.getRepository().getIDGenerationLocation() == IDGenerationLocation.STORE;
+    boolean mapIDs = transaction.getRepository().getIDGenerationLocation() == IDGenerationLocation.STORE;
+    lockDeltas.setOperation(Operation.LOCK);
 
-    for (CDOLockState lockState : locksOnNewObjects)
+    for (CDOLockState lockStateOnNewObject : locksOnNewObjects)
     {
-      Object target = lockState.getLockedObject();
+      Object target = lockStateOnNewObject.getLockedObject();
 
       if (mapIDs)
       {
@@ -1733,24 +1756,18 @@ public class TransactionCommitContext implements InternalCommitContext
         target = idAndBranch != null ? CDOIDUtil.createIDAndBranch(newID, idAndBranch.getBranch()) : newID;
       }
 
-      LockState<Object, IView> postCommitLockState = null;
       for (LockType type : ALL_LOCK_TYPES)
       {
-        if (lockState.isLocked(type, owner, false))
+        if (lockStateOnNewObject.isLocked(type, lockOwner, false))
         {
-          List<LockState<Object, IView>> lockStates = lockManager.lock2(type, transaction, Collections.singleton(target), 0);
-          postCommitLockState = lockStates.get(0);
+          Set<Object> objects = Collections.singleton(target);
+          lockManager.lock(transaction, objects, type, 1, IRWOLockManager.NO_TIMEOUT, false, true, lockDeltas, lockStates);
         }
-      }
-
-      if (postCommitLockState != null)
-      {
-        postCommitLockStates.add(postCommitLockState);
       }
     }
   }
 
-  protected void autoReleaseExplicitLocks() throws InterruptedException
+  protected void autoReleaseExplicitLocks(CDOLockOwner lockOwner) throws InterruptedException
   {
     List<Object> targets = new ArrayList<>();
 
@@ -1772,29 +1789,8 @@ public class TransactionCommitContext implements InternalCommitContext
       }
     }
 
-    try
-    {
-      RWOLockManager.setUnlockAll(true);
-
-      List<LockState<Object, IView>> lockStates = lockManager.unlock2(true, LockType.WRITE, transaction, targets, false);
-      if (lockStates != null)
-      {
-        postCommitLockStates.addAll(lockStates);
-      }
-    }
-    finally
-    {
-      RWOLockManager.setUnlockAll(false);
-    }
-  }
-
-  protected CDOLockChangeInfo createLockChangeInfo(List<LockState<Object, IView>> newLockStates)
-  {
-    CDOBranchPoint branchPoint = getBranchPoint();
-    CDOLockOwner lockOwner = transaction.getLockOwner();
-    List<CDOLockState> newStates = Arrays.asList(Repository.toCDOLockStates(newLockStates));
-
-    return CDOLockUtil.createLockChangeInfo(branchPoint, lockOwner, Operation.UNLOCK, null, newStates);
+    lockDeltas.setOperation(Operation.UNLOCK);
+    lockManager.unlock(transaction, targets, null, IRWOLockManager.ALL_LOCKS, false, true, lockDeltas, lockStates);
   }
 
   protected void addNewPackageUnits(OMMonitor monitor)
@@ -1903,6 +1899,36 @@ public class TransactionCommitContext implements InternalCommitContext
   {
     return MessageFormat.format("TransactionCommitContext[{0}, {1}, {2}]", transaction.getSession(), transaction, //$NON-NLS-1$
         CDOCommonUtil.formatTimeStamp(timeStamp));
+  }
+
+  @Override
+  @Deprecated
+  public boolean isAutoReleaseLocksEnabled()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void setAutoReleaseLocksEnabled(boolean on)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public List<LockState<Object, IView>> getPostCommmitLockStates()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * @deprecated Does not seem to be used.
+   */
+  @Deprecated
+  protected void setTimeStamp(long timeStamp)
+  {
+    throw new UnsupportedOperationException();
   }
 
   /**

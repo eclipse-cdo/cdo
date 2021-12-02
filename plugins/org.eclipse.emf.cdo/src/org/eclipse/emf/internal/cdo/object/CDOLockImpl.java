@@ -13,6 +13,8 @@ package org.eclipse.emf.internal.cdo.object;
 
 import org.eclipse.emf.cdo.CDOLock;
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
+import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.util.LockTimeoutException;
 
 import org.eclipse.net4j.util.WrappedException;
@@ -23,6 +25,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.text.MessageFormat;
 import java.util.Collections;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.locks.Condition;
@@ -34,6 +37,8 @@ import java.util.concurrent.locks.Condition;
 public class CDOLockImpl implements CDOLock
 {
   public static final CDOLock NOOP = new NOOPLockImpl();
+
+  private static final Set<CDOLockOwner> NO_OWNERS = Collections.emptySet();
 
   private final InternalCDOObject object;
 
@@ -73,12 +78,35 @@ public class CDOLockImpl implements CDOLock
   }
 
   @Override
+  public Set<CDOLockOwner> getOwners()
+  {
+    CDOLockState lockState = object.cdoLockState();
+
+    switch (type)
+    {
+    case READ:
+      return lockState.getReadLockOwners();
+
+    case WRITE:
+      CDOLockOwner writeLockOwner = lockState.getWriteLockOwner();
+      return writeLockOwner == null ? NO_OWNERS : Collections.singleton(writeLockOwner);
+
+    case OPTION:
+      CDOLockOwner writeOptionOwner = lockState.getWriteOptionOwner();
+      return writeOptionOwner == null ? NO_OWNERS : Collections.singleton(writeOptionOwner);
+
+    default:
+      throw new AssertionError();
+    }
+  }
+
+  @Override
   public void lock()
   {
     try
     {
       InternalCDOView view = object.cdoView();
-      view.lockObjects(Collections.singletonList(object), type, WAIT);
+      view.lockObjects(Collections.singletonList(object), type, NO_TIMEOUT);
     }
     catch (InterruptedException ex)
     {
@@ -132,7 +160,7 @@ public class CDOLockImpl implements CDOLock
     try
     {
       InternalCDOView view = object.cdoView();
-      view.lockObjects(Collections.singletonList(object), type, NO_WAIT);
+      view.lockObjects(Collections.singletonList(object), type, 0);
       return true;
     }
     catch (LockTimeoutException ex)
@@ -213,6 +241,12 @@ public class CDOLockImpl implements CDOLock
     public boolean isLockedByOthers()
     {
       return false;
+    }
+
+    @Override
+    public Set<CDOLockOwner> getOwners()
+    {
+      return NO_OWNERS;
     }
 
     @Override

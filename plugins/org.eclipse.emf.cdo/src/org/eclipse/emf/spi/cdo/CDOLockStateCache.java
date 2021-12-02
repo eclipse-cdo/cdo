@@ -12,12 +12,14 @@ package org.eclipse.emf.spi.cdo;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.lock.CDOLockDelta;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.function.Consumer;
 
 /**
@@ -40,11 +42,36 @@ public interface CDOLockStateCache extends ILifecycle
 
   public void addLockStates(CDOBranch branch, Collection<? extends CDOLockState> newLockStates, Consumer<CDOLockState> consumer);
 
-  public void removeOwner(CDOBranch branch, CDOLockOwner owner, Consumer<CDOLockState> changeConsumer);
-
-  public void remapOwner(CDOBranch branch, CDOLockOwner oldOwner, CDOLockOwner newOwner);
+  public void updateLockStates(CDOBranch branch, Collection<CDOLockDelta> lockDeltas, Collection<CDOLockState> lockStates, Consumer<CDOLockState> consumer);
 
   public void removeLockStates(CDOBranch branch, Collection<CDOID> ids, Consumer<CDOLockState> consumer);
 
   public void removeLockStates(CDOBranch branch);
+
+  public List<CDOLockDelta> removeOwner(CDOBranch branch, CDOLockOwner owner, Consumer<CDOLockState> consumer);
+
+  public void remapOwner(CDOBranch branch, CDOLockOwner oldOwner, CDOLockOwner newOwner);
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class ObjectAlreadyLockedException extends IllegalStateException
+  {
+    private static final long serialVersionUID = 1L;
+
+    public ObjectAlreadyLockedException(String message, Throwable cause)
+    {
+      super(message, cause);
+    }
+
+    public ObjectAlreadyLockedException(String message)
+    {
+      super(message);
+    }
+
+    public ObjectAlreadyLockedException(CDOID id, CDOBranch branch, Throwable cause)
+    {
+      super(id + " on " + branch.getPathName() + " branch: " + cause.getMessage(), cause);
+    }
+  }
 }

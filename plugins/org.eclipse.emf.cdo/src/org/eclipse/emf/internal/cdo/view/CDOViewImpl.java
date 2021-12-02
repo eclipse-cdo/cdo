@@ -22,10 +22,11 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
-import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo.Operation;
+import org.eclipse.emf.cdo.common.lock.CDOLockDelta;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
+import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockGrade;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.UnitOpcode;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
@@ -72,7 +73,7 @@ import org.eclipse.emf.internal.cdo.object.CDOInvalidationNotificationImpl;
 import org.eclipse.emf.internal.cdo.object.CDONotificationBuilder;
 import org.eclipse.emf.internal.cdo.object.CDOObjectWrapperBase;
 import org.eclipse.emf.internal.cdo.session.SessionUtil;
-import org.eclipse.emf.internal.cdo.util.DefaultLocksChangedEvent;
+import org.eclipse.emf.internal.cdo.util.AbstractLocksChangedEvent;
 
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.ObjectUtil;
@@ -131,7 +132,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -182,6 +182,8 @@ public class CDOViewImpl extends AbstractCDOView
 
   @ExcludeFromDump
   private boolean inverseClosing;
+
+  private DurableLockProcessor durableLockProcessor;
 
   /**
    * @since 2.0
@@ -384,8 +386,12 @@ public class CDOViewImpl extends AbstractCDOView
     checkActive();
     checkState(!isHistorical(), "Locking not supported for historial views");
 
-    List<CDOLockState> newLockStates = null;
-    List<CDOLockState> locksOnNewObjects = new ArrayList<>();
+    List<CDOLockDelta> newObjectLockDeltas = new ArrayList<>();
+    List<CDOLockState> newObjectLockStates = new ArrayList<>();
+
+    List<CDOLockDelta> sessionLockDeltas = null;
+    List<CDOLockState> sessionLockStates = null;
+
     long timeStamp = CDOBranchPoint.UNSPECIFIED_DATE;
 
     synchronized (getViewMonitor())
@@ -399,21 +405,14 @@ public class CDOViewImpl extends AbstractCDOView
         // TODO For recursive locking consider local tree changes (NEW, DIRTY).
         for (CDOObject object : CollectionUtil.setOf(objects))
         {
-          CDOLockState lockState = createUpdatedLockStateForNewObject(object, lockType, true);
-          if (lockState != null)
+          if (updateLockStateOfNewObject(object, lockType, true, newObjectLockDeltas, newObjectLockStates))
           {
-            locksOnNewObjects.add(lockState);
-
             if (recursive)
             {
               for (TreeIterator<EObject> it = object.eAllContents(); it.hasNext();)
               {
                 CDOObject child = CDOUtil.getCDOObject(it.next());
-                lockState = createUpdatedLockStateForNewObject(child, lockType, true);
-                if (lockState != null)
-                {
-                  locksOnNewObjects.add(lockState);
-                }
+                updateLockStateOfNewObject(child, lockType, true, newObjectLockDeltas, newObjectLockStates);
               }
             }
           }
@@ -484,10 +483,14 @@ public class CDOViewImpl extends AbstractCDOView
 
         if (result != null)
         {
-          newLockStates = Arrays.asList(result.getNewLockStates());
           timeStamp = result.getTimestamp();
 
-          updateLockStates(newLockStates, false, null);
+          sessionLockDeltas = result.getLockDeltas();
+          if (!ObjectUtil.isEmpty(sessionLockDeltas))
+          {
+            sessionLockStates = result.getLockStates();
+            updateLockStates(sessionLockDeltas, sessionLockStates);
+          }
         }
       }
       finally
@@ -496,57 +499,43 @@ public class CDOViewImpl extends AbstractCDOView
       }
     }
 
-    if (!locksOnNewObjects.isEmpty())
+    if (!newObjectLockDeltas.isEmpty())
     {
-      CDOLockChangeInfo lockChangeInfo = makeLockChangeInfo(Operation.LOCK, lockType, getTimeStamp(), locksOnNewObjects);
+      CDOLockChangeInfo lockChangeInfo = makeLockChangeInfo(getTimeStamp(), newObjectLockDeltas, newObjectLockStates);
       fireLocksChangedEvent(this, lockChangeInfo);
     }
 
-    if (newLockStates != null)
+    if (!ObjectUtil.isEmpty(sessionLockDeltas))
     {
-      notifyLockChanges(Operation.LOCK, lockType, timeStamp, newLockStates);
+      notifyLockChanges(timeStamp, sessionLockDeltas, sessionLockStates);
     }
   }
 
-  @Deprecated
-  @Override
-  public void updateLockStates(CDOLockState[] newLockStates, boolean loadObjectsOnDemand, Consumer<CDOLockState> consumer)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  /**
-   * Updates the lock states of objects held in this view.
-   * <p>
-   * The caller must hold the view lock!
-   *
-   * @param newLockStates new {@link CDOLockState lockStates} to integrate in cache
-   * @param loadObjectsOnDemand true to load corresponding {@link CDOObject} if not already loaded to be able to store lockState in cache, false otherwise
-   * @since 4.5
-   */
-  @Override
-  public final void updateLockStates(Collection<? extends CDOLockState> newLockStates, boolean loadObjectsOnDemand, Consumer<CDOLockState> consumer)
+  private void updateLockStates(List<CDOLockDelta> lockDeltas, List<CDOLockState> lockStates)
   {
     CDOBranch branch = getBranch();
     CDOLockStateCache lockStateCache = session.getLockStateCache();
-    lockStateCache.addLockStates(branch, newLockStates, consumer);
+    lockStateCache.updateLockStates(branch, lockDeltas, lockStates, null);
   }
 
-  protected final void notifyLockChanges(Operation op, LockType type, long timestamp, Collection<? extends CDOLockState> lockStates)
+  protected final void notifyLockChanges(long timestamp, Collection<CDOLockDelta> lockDeltas, List<CDOLockState> lockStates)
   {
-    if (isActive() && !lockStates.isEmpty())
+    if (isActive() && !lockDeltas.isEmpty())
     {
-      CDOLockChangeInfo lockChangeInfo = makeLockChangeInfo(op, type, timestamp, lockStates);
+      CDOLockChangeInfo lockChangeInfo = makeLockChangeInfo(timestamp, lockDeltas, lockStates);
       notifyLockChanges(lockChangeInfo);
     }
   }
 
+  /**
+   * Notifies the session (including other views) and this view.
+   */
   protected final void notifyLockChanges(CDOLockChangeInfo lockChangeInfo)
   {
     if (isActive() && lockChangeInfo != null)
     {
-      List<CDOLockState> lockStates = lockChangeInfo.getNewLockStates();
-      if (!ObjectUtil.isEmpty(lockStates) || lockChangeInfo.isInvalidateAll())
+      CDOLockDelta[] lockDeltas = lockChangeInfo.getLockDeltas();
+      if (!ObjectUtil.isEmpty(lockDeltas) || lockChangeInfo.isInvalidateAll())
       {
         // Do not call out from the current thread to other views while this view is holding its view lock!
         session.handleLockNotification(lockChangeInfo, this, true);
@@ -555,10 +544,11 @@ public class CDOViewImpl extends AbstractCDOView
     }
   }
 
-  protected final CDOLockChangeInfo makeLockChangeInfo(Operation op, LockType type, long timestamp, Collection<? extends CDOLockState> newLockStates)
+  protected final CDOLockChangeInfo makeLockChangeInfo(long timestamp, Collection<CDOLockDelta> lockDeltas, Collection<CDOLockState> lockStates)
   {
     CDOBranchPoint branchPoint = getBranch().getPoint(timestamp);
-    return CDOLockUtil.createLockChangeInfo(branchPoint, getLockOwner(), op, type, newLockStates);
+    CDOLockOwner lockOwner = getLockOwner();
+    return CDOLockUtil.createLockChangeInfo(branchPoint, lockOwner, lockDeltas, lockStates);
   }
 
   @Override
@@ -622,8 +612,12 @@ public class CDOViewImpl extends AbstractCDOView
   {
     checkActive();
 
-    Collection<? extends CDOLockState> newLockStates = null;
-    List<CDOLockState> locksOnNewObjects = new LinkedList<>();
+    List<CDOLockDelta> newObjectLockDeltas = new ArrayList<>();
+    List<CDOLockState> newObjectLockStates = new ArrayList<>();
+
+    List<CDOLockDelta> sessionLockDeltas = null;
+    List<CDOLockState> sessionLockStates = null;
+
     long timeStamp = CDOBranchPoint.UNSPECIFIED_DATE;
 
     synchronized (getViewMonitor())
@@ -640,18 +634,15 @@ public class CDOViewImpl extends AbstractCDOView
 
           for (CDOObject object : CollectionUtil.setOf(objects))
           {
-            CDOLockState lockState = createUpdatedLockStateForNewObject(object, lockType, false);
-            if (lockState != null)
+            updateLockStateOfNewObject(object, lockType, false, newObjectLockDeltas, newObjectLockStates);
+            if (updateLockStateOfNewObject(object, lockType, false, newObjectLockDeltas, newObjectLockStates))
             {
-              locksOnNewObjects.add(lockState);
-
               if (recursive)
               {
                 for (TreeIterator<EObject> it = object.eAllContents(); it.hasNext();)
                 {
                   CDOObject child = CDOUtil.getCDOObject(it.next());
-                  lockState = createUpdatedLockStateForNewObject(child, lockType, false);
-                  locksOnNewObjects.add(lockState);
+                  updateLockStateOfNewObject(child, lockType, false, newObjectLockDeltas, newObjectLockStates);
                 }
               }
             }
@@ -671,11 +662,7 @@ public class CDOViewImpl extends AbstractCDOView
         }
         else
         {
-          Collection<CDOLockState> lockStates = createUnlockedLockStatesForAllNewObjects();
-          if (!ObjectUtil.isEmpty(lockStates))
-          {
-            locksOnNewObjects.addAll(lockStates);
-          }
+          unlockAllNewObjects(newObjectLockDeltas, newObjectLockStates);
         }
 
         UnlockObjectsResult result = null;
@@ -687,10 +674,13 @@ public class CDOViewImpl extends AbstractCDOView
 
         if (result != null)
         {
-          newLockStates = Arrays.asList(result.getNewLockStates());
           timeStamp = result.getTimestamp();
-
-          updateLockStates(newLockStates, false, null);
+          sessionLockDeltas = result.getLockDeltas();
+          if (!ObjectUtil.isEmpty(sessionLockDeltas))
+          {
+            sessionLockStates = result.getLockStates();
+            updateLockStates(sessionLockDeltas, sessionLockStates);
+          }
         }
       }
       finally
@@ -699,28 +689,27 @@ public class CDOViewImpl extends AbstractCDOView
       }
     }
 
-    if (!locksOnNewObjects.isEmpty())
+    if (!newObjectLockDeltas.isEmpty())
     {
-      CDOLockChangeInfo lockChangeInfo = makeLockChangeInfo(Operation.UNLOCK, lockType, getTimeStamp(), locksOnNewObjects);
+      CDOLockChangeInfo lockChangeInfo = makeLockChangeInfo(getTimeStamp(), newObjectLockDeltas, newObjectLockStates);
       fireLocksChangedEvent(this, lockChangeInfo);
     }
 
-    if (newLockStates != null)
+    if (!ObjectUtil.isEmpty(sessionLockDeltas))
     {
-      notifyLockChanges(Operation.UNLOCK, lockType, timeStamp, newLockStates);
+      notifyLockChanges(timeStamp, sessionLockDeltas, sessionLockStates);
     }
   }
 
-  protected InternalCDOLockState createUpdatedLockStateForNewObject(CDOObject object, LockType lockType, boolean on)
+  protected boolean updateLockStateOfNewObject(CDOObject object, LockType lockType, boolean on, List<CDOLockDelta> lockDeltas, List<CDOLockState> lockStates)
   {
     // We have no new objects, CDOTransactionImpl overrides.
-    return null;
+    return false;
   }
 
-  protected Collection<CDOLockState> createUnlockedLockStatesForAllNewObjects()
+  protected void unlockAllNewObjects(List<CDOLockDelta> lockDeltas, List<CDOLockState> lockStates)
   {
     // We have no new objects, CDOTransactionImpl overrides.
-    return null;
   }
 
   /**
@@ -789,13 +778,6 @@ public class CDOViewImpl extends AbstractCDOView
         unlockView();
       }
     }
-  }
-
-  @Override
-  @Deprecated
-  public String enableDurableLocking(boolean enable)
-  {
-    throw new UnsupportedOperationException();
   }
 
   @Override
@@ -892,50 +874,6 @@ public class CDOViewImpl extends AbstractCDOView
    * @since 2.0
    */
   @Override
-  @Deprecated
-  public CDOFeatureAnalyzer getFeatureAnalyzer()
-  {
-    synchronized (getViewMonitor())
-    {
-      lockView();
-
-      try
-      {
-        return options().getFeatureAnalyzer();
-      }
-      finally
-      {
-        unlockView();
-      }
-    }
-  }
-
-  /**
-   * @since 2.0
-   */
-  @Override
-  @Deprecated
-  public void setFeatureAnalyzer(CDOFeatureAnalyzer featureAnalyzer)
-  {
-    synchronized (getViewMonitor())
-    {
-      lockView();
-
-      try
-      {
-        options.setFeatureAnalyzer(featureAnalyzer);
-      }
-      finally
-      {
-        unlockView();
-      }
-    }
-  }
-
-  /**
-   * @since 2.0
-   */
-  @Override
   public InternalCDOTransaction toTransaction()
   {
     checkActive();
@@ -1001,11 +939,11 @@ public class CDOViewImpl extends AbstractCDOView
         if (!ids.isEmpty())
         {
           CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
-          CDOLockState[] loadedLockStates = sessionProtocol.getLockStates(viewID, ids, CDOLockState.DEPTH_NONE);
+          List<CDOLockState> loadedLockStates = sessionProtocol.getLockStates2(viewID, ids, CDOLockState.DEPTH_NONE);
 
           if (!ObjectUtil.isEmpty(loadedLockStates))
           {
-            lockStateCache.addLockStates(branch, Arrays.asList(loadedLockStates), null);
+            lockStateCache.addLockStates(branch, loadedLockStates, null);
           }
         }
       }
@@ -1118,22 +1056,6 @@ public class CDOViewImpl extends AbstractCDOView
     revisionManager.getRevision(id, this, initialChunkSize, depth, true);
   }
 
-  @Override
-  @Deprecated
-  public void invalidate(CDOBranch branch, long lastUpdateTime, List<CDORevisionKey> allChangedObjects, List<CDOIDAndVersion> allDetachedObjects,
-      Map<CDOID, InternalCDORevision> oldRevisions, boolean async)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  @Deprecated
-  public void invalidate(CDOBranch branch, long lastUpdateTime, List<CDORevisionKey> allChangedObjects, List<CDOIDAndVersion> allDetachedObjects,
-      Map<CDOID, InternalCDORevision> oldRevisions, boolean async, boolean clearResourcePathCache)
-  {
-    throw new UnsupportedOperationException();
-  }
-
   /*
    * Must not by synchronized on the view!
    */
@@ -1241,7 +1163,9 @@ public class CDOViewImpl extends AbstractCDOView
         CDOLockChangeInfo lockChangeInfo = invalidationData.getLockChangeInfo();
         if (lockChangeInfo != null)
         {
-          updateLockStates(lockChangeInfo.getNewLockStates(), false, null);
+          List<CDOLockDelta> lockDeltas = Arrays.asList(lockChangeInfo.getLockDeltas());
+          List<CDOLockState> lockStates = Arrays.asList(lockChangeInfo.getLockStates());
+          updateLockStates(lockDeltas, lockStates);
           fireLocksChangedEvent(null, lockChangeInfo);
         }
       }
@@ -1263,13 +1187,6 @@ public class CDOViewImpl extends AbstractCDOView
   public ViewInvalidator getInvalidator()
   {
     return invalidator;
-  }
-
-  @Override
-  @Deprecated
-  public boolean isInvalidationRunnerActive()
-  {
-    return isInvalidating();
   }
 
   @Override
@@ -1591,10 +1508,13 @@ public class CDOViewImpl extends AbstractCDOView
   {
     super.doActivate();
 
+    lockOwner = CDOLockUtil.createLockOwner(this);
     CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
+
     if (durableLockingID != null)
     {
-      CDOBranchPoint branchPoint = sessionProtocol.openView(viewID, isReadOnly(), durableLockingID);
+      durableLockProcessor = createDurableLockProcessor();
+      CDOBranchPoint branchPoint = sessionProtocol.openView(viewID, isReadOnly(), durableLockingID, durableLockProcessor);
       basicSetBranchPoint(branchPoint);
     }
     else
@@ -1610,8 +1530,6 @@ public class CDOViewImpl extends AbstractCDOView
       runnable.run();
     }
 
-    lockOwner = CDOLockUtil.createLockOwner(this);
-
     if (viewLock != null && Boolean.getBoolean("org.eclipse.emf.cdo.sync.tester"))
     {
       new SyncTester().start();
@@ -1624,6 +1542,12 @@ public class CDOViewImpl extends AbstractCDOView
   protected void doAfterActivate() throws Exception
   {
     super.doAfterActivate();
+
+    if (durableLockProcessor != null)
+    {
+      durableLockProcessor.run();
+      durableLockProcessor = null;
+    }
 
     ExecutorService executorService = getExecutorService();
     invalidator.setDelegate(executorService);
@@ -1694,6 +1618,9 @@ public class CDOViewImpl extends AbstractCDOView
     }
     finally
     {
+      List<CDOLockDelta> lockDeltas = null;
+      List<CDOLockState> lockStates = new ArrayList<>();
+
       synchronized (getViewMonitor())
       {
         lockView();
@@ -1702,22 +1629,20 @@ public class CDOViewImpl extends AbstractCDOView
         {
           if (session.isActive())
           {
-            List<CDOLockState> result = new ArrayList<>();
-
-            CDOLockStateCache lockStateCache = session.getLockStateCache();
             CDOBranch branch = getBranch();
-            lockStateCache.removeOwner(branch, lockOwner, result::add);
-
-            if (!result.isEmpty())
-            {
-              long timeStamp = session.getLastUpdateTime();
-              notifyLockChanges(Operation.UNLOCK, null, timeStamp, result);
-            }
+            CDOLockStateCache lockStateCache = session.getLockStateCache();
+            lockDeltas = lockStateCache.removeOwner(branch, lockOwner, lockStates::add);
           }
         }
         finally
         {
           unlockView();
+        }
+
+        if (!ObjectUtil.isEmpty(lockDeltas))
+        {
+          long timeStamp = session.getLastUpdateTime();
+          notifyLockChanges(timeStamp, lockDeltas, lockStates);
         }
       }
     }
@@ -1965,6 +1890,68 @@ public class CDOViewImpl extends AbstractCDOView
   protected final Object getLockTarget(CDOID id)
   {
     return session.getLockStateCache().createKey(getBranch(), id);
+  }
+
+  public final DurableLockProcessor createDurableLockProcessor()
+  {
+    return new DurableLockProcessor();
+  }
+
+  @Override
+  @Deprecated
+  public void updateLockStates(CDOLockState[] newLockStates, boolean loadObjectsOnDemand, Consumer<CDOLockState> consumer)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public String enableDurableLocking(boolean enable)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * @since 2.0
+   */
+  @Override
+  @Deprecated
+  public CDOFeatureAnalyzer getFeatureAnalyzer()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * @since 2.0
+   */
+  @Override
+  @Deprecated
+  public void setFeatureAnalyzer(CDOFeatureAnalyzer featureAnalyzer)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void invalidate(CDOBranch branch, long lastUpdateTime, List<CDORevisionKey> allChangedObjects, List<CDOIDAndVersion> allDetachedObjects,
+      Map<CDOID, InternalCDORevision> oldRevisions, boolean async)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void invalidate(CDOBranch branch, long lastUpdateTime, List<CDORevisionKey> allChangedObjects, List<CDOIDAndVersion> allDetachedObjects,
+      Map<CDOID, InternalCDORevision> oldRevisions, boolean async, boolean clearResourcePathCache)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public boolean isInvalidationRunnerActive()
+  {
+    throw new UnsupportedOperationException();
   }
 
   public static Object getLockTarget(CDOView view, CDOID id)
@@ -2889,7 +2876,7 @@ public class CDOViewImpl extends AbstractCDOView
    * @author Caspar De Groot
    * @since 4.1
    */
-  private final class ViewLocksChangedEvent extends DefaultLocksChangedEvent implements CDOViewLocksChangedEvent
+  private final class ViewLocksChangedEvent extends AbstractLocksChangedEvent implements CDOViewLocksChangedEvent
   {
     private static final long serialVersionUID = 1L;
 
@@ -2910,9 +2897,9 @@ public class CDOViewImpl extends AbstractCDOView
       List<EObject> objects = new ArrayList<>();
       CDOView view = getSource();
 
-      for (CDOLockState lockState : getNewLockStates())
+      for (CDOLockDelta delta : getLockDeltas())
       {
-        Object lockedObject = lockState.getLockedObject();
+        Object lockedObject = delta.getTarget();
 
         CDOID id = null;
         if (lockedObject instanceof CDOIDAndBranch)
@@ -2939,6 +2926,12 @@ public class CDOViewImpl extends AbstractCDOView
       }
 
       return objects.toArray(new EObject[objects.size()]);
+    }
+
+    @Override
+    protected InternalCDOSession getSession()
+    {
+      return getSource().getSession();
     }
 
     @Override
@@ -3098,6 +3091,54 @@ public class CDOViewImpl extends AbstractCDOView
         {
           return;
         }
+      }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public final class DurableLockProcessor implements BiConsumer<CDOID, LockGrade>, Runnable
+  {
+    private final Map<CDOID, LockGrade> lockGrades = CDOIDUtil.createMap();
+
+    private DurableLockProcessor()
+    {
+    }
+
+    @Override
+    public void accept(CDOID id, LockGrade lockGrade)
+    {
+      lockGrades.put(id, lockGrade);
+    }
+
+    @Override
+    public void run()
+    {
+      List<CDOLockDelta> lockDeltas = new ArrayList<>();
+      List<CDOLockState> lockStates = new ArrayList<>();
+
+      for (Map.Entry<CDOID, LockGrade> entry : lockGrades.entrySet())
+      {
+        CDOID id = entry.getKey();
+        LockGrade lockGrade = entry.getValue();
+
+        Object target = getLockTarget(id);
+        InternalCDOLockState lockState = (InternalCDOLockState)CDOLockUtil.createLockState(target);
+
+        lockGrade.forEachLockType(lockType -> {
+          lockDeltas.add(CDOLockUtil.createLockDelta(target, lockType, null, lockOwner));
+          lockState.addOwner(lockOwner, lockType);
+        });
+
+        lockStates.add(lockState);
+      }
+
+      if (!lockDeltas.isEmpty())
+      {
+        CDOBranch branch = getBranch();
+        CDOLockStateCache lockStateCache = session.getLockStateCache();
+        lockStateCache.updateLockStates(branch, lockDeltas, lockStates, null);
       }
     }
   }

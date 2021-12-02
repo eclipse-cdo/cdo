@@ -25,8 +25,6 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lob.CDOLob;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
-import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo.Operation;
-import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockArea;
@@ -59,7 +57,6 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
-import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalRepositorySynchronizer;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
@@ -68,7 +65,6 @@ import org.eclipse.emf.cdo.spi.server.InternalStore;
 import org.eclipse.emf.cdo.spi.server.InternalSynchronizableRepository;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 import org.eclipse.emf.cdo.spi.server.InternalView;
-import org.eclipse.emf.cdo.spi.server.SyncingUtil;
 
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.IndexedList;
@@ -362,51 +358,53 @@ public abstract class SynchronizableRepository extends Repository.Default implem
   @Override
   public void handleLockChangeInfo(CDOLockChangeInfo lockChangeInfo)
   {
-    CDOLockOwner owner = lockChangeInfo.getLockOwner();
-    if (owner == null)
-    {
-      return;
-    }
+    throw new UnsupportedOperationException("Needs reimplementation for CDOLockDeltas");
 
-    String durableLockingID = owner.getDurableLockingID();
-    CDOBranch viewedBranch = lockChangeInfo.getBranch();
-    InternalLockManager lockManager = getLockingManager();
-    LockType lockType = lockChangeInfo.getLockType();
-
-    InternalView view = null;
-
-    try
-    {
-      view = SyncingUtil.openViewWithLockArea(replicatorSession, lockManager, viewedBranch, durableLockingID);
-      List<Object> lockables = new LinkedList<>();
-
-      for (CDOLockState lockState : lockChangeInfo.getNewLockStates())
-      {
-        lockables.add(lockState.getLockedObject());
-      }
-
-      if (lockChangeInfo.getOperation() == Operation.LOCK)
-      {
-        // If we can't lock immediately, there's a conflict, which means we're in big
-        // trouble: somehow locks were obtained on the clone but not on the master. What to do?
-        // TODO (CD) Consider this problem further
-        long timeout = 0;
-
-        super.lock(view, lockType, lockables, null, false, timeout);
-      }
-      else if (lockChangeInfo.getOperation() == Operation.UNLOCK)
-      {
-        super.doUnlock(view, lockType, lockables, false);
-      }
-      else
-      {
-        throw new IllegalStateException("Unexpected: " + lockChangeInfo.getOperation());
-      }
-    }
-    finally
-    {
-      LifecycleUtil.deactivate(view);
-    }
+    // CDOLockOwner owner = lockChangeInfo.getLockOwner();
+    // if (owner == null)
+    // {
+    // return;
+    // }
+    //
+    // String durableLockingID = owner.getDurableLockingID();
+    // CDOBranch viewedBranch = lockChangeInfo.getBranch();
+    // InternalLockManager lockManager = getLockingManager();
+    // LockType lockType = lockChangeInfo.getLockType();
+    //
+    // InternalView view = null;
+    //
+    // try
+    // {
+    // view = SyncingUtil.openViewWithLockArea(replicatorSession, lockManager, viewedBranch, durableLockingID);
+    // List<Object> lockables = new LinkedList<>();
+    //
+    // for (CDOLockState lockState : lockChangeInfo.getNewLockStates())
+    // {
+    // lockables.add(lockState.getLockedObject());
+    // }
+    //
+    // if (lockChangeInfo.getOperation() == Operation.LOCK)
+    // {
+    // // If we can't lock immediately, there's a conflict, which means we're in big
+    // // trouble: somehow locks were obtained on the clone but not on the master. What to do?
+    // // TODO (CD) Consider this problem further
+    // long timeout = 0;
+    //
+    // super.doLock(view, lockType, lockables, null, false, timeout);
+    // }
+    // else if (lockChangeInfo.getOperation() == Operation.UNLOCK)
+    // {
+    // super.doUnlock(view, lockType, lockables, false);
+    // }
+    // else
+    // {
+    // throw new IllegalStateException("Unexpected: " + lockChangeInfo.getOperation());
+    // }
+    // }
+    // finally
+    // {
+    // LifecycleUtil.deactivate(view);
+    // }
   }
 
   @Override

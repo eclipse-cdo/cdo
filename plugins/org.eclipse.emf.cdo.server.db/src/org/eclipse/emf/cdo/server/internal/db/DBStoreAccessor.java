@@ -107,7 +107,6 @@ import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -167,35 +166,6 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   }
 
   @Override
-  @Deprecated
-  public org.eclipse.emf.cdo.server.db.IPreparedStatementCache getStatementCache()
-  {
-    return new org.eclipse.emf.cdo.server.db.IPreparedStatementCache()
-    {
-      @Override
-      public void setConnection(Connection connection)
-      {
-        // Do nothing
-      }
-
-      @Override
-      public IDBPreparedStatement getPreparedStatement(String sql, ReuseProbability reuseProbability)
-      {
-        org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability converted = //
-            org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability.values()[reuseProbability.ordinal()];
-
-        return connection.prepareStatement(sql, converted);
-      }
-
-      @Override
-      public void releasePreparedStatement(PreparedStatement ps)
-      {
-        DBUtil.close(ps);
-      }
-    };
-  }
-
-  @Override
   public DBStoreChunkReader createChunkReader(InternalCDORevision revision, EStructuralFeature feature)
   {
     return new DBStoreChunkReader(this, revision, feature);
@@ -209,24 +179,6 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     IDBDatabase database = store.getDatabase();
 
     return dbAdapter.openSchemaTransaction(database, connection);
-  }
-
-  /**
-   * Returns an iterator that iterates over all objects in the store and makes their CDOIDs available for processing.
-   * This method is supposed to be called very infrequently, for example during the recovery from a crash.
-   *
-   * @since 2.0
-   * @deprecated Not used by the framework anymore.
-   */
-  @Deprecated
-  public CloseableIterator<CDOID> readObjectIDs()
-  {
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace("Selecting object IDs"); //$NON-NLS-1$
-    }
-
-    return getStore().getMappingStrategy().readObjectIDs(this);
   }
 
   public CDOClassifierRef readObjectType(CDOID id)
@@ -544,13 +496,6 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
         maxID = id;
       }
     }
-  }
-
-  @Deprecated
-  @Override
-  protected void writeCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment, OMMonitor monitor)
-  {
-    writeCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, null, monitor);
   }
 
   @Override
@@ -1215,20 +1160,6 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   }
 
   @Override
-  @Deprecated
-  public void deleteBranch(int branchID)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  @Deprecated
-  public void renameBranch(int branchID, String newName)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
   public void renameBranch(int branchID, String oldName, String newName)
   {
     checkBranchingSupport();
@@ -1709,13 +1640,6 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   }
 
   @Override
-  public void unlock(String durableLockingID)
-  {
-    DurableLockingManager manager = getStore().getDurableLockingManager();
-    manager.unlock(this, durableLockingID);
-  }
-
-  @Override
   public List<CDOID> readUnitRoots()
   {
     UnitMappingTable unitMappingTable = getStore().getUnitMappingTable();
@@ -1827,5 +1751,46 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
       accessor = null;
       return super.cancel();
     }
+  }
+
+  @Override
+  @Deprecated
+  public org.eclipse.emf.cdo.server.db.IPreparedStatementCache getStatementCache()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Deprecated
+  public CloseableIterator<CDOID> readObjectIDs()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Deprecated
+  @Override
+  protected void writeCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment, OMMonitor monitor)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void deleteBranch(int branchID)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void renameBranch(int branchID, String newName)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void unlock(String durableLockingID)
+  {
+    throw new UnsupportedOperationException();
   }
 }

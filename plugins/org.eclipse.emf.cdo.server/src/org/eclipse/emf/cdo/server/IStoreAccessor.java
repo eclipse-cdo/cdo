@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.common.lob.CDOBlob;
 import org.eclipse.emf.cdo.common.lob.CDOClob;
 import org.eclipse.emf.cdo.common.lob.CDOLob;
 import org.eclipse.emf.cdo.common.lob.CDOLobHandler;
+import org.eclipse.emf.cdo.common.lock.CDOLockDelta;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
@@ -425,14 +426,6 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
     public ExtendedDataInputStream getLobs();
 
     /**
-     *
-     * @since 3.0
-     * @deprecated As of 4.5 no longer supported. See {@link #getIDsToUnlock()}.
-     */
-    @Deprecated
-    public boolean isAutoReleaseLocksEnabled();
-
-    /**
      * Returns an array of the locks on the new objects that are part of the commit operation represented by this
      * <code>CommitContext</code>.
      *
@@ -472,9 +465,14 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
     public List<CDOIDReference> getXRefs();
 
     /**
-     * @since 4.1
+     * @since 4.15
      */
-    public List<LockState<Object, IView>> getPostCommmitLockStates();
+    public List<CDOLockDelta> getLockDeltas();
+
+    /**
+     * @since 4.15
+     */
+    public List<CDOLockState> getLockStates();
 
     /**
      * @since 4.3
@@ -490,6 +488,21 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      * @since 4.10
      */
     public void modify(Consumer<ModificationContext> modifier);
+
+    /**
+     *
+     * @since 3.0
+     * @deprecated As of 4.5 no longer supported. See {@link #getIDsToUnlock()}.
+     */
+    @Deprecated
+    public boolean isAutoReleaseLocksEnabled();
+
+    /**
+     * @since 4.1
+     * @deprecated As of 4.15 use {@link #getLockStates()}.
+     */
+    @Deprecated
+    public List<LockState<Object, IView>> getPostCommmitLockStates();
 
     /**
      * A data and result context for the modifications in {@link CommitContext#modify(Consumer)}.
@@ -858,6 +871,10 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
 
     public void unlock(String durableLockingID, LockType type, Collection<? extends Object> objectsToUnlock);
 
+    /**
+     * @deprecated As of 4.15 use {@link #unlock(String, LockType, Collection) unlock(durableLockingID, null, null)}.
+     */
+    @Deprecated
     public void unlock(String durableLockingID);
   }
 

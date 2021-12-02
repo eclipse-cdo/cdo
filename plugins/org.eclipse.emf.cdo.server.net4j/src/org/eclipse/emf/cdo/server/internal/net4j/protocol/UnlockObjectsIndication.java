@@ -12,7 +12,6 @@
 package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
@@ -76,11 +75,7 @@ public class UnlockObjectsIndication extends CDOServerWriteIndication
   protected void responding(CDODataOutput out) throws IOException
   {
     out.writeXLong(result.getTimestamp());
-    CDOLockState[] newLockStates = result.getNewLockStates();
-    out.writeXInt(newLockStates.length);
-    for (CDOLockState state : newLockStates)
-    {
-      out.writeCDOLockState(state);
-    }
+    out.writeCDOLockDeltas(result.getLockDeltas(), null);
+    out.writeCDOLockStates(result.getLockStates(), null);
   }
 }

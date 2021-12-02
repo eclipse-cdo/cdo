@@ -19,11 +19,12 @@ import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * @author Caspar De Groot
  */
-public class LockStateRequest extends CDOClientRequest<CDOLockState[]>
+public class LockStateRequest extends CDOClientRequest<List<CDOLockState>>
 {
   private int branchID;
 
@@ -61,16 +62,9 @@ public class LockStateRequest extends CDOClientRequest<CDOLockState[]>
   }
 
   @Override
-  protected CDOLockState[] confirming(CDODataInput in) throws IOException
+  protected List<CDOLockState> confirming(CDODataInput in) throws IOException
   {
-    int n = in.readXInt();
-    CDOLockState[] lockStates = new CDOLockState[n];
-    for (int i = 0; i < n; i++)
-    {
-      lockStates[i] = in.readCDOLockState();
-    }
-
-    return lockStates;
+    return in.readCDOLockStates();
   }
 
   @Override

@@ -142,20 +142,6 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw2, Durab
   }
 
   @Override
-  @Deprecated
-  public void deleteBranch(int branchID)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  @Deprecated
-  public void renameBranch(int branchID, String newName)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
   public void renameBranch(int branchID, String oldName, String newName)
   {
     store.renameBranch(branchID, oldName, newName);
@@ -224,13 +210,6 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw2, Durab
     {
       super.doWrite(context, monitor);
     }
-  }
-
-  @Deprecated
-  @Override
-  protected void writeCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment, OMMonitor monitor)
-  {
-    throw new UnsupportedOperationException();
   }
 
   @Override
@@ -460,12 +439,6 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw2, Durab
   }
 
   @Override
-  public void unlock(String durableLockingID)
-  {
-    store.unlock(durableLockingID);
-  }
-
-  @Override
   public void queryLobs(List<byte[]> ids)
   {
     store.queryLobs(ids);
@@ -505,5 +478,33 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw2, Durab
     }
 
     super.doDeactivate();
+  }
+
+  @Override
+  @Deprecated
+  public void deleteBranch(int branchID)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void renameBranch(int branchID, String newName)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  protected void writeCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment, OMMonitor monitor)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void unlock(String durableLockingID)
+  {
+    throw new UnsupportedOperationException();
   }
 }

@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDReference;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
+import org.eclipse.emf.cdo.common.lock.CDOLockDelta;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
@@ -67,9 +68,8 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.io.IOException;
 import java.text.MessageFormat;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -298,45 +298,14 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
     if (lockChangeInfo.isInvalidateAll())
     {
       writeBoolean(true);
+      return;
     }
-    else
-    {
-      writeBoolean(false);
-      writeCDOBranchPoint(lockChangeInfo);
-      writeCDOLockOwner(lockChangeInfo.getLockOwner());
-      writeEnum(lockChangeInfo.getOperation());
-      writeCDOLockType(lockChangeInfo.getLockType());
 
-      Collection<CDOLockState> lockStates = lockChangeInfo.getNewLockStates();
-
-      if (filter != null)
-      {
-        List<CDOLockState> filtered = new ArrayList<>(lockStates.size());
-        for (CDOLockState lockState : lockStates)
-        {
-          Object lockedObject = lockState.getLockedObject();
-          CDOID id = CDOLockUtil.getLockedObjectID(lockedObject);
-          if (filter.contains(id))
-          {
-            filtered.add(lockState);
-          }
-        }
-
-        writeXInt(filtered.size());
-        for (CDOLockState lockState : filtered)
-        {
-          writeCDOLockState(lockState);
-        }
-      }
-      else
-      {
-        writeXInt(lockStates.size());
-        for (CDOLockState lockState : lockStates)
-        {
-          writeCDOLockState(lockState);
-        }
-      }
-    }
+    writeBoolean(false);
+    writeCDOBranchPoint(lockChangeInfo);
+    writeCDOLockOwner(lockChangeInfo.getLockOwner());
+    writeCDOLockDeltas(Arrays.asList(lockChangeInfo.getLockDeltas()), filter == null ? null : delta -> filter.contains(delta.getID()));
+    writeCDOLockStates(Arrays.asList(lockChangeInfo.getLockStates()), filter == null ? null : state -> filter.contains(state.getID()));
   }
 
   @Override
@@ -361,9 +330,62 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
   @Override
   public void writeCDOLockOwner(CDOLockOwner lockOwner) throws IOException
   {
-    writeXInt(lockOwner.getSessionID());
-    writeXInt(lockOwner.getViewID());
-    writeString(lockOwner.getDurableLockingID());
+    if (lockOwner == null)
+    {
+      writeXInt(CDOLockUtil.DURABLE_SESSION_ID - 1);
+    }
+    else
+    {
+      writeXInt(lockOwner.getSessionID());
+      writeXInt(lockOwner.getViewID());
+      writeString(lockOwner.getDurableLockingID());
+    }
+  }
+
+  @Override
+  public void writeCDOLockDelta(CDOLockDelta lockDelta) throws IOException
+  {
+    if (lockDelta == null)
+    {
+      writeByte(-1);
+      return;
+    }
+
+    byte opcode = 0;
+    CDOID id;
+    CDOBranch branch;
+
+    Object target = lockDelta.getTarget();
+    if (target instanceof CDOIDAndBranch)
+    {
+      CDOIDAndBranch idAndBranch = (CDOIDAndBranch)target;
+      id = idAndBranch.getID();
+      branch = idAndBranch.getBranch();
+      opcode += 10;
+    }
+    else if (target instanceof CDOID)
+    {
+      id = (CDOID)target;
+      branch = null;
+    }
+    else
+    {
+      throw new AssertionError("Unexpected type: " + target.getClass().getSimpleName());
+    }
+
+    LockType type = lockDelta.getType();
+    opcode += type.ordinal();
+
+    writeByte(opcode);
+    writeCDOID(id);
+
+    if (opcode >= 10)
+    {
+      writeCDOBranch(branch);
+    }
+
+    writeCDOLockOwner(lockDelta.getOldOwner());
+    writeCDOLockOwner(lockDelta.getNewOwner());
   }
 
   @Override

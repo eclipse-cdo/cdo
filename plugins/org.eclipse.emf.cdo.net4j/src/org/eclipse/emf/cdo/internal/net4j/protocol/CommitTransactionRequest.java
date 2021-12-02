@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lob.CDOBlob;
 import org.eclipse.emf.cdo.common.lob.CDOClob;
 import org.eclipse.emf.cdo.common.lob.CDOLob;
+import org.eclipse.emf.cdo.common.lock.CDOLockDelta;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
@@ -160,6 +161,7 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
     out.writeXInt(commitNumber);
     out.writeString(commitComment);
     CDOBranchUtil.writeBranchPointOrNull(out, commitMergeSource);
+    out.writeXLong(transaction.options().getOptimisticLockingTimeout());
 
     out.writeXInt(locksOnNewObjects.size());
     out.writeXInt(idsToUnlock.size());
@@ -310,7 +312,7 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
 
     result = confirmingResult(in);
     confirmingMappingNewObjects(in, result);
-    confirmingNewLockStates(in, result);
+    confirmingLocks(in, result);
     confirmingNewPermissions(in, result);
     confirmingNewCommitData(in, result);
     return result;
@@ -382,17 +384,13 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
     }
   }
 
-  protected void confirmingNewLockStates(CDODataInput in, CommitTransactionResult result) throws IOException
+  protected void confirmingLocks(CDODataInput in, CommitTransactionResult result) throws IOException
   {
-    int n = in.readXInt();
-    CDOLockState[] newLockStates = new CDOLockState[n];
+    List<CDOLockDelta> lockDeltas = in.readCDOLockDeltas();
+    result.setLockDeltas(lockDeltas);
 
-    for (int i = 0; i < n; i++)
-    {
-      newLockStates[i] = in.readCDOLockState();
-    }
-
-    result.setNewLockStates(newLockStates);
+    List<CDOLockState> lockStates = in.readCDOLockStates();
+    result.setLockStates(lockStates);
   }
 
   protected void confirmingNewPermissions(CDODataInput in, CommitTransactionResult result) throws IOException

@@ -457,13 +457,15 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/cdo/spi/common/lock/AbstractCDOLockState.java" type="org.eclipse.emf.cdo.spi.common.lock.AbstractCDOLockState">
+    <resource path="src/org/eclipse/emf/cdo/spi/common/lock/AbstractCDOLockChangeInfo.java" type="org.eclipse.emf.cdo.spi.common.lock.AbstractCDOLockChangeInfo">
         <filter id="576725006">
             <message_arguments>
-                <message_argument value="CDOLockState"/>
-                <message_argument value="AbstractCDOLockState"/>
+                <message_argument value="CDOLockChangeInfo"/>
+                <message_argument value="AbstractCDOLockChangeInfo"/>
             </message_arguments>
         </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/spi/common/lock/AbstractCDOLockState.java" type="org.eclipse.emf.cdo.spi.common.lock.AbstractCDOLockState">
         <filter id="576725006">
             <message_arguments>
                 <message_argument value="InternalCDOLockState"/>

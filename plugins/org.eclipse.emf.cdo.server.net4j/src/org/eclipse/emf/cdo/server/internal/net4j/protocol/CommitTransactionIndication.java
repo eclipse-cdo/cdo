@@ -19,8 +19,8 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDReference;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.lock.CDOLockDelta;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
-import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.model.EMFUtil.ExtResourceSet;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
@@ -31,7 +31,6 @@ import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.etypes.EtypesPackage;
 import org.eclipse.emf.cdo.server.IPermissionManager;
-import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
@@ -43,7 +42,6 @@ import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 import org.eclipse.emf.cdo.spi.server.InternalView;
 
 import org.eclipse.net4j.util.WrappedException;
-import org.eclipse.net4j.util.concurrent.RWOLockManager.LockState;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import org.eclipse.emf.ecore.EClass;
@@ -121,6 +119,7 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
     int commitNumber = in.readXInt();
     String commitComment = in.readString();
     CDOBranchPoint commitMergeSource = CDOBranchUtil.readBranchPointOrNull(in);
+    long optimisticLockingTimeout = in.readXLong();
 
     CDOLockState[] locksOnNewObjects = new CDOLockState[in.readXInt()];
     CDOID[] idsToUnlock = new CDOID[in.readXInt()];
@@ -256,6 +255,7 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
 
       commitContext.setCommitNumber(commitNumber);
       commitContext.setLastUpdateTime(lastUpdateTime);
+      commitContext.setOptimisticLockingTimeout(optimisticLockingTimeout);
       commitContext.setClearResourcePathCache(clearResourcePathCache);
       commitContext.setUsingEcore(usingEcore);
       commitContext.setUsingEtypes(usingEtypes);
@@ -309,7 +309,7 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
       {
         respondingResult(out);
         respondingMappingNewObjects(out);
-        respondingNewLockStates(out);
+        respondingLocks(out);
         respondingNewPermissions(out);
         respondingNewCommitData(out);
       }
@@ -369,22 +369,13 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
     out.writeCDOID(CDOID.NULL);
   }
 
-  protected void respondingNewLockStates(CDODataOutput out) throws Exception
+  protected void respondingLocks(CDODataOutput out) throws Exception
   {
-    List<LockState<Object, IView>> newLockStates = commitContext.getPostCommmitLockStates();
-    if (newLockStates != null)
-    {
-      out.writeXInt(newLockStates.size());
-      for (LockState<Object, IView> lockState : newLockStates)
-      {
-        CDOLockState cdoLockState = CDOLockUtil.convertLockState(lockState);
-        out.writeCDOLockState(cdoLockState);
-      }
-    }
-    else
-    {
-      out.writeXInt(0);
-    }
+    List<CDOLockDelta> lockDeltas = commitContext.getLockDeltas();
+    out.writeCDOLockDeltas(lockDeltas, null);
+
+    List<CDOLockState> lockStates = commitContext.getLockStates();
+    out.writeCDOLockStates(lockStates, null);
   }
 
   protected void respondingNewPermissions(CDODataOutput out) throws Exception

@@ -212,18 +212,7 @@ public class LoadRevisionsRequest extends CDOClientRequest<List<RevisionInfo>>
 
     if (in.readBoolean())
     {
-      List<CDOLockState> lockStates = new ArrayList<>();
-
-      for (;;)
-      {
-        CDOLockState lockState = in.readCDOLockState();
-        if (lockState == null)
-        {
-          break;
-        }
-
-        lockStates.add(lockState);
-      }
+      List<CDOLockState> lockStates = in.readCDOLockStates();
 
       int noLockStateKeys = in.readXInt();
       if (noLockStateKeys != 0)

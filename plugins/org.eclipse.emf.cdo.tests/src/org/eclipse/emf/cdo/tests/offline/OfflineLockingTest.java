@@ -27,6 +27,8 @@ import org.eclipse.emf.cdo.view.CDOViewLocksChangedEvent;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.tests.TestListener2;
 
+import java.util.Collections;
+
 /**
  * @author Caspar De Groot
  */
@@ -122,8 +124,8 @@ public class OfflineLockingTest extends AbstractSyncingTest
     session1lockListener.waitFor(1);
 
     e = (CDOSessionLocksChangedEvent)session1lockListener.getEvents().get(0);
-    assertSame(LockType.WRITE, e.getLockType());
-    assertSame(Operation.LOCK, e.getOperation());
+    assertEquals(Collections.singleton(LockType.WRITE), e.getLockTypes());
+    assertEquals(Collections.singleton(Operation.LOCK), e.getOperations());
     assertEquals(true, companyA_session1.cdoWriteLock().isLockedByOthers());
 
     // Perform the unlock in session 2, connected to clone 2
@@ -133,8 +135,8 @@ public class OfflineLockingTest extends AbstractSyncingTest
     session1lockListener.waitFor(2);
 
     e = (CDOSessionLocksChangedEvent)session1lockListener.getEvents().get(1);
-    assertSame(LockType.WRITE, e.getLockType());
-    assertSame(Operation.UNLOCK, e.getOperation());
+    assertEquals(Collections.singleton(LockType.WRITE), e.getLockTypes());
+    assertEquals(Collections.singleton(Operation.UNLOCK), e.getOperations());
     assertEquals(false, companyA_session1.cdoWriteLock().isLockedByOthers());
 
     // Now vice versa . . .
@@ -148,8 +150,8 @@ public class OfflineLockingTest extends AbstractSyncingTest
     session2lockListener.waitFor(1);
 
     e = (CDOSessionLocksChangedEvent)session2lockListener.getEvents().get(0);
-    assertSame(LockType.WRITE, e.getLockType());
-    assertSame(Operation.LOCK, e.getOperation());
+    assertEquals(Collections.singleton(LockType.WRITE), e.getLockTypes());
+    assertEquals(Collections.singleton(Operation.LOCK), e.getOperations());
     assertEquals(true, companyA_session2.cdoWriteLock().isLockedByOthers());
 
     // Perform the unlock in session 1, connected to clone 1
@@ -159,8 +161,8 @@ public class OfflineLockingTest extends AbstractSyncingTest
     session2lockListener.waitFor(2);
 
     e = (CDOSessionLocksChangedEvent)session2lockListener.getEvents().get(1);
-    assertSame(LockType.WRITE, e.getLockType());
-    assertSame(Operation.UNLOCK, e.getOperation());
+    assertEquals(Collections.singleton(LockType.WRITE), e.getLockTypes());
+    assertEquals(Collections.singleton(Operation.UNLOCK), e.getOperations());
     assertEquals(false, companyA_session2.cdoWriteLock().isLockedByOthers());
 
     // Now try an unlock-all . . .

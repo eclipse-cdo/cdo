@@ -89,7 +89,25 @@
         <filter id="336658481">
             <message_arguments>
                 <message_argument value="org.eclipse.net4j.util.concurrent.RWOLockManager"/>
-                <message_argument value="ALL_LOCK_TYPES"/>
+                <message_argument value="read"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.util.concurrent.RWOLockManager"/>
+                <message_argument value="rwAccess"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.util.concurrent.RWOLockManager"/>
+                <message_argument value="write"/>
+            </message_arguments>
+        </filter>
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="IRWOLockManager&lt;OBJECT, CONTEXT&gt;"/>
+                <message_argument value="RWOLockManager&lt;OBJECT, CONTEXT&gt;"/>
             </message_arguments>
         </filter>
     </resource>

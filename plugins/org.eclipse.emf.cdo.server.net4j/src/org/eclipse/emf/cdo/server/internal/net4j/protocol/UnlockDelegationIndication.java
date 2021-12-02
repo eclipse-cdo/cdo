@@ -13,9 +13,12 @@ package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalView;
+
+import org.eclipse.net4j.util.concurrent.Holder;
 
 import java.io.IOException;
 
@@ -56,9 +59,11 @@ public class UnlockDelegationIndication extends UnlockObjectsIndication
   @Override
   protected InternalView getView(int viewID)
   {
+    Holder<IView> viewHolder = new Holder<>();
+
     InternalLockManager lockManager = getRepository().getLockingManager();
     InternalSession session = getSession();
-    view = (InternalView)lockManager.openView(session, InternalSession.TEMP_VIEW_ID, true, lockAreaID);
-    return view;
+    lockManager.openView(session, InternalSession.TEMP_VIEW_ID, true, lockAreaID, viewHolder, null);
+    return view = (InternalView)viewHolder.get();
   }
 }

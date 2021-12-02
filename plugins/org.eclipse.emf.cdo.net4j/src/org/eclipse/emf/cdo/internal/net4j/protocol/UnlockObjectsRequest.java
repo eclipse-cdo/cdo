@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.lock.CDOLockDelta;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
@@ -22,6 +23,7 @@ import org.eclipse.emf.spi.cdo.CDOSessionProtocol.UnlockObjectsResult;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * @author Simon McDuff
@@ -76,15 +78,10 @@ public class UnlockObjectsRequest extends CDOClientRequest<UnlockObjectsResult>
   protected UnlockObjectsResult confirming(CDODataInput in) throws IOException
   {
     long timestamp = in.readXLong();
-    int n = in.readXInt();
-    CDOLockState[] newLockStates = new CDOLockState[n];
+    List<CDOLockDelta> lockDeltas = in.readCDOLockDeltas();
+    List<CDOLockState> lockStates = in.readCDOLockStates();
 
-    for (int i = 0; i < n; i++)
-    {
-      newLockStates[i] = in.readCDOLockState();
-    }
-
-    return new UnlockObjectsResult(newLockStates, timestamp);
+    return new UnlockObjectsResult(timestamp, lockDeltas, lockStates);
   }
 
   @Override

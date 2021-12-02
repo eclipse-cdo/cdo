@@ -149,10 +149,9 @@ public interface InternalCommitContext extends IStoreAccessor.CommitContext, CDO
   public void setLastUpdateTime(long lastUpdateTime);
 
   /**
-   * @deprecated As of 4.5 no longer supported. See {@link #setIDsToUnlock(CDOID[])}.
+   * @since 4.15
    */
-  @Deprecated
-  public void setAutoReleaseLocksEnabled(boolean on);
+  public void setOptimisticLockingTimeout(long optimisticLockingTimeout);
 
   /**
    * @since 4.1
@@ -189,4 +188,10 @@ public interface InternalCommitContext extends IStoreAccessor.CommitContext, CDO
    * @since 4.3
    */
   public void setSecurityImpact(byte securityImpact, Set<? extends Object> impactedRules);
+
+  /**
+   * @deprecated As of 4.5 no longer supported. See {@link #setIDsToUnlock(CDOID[])}.
+   */
+  @Deprecated
+  public void setAutoReleaseLocksEnabled(boolean on);
 }

@@ -87,19 +87,6 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/internal/server/Repository.java" type="org.eclipse.emf.cdo.internal.server.Repository">
-        <filter id="574619656">
-            <message_arguments>
-                <message_argument value="CDOReplicationInfo"/>
-                <message_argument value="Repository"/>
-            </message_arguments>
-        </filter>
-        <filter id="574660632">
-            <message_arguments>
-                <message_argument value="InternalRepository"/>
-                <message_argument value="CDOCommonRepository"/>
-                <message_argument value="Repository"/>
-            </message_arguments>
-        </filter>
         <filter id="574664731">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.cdo.internal.server.Repository.replicateRaw(CDODataOutput, int, long)"/>
@@ -455,6 +442,72 @@
             <message_arguments>
                 <message_argument value="IDurableLockingManager"/>
                 <message_argument value="InternalLockManager"/>
+            </message_arguments>
+        </filter>
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="IRWOLockManager&lt;OBJECT, CONTEXT&gt;"/>
+                <message_argument value="InternalLockManager"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="lock(IRWLockManager.LockType, IView, Collection&lt;? extends Object&gt;, long)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="lock(IRWLockManager.LockType, IView, Object, long)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="lock(IView, Collection&lt;? extends Object&gt;, IRWLockManager.LockType, int, long, IRWOLockManager.LockDeltaHandler&lt;Object,IView&gt;, Consumer&lt;RWOLockManager.LockState&lt;Object,IView&gt;&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="lock2(IRWLockManager.LockType, IView, Collection&lt;? extends Object&gt;, long)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="lock3(IView, Collection&lt;? extends Object&gt;, IRWLockManager.LockType, int, long, IRWOLockManager.LockDeltaHandler&lt;Object,IView&gt;, Consumer&lt;RWOLockManager.LockState&lt;Object,IView&gt;&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="unlock(IRWLockManager.LockType, IView, Collection&lt;? extends Object&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="unlock(IView)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="unlock(IView, Collection&lt;? extends Object&gt;, IRWLockManager.LockType, int, IRWOLockManager.LockDeltaHandler&lt;Object,IView&gt;, Consumer&lt;RWOLockManager.LockState&lt;Object,IView&gt;&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="unlock2(IRWLockManager.LockType, IView, Collection&lt;? extends Object&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="unlock2(IView)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="unlock2(IView, Collection&lt;? extends Object&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="unlock3(IView, Collection&lt;? extends Object&gt;, IRWLockManager.LockType, int, IRWOLockManager.LockDeltaHandler&lt;Object,IView&gt;, Consumer&lt;RWOLockManager.LockState&lt;Object,IView&gt;&gt;)"/>
             </message_arguments>
         </filter>
     </resource>

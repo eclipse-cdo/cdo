@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
+import org.eclipse.emf.internal.cdo.view.CDOViewImpl.DurableLockProcessor;
 
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
@@ -320,6 +321,8 @@ public abstract class RecoveringCDOSessionImpl extends CDONet4jSessionImpl
 
     private final String durableLockingID;
 
+    private final DurableLockProcessor durableLockProcessor;
+
     private final CDOBranchPoint branchPoint;
 
     private final CDOViewImpl.OptionsImpl options;
@@ -333,10 +336,12 @@ public abstract class RecoveringCDOSessionImpl extends CDONet4jSessionImpl
       if (durableLockingID == null)
       {
         branchPoint = CDOBranchUtil.copyBranchPoint(view);
+        durableLockProcessor = null;
       }
       else
       {
         branchPoint = null;
+        durableLockProcessor = ((CDOViewImpl)view).createDurableLockProcessor();
       }
 
       options = (CDOViewImpl.OptionsImpl)view.options();
@@ -347,7 +352,8 @@ public abstract class RecoveringCDOSessionImpl extends CDONet4jSessionImpl
     {
       if (durableLockingID != null)
       {
-        sessionProtocol.openView(viewID, !transaction, durableLockingID);
+        sessionProtocol.openView(viewID, !transaction, durableLockingID, durableLockProcessor);
+        durableLockProcessor.run();
       }
       else
       {

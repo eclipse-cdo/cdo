@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.view;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
@@ -27,12 +28,11 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 
+import org.eclipse.emf.spi.cdo.CDOLockStateCache;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -208,9 +208,9 @@ public class CDOLockStatePrefetcher
         {
           // Direct call the session protocol.
           CDOSessionProtocol sessionProtocol = view.getSession().getSessionProtocol();
-          CDOLockState[] loadedLockStates = sessionProtocol.getLockStates(view.getBranch().getID(), ids, event.getPrefetchDepth());
+          List<CDOLockState> loadedLockStates = sessionProtocol.getLockStates2(view.getBranch().getID(), ids, event.getPrefetchDepth());
 
-          updateLockStates(Arrays.asList(loadedLockStates), true);
+          updateLockStates(loadedLockStates, true);
 
           // Add missing lock states.
           List<CDOLockState> missingLockStates = new ArrayList<>();
@@ -265,49 +265,17 @@ public class CDOLockStatePrefetcher
     });
   }
 
-  private void updateLockStates(Collection<? extends CDOLockState> lockStates, boolean loadOnDemand)
+  private void updateLockStates(List<CDOLockState> lockStates, boolean loadOnDemand)
   {
     try
     {
-      view.updateLockStates(lockStates, loadOnDemand, null);
+      CDOBranch branch = view.getBranch();
+      CDOLockStateCache lockStateCache = view.getSession().getLockStateCache();
+      lockStateCache.addLockStates(branch, lockStates, null);
     }
     catch (Exception ex)
     {
       if (view.isActive())
-      {
-        OM.LOG.error(ex);
-      }
-    }
-
-    if (updateOtherViews)
-    {
-      for (InternalCDOView otherView : view.getSession().getViews())
-      {
-        if (asyncUpdate)
-        {
-          ExecutorService executorService = view.getExecutorService();
-          executorService.submit(() -> updateLockStatesForOtherView(lockStates, loadOnDemand, otherView));
-        }
-        else
-        {
-          updateLockStatesForOtherView(lockStates, loadOnDemand, otherView);
-        }
-      }
-    }
-  }
-
-  private void updateLockStatesForOtherView(Collection<? extends CDOLockState> lockStates, boolean loadOnDemand, InternalCDOView otherview)
-  {
-    try
-    {
-      if (otherview != view && otherview.isActive() && otherview.getBranch() == view.getBranch())
-      {
-        otherview.updateLockStates(lockStates, loadOnDemand, null);
-      }
-    }
-    catch (Exception ex)
-    {
-      if (otherview.isActive())
       {
         OM.LOG.error(ex);
       }

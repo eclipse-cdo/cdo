@@ -24,7 +24,7 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
-import org.eclipse.emf.cdo.common.lock.CDOLockState;
+import org.eclipse.emf.cdo.common.lock.CDOLockDelta;
 import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockGrade;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
@@ -764,9 +764,9 @@ public class Session extends Container<IView> implements InternalSession
       {
         Map<CDOID, LockGrade> locks = lockingManager.getLocks(view);
 
-        for (CDOLockState lockState : lockChangeInfo.getNewLockStates())
+        for (CDOLockDelta delta : lockChangeInfo.getLockDeltas())
         {
-          Object lockedObject = lockState.getLockedObject();
+          Object lockedObject = delta.getTarget();
           CDOID id = CDOLockUtil.getLockedObjectID(lockedObject);
 
           LockGrade lockGrade = locks.get(id);

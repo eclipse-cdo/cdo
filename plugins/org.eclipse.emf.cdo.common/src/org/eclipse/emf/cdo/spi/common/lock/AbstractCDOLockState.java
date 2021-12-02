@@ -12,12 +12,17 @@ package org.eclipse.emf.cdo.spi.common.lock;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.lock.CDOLockDelta;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
+import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
 
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -26,32 +31,56 @@ import java.util.Set;
  * @since 4.15
  * @noextend This class is not intended to be extended by clients.
  */
-public abstract class AbstractCDOLockState implements CDOLockState
+public abstract class AbstractCDOLockState implements InternalCDOLockState
 {
-  public AbstractCDOLockState()
+  protected Object lockedObject;
+
+  public AbstractCDOLockState(Object lockedObject)
   {
+    assert lockedObject instanceof CDOID || lockedObject instanceof CDOIDAndBranch : "lockedObject is of wrong type";
+    assert !CDOIDUtil.isNull(CDOLockUtil.getLockedObjectID(lockedObject)) : "lockedObject is null";
+    this.lockedObject = lockedObject;
   }
 
   @Override
-  public CDOBranch getBranch()
+  public final Object getLockedObject()
   {
-    return CDOLockUtil.getLockedObjectBranch(getLockedObject());
+    return lockedObject;
   }
 
   @Override
-  public CDOID getID()
+  public final CDOID getID()
   {
-    return CDOLockUtil.getLockedObjectID(getLockedObject());
+    return CDOLockUtil.getLockedObjectID(lockedObject);
   }
 
   @Override
-  public int hashCode()
+  public void remapID(CDOID newID)
   {
-    return Objects.hashCode(getLockedObject());
+    if (lockedObject instanceof CDOID)
+    {
+      lockedObject = newID;
+    }
+    else
+    {
+      lockedObject = CDOIDUtil.createIDAndBranch(newID, ((CDOIDAndBranch)lockedObject).getBranch());
+    }
   }
 
   @Override
-  public boolean equals(Object obj)
+  public final CDOBranch getBranch()
+  {
+    return CDOLockUtil.getLockedObjectBranch(lockedObject);
+  }
+
+  @Override
+  public final int hashCode()
+  {
+    return Objects.hashCode(lockedObject);
+  }
+
+  @Override
+  public final boolean equals(Object obj)
   {
     if (this == obj)
     {
@@ -69,7 +98,7 @@ public abstract class AbstractCDOLockState implements CDOLockState
     }
 
     CDOLockState other = (CDOLockState)obj;
-    if (!getLockedObject().equals(other.getLockedObject()))
+    if (!lockedObject.equals(other.getLockedObject()))
     {
       return false;
     }
@@ -93,10 +122,10 @@ public abstract class AbstractCDOLockState implements CDOLockState
   }
 
   @Override
-  public String toString()
+  public final String toString()
   {
     StringBuilder builder = new StringBuilder("CDOLockState[lockedObject=");
-    builder.append(getLockedObject());
+    builder.append(lockedObject);
 
     Set<CDOLockOwner> readLockOwners = getReadLockOwners();
     builder.append(", readLockOwners=");
@@ -106,7 +135,7 @@ public abstract class AbstractCDOLockState implements CDOLockState
       boolean first = true;
       for (CDOLockOwner lockOwner : readLockOwners)
       {
-        appendLockOwner(builder, lockOwner, first);
+        AbstractCDOLockState.appendLockOwner(builder, lockOwner, first);
         first = false;
       }
     }
@@ -127,16 +156,137 @@ public abstract class AbstractCDOLockState implements CDOLockState
     return builder.toString();
   }
 
-  private static void appendLockOwner(StringBuilder builder, CDOLockOwner lockOwner, boolean first)
+  @Override
+  public final CDOLockDelta addOwner(CDOLockOwner owner, LockType type)
+  {
+    switch (type)
+    {
+    case READ:
+      return addReadOwner(owner);
+
+    case WRITE:
+      return addWriteOwner(owner);
+
+    case OPTION:
+      return addOptionOwner(owner);
+
+    default:
+      throw new IllegalArgumentException("Illegal type: " + type);
+    }
+  }
+
+  @Override
+  public final CDOLockDelta removeOwner(CDOLockOwner owner, LockType type)
+  {
+    switch (type)
+    {
+    case READ:
+      return removeReadOwner(owner);
+
+    case WRITE:
+      return removeWriteOwner(owner);
+
+    case OPTION:
+      return removeOptionOwner(owner);
+
+    default:
+      throw new IllegalArgumentException("Illegal type: " + type);
+    }
+  }
+
+  @Override
+  public final CDOLockDelta[] clearOwner(CDOLockOwner owner)
+  {
+    List<CDOLockDelta> deltas = null;
+    deltas = CDOLockUtil.appendLockDelta(deltas, removeReadOwner(owner));
+    deltas = CDOLockUtil.appendLockDelta(deltas, removeWriteOwner(owner));
+    deltas = CDOLockUtil.appendLockDelta(deltas, removeOptionOwner(owner));
+    return CDOLockUtil.toArray(deltas);
+  }
+
+  protected abstract CDOLockDelta addReadOwner(CDOLockOwner owner);
+
+  protected abstract CDOLockDelta addWriteOwner(CDOLockOwner owner);
+
+  protected abstract CDOLockDelta addOptionOwner(CDOLockOwner owner);
+
+  protected abstract CDOLockDelta removeReadOwner(CDOLockOwner owner);
+
+  protected abstract CDOLockDelta removeWriteOwner(CDOLockOwner owner);
+
+  protected abstract CDOLockDelta removeOptionOwner(CDOLockOwner owner);
+
+  @Override
+  @Deprecated
+  public final void addReadLockOwner(CDOLockOwner owner)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public final boolean removeReadLockOwner(CDOLockOwner owner)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public final void setWriteLockOwner(CDOLockOwner owner)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public final void setWriteOptionOwner(CDOLockOwner owner)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public final boolean removeOwner(CDOLockOwner owner)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public final void updateFrom(CDOLockState source)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public final void updateFrom(Object object, CDOLockState source)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public final void dispose()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public static void appendLockOwner(StringBuilder builder, CDOLockOwner lockOwner, boolean first)
   {
     if (!first)
     {
       builder.append("+");
     }
 
-    String durableLockingID = lockOwner.getDurableLockingID();
     builder.append('[');
+    appendLockOwner(builder, lockOwner);
+    builder.append(']');
+  }
 
+  public static void appendLockOwner(StringBuilder builder, CDOLockOwner lockOwner)
+  {
+    String durableLockingID = lockOwner.getDurableLockingID();
     if (durableLockingID != null)
     {
       builder.append(durableLockingID);
@@ -147,7 +297,5 @@ public abstract class AbstractCDOLockState implements CDOLockState
       builder.append(':');
       builder.append(lockOwner.getViewID());
     }
-
-    builder.append(']');
   }
 }

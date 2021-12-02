@@ -11,24 +11,35 @@
 package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockAreaNotFoundException;
+import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockGrade;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
-import org.eclipse.emf.cdo.spi.server.InternalView;
+
+import org.eclipse.net4j.util.io.IORuntimeException;
 
 import java.io.IOException;
+import java.util.function.BiConsumer;
 
 /**
  * @author Eike Stepper
  */
 public class OpenViewIndication extends CDOServerReadIndication
 {
-  private InternalView newView;
+  private int viewID;
 
-  private String message;
+  private boolean readOnly;
+
+  private CDOBranchPoint branchPoint;
+
+  private String durableLockingID;
+
+  private boolean respondLockGrades;
 
   public OpenViewIndication(CDOServerProtocol protocol)
   {
@@ -38,14 +49,29 @@ public class OpenViewIndication extends CDOServerReadIndication
   @Override
   protected void indicating(CDODataInput in) throws IOException
   {
-    InternalSession session = getSession();
-
-    int viewID = in.readXInt();
-    boolean readOnly = in.readBoolean();
+    viewID = in.readXInt();
+    readOnly = in.readBoolean();
 
     if (in.readBoolean())
     {
-      CDOBranchPoint branchPoint = in.readCDOBranchPoint();
+      branchPoint = in.readCDOBranchPoint();
+    }
+    else
+    {
+      durableLockingID = in.readString();
+      respondLockGrades = in.readBoolean();
+    }
+  }
+
+  @Override
+  protected void responding(CDODataOutput out) throws IOException
+  {
+    InternalSession session = getSession();
+
+    if (branchPoint != null)
+    {
+      IView newView;
+
       if (readOnly)
       {
         newView = session.openView(viewID, branchPoint);
@@ -54,15 +80,58 @@ public class OpenViewIndication extends CDOServerReadIndication
       {
         newView = session.openTransaction(viewID, branchPoint);
       }
+
+      respondNewView(out, newView, null);
     }
     else
     {
       InternalLockManager lockManager = getRepository().getLockingManager();
+      String message = null;
+
+      BiConsumer<CDOID, LockGrade> lockConsumer = respondLockGrades ? (id, lockGrade) -> {
+        try
+        {
+          out.writeCDOID(id);
+          out.writeEnum(lockGrade);
+        }
+        catch (IOException ex)
+        {
+          throw new IORuntimeException(ex);
+        }
+      } : null;
 
       try
       {
-        String durableLockingID = in.readString();
-        newView = (InternalView)lockManager.openView(session, viewID, readOnly, durableLockingID);
+        try
+        {
+          lockManager.openView(session, viewID, readOnly, durableLockingID, newView -> {
+            try
+            {
+              respondNewView(out, newView, null);
+            }
+            catch (IOException ex)
+            {
+              throw new IORuntimeException(ex);
+            }
+          }, lockConsumer);
+        }
+        catch (IORuntimeException ex)
+        {
+          Throwable cause = ex.getCause();
+          if (cause instanceof IOException)
+          {
+            throw (IOException)cause;
+          }
+
+          throw ex;
+        }
+
+        if (respondLockGrades)
+        {
+          out.writeCDOID(null);
+        }
+
+        return;
       }
       catch (LockAreaNotFoundException ex)
       {
@@ -72,11 +141,12 @@ public class OpenViewIndication extends CDOServerReadIndication
       {
         message = ex.getMessage();
       }
+
+      respondNewView(out, null, message);
     }
   }
 
-  @Override
-  protected void responding(CDODataOutput out) throws IOException
+  private static void respondNewView(CDODataOutput out, IView newView, String message) throws IOException
   {
     if (newView != null)
     {

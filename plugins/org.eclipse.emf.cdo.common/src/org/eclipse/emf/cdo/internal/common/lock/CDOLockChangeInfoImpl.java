@@ -13,51 +13,52 @@ package org.eclipse.emf.cdo.internal.common.lock;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
-import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
+import org.eclipse.emf.cdo.common.lock.CDOLockDelta;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchAdjustable;
+import org.eclipse.emf.cdo.spi.common.lock.AbstractCDOLockChangeInfo;
 
-import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
+import org.eclipse.net4j.util.event.INotifier;
+import org.eclipse.net4j.util.event.Notifier;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * @author Caspar De Groot
  */
-public final class CDOLockChangeInfoImpl implements CDOLockChangeInfo, CDOBranchAdjustable
+public final class CDOLockChangeInfoImpl extends AbstractCDOLockChangeInfo implements CDOBranchAdjustable
 {
+  private static final INotifier SOURCE = new Notifier();
+
+  private static final long serialVersionUID = 1L;
+
   private CDOBranchPoint branchPoint;
 
   private final CDOLockOwner lockOwner;
 
-  private final Operation operation;
+  private final CDOLockDelta[] lockDeltas;
 
-  private final LockType lockType;
-
-  private final List<CDOLockState> lockStates;
+  private final CDOLockState[] lockStates;
 
   private final boolean isInvalidateAll;
 
-  public CDOLockChangeInfoImpl(CDOBranchPoint branchPoint, CDOLockOwner lockOwner, Operation operation, LockType lockType,
-      Collection<? extends CDOLockState> lockStates)
+  public CDOLockChangeInfoImpl(CDOBranchPoint branchPoint, CDOLockOwner lockOwner, Collection<CDOLockDelta> lockDeltas, Collection<CDOLockState> lockStates)
   {
+    super(SOURCE);
     this.branchPoint = branchPoint;
     this.lockOwner = lockOwner;
-    this.operation = operation;
-    this.lockType = lockType;
-    this.lockStates = Collections.unmodifiableList(lockStates instanceof List ? (List<? extends CDOLockState>)lockStates : new ArrayList<>(lockStates));
+    this.lockDeltas = lockDeltas.toArray(new CDOLockDelta[lockDeltas.size()]);
+    this.lockStates = lockStates.toArray(new CDOLockState[lockStates.size()]);
     isInvalidateAll = false;
   }
 
   public CDOLockChangeInfoImpl()
   {
+    super(null);
     lockOwner = null;
-    operation = null;
-    lockType = null;
+    lockDeltas = null;
     lockStates = null;
     isInvalidateAll = true;
   }
@@ -89,32 +90,19 @@ public final class CDOLockChangeInfoImpl implements CDOLockChangeInfo, CDOBranch
   }
 
   @Override
-  public Operation getOperation()
-  {
-    return operation;
-  }
-
-  @Override
-  public LockType getLockType()
-  {
-    return lockType;
-  }
-
-  @Override
   public CDOLockOwner getLockOwner()
   {
     return lockOwner;
   }
 
-  @Deprecated
   @Override
-  public CDOLockState[] getLockStates()
+  public CDOLockDelta[] getLockDeltas()
   {
-    return lockStates.toArray(new CDOLockState[lockStates.size()]);
+    return lockDeltas;
   }
 
   @Override
-  public List<CDOLockState> getNewLockStates()
+  public CDOLockState[] getLockStates()
   {
     return lockStates;
   }
@@ -131,16 +119,17 @@ public final class CDOLockChangeInfoImpl implements CDOLockChangeInfo, CDOBranch
     StringBuilder builder = new StringBuilder();
     builder.append("CDOLockChangeInfo[branchPoint=");
     builder.append(branchPoint);
-    builder.append(", operation=");
-    builder.append(operation);
-    builder.append(", lockType=");
-    builder.append(lockType == null ? "ALL" : lockType);
-    builder.append(", lockOwner=");
-    builder.append(lockOwner);
-    builder.append(", lockStates=");
-    builder.append(lockStates);
-    builder.append(", invalidateAll=");
-    builder.append(isInvalidateAll);
+
+    if (isInvalidateAll)
+    {
+      builder.append(", invalidateAll");
+    }
+    else
+    {
+      builder.append(", deltas=");
+      builder.append(Arrays.asList(lockDeltas));
+    }
+
     builder.append("]");
     return builder.toString();
   }

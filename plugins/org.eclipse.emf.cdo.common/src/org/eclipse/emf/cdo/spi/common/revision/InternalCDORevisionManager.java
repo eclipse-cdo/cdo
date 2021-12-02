@@ -125,18 +125,18 @@ public interface InternalCDORevisionManager extends CDORevisionManager, CDORevis
    */
   public interface RevisionLoader
   {
-    /**
-     * @deprecated As of 4.15 use {@link RevisionLoader3#loadRevisions(List, CDOBranchPoint, int, int, boolean)}.
-     */
-    @Deprecated
-    public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth);
-
     public InternalCDORevision loadRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int referenceChunk);
 
     /**
      * @since 4.3
      */
     public void handleRevisions(EClass eClass, CDOBranch branch, boolean exactBranch, long timeStamp, boolean exactTime, CDORevisionHandler handler);
+
+    /**
+     * @deprecated As of 4.15 use {@link RevisionLoader3#loadRevisions(List, CDOBranchPoint, int, int, boolean)}.
+     */
+    @Deprecated
+    public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth);
   }
 
   /**

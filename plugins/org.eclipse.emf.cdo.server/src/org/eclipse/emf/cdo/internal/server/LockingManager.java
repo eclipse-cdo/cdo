@@ -17,7 +17,10 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo.Operation;
+import org.eclipse.emf.cdo.common.lock.CDOLockDelta;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
+import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -33,6 +36,7 @@ import org.eclipse.emf.cdo.server.IStoreAccessor.DurableLocking2;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider;
 import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
@@ -41,11 +45,12 @@ import org.eclipse.emf.cdo.spi.server.InternalStore;
 import org.eclipse.emf.cdo.spi.server.InternalView;
 
 import org.eclipse.net4j.util.CheckUtil;
-import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.ConcurrentArray;
+import org.eclipse.net4j.util.concurrent.Access;
 import org.eclipse.net4j.util.concurrent.RWOLockManager;
+import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.event.EventUtil;
@@ -63,10 +68,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
  * @author Simon McDuff
@@ -100,7 +108,7 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
       String durableLockingID = view.getDurableLockingID();
       if (durableLockingID == null)
       {
-        repository.unlock((InternalView)view, null, null, false);
+        repository.unlock((InternalView)view);
       }
       else
       {
@@ -128,6 +136,12 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
     }
   };
 
+  private BiFunction<CDOID, CDOBranch, Object> lockKeyCreator;
+
+  private Function<Object, CDOID> lockIDExtractor;
+
+  private Function<Object, CDOBranch> lockBranchExtractor;
+
   public LockingManager()
   {
   }
@@ -145,131 +159,68 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
   }
 
   @Override
-  public synchronized Object getLockEntryObject(Object key)
-  {
-    LockState<Object, IView> lockState = getObjectToLocksMap().get(key);
-    return lockState == null ? null : lockState.getLockedObject();
-  }
-
-  @Override
   public Object getLockKey(CDOID id, CDOBranch branch)
   {
-    if (repository.isSupportingBranches())
-    {
-      return CDOIDUtil.createIDAndBranch(id, branch);
-    }
-
-    return id;
+    return lockKeyCreator.apply(id, branch);
   }
 
   @Override
-  public synchronized Map<CDOID, LockGrade> getLocks(final IView view)
+  public CDOID getLockKeyID(Object key)
+  {
+    return lockIDExtractor.apply(key);
+  }
+
+  @Override
+  public CDOBranch getLockKeyBranch(Object key)
+  {
+    return lockBranchExtractor.apply(key);
+  }
+
+  /**
+   * @category Read Access
+   */
+  @Override
+  public Map<CDOID, LockGrade> getLocks(final IView view)
   {
     final Map<CDOID, LockGrade> result = CDOIDUtil.createMap();
 
-    for (LockState<Object, IView> lockState : getObjectToLocksMap().values())
+    try (Access access = read.access())
     {
-      LockGrade grade = LockGrade.NONE;
-      if (lockState.hasLock(LockType.READ, view, false))
+      for (LockState<Object, IView> lockState : getObjectToLocksMap().values())
       {
-        grade = grade.getUpdated(LockType.READ, true);
-      }
+        LockGrade grade = LockGrade.NONE;
+        if (lockState.hasLock(LockType.READ, view, false))
+        {
+          grade = grade.getUpdated(LockType.READ, true);
+        }
 
-      if (lockState.hasLock(LockType.WRITE, view, false))
-      {
-        grade = grade.getUpdated(LockType.WRITE, true);
-      }
+        if (lockState.hasLock(LockType.WRITE, view, false))
+        {
+          grade = grade.getUpdated(LockType.WRITE, true);
+        }
 
-      if (lockState.hasLock(LockType.OPTION, view, false))
-      {
-        grade = grade.getUpdated(LockType.OPTION, true);
-      }
+        if (lockState.hasLock(LockType.OPTION, view, false))
+        {
+          grade = grade.getUpdated(LockType.OPTION, true);
+        }
 
-      if (grade != LockGrade.NONE)
-      {
-        CDOID id = getLockKeyID(lockState.getLockedObject());
-        result.put(id, grade);
+        if (grade != LockGrade.NONE)
+        {
+          CDOID id = getLockKeyID(lockState.getLockedObject());
+          result.put(id, grade);
+        }
       }
     }
 
     return result;
   }
 
-  @Override
-  @Deprecated
-  public void lock(boolean explicit, LockType type, IView view, Collection<? extends Object> objectsToLock, long timeout) throws InterruptedException
-  {
-    lock2(explicit, type, view, objectsToLock, false, timeout);
-  }
-
-  @Override
-  public List<LockState<Object, IView>> lock2(boolean explicit, LockType type, IView view, Collection<? extends Object> objectsToLock, boolean recursive,
-      long timeout) throws InterruptedException
-  {
-    String durableLockingID = null;
-    DurableLocking accessor = null;
-
-    if (explicit)
-    {
-      durableLockingID = view.getDurableLockingID();
-      if (durableLockingID != null)
-      {
-        accessor = getDurableLocking();
-      }
-    }
-
-    long startTime = timeout == WAIT ? 0L : currentTimeMillis();
-
-    List<LockState<Object, IView>> newLockStates;
-    synchronized (this)
-    {
-      if (recursive)
-      {
-        objectsToLock = createContentSet(objectsToLock, view);
-      }
-
-      // Adjust timeout for delay we may have incurred on entering this synchronized block
-      if (timeout != WAIT)
-      {
-        timeout -= currentTimeMillis() - startTime;
-      }
-
-      newLockStates = super.lock2(type, view, objectsToLock, timeout);
-    }
-
-    if (accessor != null)
-    {
-      accessor.lock(durableLockingID, type, objectsToLock);
-    }
-
-    return newLockStates;
-  }
-
-  @Override
-  public void lock(LockType type, IView context, Collection<? extends Object> objectsToLock, long timeout) throws InterruptedException
-  {
-    lock2(false, type, context, objectsToLock, false, timeout);
-  }
-
-  @Override
-  public void lock(LockType type, IView context, Object objectToLock, long timeout) throws InterruptedException
-  {
-    Collection<Object> objectsToLock = new LinkedHashSet<>();
-    objectsToLock.add(objectToLock);
-    lock2(false, type, context, objectsToLock, false, timeout);
-  }
-
-  @Override
-  public List<LockState<Object, IView>> lock2(LockType type, IView context, Collection<? extends Object> objectsToLock, long timeout)
-      throws InterruptedException
-  {
-    return lock2(false, type, context, objectsToLock, false, timeout);
-  }
-
+  /**
+   * Synchronized by the caller.
+   */
   private Set<? extends Object> createContentSet(Collection<? extends Object> objectsToLock, IView view)
   {
     CDOBranch branch = view.getBranch();
-    boolean branching = repository.isSupportingBranches();
 
     CDORevisionManager revisionManager = view.getSession().getRepository().getRevisionManager();
     CDORevisionProvider revisionProvider = new ManagedRevisionProvider(revisionManager, branch.getHead());
@@ -280,111 +231,109 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
     {
       contents.add(objectToLock);
 
-      CDOID id = branching ? ((CDOIDAndBranch)objectToLock).getID() : (CDOID)objectToLock;
+      CDOID id = getLockKeyID(objectToLock);
       CDORevision revision = revisionProvider.getRevision(id);
-      createContentSet(branch, branching, revisionProvider, revision, contents);
+      createContentSet(branch, revisionProvider, revision, contents);
     }
 
     return contents;
   }
 
-  private void createContentSet(CDOBranch branch, boolean branching, CDORevisionProvider revisionProvider, CDORevision revision, Set<Object> contents)
+  /**
+   * Synchronized by the caller.
+   */
+  private void createContentSet(CDOBranch branch, CDORevisionProvider revisionProvider, CDORevision revision, Set<Object> contents)
   {
     for (CDORevision child : CDORevisionUtil.getChildRevisions(revision, revisionProvider))
     {
       CDOID childID = child.getID();
-      contents.add(branching ? CDOIDUtil.createIDAndBranch(childID, branch) : childID);
-      createContentSet(branch, branching, revisionProvider, child, contents);
+      Object key = getLockKey(childID, branch);
+      contents.add(key);
+      createContentSet(branch, revisionProvider, child, contents);
     }
   }
 
+  /**
+   * @category Write Access
+   */
   @Override
-  @Deprecated
-  public synchronized void unlock(boolean explicit, LockType type, IView view, Collection<? extends Object> objectsToUnlock)
+  public long lock(IView view, Collection<? extends Object> objects, LockType lockType, int count, long timeout, //
+      boolean recursive, boolean explicit, //
+      LockDeltaHandler<Object, IView> deltaHandler, Consumer<LockState<Object, IView>> stateHandler) //
+      throws InterruptedException, TimeoutRuntimeException
   {
-    unlock2(explicit, type, view, objectsToUnlock, false);
-  }
-
-  @Override
-  public synchronized List<LockState<Object, IView>> unlock2(boolean explicit, LockType type, IView view, Collection<? extends Object> objects,
-      boolean recursive)
-  {
-    List<LockState<Object, IView>> newLockStates;
-    synchronized (this)
+    long modCount;
+    try (Access access = write.access())
     {
       if (recursive)
       {
         objects = createContentSet(objects, view);
       }
 
-      newLockStates = super.unlock2(type, view, objects);
+      modCount = super.lock(view, objects, lockType, count, timeout, deltaHandler, stateHandler);
     }
 
     if (explicit)
     {
-      String durableLockingID = view.getDurableLockingID();
-      if (durableLockingID != null)
+      try
       {
-        DurableLocking accessor = getDurableLocking();
-        accessor.unlock(durableLockingID, type, objects);
+        lockDurably(view, objects, lockType);
+      }
+      catch (Exception | Error ex)
+      {
+        super.unlock(view, objects, lockType, count, null, null);
+        throw ex;
       }
     }
 
-    return newLockStates;
+    return modCount;
   }
 
-  @Override
-  @Deprecated
-  public synchronized void unlock(boolean explicit, IView view)
+  private void lockDurably(IView view, Collection<? extends Object> objects, LockType lockType)
   {
-    unlock2(explicit, view);
+    String durableLockingID = view.getDurableLockingID();
+    if (durableLockingID != null)
+    {
+      DurableLocking accessor = getDurableLocking();
+      accessor.lock(durableLockingID, lockType, objects);
+    }
   }
 
+  /**
+   * @category Write Access
+   */
   @Override
-  public synchronized List<LockState<Object, IView>> unlock2(boolean explicit, IView view)
+  public long unlock(IView view, Collection<? extends Object> objects, LockType lockType, int count, //
+      boolean recursive, boolean explicit, //
+      LockDeltaHandler<Object, IView> deltaHandler, Consumer<LockState<Object, IView>> stateHandler)
   {
+    long modCount;
+    try (Access access = write.access())
+    {
+      if (recursive)
+      {
+        objects = createContentSet(objects, view);
+      }
+
+      modCount = super.unlock(view, objects, lockType, count, deltaHandler, stateHandler);
+    }
+
     if (explicit)
     {
-      String durableLockingID = view.getDurableLockingID();
-      if (durableLockingID != null)
-      {
-        DurableLocking accessor = getDurableLocking();
-        accessor.unlock(durableLockingID);
-      }
+      unlockDurably(view, objects, lockType);
     }
 
-    return super.unlock2(view);
+    return modCount;
   }
 
-  @Override
-  public synchronized List<RWOLockManager.LockState<Object, IView>> unlock2(IView context)
+  private void unlockDurably(IView view, Collection<? extends Object> objects, LockType lockType)
   {
-    return unlock2(false, context);
-  }
-
-  @Override
-  public synchronized List<RWOLockManager.LockState<Object, IView>> unlock2(IView context, Collection<? extends Object> objectsToUnlock)
-  {
-    // If no locktype is specified, use the LockType.WRITE
-    return unlock2(false, LockType.WRITE, context, objectsToUnlock, false);
-  }
-
-  @Override
-  public synchronized List<RWOLockManager.LockState<Object, IView>> unlock2(LockType type, IView context, Collection<? extends Object> objectsToUnlock)
-  {
-    return unlock2(false, type, context, objectsToUnlock, false);
-  }
-
-  @Override
-  public synchronized void unlock(IView context)
-  {
-    unlock2(context);
-  }
-
-  @Override
-  public synchronized void unlock(LockType type, IView context, Collection<? extends Object> objectsToUnlock)
-  {
-    unlock2(type, context, objectsToUnlock);
+    String durableLockingID = view.getDurableLockingID();
+    if (durableLockingID != null)
+    {
+      DurableLocking accessor = getDurableLocking();
+      accessor.unlock(durableLockingID, lockType, objects);
+    }
   }
 
   @Override
@@ -456,7 +405,8 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
   }
 
   @Override
-  public IView openView(ISession session, int viewID, boolean readOnly, final String durableLockingID)
+  public void openView(ISession session, int viewID, boolean readOnly, String durableLockingID, Consumer<IView> viewConsumer,
+      BiConsumer<CDOID, LockGrade> lockConsumer)
   {
     synchronized (openDurableViews)
     {
@@ -509,7 +459,17 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
       });
 
       openDurableViews.put(durableLockingID, view);
-      return view;
+      viewConsumer.accept(view);
+
+      if (lockConsumer != null)
+      {
+        for (Map.Entry<CDOID, LockGrade> entry : area.getLocks().entrySet())
+        {
+          CDOID id = entry.getKey();
+          LockGrade lockGrade = entry.getValue();
+          lockConsumer.accept(id, lockGrade);
+        }
+      }
     }
   }
 
@@ -517,9 +477,25 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
   protected void doActivate() throws Exception
   {
     super.doActivate();
+
+    if (repository.isSupportingBranches())
+    {
+      lockKeyCreator = (id, branch) -> CDOIDUtil.createIDAndBranch(id, branch);
+      lockIDExtractor = key -> ((CDOIDAndBranch)key).getID();
+      lockBranchExtractor = key -> ((CDOIDAndBranch)key).getBranch();
+    }
+    else
+    {
+      InternalCDOBranch mainBranch = repository.getBranchManager().getMainBranch();
+
+      lockKeyCreator = (id, branch) -> id;
+      lockIDExtractor = key -> (CDOID)key;
+      lockBranchExtractor = key -> mainBranch;
+    }
+
     loadLocks();
 
-    InternalSessionManager sessionManager = getRepository().getSessionManager();
+    InternalSessionManager sessionManager = repository.getSessionManager();
     sessionManager.addListener(sessionManagerListener);
 
     for (ISession session : sessionManager.getSessions())
@@ -531,7 +507,7 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
   @Override
   protected void doDeactivate() throws Exception
   {
-    ISessionManager sessionManager = getRepository().getSessionManager();
+    ISessionManager sessionManager = repository.getSessionManager();
     sessionManager.removeListener(sessionManagerListener);
 
     for (ISession session : sessionManager.getSessions())
@@ -604,18 +580,6 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
   }
 
   @Override
-  public CDOID getLockKeyID(Object key)
-  {
-    CDOID id = CDOLockUtil.getLockedObjectID(key);
-    if (id == null)
-    {
-      throw new ImplementationError("Unexpected lock object: " + key);
-    }
-
-    return id;
-  }
-
-  @Override
   public void addDurableViewHandler(DurableViewHandler handler)
   {
     durableViewHandlers.add(handler);
@@ -631,6 +595,66 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
   public DurableViewHandler[] getDurableViewHandlers()
   {
     return durableViewHandlers.get();
+  }
+
+  /**
+   * @category Read Access
+   */
+  @Override
+  public LockGrade getLockGrade(Object key)
+  {
+    try (Access access = read.access())
+    {
+      LockState<Object, IView> lockState = getObjectToLocksMap().get(key);
+      LockGrade grade = LockGrade.NONE;
+      if (lockState != null)
+      {
+        for (LockType type : ALL_LOCK_TYPES)
+        {
+          if (lockState.hasLock(type))
+          {
+            grade = grade.getUpdated(type, true);
+          }
+        }
+      }
+
+      return grade;
+    }
+  }
+
+  private LockArea getLockAreaNoEx(String durableLockingID)
+  {
+    try
+    {
+      return getLockArea(durableLockingID);
+    }
+    catch (LockAreaNotFoundException e)
+    {
+      return null;
+    }
+  }
+
+  @Override
+  public void updateLockArea(LockArea lockArea)
+  {
+    String durableLockingID = lockArea.getDurableLockingID();
+    DurableLocking2 accessor = getDurableLocking2();
+
+    if (lockArea.isMissing())
+    {
+      LockArea localLockArea = getLockAreaNoEx(durableLockingID);
+      if (localLockArea != null && localLockArea.getLocks().size() > 0)
+      {
+        accessor.deleteLockArea(durableLockingID);
+        DurableView deletedView = durableViews.remove(durableLockingID);
+        CheckUtil.checkNull(deletedView, "deletedView");
+      }
+    }
+    else
+    {
+      accessor.updateLockArea(lockArea);
+      new DurableLockLoader().handleLockArea(lockArea);
+    }
   }
 
   /**
@@ -855,7 +879,7 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
       IView view = getView(durableLockingID);
       if (view != null)
       {
-        unlock2(view);
+        LockingManager.super.unlock(view, null, null, ALL_LOCKS, null, null);
       }
       else
       {
@@ -888,9 +912,9 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
 
       try
       {
-        lock(LockType.READ, view, readLocks, 1000L);
-        lock(LockType.WRITE, view, writeLocks, 1000L);
-        lock(LockType.OPTION, view, writeOptions, 1000L);
+        LockingManager.super.lock(view, readLocks, LockType.READ, 1, 1000L, null, null);
+        LockingManager.super.lock(view, writeLocks, LockType.WRITE, 1, 1000L, null, null);
+        LockingManager.super.lock(view, writeOptions, LockType.OPTION, 1, 1000L, null, null);
       }
       catch (InterruptedException ex)
       {
@@ -901,57 +925,196 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
     }
   }
 
-  @Override
-  public synchronized LockGrade getLockGrade(Object key)
+  /**
+   * @author Eike Stepper
+   */
+  public static final class LockDeltaCollector extends ArrayList<CDOLockDelta> implements LockDeltaHandler<Object, IView>
   {
-    LockState<Object, IView> lockState = getObjectToLocksMap().get(key);
-    LockGrade grade = LockGrade.NONE;
-    if (lockState != null)
+    private static final long serialVersionUID = 1L;
+
+    private Operation operation;
+
+    public LockDeltaCollector(Operation operation)
     {
-      for (LockType type : ALL_LOCK_TYPES)
+      this.operation = operation;
+    }
+
+    public LockDeltaCollector()
+    {
+    }
+
+    public Operation getOperation()
+    {
+      return operation;
+    }
+
+    public void setOperation(Operation operation)
+    {
+      this.operation = operation;
+    }
+
+    @Override
+    public void handleLockDelta(IView context, Object object, LockType lockType, int oldCount, int newCount)
+    {
+      switch (operation)
       {
-        if (lockState.hasLock(type))
+      case LOCK:
+        if (oldCount == 0 && newCount > 0)
         {
-          grade = grade.getUpdated(type, true);
+          CDOLockOwner lockOwner = context.getLockOwner();
+          CDOLockDelta lockDelta = CDOLockUtil.createLockDelta(object, lockType, null, lockOwner);
+          add(lockDelta);
         }
+        break;
+
+      case UNLOCK:
+        if (oldCount > 0 && newCount == 0)
+        {
+          CDOLockOwner lockOwner = context.getLockOwner();
+          CDOLockDelta lockDelta = CDOLockUtil.createLockDelta(object, lockType, lockOwner, null);
+          add(lockDelta);
+        }
+        break;
+
+      default:
+        throw new AssertionError();
       }
     }
-
-    return grade;
   }
 
-  private LockArea getLockAreaNoEx(String durableLockingID)
+  /**
+   * @author Eike Stepper
+   */
+  public static final class LockStateCollector extends ArrayList<CDOLockState> implements Consumer<LockState<Object, IView>>
   {
-    try
+    private static final long serialVersionUID = 1L;
+
+    @Override
+    public void accept(LockState<Object, IView> serverLockState)
     {
-      return getLockArea(durableLockingID);
+      CDOLockState commonLockState = CDOLockUtil.convertLockState(serverLockState);
+      add(commonLockState);
     }
-    catch (LockAreaNotFoundException e)
+  }
+
+  /**
+   * @deprecated
+   * @category Read Access
+   */
+  @Deprecated
+  @Override
+  public Object getLockEntryObject(Object key)
+  {
+    try (Access access = read.access())
     {
-      return null;
+      LockState<Object, IView> lockState = getObjectToLocksMap().get(key);
+      return lockState == null ? null : lockState.getLockedObject();
     }
   }
 
   @Override
-  public void updateLockArea(LockArea lockArea)
+  @Deprecated
+  public void lock(boolean explicit, LockType type, IView view, Collection<? extends Object> objectsToLock, long timeout) throws InterruptedException
   {
-    String durableLockingID = lockArea.getDurableLockingID();
-    DurableLocking2 accessor = getDurableLocking2();
+    throw new UnsupportedOperationException();
+  }
 
-    if (lockArea.isMissing())
-    {
-      LockArea localLockArea = getLockAreaNoEx(durableLockingID);
-      if (localLockArea != null && localLockArea.getLocks().size() > 0)
-      {
-        accessor.deleteLockArea(durableLockingID);
-        DurableView deletedView = durableViews.remove(durableLockingID);
-        CheckUtil.checkNull(deletedView, "deletedView");
-      }
-    }
-    else
-    {
-      accessor.updateLockArea(lockArea);
-      new DurableLockLoader().handleLockArea(lockArea);
-    }
+  @Override
+  @Deprecated
+  public void unlock(boolean explicit, LockType type, IView view, Collection<? extends Object> objectsToUnlock)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void unlock(boolean explicit, IView view)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void lock(LockType type, IView view, Collection<? extends Object> objectsToLock, long timeout) throws InterruptedException
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void lock(LockType type, IView view, Object objectToLock, long timeout) throws InterruptedException
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public List<LockState<Object, IView>> lock2(LockType type, IView view, Collection<? extends Object> objectsToLock, long timeout) throws InterruptedException
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public List<LockState<Object, IView>> lock2(boolean explicit, LockType type, IView view, Collection<? extends Object> objectsToLock, boolean recursive,
+      long timeout) throws InterruptedException
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void unlock(IView view)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void unlock(LockType type, IView view, Collection<? extends Object> objectsToUnlock)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public List<LockState<Object, IView>> unlock2(boolean explicit, LockType type, IView view, Collection<? extends Object> objects, boolean recursive)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public List<LockState<Object, IView>> unlock2(boolean explicit, IView view)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public List<RWOLockManager.LockState<Object, IView>> unlock2(IView view)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public List<RWOLockManager.LockState<Object, IView>> unlock2(IView view, Collection<? extends Object> objectsToUnlock)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public List<RWOLockManager.LockState<Object, IView>> unlock2(LockType type, IView view, Collection<? extends Object> objectsToUnlock)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public IView openView(ISession session, int viewID, boolean readOnly, String durableLockingID)
+  {
+    throw new UnsupportedOperationException();
   }
 }

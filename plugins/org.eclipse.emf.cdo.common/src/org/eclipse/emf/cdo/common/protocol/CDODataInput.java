@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDReference;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
+import org.eclipse.emf.cdo.common.lock.CDOLockDelta;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockArea;
@@ -46,6 +47,8 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Provides I/O methods for reading various CDO data types and concepts from streams.
@@ -170,6 +173,51 @@ public interface CDODataInput extends ExtendedDataInput
    * @since 4.1
    */
   public CDOLockState readCDOLockState() throws IOException;
+
+  /**
+   * @since 4.15
+   */
+  default List<CDOLockState> readCDOLockStates() throws IOException
+  {
+    List<CDOLockState> lockDeltas = new ArrayList<>();
+    for (;;)
+    {
+      CDOLockState lockState = readCDOLockState();
+      if (lockState == null)
+      {
+        break;
+      }
+
+      lockDeltas.add(lockState);
+    }
+
+    return lockDeltas;
+  }
+
+  /**
+   * @since 4.15
+   */
+  public CDOLockDelta readCDOLockDelta() throws IOException;
+
+  /**
+   * @since 4.15
+   */
+  default List<CDOLockDelta> readCDOLockDeltas() throws IOException
+  {
+    List<CDOLockDelta> lockDeltas = new ArrayList<>();
+    for (;;)
+    {
+      CDOLockDelta lockDelta = readCDOLockDelta();
+      if (lockDelta == null)
+      {
+        break;
+      }
+
+      lockDeltas.add(lockDelta);
+    }
+
+    return lockDeltas;
+  }
 
   /**
    * @since 4.1

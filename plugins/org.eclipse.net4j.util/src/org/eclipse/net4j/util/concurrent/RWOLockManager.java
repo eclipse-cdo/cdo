@@ -7,15 +7,14 @@
  *
  * Contributors:
  *    Caspar De Groot - initial API and implementation
+ *    Eike Stepper - major reimplementation
  */
 package org.eclipse.net4j.util.concurrent;
 
-import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.collection.HashBag;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,11 +22,14 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.StringJoiner;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Condition;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 /**
  * Keeps track of locks on objects. Locks are owned by contexts. A particular combination of locks and their owners, for
@@ -35,17 +37,31 @@ import java.util.function.BiConsumer;
  * deciding whether or not a new lock can be granted, based on the locks already present.
  *
  * @author Caspar De Groot
+ * @author Eike Stepper
  * @since 3.2
  */
 public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLockManager<OBJECT, CONTEXT>
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_CONCURRENCY, RWOLockManager.class);
+  private static final LockType[][] LOCK_TYPE_ARRAYS = { { LockType.values()[0] }, { LockType.values()[1] }, { LockType.values()[2] } };
 
-  private static final ThreadLocal<Boolean> UNLOCK_ALL = new ThreadLocal<>();
+  private static final LockType[] ALL_LOCK_TYPES_ARRAY = LockType.values();
 
-  private static final LockType[] ALL_LOCK_TYPES = LockType.values();
+  /**
+   * @since 3.16
+   */
+  protected final ReentrantReadWriteAccess rwAccess = new ReentrantReadWriteAccess(true);
 
-  private final List<LockState<OBJECT, CONTEXT>> emptyResult = Collections.emptyList();
+  /**
+   * @since 3.16
+   */
+  protected final Access read = rwAccess.readAccess();
+
+  /**
+   * @since 3.16
+   */
+  protected final Access write = rwAccess.writeAccess();
+
+  private final Condition unlocked = rwAccess.newCondition();
 
   private final Map<OBJECT, LockState<OBJECT, CONTEXT>> objectToLockStateMap = createObjectToLocksMap();
 
@@ -58,228 +74,343 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
    */
   private final Map<CONTEXT, Set<LockState<OBJECT, CONTEXT>>> contextToLockStates = createContextToLocksMap();
 
-  @Override
-  public void lock(LockType type, CONTEXT context, Collection<? extends OBJECT> objectsToLock, long timeout) throws InterruptedException
+  private volatile long modCount;
+
+  public RWOLockManager()
   {
-    lock2(type, context, objectsToLock, timeout);
   }
 
+  /**
+   * @category Read Access
+   */
   @Override
-  public List<LockState<OBJECT, CONTEXT>> lock2(LockType type, CONTEXT context, Collection<? extends OBJECT> objectsToLock, long timeout)
-      throws InterruptedException
+  public long getModCount()
   {
-    int count = objectsToLock.size();
-    if (count == 0)
+    try (Access access = read.access())
     {
-      return emptyResult;
+      return modCount;
     }
+  }
 
-    if (TRACER.isEnabled())
+  /**
+   * @since 3.16
+   * @category Write Access
+   */
+  @Override
+  public long lock(CONTEXT context, Collection<? extends OBJECT> objects, LockType lockType, int count, long timeout, //
+      LockDeltaHandler<OBJECT, CONTEXT> deltaHandler, Consumer<LockState<OBJECT, CONTEXT>> stateHandler) //
+      throws InterruptedException, TimeoutRuntimeException
+  {
+    CheckUtil.checkArg(context, "context");
+    CheckUtil.checkArg(objects, "objects");
+    CheckUtil.checkArg(lockType, "lockType");
+    CheckUtil.checkArg(count >= 0, "count >= 0");
+
+    long deadline = timeout == NO_TIMEOUT ? Long.MAX_VALUE : currentTimeMillis() + timeout;
+
+    try (Access access = write.access())
     {
-      TRACER.format("Lock: {0} --> {1}", context, objectsToLock); //$NON-NLS-1$
-    }
+      if (ObjectUtil.isEmpty(objects) || count == 0)
+      {
+        // Nothing to do.
+        return modCount;
+      }
 
-    // Must come before the synchronized block!
-    long startTime = timeout == WAIT ? 0L : currentTimeMillis();
+      // Populate a mutable list of objects to lock. This list will shrink while objects are successfully locked below.
+      List<OBJECT> objectsToLock = new ArrayList<>(objects);
 
-    // Do not synchronize the entire method as it would corrupt the timeout!
-    synchronized (this)
-    {
+      // Remember the locked objects for the case that an exception occurs, so that their locks can be removed again.
+      List<OBJECT> lockedObjects = new ArrayList<>(objectsToLock.size());
+
       for (;;)
       {
-        ArrayList<LockState<OBJECT, CONTEXT>> lockStates = getLockStatesForContext(type, context, objectsToLock);
-        if (lockStates != null)
+        for (Iterator<OBJECT> it = objectsToLock.iterator(); it.hasNext();)
         {
-          for (int i = 0; i < count; i++)
+          OBJECT lockedObject = it.next();
+          LockState<OBJECT, CONTEXT> lockState = getOrCreateLockState(lockedObject);
+
+          if (lockState.canLock(lockType, context))
           {
-            LockState<OBJECT, CONTEXT> lockState = lockStates.get(i);
-            lockState.lock(type, context);
-            addContextToLockStateMapping(context, lockState);
-          }
+            int oldCount = lockState.getLockCount(lockType, context);
+            int newCount = lockState.lock(lockType, context, count);
 
-          return lockStates;
-        }
-
-        wait(startTime, timeout);
-      }
-    }
-  }
-
-  @Override
-  public void lock(LockType type, CONTEXT context, OBJECT objectToLock, long timeout) throws InterruptedException
-  {
-    // Do not synchronize the entire method as it would corrupt the timeout!
-    lock(type, context, Collections.singleton(objectToLock), timeout);
-  }
-
-  @Override
-  public void unlock(LockType type, CONTEXT context, Collection<? extends OBJECT> objectsToUnlock)
-  {
-    unlock2(type, context, objectsToUnlock);
-  }
-
-  @Override
-  public List<LockState<OBJECT, CONTEXT>> unlock2(CONTEXT context, Collection<? extends OBJECT> objectsToUnlock)
-  {
-    return unlock2(ALL_LOCK_TYPES, context, objectsToUnlock);
-  }
-
-  @Override
-  public List<LockState<OBJECT, CONTEXT>> unlock2(LockType type, CONTEXT context, Collection<? extends OBJECT> objectsToUnlock)
-  {
-    return unlock2(new LockType[] { type }, context, objectsToUnlock);
-  }
-
-  private List<LockState<OBJECT, CONTEXT>> unlock2(LockType[] types, CONTEXT context, Collection<? extends OBJECT> objectsToUnlock)
-  {
-    if (objectsToUnlock.isEmpty())
-    {
-      return emptyResult;
-    }
-
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Unlock: {0} --> {1}", context, objectsToUnlock); //$NON-NLS-1$
-    }
-
-    Set<LockState<OBJECT, CONTEXT>> result = new HashSet<>();
-    boolean unlockAll = UNLOCK_ALL.get() == Boolean.TRUE;
-
-    synchronized (this)
-    {
-      for (OBJECT o : objectsToUnlock)
-      {
-        LockState<OBJECT, CONTEXT> lockState = objectToLockStateMap.get(o);
-        if (lockState != null)
-        {
-          for (LockType type : types)
-          {
-            while (lockState.canUnlock(type, context))
+            if (newCount != oldCount)
             {
-              lockState.unlock(type, context);
-              result.add(lockState);
+              addContextToLockStateMapping(context, lockState);
 
-              if (!unlockAll)
+              if (deltaHandler != null)
               {
-                break;
+                deltaHandler.handleLockDelta(context, lockedObject, lockType, oldCount, newCount);
               }
             }
+
+            if (stateHandler != null)
+            {
+              stateHandler.accept(lockState);
+            }
+
+            lockedObjects.add(lockedObject);
+            it.remove();
+          }
+        }
+
+        if (objectsToLock.isEmpty())
+        {
+          return ++modCount;
+        }
+
+        try
+        {
+          long waitTime = deadline - currentTimeMillis();
+          if (waitTime <= 0)
+          {
+            StringBuilder builder = new StringBuilder();
+            builder.append("Could not lock objects within ");
+            builder.append(timeout);
+            builder.append(" milliseconds: ");
+
+            StringJoiner joiner = new StringJoiner(", ", "Could not lock objects within " + timeout + " milliseconds: ", "");
+            for (OBJECT objectToLock : objectsToLock)
+            {
+              LockState<OBJECT, CONTEXT> lockState = objectToLockStateMap.get(objectToLock);
+              if (lockState != null)
+              {
+                joiner.add(lockState.toString());
+              }
+            }
+
+            throw new TimeoutRuntimeException(builder.toString());
+          }
+
+          // Give others a chance to unlock objects.
+          unlocked.await(waitTime, TimeUnit.MILLISECONDS);
+        }
+        catch (InterruptedException | TimeoutRuntimeException ex)
+        {
+          unlock(context, lockedObjects, lockType, count, null, null);
+
+          --modCount; // Fix the modCount that was increased by unlock();
+          throw ex;
+        }
+      }
+    }
+  }
+
+  private LockState<OBJECT, CONTEXT> getOrCreateLockState(OBJECT object)
+  {
+    return objectToLockStateMap.computeIfAbsent(object, o -> new LockState<>(o));
+  }
+
+  private void addContextToLockStateMapping(CONTEXT context, LockState<OBJECT, CONTEXT> lockState)
+  {
+    contextToLockStates.computeIfAbsent(context, c -> new HashSet<>()).add(lockState);
+  }
+
+  /**
+   * @category Write Access
+   */
+  @Override
+  public long unlock(CONTEXT context, Collection<? extends OBJECT> objects, LockType lockType, int count, //
+      LockDeltaHandler<OBJECT, CONTEXT> deltaHandler, Consumer<LockState<OBJECT, CONTEXT>> stateHandler)
+  {
+    CheckUtil.checkArg(context, "context");
+    CheckUtil.checkArg(count >= -1, "count >= -1");
+
+    LockType[] lockTypes = lockType == null ? ALL_LOCK_TYPES_ARRAY : LOCK_TYPE_ARRAYS[lockType.ordinal()];
+    List<LockState<OBJECT, CONTEXT>> modifiedLockStates = new ArrayList<>();
+
+    try (Access access = write.access())
+    {
+      if (objects == null)
+      {
+        if (count == 0)
+        {
+          // Nothing to do.
+          return modCount;
+        }
+
+        Set<LockState<OBJECT, CONTEXT>> lockStates = contextToLockStates.get(context);
+        if (lockStates == null)
+        {
+          // We have no locks, nothing to do.
+          return modCount;
+        }
+
+        for (LockState<OBJECT, CONTEXT> lockState : lockStates)
+        {
+          OBJECT object = lockState.getLockedObject();
+          doUnlock(context, object, lockTypes, count, deltaHandler, stateHandler, lockState, modifiedLockStates);
+        }
+      }
+      else
+      {
+        if (objects.isEmpty())
+        {
+          return modCount;
+        }
+
+        for (OBJECT object : objects)
+        {
+          LockState<OBJECT, CONTEXT> lockState = objectToLockStateMap.get(object);
+          if (lockState != null)
+          {
+            doUnlock(context, object, lockTypes, count, deltaHandler, stateHandler, lockState, modifiedLockStates);
           }
         }
       }
 
-      for (LockState<OBJECT, CONTEXT> lockState : result)
+      removeLockStates(context, modifiedLockStates);
+
+      // Wake up blocked lockers.
+      unlocked.signalAll();
+
+      return ++modCount;
+    }
+  }
+
+  private void doUnlock(CONTEXT context, OBJECT object, LockType[] lockTypes, int count, //
+      LockDeltaHandler<OBJECT, CONTEXT> deltaHandler, Consumer<LockState<OBJECT, CONTEXT>> stateHandler, //
+      LockState<OBJECT, CONTEXT> lockState, List<LockState<OBJECT, CONTEXT>> modifiedLockStates)
+  {
+    for (LockType lockType : lockTypes)
+    {
+      if (lockState.canUnlock(lockType, context))
       {
-        if (!lockState.hasLocks(context))
+        int oldCount = lockState.getLockCount(lockType, context);
+        int newCount = lockState.unlock(lockType, context, count);
+
+        if (newCount != oldCount)
         {
-          removeLockStateForContext(context, lockState);
+          modifiedLockStates.add(lockState);
+
+          if (deltaHandler != null)
+          {
+            deltaHandler.handleLockDelta(context, lockState.getLockedObject(), lockType, oldCount, newCount);
+          }
         }
 
-        if (lockState.hasNoLocks())
+        if (stateHandler != null)
         {
-          objectToLockStateMap.remove(lockState.getLockedObject());
+          stateHandler.accept(lockState);
         }
       }
-
-      notifyAll();
     }
-
-    return new LinkedList<>(result);
   }
 
-  @Override
-  public synchronized void unlock(CONTEXT context)
+  private void removeLockStates(CONTEXT context, List<LockState<OBJECT, CONTEXT>> modifiedLockStates)
   {
-    unlock2(context);
-  }
-
-  @Override
-  public synchronized List<LockState<OBJECT, CONTEXT>> unlock2(CONTEXT context)
-  {
-    Set<LockState<OBJECT, CONTEXT>> lockStates = contextToLockStates.get(context);
-    if (lockStates == null)
+    for (LockState<OBJECT, CONTEXT> lockState : modifiedLockStates)
     {
-      return emptyResult;
-    }
-
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Unlock: {0} --> {1}", context, lockStates); //$NON-NLS-1$
-    }
-
-    List<OBJECT> objectsWithoutLocks = new LinkedList<>();
-
-    for (LockState<OBJECT, CONTEXT> lockState : lockStates)
-    {
-      for (LockType type : ALL_LOCK_TYPES)
+      if (!lockState.hasLocks(context))
       {
-        while (lockState.hasLock(type, context, false))
-        {
-          lockState.unlock(type, context);
-        }
+        removeLockStateForContext(context, lockState);
       }
 
       if (lockState.hasNoLocks())
       {
-        OBJECT o = lockState.getLockedObject();
-        objectsWithoutLocks.add(o);
+        objectToLockStateMap.remove(lockState.getLockedObject());
       }
     }
-
-    contextToLockStates.remove(context);
-
-    // This must be done outside the above iteration, in order to avoid ConcurrentModEx
-    for (OBJECT o : objectsWithoutLocks)
-    {
-      objectToLockStateMap.remove(o);
-    }
-
-    notifyAll();
-
-    return toList(lockStates);
   }
 
-  @Override
-  public synchronized boolean hasLock(LockType type, CONTEXT context, OBJECT objectToLock)
+  /**
+   * Removes a lockState from the set of all lockStates that the given context is involved in. If the lockState being
+   * removed is the last one for the given context, then the set becomes empty, and is therefore removed from the
+   * contextToLockStates map.
+   */
+  private void removeLockStateForContext(CONTEXT context, LockState<OBJECT, CONTEXT> lockState)
   {
-    LockState<OBJECT, CONTEXT> lockState = objectToLockStateMap.get(objectToLock);
-    return lockState != null && lockState.hasLock(type, context, false);
-  }
-
-  @Override
-  public synchronized boolean hasLockByOthers(LockType type, CONTEXT context, OBJECT objectToLock)
-  {
-    LockState<OBJECT, CONTEXT> lockState = objectToLockStateMap.get(objectToLock);
-    return lockState != null && lockState.hasLock(type, context, true);
-  }
-
-  protected synchronized void changeContext(CONTEXT oldContext, CONTEXT newContext)
-  {
-    for (LockState<OBJECT, CONTEXT> lockState : objectToLockStateMap.values())
-    {
-      lockState.replaceContext(oldContext, newContext);
-    }
-
-    Set<LockState<OBJECT, CONTEXT>> lockStates = contextToLockStates.remove(oldContext);
+    Set<LockState<OBJECT, CONTEXT>> lockStates = contextToLockStates.get(context);
     if (lockStates != null)
     {
-      contextToLockStates.put(newContext, lockStates);
+      lockStates.remove(lockState);
+
+      if (lockStates.isEmpty())
+      {
+        contextToLockStates.remove(context);
+      }
     }
   }
 
-  protected long currentTimeMillis()
+  /**
+   * @category Read Access
+   */
+  @Override
+  public boolean hasLock(LockType type, CONTEXT context, OBJECT objectToLock)
   {
-    return System.currentTimeMillis();
+    try (Access access = read.access())
+    {
+      LockState<OBJECT, CONTEXT> lockState = objectToLockStateMap.get(objectToLock);
+      return lockState != null && lockState.hasLock(type, context, false);
+    }
   }
 
-  protected Map<OBJECT, LockState<OBJECT, CONTEXT>> createObjectToLocksMap()
+  /**
+   * @category Read Access
+   */
+  @Override
+  public boolean hasLockByOthers(LockType type, CONTEXT context, OBJECT objectToLock)
   {
-    return new HashMap<>();
+    try (Access access = read.access())
+    {
+      LockState<OBJECT, CONTEXT> lockState = objectToLockStateMap.get(objectToLock);
+      return lockState != null && lockState.hasLock(type, context, true);
+    }
   }
 
-  protected Map<CONTEXT, Set<LockState<OBJECT, CONTEXT>>> createContextToLocksMap()
+  /**
+   * @category Read Access
+   */
+  public LockState<OBJECT, CONTEXT> getLockState(OBJECT key)
   {
-    return new HashMap<>();
+    try (Access access = read.access())
+    {
+      return objectToLockStateMap.get(key);
+    }
+  }
+
+  /**
+   * @since 3.16
+   * @category Read Access
+   */
+  public void getLockStates(Collection<OBJECT> keys, BiConsumer<OBJECT, LockState<OBJECT, CONTEXT>> consumer)
+  {
+    try (Access access = read.access())
+    {
+      keys.forEach(key -> {
+        LockState<OBJECT, CONTEXT> lockState = objectToLockStateMap.get(key);
+        consumer.accept(key, lockState);
+      });
+    }
+  }
+
+  /**
+   * @since 3.16
+   * @category Read Access
+   */
+  public void getLockStates(Consumer<LockState<OBJECT, CONTEXT>> consumer)
+  {
+    try (Access access = read.access())
+    {
+      objectToLockStateMap.values().forEach(consumer);
+    }
+  }
+
+  protected void changeContext(CONTEXT oldContext, CONTEXT newContext)
+  {
+    try (Access access = write.access())
+    {
+      for (LockState<OBJECT, CONTEXT> lockState : objectToLockStateMap.values())
+      {
+        lockState.replaceContext(oldContext, newContext);
+      }
+
+      Set<LockState<OBJECT, CONTEXT>> lockStates = contextToLockStates.remove(oldContext);
+      if (lockStates != null)
+      {
+        contextToLockStates.put(newContext, lockStates);
+      }
+    }
   }
 
   /**
@@ -298,162 +429,117 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
     return contextToLockStates;
   }
 
-  public synchronized LockState<OBJECT, CONTEXT> getLockState(OBJECT key)
+  protected Map<OBJECT, LockState<OBJECT, CONTEXT>> createObjectToLocksMap()
   {
-    return objectToLockStateMap.get(key);
+    return new HashMap<>();
+  }
+
+  protected Map<CONTEXT, Set<LockState<OBJECT, CONTEXT>>> createContextToLocksMap()
+  {
+    return new HashMap<>();
+  }
+
+  protected long currentTimeMillis()
+  {
+    return System.currentTimeMillis();
+  }
+
+  @Deprecated
+  public List<LockState<OBJECT, CONTEXT>> getLockStates()
+  {
+    throw new UnsupportedOperationException();
   }
 
   /**
-   * @since 3.16
+   * @category Write Access
    */
-  public synchronized void getLockStates(Collection<OBJECT> keys, BiConsumer<OBJECT, LockState<OBJECT, CONTEXT>> consumer)
+  @Deprecated
+  public void setLockState(OBJECT key, LockState<OBJECT, CONTEXT> lockState)
   {
-    keys.forEach(key -> {
-      LockState<OBJECT, CONTEXT> lockState = objectToLockStateMap.get(key);
-      consumer.accept(key, lockState);
-    });
-  }
-
-  /**
-   * @since 3.5
-   */
-  public synchronized List<LockState<OBJECT, CONTEXT>> getLockStates()
-  {
-    return new ArrayList<>(objectToLockStateMap.values());
-  }
-
-  public synchronized void setLockState(OBJECT key, LockState<OBJECT, CONTEXT> lockState)
-  {
-    objectToLockStateMap.put(key, lockState);
-
-    for (CONTEXT readLockOwner : lockState.getReadLockOwners())
+    try (Access access = write.access())
     {
-      addContextToLockStateMapping(readLockOwner, lockState);
-    }
+      objectToLockStateMap.put(key, lockState);
 
-    CONTEXT writeLockOwner = lockState.getWriteLockOwner();
-    if (writeLockOwner != null)
-    {
-      addContextToLockStateMapping(writeLockOwner, lockState);
-    }
-
-    CONTEXT writeOptionOwner = lockState.getWriteOptionOwner();
-    if (writeOptionOwner != null)
-    {
-      addContextToLockStateMapping(writeOptionOwner, lockState);
-    }
-  }
-
-  private LockState<OBJECT, CONTEXT> getOrCreateLockState(OBJECT o)
-  {
-    LockState<OBJECT, CONTEXT> lockState = objectToLockStateMap.get(o);
-    if (lockState == null)
-    {
-      lockState = new LockState<>(o);
-      objectToLockStateMap.put(o, lockState);
-    }
-
-    return lockState;
-  }
-
-  private ArrayList<LockState<OBJECT, CONTEXT>> getLockStatesForContext(LockType type, CONTEXT context, Collection<? extends OBJECT> objectsToLock)
-  {
-    int count = objectsToLock.size();
-    ArrayList<LockState<OBJECT, CONTEXT>> lockStates = new ArrayList<>(count);
-
-    Iterator<? extends OBJECT> it = objectsToLock.iterator();
-
-    for (int i = 0; i < count; i++)
-    {
-      OBJECT o = it.next();
-      LockState<OBJECT, CONTEXT> lockState = getOrCreateLockState(o);
-      if (!lockState.canLock(type, context))
+      for (CONTEXT readLockOwner : lockState.getReadLockOwners())
       {
-        return null;
+        addContextToLockStateMapping(readLockOwner, lockState);
       }
 
-      lockStates.add(lockState);
-    }
-
-    return lockStates;
-  }
-
-  private void addContextToLockStateMapping(CONTEXT context, LockState<OBJECT, CONTEXT> lockState)
-  {
-    Set<LockState<OBJECT, CONTEXT>> lockStates = contextToLockStates.get(context);
-    if (lockStates == null)
-    {
-      lockStates = new HashSet<>();
-      contextToLockStates.put(context, lockStates);
-    }
-
-    lockStates.add(lockState);
-  }
-
-  /**
-   * Removes a lockState from the set of all lockStates that the given context is involved in. If the lockState being
-   * removed is the last one for the given context, then the set becomes empty, and is therefore removed from the
-   * contextToLockStates map.
-   */
-  private void removeLockStateForContext(CONTEXT context, LockState<OBJECT, CONTEXT> lockState)
-  {
-    Set<LockState<OBJECT, CONTEXT>> lockStates = contextToLockStates.get(context);
-    lockStates.remove(lockState);
-    if (lockStates.isEmpty())
-    {
-      contextToLockStates.remove(context);
-    }
-  }
-
-  private void wait(long startTime, long timeout) throws InterruptedException
-  {
-    if (timeout == WAIT)
-    {
-      wait();
-    }
-    else
-    {
-      long elapsedTime = currentTimeMillis() - startTime;
-      long waitTime = timeout - elapsedTime;
-      if (waitTime < 1)
+      CONTEXT writeLockOwner = lockState.getWriteLockOwner();
+      if (writeLockOwner != null)
       {
-        throw new TimeoutRuntimeException("Could not lock objects within " + timeout + " milli seconds");
+        addContextToLockStateMapping(writeLockOwner, lockState);
       }
 
-      wait(waitTime);
+      CONTEXT writeOptionOwner = lockState.getWriteOptionOwner();
+      if (writeOptionOwner != null)
+      {
+        addContextToLockStateMapping(writeOptionOwner, lockState);
+      }
     }
   }
 
-  @SuppressWarnings("unchecked")
-  private static <OBJECT, CONTEXT> List<LockState<OBJECT, CONTEXT>> toList(Set<LockState<OBJECT, CONTEXT>> lockStates)
+  @Override
+  @Deprecated
+  public void lock(LockType type, CONTEXT context, Collection<? extends OBJECT> objectsToLock, long timeout) throws InterruptedException
   {
-    if (lockStates instanceof List)
-    {
-      return (List<LockState<OBJECT, CONTEXT>>)lockStates;
-    }
-
-    List<LockState<OBJECT, CONTEXT>> list = new LinkedList<>();
-    for (LockState<OBJECT, CONTEXT> lockState : lockStates)
-    {
-      list.add(lockState);
-    }
-
-    return list;
+    throw new UnsupportedOperationException();
   }
 
-  /**
-   * @since 3.7
-   */
+  @Override
+  @Deprecated
+  public List<LockState<OBJECT, CONTEXT>> lock2(LockType type, CONTEXT context, Collection<? extends OBJECT> objectsToLock, long timeout)
+      throws InterruptedException
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void lock(LockType type, CONTEXT context, OBJECT objectToLock, long timeout) throws InterruptedException
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void unlock(LockType type, CONTEXT context, Collection<? extends OBJECT> objectsToUnlock)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void unlock(CONTEXT context)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public List<LockState<OBJECT, CONTEXT>> unlock2(CONTEXT context)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public List<LockState<OBJECT, CONTEXT>> unlock2(CONTEXT context, Collection<? extends OBJECT> objectsToUnlock)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public List<LockState<OBJECT, CONTEXT>> unlock2(LockType lockType, CONTEXT context, Collection<? extends OBJECT> objectsToUnlock)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Deprecated
   public static void setUnlockAll(boolean on)
   {
-    if (on)
-    {
-      UNLOCK_ALL.set(Boolean.TRUE);
-    }
-    else
-    {
-      UNLOCK_ALL.remove();
-    }
+    throw new UnsupportedOperationException();
   }
 
   /**
@@ -477,7 +563,7 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
   {
     private final OBJECT lockedObject;
 
-    private final HashBag<CONTEXT> readLockOwners = new HashBag<>();
+    private HashBag<CONTEXT> readLockOwners;
 
     private CONTEXT writeLockOwner;
 
@@ -496,38 +582,67 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
       return lockedObject;
     }
 
-    public boolean hasLock(LockType type, CONTEXT view, boolean byOthers)
+    /**
+     * @since 3.16
+     */
+    public int getLockCount(LockType type, CONTEXT context)
     {
-      CheckUtil.checkArg(view, "view");
+      CheckUtil.checkArg(context, "context");
 
       switch (type)
       {
       case READ:
-        if (byOthers)
+        return readLockOwners == null ? 0 : readLockOwners.getCounterFor(context);
+
+      case WRITE:
+        return writeLockOwner == context ? writeLockCounter : 0;
+
+      case OPTION:
+        return writeOptionOwner == context ? 1 : 0;
+
+      default:
+        throw new AssertionError();
+      }
+    }
+
+    public boolean hasLock(LockType type, CONTEXT context, boolean byOthers)
+    {
+      CheckUtil.checkArg(context, "context");
+
+      switch (type)
+      {
+      case READ:
+        if (readLockOwners == null)
         {
-          return readLockOwners.size() > 1 || readLockOwners.size() == 1 && !readLockOwners.contains(view);
+          return false;
         }
 
-        return readLockOwners.contains(view);
+        if (byOthers)
+        {
+          return readLockOwners.size() > 1 || readLockOwners.size() == 1 && !readLockOwners.contains(context);
+        }
+
+        return readLockOwners.contains(context);
 
       case WRITE:
         if (byOthers)
         {
-          return writeLockOwner != null && writeLockOwner != view;
+          return writeLockOwner != null && writeLockOwner != context;
         }
 
-        return writeLockOwner == view;
+        return writeLockOwner == context;
 
       case OPTION:
         if (byOthers)
         {
-          return writeOptionOwner != null && writeOptionOwner != view;
+          return writeOptionOwner != null && writeOptionOwner != context;
         }
 
-        return writeOptionOwner == view;
-      }
+        return writeOptionOwner == context;
 
-      return false;
+      default:
+        throw new AssertionError();
+      }
     }
 
     public boolean hasLock(LockType type)
@@ -535,20 +650,26 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
       switch (type)
       {
       case READ:
-        return readLockOwners.size() > 0;
+        return readLockOwners != null && readLockOwners.size() > 0;
 
       case WRITE:
         return writeLockOwner != null;
 
       case OPTION:
         return writeOptionOwner != null;
-      }
 
-      return false;
+      default:
+        throw new AssertionError();
+      }
     }
 
     public Set<CONTEXT> getReadLockOwners()
     {
+      if (readLockOwners == null)
+      {
+        return Collections.emptySet();
+      }
+
       return Collections.unmodifiableSet(readLockOwners);
     }
 
@@ -596,11 +717,11 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
       StringBuilder builder = new StringBuilder("LockState[target=");
       builder.append(lockedObject);
 
-      if (readLockOwners.size() > 0)
+      if (readLockOwners != null && readLockOwners.size() > 0)
       {
         builder.append(", read=");
         boolean first = true;
-        for (CONTEXT view : readLockOwners)
+        for (CONTEXT context : readLockOwners)
         {
           if (first)
           {
@@ -611,7 +732,7 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
             builder.append(", ");
           }
 
-          builder.append(view);
+          builder.append(context);
         }
 
         builder.deleteCharAt(builder.length() - 1);
@@ -633,43 +754,23 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
       return builder.toString();
     }
 
-    void lock(LockType type, CONTEXT context)
-    {
-      CheckUtil.checkArg(context, "context");
-      switch (type)
-      {
-      case READ:
-        doReadLock(context);
-        return;
-
-      case WRITE:
-        doWriteLock(context);
-        return;
-
-      case OPTION:
-        doWriteOption(context);
-        return;
-      }
-
-      throw new AssertionError("Unknown lock type " + type);
-    }
-
     boolean canLock(LockType type, CONTEXT context)
     {
       CheckUtil.checkArg(context, "context");
       switch (type)
       {
       case READ:
-        return canReadLock(context);
+        return canLockRead(context);
 
       case WRITE:
-        return canWriteLock(context);
+        return canLockWrite(context);
 
       case OPTION:
-        return canWriteOption(context);
-      }
+        return canLockOption(context);
 
-      throw new AssertionError("Unknown lock type " + type);
+      default:
+        throw new AssertionError();
+      }
     }
 
     boolean canUnlock(LockType type, CONTEXT context)
@@ -678,48 +779,69 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
       switch (type)
       {
       case READ:
-        return canReadUnlock(context);
+        return canUnlockRead(context);
 
       case WRITE:
-        return canWriteUnlock(context);
+        return canUnlockWrite(context);
 
       case OPTION:
-        return canWriteUnoption(context);
-      }
+        return canUnlockOption(context);
 
-      throw new AssertionError("Unknown lock type " + type);
+      default:
+        throw new AssertionError();
+      }
     }
 
-    void unlock(LockType type, CONTEXT context)
+    int lock(LockType type, CONTEXT context, int count)
     {
       CheckUtil.checkArg(context, "context");
       switch (type)
       {
       case READ:
-        doReadUnlock(context);
-        return;
+        return doLockRead(context, count);
 
       case WRITE:
-        doWriteUnlock(context);
-        return;
+        return doLockWrite(context, count);
 
       case OPTION:
-        doWriteUnoption(context);
-        return;
-      }
+        return doLockOption(context, count);
 
-      throw new AssertionError("Unknown lock type " + type);
+      default:
+        throw new AssertionError();
+      }
+    }
+
+    int unlock(LockType type, CONTEXT context, int count)
+    {
+      CheckUtil.checkArg(context, "context");
+      switch (type)
+      {
+      case READ:
+        return doUnlockRead(context, count);
+
+      case WRITE:
+        return doUnlockWrite(context, count);
+
+      case OPTION:
+        return doUnlockOption(context, count);
+
+      default:
+        throw new AssertionError();
+      }
     }
 
     void replaceContext(CONTEXT oldContext, CONTEXT newContext)
     {
-      int readLocksOwnedByOldView = readLockOwners.getCounterFor(oldContext);
-      if (readLocksOwnedByOldView > 0)
+      if (readLockOwners != null)
       {
-        for (int i = 0; i < readLocksOwnedByOldView; i++)
+        int readLocksOwnedByOldView = readLockOwners.getCounterFor(oldContext);
+        if (readLocksOwnedByOldView > 0)
         {
-          readLockOwners.remove(oldContext);
-          readLockOwners.add(newContext);
+          for (int i = 0; i < readLocksOwnedByOldView; i++)
+          {
+            readLockOwners.remove(oldContext);
+            readLockOwners.add(newContext);
+          }
         }
       }
 
@@ -736,15 +858,15 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
 
     boolean hasNoLocks()
     {
-      return readLockOwners.isEmpty() && writeLockOwner == null && writeOptionOwner == null;
+      return ObjectUtil.isEmpty(readLockOwners) && writeLockOwner == null && writeOptionOwner == null;
     }
 
     boolean hasLocks(CONTEXT context)
     {
-      return readLockOwners.contains(context) || writeLockOwner == context || writeOptionOwner == context;
+      return readLockOwners != null && readLockOwners.contains(context) || writeLockOwner == context || writeOptionOwner == context;
     }
 
-    private boolean canReadLock(CONTEXT context)
+    private boolean canLockRead(CONTEXT context)
     {
       if (writeLockOwner != null && writeLockOwner != context)
       {
@@ -754,12 +876,7 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
       return true;
     }
 
-    private void doReadLock(CONTEXT context)
-    {
-      readLockOwners.add(context);
-    }
-
-    private boolean canWriteLock(CONTEXT context)
+    private boolean canLockWrite(CONTEXT context)
     {
       // If another context owns a writeLock, we can't write-lock
       if (writeLockOwner != null && writeLockOwner != context)
@@ -774,29 +891,26 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
       }
 
       // If another context owns a readLock, we can't write-lock
-      if (readLockOwners.size() > 1)
+      if (readLockOwners != null)
       {
-        return false;
-      }
-
-      if (readLockOwners.size() == 1)
-      {
-        if (!readLockOwners.contains(context))
+        if (readLockOwners.size() > 1)
         {
           return false;
+        }
+
+        if (readLockOwners.size() == 1)
+        {
+          if (!readLockOwners.contains(context))
+          {
+            return false;
+          }
         }
       }
 
       return true;
     }
 
-    private void doWriteLock(CONTEXT context)
-    {
-      writeLockOwner = context;
-      writeLockCounter++;
-    }
-
-    private boolean canWriteOption(CONTEXT context)
+    private boolean canLockOption(CONTEXT context)
     {
       if (writeOptionOwner != null && writeOptionOwner != context)
       {
@@ -811,14 +925,9 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
       return true;
     }
 
-    private void doWriteOption(CONTEXT context)
+    private boolean canUnlockRead(CONTEXT context)
     {
-      writeOptionOwner = context;
-    }
-
-    private boolean canReadUnlock(CONTEXT context)
-    {
-      if (!readLockOwners.contains(context))
+      if (readLockOwners != null && !readLockOwners.contains(context))
       {
         return false;
       }
@@ -826,12 +935,7 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
       return true;
     }
 
-    private void doReadUnlock(CONTEXT context)
-    {
-      readLockOwners.remove(context);
-    }
-
-    private boolean canWriteUnlock(CONTEXT context)
+    private boolean canUnlockWrite(CONTEXT context)
     {
       if (writeLockOwner != context)
       {
@@ -841,16 +945,7 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
       return true;
     }
 
-    private void doWriteUnlock(CONTEXT context)
-    {
-      writeLockCounter--;
-      if (writeLockCounter == 0)
-      {
-        writeLockOwner = null;
-      }
-    }
-
-    private boolean canWriteUnoption(CONTEXT context)
+    private boolean canUnlockOption(CONTEXT context)
     {
       if (writeOptionOwner != context)
       {
@@ -860,9 +955,77 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
       return true;
     }
 
-    private void doWriteUnoption(CONTEXT context)
+    private int doLockRead(CONTEXT context, int count)
+    {
+      if (readLockOwners == null)
+      {
+        readLockOwners = new HashBag<>();
+      }
+
+      return readLockOwners.addAndGet(context, count);
+    }
+
+    private int doLockWrite(CONTEXT context, int count)
+    {
+      writeLockOwner = context;
+      return writeLockCounter += count;
+    }
+
+    private int doLockOption(CONTEXT context, int count)
+    {
+      writeOptionOwner = context;
+      return 1;
+    }
+
+    private int doUnlockRead(CONTEXT context, int count)
+    {
+      if (readLockOwners == null)
+      {
+        return 0;
+      }
+
+      if (count == ALL_LOCKS)
+      {
+        readLockOwners.removeCounterFor(context);
+        if (readLockOwners.isEmpty())
+        {
+          readLockOwners = null;
+        }
+
+        return 0;
+      }
+
+      int newCount = readLockOwners.removeAndGet(context, count);
+      if (readLockOwners.isEmpty())
+      {
+        readLockOwners = null;
+      }
+
+      return newCount;
+    }
+
+    private int doUnlockWrite(CONTEXT context, int count)
+    {
+      if (count == ALL_LOCKS)
+      {
+        writeLockOwner = null;
+        writeLockCounter = 0;
+        return 0;
+      }
+
+      writeLockCounter -= count;
+      if (writeLockCounter == 0)
+      {
+        writeLockOwner = null;
+      }
+
+      return writeLockCounter;
+    }
+
+    private int doUnlockOption(CONTEXT context, int count)
     {
       writeOptionOwner = null;
+      return 0;
     }
   }
 }

@@ -77,12 +77,6 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle, IEx
 
   public void setViewSet(InternalCDOViewSet viewSet);
 
-  @Deprecated
-  public CDOFeatureAnalyzer getFeatureAnalyzer();
-
-  @Deprecated
-  public void setFeatureAnalyzer(CDOFeatureAnalyzer featureAnalyzer);
-
   /**
    * Returns an unmodifiable map of the objects managed by this view.
    *
@@ -115,21 +109,6 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle, IEx
   public void handleObjectStateChanged(InternalCDOObject object, CDOState oldState, CDOState newState);
 
   /**
-   * @deprecated As of 4.2. use {@link #invalidate(CDOBranch, long, List, List, Map, boolean, boolean)}
-   */
-  @Deprecated
-  public void invalidate(CDOBranch branch, long lastUpdateTime, List<CDORevisionKey> allChangedObjects, List<CDOIDAndVersion> allDetachedObjects,
-      Map<CDOID, InternalCDORevision> oldRevisions, boolean async);
-
-  /**
-   * @since 4.2
-   * @deprecated As of 4.6. use {@link #invalidate(ViewInvalidationData)}
-   */
-  @Deprecated
-  public void invalidate(CDOBranch branch, long lastUpdateTime, List<CDORevisionKey> allChangedObjects, List<CDOIDAndVersion> allDetachedObjects,
-      Map<CDOID, InternalCDORevision> oldRevisions, boolean async, boolean clearResourcePathCache);
-
-  /**
    * @since 4.6
    */
   public void invalidate(ViewInvalidationData invalidationData);
@@ -152,12 +131,6 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle, IEx
   public void clearResourcePathCacheIfNecessary(CDORevisionDelta delta);
 
   public CDOID getResourceNodeID(String path);
-
-  /**
-   * @deprecated No longer supported.
-   */
-  @Deprecated
-  public void registerProxyResource(CDOResourceImpl resource);
 
   public void registerObject(InternalCDOObject object);
 
@@ -203,18 +176,6 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle, IEx
   public boolean isObjectLocked(CDOObject object, LockType lockType, boolean byOthers);
 
   /**
-   * @since 4.12
-   * @deprecated As of 4.15 use {@link #updateLockStates(Collection, boolean, Consumer)}.
-   */
-  @Deprecated
-  public void updateLockStates(CDOLockState[] newLockStates, boolean loadObjectsOnDemand, Consumer<CDOLockState> consumer);
-
-  /**
-   * @since 4.15
-   */
-  public void updateLockStates(Collection<? extends CDOLockState> newLockStates, boolean loadObjectsOnDemand, Consumer<CDOLockState> consumer);
-
-  /**
    * @since 4.15
    */
   public CDOLockState[] getLockStates(Collection<CDOID> ids, boolean loadOnDemand);
@@ -253,6 +214,40 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle, IEx
    * @since 4.15
    */
   public void inverseClose();
+
+  @Deprecated
+  public CDOFeatureAnalyzer getFeatureAnalyzer();
+
+  @Deprecated
+  public void setFeatureAnalyzer(CDOFeatureAnalyzer featureAnalyzer);
+
+  /**
+   * @deprecated As of 4.2. use {@link #invalidate(CDOBranch, long, List, List, Map, boolean, boolean)}
+   */
+  @Deprecated
+  public void invalidate(CDOBranch branch, long lastUpdateTime, List<CDORevisionKey> allChangedObjects, List<CDOIDAndVersion> allDetachedObjects,
+      Map<CDOID, InternalCDORevision> oldRevisions, boolean async);
+
+  /**
+   * @since 4.2
+   * @deprecated As of 4.6. use {@link #invalidate(ViewInvalidationData)}
+   */
+  @Deprecated
+  public void invalidate(CDOBranch branch, long lastUpdateTime, List<CDORevisionKey> allChangedObjects, List<CDOIDAndVersion> allDetachedObjects,
+      Map<CDOID, InternalCDORevision> oldRevisions, boolean async, boolean clearResourcePathCache);
+
+  /**
+   * @deprecated No longer supported.
+   */
+  @Deprecated
+  public void registerProxyResource(CDOResourceImpl resource);
+
+  /**
+   * @since 4.12
+   * @deprecated As of 4.15 use {@link CDOLockStateCache#updateLockStates(CDOBranch, Collection, Collection, Consumer)}.
+   */
+  @Deprecated
+  public void updateLockStates(CDOLockState[] newLockStates, boolean loadObjectsOnDemand, Consumer<CDOLockState> consumer);
 
   /**
    * Optimizes the storage of {@link CDOObject#cdoView()} and {@link CDOObject#cdoState()}. All objects of a view

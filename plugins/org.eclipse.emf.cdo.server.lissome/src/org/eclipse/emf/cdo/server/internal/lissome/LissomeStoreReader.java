@@ -486,9 +486,9 @@ public class LissomeStoreReader extends StoreAccessorBase implements ILissomeSto
   }
 
   @Override
+  @Deprecated
   public void unlock(String durableLockingID)
   {
-    // Implemented in LissomeStoreWriter
     throw new UnsupportedOperationException();
   }
 

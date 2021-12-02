@@ -20,17 +20,20 @@ import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockGrade;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
 import org.eclipse.emf.cdo.internal.common.lock.CDOLockAreaImpl;
 import org.eclipse.emf.cdo.internal.common.lock.CDOLockChangeInfoImpl;
+import org.eclipse.emf.cdo.internal.common.lock.CDOLockDeltaImpl;
 import org.eclipse.emf.cdo.internal.common.lock.CDOLockStateImpl;
 import org.eclipse.emf.cdo.internal.common.lock.DurableCDOLockOwner;
 import org.eclipse.emf.cdo.internal.common.lock.NormalCDOLockOwner;
 import org.eclipse.emf.cdo.spi.common.lock.InternalCDOLockState;
 
 import org.eclipse.net4j.util.HexUtil;
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.concurrent.RWOLockManager.LockState;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -51,6 +54,16 @@ public final class CDOLockUtil
    * @since 4.14
    */
   public static final int DURABLE_VIEW_ID = 0;
+
+  /**
+   * @since 4.15
+   */
+  public static final CDOLockState[] NO_LOCK_STATES = {};
+
+  /**
+   * @since 4.15
+   */
+  public static final CDOLockDelta[] NO_LOCK_DELTAS = {};
 
   private CDOLockUtil()
   {
@@ -103,19 +116,6 @@ public final class CDOLockUtil
     return -1;
   }
 
-  public static CDOLockState copyLockState(CDOLockState lockState)
-  {
-    return ((CDOLockStateImpl)lockState).copy();
-  }
-
-  /**
-   * @since 4.12
-   */
-  public static CDOLockState copyLockState(CDOLockState lockState, Object lockedObject)
-  {
-    return ((CDOLockStateImpl)lockState).copy(lockedObject);
-  }
-
   /**
    * @since 4.15
    */
@@ -123,21 +123,21 @@ public final class CDOLockUtil
   {
     InternalCDOLockState cdoLockState = new CDOLockStateImpl(lockState.getLockedObject());
 
-    for (CDOCommonView view : lockState.getReadLockOwners())
+    for (CDOCommonView readLockOwner : lockState.getReadLockOwners())
     {
-      cdoLockState.addReadLockOwner(createLockOwner(view));
+      cdoLockState.addOwner(createLockOwner(readLockOwner), LockType.READ);
     }
 
     CDOCommonView writeLockOwner = lockState.getWriteLockOwner();
     if (writeLockOwner != null)
     {
-      cdoLockState.setWriteLockOwner(createLockOwner(writeLockOwner));
+      cdoLockState.addOwner(createLockOwner(writeLockOwner), LockType.WRITE);
     }
 
     CDOCommonView writeOptionOwner = lockState.getWriteOptionOwner();
     if (writeOptionOwner != null)
     {
-      cdoLockState.setWriteOptionOwner(createLockOwner(writeOptionOwner));
+      cdoLockState.addOwner(createLockOwner(writeOptionOwner), LockType.OPTION);
     }
 
     return cdoLockState;
@@ -146,15 +146,6 @@ public final class CDOLockUtil
   public static CDOLockState createLockState(Object target)
   {
     return new CDOLockStateImpl(target);
-  }
-
-  /**
-   * @deprecated As of 4.15 use {@link #convertLockState(LockState)}.
-   */
-  @Deprecated
-  public static CDOLockState createLockState(LockState<Object, ? extends CDOCommonView> lockState)
-  {
-    return convertLockState(lockState);
   }
 
   public static CDOLockOwner createLockOwner(CDOCommonView view)
@@ -179,34 +170,33 @@ public final class CDOLockUtil
   }
 
   /**
-   * @deprecated As of 4.15 use the faster {@link #createLockChangeInfo(CDOBranchPoint, CDOLockOwner, Operation, LockType, Collection)} method.
+   * @since 4.15
    */
-  @Deprecated
-  public static CDOLockChangeInfo createLockChangeInfo(long timestamp, CDOLockOwner lockOwner, CDOBranch branch, Operation op, LockType lockType,
-      CDOLockState[] newLockStates)
+  public static CDOLockDelta createLockDelta(Object target, LockType type, CDOLockOwner oldOwner, CDOLockOwner newOwner)
   {
-    return createLockChangeInfo(branch.getPoint(timestamp), lockOwner, op, lockType, Arrays.asList(newLockStates));
+    return CDOLockDeltaImpl.create(target, type, oldOwner, newOwner);
   }
 
   /**
    * @since 4.15
    */
-  public static CDOLockChangeInfo createLockChangeInfo(CDOBranchPoint branchPoint, CDOLockOwner lockOwner, Operation op, LockType lockType,
-      Collection<? extends CDOLockState> newLockStates)
+  public static CDOLockDelta createLockDelta(Object target)
   {
-    return new CDOLockChangeInfoImpl(branchPoint, lockOwner, op, lockType, newLockStates);
+    return CDOLockDeltaImpl.createNull(target);
+  }
+
+  /**
+   * @since 4.15
+   */
+  public static CDOLockChangeInfo createLockChangeInfo(CDOBranchPoint branchPoint, CDOLockOwner lockOwner, Collection<CDOLockDelta> lockDeltas,
+      Collection<CDOLockState> lockStates)
+  {
+    return new CDOLockChangeInfoImpl(branchPoint, lockOwner, lockDeltas, lockStates);
   }
 
   public static CDOLockChangeInfo createLockChangeInfo()
   {
     return new CDOLockChangeInfoImpl();
-  }
-
-  public static CDOLockChangeInfo createLockChangeInfo(long timestamp, CDOCommonView view, CDOBranch viewedBranch, Operation op, LockType lockType,
-      CDOLockState[] newLockStates)
-  {
-    CDOLockOwner lockOwner = createLockOwner(view);
-    return createLockChangeInfo(timestamp, lockOwner, viewedBranch, op, lockType, newLockStates);
   }
 
   public static LockArea createLockArea(String durableLockingID, String userID, CDOBranchPoint branchPoint, boolean readOnly, Map<CDOID, LockGrade> locks)
@@ -232,5 +222,92 @@ public final class CDOLockUtil
     random.nextBytes(buffer);
 
     return HexUtil.bytesToHex(buffer);
+  }
+
+  /**
+   * @since 4.15
+   */
+  public static List<CDOLockDelta> appendLockDelta(List<CDOLockDelta> deltas, Object target, LockType type, CDOLockOwner oldOwner, CDOLockOwner newOwner)
+  {
+    return appendLockDelta(deltas, createLockDelta(target, type, oldOwner, newOwner));
+  }
+
+  /**
+   * @since 4.15
+   */
+  public static List<CDOLockDelta> appendLockDelta(List<CDOLockDelta> deltas, CDOLockDelta delta)
+  {
+    if (delta != null)
+    {
+      if (deltas == null)
+      {
+        deltas = new ArrayList<>(1);
+      }
+
+      deltas.add(delta);
+    }
+
+    return deltas;
+  }
+
+  /**
+   * @since 4.15
+   */
+  public static CDOLockDelta[] toArray(List<CDOLockDelta> deltas)
+  {
+    if (ObjectUtil.isEmpty(deltas))
+    {
+      return NO_LOCK_DELTAS;
+    }
+
+    return deltas.toArray(new CDOLockDelta[deltas.size()]);
+  }
+
+  /**
+   * @deprecated As of 4.15 no longer supported.
+   */
+  @Deprecated
+  public static CDOLockState copyLockState(CDOLockState lockState)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * @since 4.12
+   * @deprecated As of 4.15 no longer supported.
+   */
+  @Deprecated
+  public static CDOLockState copyLockState(CDOLockState lockState, Object lockedObject)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * @deprecated As of 4.15 use {@link #convertLockState(LockState)}.
+   */
+  @Deprecated
+  public static CDOLockState createLockState(LockState<Object, ? extends CDOCommonView> lockState)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * @deprecated As of 4.15 use {@link #createLockChangeInfo(CDOBranchPoint, CDOLockOwner, Collection, Collection)}.
+   */
+  @Deprecated
+  public static CDOLockChangeInfo createLockChangeInfo(long timestamp, CDOLockOwner lockOwner, CDOBranch branch, Operation op, LockType lockType,
+      CDOLockState[] newLockStates)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * @deprecated As of 4.15 use {@link #createLockChangeInfo(CDOBranchPoint, CDOLockOwner, Collection, Collection)}.
+   */
+  @Deprecated
+  public static CDOLockChangeInfo createLockChangeInfo(long timestamp, CDOCommonView view, CDOBranch viewedBranch, Operation op, LockType lockType,
+      CDOLockState[] newLockStates)
+  {
+    throw new UnsupportedOperationException();
   }
 }

@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
+import org.eclipse.emf.cdo.common.lock.CDOLockDelta;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
@@ -78,6 +79,7 @@ public class LockObjectsRequest extends CDOClientRequest<LockObjectsResult>
     boolean succesful = in.readBoolean();
     boolean timeout = in.readBoolean();
     boolean waitForUpdate = in.readBoolean();
+    long timestamp = in.readXLong();
     long requiredTimestamp = in.readXLong();
 
     int nStaleRevisions = in.readXInt();
@@ -87,16 +89,10 @@ public class LockObjectsRequest extends CDOClientRequest<LockObjectsResult>
       staleRevisions[i] = in.readCDORevisionKey();
     }
 
-    long timestamp = in.readXLong();
+    List<CDOLockDelta> lockDeltas = in.readCDOLockDeltas();
+    List<CDOLockState> lockStates = in.readCDOLockStates();
 
-    int n = in.readXInt();
-    CDOLockState[] newLockStates = new CDOLockState[n];
-    for (int i = 0; i < n; i++)
-    {
-      newLockStates[i] = in.readCDOLockState();
-    }
-
-    return new LockObjectsResult(succesful, timeout, waitForUpdate, requiredTimestamp, staleRevisions, newLockStates, timestamp);
+    return new LockObjectsResult(succesful, timeout, waitForUpdate, requiredTimestamp, staleRevisions, lockDeltas, lockStates, timestamp);
   }
 
   @Override

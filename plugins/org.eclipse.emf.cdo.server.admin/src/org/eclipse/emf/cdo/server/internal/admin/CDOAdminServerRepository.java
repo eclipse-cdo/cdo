@@ -190,13 +190,6 @@ public class CDOAdminServerRepository extends Notifier implements CDOAdminReposi
   }
 
   @Override
-  @Deprecated
-  public boolean isSupportingEcore()
-  {
-    return delegate.isSupportingEcore();
-  }
-
-  @Override
   public boolean isSerializingCommits()
   {
     return delegate.isSerializingCommits();
@@ -245,12 +238,6 @@ public class CDOAdminServerRepository extends Notifier implements CDOAdminReposi
     return AdapterUtil.adapt(this, adapter, false);
   }
 
-  @Override
-  public String toString()
-  {
-    return delegate.toString();
-  }
-
   public void write(ExtendedDataOutputStream out) throws IOException
   {
     out.writeString(getName());
@@ -296,5 +283,18 @@ public class CDOAdminServerRepository extends Notifier implements CDOAdminReposi
       IRepositorySynchronizer synchronizer = ((ISynchronizableRepository)delegate).getSynchronizer();
       synchronizer.removeListener(delegateSynchronizerListener);
     }
+  }
+
+  @Override
+  public String toString()
+  {
+    return delegate.toString();
+  }
+
+  @Override
+  @Deprecated
+  public boolean isSupportingEcore()
+  {
+    throw new UnsupportedOperationException();
   }
 }

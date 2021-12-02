@@ -14,20 +14,20 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.lock.CDOLockDelta;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.lock.AbstractCDOLockState;
-import org.eclipse.emf.cdo.spi.common.lock.InternalCDOLockState;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewTargetChangedEvent;
 
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.ObjectUtil;
-import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.collection.CollectionUtil;
 import org.eclipse.net4j.util.collection.CollectionUtil.KeepMappedValue;
 import org.eclipse.net4j.util.collection.HashBag;
@@ -37,8 +37,10 @@ import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
+import org.eclipse.net4j.util.om.OMPlatform;
 
 import org.eclipse.emf.spi.cdo.CDOLockStateCache;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
@@ -53,6 +55,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.StringJoiner;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.function.BiFunction;
@@ -64,6 +67,11 @@ import java.util.function.Consumer;
 public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockStateCache
 {
   private static final Class<CDOLockOwner[]> ARRAY_CLASS = CDOLockOwner[].class;
+
+  private static final boolean DEBUG = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.internal.cdo.session.CDOLockStateCacheImpl.DEBUG");
+
+  private static final boolean DEBUG_STACK_TRACE = //
+      OMPlatform.INSTANCE.isProperty("org.eclipse.emf.internal.cdo.session.CDOLockStateCacheImpl.DEBUG_STACK_TRACE");
 
   private final Map<CDOBranch, ConcurrentMap<CDOID, OwnerInfo>> ownerInfosPerBranch = new HashMap<>();
 
@@ -152,7 +160,7 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
   public CDOLockState getLockState(CDOBranch branch, CDOID id)
   {
     Object key = createKey(branch, id);
-    return new MutableLockState(key, this);
+    return new LockState(key, this);
   }
 
   @Override
@@ -162,7 +170,7 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
     {
       if (loadOnDemand)
       {
-        loadAndCacheLockStates(branch, null, consumer);
+        loadLockStates(branch, null, consumer);
       }
       else
       {
@@ -176,7 +184,7 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
 
       if (!ObjectUtil.isEmpty(missingIDs))
       {
-        loadAndCacheLockStates(branch, missingIDs, lockState -> {
+        loadLockStates(branch, missingIDs, lockState -> {
           missingIDs.remove(lockState.getID());
           consumer.accept(lockState);
         });
@@ -188,8 +196,7 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
 
           for (CDOID id : missingIDs)
           {
-            Object key = createKey(branch, id);
-            CDOLockState defaultLockStateToCache = new ImmutableLockState(key, NoOwnerInfo.INSTANCE);
+            CDOLockState defaultLockStateToCache = getLockState(branch, id);
             defaultLockStatesToCache.add(defaultLockStateToCache);
           }
 
@@ -212,33 +219,111 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
   }
 
   @Override
-  public void addLockStates(CDOBranch branch, Collection<? extends CDOLockState> newLockStates, Consumer<CDOLockState> consumer)
+  public synchronized void updateLockStates(CDOBranch branch, Collection<CDOLockDelta> lockDeltas, Collection<CDOLockState> lockStates,
+      Consumer<CDOLockState> consumer)
+  {
+    try
+    {
+      ConcurrentMap<CDOID, OwnerInfo> infos = getOwnerInfoMap(branch);
+
+      delta_loop: for (CDOLockDelta delta : lockDeltas)
+      {
+        CDOID id = delta.getID();
+
+        OwnerInfo info = null;
+        OwnerInfo newInfo = null;
+
+        for (int i = 50; i >= 0; --i)
+        {
+          info = infos.get(id);
+          if (info == null || delta.getType() == null)
+          {
+            for (CDOLockState lockState : lockStates)
+            {
+              if (lockState.getID() == id)
+              {
+                addLockState(infos, lockState, consumer);
+                continue delta_loop;
+              }
+            }
+
+            continue delta_loop;
+          }
+
+          try
+          {
+            newInfo = info.applyDelta(this, delta);
+            break;
+          }
+          catch (ObjectAlreadyLockedException ex)
+          {
+            if (i == 0)
+            {
+              throw new ObjectAlreadyLockedException(id, branch, ex);
+            }
+
+            try
+            {
+              wait(100);
+            }
+            catch (InterruptedException ex1)
+            {
+              throw new Error(ex1);
+            }
+          }
+        }
+
+        if (newInfo != info)
+        {
+          trace(id, info, newInfo);
+          infos.put(id, newInfo);
+        }
+
+        if (consumer != null)
+        {
+          Object target = delta.getTarget();
+          CDOLockState lockState = new LockState(target, this);
+          consumer.accept(lockState);
+        }
+      }
+    }
+    finally
+    {
+      notifyAll();
+    }
+  }
+
+  @Override
+  public void addLockStates(CDOBranch branch, Collection<? extends CDOLockState> lockStates, Consumer<CDOLockState> consumer)
   {
     ConcurrentMap<CDOID, OwnerInfo> infos = getOwnerInfoMap(branch);
 
-    for (CDOLockState loadedLockState : newLockStates)
+    for (CDOLockState lockState : lockStates)
     {
-      CDOID id = loadedLockState.getID();
-      OwnerInfo info = createOwnerInfo(loadedLockState);
-      infos.put(id, info);
-
-      if (consumer != null)
+      try
       {
-        consumer.accept(loadedLockState);
+        addLockState(infos, lockState, consumer);
+      }
+      catch (Exception ex)
+      {
+        ex.printStackTrace();
       }
     }
   }
 
   @Override
-  public void removeOwner(CDOBranch branch, CDOLockOwner owner, Consumer<CDOLockState> changeConsumer)
+  public List<CDOLockDelta> removeOwner(CDOBranch branch, CDOLockOwner owner, Consumer<CDOLockState> consumer)
   {
+    List<CDOLockDelta> deltas = new ArrayList<>();
     List<Pair<CDOID, OwnerInfo>> newInfos = new ArrayList<>();
+
     ConcurrentMap<CDOID, OwnerInfo> infos = getOwnerInfoMap(branch);
     infos.forEach((id, info) -> {
-      OwnerInfo newInfo = info.removeOwner(this, owner);
+      OwnerInfo newInfo = info.removeOwner(this, owner, lockType -> appendRemoveDelta(deltas, branch, id, lockType, owner));
       if (newInfo != info)
       {
         newInfos.add(Pair.create(id, newInfo));
+        notifyConsumer(branch, id, consumer);
       }
     });
 
@@ -247,35 +332,39 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
       CDOID id = pair.getElement1();
       OwnerInfo newInfo = pair.getElement2();
 
-      if (newInfo == NoOwnerInfo.INSTANCE)
-      {
-        infos.remove(id);
-      }
-      else
-      {
-        infos.put(id, newInfo);
-      }
-
-      notifyConsumer(branch, id, changeConsumer);
+      OwnerInfo oldInfo = infos.put(id, newInfo);
+      trace(id, oldInfo, newInfo);
     }
+
+    return deltas;
   }
 
   @Override
   public void remapOwner(CDOBranch branch, CDOLockOwner oldOwner, CDOLockOwner newOwner)
   {
-    removeSingleOwnerInfos(oldOwner);
-    addSingleOwnerInfos(newOwner, -1);
+    for (int type = 0; type < singleOwnerInfos.length; type++)
+    {
+      for (SingleOwnerInfo info : singleOwnerInfos[type].values())
+      {
+        remapOwnerInfo(info, oldOwner, newOwner);
+      }
+    }
 
     ConcurrentMap<CDOID, OwnerInfo> infos = getOwnerInfoMap(branch);
     for (OwnerInfo info : infos.values())
     {
-      info.remapOwner(oldOwner, newOwner);
+      remapOwnerInfo(info, oldOwner, newOwner);
     }
   }
 
   @Override
   public void removeLockStates(CDOBranch branch, Collection<CDOID> ids, Consumer<CDOLockState> consumer)
   {
+    if (ObjectUtil.isEmpty(ids))
+    {
+      return;
+    }
+
     ConcurrentMap<CDOID, OwnerInfo> infos = getOwnerInfoMap(branch);
 
     for (CDOID id : ids)
@@ -377,6 +466,34 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
     }
   }
 
+  private SingleOwnerInfo addSingleOwnerInfos(CDOLockOwner owner, int typeToReturn)
+  {
+    SingleOwnerInfo infoToReturn = null;
+
+    for (int type = 0; type < singleOwnerInfos.length; type++)
+    {
+      int finalType = type;
+
+      // Don't overwrite existing infos. Infos can exist if the owning view is durable.
+      SingleOwnerInfo info = singleOwnerInfos[type].computeIfAbsent(owner, o -> SingleOwnerInfo.create(o, finalType));
+
+      if (type == typeToReturn)
+      {
+        infoToReturn = info;
+      }
+    }
+
+    return infoToReturn;
+  }
+
+  private void removeSingleOwnerInfos(CDOLockOwner owner)
+  {
+    for (int type = 0; type < singleOwnerInfos.length; type++)
+    {
+      singleOwnerInfos[type].remove(owner);
+    }
+  }
+
   private <T> T withKey(Object key, BiFunction<CDOBranch, CDOID, T> function)
   {
     CDOBranch branch;
@@ -401,37 +518,8 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
   {
     if (consumer != null)
     {
-      Object key = createKey(branch, id);
-      CDOLockState lockState = new MutableLockState(key, this);
+      CDOLockState lockState = getLockState(branch, id);
       consumer.accept(lockState);
-    }
-  }
-
-  private SingleOwnerInfo addSingleOwnerInfos(CDOLockOwner owner, int typeToReturn)
-  {
-    CheckUtil.checkArg(owner, "owner");
-    SingleOwnerInfo infoToReturn = null;
-
-    for (int type = 0; type < singleOwnerInfos.length; type++)
-    {
-      SingleOwnerInfo info = SingleOwnerInfo.create(owner, type);
-      singleOwnerInfos[type].put(owner, info);
-
-      if (type == typeToReturn)
-      {
-        infoToReturn = info;
-      }
-    }
-
-    return infoToReturn;
-  }
-
-  private void removeSingleOwnerInfos(CDOLockOwner owner)
-  {
-    CheckUtil.checkArg(owner, "owner");
-    for (int type = 0; type < singleOwnerInfos.length; type++)
-    {
-      singleOwnerInfos[type].remove(owner);
     }
   }
 
@@ -502,6 +590,7 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
         OwnerInfo newInfo = changer.apply(info, owner);
         if (newInfo != info)
         {
+          trace(id, info, newInfo);
           changed[0] = true;
           return newInfo;
         }
@@ -511,6 +600,14 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
 
       return changed[0];
     });
+  }
+
+  private void remapOwnerInfo(OwnerInfo info, CDOLockOwner oldOwner, CDOLockOwner newOwner)
+  {
+    if (info.remapOwner(oldOwner, newOwner) && DEBUG)
+    {
+      IOUtil.OUT().println("Remap owner: " + info);
+    }
   }
 
   private void collectLockStates(CDOBranch branch, Collection<CDOID> ids, Set<CDOID> missingIDs, Consumer<CDOLockState> consumer)
@@ -548,12 +645,26 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
     }
   }
 
-  private void loadAndCacheLockStates(CDOBranch branch, Set<CDOID> ids, Consumer<CDOLockState> consumer)
+  private void loadLockStates(CDOBranch branch, Set<CDOID> ids, Consumer<CDOLockState> consumer)
   {
     CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
-    CDOLockState[] loadedLockStates = sessionProtocol.getLockStates(branch.getID(), ids, CDOLockState.DEPTH_NONE);
+    List<CDOLockState> lockStates = sessionProtocol.getLockStates2(branch.getID(), ids, CDOLockState.DEPTH_NONE);
 
-    addLockStates(branch, Arrays.asList(loadedLockStates), consumer);
+    addLockStates(branch, lockStates, consumer);
+  }
+
+  private void addLockState(ConcurrentMap<CDOID, OwnerInfo> infos, CDOLockState lockState, Consumer<CDOLockState> consumer)
+  {
+    CDOID id = lockState.getID();
+    OwnerInfo info = createOwnerInfo(lockState);
+
+    trace(id, null, info);
+    infos.put(id, info);
+
+    if (consumer != null)
+    {
+      consumer.accept(lockState);
+    }
   }
 
   private OwnerInfo createOwnerInfo(CDOLockState lockState)
@@ -570,8 +681,18 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
         info = info.addReadLockOwner(this, readLockOwner);
       }
 
-      info = info.setWriteLockOwner(this, lockState.getWriteLockOwner());
-      info = info.setWriteOptionOwner(this, lockState.getWriteOptionOwner());
+      info = info.addWriteLockOwner(this, lockState.getWriteLockOwner());
+      info = info.addWriteOptionOwner(this, lockState.getWriteOptionOwner());
+    }
+    catch (ObjectAlreadyLockedException ex)
+    {
+      CDOBranch branch = lockState.getBranch();
+      if (branch == null)
+      {
+        branch = mainBranch;
+      }
+
+      throw new ObjectAlreadyLockedException(lockState.getID(), branch, ex);
     }
     catch (RuntimeException | Error ex)
     {
@@ -579,6 +700,11 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
     }
 
     return info;
+  }
+
+  private boolean appendRemoveDelta(List<CDOLockDelta> deltas, CDOBranch branch, CDOID id, LockType lockType, CDOLockOwner owner)
+  {
+    return deltas.add(CDOLockUtil.createLockDelta(createKey(branch, id), lockType, owner, null));
   }
 
   private static boolean isOwnerInfoLocked(OwnerInfo info, LockType lockType, CDOLockOwner lockOwner, boolean others)
@@ -664,6 +790,21 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
     return writeOptionOwner == by ^ others;
   }
 
+  private void trace(CDOID id, OwnerInfo oldInfo, OwnerInfo newInfo)
+  {
+    if (DEBUG)
+    {
+      String message = "[" + session.getSessionID() + "] " + id + ": " + oldInfo + " --> " + newInfo;
+
+      if (DEBUG_STACK_TRACE)
+      {
+        message += "\n" + ReflectUtil.dumpThread();
+      }
+
+      IOUtil.OUT().println(message);
+    }
+  }
+
   /**
    * @author Eike Stepper
    */
@@ -688,19 +829,78 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
 
     public abstract OwnerInfo removeReadLockOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner);
 
-    public abstract OwnerInfo setWriteLockOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner);
+    public abstract OwnerInfo addWriteLockOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner);
 
-    public abstract OwnerInfo setWriteOptionOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner);
+    public abstract OwnerInfo removeWriteLockOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner);
 
-    public abstract OwnerInfo removeOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner);
+    public abstract OwnerInfo addWriteOptionOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner);
 
-    public abstract void remapOwner(CDOLockOwner oldOwner, CDOLockOwner newOwner);
+    public abstract OwnerInfo removeWriteOptionOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner);
+
+    public abstract OwnerInfo removeOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner, Consumer<LockType> consumer);
+
+    public abstract boolean remapOwner(CDOLockOwner oldOwner, CDOLockOwner newOwner);
+
+    public final OwnerInfo applyDelta(CDOLockStateCacheImpl cache, CDOLockDelta delta)
+    {
+      OwnerInfo info = this;
+
+      CDOLockOwner oldOwner = delta.getOldOwner();
+      CDOLockOwner newOwner = delta.getNewOwner();
+
+      switch (delta.getType())
+      {
+      case READ:
+        if (oldOwner != null)
+        {
+          info = info.removeReadLockOwner(cache, oldOwner);
+        }
+
+        if (newOwner != null)
+        {
+          info = info.addReadLockOwner(cache, newOwner);
+        }
+
+        break;
+
+      case OPTION:
+        if (oldOwner != null)
+        {
+          info = info.removeWriteOptionOwner(cache, oldOwner);
+        }
+
+        if (newOwner != null)
+        {
+          info = info.addWriteOptionOwner(cache, newOwner);
+        }
+
+        break;
+
+      case WRITE:
+        if (oldOwner != null)
+        {
+          info = info.removeWriteLockOwner(cache, oldOwner);
+        }
+
+        if (newOwner != null)
+        {
+          info = info.addWriteLockOwner(cache, newOwner);
+        }
+
+        break;
+
+      default:
+        throw new AssertionError();
+      }
+
+      return info;
+    }
 
     @Override
     public String toString()
     {
       String name = getClass().getName();
-      name = StringUtil.replace(name, CDOLockStateCache.class.getName() + "$", "");
+      name = name.replace(CDOLockStateCacheImpl.class.getName() + "$", "");
       name = name.replace('$', '.');
       return name;
     }
@@ -738,19 +938,22 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
     @Override
     public OwnerInfo addReadLockOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
     {
-      CheckUtil.checkArg(owner, "owner");
+      if (owner == null)
+      {
+        return this;
+      }
+
       return cache.getSingleOwnerInfo(owner, SingleOwnerInfo.ReadLock.TYPE);
     }
 
     @Override
     public OwnerInfo removeReadLockOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
     {
-      CheckUtil.checkArg(owner, "owner");
       return this;
     }
 
     @Override
-    public OwnerInfo setWriteLockOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
+    public OwnerInfo addWriteLockOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
     {
       if (owner == null)
       {
@@ -761,7 +964,13 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
     }
 
     @Override
-    public OwnerInfo setWriteOptionOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
+    public OwnerInfo removeWriteLockOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
+    {
+      return this;
+    }
+
+    @Override
+    public OwnerInfo addWriteOptionOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
     {
       if (owner == null)
       {
@@ -772,15 +981,22 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
     }
 
     @Override
-    public OwnerInfo removeOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
+    public OwnerInfo removeWriteOptionOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
     {
       return this;
     }
 
     @Override
-    public void remapOwner(CDOLockOwner oldOwner, CDOLockOwner newOwner)
+    public OwnerInfo removeOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner, Consumer<LockType> consumer)
+    {
+      return this;
+    }
+
+    @Override
+    public boolean remapOwner(CDOLockOwner oldOwner, CDOLockOwner newOwner)
     {
       // Do nothing.
+      return false;
     }
   }
 
@@ -815,10 +1031,11 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
     }
 
     @Override
-    public final OwnerInfo removeOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
+    public final OwnerInfo removeOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner, Consumer<LockType> consumer)
     {
       if (owner == this.owner)
       {
+        notifyLockTypes(consumer);
         return NoOwnerInfo.INSTANCE;
       }
 
@@ -826,12 +1043,15 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
     }
 
     @Override
-    public final void remapOwner(CDOLockOwner oldOwner, CDOLockOwner newOwner)
+    public final boolean remapOwner(CDOLockOwner oldOwner, CDOLockOwner newOwner)
     {
       if (owner == oldOwner)
       {
         owner = newOwner;
+        return true;
       }
+
+      return false;
     }
 
     @Override
@@ -839,6 +1059,21 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
     {
       return super.toString() + "[" + owner + "]";
     }
+
+    protected final ObjectAlreadyLockedException failure(CDOLockOwner owner, LockType lockType)
+    {
+      StringJoiner joiner = new StringJoiner(" and the ", //
+          owner + " could not acquire the " + lockType + " lock because the ", //
+          " is already acquired by " + this.owner);
+
+      notifyLockTypes(type -> {
+        joiner.add(type + " lock");
+      });
+
+      return new ObjectAlreadyLockedException(joiner.toString());
+    }
+
+    protected abstract void notifyLockTypes(Consumer<LockType> consumer);
 
     public static SingleOwnerInfo create(CDOLockOwner owner, int type)
     {
@@ -885,7 +1120,10 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
       @Override
       public OwnerInfo addReadLockOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
       {
-        CheckUtil.checkArg(owner, "owner");
+        if (owner == null)
+        {
+          return this;
+        }
 
         if (owner == this.owner)
         {
@@ -898,12 +1136,11 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
       @Override
       public OwnerInfo removeReadLockOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
       {
-        CheckUtil.checkArg(owner, "owner");
-        return removeOwner(cache, owner);
+        return removeOwner(cache, owner, null);
       }
 
       @Override
-      public OwnerInfo setWriteLockOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
+      public OwnerInfo addWriteLockOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
       {
         if (owner == null)
         {
@@ -915,11 +1152,17 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
           return cache.getSingleOwnerInfo(owner, SingleOwnerInfo.ReadLockAndWriteLock.TYPE);
         }
 
-        throw new IllegalStateException("Read lock already obtained");
+        throw failure(owner, LockType.WRITE);
       }
 
       @Override
-      public OwnerInfo setWriteOptionOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
+      public OwnerInfo removeWriteLockOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
+      {
+        return this;
+      }
+
+      @Override
+      public OwnerInfo addWriteOptionOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
       {
         if (owner == null)
         {
@@ -932,6 +1175,21 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
         }
 
         return new MultiOwnerInfo.ReadLockAndWriteOption(owner, this.owner);
+      }
+
+      @Override
+      public OwnerInfo removeWriteOptionOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
+      {
+        return this;
+      }
+
+      @Override
+      protected void notifyLockTypes(Consumer<LockType> consumer)
+      {
+        if (consumer != null)
+        {
+          consumer.accept(LockType.READ);
+        }
       }
     }
 
@@ -962,19 +1220,22 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
       @Override
       public OwnerInfo addReadLockOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
       {
-        CheckUtil.checkArg(owner, "owner");
+        if (owner == null)
+        {
+          return this;
+        }
+
         if (owner == this.owner)
         {
           return this;
         }
 
-        throw new IllegalStateException("Write lock already obtained");
+        throw failure(owner, LockType.READ);
       }
 
       @Override
       public OwnerInfo removeReadLockOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
       {
-        CheckUtil.checkArg(owner, "owner");
         if (owner == this.owner)
         {
           return cache.getSingleOwnerInfo(owner, SingleOwnerInfo.WriteLock.TYPE);
@@ -984,11 +1245,11 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
       }
 
       @Override
-      public OwnerInfo setWriteLockOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
+      public OwnerInfo addWriteLockOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
       {
         if (owner == null)
         {
-          return cache.getSingleOwnerInfo(this.owner, SingleOwnerInfo.ReadLock.TYPE);
+          return this;
         }
 
         if (owner == this.owner)
@@ -996,18 +1257,42 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
           return this;
         }
 
-        throw new IllegalStateException("Read lock already obtained");
+        throw failure(owner, LockType.WRITE);
       }
 
       @Override
-      public OwnerInfo setWriteOptionOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
+      public OwnerInfo removeWriteLockOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
+      {
+        if (owner == this.owner)
+        {
+          return cache.getSingleOwnerInfo(owner, SingleOwnerInfo.ReadLock.TYPE);
+        }
+
+        return this;
+      }
+
+      @Override
+      public OwnerInfo addWriteOptionOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
       {
         if (owner == null)
         {
           return this;
         }
 
-        throw new IllegalStateException("Write lock already obtained");
+        throw failure(owner, LockType.OPTION);
+      }
+
+      @Override
+      public OwnerInfo removeWriteOptionOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
+      {
+        return this;
+      }
+
+      @Override
+      protected void notifyLockTypes(Consumer<LockType> consumer)
+      {
+        consumer.accept(LockType.READ);
+        consumer.accept(LockType.WRITE);
       }
     }
 
@@ -1038,7 +1323,11 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
       @Override
       public OwnerInfo addReadLockOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
       {
-        CheckUtil.checkArg(owner, "owner");
+        if (owner == null)
+        {
+          return this;
+        }
+
         if (owner == this.owner)
         {
           return this;
@@ -1050,7 +1339,6 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
       @Override
       public OwnerInfo removeReadLockOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
       {
-        CheckUtil.checkArg(owner, "owner");
         if (owner == this.owner)
         {
           return cache.getSingleOwnerInfo(owner, SingleOwnerInfo.WriteOption.TYPE);
@@ -1060,7 +1348,7 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
       }
 
       @Override
-      public OwnerInfo setWriteLockOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
+      public OwnerInfo addWriteLockOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
       {
         if (owner == null)
         {
@@ -1072,15 +1360,21 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
           return cache.getSingleOwnerInfo(owner, SingleOwnerInfo.WriteLock.TYPE);
         }
 
-        throw new IllegalStateException("Read lock already obtained");
+        throw failure(owner, LockType.WRITE);
       }
 
       @Override
-      public OwnerInfo setWriteOptionOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
+      public OwnerInfo removeWriteLockOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
+      {
+        return this;
+      }
+
+      @Override
+      public OwnerInfo addWriteOptionOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
       {
         if (owner == null)
         {
-          return cache.getSingleOwnerInfo(this.owner, SingleOwnerInfo.ReadLock.TYPE);
+          return this;
         }
 
         if (owner == this.owner)
@@ -1088,7 +1382,25 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
           return this;
         }
 
-        throw new IllegalStateException("Write option already obtained");
+        throw failure(owner, LockType.OPTION);
+      }
+
+      @Override
+      public OwnerInfo removeWriteOptionOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
+      {
+        if (owner == this.owner)
+        {
+          return cache.getSingleOwnerInfo(owner, SingleOwnerInfo.ReadLock.TYPE);
+        }
+
+        return this;
+      }
+
+      @Override
+      protected void notifyLockTypes(Consumer<LockType> consumer)
+      {
+        consumer.accept(LockType.READ);
+        consumer.accept(LockType.OPTION);
       }
     }
 
@@ -1113,23 +1425,31 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
       @Override
       public OwnerInfo addReadLockOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
       {
-        CheckUtil.checkArg(owner, "owner");
-        throw new IllegalStateException("Write lock already obtained");
+        if (owner == null)
+        {
+          return this;
+        }
+
+        if (owner == this.owner)
+        {
+          return cache.getSingleOwnerInfo(owner, SingleOwnerInfo.ReadLockAndWriteLock.TYPE);
+        }
+
+        throw failure(owner, LockType.READ);
       }
 
       @Override
       public OwnerInfo removeReadLockOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
       {
-        CheckUtil.checkArg(owner, "owner");
         return this;
       }
 
       @Override
-      public OwnerInfo setWriteLockOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
+      public OwnerInfo addWriteLockOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
       {
         if (owner == null)
         {
-          return NoOwnerInfo.INSTANCE;
+          return this;
         }
 
         if (owner == this.owner)
@@ -1137,18 +1457,41 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
           return this;
         }
 
-        throw new IllegalStateException("Write lock already obtained");
+        throw failure(owner, LockType.WRITE);
       }
 
       @Override
-      public OwnerInfo setWriteOptionOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
+      public OwnerInfo removeWriteLockOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
+      {
+        if (owner == this.owner)
+        {
+          return NoOwnerInfo.INSTANCE;
+        }
+
+        return this;
+      }
+
+      @Override
+      public OwnerInfo addWriteOptionOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
       {
         if (owner == null)
         {
           return this;
         }
 
-        throw new IllegalStateException("Write lock already obtained");
+        throw failure(owner, LockType.OPTION);
+      }
+
+      @Override
+      public OwnerInfo removeWriteOptionOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
+      {
+        return this;
+      }
+
+      @Override
+      protected void notifyLockTypes(Consumer<LockType> consumer)
+      {
+        consumer.accept(LockType.WRITE);
       }
     }
 
@@ -1173,7 +1516,11 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
       @Override
       public OwnerInfo addReadLockOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
       {
-        CheckUtil.checkArg(owner, "owner");
+        if (owner == null)
+        {
+          return this;
+        }
+
         if (owner == this.owner)
         {
           return cache.getSingleOwnerInfo(owner, SingleOwnerInfo.ReadLockAndWriteOption.TYPE);
@@ -1185,12 +1532,11 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
       @Override
       public OwnerInfo removeReadLockOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
       {
-        CheckUtil.checkArg(owner, "owner");
         return this;
       }
 
       @Override
-      public OwnerInfo setWriteLockOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
+      public OwnerInfo addWriteLockOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
       {
         if (owner == null)
         {
@@ -1202,15 +1548,21 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
           return cache.getSingleOwnerInfo(owner, SingleOwnerInfo.WriteLock.TYPE);
         }
 
-        throw new IllegalStateException("Write option already obtained");
+        throw failure(owner, LockType.WRITE);
       }
 
       @Override
-      public OwnerInfo setWriteOptionOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
+      public OwnerInfo removeWriteLockOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
+      {
+        return this;
+      }
+
+      @Override
+      public OwnerInfo addWriteOptionOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
       {
         if (owner == null)
         {
-          return NoOwnerInfo.INSTANCE;
+          return this;
         }
 
         if (owner == this.owner)
@@ -1218,7 +1570,24 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
           return this;
         }
 
-        throw new IllegalStateException("Write option already obtained");
+        throw failure(owner, LockType.OPTION);
+      }
+
+      @Override
+      public OwnerInfo removeWriteOptionOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
+      {
+        if (owner == this.owner)
+        {
+          return NoOwnerInfo.INSTANCE;
+        }
+
+        return this;
+      }
+
+      @Override
+      protected void notifyLockTypes(Consumer<LockType> consumer)
+      {
+        consumer.accept(LockType.OPTION);
       }
     }
   }
@@ -1239,14 +1608,33 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
     }
 
     @Override
-    public final OwnerInfo setWriteLockOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
+    public final OwnerInfo addWriteLockOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
     {
       if (owner == null)
       {
         return this;
       }
 
-      throw new IllegalStateException();
+      throw failure(owner, LockType.WRITE);
+    }
+
+    @Override
+    public final OwnerInfo removeWriteLockOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
+    {
+      return this;
+    }
+
+    protected final ObjectAlreadyLockedException failure(CDOLockOwner owner, LockType lockType)
+    {
+      String message = owner + " could not acquire the " + lockType + " lock because the READ lock is already acquired by " + getReadLockOwners();
+
+      CDOLockOwner writeOptionOwner = getWriteOptionOwner();
+      if (writeOptionOwner != null)
+      {
+        message += " and the OPTION lock is already acquired by " + writeOptionOwner;
+      }
+
+      return new ObjectAlreadyLockedException(message);
     }
 
     /**
@@ -1271,7 +1659,10 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
       @Override
       public OwnerInfo addReadLockOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
       {
-        CheckUtil.checkArg(owner, "owner");
+        if (owner == null)
+        {
+          return this;
+        }
 
         CDOLockOwner[] owners = readLockOwners;
         if (CDOLockUtil.indexOf(owners, owner) == -1)
@@ -1289,8 +1680,6 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
       @Override
       public OwnerInfo removeReadLockOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
       {
-        CheckUtil.checkArg(owner, "owner");
-
         CDOLockOwner[] owners = readLockOwners;
         int index = CDOLockUtil.indexOf(owners, owner);
         if (index != -1)
@@ -1343,7 +1732,7 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
       }
 
       @Override
-      public OwnerInfo setWriteOptionOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
+      public OwnerInfo addWriteOptionOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
       {
         if (owner == null)
         {
@@ -1354,20 +1743,42 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
       }
 
       @Override
-      public OwnerInfo removeOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
+      public OwnerInfo removeWriteOptionOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
       {
-        return removeReadLockOwner(cache, owner);
+        return this;
       }
 
       @Override
-      public void remapOwner(CDOLockOwner oldOwner, CDOLockOwner newOwner)
+      public OwnerInfo removeOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner, Consumer<LockType> consumer)
+      {
+        OwnerInfo newInfo = removeReadLockOwner(cache, owner);
+
+        if (newInfo != this)
+        {
+          consumer.accept(LockType.READ);
+        }
+
+        return newInfo;
+      }
+
+      @Override
+      public boolean remapOwner(CDOLockOwner oldOwner, CDOLockOwner newOwner)
       {
         CDOLockOwner[] owners = readLockOwners;
         int index = CDOLockUtil.indexOf(owners, oldOwner);
         if (index != -1)
         {
           readLockOwners[index] = newOwner;
+          return true;
         }
+
+        return false;
+      }
+
+      @Override
+      public String toString()
+      {
+        return super.toString() + "[readLockOwners=" + Arrays.asList(readLockOwners) + "]";
       }
 
       private static MultiOwnerInfo createMultiOwnerInfo(CDOLockOwner writeOptionOwner, CDOLockOwner... readLockOwners)
@@ -1401,43 +1812,64 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
       }
 
       @Override
-      public OwnerInfo setWriteOptionOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
+      public OwnerInfo addWriteOptionOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
       {
         if (owner == null)
         {
-          return new MultiOwnerInfo.ReadLock(readLockOwners);
+          return this;
         }
 
-        if (writeOptionOwner != owner)
+        if (owner == writeOptionOwner)
         {
-          throw new IllegalStateException();
+          return this;
+        }
+
+        throw failure(owner, LockType.OPTION);
+      }
+
+      @Override
+      public OwnerInfo removeWriteOptionOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
+      {
+        if (owner == writeOptionOwner)
+        {
+          return new MultiOwnerInfo.ReadLock(readLockOwners);
         }
 
         return this;
       }
 
       @Override
-      public OwnerInfo removeOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner)
+      public OwnerInfo removeOwner(CDOLockStateCacheImpl cache, CDOLockOwner owner, Consumer<LockType> consumer)
       {
-        OwnerInfo newInfo = super.removeOwner(cache, owner);
+        OwnerInfo newInfo = super.removeOwner(cache, owner, consumer);
 
         if (owner == newInfo.getWriteOptionOwner())
         {
-          return newInfo.setWriteOptionOwner(cache, null);
+          consumer.accept(LockType.OPTION);
+          return newInfo.removeWriteOptionOwner(cache, owner);
         }
 
         return newInfo;
       }
 
       @Override
-      public void remapOwner(CDOLockOwner oldOwner, CDOLockOwner newOwner)
+      public boolean remapOwner(CDOLockOwner oldOwner, CDOLockOwner newOwner)
       {
-        super.remapOwner(oldOwner, newOwner);
+        boolean remapped = super.remapOwner(oldOwner, newOwner);
 
         if (writeOptionOwner == oldOwner)
         {
           writeOptionOwner = newOwner;
+          remapped = true;
         }
+
+        return remapped;
+      }
+
+      @Override
+      public String toString()
+      {
+        return super.toString() + "[readLockOwners=" + Arrays.asList(readLockOwners) + ", writeOptionOwner=" + writeOptionOwner + "]";
       }
     }
   }
@@ -1445,21 +1877,16 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
   /**
    * @author Eike Stepper
    */
-  private static abstract class LockState extends AbstractCDOLockState
+  private static final class LockState extends AbstractCDOLockState
   {
     private static final Set<CDOLockOwner> NO_LOCK_OWNERS = Collections.emptySet();
 
-    protected final Object key;
+    private final CDOLockStateCacheImpl cache;
 
-    public LockState(Object key)
+    public LockState(Object lockedObject, CDOLockStateCacheImpl cache)
     {
-      this.key = key;
-    }
-
-    @Override
-    public final Object getLockedObject()
-    {
-      return key;
+      super(lockedObject);
+      this.cache = cache;
     }
 
     @Override
@@ -1509,50 +1936,75 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
       return info.getWriteOptionOwner();
     }
 
-    protected abstract OwnerInfo getInfo();
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private static final class MutableLockState extends LockState implements InternalCDOLockState
-  {
-    private final CDOLockStateCacheImpl cache;
-
-    public MutableLockState(Object key, CDOLockStateCacheImpl cache)
+    @Override
+    protected CDOLockDelta addReadOwner(CDOLockOwner owner)
     {
-      super(key);
-      this.cache = cache;
+      if (cache.changeOwnerInfo(lockedObject, owner, (i, o) -> i.addReadLockOwner(cache, o)))
+      {
+        return CDOLockUtil.createLockDelta(lockedObject, LockType.READ, null, owner);
+      }
+
+      return null;
     }
 
     @Override
-    public void addReadLockOwner(CDOLockOwner owner)
+    protected CDOLockDelta addWriteOwner(CDOLockOwner owner)
     {
-      cache.changeOwnerInfo(key, owner, (i, o) -> i.addReadLockOwner(cache, o));
+      if (cache.changeOwnerInfo(lockedObject, owner, (i, o) -> i.addWriteLockOwner(cache, o)))
+      {
+        return CDOLockUtil.createLockDelta(lockedObject, LockType.WRITE, null, owner);
+      }
+
+      return null;
     }
 
     @Override
-    public boolean removeReadLockOwner(CDOLockOwner owner)
+    protected CDOLockDelta addOptionOwner(CDOLockOwner owner)
     {
-      return cache.changeOwnerInfo(key, owner, (i, o) -> i.removeReadLockOwner(cache, o));
+      if (cache.changeOwnerInfo(lockedObject, owner, (i, o) -> i.addWriteOptionOwner(cache, o)))
+      {
+        return CDOLockUtil.createLockDelta(lockedObject, LockType.OPTION, null, owner);
+      }
+
+      return null;
     }
 
     @Override
-    public void setWriteLockOwner(CDOLockOwner owner)
+    protected CDOLockDelta removeReadOwner(CDOLockOwner owner)
     {
-      cache.changeOwnerInfo(key, owner, (i, o) -> i.setWriteLockOwner(cache, o));
+      if (cache.changeOwnerInfo(lockedObject, owner, (i, o) -> i.removeReadLockOwner(cache, o)))
+      {
+        return CDOLockUtil.createLockDelta(lockedObject, LockType.READ, owner, null);
+      }
+
+      return null;
     }
 
     @Override
-    public void setWriteOptionOwner(CDOLockOwner owner)
+    protected CDOLockDelta removeWriteOwner(CDOLockOwner owner)
     {
-      cache.changeOwnerInfo(key, owner, (i, o) -> i.setWriteOptionOwner(cache, o));
+      if (cache.changeOwnerInfo(lockedObject, owner, (i, o) -> i.removeWriteLockOwner(cache, o)))
+      {
+        return CDOLockUtil.createLockDelta(lockedObject, LockType.WRITE, owner, null);
+      }
+
+      return null;
     }
 
     @Override
-    public boolean removeOwner(CDOLockOwner owner)
+    protected CDOLockDelta removeOptionOwner(CDOLockOwner owner)
     {
-      return cache.changeOwnerInfo(key, owner, (i, o) -> i.removeOwner(cache, o));
+      if (cache.changeOwnerInfo(lockedObject, owner, (i, o) -> i.removeWriteOptionOwner(cache, o)))
+      {
+        return CDOLockUtil.createLockDelta(lockedObject, LockType.OPTION, owner, null);
+      }
+
+      return null;
+    }
+
+    private OwnerInfo getInfo()
+    {
+      return cache.getOwnerInfo(lockedObject);
     }
 
     /**
@@ -1560,59 +2012,9 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
      */
     @Deprecated
     @Override
-    public boolean remapOwner(CDOLockOwner oldOwner, CDOLockOwner newOwner)
+    public CDOLockDelta[] remapOwner(CDOLockOwner oldOwner, CDOLockOwner newOwner)
     {
       throw new UnsupportedOperationException();
-    }
-
-    @Deprecated
-    @Override
-    public void updateFrom(Object object, CDOLockState source)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    /**
-     * @deprecated Only used for new objects and those are local to a transaction, i.e., not cached.
-     */
-    @Deprecated
-    @Override
-    public void updateFrom(CDOLockState source)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    @Deprecated
-    @Override
-    public void dispose()
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    @Override
-    protected OwnerInfo getInfo()
-    {
-      return cache.getOwnerInfo(key);
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private static final class ImmutableLockState extends LockState
-  {
-    private final OwnerInfo info;
-
-    public ImmutableLockState(Object key, OwnerInfo info)
-    {
-      super(key);
-      this.info = info;
-    }
-
-    @Override
-    protected OwnerInfo getInfo()
-    {
-      return info;
     }
   }
 }

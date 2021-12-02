@@ -144,13 +144,6 @@ public interface InternalRepository extends IRepository, //
   public void setSessionManager(InternalSessionManager sessionManager);
 
   /**
-   * @deprecated As of 4.1 use {@link #getLockingManager()}.
-   */
-  @Override
-  @Deprecated
-  public InternalLockManager getLockManager();
-
-  /**
    * @since 4.1
    */
   @Override
@@ -229,20 +222,6 @@ public interface InternalRepository extends IRepository, //
   public void commit(InternalCommitContext commitContext, OMMonitor monitor);
 
   /**
-   * @since 4.0
-   * @deprecated As of 4.2 use {@link #sendCommitNotification(InternalSession, CDOCommitInfo, boolean)}.
-   */
-  @Deprecated
-  public void sendCommitNotification(InternalSession sender, CDOCommitInfo commitInfo);
-
-  /**
-   * @since 4.2
-   * @deprecated As of 4.3 use {@link #sendCommitNotification(ISessionProtocol.CommitNotificationInfo)}.
-   */
-  @Deprecated
-  public void sendCommitNotification(InternalSession sender, CDOCommitInfo commitInfo, boolean clearResourcePathCache);
-
-  /**
    * @since 4.3
    */
   public void sendCommitNotification(CommitNotificationInfo info);
@@ -270,14 +249,6 @@ public interface InternalRepository extends IRepository, //
   public CDOReplicationInfo replicateRaw(CDODataOutput out, int lastReplicatedBranchID, long lastReplicatedCommitTime) throws IOException;
 
   public CDOChangeSetData getChangeSet(CDOBranchPoint startPoint, CDOBranchPoint endPoint);
-
-  /**
-   * @since 4.0
-   * @deprecated As of 4.6 use {@link #getMergeData2(CDORevisionAvailabilityInfo, CDORevisionAvailabilityInfo, CDORevisionAvailabilityInfo, CDORevisionAvailabilityInfo, OMMonitor)}.
-   */
-  @Deprecated
-  public Set<CDOID> getMergeData(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo, CDORevisionAvailabilityInfo targetBaseInfo,
-      CDORevisionAvailabilityInfo sourceBaseInfo, OMMonitor monitor);
 
   /**
    * @since 4.6
@@ -317,13 +288,6 @@ public interface InternalRepository extends IRepository, //
   public void setSkipInitialization(boolean skipInitialization);
 
   /**
-   * @since 4.0
-   * @deprecated As of 4.3 use {@link #initSystemPackages()}.
-   */
-  @Deprecated
-  public void initSystemPackages();
-
-  /**
    * @since 4.3
    */
   public void initSystemPackages(boolean firstStart);
@@ -342,6 +306,11 @@ public interface InternalRepository extends IRepository, //
    * @since 4.1
    */
   public UnlockObjectsResult unlock(InternalView view, LockType type, List<CDOID> ids, boolean recursive);
+
+  /**
+   * @since 4.15
+   */
+  public UnlockObjectsResult unlock(InternalView view);
 
   /**
    * @since 4.2
@@ -363,9 +332,9 @@ public interface InternalRepository extends IRepository, //
   {
     @Override
     public InternalRepository getSource();
-
+  
     public boolean isFirstStart();
-
+  
     /**
      * @since 4.7
      */
@@ -390,4 +359,40 @@ public interface InternalRepository extends IRepository, //
      */
     public void doPostActivate(InternalSession session);
   }
+
+  /**
+   * @deprecated As of 4.1 use {@link #getLockingManager()}.
+   */
+  @Override
+  @Deprecated
+  public InternalLockManager getLockManager();
+
+  /**
+   * @since 4.0
+   * @deprecated As of 4.2 use {@link #sendCommitNotification(InternalSession, CDOCommitInfo, boolean)}.
+   */
+  @Deprecated
+  public void sendCommitNotification(InternalSession sender, CDOCommitInfo commitInfo);
+
+  /**
+   * @since 4.2
+   * @deprecated As of 4.3 use {@link #sendCommitNotification(ISessionProtocol.CommitNotificationInfo)}.
+   */
+  @Deprecated
+  public void sendCommitNotification(InternalSession sender, CDOCommitInfo commitInfo, boolean clearResourcePathCache);
+
+  /**
+   * @since 4.0
+   * @deprecated As of 4.6 use {@link #getMergeData2(CDORevisionAvailabilityInfo, CDORevisionAvailabilityInfo, CDORevisionAvailabilityInfo, CDORevisionAvailabilityInfo, OMMonitor)}.
+   */
+  @Deprecated
+  public Set<CDOID> getMergeData(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo, CDORevisionAvailabilityInfo targetBaseInfo,
+      CDORevisionAvailabilityInfo sourceBaseInfo, OMMonitor monitor);
+
+  /**
+   * @since 4.0
+   * @deprecated As of 4.3 use {@link #initSystemPackages()}.
+   */
+  @Deprecated
+  public void initSystemPackages();
 }

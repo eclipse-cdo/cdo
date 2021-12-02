@@ -27,7 +27,9 @@ import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
+import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.Product1;
+import org.eclipse.emf.cdo.tests.model1.Supplier;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
@@ -44,13 +46,18 @@ import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.io.IOUtil;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.spi.cdo.CDOLockStateCache;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 
+import org.eclipse.ocl.util.CollectionUtil;
+
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
@@ -104,8 +111,8 @@ public class LockingManagerTest extends AbstractLockingTest
     keys.add(2);
     keys.add(3);
 
-    lockingManager.lock(LockType.READ, 1, keys, 100);
-    lockingManager.unlock(1);
+    lockingManager.lock(1, keys, LockType.READ, 1, 100, null, null);
+    lockingManager.unlock(1, (Collection<Integer>)null, (LockType)null, 1, null, null);
   }
 
   public void testWriteOptions() throws Exception
@@ -114,7 +121,7 @@ public class LockingManagerTest extends AbstractLockingTest
 
     Set<Integer> keys = new HashSet<>();
     keys.add(1);
-    lockingManager.lock(LockType.OPTION, 1, keys, 100);
+    lockingManager.lock(1, keys, LockType.OPTION, 1, 100, null, null);
 
     // (R=Read, W=Write, WO=WriteOption)
     // Scenario 1: 1 has WO, 2 requests W -> fail
@@ -123,7 +130,7 @@ public class LockingManagerTest extends AbstractLockingTest
 
     try
     {
-      lockingManager.lock(LockType.WRITE, 2, keys, 100); // Must fail
+      lockingManager.lock(2, keys, LockType.WRITE, 1, 100, null, null); // Must fail
       fail("Should have thrown an exception");
     }
     catch (TimeoutRuntimeException e)
@@ -133,7 +140,7 @@ public class LockingManagerTest extends AbstractLockingTest
     // Scenario 2: 1 has WO, 2 requests R -> succeed
     try
     {
-      lockingManager.lock(LockType.READ, 2, keys, 100); // Must succeed
+      lockingManager.lock(2, keys, LockType.READ, 1, 100, null, null); // Must succeed
     }
     catch (TimeoutRuntimeException e)
     {
@@ -143,7 +150,7 @@ public class LockingManagerTest extends AbstractLockingTest
     // Scenario 3: 1 has WO, 2 has R, 1 requests W -> fail
     try
     {
-      lockingManager.lock(LockType.WRITE, 1, keys, 100); // Must fail
+      lockingManager.lock(1, keys, LockType.WRITE, 1, 100, null, null); // Must fail
       fail("Should have thrown an exception");
     }
     catch (TimeoutRuntimeException e)
@@ -153,7 +160,7 @@ public class LockingManagerTest extends AbstractLockingTest
     // Scenario 4: 1 has WO, 2 has R, 2 requests WO -> fail
     try
     {
-      lockingManager.lock(LockType.OPTION, 2, keys, 100); // Must fail
+      lockingManager.lock(2, keys, LockType.OPTION, 1, 100, null, null); // Must fail
       fail("Should have thrown an exception");
     }
     catch (TimeoutRuntimeException e)
@@ -161,10 +168,10 @@ public class LockingManagerTest extends AbstractLockingTest
     }
 
     // Scenario 5: 1 has WO, 2 has nothing, 2 requests WO -> fail
-    lockingManager.unlock(LockType.READ, 2, keys);
+    lockingManager.unlock(2, keys, LockType.READ, 1, null, null);
     try
     {
-      lockingManager.lock(LockType.OPTION, 2, keys, 100); // Must fail
+      lockingManager.lock(2, keys, LockType.OPTION, 1, 100, null, null); // Must fail
       fail("Should have thrown an exception");
     }
     catch (TimeoutRuntimeException e)
@@ -172,11 +179,11 @@ public class LockingManagerTest extends AbstractLockingTest
     }
 
     // Scenario 6: 1 has W, 2 has nothing, 2 requests WO -> fail
-    lockingManager.unlock(LockType.OPTION, 1, keys);
-    lockingManager.lock(LockType.WRITE, 1, keys, 100);
+    lockingManager.unlock(1, keys, LockType.OPTION, 1, null, null);
+    lockingManager.lock(1, keys, LockType.WRITE, 1, 100, null, null);
     try
     {
-      lockingManager.lock(LockType.OPTION, 2, keys, 100); // Must fail
+      lockingManager.lock(2, keys, LockType.OPTION, 1, 100, null, null); // Must fail
       fail("Should have thrown an exception");
     }
     catch (TimeoutRuntimeException e)
@@ -186,7 +193,7 @@ public class LockingManagerTest extends AbstractLockingTest
     // Scenario 7: 1 has W, 1 request WO -> succeed
     try
     {
-      lockingManager.lock(LockType.OPTION, 1, keys, 100); // Must succeed
+      lockingManager.lock(1, keys, LockType.OPTION, 1, 100, null, null); // Must succeed
     }
     catch (TimeoutRuntimeException e)
     {
@@ -194,11 +201,11 @@ public class LockingManagerTest extends AbstractLockingTest
     }
 
     // Scenario 8: 1 has W, 2 has R, 1 request WO -> succeed
-    lockingManager.unlock(LockType.OPTION, 1, keys);
-    lockingManager.lock(LockType.READ, 1, keys, 100);
+    lockingManager.unlock(1, keys, LockType.OPTION, 1, null, null);
+    lockingManager.lock(1, keys, LockType.READ, 1, 100, null, null);
     try
     {
-      lockingManager.lock(LockType.OPTION, 1, keys, 100); // Must succeed
+      lockingManager.lock(1, keys, LockType.OPTION, 1, 100, null, null); // Must succeed
     }
     catch (TimeoutRuntimeException e)
     {
@@ -219,7 +226,7 @@ public class LockingManagerTest extends AbstractLockingTest
         keys.add(1);
         try
         {
-          lockingManager.lock(LockType.WRITE, 1, keys, 50000);
+          lockingManager.lock(1, keys, LockType.WRITE, 1, 50000, null, null);
         }
         catch (InterruptedException ex)
         {
@@ -236,7 +243,7 @@ public class LockingManagerTest extends AbstractLockingTest
     keys.add(4);
 
     msg("Context 1 have readlock 1,2,3,4");
-    lockingManager.lock(LockType.READ, 1, keys, 1000);
+    lockingManager.lock(1, keys, LockType.READ, 1, 1000, null, null);
     assertEquals(true, lockingManager.hasLock(LockType.READ, 1, 1));
     assertEquals(true, lockingManager.hasLock(LockType.READ, 1, 2));
     assertEquals(true, lockingManager.hasLock(LockType.READ, 1, 3));
@@ -248,7 +255,7 @@ public class LockingManagerTest extends AbstractLockingTest
     keys.add(3);
 
     msg("Context 2 have readlock 1,2,3");
-    lockingManager.lock(LockType.READ, 2, keys, 1000);
+    lockingManager.lock(2, keys, LockType.READ, 1, 1000, null, null);
     assertEquals(true, lockingManager.hasLock(LockType.READ, 2, 1));
     assertEquals(true, lockingManager.hasLock(LockType.READ, 2, 2));
     assertEquals(true, lockingManager.hasLock(LockType.READ, 2, 3));
@@ -259,7 +266,7 @@ public class LockingManagerTest extends AbstractLockingTest
     keys.add(4);
 
     msg("Context 1 have readlock 1,2,3,4 and writeLock 4");
-    lockingManager.lock(LockType.WRITE, 1, keys, 1000);
+    lockingManager.lock(1, keys, LockType.WRITE, 1, 1000, null, null);
     assertEquals(true, lockingManager.hasLock(LockType.READ, 1, 4));
     assertEquals(true, lockingManager.hasLock(LockType.WRITE, 1, 4));
 
@@ -268,7 +275,7 @@ public class LockingManagerTest extends AbstractLockingTest
 
     try
     {
-      lockingManager.lock(LockType.WRITE, 1, keys, 1000);
+      lockingManager.lock(1, keys, LockType.WRITE, 1, 1000, null, null);
       fail("Should not have exception");
     }
     catch (RuntimeException expected)
@@ -284,7 +291,7 @@ public class LockingManagerTest extends AbstractLockingTest
     keys.add(1);
     keys.add(2);
     keys.add(3);
-    lockingManager.unlock(LockType.READ, 2, keys);
+    lockingManager.unlock(2, keys, LockType.READ, 1, null, null);
 
     new PollingTimeOuter()
     {
@@ -301,11 +308,11 @@ public class LockingManagerTest extends AbstractLockingTest
     RWOLockManager<Integer, Integer> lockingManager = new RWOLockManager<>();
     Set<Integer> keys = new HashSet<>();
     keys.add(1);
-    lockingManager.lock(LockType.READ, 1, keys, 10000);
-    lockingManager.unlock(LockType.READ, 1, keys);
+    lockingManager.lock(1, keys, LockType.READ, 1, 10000, null, null);
+    lockingManager.unlock(1, keys, LockType.READ, 1, null, null);
 
     // As of 4.4 should not fail anymore.
-    lockingManager.unlock(LockType.READ, 1, keys);
+    lockingManager.unlock(1, keys, LockType.READ, 1, null, null);
   }
 
   public void testReadTimeout() throws Exception
@@ -463,7 +470,7 @@ public class LockingManagerTest extends AbstractLockingTest
     CDOObject cdoCompany = CDOUtil.getCDOObject(company);
     CDOObject cdoCompany2 = CDOUtil.getCDOObject(company2);
 
-    transaction.lockObjects(Collections.singletonList(cdoCompany), LockType.WRITE, CDOLock.WAIT);
+    transaction.lockObjects(Collections.singletonList(cdoCompany), LockType.WRITE, CDOLock.NO_TIMEOUT);
 
     try
     {
@@ -1171,7 +1178,7 @@ public class LockingManagerTest extends AbstractLockingTest
     objects.add(CDOUtil.getCDOObject(category));
   }
 
-  public void _testLockContention() throws Exception
+  public void testLockContention() throws Exception
   {
     Company company1 = getModel1Factory().createCompany();
 
@@ -1227,12 +1234,155 @@ public class LockingManagerTest extends AbstractLockingTest
     CDOLockStateCache lockStateCache2 = ((InternalCDOSession)session2).getLockStateCache();
     CDOLockState lockState = lockStateCache2.getLockState(mainBranch, id);
     CDOLockOwner expectedLockOwner = transaction2.getLockOwner();
-    assertEquals("1", expectedLockOwner, lockState.getWriteLockOwner());
+    assertEquals(expectedLockOwner, lockState.getWriteLockOwner());
 
     sleep(200);
-    assertEquals("2", expectedLockOwner, lockState.getWriteLockOwner());
+    assertEquals(expectedLockOwner, lockState.getWriteLockOwner());
+  }
 
-    System.out.println();
+  public void testLockContentionRecursive() throws Exception
+  {
+    Company company21 = getModel1Factory().createCompany();
+
+    Supplier supplier21 = getModel1Factory().createSupplier();
+    company21.getSuppliers().add(supplier21);
+
+    Customer customer21 = getModel1Factory().createCustomer();
+    company21.getCustomers().add(customer21);
+
+    Category category21 = getModel1Factory().createCategory();
+    category21.getCategories().add(getModel1Factory().createCategory());
+    category21.getCategories().add(getModel1Factory().createCategory());
+    category21.getCategories().add(getModel1Factory().createCategory());
+    category21.getCategories().add(getModel1Factory().createCategory());
+    company21.getCategories().add(category21);
+
+    CDOSession session2 = openSession();
+    CDOTransaction transaction21 = session2.openTransaction();
+    transaction21.options().setLockNotificationEnabled(true);
+
+    CDOResource resource21 = transaction21.createResource(getResourcePath("/res1"));
+    resource21.getContents().add(company21);
+    transaction21.commit();
+
+    @SuppressWarnings("unused")
+    Set<Object> objects21 = loadView(transaction21);
+    CDOView view22 = openAndLoadView(session2);
+
+    CDOSession session3 = openSession();
+    CDOTransaction transaction31 = session3.openTransaction();
+    transaction31.options().setLockNotificationEnabled(true);
+    Company company31 = (Company)transaction31.getResource(getResourcePath("/res1")).getContents().get(0);
+    Category category31 = company31.getCategories().get(0);
+
+    @SuppressWarnings("unused")
+    Set<Object> objects31 = loadView(transaction31);
+    CDOView view32 = openAndLoadView(session3);
+
+    System.out.println(transaction21.getLockOwner() + " locking " + category21);
+    transaction21.lockObjects(CDOUtil.getCDOObjects(category21), LockType.WRITE, DEFAULT_TIMEOUT, true);
+    assertRecursiveWriteLock(transaction21.getLockOwner(), category21);
+
+    sleep(500); // Wait until all other views must have been notified.
+    assertRecursiveWriteLock(transaction21.getLockOwner(), view22.getObject(category21));
+    assertRecursiveWriteLock(transaction21.getLockOwner(), category31);
+    assertRecursiveWriteLock(transaction21.getLockOwner(), view32.getObject(category31));
+
+    Throwable[] exception = { null };
+    Thread client3 = new Thread("Client 3")
+    {
+      @Override
+      public void run()
+      {
+        try
+        {
+          System.out.println(transaction21.getLockOwner() + " locking " + company31);
+          transaction31.lockObjects(CDOUtil.getCDOObjects(company31), LockType.WRITE, DEFAULT_TIMEOUT, true);
+          assertRecursiveWriteLock(transaction31.getLockOwner(), company31);
+
+          sleep(500); // Wait until all other views must have been notified.
+          assertRecursiveWriteLock(transaction31.getLockOwner(), view32.getObject(company31));
+          assertRecursiveWriteLock(transaction31.getLockOwner(), company21);
+          assertRecursiveWriteLock(transaction31.getLockOwner(), view22.getObject(company21));
+        }
+        catch (Throwable ex)
+        {
+          exception[0] = ex;
+        }
+      }
+    };
+
+    client3.start();
+    sleep(100); // Wait until client3 must have called lock().
+
+    // Unblock client3.
+    System.out.println(transaction21.getLockOwner() + " unlocking " + category21);
+    transaction21.unlockObjects(CDOUtil.getCDOObjects(category21), LockType.WRITE, true);
+    client3.join(DEFAULT_TIMEOUT);
+
+    if (exception[0] instanceof Error)
+    {
+      throw (Error)exception[0];
+    }
+
+    if (exception[0] instanceof Exception)
+    {
+      throw (Exception)exception[0];
+    }
+  }
+
+  private static CDOView openAndLoadView(CDOSession session)
+  {
+    CDOView view = session.openView();
+    view.options().setLockNotificationEnabled(true);
+
+    Set<Object> objects = loadView(view);
+    view.properties().put("objects", objects);
+
+    return view;
+  }
+
+  private static Set<Object> loadView(CDOView view)
+  {
+    Set<Object> objects = new HashSet<>();
+
+    CDOResource rootResource = view.getRootResource();
+    objects.add(rootResource);
+
+    for (Iterator<?> it = rootResource.eAllContents(); it.hasNext();)
+    {
+      objects.add(it.next());
+    }
+
+    return objects;
+  }
+
+  protected static void assertRecursiveWriteLock(CDOLockOwner owner, EObject object)
+  {
+    CDOObject cdoObject = CDOUtil.getCDOObject(object);
+    CDOLockOwner objectLockOwner = cdoObject.cdoView().getLockOwner();
+    assertRecursiveWriteLock(owner, objectLockOwner, cdoObject);
+
+    for (Iterator<?> it = cdoObject.eAllContents(); it.hasNext();)
+    {
+      CDOObject o = CDOUtil.getCDOObject((EObject)it.next());
+      assertRecursiveWriteLock(owner, objectLockOwner, o);
+    }
+  }
+
+  private static void assertRecursiveWriteLock(CDOLockOwner owner, CDOLockOwner objectLockOwner, CDOObject cdoObject)
+  {
+    CDOLock lock = cdoObject.cdoWriteLock();
+    assertEquals("owner of " + cdoObject, owner, CollectionUtil.first(lock.getOwners()));
+
+    if (objectLockOwner == owner)
+    {
+      assertEquals("isLocked of " + cdoObject, true, lock.isLocked());
+    }
+    else
+    {
+      assertEquals("isLockedByOthers of " + cdoObject, true, lock.isLockedByOthers());
+    }
   }
 
   public void testRecursiveLock() throws Exception
@@ -1548,23 +1698,25 @@ public class LockingManagerTest extends AbstractLockingTest
   public void testLockRefreshForHeldLock() throws Exception
   {
     // Client 1 creates and read-locks a resource.
-    CDOTransaction tx1 = openSession().openTransaction();
+    CDOSession session1 = openSession();
+    CDOTransaction tx1 = session1.openTransaction();
     CDOResource resource1 = tx1.createResource(getResourcePath("/res1"));
     tx1.commit();
     resource1.cdoReadLock().lock();
 
-    // Client 2 gets the resource created and read-locked by Client 1.
-    CDOTransaction tx2 = openSession().openTransaction();
+    // Client 2 loads the resource created and read-locked by Client 1.
+    CDOSession session2 = openSession();
+    CDOTransaction tx2 = session2.openTransaction();
     CDOResource resource2 = tx2.getResource(getResourcePath("/res1"));
 
-    // Get the lock and lock it.
+    // Client 2 gets the lock and locks it.
     CDOLock readLockBeforeClose = resource2.cdoReadLock();
     readLockBeforeClose.lock(DEFAULT_TIMEOUT);
 
     boolean isLockedByOthersBeforeClose = readLockBeforeClose.isLockedByOthers();
     assertTrue(isLockedByOthersBeforeClose);
 
-    tx1.close(); // Client 1 release read lock.
+    tx1.close(); // Client 1 releases its read lock.
 
     new PollingTimeOuter()
     {

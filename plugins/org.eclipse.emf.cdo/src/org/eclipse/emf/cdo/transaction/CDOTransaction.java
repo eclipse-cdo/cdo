@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetDataProvider;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.CDOResourceNodeNotFoundException;
@@ -37,6 +38,7 @@ import org.eclipse.emf.cdo.util.ConcurrentAccessException;
 import org.eclipse.emf.cdo.view.CDOQuery;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.util.concurrent.IRWOLockManager;
 import org.eclipse.net4j.util.options.IOptionsEvent;
 
 import org.eclipse.emf.common.util.URI;
@@ -331,6 +333,18 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
     public static final long DEFAULT_COMMIT_INFO_TIMEOUT = 60000;
 
     /**
+     * Indicates to use the timeout value that is configured on the server.
+     *
+     * @since 4.15
+     */
+    public static final long DEFAULT_OPTIMISTIC_LOCKING_TIMEOUT = CDOProtocolConstants.DEFAULT_OPTIMISTIC_LOCKING_TIMEOUT;
+
+    /**
+     * @since 4.15
+     */
+    public static final long NO_OPTIMISTIC_LOCKING_TIMEOUT = IRWOLockManager.NO_TIMEOUT;
+
+    /**
      * Returns the {@link CDOTransaction transaction} of this options object.
      *
      * @since 4.0
@@ -494,6 +508,26 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
     public void setAttachedRevisionsMap(Map<CDOID, CDORevision> attachedRevisionsMap);
 
     /**
+     * Returns the number of milliseconds to wait for the successful acquisition of all required implicit locks on the server
+     * when {@link CDOTransaction#commit()} is called.
+     * <p>
+     * Default value is {@link #DEFAULT_OPTIMISTIC_LOCKING_TIMEOUT}.
+     *
+     * @since 4.15
+     */
+    public long getOptimisticLockingTimeout();
+
+    /**
+     * Returns the number of milliseconds to wait for the successful acquisition of all required implicit locks on the server
+     * when {@link CDOTransaction#commit()} is called.
+     * <p>
+     * Default value is {@link #DEFAULT_OPTIMISTIC_LOCKING_TIMEOUT}.
+     *
+     * @since 4.15
+     */
+    public void setOptimisticLockingTimeout(long optimisticLockingTimeout);
+
+    /**
      * Returns the number of milliseconds to wait for the transaction update when {@link CDOTransaction#commit()} is called.
      * <p>
      * Default value is 10000.
@@ -598,6 +632,19 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
      * @noimplement This interface is not intended to be implemented by clients.
      */
     public interface AttachedRevisionsMap extends IOptionsEvent
+    {
+    }
+
+    /**
+     * An {@link IOptionsEvent options event} fired from transaction {@link CDOTransaction#options() options} when the
+     * {@link Options#setOptimisticLockingTimeout(long) optimistic locking timeout} option has changed.
+     *
+     * @author Eike Stepper
+     * @since 4.15
+     * @noextend This interface is not intended to be extended by clients.
+     * @noimplement This interface is not intended to be implemented by clients.
+     */
+    public interface OptimisticLockingTimeout extends IOptionsEvent
     {
     }
 

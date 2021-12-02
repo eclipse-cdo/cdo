@@ -862,35 +862,11 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/internal/cdo/session/CDOLockStateCache.java" type="org.eclipse.emf.internal.cdo.session.CDOLockStateCache$LockState">
-        <filter id="571473929">
-            <message_arguments>
-                <message_argument value="AbstractCDOLockState"/>
-                <message_argument value="LockState"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/emf/internal/cdo/session/CDOLockStateCache.java" type="org.eclipse.emf.internal.cdo.session.CDOLockStateCache$MutableLockState">
-        <filter id="574619656">
-            <message_arguments>
-                <message_argument value="InternalCDOLockState"/>
-                <message_argument value="MutableLockState"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="src/org/eclipse/emf/internal/cdo/session/CDOLockStateCacheImpl.java" type="org.eclipse.emf.internal.cdo.session.CDOLockStateCacheImpl$LockState">
         <filter id="571473929">
             <message_arguments>
                 <message_argument value="AbstractCDOLockState"/>
                 <message_argument value="LockState"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/emf/internal/cdo/session/CDOLockStateCacheImpl.java" type="org.eclipse.emf.internal.cdo.session.CDOLockStateCacheImpl$MutableLockState">
-        <filter id="574619656">
-            <message_arguments>
-                <message_argument value="InternalCDOLockState"/>
-                <message_argument value="MutableLockState"/>
             </message_arguments>
         </filter>
     </resource>
@@ -941,14 +917,6 @@
             <message_arguments>
                 <message_argument value="CDOIDReference"/>
                 <message_argument value="CDOTransactionImpl"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/emf/internal/cdo/util/DefaultLocksChangedEvent.java" type="org.eclipse.emf.internal.cdo.util.DefaultLocksChangedEvent">
-        <filter id="574619656">
-            <message_arguments>
-                <message_argument value="CDOLockChangeInfo"/>
-                <message_argument value="DefaultLocksChangedEvent"/>
             </message_arguments>
         </filter>
     </resource>

@@ -195,13 +195,6 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
   }
 
   @Override
-  @Deprecated
-  public boolean isInvalidationRunnerActive()
-  {
-    return isInvalidating();
-  }
-
-  @Override
   public boolean isInvalidating()
   {
     return false;
@@ -298,13 +291,6 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
   }
 
   @Override
-  @Deprecated
-  public String enableDurableLocking(boolean enable)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
   public String enableDurableLocking()
   {
     throw new UnsupportedOperationException();
@@ -337,22 +323,6 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
   }
 
   @Override
-  @Deprecated
-  public void invalidate(CDOBranch branch, long lastUpdateTime, List<CDORevisionKey> allChangedObjects, List<CDOIDAndVersion> allDetachedObjects,
-      Map<CDOID, InternalCDORevision> oldRevisions, boolean async)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  @Deprecated
-  public void invalidate(CDOBranch branch, long lastUpdateTime, List<CDORevisionKey> allChangedObjects, List<CDOIDAndVersion> allDetachedObjects,
-      Map<CDOID, InternalCDORevision> oldRevisions, boolean async, boolean clearResourcePathCache)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
   public void invalidate(ViewInvalidationData invalidationData)
   {
     throw new UnsupportedOperationException();
@@ -360,19 +330,6 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
 
   @Override
   public void handleLockNotification(InternalCDOView sender, CDOLockChangeInfo lockChangeInfo)
-  {
-    // Do nothing
-  }
-
-  @Override
-  @Deprecated
-  public void updateLockStates(CDOLockState[] newLockStates, boolean loadObjectsOnDemand, Consumer<CDOLockState> consumer)
-  {
-    // Do nothing
-  }
-
-  @Override
-  public void updateLockStates(Collection<? extends CDOLockState> newLockStates, boolean loadObjectsOnDemand, Consumer<CDOLockState> consumer)
   {
     // Do nothing
   }
@@ -503,29 +460,6 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     throw new UnsupportedOperationException();
   }
 
-  @Deprecated
-  public org.eclipse.emf.internal.cdo.view.CDOLockStateLoadingPolicy getLockStateLoadingPolicy()
-  {
-    return null;
-  }
-
-  @Deprecated
-  public void setLockStateLoadingPolicy(org.eclipse.emf.internal.cdo.view.CDOLockStateLoadingPolicy lockStateLoadingPolicy)
-  {
-  }
-
-  @Deprecated
-  public boolean isLockStatePrefetchEnabled()
-  {
-    return false;
-  }
-
-  @Deprecated
-  public void setLockStatePrefetchEnabled(boolean enabled)
-  {
-    throw new UnsupportedOperationException();
-  }
-
   @Override
   public CDOAdapterPolicy[] getChangeSubscriptionPolicies()
   {
@@ -554,20 +488,6 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
   public void setStrongReferencePolicy(CDOAdapterPolicy policy)
   {
     throw new UnsupportedOperationException();
-  }
-
-  @Override
-  @Deprecated
-  public CDOStaleReferencePolicy getStaleReferenceBehaviour()
-  {
-    return getStaleReferencePolicy();
-  }
-
-  @Override
-  @Deprecated
-  public void setStaleReferenceBehaviour(CDOStaleReferencePolicy policy)
-  {
-    setStaleReferencePolicy(policy);
   }
 
   @Override
@@ -632,6 +552,81 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
 
   @Override
   public CDOUnitManager getUnitManager()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public boolean isInvalidationRunnerActive()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public String enableDurableLocking(boolean enable)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void invalidate(CDOBranch branch, long lastUpdateTime, List<CDORevisionKey> allChangedObjects, List<CDOIDAndVersion> allDetachedObjects,
+      Map<CDOID, InternalCDORevision> oldRevisions, boolean async)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void invalidate(CDOBranch branch, long lastUpdateTime, List<CDORevisionKey> allChangedObjects, List<CDOIDAndVersion> allDetachedObjects,
+      Map<CDOID, InternalCDORevision> oldRevisions, boolean async, boolean clearResourcePathCache)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void updateLockStates(CDOLockState[] newLockStates, boolean loadObjectsOnDemand, Consumer<CDOLockState> consumer)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Deprecated
+  public org.eclipse.emf.internal.cdo.view.CDOLockStateLoadingPolicy getLockStateLoadingPolicy()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Deprecated
+  public void setLockStateLoadingPolicy(org.eclipse.emf.internal.cdo.view.CDOLockStateLoadingPolicy lockStateLoadingPolicy)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Deprecated
+  public boolean isLockStatePrefetchEnabled()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Deprecated
+  public void setLockStatePrefetchEnabled(boolean enabled)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public CDOStaleReferencePolicy getStaleReferenceBehaviour()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void setStaleReferenceBehaviour(CDOStaleReferencePolicy policy)
   {
     throw new UnsupportedOperationException();
   }
@@ -761,20 +756,6 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
 
     @Override
     public CDOLobStore getLobStore()
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    /**
-     * Server sessions may not be used to change the user's credentials: it must
-     * be done client-side by interaction with the user.
-     *
-     * @since 4.3
-     * @deprecated
-     */
-    @Override
-    @Deprecated
-    public void changeCredentials()
     {
       throw new UnsupportedOperationException();
     }
@@ -985,13 +966,6 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     public boolean isSupportingUnits()
     {
       return repository.isSupportingUnits();
-    }
-
-    @Override
-    @Deprecated
-    public boolean isSupportingEcore()
-    {
-      return repository.isSupportingEcore();
     }
 
     @Override
@@ -1348,43 +1322,7 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     }
 
     @Override
-    @Deprecated
-    public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    @Override
-    @Deprecated
-    public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender, boolean clearResourcePathCache)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    @Override
-    @Deprecated
-    public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender, boolean clearResourcePathCache, byte securityImpact,
-        Map<CDOID, CDOPermission> newPermissions)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    @Override
     public void invalidate(InvalidationData invalidationData)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    @Override
-    @Deprecated
-    public void handleCommitNotification(CDOCommitInfo commitInfo)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    @Override
-    @Deprecated
-    public void handleCommitNotification(CDOCommitInfo commitInfo, boolean clearResourcePathCache)
     {
       throw new UnsupportedOperationException();
     }
@@ -1395,22 +1333,8 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
       throw new UnsupportedOperationException();
     }
 
-    @Deprecated
-    @Override
-    public void handleLockNotification(CDOLockChangeInfo lockChangeInfo, InternalCDOView sender)
-    {
-      throw new UnsupportedOperationException();
-    }
-
     @Override
     public void handleLockNotification(CDOLockChangeInfo lockChangeInfo, InternalCDOView sender, boolean async)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    @Override
-    @Deprecated
-    public void handleBranchNotification(InternalCDOBranch branch)
     {
       throw new UnsupportedOperationException();
     }
@@ -1423,20 +1347,6 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
 
     @Override
     public InternalCDORemoteSessionManager getRemoteSessionManager()
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    @Override
-    @Deprecated
-    public org.eclipse.emf.cdo.common.protocol.CDOAuthenticator getAuthenticator()
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    @Override
-    @Deprecated
-    public void setAuthenticator(org.eclipse.emf.cdo.common.protocol.CDOAuthenticator authenticator)
     {
       throw new UnsupportedOperationException();
     }
@@ -1503,20 +1413,6 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
 
     @Override
     public CDOChangeSetData compareRevisions(CDOBranchPoint source, CDOBranchPoint target)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    @Override
-    @Deprecated
-    public CDORevisionAvailabilityInfo createRevisionAvailabilityInfo(CDOBranchPoint branchPoint)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    @Override
-    @Deprecated
-    public void cacheRevisions(CDORevisionAvailabilityInfo info)
     {
       throw new UnsupportedOperationException();
     }
@@ -1667,6 +1563,98 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
 
     @Override
     public CDOBlob newBlob(byte[] contents) throws IOException
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    @Deprecated
+    public void changeCredentials()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    @Deprecated
+    public boolean isSupportingEcore()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    @Deprecated
+    public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    @Deprecated
+    public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender, boolean clearResourcePathCache)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    @Deprecated
+    public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender, boolean clearResourcePathCache, byte securityImpact,
+        Map<CDOID, CDOPermission> newPermissions)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    @Deprecated
+    public void handleCommitNotification(CDOCommitInfo commitInfo)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    @Deprecated
+    public void handleCommitNotification(CDOCommitInfo commitInfo, boolean clearResourcePathCache)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    @Deprecated
+    public void handleLockNotification(CDOLockChangeInfo lockChangeInfo, InternalCDOView sender)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    @Deprecated
+    public void handleBranchNotification(InternalCDOBranch branch)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    @Deprecated
+    public org.eclipse.emf.cdo.common.protocol.CDOAuthenticator getAuthenticator()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    @Deprecated
+    public void setAuthenticator(org.eclipse.emf.cdo.common.protocol.CDOAuthenticator authenticator)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    @Deprecated
+    public CDORevisionAvailabilityInfo createRevisionAvailabilityInfo(CDOBranchPoint branchPoint)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    @Deprecated
+    public void cacheRevisions(CDORevisionAvailabilityInfo info)
     {
       throw new UnsupportedOperationException();
     }

@@ -22,9 +22,9 @@ import java.io.IOException;
  */
 public class LockAreaRequest extends CDOClientRequest<String>
 {
-  private CDOView view;
+  private final CDOView view;
 
-  private boolean create;
+  private final boolean create;
 
   public LockAreaRequest(CDOClientProtocol protocol, CDOView view, boolean create)
   {

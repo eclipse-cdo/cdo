@@ -57,7 +57,7 @@ public interface CDOLockState extends CDOIDAndBranch
    * If the 'others' argument is <code>true</code>, this method returns <code>true</code> if this lock is currently held
    * by <i>another</i> view (i.e. any view different from the requesting one), <code>false</code> otherwise.
    */
-  public boolean isLocked(LockType lockType, CDOLockOwner lockOwner, boolean others);
+  public boolean isLocked(LockType type, CDOLockOwner by, boolean others);
 
   public Set<CDOLockOwner> getReadLockOwners();
 

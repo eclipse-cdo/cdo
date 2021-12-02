@@ -508,10 +508,8 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
 
     try
     {
-      @SuppressWarnings("deprecation")
-      List<RevisionInfo> additionalRevisionInfos = revisionLoader instanceof RevisionLoader3
-          ? ((RevisionLoader3)revisionLoader).loadRevisions(infosToLoad, branchPoint, referenceChunk, prefetchDepth, prefetchLockStates)
-          : revisionLoader.loadRevisions(infosToLoad, branchPoint, referenceChunk, prefetchDepth);
+      List<RevisionInfo> additionalRevisionInfos = ((RevisionLoader3)revisionLoader).loadRevisions(infosToLoad, branchPoint, referenceChunk, prefetchDepth,
+          prefetchLockStates);
 
       if (additionalRevisionInfos != null)
       {

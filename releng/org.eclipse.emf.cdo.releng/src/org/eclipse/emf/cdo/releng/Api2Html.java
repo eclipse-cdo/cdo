@@ -54,6 +54,8 @@ public class Api2Html extends DefaultHandler
 
   private static final String NO_DOCS = "";
 
+  private static final String NO_TYPENAME = "NONE";
+
   private static final Pattern VERSION_CHANGED = Pattern
       .compile("The ([^ ]+) version has been changed for the api component ([^ ]+) \\(from version ([^ ]+) to ([^ ]+)\\)");
 
@@ -202,7 +204,7 @@ public class Api2Html extends DefaultHandler
           if (typeName == null || typeName.length() == 0)
           {
             System.out.println("No typeName: " + message);
-            return;
+            typeName = NO_TYPENAME;
           }
 
           Type type = component.getTypes().get(typeName);

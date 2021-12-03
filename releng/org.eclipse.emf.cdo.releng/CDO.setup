@@ -22,6 +22,34 @@
         href="CDOConfiguration.setup#/"/>
   </annotation>
   <setupTask
+      xsi:type="setup:CompoundTask"
+      name="Preferences">
+    <setupTask
+        xsi:type="setup:PreferenceTask"
+        key="/instance/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_STRICTLY_COMPATIBLE_JRE_NOT_AVAILABLE"
+        value="ignore"/>
+    <setupTask
+        xsi:type="setup:PreferenceTask"
+        key="/instance/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_COMPILER_COMPLIANCE_DOES_NOT_MATCH_JRE"
+        value="ignore"/>
+    <setupTask
+        xsi:type="setup:PreferenceTask"
+        key="/instance/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.problem.unclosedCloseable"
+        value="ignore"/>
+    <setupTask
+        xsi:type="setup:PreferenceTask"
+        key="/instance/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.problem.unlikelyCollectionMethodArgumentType"
+        value="ignore"/>
+    <setupTask
+        xsi:type="setup:PreferenceTask"
+        key="/instance/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.problem.unlikelyEqualsArgumentType"
+        value="ignore"/>
+    <setupTask
+        xsi:type="setup:PreferenceTask"
+        key="/instance/org.eclipse.pde/compilers.f.unresolved-features"
+        value="2"/>
+  </setupTask>
+  <setupTask
       xsi:type="setup.p2:P2Task"
       label="CDO">
     <requirement
@@ -78,6 +106,11 @@
       value="4g"
       vm="true"/>
   <setupTask
+      xsi:type="setup:EclipseIniTask"
+      option="-Doomph.redirection.cdosetup"
+      value="=https://git.eclipse.org/c/cdo/cdo.git/plain/releng/org.eclipse.emf.cdo.releng/CDO.setup->${cdo.git.clone.location|uri}/releng/org.eclipse.emf.cdo.releng/CDO.setup"
+      vm="true"/>
+  <setupTask
       xsi:type="setup:ResourceCreationTask"
       excludedTriggers="STARTUP MANUAL"
       targetURL="${workspace.location|uri}/.metadata/.plugins/org.eclipse.jdt.ui/dialog_settings.xml"
@@ -96,34 +129,6 @@
 
     </content>
   </setupTask>
-  <setupTask
-      xsi:type="setup:PreferenceTask"
-      key="/instance/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_STRICTLY_COMPATIBLE_JRE_NOT_AVAILABLE"
-      value="ignore"/>
-  <setupTask
-      xsi:type="setup:PreferenceTask"
-      key="/instance/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_COMPILER_COMPLIANCE_DOES_NOT_MATCH_JRE"
-      value="ignore"/>
-  <setupTask
-      xsi:type="setup:PreferenceTask"
-      key="/instance/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.problem.unclosedCloseable"
-      value="ignore"/>
-  <setupTask
-      xsi:type="setup:PreferenceTask"
-      key="/instance/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.problem.unlikelyCollectionMethodArgumentType"
-      value="ignore"/>
-  <setupTask
-      xsi:type="setup:PreferenceTask"
-      key="/instance/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.problem.unlikelyEqualsArgumentType"
-      value="ignore"/>
-  <setupTask
-      xsi:type="setup:PreferenceTask"
-      key="/instance/org.eclipse.pde/compilers.f.unresolved-features"
-      value="2"/>
-  <setupTask
-      xsi:type="setup:VariableTask"
-      name="eclipse.target.platform"
-      value="${cdo.target.platform}"/>
   <setupTask
       xsi:type="git:GitCloneTask"
       id="cdo.git.clone"
@@ -150,6 +155,10 @@
       xsi:type="setup:StringSubstitutionTask"
       name="git.clone.cdo"
       value="${cdo.git.clone.location}"/>
+  <setupTask
+      xsi:type="setup:VariableTask"
+      name="eclipse.target.platform"
+      value="${cdo.target.platform}"/>
   <setupTask
       xsi:type="setup.targlets:TargletTask">
     <targlet
@@ -246,6 +255,27 @@
           name="org.eclipse.emf.sdk.feature.group"/>
       <sourceLocator
           rootFolder="${cdo.git.clone.location}"/>
+      <repositoryList
+          name="2022-03">
+        <repository
+            url="https://download.eclipse.org/releases/2021-12"/>
+        <repository
+            url="https://download.eclipse.org/eclipse/updates/latest"/>
+        <repository
+            url="https://download.eclipse.org/tools/orbit/downloads/latest-I"/>
+        <repository
+            url="https://download.eclipse.org/nebula/snapshot"/>
+        <repository
+            url="https://download.eclipse.org/modeling/emf/cdo/jetty-repo-10.0.6"/>
+        <repository
+            url="https://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
+        <repository
+            url="https://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
+        <repository
+            url="https://www.springsite.com/eclipse/2.1.0/update"/>
+        <repository
+            url="${aspectj.repository}"/>
+      </repositoryList>
       <repositoryList
           name="2021-12">
         <repository
@@ -527,6 +557,23 @@
       <requirement
           name="org.eclipse.equinox.executable.feature.group"/>
       <repositoryList
+          name="4.16">
+        <repository
+            url="https://download.eclipse.org/modeling/emf/cdo/drops/R20211202-0900"/>
+        <repository
+            url="https://download.eclipse.org/releases/2021-12/202112081000"/>
+        <repository
+            url="https://download.eclipse.org/nebula/releases/2.5.0"/>
+        <repository
+            url="https://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
+        <repository
+            url="https://download.eclipse.org/modeling/emf/cdo/jetty-repo-10.0.6"/>
+        <repository
+            url="https://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
+        <repository
+            url="https://www.springsite.com/eclipse/2.1.0/update"/>
+      </repositoryList>
+      <repositoryList
           name="4.15">
         <repository
             url="https://download.eclipse.org/modeling/emf/cdo/drops/R20210908-0655"/>
@@ -745,7 +792,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.15/@workingSets[name='CDO%20Tests'] //@setupTasks.15/@workingSets[name='CDO%20Examples'] //@setupTasks.15/@workingSets[name='CDO%20Dawn'] //@setupTasks.15/@workingSets[name='CDO%20Features'] //@setupTasks.15/@workingSets[name='CDO%20Releng']"/>
+            excludedWorkingSet="//@setupTasks.11/@workingSets[name='CDO%20Tests'] //@setupTasks.11/@workingSets[name='CDO%20Examples'] //@setupTasks.11/@workingSets[name='CDO%20Dawn'] //@setupTasks.11/@workingSets[name='CDO%20Features'] //@setupTasks.11/@workingSets[name='CDO%20Releng']"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -758,7 +805,7 @@
             pattern="org\.eclipse\.emf\.cdo\.tests.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.15/@workingSets[name='CDO%20Features']"/>
+            excludedWorkingSet="//@setupTasks.11/@workingSets[name='CDO%20Features']"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -777,7 +824,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.15/@workingSets[name='CDO%20Features']"/>
+            excludedWorkingSet="//@setupTasks.11/@workingSets[name='CDO%20Features']"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -790,7 +837,7 @@
             pattern="org\.eclipse\.emf\.cdo\.dawn.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.15/@workingSets[name='CDO%20Features']"/>
+            excludedWorkingSet="//@setupTasks.11/@workingSets[name='CDO%20Features']"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -819,7 +866,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.15/@workingSets[name='CDO%20Features'] //@setupTasks.15/@workingSets[name='Net4j%20Features']"/>
+            excludedWorkingSet="//@setupTasks.11/@workingSets[name='CDO%20Features'] //@setupTasks.11/@workingSets[name='Net4j%20Features']"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -832,7 +879,7 @@
             pattern="org\.eclipse\.net4j.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.15/@workingSets[name='Net4j%20DB'] //@setupTasks.15/@workingSets[name='Net4j%20Examples'] //@setupTasks.15/@workingSets[name='Net4j%20Features']"/>
+            excludedWorkingSet="//@setupTasks.11/@workingSets[name='Net4j%20DB'] //@setupTasks.11/@workingSets[name='Net4j%20Examples'] //@setupTasks.11/@workingSets[name='Net4j%20Features']"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -845,7 +892,7 @@
             pattern="org\.eclipse\.net4j\.db.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.15/@workingSets[name='Net4j%20Features']"/>
+            excludedWorkingSet="//@setupTasks.11/@workingSets[name='Net4j%20Features']"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -867,7 +914,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.15/@workingSets[name='Net4j%20Features']"/>
+            excludedWorkingSet="//@setupTasks.11/@workingSets[name='Net4j%20Features']"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -984,29 +1031,33 @@
     </setupTask>
   </setupTask>
   <setupTask
-      xsi:type="setup:VariableTask"
-      type="URI"
-      name="aspectj.repository"
-      value="https://download.eclipse.org/tools/ajdt/48/dev/update"/>
-  <setupTask
-      xsi:type="setup:VariableTask"
-      name="INSTALL_AJDT"
-      defaultValue="Skip"
-      label="Install AJDT">
-    <choice
-        value="Skip"/>
-    <choice
-        value="Install"/>
-    <description>The AspectJ Development Tooling is only needed for editing and compiling the buffer tracing aspect in &quot;org.eclipse.net4j.trace&quot;.</description>
-  </setupTask>
-  <setupTask
-      xsi:type="setup.p2:P2Task"
-      filter="(INSTALL_AJDT=Install)"
-      label="AJDT">
-    <requirement
-        name="org.eclipse.ajdt.feature.group"/>
-    <repository
-        url="${aspectj.repository}"/>
+      xsi:type="setup:CompoundTask"
+      name="AspectJ">
+    <setupTask
+        xsi:type="setup:VariableTask"
+        type="URI"
+        name="aspectj.repository"
+        value="https://download.eclipse.org/tools/ajdt/48/dev/update"/>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="INSTALL_AJDT"
+        defaultValue="Skip"
+        label="Install AJDT">
+      <choice
+          value="Skip"/>
+      <choice
+          value="Install"/>
+      <description>The AspectJ Development Tooling is only needed for editing and compiling the buffer tracing aspect in &quot;org.eclipse.net4j.trace&quot;.</description>
+    </setupTask>
+    <setupTask
+        xsi:type="setup.p2:P2Task"
+        filter="(INSTALL_AJDT=Install)"
+        label="AJDT">
+      <requirement
+          name="org.eclipse.ajdt.feature.group"/>
+      <repository
+          url="${aspectj.repository}"/>
+    </setupTask>
   </setupTask>
   <stream name="master"
       label="Master">
@@ -1017,23 +1068,18 @@
     <setupTask
         xsi:type="setup:VariableTask"
         name="cdo.target.platform"
-        value="2021-12"/>
+        value="2022-03"/>
     <setupTask
         xsi:type="setup:VariableTask"
         name="cdo.bugzilla.version"
-        value="4.16"/>
+        value="4.17"/>
     <setupTask
         xsi:type="setup:VariableTask"
         name="cdo.baseline.version"
-        value="4.15"/>
+        value="4.16"/>
     <setupTask
         xsi:type="jdt:JRETask"
         version="JavaSE-11"
         location="${jre.location-11}"/>
-    <setupTask
-        xsi:type="setup:EclipseIniTask"
-        option="-Doomph.redirection.cdosetup"
-        value="=https://git.eclipse.org/c/cdo/cdo.git/plain/releng/org.eclipse.emf.cdo.releng/CDO.setup->${cdo.git.clone.location|uri}/releng/org.eclipse.emf.cdo.releng/CDO.setup"
-        vm="true"/>
   </stream>
 </setup:Project>

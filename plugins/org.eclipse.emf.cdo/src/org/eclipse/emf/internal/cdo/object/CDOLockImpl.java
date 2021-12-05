@@ -63,21 +63,6 @@ public class CDOLockImpl implements CDOLock
   }
 
   @Override
-  public boolean isLocked()
-  {
-    return isLocked(false);
-  }
-
-  /**
-   * @see org.eclipse.emf.cdo.CDOLock#isLockedByOthers()
-   */
-  @Override
-  public boolean isLockedByOthers()
-  {
-    return isLocked(true);
-  }
-
-  @Override
   public Set<CDOLockOwner> getOwners()
   {
     CDOLockState lockState = object.cdoLockState();
@@ -101,25 +86,33 @@ public class CDOLockImpl implements CDOLock
   }
 
   @Override
-  public void lock()
+  public boolean isLocked()
   {
-    try
-    {
-      InternalCDOView view = object.cdoView();
-      view.lockObjects(Collections.singletonList(object), type, NO_TIMEOUT);
-    }
-    catch (InterruptedException ex)
-    {
-      throw WrappedException.wrap(ex);
-    }
+    return isLocked(false);
+  }
+
+  /**
+   * @see org.eclipse.emf.cdo.CDOLock#isLockedByOthers()
+   */
+  @Override
+  public boolean isLockedByOthers()
+  {
+    return isLocked(true);
   }
 
   @Override
-  public void lock(long time, TimeUnit unit) throws TimeoutException
+  public CDOAcquiredLock acquire(long time, TimeUnit unit, boolean recursive) throws TimeoutException
+  {
+    lock(time, unit, recursive);
+    return new CDOAcquiredLockImpl(this, recursive);
+  }
+
+  @Override
+  public void lock(long time, TimeUnit unit, boolean recursive) throws TimeoutException
   {
     try
     {
-      if (!tryLock(time, unit))
+      if (!tryLock(time, unit, recursive))
       {
         throw new TimeoutException();
       }
@@ -131,15 +124,29 @@ public class CDOLockImpl implements CDOLock
   }
 
   @Override
+  public void lock(long time, TimeUnit unit) throws TimeoutException
+  {
+    lock(time, unit, false);
+  }
+
+  @Override
   public void lock(long millis) throws TimeoutException
   {
     lock(millis, TimeUnit.MILLISECONDS);
   }
 
   @Override
-  public boolean tryLock(long millis) throws InterruptedException
+  public void lock()
   {
-    return tryLock(millis, TimeUnit.MILLISECONDS);
+    try
+    {
+      lock(NO_TIMEOUT);
+    }
+    catch (TimeoutException ex)
+    {
+      // Should not happen.
+      throw WrappedException.wrap(ex);
+    }
   }
 
   @Override
@@ -149,9 +156,30 @@ public class CDOLockImpl implements CDOLock
   }
 
   @Override
-  public Condition newCondition()
+  public boolean tryLock(long time, TimeUnit unit, boolean recursive) throws InterruptedException
   {
-    throw new UnsupportedOperationException();
+    try
+    {
+      InternalCDOView view = object.cdoView();
+      view.lockObjects(Collections.singletonList(object), type, unit.toMillis(time), recursive);
+      return true;
+    }
+    catch (LockTimeoutException ex)
+    {
+      return false;
+    }
+  }
+
+  @Override
+  public boolean tryLock(long time, TimeUnit unit) throws InterruptedException
+  {
+    return tryLock(time, unit, false);
+  }
+
+  @Override
+  public boolean tryLock(long millis) throws InterruptedException
+  {
+    return tryLock(millis, TimeUnit.MILLISECONDS);
   }
 
   @Override
@@ -159,40 +187,32 @@ public class CDOLockImpl implements CDOLock
   {
     try
     {
-      InternalCDOView view = object.cdoView();
-      view.lockObjects(Collections.singletonList(object), type, 0);
-      return true;
-    }
-    catch (LockTimeoutException ex)
-    {
-      return false;
+      return tryLock(NO_TIMEOUT, TimeUnit.MILLISECONDS);
     }
     catch (InterruptedException ex)
     {
+      // Should not happen.
       throw WrappedException.wrap(ex);
     }
   }
 
   @Override
-  public boolean tryLock(long time, TimeUnit unit) throws InterruptedException
+  public void unlock(boolean recursive)
   {
-    try
-    {
-      InternalCDOView view = object.cdoView();
-      view.lockObjects(Collections.singletonList(object), type, unit.toMillis(time));
-      return true;
-    }
-    catch (LockTimeoutException ex)
-    {
-      return false;
-    }
+    InternalCDOView view = object.cdoView();
+    view.unlockObjects(Collections.singletonList(object), type, recursive);
   }
 
   @Override
   public void unlock()
   {
-    InternalCDOView view = object.cdoView();
-    view.unlockObjects(Collections.singletonList(object), type);
+    unlock(false);
+  }
+
+  @Override
+  public Condition newCondition()
+  {
+    throw new UnsupportedOperationException();
   }
 
   @Override
@@ -205,6 +225,70 @@ public class CDOLockImpl implements CDOLock
   {
     InternalCDOView view = object.cdoView();
     return view.isObjectLocked(object, type, others);
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class CDOAcquiredLockImpl implements CDOAcquiredLock
+  {
+    private final CDOLock lock;
+
+    private final boolean recursive;
+
+    public CDOAcquiredLockImpl(CDOLock lock, boolean recursive)
+    {
+      this.lock = lock;
+      this.recursive = recursive;
+    }
+
+    @Override
+    public CDOLock getLock()
+    {
+      return lock;
+    }
+
+    @Override
+    public CDOObject getObject()
+    {
+      return lock.getObject();
+    }
+
+    @Override
+    public LockType getType()
+    {
+      return lock.getType();
+    }
+
+    @Override
+    public Set<CDOLockOwner> getOwners()
+    {
+      return lock.getOwners();
+    }
+
+    @Override
+    public boolean isLocked()
+    {
+      return lock.isLocked();
+    }
+
+    @Override
+    public boolean isLockedByOthers()
+    {
+      return lock.isLockedByOthers();
+    }
+
+    @Override
+    public boolean isRecursive()
+    {
+      return recursive;
+    }
+
+    @Override
+    public void close()
+    {
+      lock.unlock(recursive);
+    }
   }
 
   /**
@@ -250,21 +334,15 @@ public class CDOLockImpl implements CDOLock
     }
 
     @Override
-    public void lock()
+    public CDOAcquiredLock acquire(long time, TimeUnit unit, boolean recursive) throws TimeoutException
     {
       throw new UnsupportedOperationException();
     }
 
     @Override
-    public void lockInterruptibly() throws InterruptedException
+    public void lock(long time, TimeUnit unit, boolean recursive) throws TimeoutException
     {
       throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Condition newCondition()
-    {
-      return null;
     }
 
     @Override
@@ -280,25 +358,55 @@ public class CDOLockImpl implements CDOLock
     }
 
     @Override
-    public boolean tryLock(long millis) throws InterruptedException
+    public void lock()
     {
-      return false;
+      throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean tryLock()
+    public void lockInterruptibly() throws InterruptedException
     {
-      return false;
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean tryLock(long time, TimeUnit unit, boolean recursive) throws InterruptedException
+    {
+      throw new UnsupportedOperationException();
     }
 
     @Override
     public boolean tryLock(long time, TimeUnit unit) throws InterruptedException
     {
-      return false;
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean tryLock(long millis) throws InterruptedException
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean tryLock()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void unlock(boolean recursive)
+    {
+      throw new UnsupportedOperationException();
     }
 
     @Override
     public void unlock()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Condition newCondition()
     {
       throw new UnsupportedOperationException();
     }

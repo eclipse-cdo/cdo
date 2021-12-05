@@ -30,9 +30,9 @@ import java.util.concurrent.CountDownLatch;
  */
 public class Bugzilla_560957_Test extends AbstractCDOTest
 {
-  public void testDeadlockOnViewGetBranch10000() throws Exception
+  public void _testDeadlockOnViewGetBranch10000() throws Exception
   {
-    for (int i = 0; i < 100; i++)
+    for (int i = 0; i < 10000; i++)
     {
       System.out.println("Run " + i);
       run(i);

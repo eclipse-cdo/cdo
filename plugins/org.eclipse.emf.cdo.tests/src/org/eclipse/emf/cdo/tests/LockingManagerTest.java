@@ -13,6 +13,7 @@
 package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.CDOLock;
+import org.eclipse.emf.cdo.CDOLock.CDOAcquiredLock;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -1176,6 +1177,29 @@ public class LockingManagerTest extends AbstractLockingTest
     Category category = getModel1Factory().createCategory();
     company.getCategories().add(category);
     objects.add(CDOUtil.getCDOObject(category));
+  }
+
+  public void testAcquiredLock() throws Exception
+  {
+    CDOSession session1 = openSession();
+    CDOTransaction transaction1 = session1.openTransaction();
+    transaction1.options().setAutoReleaseLocksEnabled(false);
+
+    CDOResource resource1 = transaction1.createResource(getResourcePath("/res1"));
+    Company company1 = getModel1Factory().createCompany();
+    resource1.getContents().add(company1);
+    transaction1.commit();
+
+    CDOObject cdoObject = CDOUtil.getCDOObject(company1);
+
+    try (CDOAcquiredLock lock = cdoObject.cdoWriteLock().acquire(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS, true))
+    {
+      company1.setName("ESC");
+      assertWriteLock(true, cdoObject);
+      transaction1.commit();
+    }
+
+    assertWriteLock(false, cdoObject);
   }
 
   public void testLockContention() throws Exception

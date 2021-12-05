@@ -32,7 +32,7 @@ import java.util.concurrent.locks.Lock;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface CDOLock extends Lock
+public interface CDOLock extends Lock, AutoCloseable
 {
   /**
    * @since 4.15
@@ -50,19 +50,9 @@ public interface CDOLock extends Lock
   public LockType getType();
 
   /**
-   * @since 4.0
+   * @since 4.15
    */
-  public void lock(long time, TimeUnit unit) throws TimeoutException;
-
-  /**
-   * @since 4.0
-   */
-  public void lock(long millis) throws TimeoutException;
-
-  /**
-   * @since 4.0
-   */
-  public boolean tryLock(long millis) throws InterruptedException;
+  public Set<CDOLockOwner> getOwners();
 
   /**
    * Returns <code>true</code> if this lock is currently held by the requesting {@link CDOView view}, <code>false</code>
@@ -77,13 +67,76 @@ public interface CDOLock extends Lock
   public boolean isLockedByOthers();
 
   /**
-   * @since 4.15
+   * @since 4.0
    */
-  public Set<CDOLockOwner> getOwners();
+  public void lock(long time, TimeUnit unit) throws TimeoutException;
+
+  /**
+   * @since 4.16
+   */
+  public void lock(long time, TimeUnit unit, boolean recursive) throws TimeoutException;
+
+  /**
+   * @since 4.0
+   */
+  public void lock(long millis) throws TimeoutException;
+
+  /**
+   * @since 4.0
+   */
+  public boolean tryLock(long millis) throws InterruptedException;
+
+  /**
+   * @since 4.16
+   */
+  public boolean tryLock(long time, TimeUnit unit, boolean recursive) throws InterruptedException;
+
+  /**
+   * @since 4.16
+   */
+  public CDOAcquiredLock acquire(long time, TimeUnit unit, boolean recursive) throws TimeoutException;
+
+  /**
+   * @since 4.16
+   */
+  public void unlock(boolean recursive);
+
+  /**
+   * @since 4.16
+   */
+  @Override
+  default void close()
+  {
+    unlock();
+  }
 
   @Deprecated
   public static final int WAIT = IRWLockManager.WAIT;
 
   @Deprecated
   public static final int NO_WAIT = IRWLockManager.NO_WAIT;
+
+  /**
+   * @author Eike Stepper
+   * @since 4.16
+   */
+  public interface CDOAcquiredLock extends AutoCloseable
+  {
+    public CDOLock getLock();
+
+    public CDOObject getObject();
+
+    public LockType getType();
+
+    public Set<CDOLockOwner> getOwners();
+
+    public boolean isLocked();
+
+    public boolean isLockedByOthers();
+
+    public boolean isRecursive();
+
+    @Override
+    public void close();
+  }
 }

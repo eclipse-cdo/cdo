@@ -520,7 +520,7 @@ public class CDOViewImpl extends AbstractCDOView
 
   protected final void notifyLockChanges(long timestamp, Collection<CDOLockDelta> lockDeltas, List<CDOLockState> lockStates)
   {
-    if (isActive() && !lockDeltas.isEmpty())
+    if (!lockDeltas.isEmpty())
     {
       CDOLockChangeInfo lockChangeInfo = makeLockChangeInfo(timestamp, lockDeltas, lockStates);
       notifyLockChanges(lockChangeInfo);
@@ -532,14 +532,18 @@ public class CDOViewImpl extends AbstractCDOView
    */
   protected final void notifyLockChanges(CDOLockChangeInfo lockChangeInfo)
   {
-    if (isActive() && lockChangeInfo != null)
+    if (lockChangeInfo != null)
     {
       CDOLockDelta[] lockDeltas = lockChangeInfo.getLockDeltas();
       if (!ObjectUtil.isEmpty(lockDeltas) || lockChangeInfo.isInvalidateAll())
       {
         // Do not call out from the current thread to other views while this view is holding its view lock!
         session.handleLockNotification(lockChangeInfo, this, true);
-        fireLocksChangedEvent(this, lockChangeInfo);
+
+        if (isActive())
+        {
+          fireLocksChangedEvent(this, lockChangeInfo);
+        }
       }
     }
   }

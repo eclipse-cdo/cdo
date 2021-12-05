@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emf.cdo; singleton:=true
-Bundle-Version: 4.15.0.qualifier
+Bundle-Version: 4.15.1.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -10,28 +10,28 @@ Bundle-Activator: org.eclipse.emf.internal.cdo.bundle.Activator$Implementation
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.core.expressions;bundle-version="[3.4.0,4.0.0)";resolution:=optional,
  org.eclipse.emf.cdo.common;bundle-version="[4.0.0,5.0.0)";visibility:=reexport
-Export-Package: org.eclipse.emf.cdo;version="4.15.0",
- org.eclipse.emf.cdo.eresource;version="4.15.0",
- org.eclipse.emf.cdo.eresource.impl;version="4.15.0",
- org.eclipse.emf.cdo.eresource.util;version="4.15.0",
- org.eclipse.emf.cdo.eresource.validation;version="4.15.0",
- org.eclipse.emf.cdo.etypes;version="4.15.0",
- org.eclipse.emf.cdo.etypes.impl;version="4.15.0",
- org.eclipse.emf.cdo.etypes.util;version="4.15.0",
- org.eclipse.emf.cdo.session;version="4.15.0",
- org.eclipse.emf.cdo.session.remote;version="4.15.0",
- org.eclipse.emf.cdo.transaction;version="4.15.0",
- org.eclipse.emf.cdo.util;version="4.15.0",
- org.eclipse.emf.cdo.view;version="4.15.0",
- org.eclipse.emf.internal.cdo;version="4.15.0",
- org.eclipse.emf.internal.cdo.analyzer;version="4.15.0";
+Export-Package: org.eclipse.emf.cdo;version="4.15.1",
+ org.eclipse.emf.cdo.eresource;version="4.15.1",
+ org.eclipse.emf.cdo.eresource.impl;version="4.15.1",
+ org.eclipse.emf.cdo.eresource.util;version="4.15.1",
+ org.eclipse.emf.cdo.eresource.validation;version="4.15.1",
+ org.eclipse.emf.cdo.etypes;version="4.15.1",
+ org.eclipse.emf.cdo.etypes.impl;version="4.15.1",
+ org.eclipse.emf.cdo.etypes.util;version="4.15.1",
+ org.eclipse.emf.cdo.session;version="4.15.1",
+ org.eclipse.emf.cdo.session.remote;version="4.15.1",
+ org.eclipse.emf.cdo.transaction;version="4.15.1",
+ org.eclipse.emf.cdo.util;version="4.15.1",
+ org.eclipse.emf.cdo.view;version="4.15.1",
+ org.eclipse.emf.internal.cdo;version="4.15.1",
+ org.eclipse.emf.internal.cdo.analyzer;version="4.15.1";
   x-friends:="org.eclipse.emf.cdo.net4j,
    org.eclipse.emf.cdo.server,
    org.eclipse.emf.cdo.tests,
    org.eclipse.emf.cdo.ui",
- org.eclipse.emf.internal.cdo.bundle;version="4.15.0";x-friends:="org.eclipse.emf.cdo.ui",
- org.eclipse.emf.internal.cdo.messages;version="4.15.0";x-internal:=true,
- org.eclipse.emf.internal.cdo.object;version="4.15.0";
+ org.eclipse.emf.internal.cdo.bundle;version="4.15.1";x-friends:="org.eclipse.emf.cdo.ui",
+ org.eclipse.emf.internal.cdo.messages;version="4.15.1";x-internal:=true,
+ org.eclipse.emf.internal.cdo.object;version="4.15.1";
   x-friends:="org.eclipse.emf.cdo.net4j,
    org.eclipse.emf.cdo.server,
    org.eclipse.emf.cdo.tests,
@@ -40,12 +40,12 @@ Export-Package: org.eclipse.emf.cdo;version="4.15.0",
    org.eclipse.emf.cdo.explorer,
    org.eclipse.emf.cdo.explorer.ui,
    org.eclipse.emf.cdo.edit",
- org.eclipse.emf.internal.cdo.query;version="4.15.0";
+ org.eclipse.emf.internal.cdo.query;version="4.15.1";
   x-friends:="org.eclipse.emf.cdo.net4j,
    org.eclipse.emf.cdo.server,
    org.eclipse.emf.cdo.tests,
    org.eclipse.emf.cdo.ui",
- org.eclipse.emf.internal.cdo.session;version="4.15.0";
+ org.eclipse.emf.internal.cdo.session;version="4.15.1";
   x-friends:="org.eclipse.emf.cdo.net4j,
    org.eclipse.emf.cdo.server,
    org.eclipse.emf.cdo.tests,
@@ -55,23 +55,23 @@ Export-Package: org.eclipse.emf.cdo;version="4.15.0",
    org.eclipse.emf.cdo.security.ui,
    org.eclipse.emf.cdo.explorer,
    org.eclipse.emf.cdo.explorer.ui",
- org.eclipse.emf.internal.cdo.session.remote;version="4.15.0";
+ org.eclipse.emf.internal.cdo.session.remote;version="4.15.1";
   x-friends:="org.eclipse.emf.cdo.net4j,
    org.eclipse.emf.cdo.server,
    org.eclipse.emf.cdo.tests,
    org.eclipse.emf.cdo.ui",
- org.eclipse.emf.internal.cdo.transaction;version="4.15.0";
+ org.eclipse.emf.internal.cdo.transaction;version="4.15.1";
   x-friends:="org.eclipse.emf.cdo.net4j,
    org.eclipse.emf.cdo.server,
    org.eclipse.emf.cdo.tests,
    org.eclipse.emf.cdo.ui,
    org.eclipse.emf.cdo.explorer.ui",
- org.eclipse.emf.internal.cdo.util;version="4.15.0";
+ org.eclipse.emf.internal.cdo.util;version="4.15.1";
   x-friends:="org.eclipse.emf.cdo.net4j,
    org.eclipse.emf.cdo.server,
    org.eclipse.emf.cdo.tests,
    org.eclipse.emf.cdo.ui",
- org.eclipse.emf.internal.cdo.view;version="4.15.0";
+ org.eclipse.emf.internal.cdo.view;version="4.15.1";
   x-friends:="org.eclipse.emf.cdo.net4j,
    org.eclipse.emf.cdo.server,
    org.eclipse.emf.cdo.tests,
@@ -79,6 +79,6 @@ Export-Package: org.eclipse.emf.cdo;version="4.15.0",
    org.eclipse.emf.cdo.ui.ide,
    org.eclipse.emf.cdo.explorer,
    org.eclipse.emf.cdo.explorer.ui",
- org.eclipse.emf.spi.cdo;version="4.15.0"
+ org.eclipse.emf.spi.cdo;version="4.15.1"
 Bundle-ActivationPolicy: lazy
 Automatic-Module-Name: org.eclipse.emf.cdo

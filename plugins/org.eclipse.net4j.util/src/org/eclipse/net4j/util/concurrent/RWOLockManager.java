@@ -927,7 +927,7 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
 
     private boolean canUnlockRead(CONTEXT context)
     {
-      if (readLockOwners != null && !readLockOwners.contains(context))
+      if (readLockOwners == null || !readLockOwners.contains(context))
       {
         return false;
       }

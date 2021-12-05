@@ -23,6 +23,8 @@ import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.CommitException;
+import org.eclipse.emf.cdo.util.ConcurrentAccessException;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewLocksChangedEvent;
 
@@ -199,6 +201,56 @@ public class LockingNotificationsTest extends AbstractLockingTest
     listener.waitFor(1);
   }
 
+  public void testCloseViewSameSession() throws Exception
+  {
+    CDOSession session1 = openSession();
+    runCloseView(session1, session1);
+  }
+
+  public void testCloseViewDifferentSession() throws Exception
+  {
+    CDOSession session1 = openSession();
+    CDOSession session2 = openSession();
+    runCloseView(session1, session2);
+  }
+
+  private void runCloseView(CDOSession session1, CDOSession session2) throws ConcurrentAccessException, CommitException, InterruptedException
+  {
+    CDOTransaction transaction1 = session1.openTransaction();
+    CDOLockOwner lockOwner1 = transaction1.getLockOwner();
+    CDOResource resource1 = transaction1.createResource(getResourcePath("r1"));
+
+    CDOObject company1 = CDOUtil.getCDOObject(getModel1Factory().createCompany());
+    resource1.getContents().add(company1);
+    transaction1.commit();
+
+    CDOView view2 = openViewWithLockNotifications(session2, transaction1.getBranch());
+
+    @SuppressWarnings("unused")
+    Company company2 = (Company)view2.getObject(company1);
+
+    TestListener2 listener2 = new TestListener2(CDOViewLocksChangedEvent.class).dump(true, false);
+    view2.addListener(listener2);
+
+    lockWrite(company1);
+    listener2.waitFor(1);
+    listener2.clearEvents();
+
+    transaction1.close();
+    IEvent[] events = listener2.waitFor(1);
+    assertEquals(1, events.length);
+
+    CDOViewLocksChangedEvent event = (CDOViewLocksChangedEvent)events[0];
+    CDOLockDelta[] lockDeltas = event.getLockDeltas();
+    assertEquals(1, lockDeltas.length);
+    assertEquals(CDOLockDelta.Kind.REMOVED, lockDeltas[0].getKind());
+    assertEquals(LockType.WRITE, lockDeltas[0].getType());
+    assertEquals(lockOwner1, lockDeltas[0].getOldOwner());
+    assertEquals(null, lockDeltas[0].getNewOwner());
+
+    assertEquals(1, event.getLockStates().length);
+  }
+
   private CDOView openViewWithLockNotifications(CDOSession session, CDOBranch branch)
   {
     CDOView view = branch != null ? session.openView(branch) : session.openView();
@@ -314,7 +366,7 @@ public class LockingNotificationsTest extends AbstractLockingTest
       IEvent[] events = controlViewListener.waitFor(1);
       assertEquals(1, events.length);
 
-      CDOViewLocksChangedEvent event = (CDOViewLocksChangedEvent)controlViewListener.getEvents().get(0);
+      CDOViewLocksChangedEvent event = (CDOViewLocksChangedEvent)events[0];
       assertLockOwner(transaction, event.getLockOwner());
 
       CDOLockDelta[] lockDeltas = event.getLockDeltas();
@@ -338,7 +390,7 @@ public class LockingNotificationsTest extends AbstractLockingTest
       IEvent[] events = controlViewListener.waitFor(1);
       assertEquals(1, events.length);
 
-      CDOViewLocksChangedEvent event = (CDOViewLocksChangedEvent)controlViewListener.getEvents().get(0);
+      CDOViewLocksChangedEvent event = (CDOViewLocksChangedEvent)events[0];
       assertLockOwner(transaction, event.getLockOwner());
 
       CDOLockDelta[] lockDeltas = event.getLockDeltas();
@@ -359,7 +411,7 @@ public class LockingNotificationsTest extends AbstractLockingTest
       IEvent[] events = controlViewListener.waitFor(1);
       assertEquals(1, events.length);
 
-      CDOViewLocksChangedEvent event = (CDOViewLocksChangedEvent)controlViewListener.getEvents().get(0);
+      CDOViewLocksChangedEvent event = (CDOViewLocksChangedEvent)events[0];
       assertLockOwner(transaction, event.getLockOwner());
 
       CDOLockDelta[] lockDeltas = event.getLockDeltas();
@@ -378,7 +430,7 @@ public class LockingNotificationsTest extends AbstractLockingTest
       IEvent[] events = controlViewListener.waitFor(1);
       assertEquals(1, events.length);
 
-      CDOViewLocksChangedEvent event = (CDOViewLocksChangedEvent)controlViewListener.getEvents().get(0);
+      CDOViewLocksChangedEvent event = (CDOViewLocksChangedEvent)events[0];
       assertLockOwner(transaction, event.getLockOwner());
 
       CDOLockDelta[] lockDeltas = event.getLockDeltas();
@@ -398,7 +450,7 @@ public class LockingNotificationsTest extends AbstractLockingTest
       IEvent[] events = controlViewListener.waitFor(1);
       assertEquals(1, events.length);
 
-      CDOViewLocksChangedEvent event = (CDOViewLocksChangedEvent)controlViewListener.getEvents().get(0);
+      CDOViewLocksChangedEvent event = (CDOViewLocksChangedEvent)events[0];
       assertLockOwner(transaction, event.getLockOwner());
 
       CDOLockDelta[] lockDeltas = event.getLockDeltas();
@@ -417,7 +469,7 @@ public class LockingNotificationsTest extends AbstractLockingTest
       IEvent[] events = controlViewListener.waitFor(1);
       assertEquals(1, events.length);
 
-      CDOViewLocksChangedEvent event = (CDOViewLocksChangedEvent)controlViewListener.getEvents().get(0);
+      CDOViewLocksChangedEvent event = (CDOViewLocksChangedEvent)events[0];
       assertLockOwner(transaction, event.getLockOwner());
 
       CDOLockDelta[] lockDeltas = event.getLockDeltas();
@@ -475,8 +527,8 @@ public class LockingNotificationsTest extends AbstractLockingTest
 
     if (sameBranch)
     {
-      controlViewListener.waitFor(1);
-      event = (CDOViewLocksChangedEvent)controlViewListener.getEvents().get(0);
+      IEvent[] events = controlViewListener.waitFor(1);
+      event = (CDOViewLocksChangedEvent)events[0];
       assertEquals(Collections.singleton(Operation.LOCK), event.getOperations());
       assertEquals(Collections.singleton(lockType), event.getLockTypes());
     }
@@ -491,8 +543,8 @@ public class LockingNotificationsTest extends AbstractLockingTest
 
     if (sameBranch)
     {
-      controlViewListener.waitFor(1);
-      event = (CDOViewLocksChangedEvent)controlViewListener.getEvents().get(0);
+      IEvent[] events = controlViewListener.waitFor(1);
+      event = (CDOViewLocksChangedEvent)events[0];
       assertEquals(Collections.singleton(Operation.UNLOCK), event.getOperations());
       assertEquals(Collections.singleton(lockType), event.getLockTypes());
     }
@@ -520,6 +572,7 @@ public class LockingNotificationsTest extends AbstractLockingTest
 
   public static void assertLockOwner(CDOView expected, CDOLockOwner actual)
   {
-    assertEquals(expected.getLockOwner(), actual);
+    CDOLockOwner lockOwner = expected == null ? null : expected.getLockOwner();
+    assertEquals(lockOwner, actual);
   }
 }

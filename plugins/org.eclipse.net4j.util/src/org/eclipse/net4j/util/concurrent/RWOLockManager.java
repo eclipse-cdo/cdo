@@ -565,11 +565,9 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
 
     private HashBag<CONTEXT> readLockOwners;
 
-    private CONTEXT writeLockOwner;
+    private ReentrantOwner<CONTEXT> writeLockOwner;
 
-    private CONTEXT writeOptionOwner;
-
-    private int writeLockCounter;
+    private ReentrantOwner<CONTEXT> writeOptionOwner;
 
     LockState(OBJECT lockedObject)
     {
@@ -595,10 +593,10 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
         return readLockOwners == null ? 0 : readLockOwners.getCounterFor(context);
 
       case WRITE:
-        return writeLockOwner == context ? writeLockCounter : 0;
+        return writeLockOwner != null && writeLockOwner.getContext() == context ? writeLockOwner.getCount() : 0;
 
       case OPTION:
-        return writeOptionOwner == context ? 1 : 0;
+        return writeOptionOwner != null && writeOptionOwner.getContext() == context ? writeOptionOwner.getCount() : 0;
 
       default:
         throw new AssertionError();
@@ -619,26 +617,37 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
 
         if (byOthers)
         {
-          return readLockOwners.size() > 1 || readLockOwners.size() == 1 && !readLockOwners.contains(context);
+          int size = readLockOwners.size();
+          return size > 1 || size == 1 && !readLockOwners.contains(context);
         }
 
         return readLockOwners.contains(context);
 
       case WRITE:
-        if (byOthers)
+        if (writeLockOwner == null)
         {
-          return writeLockOwner != null && writeLockOwner != context;
+          return false;
         }
 
-        return writeLockOwner == context;
+        if (byOthers)
+        {
+          return writeLockOwner.getContext() != context;
+        }
+
+        return writeLockOwner.getContext() == context;
 
       case OPTION:
-        if (byOthers)
+        if (writeOptionOwner == null)
         {
-          return writeOptionOwner != null && writeOptionOwner != context;
+          return false;
         }
 
-        return writeOptionOwner == context;
+        if (byOthers)
+        {
+          return writeOptionOwner.getContext() != context;
+        }
+
+        return writeOptionOwner.getContext() == context;
 
       default:
         throw new AssertionError();
@@ -650,7 +659,7 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
       switch (type)
       {
       case READ:
-        return readLockOwners != null && readLockOwners.size() > 0;
+        return readLockOwners != null;
 
       case WRITE:
         return writeLockOwner != null;
@@ -675,12 +684,12 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
 
     public CONTEXT getWriteLockOwner()
     {
-      return writeLockOwner;
+      return writeLockOwner == null ? null : writeLockOwner.getContext();
     }
 
     public CONTEXT getWriteOptionOwner()
     {
-      return writeOptionOwner;
+      return writeOptionOwner == null ? null : writeOptionOwner.getContext();
     }
 
     @Override
@@ -740,14 +749,22 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
 
       if (writeLockOwner != null)
       {
-        builder.append(", write=");
-        builder.append(writeLockOwner);
+        CONTEXT context = writeLockOwner.getContext();
+        if (context != null)
+        {
+          builder.append(", write=");
+          builder.append(context);
+        }
       }
 
       if (writeOptionOwner != null)
       {
-        builder.append(", option=");
-        builder.append(writeOptionOwner);
+        CONTEXT context = writeOptionOwner.getContext();
+        if (context != null)
+        {
+          builder.append(", option=");
+          builder.append(context);
+        }
       }
 
       builder.append(']');
@@ -845,14 +862,14 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
         }
       }
 
-      if (ObjectUtil.equals(writeLockOwner, oldContext))
+      if (writeLockOwner != null && ObjectUtil.equals(writeLockOwner.getContext(), oldContext))
       {
-        writeLockOwner = newContext;
+        writeLockOwner.setContext(newContext);
       }
 
-      if (ObjectUtil.equals(writeOptionOwner, oldContext))
+      if (writeOptionOwner != null && ObjectUtil.equals(writeOptionOwner.getContext(), oldContext))
       {
-        writeOptionOwner = newContext;
+        writeOptionOwner.setContext(newContext);
       }
     }
 
@@ -863,12 +880,14 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
 
     boolean hasLocks(CONTEXT context)
     {
-      return readLockOwners != null && readLockOwners.contains(context) || writeLockOwner == context || writeOptionOwner == context;
+      return readLockOwners != null && readLockOwners.contains(context) //
+          || writeLockOwner != null && writeLockOwner.getContext() == context //
+          || writeOptionOwner != null && writeOptionOwner.getContext() == context;
     }
 
     private boolean canLockRead(CONTEXT context)
     {
-      if (writeLockOwner != null && writeLockOwner != context)
+      if (writeLockOwner != null && writeLockOwner.getContext() != context)
       {
         return false;
       }
@@ -878,19 +897,19 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
 
     private boolean canLockWrite(CONTEXT context)
     {
-      // If another context owns a writeLock, we can't write-lock
-      if (writeLockOwner != null && writeLockOwner != context)
+      // If another context owns a writeLock, we can't write-lock.
+      if (writeLockOwner != null && writeLockOwner.getContext() != context)
       {
         return false;
       }
 
-      // If another context owns a writeOption, we can't write-lock
-      if (writeOptionOwner != null && writeOptionOwner != context)
+      // If another context owns a writeOption, we can't write-lock.
+      if (writeOptionOwner != null && writeOptionOwner.getContext() != context)
       {
         return false;
       }
 
-      // If another context owns a readLock, we can't write-lock
+      // If another context owns a readLock, we can't write-lock.
       if (readLockOwners != null)
       {
         if (readLockOwners.size() > 1)
@@ -912,12 +931,12 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
 
     private boolean canLockOption(CONTEXT context)
     {
-      if (writeOptionOwner != null && writeOptionOwner != context)
+      if (writeOptionOwner != null && writeOptionOwner.getContext() != context)
       {
         return false;
       }
 
-      if (writeLockOwner != null && writeLockOwner != context)
+      if (writeLockOwner != null && writeLockOwner.getContext() != context)
       {
         return false;
       }
@@ -937,7 +956,7 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
 
     private boolean canUnlockWrite(CONTEXT context)
     {
-      if (writeLockOwner != context)
+      if (writeLockOwner == null || writeLockOwner.getContext() != context)
       {
         return false;
       }
@@ -947,7 +966,7 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
 
     private boolean canUnlockOption(CONTEXT context)
     {
-      if (writeOptionOwner != context)
+      if (writeOptionOwner == null || writeOptionOwner.getContext() != context)
       {
         return false;
       }
@@ -967,14 +986,22 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
 
     private int doLockWrite(CONTEXT context, int count)
     {
-      writeLockOwner = context;
-      return writeLockCounter += count;
+      if (writeLockOwner == null)
+      {
+        writeLockOwner = new ReentrantOwner<>(context);
+      }
+
+      return writeLockOwner.changeCount(count);
     }
 
     private int doLockOption(CONTEXT context, int count)
     {
-      writeOptionOwner = context;
-      return 1;
+      if (writeOptionOwner == null)
+      {
+        writeOptionOwner = new ReentrantOwner<>(context);
+      }
+
+      return writeOptionOwner.changeCount(count);
     }
 
     private int doUnlockRead(CONTEXT context, int count)
@@ -1009,23 +1036,68 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
       if (count == ALL_LOCKS)
       {
         writeLockOwner = null;
-        writeLockCounter = 0;
         return 0;
       }
 
-      writeLockCounter -= count;
-      if (writeLockCounter == 0)
+      int newCount = writeLockOwner.changeCount(-count);
+      if (newCount == 0)
       {
         writeLockOwner = null;
       }
 
-      return writeLockCounter;
+      return newCount;
     }
 
     private int doUnlockOption(CONTEXT context, int count)
     {
-      writeOptionOwner = null;
-      return 0;
+      if (count == ALL_LOCKS)
+      {
+        writeOptionOwner = null;
+        return 0;
+      }
+
+      int newCount = writeOptionOwner.changeCount(-count);
+      if (newCount == 0)
+      {
+        writeOptionOwner = null;
+      }
+
+      return newCount;
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    private static final class ReentrantOwner<CONTEXT>
+    {
+      private CONTEXT context;
+
+      private int count;
+
+      public ReentrantOwner(CONTEXT context)
+      {
+        this.context = context;
+      }
+
+      public CONTEXT getContext()
+      {
+        return context;
+      }
+
+      public void setContext(CONTEXT context)
+      {
+        this.context = context;
+      }
+
+      public int getCount()
+      {
+        return count;
+      }
+
+      public int changeCount(int delta)
+      {
+        return count += delta;
+      }
     }
   }
 }

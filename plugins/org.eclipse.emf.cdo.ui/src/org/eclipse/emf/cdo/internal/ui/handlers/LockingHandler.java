@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.internal.ui.handlers;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo.Operation;
+import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -71,12 +72,24 @@ public abstract class LockingHandler extends AbstractBaseHandler<EObject>
 
     if (operation == Operation.LOCK)
     {
-      view.lockObjects(objects, LockType.WRITE, 5000L, recursive);
+      long timeout = getTimeout();
+      view.lockObjects(objects, LockType.WRITE, timeout, recursive);
     }
     else
     {
       view.unlockObjects(objects, LockType.WRITE, recursive);
     }
+  }
+
+  private long getTimeout()
+  {
+    Long pref = OM.PREF_LOCK_TIMEOUT.getValue();
+    if (pref != null)
+    {
+      return pref;
+    }
+
+    return 5000L;
   }
 
   /**

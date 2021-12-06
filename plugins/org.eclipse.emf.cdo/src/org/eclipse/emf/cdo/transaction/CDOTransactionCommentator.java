@@ -180,6 +180,22 @@ public class CDOTransactionCommentator implements Closeable
   }
 
   /**
+   * @since 4.16
+   */
+  public static boolean setRevertComment(CDOTransaction transaction, CDOBranchPoint revertTo)
+  {
+    if (revertTo != null)
+    {
+      StringBuilder commentBuilder = new StringBuilder("Revert to ");
+      appendBranchPoint(commentBuilder, revertTo);
+      transaction.setCommitComment(commentBuilder.toString());
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
    * @since 4.6
    */
   public static boolean appendMerge(StringBuilder builder, CDOBranchPoint mergeSource)

@@ -227,7 +227,7 @@ public class LockingNotificationsTest extends AbstractLockingTest
     CDOView view2 = openViewWithLockNotifications(session2, transaction1.getBranch());
 
     @SuppressWarnings("unused")
-    Company company2 = (Company)view2.getObject(company1);
+    CDOObject company2 = view2.getObject(company1);
 
     TestListener2 listener2 = new TestListener2(CDOViewLocksChangedEvent.class).dump(true, false);
     view2.addListener(listener2);

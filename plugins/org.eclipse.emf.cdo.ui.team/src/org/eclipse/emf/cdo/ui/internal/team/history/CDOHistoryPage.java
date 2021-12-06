@@ -20,9 +20,11 @@ import org.eclipse.emf.cdo.internal.ui.history.Net;
 import org.eclipse.emf.cdo.internal.ui.history.NetRenderer;
 import org.eclipse.emf.cdo.internal.ui.history.Track;
 import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
-import org.eclipse.emf.cdo.transaction.CDOMerger;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.transaction.CDOTransactionCommentator;
+import org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil;
+import org.eclipse.emf.cdo.ui.internal.team.bundle.OM;
+import org.eclipse.emf.cdo.ui.internal.team.history.DropConfirmationDialog.Operation;
 import org.eclipse.emf.cdo.ui.widgets.CommitHistoryComposite;
 import org.eclipse.emf.cdo.ui.widgets.CommitHistoryComposite.Input;
 import org.eclipse.emf.cdo.ui.widgets.CommitHistoryComposite.Input.IllegalInputException;
@@ -31,6 +33,7 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.ReflectUtil;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
@@ -39,17 +42,19 @@ import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.widgets.StackComposite;
 
-import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
-
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.util.LocalSelectionTransfer;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.ViewerDropAdapter;
 import org.eclipse.swt.SWT;
@@ -60,6 +65,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.team.ui.history.HistoryPage;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.ISharedImages;
@@ -167,66 +173,95 @@ public class CDOHistoryPage extends HistoryPage
 
     UIUtil.addDragSupport(tableViewer);
 
-    if (TEST)
+    tableViewer.addDropSupport(DND.DROP_MOVE, new Transfer[] { LocalSelectionTransfer.getTransfer() }, new ViewerDropAdapter(tableViewer)
     {
-      tableViewer.addDropSupport(DND.DROP_MOVE, new Transfer[] { LocalSelectionTransfer.getTransfer() }, new ViewerDropAdapter(tableViewer)
       {
+        // We don't want it to look like you can insert new elements, only drop onto existing elements.
+        setFeedbackEnabled(false);
+      }
+
+      @Override
+      public boolean validateDrop(Object target, int operation, TransferData transferType)
+      {
+        if (target instanceof CDOCommitInfo && LocalSelectionTransfer.getTransfer().isSupportedType(transferType))
         {
-          // We don't want it to look like you can insert new elements, only drop onto existing elements.
-          setFeedbackEnabled(false);
+          CDOCommitInfo commitInfo = (CDOCommitInfo)target;
+          CDOBranch branch = commitInfo.getBranch();
+
+          CDOCommitInfoManager commitInfoManager = commitInfo.getCommitInfoManager();
+          long lastCommitOfBranch = commitInfoManager.getLastCommitOfBranch(branch, true);
+          if (commitInfo.getTimeStamp() == lastCommitOfBranch)
+          {
+            return true;
+          }
         }
 
-        @Override
-        public boolean validateDrop(Object target, int operation, TransferData transferType)
+        return false;
+      }
+
+      @Override
+      public boolean performDrop(Object data)
+      {
+        CDOCommitInfo sourcePoint = UIUtil.getElement((ISelection)data, CDOCommitInfo.class);
+        CDOBranch targetBranch = ((CDOCommitInfo)getCurrentTarget()).getBranch();
+
+        Shell shell = stackComposite.getShell();
+
+        DropConfirmationDialog dialog = new DropConfirmationDialog(shell, sourcePoint, targetBranch);
+        if (dialog.open() != DropConfirmationDialog.OK)
         {
-          if (target instanceof CDOBranchPoint && LocalSelectionTransfer.getTransfer().isSupportedType(transferType))
-          {
-            CDOBranchPoint objectToDrop = getObjectToDrop(transferType);
-            if (objectToDrop != null)
-            {
-              if (CDOBranchUtil.isContainedBy(objectToDrop, (CDOBranchPoint)target))
-              {
-                return false;
-              }
-
-              return true;
-            }
-          }
-
           return false;
         }
 
-        @Override
-        public boolean performDrop(Object data)
-        {
-          final CDOBranchPoint objectToDrop = UIUtil.getElement((ISelection)data, CDOBranchPoint.class);
-          final CDOBranchPoint dropTarget = (CDOBranchPoint)getCurrentTarget();
+        Operation operation = dialog.getOperation();
+        String label = StringUtil.capAll(operation.getLabel());
+        CDOSession session = CDOUtil.getSession(targetBranch);
 
-          boolean result = new TransactionalBranchPointOperation()
+        if (operation == Operation.MERGE_FROM)
+        {
+          CDOCompareEditorUtil.openEditor(session, session, sourcePoint, targetBranch.getHead(), null, true);
+        }
+        else
+        {
+          new Job(label)
           {
             @Override
-            protected void run(CDOTransaction transaction)
+            protected IStatus run(IProgressMonitor progressMonitor)
             {
-              CDOMerger merger = new DefaultCDOMerger.PerFeature.ManyValued();
-              transaction.merge(objectToDrop, merger);
+              CDOTransaction transaction = null;
+
+              try
+              {
+
+                transaction = session.openTransaction(targetBranch);
+                CDOUtil.configureView(transaction);
+
+                transaction.revertTo(sourcePoint);
+                CDOTransactionCommentator.setRevertComment(transaction, sourcePoint);
+
+                transaction.commit(progressMonitor);
+              }
+              catch (Exception ex)
+              {
+                OM.LOG.error(ex);
+
+                String message = ex.getMessage();
+                Status status = new Status(IStatus.ERROR, OM.BUNDLE_ID, message, ex);
+                UIUtil.asyncExec(() -> ErrorDialog.openError(shell, label, message, status));
+              }
+              finally
+              {
+                transaction.close();
+              }
+
+              return Status.OK_STATUS;
             }
-          }.execute(dropTarget);
-
-          if (result)
-          {
-            tableViewer.getControl().setFocus();
-            tableViewer.setSelection(new StructuredSelection(dropTarget));
-          }
-
-          return result;
+          }.schedule();
         }
 
-        private CDOBranchPoint getObjectToDrop(TransferData transferType)
-        {
-          return UIUtil.getElement(LocalSelectionTransfer.getTransfer().getSelection(), CDOBranchPoint.class);
-        }
-      });
-    }
+        return true;
+      }
+    });
 
     if (DEBUG)
     {

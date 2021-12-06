@@ -40,7 +40,7 @@
     <stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-11"/>
     <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} -consoleLog -nosplash&#13;&#10;-clean"/>
     <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.pde.ui.workbenchClasspathProvider"/>
-    <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xms40m&#13;&#10;-Xmx2g&#13;&#10;-Dosgi.console.enable.builtin=true&#13;&#10;-Dosgi.checkConfiguration=false&#13;&#10;-Dorg.eclipse.emf.cdo.ui.team.history.test=true&#13;&#10;-Dcdo.explorer.setUserName=true&#13;&#10;-Dorg.eclipse.emf.cdo.internal.server.Repository.DISABLE_FEATURE_MAP_CHECKS=true"/>
+    <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xms40m&#13;&#10;-Xmx2g&#13;&#10;-Dosgi.console.enable.builtin=true&#13;&#10;-Dosgi.checkConfiguration=false&#13;&#10;-Dorg.eclipse.emf.cdo.ui.team.history.test=false&#13;&#10;-Dcdo.explorer.setUserName=true&#13;&#10;-Dorg.eclipse.emf.cdo.internal.server.Repository.DISABLE_FEATURE_MAP_CHECKS=true"/>
     <stringAttribute key="pde.version" value="3.3"/>
     <stringAttribute key="product" value="org.eclipse.platform.ide"/>
     <booleanAttribute key="restart" value="true"/>

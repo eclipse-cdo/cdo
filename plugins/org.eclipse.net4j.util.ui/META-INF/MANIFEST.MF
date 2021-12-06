@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.net4j.util.ui;singleton:=true
-Bundle-Version: 3.12.0.qualifier
+Bundle-Version: 3.13.0.qualifier
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-ActivationPolicy: lazy
@@ -15,20 +15,20 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.ui;bundle-version="[3.5.0,4.0.0)";visibility:=reexport,
  org.eclipse.net4j.util;bundle-version="[3.0.0,4.0.0)";visibility:=reexport,
  org.eclipse.net4j.ui.shared;bundle-version="[4.0.0,5.0.0)"
-Export-Package: org.eclipse.net4j.util.internal.ui;version="3.12.0";x-internal:=true,
- org.eclipse.net4j.util.internal.ui.actions;version="3.12.0";x-internal:=true,
- org.eclipse.net4j.util.internal.ui.bundle;version="3.12.0";x-internal:=true,
- org.eclipse.net4j.util.internal.ui.messages;version="3.12.0";x-internal:=true,
- org.eclipse.net4j.util.internal.ui.views;version="3.12.0";x-internal:=true,
- org.eclipse.net4j.util.ui;version="3.12.0",
- org.eclipse.net4j.util.ui.actions;version="3.12.0",
- org.eclipse.net4j.util.ui.confirmation;version="3.12.0",
- org.eclipse.net4j.util.ui.container;version="3.12.0",
- org.eclipse.net4j.util.ui.dnd;version="3.12.0",
- org.eclipse.net4j.util.ui.handlers;version="3.12.0",
- org.eclipse.net4j.util.ui.prefs;version="3.12.0",
- org.eclipse.net4j.util.ui.proposals;version="3.12.0",
- org.eclipse.net4j.util.ui.security;version="3.12.0",
- org.eclipse.net4j.util.ui.views;version="3.12.0",
- org.eclipse.net4j.util.ui.widgets;version="3.12.0"
+Export-Package: org.eclipse.net4j.util.internal.ui;version="3.13.0";x-internal:=true,
+ org.eclipse.net4j.util.internal.ui.actions;version="3.13.0";x-internal:=true,
+ org.eclipse.net4j.util.internal.ui.bundle;version="3.13.0";x-internal:=true,
+ org.eclipse.net4j.util.internal.ui.messages;version="3.13.0";x-internal:=true,
+ org.eclipse.net4j.util.internal.ui.views;version="3.13.0";x-internal:=true,
+ org.eclipse.net4j.util.ui;version="3.13.0",
+ org.eclipse.net4j.util.ui.actions;version="3.13.0",
+ org.eclipse.net4j.util.ui.confirmation;version="3.13.0",
+ org.eclipse.net4j.util.ui.container;version="3.13.0",
+ org.eclipse.net4j.util.ui.dnd;version="3.13.0",
+ org.eclipse.net4j.util.ui.handlers;version="3.13.0",
+ org.eclipse.net4j.util.ui.prefs;version="3.13.0",
+ org.eclipse.net4j.util.ui.proposals;version="3.13.0",
+ org.eclipse.net4j.util.ui.security;version="3.13.0",
+ org.eclipse.net4j.util.ui.views;version="3.13.0",
+ org.eclipse.net4j.util.ui.widgets;version="3.13.0"
 Automatic-Module-Name: org.eclipse.net4j.util.ui

@@ -276,7 +276,7 @@ public final class NetRenderer implements Listener
     Segment[] segments = commit.getRowSegments();
     Segment commitSegment = commit.getSegment();
     long commitTime = commit.getTime();
-    boolean commitLastInBranch = commitTime == commitBranch.getLastCommitTime();
+    boolean commitLastInBranch = commit.isLastInBranch(); // commitTime == commitBranch.getLastCommitTime();
 
     if (!justMeasureWidth)
     {

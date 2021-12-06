@@ -255,10 +255,13 @@ public final class CDOUtil
       object = ((CDORenameContext.WithElement)object).getElement();
     }
 
-    CDOBranchPoint branchPoint = AdapterUtil.adapt(object, CDOBranchPoint.class);
-    if (branchPoint != null)
+    if (!(object instanceof CDOBranch))
     {
-      object = branchPoint.getBranch();
+      CDOBranchPoint branchPoint = AdapterUtil.adapt(object, CDOBranchPoint.class);
+      if (branchPoint != null)
+      {
+        object = branchPoint.getBranch();
+      }
     }
 
     CDOBranch branch = AdapterUtil.adapt(object, CDOBranch.class);

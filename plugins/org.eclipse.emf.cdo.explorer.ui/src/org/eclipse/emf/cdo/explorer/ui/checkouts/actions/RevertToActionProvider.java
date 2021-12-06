@@ -95,10 +95,7 @@ public class RevertToActionProvider extends AbstractBranchPointActionProvider
     {
       transaction.revertTo(branchPoint);
 
-      StringBuilder commentBuilder = new StringBuilder("Revert to ");
-      CDOTransactionCommentator.appendBranchPoint(commentBuilder, branchPoint);
-      transaction.setCommitComment(commentBuilder.toString());
-
+      CDOTransactionCommentator.setRevertComment(transaction, branchPoint);
       transaction.commit();
     }
     finally

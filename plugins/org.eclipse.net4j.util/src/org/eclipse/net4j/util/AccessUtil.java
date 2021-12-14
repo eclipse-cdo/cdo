@@ -2206,8 +2206,7 @@ final class AccessUtil
     try
     {
       // InaccessibleObjectException is new to Java 9.
-      // If it can't be loaded we don't need any special support so we will drop out of this block and initialize the
-      // fields to null.
+      // If it can't be loaded we don't need any special support so we will drop out of this block and initialize the fields to null.
       Class.forName("java.lang.reflect.InaccessibleObjectException");
 
       // Use reflection on Unsafe to avoid having to compile against it.
@@ -2220,8 +2219,7 @@ final class AccessUtil
       // Get the singleton from the static field.
       unsafeInstance = theUnsafeField.get(null);
 
-      // We will use the Unsafe.defineAnonymousClass method to a create class that will be able to make an
-      // AccessibleObject accessible.
+      // We will use the Unsafe.defineAnonymousClass method to a create class that will be able to make an AccessibleObject accessible.
       defineAnonymousClassMethod = unsafeClass.getMethod("defineAnonymousClass", Class.class, byte[].class, Object[].class);
 
       allocateInstanceMethod = unsafeClass.getDeclaredMethod("allocateInstance", Class.class);
@@ -2233,8 +2231,7 @@ final class AccessUtil
     {
       //$FALL-THROUGH$
       //
-      // If the Unsafe class can't be loaded, then it must be unsupported and we won't be able to do anything special to
-      // support making members accessible.
+      // If the Unsafe class can't be loaded, then it must be unsupported and we won't be able to do anything special to support making members accessible.
       // The static final fields will be initialized to null.
     }
 
@@ -2438,33 +2435,135 @@ final class AccessUtil
   }
 }
 
-// Disable the formatter for the remainder of this file.
-// @formatter:off
+//Disable the formatter for the remainder of this file.
+//@formatter:off
 /*
- * class ClassBytesGenerator { public static void generate() { generate(AccessController.class); } private static void
- * generate(Class<?> targetClass) { String name = targetClass.getName(); StringBuilder builder = new StringBuilder();
- * java.net.URL resource = targetClass.getResource(name.substring(name.lastIndexOf('.') + 1) + ".class"); try {
- * java.io.InputStream input = resource.openStream(); for (int value = input.read(); value != -1; value = input.read())
- * { builder.append((char)value); } input.close(); String namePath = name.replace('.', '/'); String nameSignature = 'L'
- * + namePath + ';'; int namePathIndex = builder.indexOf(namePath); int nameSignatureIndex =
- * builder.indexOf(nameSignature); int namePathStart = namePathIndex - 2; int namePathEnd = namePathIndex +
- * namePath.length(); int nameSignatureStart = nameSignatureIndex - 2; int nameSignatureEnd = nameSignatureIndex +
- * +nameSignature.length(); System.out.println("private static final int NAME_PATH_INDEX = " + namePathStart + ";");
- * System.out.println("private static final int NAME_SIGNATURE_INDEX = " + (nameSignatureStart - (namePathEnd -
- * namePathStart)) + ";"); System.out.println("private static final byte[] ACCESS_CONTROLLER_BYTES = new byte[]");
- * System.out.println("  { //"); for (int i = 0, length = builder.length(), count = 0; i < length; ++i) { int value =
- * builder.charAt(i); System.out.print("    "); boolean exclude = i >= namePathStart && i < namePathEnd || i >=
- * nameSignatureStart && i < nameSignatureEnd; if (exclude) { System.out.print("// 0x"); } else { ++count; if (value >
- * 127) { System.out.print("(byte)"); } System.out.print("0x"); } String hexString =
- * Integer.toHexString(Byte.toUnsignedInt((byte)value)); if (hexString.length() == 1) { System.out.print('0'); }
- * System.out.print(hexString); System.out.print(", //"); if (value > 32 && value < 128) { System.out.print(' ');
- * System.out.print((char)value); } if (!exclude) { System.out.print(" " + (count - 1)); } System.out.println(); }
- * System.out.println("  };"); } catch (IOException ex) { ex.printStackTrace(); } } } class AccessController implements
- * Consumer<AccessibleObject> { private static final VarHandle MODIFIERS; static { try { Lookup lookup =
- * MethodHandles.privateLookupIn(Field.class, MethodHandles.lookup()); MODIFIERS = lookup.findVarHandle(Field.class,
- * "modifiers", int.class); } catch (Throwable ex) { throw new RuntimeException(ex); } } public static void
- * makeNonFinal(Field field) { int mods = field.getModifiers(); if (Modifier.isFinal(mods)) { MODIFIERS.set(field, mods
- * & ~Modifier.FINAL); } }
- * @Override public void accept(AccessibleObject accessibleObject) { accessibleObject.setAccessible(true); if
- * (accessibleObject instanceof Field) { makeNonFinal((Field)accessibleObject); } } } //
- */
+
+class ClassBytesGenerator
+{
+public static void generate()
+{
+ generate(AccessController.class);
+}
+
+private static void generate(Class<?> targetClass)
+{
+ String name = targetClass.getName();
+ StringBuilder builder = new StringBuilder();
+ java.net.URL resource = targetClass.getResource(name.substring(name.lastIndexOf('.') + 1) + ".class");
+ try
+ {
+   java.io.InputStream input = resource.openStream();
+   for (int value = input.read(); value != -1; value = input.read())
+   {
+     builder.append((char)value);
+   }
+
+   input.close();
+
+   String namePath = name.replace('.', '/');
+   String nameSignature = 'L' + namePath + ';';
+   int namePathIndex = builder.indexOf(namePath);
+   int nameSignatureIndex = builder.indexOf(nameSignature);
+
+   int namePathStart = namePathIndex - 2;
+   int namePathEnd = namePathIndex + namePath.length();
+
+   int nameSignatureStart = nameSignatureIndex - 2;
+   int nameSignatureEnd = nameSignatureIndex + +nameSignature.length();
+
+   System.out.println("private static final int NAME_PATH_INDEX = " + namePathStart + ";");
+   System.out.println("private static final int NAME_SIGNATURE_INDEX = " + (nameSignatureStart - (namePathEnd - namePathStart)) + ";");
+   System.out.println("private static final byte[] ACCESS_CONTROLLER_BYTES = new byte[]");
+   System.out.println("  { //");
+
+   for (int i = 0, length = builder.length(), count = 0; i < length; ++i)
+   {
+     int value = builder.charAt(i);
+     System.out.print("    ");
+     boolean exclude = i >= namePathStart && i < namePathEnd || i >= nameSignatureStart && i < nameSignatureEnd;
+     if (exclude)
+     {
+       System.out.print("// 0x");
+     }
+     else
+     {
+       ++count;
+       if (value > 127)
+       {
+         System.out.print("(byte)");
+       }
+
+       System.out.print("0x");
+     }
+
+     String hexString = Integer.toHexString(Byte.toUnsignedInt((byte)value));
+     if (hexString.length() == 1)
+     {
+       System.out.print('0');
+     }
+
+     System.out.print(hexString);
+     System.out.print(", //");
+     if (value > 32 && value < 128)
+     {
+       System.out.print(' ');
+       System.out.print((char)value);
+     }
+
+     if (!exclude)
+     {
+       System.out.print(" " + (count - 1));
+     }
+
+     System.out.println();
+   }
+
+   System.out.println("  };");
+
+ }
+ catch (IOException ex)
+ {
+   ex.printStackTrace();
+ }
+}
+}
+
+class AccessController implements Consumer<AccessibleObject>
+{
+private static final VarHandle MODIFIERS;
+
+static
+{
+ try
+ {
+   Lookup lookup = MethodHandles.privateLookupIn(Field.class, MethodHandles.lookup());
+   MODIFIERS = lookup.findVarHandle(Field.class, "modifiers", int.class);
+ }
+ catch (Throwable ex)
+ {
+   throw new RuntimeException(ex);
+ }
+}
+
+public static void makeNonFinal(Field field)
+{
+ int mods = field.getModifiers();
+ if (Modifier.isFinal(mods))
+ {
+   MODIFIERS.set(field, mods & ~Modifier.FINAL);
+ }
+}
+
+@Override
+public void accept(AccessibleObject accessibleObject)
+{
+ accessibleObject.setAccessible(true);
+ if (accessibleObject instanceof Field)
+ {
+   makeNonFinal((Field)accessibleObject);
+ }
+}
+}
+
+//*/

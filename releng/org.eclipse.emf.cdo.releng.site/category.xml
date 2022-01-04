@@ -9,6 +9,7 @@
   <feature id="org.eclipse.emf.cdo.doc" version="0.0.0"><category name="org.eclipse.emf.cdo.category"/></feature>
   <feature id="org.eclipse.emf.cdo.sdk" version="0.0.0"><category name="org.eclipse.emf.cdo.category"/></feature>
   <feature id="org.eclipse.emf.cdo.migrator" version="0.0.0"><category name="org.eclipse.emf.cdo.category"/></feature>
+  <feature id="org.eclipse.emf.cdo.ecore.dependencies" version="0.0.0"><category name="org.eclipse.emf.cdo.category"/></feature>
   <feature id="org.eclipse.emf.cdo.tests" version="0.0.0"><category name="org.eclipse.emf.cdo.category"/></feature>
   <feature id="org.eclipse.emf.cdo.dawn" version="0.0.0"><category name="org.eclipse.emf.cdo.category"/></feature>
   <feature id="org.eclipse.emf.cdo.server" version="0.0.0"><category name="org.eclipse.emf.cdo.category"/></feature>

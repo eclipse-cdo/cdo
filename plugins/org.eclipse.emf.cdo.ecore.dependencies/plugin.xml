@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<!--
+	Copyright (c) 2013 Eike Stepper (Loehne, Germany) and others.
+	All rights reserved. This program and the accompanying materials
+	are made available under the terms of the Eclipse Public License v1.0
+	which accompanies this distribution, and is available at
+	http://www.eclipse.org/legal/epl-v10.html
+
+	Contributors:
+	  Eike Stepper - initial API and implementation
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated dependencies -->
+      <package
+            uri="http://www.eclipse.org/emf/CDO/dependencies/1.0.0"
+            class="org.eclipse.emf.cdo.ecore.dependencies.DependenciesPackage"
+            genModel="model/dependencies.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
+      <!-- @generated dependencies -->
+      <factory
+            uri="http://www.eclipse.org/emf/CDO/dependencies/1.0.0"
+            class="org.eclipse.emf.cdo.ecore.dependencies.provider.DependenciesItemProviderAdapterFactory"
+            supportedTypes=
+              "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
+               org.eclipse.emf.edit.provider.IStructuredItemContentProvider
+               org.eclipse.emf.edit.provider.ITreeItemContentProvider
+               org.eclipse.emf.edit.provider.IItemLabelProvider
+               org.eclipse.emf.edit.provider.IItemPropertySource
+               org.eclipse.emf.edit.provider.IItemStyledLabelProvider"/>
+   </extension>
+
+   <extension point="org.eclipse.ui.views">
+      <category
+            name="EMF"
+            id="org.eclipse.emf"/>
+      <view
+            id="org.eclipse.emf.cdo.ecore.DependenciesView"
+            name="Ecore Dependencies"
+            icon="icons/full/obj16/Model.gif"
+            class="org.eclipse.emf.cdo.ecore.dependencies.ui.DependenciesView"
+            category="org.eclipse.emf"
+            inject="true"/>
+   </extension>
+
+</plugin>

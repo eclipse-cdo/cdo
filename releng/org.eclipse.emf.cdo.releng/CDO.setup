@@ -48,6 +48,15 @@
         xsi:type="setup:PreferenceTask"
         key="/instance/org.eclipse.pde/compilers.f.unresolved-features"
         value="2"/>
+    <setupTask
+        xsi:type="setup:PreferenceTask"
+        id="sync116"
+        key="/instance/org.eclipse.pde.api.tools/missing_default_api_profile"
+        value="Ignore"/>
+    <setupTask
+        xsi:type="setup:PreferenceTask"
+        key="/instance/org.eclipse.pde.api.tools/missing_plugin_in_baseline"
+        value="Ignore"/>
   </setupTask>
   <setupTask
       xsi:type="setup.p2:P2Task"

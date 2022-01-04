@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipse.emf.cdo.ecore.dependencies/src" creationIcons="false"
+    editDirectory="/org.eclipse.emf.cdo.ecore.dependencies/src" editorDirectory=""
+    modelPluginID="org.eclipse.emf.cdo.ecore.dependencies" modelName="Dependencies"
+    editPluginClass="org.eclipse.emf.cdo.ecore.dependencies.bundle.DependenciesPlugin"
+    updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    testsDirectory="" importerID="org.eclipse.emf.importer.ecore" complianceLevel="11.0"
+    copyrightFields="false" operationReflection="true" styleProviders="true" cleanup="true">
+  <foreignModel>dependencies.ecore</foreignModel>
+  <genPackages prefix="Dependencies" basePackage="org.eclipse.emf.cdo.ecore" disposableProviderFactory="true"
+      ecorePackage="dependencies.ecore#/">
+    <genDataTypes ecoreDataType="dependencies.ecore#//URI"/>
+    <genDataTypes ecoreDataType="dependencies.ecore#//File"/>
+    <genClasses image="false" ecoreClass="dependencies.ecore#//Addressable">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dependencies.ecore#//Addressable/uri"/>
+    </genClasses>
+    <genClasses ecoreClass="dependencies.ecore#//ModelContainer">
+      <genFeatures property="None" children="true" createChild="false" ecoreFeature="ecore:EReference dependencies.ecore#//ModelContainer/models"/>
+      <genOperations ecoreOperation="dependencies.ecore#//ModelContainer/getModel">
+        <genParameters ecoreParameter="dependencies.ecore#//ModelContainer/getModel/uri"/>
+      </genOperations>
+      <genOperations ecoreOperation="dependencies.ecore#//ModelContainer/getElement">
+        <genParameters ecoreParameter="dependencies.ecore#//ModelContainer/getElement/uri"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="dependencies.ecore#//Model">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference dependencies.ecore#//Model/container"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute dependencies.ecore#//Model/file"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute dependencies.ecore#//Model/workspace"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dependencies.ecore#//Model/exists"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dependencies.ecore#//Model/nsURI"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dependencies.ecore#//Model/name"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference dependencies.ecore#//Model/elements"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference dependencies.ecore#//Model/outgoingLinks"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference dependencies.ecore#//Model/incomingLinks"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference dependencies.ecore#//Model/brokenLinks"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference dependencies.ecore#//Model/dependencies"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dependencies.ecore#//Model/dependingModels"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference dependencies.ecore#//Model/flatDependencies"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference dependencies.ecore#//Model/flatDependingModels"/>
+      <genOperations ecoreOperation="dependencies.ecore#//Model/dependsUpon">
+        <genParameters ecoreParameter="dependencies.ecore#//Model/dependsUpon/target"/>
+      </genOperations>
+      <genOperations ecoreOperation="dependencies.ecore#//Model/addDependency">
+        <genParameters ecoreParameter="dependencies.ecore#//Model/addDependency/target"/>
+      </genOperations>
+      <genOperations ecoreOperation="dependencies.ecore#//Model/hasBrokenLinks"/>
+      <genOperations ecoreOperation="dependencies.ecore#//Model/getElement">
+        <genParameters ecoreParameter="dependencies.ecore#//Model/getElement/uri"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="dependencies.ecore#//Element">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference dependencies.ecore#//Element/model"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dependencies.ecore#//Element/exists"/>
+      <genFeatures property="None" children="true" createChild="false" ecoreFeature="ecore:EReference dependencies.ecore#//Element/outgoingLinks"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dependencies.ecore#//Element/incomingLinks"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference dependencies.ecore#//Element/brokenLinks"/>
+      <genOperations ecoreOperation="dependencies.ecore#//Element/hasBrokenLinks"/>
+    </genClasses>
+    <genClasses ecoreClass="dependencies.ecore#//Link">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference dependencies.ecore#//Link/source"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dependencies.ecore#//Link/target"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dependencies.ecore#//Link/reference"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute dependencies.ecore#//Link/broken"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

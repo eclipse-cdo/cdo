@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="dependencies" nsURI="http://www.eclipse.org/emf/CDO/dependencies/1.0.0"
+    nsPrefix="dependencies">
+  <eClassifiers xsi:type="ecore:EClass" name="Addressable" abstract="true" interface="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="uri" lowerBound="1" eType="#//URI"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ModelContainer">
+    <eOperations name="getModel" eType="#//Model">
+      <eParameters name="uri" lowerBound="1" eType="#//URI"/>
+    </eOperations>
+    <eOperations name="getElement" eType="#//Element">
+      <eParameters name="uri" lowerBound="1" eType="#//URI"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="models" upperBound="-1"
+        eType="#//Model" containment="true" eOpposite="#//Model/container"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Model" eSuperTypes="#//Addressable">
+    <eOperations name="dependsUpon" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eParameters name="target" lowerBound="1" eType="#//Model"/>
+    </eOperations>
+    <eOperations name="addDependency">
+      <eParameters name="target" lowerBound="1" eType="#//Model"/>
+    </eOperations>
+    <eOperations name="hasBrokenLinks" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eOperations name="getElement" eType="#//Element">
+      <eParameters name="uri" lowerBound="1" eType="#//URI"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="container" lowerBound="1"
+        eType="#//ModelContainer" eOpposite="#//ModelContainer/models"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="file" eType="#//File" changeable="false"
+        volatile="true" transient="true" derived="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="workspace" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        changeable="false" volatile="true" transient="true" derived="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="exists" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nsURI" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="elements" upperBound="-1"
+        eType="#//Element" containment="true" resolveProxies="false" eOpposite="#//Element/model"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outgoingLinks" upperBound="-1"
+        eType="#//Link" changeable="false" volatile="true" transient="true" derived="true"
+        resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="incomingLinks" upperBound="-1"
+        eType="#//Link" changeable="false" volatile="true" transient="true" derived="true"
+        resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="brokenLinks" upperBound="-1"
+        eType="#//Link" changeable="false" volatile="true" transient="true" derived="true"
+        resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="dependencies" upperBound="-1"
+        eType="#//Model" changeable="false" volatile="true" transient="true" derived="true"
+        resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="dependingModels" upperBound="-1"
+        eType="#//Model" changeable="false" volatile="true" transient="true" derived="true"
+        resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="flatDependencies" upperBound="-1"
+        eType="#//Model" changeable="false" volatile="true" transient="true" derived="true"
+        resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="flatDependingModels" upperBound="-1"
+        eType="#//Model" changeable="false" volatile="true" transient="true" derived="true"
+        resolveProxies="false"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Element" eSuperTypes="#//Addressable">
+    <eOperations name="hasBrokenLinks" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="model" eType="#//Model"
+        resolveProxies="false" eOpposite="#//Model/elements"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="exists" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outgoingLinks" upperBound="-1"
+        eType="#//Link" containment="true" resolveProxies="false" eOpposite="#//Link/source"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="incomingLinks" upperBound="-1"
+        eType="#//Link" resolveProxies="false" eOpposite="#//Link/target"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="brokenLinks" upperBound="-1"
+        eType="#//Link" changeable="false" volatile="true" transient="true" derived="true"
+        resolveProxies="false"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Link" eSuperTypes="#//Addressable">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="source" lowerBound="1"
+        eType="#//Element" resolveProxies="false" eOpposite="#//Element/outgoingLinks"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="target" lowerBound="1"
+        eType="#//Element" resolveProxies="false" eOpposite="#//Element/incomingLinks"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="reference" lowerBound="1"
+        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="broken" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        changeable="false" volatile="true" transient="true" derived="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="URI" instanceClassName="org.eclipse.emf.common.util.URI"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="File" instanceClassName="org.eclipse.core.resources.IFile"
+      serializable="false"/>
+</ecore:EPackage>

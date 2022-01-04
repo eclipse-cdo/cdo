@@ -42,6 +42,8 @@ public abstract class SashComposite extends Composite implements INotifier
 
   private boolean vertical;
 
+  private boolean showBand;
+
   private Sash sash;
 
   private Control control1;
@@ -61,11 +63,21 @@ public abstract class SashComposite extends Composite implements INotifier
 
   public SashComposite(Composite parent, int style, int limit, int percent, boolean borders)
   {
+    this(parent, style, limit, percent, false, false, false);
+  }
+
+  /**
+   * @since 3.13
+   */
+  public SashComposite(Composite parent, int style, int limit, int percent, boolean borders, boolean vertical, boolean showBand)
+  {
     super(parent, style);
     setLayout(new FormLayout());
     this.limit = limit;
     this.percent = percent;
     this.borders = borders;
+    this.vertical = vertical;
+    this.showBand = showBand;
 
     control1Data = new FormData();
     control1 = borders ? new OneBorderComposite(this)
@@ -245,7 +257,7 @@ public abstract class SashComposite extends Composite implements INotifier
 
   protected Sash createSash(Composite parent)
   {
-    Sash sash = new Sash(parent, vertical ? SWT.HORIZONTAL : SWT.VERTICAL);
+    Sash sash = new Sash(parent, (showBand ? SWT.BORDER : SWT.NONE) | (vertical ? SWT.HORIZONTAL : SWT.VERTICAL));
     sash.addListener(SWT.Selection, sashListener);
     return sash;
   }
@@ -262,11 +274,12 @@ public abstract class SashComposite extends Composite implements INotifier
   {
     private static final long serialVersionUID = 1L;
 
-    private boolean vertical;
+    private final boolean vertical;
 
     public OrientationChangedEvent(boolean vertical)
     {
       super(SashComposite.this);
+      this.vertical = vertical;
     }
 
     @Override
@@ -295,23 +308,23 @@ public abstract class SashComposite extends Composite implements INotifier
     {
       Rectangle sashRect = sash.getBounds();
       Rectangle shellRect = getClientArea();
-      if (!vertical)
-      {
-        int right = shellRect.width - sashRect.width - limit;
-        e.x = Math.max(Math.min(e.x, right), limit);
-        if (e.x != sashRect.x)
-        {
-          sashData.left = new FormAttachment(0, e.x);
-          layout();
-        }
-      }
-      else
+      if (vertical)
       {
         int bottom = shellRect.height - sashRect.height - limit;
         e.y = Math.max(Math.min(e.y, bottom), limit);
         if (e.y != sashRect.y)
         {
           sashData.top = new FormAttachment(0, e.y);
+          layout();
+        }
+      }
+      else
+      {
+        int right = shellRect.width - sashRect.width - limit;
+        e.x = Math.max(Math.min(e.x, right), limit);
+        if (e.x != sashRect.x)
+        {
+          sashData.left = new FormAttachment(0, e.x);
           layout();
         }
       }

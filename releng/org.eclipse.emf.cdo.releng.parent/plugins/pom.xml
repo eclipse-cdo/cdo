@@ -41,6 +41,7 @@ Eike Stepper - initial API and implementation
     <module>../../../plugins/org.eclipse.emf.cdo.dawn.util</module>
     <module>../../../plugins/org.eclipse.emf.cdo.doc</module>
     <module>../../../plugins/org.eclipse.emf.cdo.ecore</module>
+    <module>../../../plugins/org.eclipse.emf.cdo.ecore.dependencies</module>
     <module>../../../plugins/org.eclipse.emf.cdo.edit</module>
     <module>../../../plugins/org.eclipse.emf.cdo.examples</module>
     <module>../../../plugins/org.eclipse.emf.cdo.examples.client</module>

@@ -23,7 +23,7 @@
       <product
         name="CDO Explorer"
         description="%product.description"
-        application="org.eclipse.emf.cdo.explorer.app">
+        application="org.eclipse.emf.cdo.explorer.ui.app">
           <property name="appName" value="CDO Explorer"/>
       </product>
    </extension>

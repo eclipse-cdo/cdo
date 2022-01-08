@@ -396,6 +396,7 @@ public class CDOServerBrowser extends Worker
   protected void initPages(List<Page> pages)
   {
     pages.add(new PackagesPage());
+    pages.add(new BranchesPage());
     pages.add(new LocksPage());
     pages.add(new RevisionsPage.FromCache());
     pages.add(new RevisionsPage.FromStore());
@@ -700,6 +701,88 @@ public class CDOServerBrowser extends Worker
       for (InternalCDOPackageUnit unit : packageRegistry.getPackageUnits())
       {
         param = showPackage(unit.getTopLevelPackageInfo(), packageRegistry, browser, param, out, "&nbsp;&nbsp;");
+      }
+    }
+
+    protected String showPackage(InternalCDOPackageInfo info, InternalCDOPackageRegistry packageRegistry, CDOServerBrowser browser, String param,
+        PrintStream out, String prefix)
+    {
+      EPackage ePackage = info.getEPackage();
+      out.println("<h3>" + prefix + ePackage.getName() + "&nbsp;&nbsp;[" + ePackage.getNsURI() + "]</h3>");
+
+      for (EClassifier classifier : ePackage.getEClassifiers())
+      {
+        String name = classifier.getName();
+        if (param == null)
+        {
+          param = name;
+        }
+
+        String label = name.equals(param) ? name : browser.href(name, getName(), "classifier", name);
+        out.print(prefix + "&nbsp;&nbsp;<b>" + label);
+
+        if (classifier instanceof EEnum)
+        {
+          EEnum eenum = (EEnum)classifier;
+          out.print("&nbsp;&nbsp;" + eenum.getELiterals());
+        }
+        else if (classifier instanceof EDataType)
+        {
+          EDataType eDataType = (EDataType)classifier;
+          out.print("&nbsp;&nbsp;" + eDataType.getInstanceClassName());
+        }
+
+        out.println("</b><br>");
+      }
+
+      for (EPackage sub : ePackage.getESubpackages())
+      {
+        InternalCDOPackageInfo subInfo = packageRegistry.getPackageInfo(sub);
+        param = showPackage(subInfo, packageRegistry, browser, param, out, prefix + "&nbsp;&nbsp;");
+      }
+
+      return param;
+    }
+  }
+
+  /**
+   * A {@link Page server browser page} that renders the branch manager contents of a repository.
+   *
+   * @author Eike Stepper
+   * @since 4.16
+   */
+  public static class BranchesPage extends AbstractPage
+  {
+    public static final String NAME = "branches";
+
+    public BranchesPage()
+    {
+      super(NAME, "Branches");
+    }
+
+    @Override
+    public boolean canDisplay(InternalRepository repository)
+    {
+      return true;
+    }
+
+    @Override
+    public void display(CDOServerBrowser browser, InternalRepository repository, PrintStream out)
+    {
+      out.println("<ul>");
+      showBranch(out, repository.getBranchManager().getMainBranch());
+      out.println("</ul>");
+    }
+
+    protected void showBranch(PrintStream out, CDOBranch branch)
+    {
+      out.println("<li>" + branch.getName() + " [" + branch.getID() + "]");
+
+      for (CDOBranch child : branch.getBranches())
+      {
+        out.println("<ul>");
+        showBranch(out, child);
+        out.println("</ul>");
       }
     }
 

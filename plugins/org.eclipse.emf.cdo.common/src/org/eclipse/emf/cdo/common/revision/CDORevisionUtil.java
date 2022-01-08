@@ -796,7 +796,7 @@ public final class CDORevisionUtil
 
           out.println("<tr>");
           out.println("<td>");
-          out.println("<h4>" + branch.getName() + "[" + branch.getID() + "]</h4>");
+          out.println("<h4>" + branch.getName() + " [" + branch.getID() + "]</h4>");
           out.println("</td>");
           out.println("<td>");
           out.println("<h4>" + CDOCommonUtil.formatTimeStamp(branch.getBase().getTimeStamp()) + " / "

@@ -33,6 +33,10 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * @author Eike Stepper
  */
@@ -52,7 +56,7 @@ public abstract class CDOMigratorUtil
   {
   }
 
-  public static GenModel getGenModel(String path)
+  public static List<GenModel> getGenModels(List<String> paths)
   {
     ResourceSet resourceSet = new ResourceSetImpl();
     resourceSet.getURIConverter().getURIMap().putAll(EcorePlugin.computePlatformURIMap(true));
@@ -62,22 +66,50 @@ public abstract class CDOMigratorUtil
     resourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put("*", factory); //$NON-NLS-1$
     resourceSet.getResourceFactoryRegistry().getContentTypeToFactoryMap().put("*", factory); //$NON-NLS-1$
 
-    URI uri = URI.createPlatformResourceURI(path, false);
-    Resource resource = resourceSet.getResource(uri, true);
-
-    EcoreUtil.resolveAll(resourceSet);
-
-    EList<EObject> contents = resource.getContents();
-    if (!contents.isEmpty())
+    List<URI> uris = new ArrayList<>();
+    for (String path : paths)
     {
-      EObject object = contents.get(0);
-      if (object instanceof GenModel)
+      URI uri = URI.createPlatformResourceURI(path, true);
+
+      try
       {
-        return (GenModel)object;
+        resourceSet.getResource(uri, true);
+        uris.add(uri);
+      }
+      catch (Exception ex)
+      {
+        System.err.println("Ignoring " + uri + " (" + ex.getMessage() + ")");
       }
     }
 
-    return null;
+    EcoreUtil.resolveAll(resourceSet);
+    List<GenModel> genModels = new ArrayList<>();
+
+    for (URI uri : uris)
+    {
+      Resource resource = resourceSet.getResource(uri, true);
+
+      EList<EObject> contents = resource.getContents();
+      if (!contents.isEmpty())
+      {
+        EObject object = contents.get(0);
+        if (object instanceof GenModel)
+        {
+          genModels.add((GenModel)object);
+          continue;
+        }
+      }
+
+      System.err.println("Ignoring " + uri + " (Resource does not contain a GenModel)");
+    }
+
+    return genModels;
+  }
+
+  public static GenModel getGenModel(String path)
+  {
+    List<GenModel> genModels = getGenModels(Arrays.asList(path));
+    return genModels.isEmpty() ? null : genModels.get(0);
   }
 
   public static String adjustGenModel(GenModel genModel)

@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.internal.migrator.tasks;
 
-import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.ObjectUtil;
 
 import org.eclipse.ant.core.AntCorePlugin;
 import org.eclipse.core.resources.IWorkspace;
@@ -33,6 +33,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
+import java.util.Collection;
 
 /**
  * @author Eike Stepper
@@ -120,9 +121,19 @@ public abstract class CDOTask extends Task
     return new NullProgressMonitor();
   }
 
+  public static boolean isSet(Object obj)
+  {
+    return obj != null;
+  }
+
   public static boolean isSet(String str)
   {
-    return !StringUtil.isEmpty(str);
+    return !ObjectUtil.isEmpty(str);
+  }
+
+  public static boolean isSet(Collection<?> collection)
+  {
+    return !ObjectUtil.isEmpty(collection);
   }
 
   public static void assertTrue(String message, boolean expression) throws BuildException

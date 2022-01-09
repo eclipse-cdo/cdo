@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPointRange;
+import org.eclipse.emf.cdo.common.branch.CDODuplicateBranchException;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockAreaNotFoundException;
@@ -58,23 +59,22 @@ import java.util.List;
 @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
 public class BranchingTest extends AbstractCDOTest
 {
+  private static final Field DISABLE_GC = ReflectUtil.getField(AbstractCDORevisionCache.class, "disableGC");
+
   protected CDOSession session1;
 
   @Override
   protected void doSetUp() throws Exception
   {
     super.doSetUp();
-
-    Field disableGC = ReflectUtil.getField(AbstractCDORevisionCache.class, "disableGC");
-    ReflectUtil.setValue(disableGC, null, true);
+    ReflectUtil.setValue(DISABLE_GC, null, true);
   }
 
   @Override
   protected void doTearDown() throws Exception
   {
     session1 = null;
-    Field disableGC = ReflectUtil.getField(AbstractCDORevisionCache.class, "disableGC");
-    ReflectUtil.setValue(disableGC, null, false);
+    ReflectUtil.setValue(DISABLE_GC, null, false);
     super.doTearDown();
   }
 
@@ -93,12 +93,6 @@ public class BranchingTest extends AbstractCDOTest
   protected CDOSession openSession2()
   {
     return openSession();
-  }
-
-  protected String getBranchName(String name)
-  {
-    // New scenarios get clean repositories, no need to disambiguate them.
-    return getClass().getSimpleName() + "_" + getName() + "_" + name;
   }
 
   public void testMainBranch() throws Exception
@@ -134,19 +128,78 @@ public class BranchingTest extends AbstractCDOTest
     session.close();
   }
 
-  public void testRenameBranch() throws Exception
+  public void testCreateBranchDuplicate() throws Exception
+  {
+    String branchName = getBranchName("existing");
+
+    CDOSession session = openSession1();
+    CDOBranch mainBranch = session.getBranchManager().getMainBranch();
+    mainBranch.createBranch(branchName);
+
+    try
+    {
+      mainBranch.createBranch(branchName);
+      fail("CDODuplicateBranchException expected");
+    }
+    catch (CDODuplicateBranchException expected)
+    {
+      // SUCCESS
+    }
+  }
+
+  public void testCreateBranchIllegalName() throws Exception
   {
     CDOSession session = openSession1();
     CDOBranch mainBranch = session.getBranchManager().getMainBranch();
-    CDOBranch branch = mainBranch.createBranch("testing");
-    branch.setName("renamed");
+    CDOBranch subBranch = mainBranch.createBranch(getBranchName("sub"));
+
+    try
+    {
+      subBranch.createBranch(null);
+      fail("IllegalArgumentException expected");
+    }
+    catch (IllegalArgumentException expected)
+    {
+      // SUCCESS
+    }
+
+    try
+    {
+      subBranch.createBranch("");
+      fail("IllegalArgumentException expected");
+    }
+    catch (IllegalArgumentException expected)
+    {
+      // SUCCESS
+    }
+
+    try
+    {
+      subBranch.createBranch("a/b/c/d");
+      fail("IllegalArgumentException expected");
+    }
+    catch (IllegalArgumentException expected)
+    {
+      // SUCCESS
+    }
+  }
+
+  public void testRenameBranch() throws Exception
+  {
+    String testingPath = getBranchName("testing");
+    String renamedPath = getBranchName("renamed");
+
+    CDOSession session = openSession1();
+    CDOBranch mainBranch = session.getBranchManager().getMainBranch();
+    CDOBranch branch = mainBranch.createBranch(testingPath);
+    branch.setName(renamedPath);
     closeSession1();
 
     session = openSession2();
-    CDOBranch renamedBranch = session.getBranchManager().getBranch("MAIN/renamed");
+    CDOBranch renamedBranch = session.getBranchManager().getBranch("MAIN/" + renamedPath);
     assertNotNull(renamedBranch);
 
-    CDOBranch testingBranch = session.getBranchManager().getBranch("MAIN/testing");
+    CDOBranch testingBranch = session.getBranchManager().getBranch("MAIN/" + testingPath);
     assertNull(testingBranch);
 
     try
@@ -161,6 +214,75 @@ public class BranchingTest extends AbstractCDOTest
 
     String name = session.getBranchManager().getMainBranch().getName();
     assertEquals("Main branch can't be renamed", CDOBranch.MAIN_BRANCH_NAME, name);
+  }
+
+  public void testRenameBranchDuplicate() throws Exception
+  {
+    String existingPath = getBranchName("existing");
+    String branchPath = getBranchName("branch");
+
+    CDOSession session = openSession1();
+    CDOBranch mainBranch = session.getBranchManager().getMainBranch();
+    mainBranch.createBranch(existingPath);
+    CDOBranch branch = mainBranch.createBranch(branchPath);
+
+    try
+    {
+      branch.setName(existingPath);
+      fail("CDODuplicateBranchException expected");
+    }
+    catch (CDODuplicateBranchException expected)
+    {
+      // SUCCESS
+    }
+  }
+
+  public void testRenameBranchIllegalName() throws Exception
+  {
+    CDOSession session = openSession1();
+    CDOBranch mainBranch = session.getBranchManager().getMainBranch();
+    CDOBranch subBranch = mainBranch.createBranch(getBranchName("sub"));
+    CDOBranch subsubBranch = subBranch.createBranch("subsub");
+
+    try
+    {
+      mainBranch.setName("NOT_MAIN");
+      fail("IllegalArgumentException expected");
+    }
+    catch (IllegalArgumentException expected)
+    {
+      // SUCCESS
+    }
+
+    try
+    {
+      subsubBranch.setName(null);
+      fail("IllegalArgumentException expected");
+    }
+    catch (IllegalArgumentException expected)
+    {
+      // SUCCESS
+    }
+
+    try
+    {
+      subsubBranch.setName("");
+      fail("IllegalArgumentException expected");
+    }
+    catch (IllegalArgumentException expected)
+    {
+      // SUCCESS
+    }
+
+    try
+    {
+      subsubBranch.setName("a/b/c/d");
+      fail("IllegalArgumentException expected");
+    }
+    catch (IllegalArgumentException expected)
+    {
+      // SUCCESS
+    }
   }
 
   public void testGetBranch() throws Exception
@@ -1295,7 +1417,7 @@ public class BranchingTest extends AbstractCDOTest
 
         if (i == 4)
         {
-          String name = branch.isMainBranch() ? "sub" : branch.getName() + "-sub";
+          String name = branch.isMainBranch() ? getBranchName("sub") : branch.getName() + "-sub";
           CDOBranch subBranch = branch.createBranch(name, commit.getTimeStamp());
 
           branches.add(subBranch);

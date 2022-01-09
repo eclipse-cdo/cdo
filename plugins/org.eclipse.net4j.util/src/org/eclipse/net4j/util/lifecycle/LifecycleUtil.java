@@ -37,6 +37,8 @@ public final class LifecycleUtil
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_LIFECYCLE, LifecycleUtil.class);
 
+  private static final ThreadLocal<Boolean> WITHOUT_CHECKS = new ThreadLocal<>();
+
   private LifecycleUtil()
   {
   }
@@ -95,7 +97,7 @@ public final class LifecycleUtil
    */
   public static void checkActive(Object object) throws LifecycleException
   {
-    if (!isActive(object))
+    if (WITHOUT_CHECKS.get() == null && !isActive(object))
     {
       throw new LifecycleException("Not active: " + object); //$NON-NLS-1$
     }
@@ -106,9 +108,26 @@ public final class LifecycleUtil
    */
   public static void checkInactive(Object object) throws LifecycleException
   {
-    if (isActive(object))
+    if (WITHOUT_CHECKS.get() == null && isActive(object))
     {
       throw new LifecycleException("Not inactive: " + object); //$NON-NLS-1$
+    }
+  }
+
+  /**
+   * @since 3.17
+   */
+  public static void withoutChecks(Runnable runnable)
+  {
+    WITHOUT_CHECKS.set(Boolean.TRUE);
+
+    try
+    {
+      runnable.run();
+    }
+    finally
+    {
+      WITHOUT_CHECKS.remove();
     }
   }
 

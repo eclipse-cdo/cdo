@@ -52,7 +52,7 @@ public class Bugzilla_369646_Test extends AbstractCDOTest
     transaction.commit();
 
     // Create two cascading branches
-    CDOBranch sub1 = transaction.getBranch().createBranch("sub1");
+    CDOBranch sub1 = transaction.getBranch().createBranch(getBranchName("sub1"));
     CDOBranch sub2 = sub1.createBranch("sub2");
 
     // Now delete the contents in the sub2 branch
@@ -87,7 +87,7 @@ public class Bugzilla_369646_Test extends AbstractCDOTest
       transaction.commit();
 
       // Create a branch
-      CDOBranch sub1 = transaction.getBranch().createBranch("sub1");
+      CDOBranch sub1 = transaction.getBranch().createBranch(getBranchName("sub1"));
       transaction.setBranch(sub1);
 
       // Modify list in branch

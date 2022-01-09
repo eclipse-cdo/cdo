@@ -70,7 +70,7 @@ public class Bugzilla_326518_Test extends AbstractCDOTest
     sleep(1000L);
 
     // setup another branch.
-    final CDOBranch branch2 = transaction1.getBranch().createBranch("branch2");
+    final CDOBranch branch2 = transaction1.getBranch().createBranch(getBranchName("branch2"));
     final CDOTransaction transaction2 = session.openTransaction(branch2);
 
     CDOResource branchResource = transaction2.getObject(resource);

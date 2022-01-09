@@ -658,6 +658,12 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
     }
   }
 
+  public final String getBranchName(String name)
+  {
+    // New scenarios get clean repositories, no need to disambiguate them.
+    return getClass().getSimpleName() + "_" + getName() + "_" + name;
+  }
+
   /**
    * Constructs a test-specific resource path of the format "/TestClass_testMethod/resourceName". Using this instead of
    * (just) a hardcoded name for the test resource, ensures that the test method is isolated from all others at the

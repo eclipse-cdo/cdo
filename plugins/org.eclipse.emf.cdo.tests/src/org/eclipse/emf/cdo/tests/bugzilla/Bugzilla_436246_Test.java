@@ -94,7 +94,7 @@ public class Bugzilla_436246_Test extends AbstractCDOTest
     CDOBranch currentBranch = session.getBranchManager().getMainBranch();
     testCDORevisionFetchWithChangesOnAllBranches(session, currentBranch, signalCounter, companyCDOID, NB_CATEGORY, true);
 
-    currentBranch = currentBranch.getBranch(B1_BRANCH_NAME);
+    currentBranch = currentBranch.getBranch(getBranchName(B1_BRANCH_NAME));
     testCDORevisionFetchWithChangesOnAllBranches(session, currentBranch, signalCounter, companyCDOID, 2 * NB_CATEGORY, true);
 
     currentBranch = currentBranch.getBranch(B11_BRANCH_NAME);
@@ -122,7 +122,7 @@ public class Bugzilla_436246_Test extends AbstractCDOTest
     CDOBranch currentBranch = session.getBranchManager().getMainBranch();
     testCDORevisionFetchWithChangesOnAllBranches(session, currentBranch, signalCounter, companyCDOID, NB_CATEGORY, false);
 
-    currentBranch = currentBranch.getBranch(B1_BRANCH_NAME);
+    currentBranch = currentBranch.getBranch(getBranchName(B1_BRANCH_NAME));
     testCDORevisionFetchWithChangesOnAllBranches(session, currentBranch, signalCounter, companyCDOID, 2 * NB_CATEGORY, false);
 
     currentBranch = currentBranch.getBranch(B11_BRANCH_NAME);
@@ -169,7 +169,7 @@ public class Bugzilla_436246_Test extends AbstractCDOTest
   private CDOID setUpChangesOnBranches() throws Exception
   {
     CDOSession session = openSession();
-    CDOBranch b1Branch = session.getBranchManager().getMainBranch().createBranch(B1_BRANCH_NAME);
+    CDOBranch b1Branch = session.getBranchManager().getMainBranch().createBranch(getBranchName(B1_BRANCH_NAME));
 
     CDOTransaction transaction = session.openTransaction(b1Branch);
     CDOResource resource = transaction.getResource(getResourcePath(RESOURCE_NAME));
@@ -213,7 +213,7 @@ public class Bugzilla_436246_Test extends AbstractCDOTest
   public void testCDORevisionPrefetchOnOtherBranch() throws Exception
   {
     CDOSession session = openSession();
-    String newBranchName = "B1";
+    String newBranchName = getBranchName("B1");
     CDOBranch newBranch = session.getBranchManager().getMainBranch().createBranch(newBranchName);
     testCDORevisionPrefetchOnBranch(session, newBranch);
   }
@@ -229,21 +229,18 @@ public class Bugzilla_436246_Test extends AbstractCDOTest
     List<String> pathSegments = CDOURIUtil.analyzePath(resourcePath);
     CDOResource resource = view.getResource(resourcePath);
     assertEquals(pathSegments.size(), signalCounter.getCountFor(LoadRevisionsRequest.class));
-    resource.cdoPrefetch(CDORevision.DEPTH_INFINITE);
 
+    resource.cdoPrefetch(CDORevision.DEPTH_INFINITE);
     assertEquals(pathSegments.size() + 1, signalCounter.getCountFor(LoadRevisionsRequest.class));
 
     Company company = (Company)resource.getContents().get(0);
     CDOID companyCDOID = CDOUtil.getCDOObject(company).cdoID();
-
     assertEquals(pathSegments.size() + 1, signalCounter.getCountFor(LoadRevisionsRequest.class));
 
     view.getRevision(companyCDOID);
-
     assertEquals(pathSegments.size() + 1, signalCounter.getCountFor(LoadRevisionsRequest.class));
 
     view.getResourceSet().eAdapters().add(new EContentAdapter());
-
     assertEquals(pathSegments.size() + 1, signalCounter.getCountFor(LoadRevisionsRequest.class));
 
     protocol.removeListener(signalCounter);

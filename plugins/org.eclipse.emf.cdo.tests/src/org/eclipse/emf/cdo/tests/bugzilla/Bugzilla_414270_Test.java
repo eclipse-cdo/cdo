@@ -38,7 +38,7 @@ public class Bugzilla_414270_Test extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOBranch mainBranch = session.getBranchManager().getMainBranch();
-    CDOBranch branch = mainBranch.getBranch("blabla");
+    CDOBranch branch = mainBranch.getBranch(getBranchName("blabla"));
     assertEquals(null, branch);
   }
 
@@ -49,7 +49,7 @@ public class Bugzilla_414270_Test extends AbstractCDOTest
 
     try
     {
-      mainBranch.createBranch("blabla");
+      mainBranch.createBranch(getBranchName("blabla"));
       fail("IllegalStateException expected");
     }
     catch (IllegalStateException expected)
@@ -76,7 +76,7 @@ public class Bugzilla_414270_Test extends AbstractCDOTest
     CDOBranch mainBranch = branchManager.getBranch(CDOBranch.MAIN_BRANCH_NAME);
     assertEquals(branchManager.getMainBranch(), mainBranch);
 
-    CDOBranch branch = branchManager.getBranch("/MAIN/blabla");
+    CDOBranch branch = branchManager.getBranch("/MAIN/" + getBranchName("blabla"));
     assertEquals(null, branch);
   }
 

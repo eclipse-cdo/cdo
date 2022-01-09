@@ -59,7 +59,7 @@ public class MergingTest extends AbstractCDOTest
     addCompany(contents);
     addCompany(contents);
     long time1 = transaction.commit().getTimeStamp();
-    CDOBranch source1 = mainBranch.createBranch("source1", time1);
+    CDOBranch source1 = mainBranch.createBranch(getBranchName("source1"), time1);
 
     sleep(10);
     addCompany(contents);
@@ -67,14 +67,14 @@ public class MergingTest extends AbstractCDOTest
     addCompany(contents);
     addCompany(contents);
     long time2 = transaction.commit().getTimeStamp();
-    CDOBranch source2 = mainBranch.createBranch("source2", time2);
+    CDOBranch source2 = mainBranch.createBranch(getBranchName("source2"), time2);
 
     sleep(10);
     addCompany(contents);
     addCompany(contents);
     addCompany(contents);
     long time3 = transaction.commit().getTimeStamp();
-    CDOBranch source3 = mainBranch.createBranch("source3", time3);
+    CDOBranch source3 = mainBranch.createBranch(getBranchName("source3"), time3);
 
     CDOChangeSetData result = transaction.merge(source1.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
     assertEquals(true, result.isEmpty());
@@ -103,7 +103,7 @@ public class MergingTest extends AbstractCDOTest
     addCompany(contents);
     addCompany(contents);
     long time1 = transaction.commit().getTimeStamp();
-    CDOBranch source1 = mainBranch.createBranch("source1", time1);
+    CDOBranch source1 = mainBranch.createBranch(getBranchName("source1"), time1);
 
     sleep(10);
     addCompany(contents);
@@ -159,7 +159,7 @@ public class MergingTest extends AbstractCDOTest
     addCompany(contents);
     addCompany(contents);
     long time1 = transaction.commit().getTimeStamp();
-    CDOBranch source1 = mainBranch.createBranch("source1", time1);
+    CDOBranch source1 = mainBranch.createBranch(getBranchName("source1"), time1);
 
     sleep(10);
     addCompany(contents);
@@ -206,7 +206,7 @@ public class MergingTest extends AbstractCDOTest
     addCompany(contents);
     addCompany(contents);
     long time1 = transaction.commit().getTimeStamp();
-    CDOBranch source1 = mainBranch.createBranch("source1", time1);
+    CDOBranch source1 = mainBranch.createBranch(getBranchName("source1"), time1);
 
     sleep(10);
     addCompany(contents);
@@ -268,6 +268,9 @@ public class MergingTest extends AbstractCDOTest
 
   public void testAdditionsInSourceAndTarget() throws Exception
   {
+    String soure1Path = getBranchName("source1");
+    String source2Path = getBranchName("source2");
+
     CDOSession session = openSession();
     CDOBranch mainBranch = session.getBranchManager().getMainBranch();
     CDOTransaction transaction = session.openTransaction(mainBranch);
@@ -280,7 +283,7 @@ public class MergingTest extends AbstractCDOTest
     addCompany(contents);
     addCompany(contents);
     long time1 = transaction.commit().getTimeStamp();
-    CDOBranch source1 = mainBranch.createBranch("source1", time1);
+    CDOBranch source1 = mainBranch.createBranch(soure1Path, time1);
 
     sleep(10);
     addCompany(contents);
@@ -288,7 +291,7 @@ public class MergingTest extends AbstractCDOTest
     addCompany(contents);
     addCompany(contents);
     long time2 = transaction.commit().getTimeStamp();
-    CDOBranch source2 = mainBranch.createBranch("source2", time2);
+    CDOBranch source2 = mainBranch.createBranch(source2Path, time2);
 
     sleep(10);
     addCompany(contents);
@@ -351,7 +354,7 @@ public class MergingTest extends AbstractCDOTest
     addCompany(contents);
     addCompany(contents);
     long time1 = transaction.commit().getTimeStamp();
-    CDOBranch source1 = mainBranch.createBranch("source1", time1);
+    CDOBranch source1 = mainBranch.createBranch(getBranchName("source1"), time1);
 
     sleep(10);
     addCompany(contents);
@@ -359,7 +362,7 @@ public class MergingTest extends AbstractCDOTest
     addCompany(contents);
     addCompany(contents);
     long time2 = transaction.commit().getTimeStamp();
-    CDOBranch source2 = mainBranch.createBranch("source2", time2);
+    CDOBranch source2 = mainBranch.createBranch(getBranchName("source2"), time2);
 
     sleep(10);
     addCompany(contents);
@@ -415,7 +418,7 @@ public class MergingTest extends AbstractCDOTest
     addCompany(contents);
     addCompany(contents);
     long time = transaction.commit().getTimeStamp();
-    CDOBranch source = mainBranch.createBranch("source" + run, time);
+    CDOBranch source = mainBranch.createBranch(getBranchName("source" + run), time);
 
     sleep(10);
     CDOTransaction tx1 = session.openTransaction(source);
@@ -455,7 +458,7 @@ public class MergingTest extends AbstractCDOTest
     addCompany(contents);
     addCompany(contents);
     long time = transaction.commit().getTimeStamp();
-    CDOBranch source = mainBranch.createBranch("source", time);
+    CDOBranch source = mainBranch.createBranch(getBranchName("source"), time);
 
     sleep(10);
     CDOTransaction tx1 = session.openTransaction(source);
@@ -498,7 +501,7 @@ public class MergingTest extends AbstractCDOTest
     addCompany(contents);
     addCompany(contents);
     long time = transaction.commit().getTimeStamp();
-    CDOBranch source = mainBranch.createBranch("source", time);
+    CDOBranch source = mainBranch.createBranch(getBranchName("source"), time);
 
     sleep(10);
     CDOTransaction tx1 = session.openTransaction(source);
@@ -551,7 +554,7 @@ public class MergingTest extends AbstractCDOTest
     addCompany(contents);
     addCompany(contents);
     long time1 = transaction.commit().getTimeStamp();
-    CDOBranch source = mainBranch.createBranch("source", time1);
+    CDOBranch source = mainBranch.createBranch(getBranchName("source"), time1);
 
     sleep(10);
     CDOTransaction tx1 = session.openTransaction(source);
@@ -602,7 +605,7 @@ public class MergingTest extends AbstractCDOTest
     addCompany(contents);
     addCompany(contents);
     long time = transaction.commit().getTimeStamp();
-    CDOBranch source = mainBranch.createBranch("source", time);
+    CDOBranch source = mainBranch.createBranch(getBranchName("source"), time);
 
     sleep(10);
     CDOTransaction tx1 = session.openTransaction(source);
@@ -633,7 +636,7 @@ public class MergingTest extends AbstractCDOTest
     addCompany(contents);
     long time = transaction.commit().getTimeStamp();
 
-    CDOBranch source = mainBranch.createBranch("source", time);
+    CDOBranch source = mainBranch.createBranch(getBranchName("source"), time);
     CDOTransaction sourceTx = session.openTransaction(source);
     CDOResource res1 = sourceTx.getResource(getResourcePath("/res"));
     EList<EObject> sourceContents = res1.getContents();
@@ -672,7 +675,7 @@ public class MergingTest extends AbstractCDOTest
     addCompany(contents);
     long time = transaction.commit().getTimeStamp();
 
-    CDOBranch source = mainBranch.createBranch("source", time);
+    CDOBranch source = mainBranch.createBranch(getBranchName("source"), time);
     CDOTransaction sourceTx = session.openTransaction(source);
     CDOResource res1 = sourceTx.getResource(getResourcePath("/res"));
     EList<EObject> sourceContents = res1.getContents();
@@ -712,7 +715,7 @@ public class MergingTest extends AbstractCDOTest
     addCompany(contents);
     addCompany(contents);
     long time1 = transaction.commit().getTimeStamp();
-    CDOBranch source1 = mainBranch.createBranch("source1", time1);
+    CDOBranch source1 = mainBranch.createBranch(getBranchName("source1"), time1);
 
     {
       sleep(10);
@@ -759,7 +762,7 @@ public class MergingTest extends AbstractCDOTest
       addCompany(contents);
       addCompany(contents);
       long time1 = transaction.commit().getTimeStamp();
-      CDOBranch source1 = mainBranch.createBranch("source1", time1);
+      CDOBranch source1 = mainBranch.createBranch(getBranchName("source1"), time1);
 
       {
         sleep(10);
@@ -786,7 +789,7 @@ public class MergingTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOBranch mainBranch = session.getBranchManager().getMainBranch();
-    CDOBranch source1 = mainBranch.getBranch("source1");
+    CDOBranch source1 = mainBranch.getBranch(getBranchName("source1"));
 
     CDOTransaction transaction = session.openTransaction(mainBranch);
     CDOChangeSetData check = transaction.merge(source1.getHead(), source1.getPoint(commitInfo.getTimeStamp()), new DefaultCDOMerger.PerFeature.ManyValued());
@@ -810,7 +813,7 @@ public class MergingTest extends AbstractCDOTest
     addCompany(contents);
     addCompany(contents);
     long time = transaction.commit().getTimeStamp();
-    CDOBranch source = mainBranch.createBranch("source", time);
+    CDOBranch source = mainBranch.createBranch(getBranchName("source"), time);
 
     CDOTransaction tx1 = session.openTransaction(source);
     CDOResource res1 = tx1.getResource(getResourcePath("/res"));
@@ -869,7 +872,7 @@ public class MergingTest extends AbstractCDOTest
 
     long time = transaction.commit().getTimeStamp();
 
-    CDOBranch source = mainBranch.createBranch("branch", time);
+    CDOBranch source = mainBranch.createBranch(getBranchName("branch"), time);
     CDOTransaction tx1 = session.openTransaction(source);
 
     CDOTextResource res1 = tx1.getTextResource(getResourcePath("text1.txt"));
@@ -906,7 +909,7 @@ public class MergingTest extends AbstractCDOTest
 
     long time = transaction.commit().getTimeStamp();
 
-    CDOBranch source = mainBranch.createBranch("branch", time);
+    CDOBranch source = mainBranch.createBranch(getBranchName("branch"), time);
     CDOTransaction tx1 = session.openTransaction(source);
 
     CDOTextResource res1 = tx1.getTextResource(getResourcePath("text1.txt"));

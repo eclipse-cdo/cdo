@@ -65,7 +65,7 @@ public class Bugzilla_324084_Test extends AbstractCDOTest
     tr1.commit();
     sleep(1000);
 
-    final CDOBranch otherBranch = tr1.getBranch().createBranch("other");
+    final CDOBranch otherBranch = tr1.getBranch().createBranch(getBranchName("other"));
     final CDOTransaction tr2 = session.openTransaction(otherBranch);
 
     RefSingleContained otherContainer = tr2.getObject(container);
@@ -101,7 +101,7 @@ public class Bugzilla_324084_Test extends AbstractCDOTest
     tr1.commit();
     sleep(1000);
 
-    final CDOBranch otherBranch = tr1.getBranch().createBranch("other");
+    final CDOBranch otherBranch = tr1.getBranch().createBranch(getBranchName("other"));
     final CDOTransaction tr2 = session.openTransaction(otherBranch);
 
     RefMultiContained otherContainer = tr2.getObject(container);

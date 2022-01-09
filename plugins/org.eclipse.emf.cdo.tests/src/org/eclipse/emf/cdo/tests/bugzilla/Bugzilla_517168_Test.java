@@ -53,7 +53,7 @@ public class Bugzilla_517168_Test extends AbstractCDOTest
     transaction.commit();
 
     // Create a branch and open a transaction on it.
-    CDOBranch derivedBranch = transaction.getBranch().createBranch("Derived");
+    CDOBranch derivedBranch = transaction.getBranch().createBranch(getBranchName("Derived"));
     transaction = session.openTransaction(derivedBranch);
     orderDetail = transaction.getObject(orderDetail);
     product = transaction.getObject(product);
@@ -84,7 +84,7 @@ public class Bugzilla_517168_Test extends AbstractCDOTest
     transaction.commit();
 
     // Create a branch and open a transaction on it.
-    CDOBranch derivedBranch = transaction.getBranch().createBranch("Derived");
+    CDOBranch derivedBranch = transaction.getBranch().createBranch(getBranchName("Derived"));
     transaction = session.openTransaction(derivedBranch);
     salesOrder = transaction.getObject(salesOrder);
     purchaseOrder = transaction.getObject(purchaseOrder);
@@ -121,7 +121,7 @@ public class Bugzilla_517168_Test extends AbstractCDOTest
     transaction.commit();
 
     // Create a branch and open a transaction on it.
-    CDOBranch derivedBranch = transaction.getBranch().createBranch("Derived");
+    CDOBranch derivedBranch = transaction.getBranch().createBranch(getBranchName("Derived"));
     transaction = session.openTransaction(derivedBranch);
     orderDetail = transaction.getObject(orderDetail);
     product = transaction.getObject(product);

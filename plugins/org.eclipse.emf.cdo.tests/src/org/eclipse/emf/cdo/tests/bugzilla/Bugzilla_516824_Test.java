@@ -57,7 +57,7 @@ public class Bugzilla_516824_Test extends AbstractCDOTest
     // Make sure invalidation will trigger delta notifications
     resource.eAdapters().add(new EContentAdapter());
 
-    CDOBranch subBranch = transaction.getBranch().createBranch("subBranch");
+    CDOBranch subBranch = transaction.getBranch().createBranch(getBranchName("subBranch"));
     transaction.setBranch(subBranch);
   }
 
@@ -81,7 +81,7 @@ public class Bugzilla_516824_Test extends AbstractCDOTest
     // Make sure invalidation will trigger delta notifications
     resource.eAdapters().add(new EContentAdapter());
 
-    CDOBranch subBranch = transaction.getBranch().createBranch("subBranch");
+    CDOBranch subBranch = transaction.getBranch().createBranch(getBranchName("subBranch"));
     transaction.setBranch(subBranch);
   }
 }

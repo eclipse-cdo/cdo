@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchManager.CDOTagList;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPointRange;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
+import org.eclipse.emf.cdo.common.branch.CDODuplicateBranchException;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
@@ -522,6 +523,8 @@ public class Repository extends Container<Object> implements InternalRepository
       authorizeOperation(CoreOperations.createBranch(branchID, //
           branchInfo.getName(), branchInfo.getBaseBranchID(), branchInfo.getBaseTimeStamp()));
 
+      checkDuplicateBranchBase(branchInfo.getBaseBranchID(), branchInfo.getName());
+
       IStoreAccessor accessor = StoreThreadLocal.getAccessor();
       return accessor.createBranch(branchID, branchInfo);
     }
@@ -609,7 +612,7 @@ public class Repository extends Container<Object> implements InternalRepository
   }
 
   @Override
-  public void renameBranch(int branchID, String oldName, String newName)
+  public void renameBranch(int branchID, String oldName, String newName) throws CDODuplicateBranchException
   {
     if (!isSupportingBranches())
     {
@@ -634,11 +637,32 @@ public class Repository extends Container<Object> implements InternalRepository
     {
       authorizeOperation(CoreOperations.renameBranch(branchID, newName));
 
+      checkDuplicateBranch(branchID, newName);
+
       ((BranchLoader3)accessor).renameBranch(branchID, oldName, newName);
     }
     finally
     {
       writeLock.unlock();
+    }
+  }
+
+  private void checkDuplicateBranch(int branchID, String name) throws CDODuplicateBranchException
+  {
+    CDOBranch branch = branchManager.getBranch(branchID);
+    CDOBranch baseBranch = branch.getBase().getBranch();
+    int baseBranchID = baseBranch.getID();
+
+    checkDuplicateBranchBase(baseBranchID, name);
+  }
+
+  private void checkDuplicateBranchBase(int baseBranchID, String name) throws CDODuplicateBranchException
+  {
+    CDOBranch baseBranch = branchManager.getBranch(baseBranchID);
+    CDOBranch existingBranch = baseBranch.getBranch(name);
+    if (existingBranch != null && !existingBranch.isDeleted())
+    {
+      throw new CDODuplicateBranchException(existingBranch);
     }
   }
 

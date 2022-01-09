@@ -69,7 +69,7 @@ public class Bugzilla_325866_Test extends AbstractCDOTest
     sleep(1000L);
 
     // setup another branch.
-    final CDOBranch otherBranch = s1Tr1.getBranch().createBranch("other");
+    final CDOBranch otherBranch = s1Tr1.getBranch().createBranch(getBranchName("other"));
     final CDOTransaction s1Tr3 = session1.openTransaction(otherBranch);
 
     CDOResource branchResource = s1Tr3.getObject(resource);
@@ -126,7 +126,7 @@ public class Bugzilla_325866_Test extends AbstractCDOTest
     sleep(1000L);
 
     // setup another branch.
-    final CDOBranch otherBranch = s1Tr1.getBranch().createBranch("other");
+    final CDOBranch otherBranch = s1Tr1.getBranch().createBranch(getBranchName("other"));
     final CDOTransaction s1Tr3 = session1.openTransaction(otherBranch);
 
     CDOResource branchResource = s1Tr3.getObject(resource);

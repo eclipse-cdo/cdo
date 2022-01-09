@@ -41,7 +41,7 @@ public class Bugzilla_447593_Test extends AbstractCDOTest
     transaction.commit();
 
     CDOBranch mainBranch = session.getBranchManager().getMainBranch();
-    CDOBranch b1ParentBranch = mainBranch.createBranch("b1Parent");
+    CDOBranch b1ParentBranch = mainBranch.createBranch(getBranchName("b1Parent"));
     CDOBranch b1 = b1ParentBranch.createBranch("b1");
 
     transaction.enableDurableLocking();

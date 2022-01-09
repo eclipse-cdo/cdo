@@ -1045,7 +1045,7 @@ public class LockStateCacheTest extends AbstractCDOTest
     {
       if (testBranch == null)
       {
-        testBranch = createUniqueBranch(session.getBranchManager().getMainBranch(), "lock-state-tests");
+        testBranch = createUniqueBranch(session.getBranchManager().getMainBranch(), getBranchName("lock-state-tests"));
       }
 
       return testBranch;

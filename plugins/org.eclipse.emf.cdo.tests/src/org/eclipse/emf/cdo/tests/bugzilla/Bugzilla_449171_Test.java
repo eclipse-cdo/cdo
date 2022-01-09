@@ -36,7 +36,7 @@ public class Bugzilla_449171_Test extends AbstractCDOTest
   public void testCommitNotificationIndicationCDOCommitInfoDecoding() throws Exception
   {
     CDOSession session1 = openSession();
-    String subBranchName = "b1";
+    String subBranchName = getBranchName("b1");
     CDOSession session2 = openSession();
     CDOTransaction txOfSession1 = session1.openTransaction();
     CDOResource resource = txOfSession1.getOrCreateResource(getResourcePath(RESOURCE_NAME));

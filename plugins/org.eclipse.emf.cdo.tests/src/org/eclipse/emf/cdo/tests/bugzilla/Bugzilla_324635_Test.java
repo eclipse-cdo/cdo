@@ -60,7 +60,7 @@ public class Bugzilla_324635_Test extends AbstractCDOTest
     RefMultiContained container2 = s1Tr2.getObject(container);
 
     // setup another branch.
-    final CDOBranch otherBranch = s1Tr1.getBranch().createBranch("other");
+    final CDOBranch otherBranch = s1Tr1.getBranch().createBranch(getBranchName("other"));
     final CDOTransaction s1Tr3 = session1.openTransaction(otherBranch);
 
     RefMultiContained otherContainer = s1Tr3.getObject(container);

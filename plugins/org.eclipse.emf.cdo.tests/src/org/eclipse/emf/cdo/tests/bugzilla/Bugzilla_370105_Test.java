@@ -40,7 +40,13 @@ public class Bugzilla_370105_Test extends AbstractCDOTest
     CDOBranch parent = transaction.getBranch();
     for (int i = 0; i < 3; i++)
     {
-      CDOBranch child = parent.createBranch("Branch-" + i);
+      String branchName = "Branch-" + i;
+      if (parent.isMainBranch())
+      {
+        branchName = getBranchName(branchName);
+      }
+
+      CDOBranch child = parent.createBranch(branchName);
       parent = child;
     }
 

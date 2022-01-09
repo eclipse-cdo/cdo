@@ -52,7 +52,7 @@ public class Bugzilla_430836_Test extends AbstractCDOTest
     transaction.commit();
     transaction.close();
 
-    CDOBranch newBranch = mainBranch.createBranch("new_branch");
+    CDOBranch newBranch = mainBranch.createBranch(getBranchName("new_branch"));
     transaction = session.openTransaction(newBranch);
 
     PurchaseOrder po2 = Model1Factory.eINSTANCE.createPurchaseOrder();

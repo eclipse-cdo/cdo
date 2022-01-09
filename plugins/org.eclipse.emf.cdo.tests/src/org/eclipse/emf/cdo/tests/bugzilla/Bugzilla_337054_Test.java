@@ -52,7 +52,7 @@ public class Bugzilla_337054_Test extends AbstractCDOTest
     mainTransaction.close();
 
     msg("Creating a branch with a new element...");
-    String branchName = String.valueOf(System.currentTimeMillis());
+    String branchName = getBranchName(String.valueOf(System.currentTimeMillis()));
     CDOBranch branch = session.getBranchManager().getMainBranch().createBranch(branchName);
 
     Company branchCompany = getModel1Factory().createCompany();

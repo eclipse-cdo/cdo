@@ -88,7 +88,7 @@ public class CommitInfoTest extends AbstractCDOTest
   public void testLocalSubBranch() throws Exception
   {
     CDOSession session = openSession();
-    CDOBranch branch = session.getBranchManager().getMainBranch().createBranch("sub");
+    CDOBranch branch = session.getBranchManager().getMainBranch().createBranch(getBranchName("sub"));
     CDOTransaction transaction = session.openTransaction(branch);
     CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
     resource.getContents().add(getModel1Factory().createProduct1());
@@ -198,7 +198,7 @@ public class CommitInfoTest extends AbstractCDOTest
 
     try
     {
-      CDOBranch branch = session.getBranchManager().getMainBranch().createBranch("sub");
+      CDOBranch branch = session.getBranchManager().getMainBranch().createBranch(getBranchName("sub"));
       CDOTransaction transaction = session.openTransaction(branch);
       CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
       resource.getContents().add(getModel1Factory().createProduct1());
@@ -356,7 +356,7 @@ public class CommitInfoTest extends AbstractCDOTest
 
     try
     {
-      CDOBranch branch = session.getBranchManager().getMainBranch().createBranch("sub");
+      CDOBranch branch = session.getBranchManager().getMainBranch().createBranch(getBranchName("sub"));
       CDOTransaction transaction = session.openTransaction(branch);
       CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
       resource.getContents().add(getModel1Factory().createProduct1());
@@ -457,7 +457,7 @@ public class CommitInfoTest extends AbstractCDOTest
 
     try
     {
-      CDOBranch wrong = getRepository().getBranchManager().getMainBranch().createBranch("wrong");
+      CDOBranch wrong = getRepository().getBranchManager().getMainBranch().createBranch(getBranchName("wrong"));
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
       resource.getContents().add(getModel1Factory().createProduct1());
@@ -484,7 +484,7 @@ public class CommitInfoTest extends AbstractCDOTest
 
     try
     {
-      CDOBranch wrong = getRepository().getBranchManager().getMainBranch().createBranch("wrong");
+      CDOBranch wrong = getRepository().getBranchManager().getMainBranch().createBranch(getBranchName("wrong"));
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
       resource.getContents().add(getModel1Factory().createProduct1());
@@ -511,8 +511,8 @@ public class CommitInfoTest extends AbstractCDOTest
 
     try
     {
-      CDOBranch wrong = getRepository().getBranchManager().getMainBranch().createBranch("wrong");
-      CDOBranch branch = session.getBranchManager().getMainBranch().createBranch("sub");
+      CDOBranch wrong = getRepository().getBranchManager().getMainBranch().createBranch(getBranchName("wrong"));
+      CDOBranch branch = session.getBranchManager().getMainBranch().createBranch(getBranchName("sub"));
       CDOTransaction transaction = session.openTransaction(branch);
       CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
       resource.getContents().add(getModel1Factory().createProduct1());
@@ -548,7 +548,7 @@ public class CommitInfoTest extends AbstractCDOTest
 
     try
     {
-      CDOBranch wrong = getRepository(REPO_NAME).getBranchManager().getMainBranch().createBranch("wrong");
+      CDOBranch wrong = getRepository(REPO_NAME).getBranchManager().getMainBranch().createBranch(getBranchName("wrong"));
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
       resource.getContents().add(getModel1Factory().createProduct1());
@@ -575,7 +575,7 @@ public class CommitInfoTest extends AbstractCDOTest
 
     try
     {
-      CDOBranch wrong = getRepository().getBranchManager().getMainBranch().createBranch("wrong");
+      CDOBranch wrong = getRepository().getBranchManager().getMainBranch().createBranch(getBranchName("wrong"));
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
       resource.getContents().add(getModel1Factory().createProduct1());
@@ -662,7 +662,7 @@ public class CommitInfoTest extends AbstractCDOTest
   public void testClientSubBranch() throws Exception
   {
     CDOSession session = openSession();
-    CDOBranch branch = session.getBranchManager().getMainBranch().createBranch("sub");
+    CDOBranch branch = session.getBranchManager().getMainBranch().createBranch(getBranchName("sub"));
     CDOTransaction transaction = session.openTransaction(branch);
     CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
     resource.getContents().add(getModel1Factory().createProduct1());
@@ -769,7 +769,7 @@ public class CommitInfoTest extends AbstractCDOTest
   public void testClientSubBranchWithBranch() throws Exception
   {
     CDOSession session = openSession();
-    CDOBranch branch = session.getBranchManager().getMainBranch().createBranch("sub");
+    CDOBranch branch = session.getBranchManager().getMainBranch().createBranch(getBranchName("sub"));
     CDOTransaction transaction = session.openTransaction(branch);
     CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
     resource.getContents().add(getModel1Factory().createProduct1());
@@ -838,7 +838,7 @@ public class CommitInfoTest extends AbstractCDOTest
   public void testClientTimestampWithWrongBranch() throws Exception
   {
     CDOSession session = openSession();
-    CDOBranch wrong = session.getBranchManager().getMainBranch().createBranch("wrong");
+    CDOBranch wrong = session.getBranchManager().getMainBranch().createBranch(getBranchName("wrong"));
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
     resource.getContents().add(getModel1Factory().createProduct1());
@@ -856,7 +856,7 @@ public class CommitInfoTest extends AbstractCDOTest
   public void testClientBranchWithWrongBranch() throws Exception
   {
     CDOSession session = openSession();
-    CDOBranch wrong = session.getBranchManager().getMainBranch().createBranch("wrong");
+    CDOBranch wrong = session.getBranchManager().getMainBranch().createBranch(getBranchName("wrong"));
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
     resource.getContents().add(getModel1Factory().createProduct1());
@@ -874,8 +874,8 @@ public class CommitInfoTest extends AbstractCDOTest
   public void testClientSubBranchWithWrongBranch() throws Exception
   {
     CDOSession session = openSession();
-    CDOBranch wrong = session.getBranchManager().getMainBranch().createBranch("wrong");
-    CDOBranch branch = session.getBranchManager().getMainBranch().createBranch("sub");
+    CDOBranch wrong = session.getBranchManager().getMainBranch().createBranch(getBranchName("wrong"));
+    CDOBranch branch = session.getBranchManager().getMainBranch().createBranch(getBranchName("sub"));
     CDOTransaction transaction = session.openTransaction(branch);
     CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
     resource.getContents().add(getModel1Factory().createProduct1());
@@ -902,7 +902,7 @@ public class CommitInfoTest extends AbstractCDOTest
     getRepository(REPO_NAME);
 
     CDOSession session = openSession(REPO_NAME);
-    CDOBranch wrong = session.getBranchManager().getMainBranch().createBranch("wrong");
+    CDOBranch wrong = session.getBranchManager().getMainBranch().createBranch(getBranchName("wrong"));
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
     resource.getContents().add(getModel1Factory().createProduct1());
@@ -920,7 +920,7 @@ public class CommitInfoTest extends AbstractCDOTest
   public void testClientCommentWithWrongBranch() throws Exception
   {
     CDOSession session = openSession();
-    CDOBranch wrong = session.getBranchManager().getMainBranch().createBranch("wrong");
+    CDOBranch wrong = session.getBranchManager().getMainBranch().createBranch(getBranchName("wrong"));
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
     resource.getContents().add(getModel1Factory().createProduct1());

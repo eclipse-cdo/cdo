@@ -94,7 +94,7 @@ public class Bugzilla_456993_Test extends AbstractCDOTest
     instances = query.getResult();
     assertEquals(0, instances.size());
 
-    CDOBranch b1 = mainBranch.createBranch(B1);
+    CDOBranch b1 = mainBranch.createBranch(getBranchName(B1));
     transaction1.setBranch(b1);
 
     query = createQuery(transaction1, language, company, queryStringSuffix);
@@ -133,7 +133,7 @@ public class Bugzilla_456993_Test extends AbstractCDOTest
 
     CDOBranch b11 = b1.createBranch(B11);
     CDOBranch b12 = b1.createBranch(B12);
-    CDOBranch b2 = mainBranch.createBranch(B2);
+    CDOBranch b2 = mainBranch.createBranch(getBranchName(B2));
     CDOBranch b21 = b2.createBranch(B21);
     CDOBranch b22 = b2.createBranch(B22);
 

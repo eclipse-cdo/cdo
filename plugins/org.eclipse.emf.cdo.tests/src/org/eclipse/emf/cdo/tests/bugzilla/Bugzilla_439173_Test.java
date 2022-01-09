@@ -46,7 +46,7 @@ public class Bugzilla_439173_Test extends AbstractCDOTest
 
     // Create a branch and change object
     //
-    CDOBranch branch = session.getBranchManager().getMainBranch().createBranch("branch");
+    CDOBranch branch = session.getBranchManager().getMainBranch().createBranch(getBranchName("branch"));
     CDOTransaction branchTx = session.openTransaction(branch);
     resource = branchTx.getResource(path);
 
@@ -93,7 +93,7 @@ public class Bugzilla_439173_Test extends AbstractCDOTest
 
     // Create a branch and change object
     //
-    CDOBranch branch = session.getBranchManager().getMainBranch().createBranch("branch");
+    CDOBranch branch = session.getBranchManager().getMainBranch().createBranch(getBranchName("branch"));
     CDOTransaction branchTx = session.openTransaction(branch);
     resource = branchTx.getResource(sourcePath);
 

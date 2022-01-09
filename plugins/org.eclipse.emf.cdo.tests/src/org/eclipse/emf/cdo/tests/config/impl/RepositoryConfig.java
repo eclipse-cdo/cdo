@@ -14,6 +14,10 @@ package org.eclipse.emf.cdo.tests.config.impl;
 import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.common.CDOCommonRepository.ListOrdering;
 import org.eclipse.emf.cdo.common.CDOCommonView;
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchHandler;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.branch.CDODuplicateBranchException;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
@@ -56,6 +60,7 @@ import org.eclipse.emf.cdo.server.spi.security.InternalSecurityManager;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader5;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.server.ICommitConflictResolver;
@@ -80,6 +85,7 @@ import org.eclipse.net4j.jvm.JVMUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.concurrent.DelegatingExecutorService;
 import org.eclipse.net4j.util.concurrent.ExecutorServiceFactory;
@@ -119,6 +125,8 @@ import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
 
 /**
  * @author Eike Stepper
@@ -184,8 +192,6 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   private transient boolean restarting;
 
   private transient CDOServerBrowser serverBrowser;
-
-  private transient IRepository.WriteAccessHandler resourcePathChecker;
 
   public RepositoryConfig(String name)
   {
@@ -496,6 +502,18 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
         repository.setContainer(serverContainer);
       }
 
+      if (!getCurrentTest().getScenario().alwaysCleanRepositories())
+      {
+        repository.addListener(new LifecycleEventAdapter()
+        {
+          @Override
+          protected void onActivated(ILifecycle lifecycle)
+          {
+            lifecycle.removeListener(this);
+          }
+        });
+      }
+
       registerRepository(repository);
 
       if (activate)
@@ -517,7 +535,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       }
     }
 
-    addResourcePathChecker(repository);
+    addCheckers(repository);
     return repository;
   }
 
@@ -654,11 +672,10 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       }
       else
       {
-        removeResourcePathChecker();
+        removeCheckers();
       }
     }
 
-    resourcePathChecker = null;
     super.tearDown();
   }
 
@@ -713,62 +730,169 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     }
   }
 
-  protected void addResourcePathChecker(InternalRepository repository)
+  protected void addCheckers(InternalRepository repository)
   {
-    if (getCurrentTest().getScenario().alwaysCleanRepositories())
+    BranchLoader5 branchNameChecker = new BranchLoader5()
     {
-      return;
-    }
-
-    if (resourcePathChecker == null)
-    {
-      resourcePathChecker = new IRepository.WriteAccessHandler()
+      @Override
+      public Pair<Integer, Long> createBranch(int branchID, BranchInfo branchInfo)
       {
-        @Override
-        public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext, OMMonitor monitor) throws RuntimeException
+        int baseBranchID = branchInfo.getBaseBranchID();
+        if (baseBranchID == CDOBranch.MAIN_BRANCH_ID)
         {
-          for (InternalCDORevision revision : commitContext.getNewObjects())
+          String name = branchInfo.getName();
+
+          ConfigTest test = getCurrentTest();
+          String prefix = test.getBranchName("");
+
+          if (!name.startsWith(prefix))
           {
-            if (revision.isResource())
-            {
-              String path = CDORevisionUtil.getResourceNodePath(revision, commitContext);
-              ConfigTest test = getCurrentTest();
-              String prefix = test.getResourcePath("");
-              if (!path.startsWith(prefix) && !hasAnnotation(CleanRepositoriesBefore.class))
-              {
-                throw new RuntimeException("Test case " + test.getClass().getName() + '.' + test.getName() + " does not use getResourcePath() for resource "
-                    + path + ", nor does it declare @" + CleanRepositoriesBefore.class.getSimpleName());
-              }
-            }
+            throw new RuntimeException("Test case " + test.getClass().getName() + '.' + test.getName() + " does not use getBranchName() for branch " + name
+                + ", nor does it declare @" + CleanRepositoriesBefore.class.getSimpleName());
           }
         }
 
-        @Override
-        public void handleTransactionAfterCommitted(ITransaction transaction, CommitContext commitContext, OMMonitor monitor)
-        {
-          // Do nothing
-        }
-      };
-    }
+        return repository.createBranch(branchID, branchInfo);
+      }
 
-    repository.addHandler(resourcePathChecker);
+      @Override
+      public BranchInfo loadBranch(int branchID)
+      {
+        return repository.loadBranch(branchID);
+      }
+
+      @Override
+      public SubBranchInfo[] loadSubBranches(int branchID)
+      {
+        return repository.loadSubBranches(branchID);
+      }
+
+      @Override
+      public int loadBranches(int startID, int endID, CDOBranchHandler branchHandler)
+      {
+        return repository.loadBranches(startID, endID, branchHandler);
+      }
+
+      @Override
+      public void renameBranch(int branchID, String oldName, String newName) throws CDODuplicateBranchException
+      {
+        repository.renameBranch(branchID, oldName, newName);
+      }
+
+      @Override
+      public CDOBranchPoint changeTag(AtomicInteger modCount, String oldName, String newName, CDOBranchPoint branchPoint)
+      {
+        return repository.changeTag(modCount, oldName, newName, branchPoint);
+      }
+
+      @Override
+      public void loadTags(String name, Consumer<BranchInfo> handler)
+      {
+        repository.loadTags(name, handler);
+      }
+
+      @Override
+      public CDOBranch[] deleteBranches(int branchID, OMMonitor monitor)
+      {
+        return repository.deleteBranches(branchID, monitor);
+      }
+
+      @SuppressWarnings("deprecation")
+      @Override
+      public void deleteBranch(int branchID)
+      {
+        repository.deleteBranch(branchID);
+      }
+
+      @SuppressWarnings("deprecation")
+      @Override
+      public void renameBranch(int branchID, String newName)
+      {
+        repository.renameBranch(branchID, newName);
+      }
+    };
+
+    IRepository.WriteAccessHandler resourcePathChecker = new IRepository.WriteAccessHandler()
+    {
+      @Override
+      public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext, OMMonitor monitor) throws RuntimeException
+      {
+        if (hasAnnotation(CleanRepositoriesBefore.class))
+        {
+          return;
+        }
+
+        ConfigTest test = getCurrentTest();
+        String prefix = test.getResourcePath("");
+
+        for (InternalCDORevision revision : commitContext.getNewObjects())
+        {
+          if (revision.isResource())
+          {
+            String path = CDORevisionUtil.getResourceNodePath(revision, commitContext);
+            if (!path.startsWith(prefix))
+            {
+              throw new RuntimeException("Test case " + test.getClass().getName() + '.' + test.getName() + " does not use getResourcePath() for resource "
+                  + path + ", nor does it declare @" + CleanRepositoriesBefore.class.getSimpleName());
+            }
+          }
+        }
+      }
+
+      @Override
+      public void handleTransactionAfterCommitted(ITransaction transaction, CommitContext commitContext, OMMonitor monitor)
+      {
+        // Do nothing
+      }
+    };
+
+    LifecycleUtil.withoutChecks(() -> {
+      InternalCDOBranchManager branchManager = repository.getBranchManager();
+      if (branchManager != null)
+      {
+        branchManager.setBranchLoader(branchNameChecker);
+      }
+      else
+      {
+        repository.addListener(new LifecycleEventAdapter()
+        {
+          @Override
+          protected void onActivated(ILifecycle lifecycle)
+          {
+            repository.removeListener(this);
+
+            LifecycleUtil.withoutChecks(() -> {
+              repository.getBranchManager().setBranchLoader(branchNameChecker);
+            });
+          }
+        });
+      }
+
+      repository.addHandler(resourcePathChecker);
+    });
   }
 
-  protected void removeResourcePathChecker()
+  private void removeCheckers()
   {
-    for (InternalRepository repository : getRepositories())
-    {
-      for (Handler handler : repository.getHandlers())
+    LifecycleUtil.withoutChecks(() -> {
+      for (InternalRepository repository : getRepositories())
       {
-        repository.removeHandler(handler);
-      }
+        // Remove branch path checker.
+        repository.getBranchManager().setBranchLoader(repository);
 
-      CDOCommitInfoManager commitInfoManager = repository.getCommitInfoManager();
-      for (CDOCommitInfoHandler handler : commitInfoManager.getCommitInfoHandlers())
-      {
-        commitInfoManager.removeCommitInfoHandler(handler);
+        // Remove resource path checker.
+        for (Handler handler : repository.getHandlers())
+        {
+          repository.removeHandler(handler);
+        }
+
+        CDOCommitInfoManager commitInfoManager = repository.getCommitInfoManager();
+        for (CDOCommitInfoHandler handler : commitInfoManager.getCommitInfoHandlers())
+        {
+          commitInfoManager.removeCommitInfoHandler(handler);
+        }
       }
-    }
+    });
   }
 
   protected InternalRepository createRepository(String name)

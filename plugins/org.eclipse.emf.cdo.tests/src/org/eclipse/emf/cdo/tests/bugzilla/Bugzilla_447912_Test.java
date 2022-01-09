@@ -40,8 +40,8 @@ public class Bugzilla_447912_Test extends AbstractCDOTest
     CDOSession session1 = openSession();
     CDOView view1 = session1.openView();
     CDOBranch mainBranchFromView1 = view1.getBranch();
-    String branchB1Name = "b1";
-    String branchB2Name = "b2";
+    String branchB1Name = getBranchName("b1");
+    String branchB2Name = getBranchName("b2");
     mainBranchFromView1.createBranch(branchB1Name);
 
     CDOSession session2 = openSession();

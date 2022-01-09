@@ -124,7 +124,7 @@ public class CDOIDTest extends AbstractCDOTest
     transaction.commit();
 
     CDOID idToForce = CDOUtil.getCDOObject(company).cdoID();
-    CDOBranch newBranch = transaction.getBranch().createBranch("new");
+    CDOBranch newBranch = transaction.getBranch().createBranch(getBranchName("new"));
     transaction.setBranch(newBranch);
 
     resource.getContents().clear();
@@ -147,6 +147,7 @@ public class CDOIDTest extends AbstractCDOTest
   @Requires({ IRepositoryConfig.CAPABILITY_BRANCHING, IRepositoryConfig.CAPABILITY_RESTARTABLE })
   public void testSetIDWithReferences() throws Exception
   {
+    String newPath = getBranchName("new");
     CDOID idToForce1;
     CDOID idToForce2;
 
@@ -163,7 +164,7 @@ public class CDOIDTest extends AbstractCDOTest
 
       idToForce1 = CDOUtil.getCDOObject(company).cdoID();
       idToForce2 = CDOUtil.getCDOObject(category).cdoID();
-      CDOBranch newBranch = transaction.getBranch().createBranch("new");
+      CDOBranch newBranch = transaction.getBranch().createBranch(newPath);
       transaction.setBranch(newBranch);
 
       resource.getContents().clear();
@@ -183,7 +184,7 @@ public class CDOIDTest extends AbstractCDOTest
     restartRepository();
 
     CDOSession sessionB = openSession();
-    CDOBranch newBranch = sessionB.getBranchManager().getBranch("MAIN/new");
+    CDOBranch newBranch = sessionB.getBranchManager().getBranch("MAIN/" + newPath);
 
     CDOTransaction transactionB = sessionB.openTransaction(newBranch);
     CDOResource resourceB = transactionB.getResource(getResourcePath("/test1"));

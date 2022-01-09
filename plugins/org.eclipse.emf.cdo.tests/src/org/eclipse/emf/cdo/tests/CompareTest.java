@@ -47,7 +47,7 @@ public class CompareTest extends AbstractCDOTest
     addCompany(contents);
     addCompany(contents);
     long time1 = transaction.commit().getTimeStamp();
-    CDOBranch source1 = mainBranch.createBranch("source1", time1);
+    CDOBranch source1 = mainBranch.createBranch(getBranchName("source1"), time1);
 
     sleep(10);
     addCompany(contents);
@@ -55,14 +55,14 @@ public class CompareTest extends AbstractCDOTest
     addCompany(contents);
     addCompany(contents);
     long time2 = transaction.commit().getTimeStamp();
-    CDOBranch source2 = mainBranch.createBranch("source2", time2);
+    CDOBranch source2 = mainBranch.createBranch(getBranchName("source2"), time2);
 
     sleep(10);
     addCompany(contents);
     addCompany(contents);
     addCompany(contents);
     long time3 = transaction.commit().getTimeStamp();
-    CDOBranch source3 = mainBranch.createBranch("source3", time3);
+    CDOBranch source3 = mainBranch.createBranch(getBranchName("source3"), time3);
 
     assertCompare(session, mainBranch.getHead(), source1.getHead(), 7, 1, 0);
     assertCompare(session, mainBranch.getHead(), source2.getHead(), 3, 1, 0);
@@ -88,7 +88,7 @@ public class CompareTest extends AbstractCDOTest
     addCompany(contents);
     addCompany(contents);
     long time1 = transaction.commit().getTimeStamp();
-    CDOBranch source1 = mainBranch.createBranch("source1", time1);
+    CDOBranch source1 = mainBranch.createBranch(getBranchName("source1"), time1);
 
     sleep(10);
     addCompany(contents);
@@ -130,7 +130,7 @@ public class CompareTest extends AbstractCDOTest
     addCompany(contents);
     addCompany(contents);
     long time1 = transaction.commit().getTimeStamp();
-    CDOBranch source1 = mainBranch.createBranch("source1", time1);
+    CDOBranch source1 = mainBranch.createBranch(getBranchName("source1"), time1);
 
     sleep(10);
     addCompany(contents);
@@ -138,7 +138,7 @@ public class CompareTest extends AbstractCDOTest
     addCompany(contents);
     addCompany(contents);
     long time2 = transaction.commit().getTimeStamp();
-    CDOBranch source2 = mainBranch.createBranch("source2", time2);
+    CDOBranch source2 = mainBranch.createBranch(getBranchName("source2"), time2);
 
     sleep(10);
     addCompany(contents);
@@ -183,7 +183,7 @@ public class CompareTest extends AbstractCDOTest
     addCompany(contents);
     addCompany(contents);
     long time = transaction.commit().getTimeStamp();
-    CDOBranch source = mainBranch.createBranch("source" + 0, time);
+    CDOBranch source = mainBranch.createBranch(getBranchName("source0"), time);
 
     sleep(10);
     CDOTransaction tx1 = session.openTransaction(source);
@@ -213,7 +213,7 @@ public class CompareTest extends AbstractCDOTest
     addCompany(contents);
     addCompany(contents);
     long time = transaction.commit().getTimeStamp();
-    CDOBranch source = mainBranch.createBranch("source", time);
+    CDOBranch source = mainBranch.createBranch(getBranchName("source"), time);
 
     sleep(10);
     CDOTransaction tx1 = session.openTransaction(source);
@@ -234,7 +234,7 @@ public class CompareTest extends AbstractCDOTest
     return company;
   }
 
-  private void assertCompare(CDOSession session, CDOBranchPoint target, CDOBranchPoint source, int n, int c, int d)
+  private static void assertCompare(CDOSession session, CDOBranchPoint target, CDOBranchPoint source, int n, int c, int d)
   {
     CDOView view = session.openView(target.getBranch(), target.getTimeStamp());
     CDOChangeSetData result = view.compareRevisions(source);

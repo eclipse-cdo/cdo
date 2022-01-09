@@ -681,7 +681,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     company.setName("main-v2");
     transaction1.commit();
 
-    CDOBranch subBranch = transaction1.getBranch().createBranch("SUB_BRANCH");
+    CDOBranch subBranch = transaction1.getBranch().createBranch(getBranchName("SUB_BRANCH"));
     transaction1.setBranch(subBranch);
 
     CDOView view = session1.openView(subBranch);

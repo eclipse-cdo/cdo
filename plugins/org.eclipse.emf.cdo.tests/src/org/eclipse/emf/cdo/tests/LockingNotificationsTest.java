@@ -297,7 +297,7 @@ public class LockingNotificationsTest extends AbstractLockingTest
   private void differentBranchDifferentSession(boolean autoRelease) throws Exception
   {
     CDOSession session = openSession();
-    CDOBranch subBranch = session.getBranchManager().getMainBranch().createBranch("sub1");
+    CDOBranch subBranch = session.getBranchManager().getMainBranch().createBranch(getBranchName("sub1"));
 
     CDOSession controlSession = openSession();
     CDOView controlView = openViewWithLockNotifications(controlSession, subBranch);
@@ -318,7 +318,7 @@ public class LockingNotificationsTest extends AbstractLockingTest
   private void differentBranchSameSession(boolean autoRelease) throws Exception
   {
     CDOSession session = openSession();
-    CDOBranch subBranch = session.getBranchManager().getMainBranch().createBranch("sub2");
+    CDOBranch subBranch = session.getBranchManager().getMainBranch().createBranch(getBranchName("sub2"));
     CDOView controlView = openViewWithLockNotifications(session, subBranch);
 
     if (autoRelease)

@@ -37,7 +37,7 @@ public class Bugzilla_336382_Test extends AbstractCDOTest
 
     CDOBranch mainBranch = session.getBranchManager().getMainBranch();
     long timestamp = mainBranch.getBase().getTimeStamp();
-    CDOBranch sourceBranch = mainBranch.createBranch("branch1", timestamp);
+    CDOBranch sourceBranch = mainBranch.createBranch(getBranchName("branch1"), timestamp);
 
     {
       CDOTransaction tx = session.openTransaction(sourceBranch);
@@ -51,7 +51,7 @@ public class Bugzilla_336382_Test extends AbstractCDOTest
       tx.commit();
     }
 
-    CDOBranch targetBranch = mainBranch.createBranch("branch2", timestamp);
+    CDOBranch targetBranch = mainBranch.createBranch(getBranchName("branch2"), timestamp);
 
     CDOTransaction transaction = session.openTransaction(targetBranch);
 

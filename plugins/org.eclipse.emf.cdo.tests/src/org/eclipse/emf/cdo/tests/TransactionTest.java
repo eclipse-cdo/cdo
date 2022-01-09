@@ -836,7 +836,7 @@ public class TransactionTest extends AbstractCDOTest
 
     if (getRepositoryConfig().supportingBranches())
     {
-      CDOBranch subBranch = transaction.getBranch().createBranch("subBranch");
+      CDOBranch subBranch = transaction.getBranch().createBranch(getBranchName("subBranch"));
 
       try
       {

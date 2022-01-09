@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind;
 import org.eclipse.emf.cdo.common.branch.CDOBranchCreationContext;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
+import org.eclipse.emf.cdo.common.branch.CDODuplicateBranchException;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader;
@@ -28,6 +29,7 @@ import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.event.Event;
+import org.eclipse.net4j.util.io.RemoteException;
 import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
@@ -126,9 +128,11 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
   }
 
   @Override
-  public void setName(String name)
+  public void setName(String name) throws CDODuplicateBranchException
   {
     checkActive();
+
+    CDOBranchManagerImpl.checkBranchName(name);
 
     BranchLoader branchLoader = branchManager.getBranchLoader();
     if (!(branchLoader instanceof BranchLoader3))
@@ -139,7 +143,15 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
     String oldName = getName();
     if (!ObjectUtil.equals(name, oldName))
     {
-      ((BranchLoader3)branchLoader).renameBranch(id, oldName, name);
+      try
+      {
+        ((BranchLoader3)branchLoader).renameBranch(id, oldName, name);
+      }
+      catch (RemoteException ex)
+      {
+        throw ex.unwrap();
+      }
+
       basicSetName(name);
     }
   }
@@ -245,18 +257,13 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
   }
 
   @Override
-  public InternalCDOBranch createBranch(String name, long timeStamp)
+  public InternalCDOBranch createBranch(String name, long timeStamp) throws CDODuplicateBranchException
   {
-    if (!branchManager.getRepository().isSupportingBranches())
-    {
-      throw new IllegalStateException("Branching is not supported");
-    }
-
     return branchManager.createBranch(BranchLoader.NEW_BRANCH, name, this, timeStamp);
   }
 
   @Override
-  public InternalCDOBranch createBranch(String name)
+  public InternalCDOBranch createBranch(String name) throws CDODuplicateBranchException
   {
     return createBranch(name, CDOBranchPoint.UNSPECIFIED_DATE);
   }

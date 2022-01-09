@@ -104,7 +104,7 @@ public class Bugzilla_576893_Test extends AbstractCDOTest
 
     // =======================================================================================
     IOUtil.OUT().println("\nTesting view target switch...");
-    CDOBranch subBranch = view.getBranch().createBranch("subBranch");
+    CDOBranch subBranch = view.getBranch().createBranch(getBranchName("subBranch"));
     view.setBranch(subBranch);
 
     waitUntilPrefetched(prefetcherManager);

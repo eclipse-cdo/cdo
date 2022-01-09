@@ -16,7 +16,7 @@ package org.eclipse.net4j.signal;
  * @author Eike Stepper
  * @since 2.0
  */
-public class RemoteException extends RuntimeException
+public class RemoteException extends org.eclipse.net4j.util.io.RemoteException
 {
   private static final long serialVersionUID = 1L;
 

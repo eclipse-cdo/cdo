@@ -925,7 +925,7 @@ public class InvalidationTest extends AbstractCDOTest
     companyB.getCategories().get(0);
     CDOObject cdoCompanyB = CDOUtil.getCDOObject(companyB);
 
-    CDOBranch branch1 = mainBranch.createBranch("branch1");
+    CDOBranch branch1 = mainBranch.createBranch(getBranchName("branch1"));
     transactionB.setBranch(branch1);
     transactionA.setBranch(branch1);
 

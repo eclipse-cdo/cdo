@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchTag;
 import org.eclipse.emf.cdo.common.branch.CDOBranchTag.TagEvent;
 import org.eclipse.emf.cdo.common.branch.CDOBranchTag.TagMovedEvent;
+import org.eclipse.emf.cdo.common.branch.CDODuplicateBranchException;
 import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
@@ -30,12 +31,14 @@ import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader.BranchInfo;
 
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.container.ContainerEvent;
 import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.io.RemoteException;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.ref.ReferenceValueMap;
 
@@ -344,11 +347,27 @@ public class CDOBranchManagerImpl extends Container<CDOBranch> implements Intern
   }
 
   @Override
-  public InternalCDOBranch createBranch(int branchID, String name, InternalCDOBranch baseBranch, long baseTimeStamp)
+  public InternalCDOBranch createBranch(int branchID, String name, InternalCDOBranch baseBranch, long baseTimeStamp) throws CDODuplicateBranchException
   {
     checkActive();
 
-    Pair<Integer, Long> result = branchLoader.createBranch(branchID, new BranchInfo(name, baseBranch.getID(), baseTimeStamp));
+    if (!repository.isSupportingBranches())
+    {
+      throw new IllegalStateException("Branching is not supported");
+    }
+
+    checkBranchName(name);
+
+    Pair<Integer, Long> result;
+    try
+    {
+      result = branchLoader.createBranch(branchID, new BranchInfo(name, baseBranch.getID(), baseTimeStamp));
+    }
+    catch (RemoteException ex)
+    {
+      throw ex.unwrap();
+    }
+
     int actualBranchID = result.getElement1();
     long actualBaseTimeStamp = result.getElement2();
 
@@ -765,6 +784,19 @@ public class CDOBranchManagerImpl extends Container<CDOBranch> implements Intern
     super.doBeforeActivate();
     checkState(repository, "repository"); //$NON-NLS-1$
     checkState(branchLoader, "branchLoader"); //$NON-NLS-1$
+  }
+
+  public static void checkBranchName(String name) throws IllegalArgumentException
+  {
+    if (StringUtil.isEmpty(name))
+    {
+      throw new IllegalArgumentException("Branch name is empty");
+    }
+
+    if (name.indexOf('/') != -1)
+    {
+      throw new IllegalArgumentException("Branch name contains '/'");
+    }
   }
 
   /**

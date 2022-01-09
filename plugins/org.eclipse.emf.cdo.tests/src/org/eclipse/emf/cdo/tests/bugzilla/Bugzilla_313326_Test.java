@@ -51,7 +51,7 @@ public class Bugzilla_313326_Test extends AbstractCDOTest
 
     // create another branch
     final CDOBranch mainBranch = tr1.getBranch();
-    final CDOBranch otherBranch = mainBranch.createBranch("other");
+    final CDOBranch otherBranch = mainBranch.createBranch(getBranchName("other"));
     final CDOTransaction tr2 = session.openTransaction(otherBranch);
 
     // get container in other branch and remove containment.

@@ -105,7 +105,7 @@ public class RevisionDeltaCascadingBranchesTest extends RevisionDeltaTest
     {
       CDOSession session = openSession();
       CDOBranch mainBranch = session.getBranchManager().getMainBranch();
-      CDOBranch subBranch = mainBranch.createBranch("subBranch", timestampBaseSubBranch);
+      CDOBranch subBranch = mainBranch.createBranch(getBranchName("subBranch"), timestampBaseSubBranch);
       subBranchID = subBranch.getID();
 
       CDOTransaction transaction = session.openTransaction(subBranch);

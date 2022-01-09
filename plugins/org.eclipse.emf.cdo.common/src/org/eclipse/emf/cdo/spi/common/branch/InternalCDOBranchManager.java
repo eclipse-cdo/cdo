@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchHandler;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchTag;
+import org.eclipse.emf.cdo.common.branch.CDODuplicateBranchException;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
@@ -75,7 +76,7 @@ public interface InternalCDOBranchManager extends CDOBranchManager, ILifecycle
   @Override
   public InternalCDOBranch getBranch(String path);
 
-  public InternalCDOBranch createBranch(int id, String name, InternalCDOBranch baseBranch, long baseTimeStamp);
+  public InternalCDOBranch createBranch(int id, String name, InternalCDOBranch baseBranch, long baseTimeStamp) throws CDODuplicateBranchException;
 
   /**
    * @since 4.15
@@ -358,7 +359,7 @@ public interface InternalCDOBranchManager extends CDOBranchManager, ILifecycle
    */
   public interface BranchLoader3 extends BranchLoader2
   {
-    public void renameBranch(int branchID, String oldName, String newName);
+    public void renameBranch(int branchID, String oldName, String newName) throws CDODuplicateBranchException;
   }
 
   /**

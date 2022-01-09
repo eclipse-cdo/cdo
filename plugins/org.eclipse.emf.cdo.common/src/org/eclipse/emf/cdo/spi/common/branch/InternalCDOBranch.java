@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.spi.common.branch;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDODuplicateBranchException;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader.BranchInfo;
 
 /**
@@ -40,10 +41,10 @@ public interface InternalCDOBranch extends CDOBranch
   public InternalCDOBranch getBranch(String path);
 
   @Override
-  public InternalCDOBranch createBranch(String name, long timeStamp);
+  public InternalCDOBranch createBranch(String name, long timeStamp) throws CDODuplicateBranchException;
 
   @Override
-  public InternalCDOBranch createBranch(String name);
+  public InternalCDOBranch createBranch(String name) throws CDODuplicateBranchException;
 
   public BranchInfo getBranchInfo();
 

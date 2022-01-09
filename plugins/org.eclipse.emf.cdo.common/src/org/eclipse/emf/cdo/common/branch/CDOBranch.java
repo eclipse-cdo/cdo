@@ -101,7 +101,7 @@ public interface CDOBranch extends CDOBranchPoint, CDONameProvider, IContainer<C
   /**
    * @since 4.4
    */
-  public void setName(String name);
+  public void setName(String name) throws CDODuplicateBranchException;
 
   /**
    * Returns the fully qualified path name of this branch, a concatenation of the names of all branches from the
@@ -190,13 +190,13 @@ public interface CDOBranch extends CDOBranchPoint, CDONameProvider, IContainer<C
    *          special time stamp <i> {@link CDOBranchPoint#UNSPECIFIED_DATE unspecified}</i>
    * @see #createBranch(String)
    */
-  public CDOBranch createBranch(String name, long timeStamp);
+  public CDOBranch createBranch(String name, long timeStamp) throws CDODuplicateBranchException;
 
   /**
    * Creates a sub branch of this branch with the given name, {@link #getBase() based} at the {@link CDOTimeProvider
    * current time}.
    */
-  public CDOBranch createBranch(String name);
+  public CDOBranch createBranch(String name) throws CDODuplicateBranchException;
 
   /**
    * Deletes this branch and all its sub branches.

@@ -39,7 +39,7 @@ public class Bugzilla_303807_Test extends AbstractCDOTest
     transaction.commit();
 
     // Switch transaction to a new branch
-    CDOBranch newBranch = mainBranch.createBranch("foobar");
+    CDOBranch newBranch = mainBranch.createBranch(getBranchName("foobar"));
     transaction.setBranch(newBranch);
 
     transaction.getRootResource().getContents().size();

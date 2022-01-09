@@ -185,7 +185,7 @@ public class Bugzilla_505654_Test extends AbstractCDOTest
     System.out.println("COMMIT " + commit.getTimeStamp());
     System.out.println(leftCompany);
 
-    CDOBranch rightBranch = CDOUtil.createBranch(commit, "branch1");
+    CDOBranch rightBranch = CDOUtil.createBranch(commit, getBranchName("branch1"));
     rightTransaction = session.openTransaction(rightBranch);
     CDOResource rightResource = rightTransaction.getResource(getResourcePath("/model1"));
     rightCompany = (Company)rightResource.getContents().get(0);

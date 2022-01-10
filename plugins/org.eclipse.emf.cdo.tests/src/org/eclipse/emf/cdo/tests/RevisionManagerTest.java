@@ -218,7 +218,13 @@ public class RevisionManagerTest extends AbstractCDOTest
       sleep(1);
     }
 
-    return baseBranch.createBranch("branch" + ++branchID, baseTimeStamp);
+    String name = "branch" + ++branchID;
+    if (baseBranch.isMainBranch())
+    {
+      name = getBranchName(name);
+    }
+
+    return baseBranch.createBranch(name, baseTimeStamp);
   }
 
   private long getMiddleOfValidity(InternalCDORevision revision)

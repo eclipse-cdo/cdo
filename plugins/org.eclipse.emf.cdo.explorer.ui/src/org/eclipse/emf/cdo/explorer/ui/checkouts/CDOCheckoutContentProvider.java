@@ -562,6 +562,11 @@ public class CDOCheckoutContentProvider extends CDOContentProvider<CDOCheckout> 
 
   public static TreeViewer createTreeViewer(Composite container, Predicate<Object> contentPredicate)
   {
+    return createTreeViewer(container, SWT.BORDER, contentPredicate);
+  }
+
+  public static TreeViewer createTreeViewer(Composite container, int style, Predicate<Object> contentPredicate)
+  {
     // TODO This is not lazy, async:
     CDOItemProvider parentItemProvider = new CDOItemProvider(null)
     {
@@ -612,7 +617,7 @@ public class CDOCheckoutContentProvider extends CDOContentProvider<CDOCheckout> 
 
     CDOCheckoutLabelProvider labelProvider = new CDOCheckoutLabelProvider(contentProvider);
 
-    TreeViewer parentViewer = new TreeViewer(container, SWT.BORDER);
+    TreeViewer parentViewer = new TreeViewer(container, style);
     parentViewer.setContentProvider(parentItemProvider);
     parentViewer.setLabelProvider(labelProvider);
     parentViewer.setInput(CDOExplorerUtil.getCheckoutManager());

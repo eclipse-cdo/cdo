@@ -53,6 +53,7 @@
            class="org.eclipse.emf.cdo.explorer.ui.properties.ExplorerUIAdapterFactory">
         <adapter type="org.eclipse.emf.cdo.common.util.CDORenameContext"/>
         <adapter type="org.eclipse.ui.model.IWorkbenchAdapter"/>
+        <adapter type="org.eclipse.ui.IPersistableElement"/>
      </factory>
      <factory
            adaptableType="org.eclipse.emf.cdo.common.branch.CDOBranch"
@@ -80,6 +81,12 @@
            class="org.eclipse.emf.cdo.ui.internal.team.history.CDOHistoryAdapterFactory">
         <adapter type="org.eclipse.team.ui.history.IHistoryPageSource"/>
      </factory>
+  </extension>
+
+  <extension point="org.eclipse.ui.elementFactories">
+     <factory
+           class="org.eclipse.emf.cdo.explorer.ui.properties.ExplorerUIAdapterFactory$ExplorerElementFactory"
+           id="org.eclipse.emf.cdo.explorer.ElementFactory"/>
   </extension>
 
   <extension point="org.eclipse.ui.perspectives">
@@ -893,6 +900,21 @@
             name="CDO Editor"
             priority="100"
             regex="cdo\.checkout://.*"/>
+  </extension>
+
+  <extension point="org.eclipse.ui.workingSets">
+    <workingSet
+          id="org.eclipse.emf.cdo.explorer.ui.CheckoutWorkingSet"
+          name="CDO Checkouts"
+          icon="icons/workingset.gif"
+          description="Working set for CDO checkouts"
+          pageClass="org.eclipse.emf.cdo.explorer.ui.checkouts.workingsets.CheckoutWorkingSetWizardPage"/>
+    <workingSet
+          id="org.eclipse.emf.cdo.explorer.ui.OthersWorkingSet"
+          name="Other CDO Checkouts"
+          icon="icons/workingset.gif"
+          description="Working set containing all CDO checkouts not in any other groups"
+          updaterClass="org.eclipse.emf.cdo.explorer.ui.checkouts.workingsets.OthersWorkingSetUpdater"/>
   </extension>
 
 </plugin>

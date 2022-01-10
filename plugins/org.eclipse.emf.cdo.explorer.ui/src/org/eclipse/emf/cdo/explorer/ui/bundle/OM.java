@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.explorer.ui.bundle;
 
+import org.eclipse.emf.cdo.explorer.ui.checkouts.workingsets.OthersWorkingSetUpdater;
 import org.eclipse.emf.cdo.ui.OverlayImage;
 
 import org.eclipse.net4j.util.om.OMBundle;
@@ -25,8 +26,12 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.provider.ComposedImage;
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.ui.IWorkingSet;
+import org.eclipse.ui.IWorkingSetManager;
+import org.eclipse.ui.PlatformUI;
 
 /**
  * The <em>Operations & Maintenance</em> class of this bundle.
@@ -92,6 +97,31 @@ public abstract class OM
     {
       super(BUNDLE);
       INSTANCE = this;
+    }
+
+    @Override
+    protected void doStart() throws Exception
+    {
+      IWorkingSetManager workingSetManager = PlatformUI.getWorkbench().getWorkingSetManager();
+      if (!existsOthersWorkingSet(workingSetManager))
+      {
+        IWorkingSet workingSet = workingSetManager.createWorkingSet(OthersWorkingSetUpdater.WORKING_SET_NAME, new IAdaptable[0]);
+        workingSet.setId(OthersWorkingSetUpdater.WORKING_SET_ID);
+        workingSetManager.addWorkingSet(workingSet);
+      }
+    }
+
+    private boolean existsOthersWorkingSet(IWorkingSetManager workingSetManager)
+    {
+      for (IWorkingSet workingSet : workingSetManager.getAllWorkingSets())
+      {
+        if (OthersWorkingSetUpdater.WORKING_SET_ID.equals(workingSet.getId()))
+        {
+          return true;
+        }
+      }
+
+      return false;
     }
   }
 }

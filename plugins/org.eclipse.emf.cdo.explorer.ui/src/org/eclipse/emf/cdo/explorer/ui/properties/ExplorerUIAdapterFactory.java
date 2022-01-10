@@ -34,12 +34,16 @@ import org.eclipse.net4j.util.StringUtil;
 
 import org.eclipse.emf.ecore.EObject;
 
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IAdapterFactory;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.ui.IElementFactory;
+import org.eclipse.ui.IMemento;
+import org.eclipse.ui.IPersistableElement;
 import org.eclipse.ui.model.IWorkbenchAdapter;
 import org.eclipse.ui.model.WorkbenchAdapter;
 
@@ -56,8 +60,10 @@ public class ExplorerUIAdapterFactory implements IAdapterFactory
 
   private static final Class<IWorkbenchAdapter> CLASS_WORKBENCH_ADAPTER = IWorkbenchAdapter.class;
 
+  private static final Class<IPersistableElement> CLASS_PERSISTABLE_ELEMENT = IPersistableElement.class;
+
   private static final Class<?>[] CLASSES = { CLASS_EXPLORER_RENAME_CONTEXT, CLASS_EXPLORER_RENAME_BRANCH_CONTEXT, CLASS_STATE_PROVIDER,
-      CLASS_WORKBENCH_ADAPTER };
+      CLASS_WORKBENCH_ADAPTER, CLASS_PERSISTABLE_ELEMENT };
 
   public ExplorerUIAdapterFactory()
   {
@@ -114,6 +120,13 @@ public class ExplorerUIAdapterFactory implements IAdapterFactory
       if (adaptableObject instanceof AbstractElement)
       {
         return (T)ExplorerWorkbenchAdapter.INSTANCE;
+      }
+    }
+    else if (adapterType == CLASS_PERSISTABLE_ELEMENT)
+    {
+      if (adaptableObject instanceof AbstractElement)
+      {
+        return (T)new ExplorerPersistableElement((AbstractElement)adaptableObject);
       }
     }
 
@@ -345,6 +358,77 @@ public class ExplorerUIAdapterFactory implements IAdapterFactory
       }
 
       return super.getLabel(object);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class ExplorerPersistableElement implements IPersistableElement
+  {
+    private final AbstractElement element;
+
+    private ExplorerPersistableElement(AbstractElement element)
+    {
+      this.element = element;
+    }
+
+    @Override
+    public void saveState(IMemento memento)
+    {
+      memento.putString("id", element.getID());
+      if (element instanceof CDORepository)
+      {
+        memento.putString("type", ExplorerElementFactory.TYPE_REPOSITORY);
+      }
+      else if (element instanceof CDOCheckout)
+      {
+        memento.putString("type", ExplorerElementFactory.TYPE_CHECKOUT);
+      }
+    }
+
+    @Override
+    public String getFactoryId()
+    {
+      return ExplorerElementFactory.ID;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class ExplorerElementFactory implements IElementFactory
+  {
+    public static final String ID = "org.eclipse.emf.cdo.explorer.ElementFactory";
+
+    public static final String TYPE_REPOSITORY = "repository";
+
+    public static final String TYPE_CHECKOUT = "checkout";
+
+    public ExplorerElementFactory()
+    {
+    }
+
+    @Override
+    public IAdaptable createElement(IMemento memento)
+    {
+      String type = memento.getString("type");
+      if (type != null)
+      {
+        String id = memento.getString("id");
+
+        if (TYPE_REPOSITORY.equals(type))
+        {
+          return CDOExplorerUtil.getRepositoryManager().getRepository(id);
+        }
+
+        if (TYPE_CHECKOUT.equals(type))
+        {
+          return CDOExplorerUtil.getCheckoutManager().getCheckout(id);
+        }
+      }
+
+      return null;
     }
   }
 }

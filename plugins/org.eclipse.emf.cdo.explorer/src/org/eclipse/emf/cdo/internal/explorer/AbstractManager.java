@@ -150,8 +150,7 @@ public abstract class AbstractManager<T extends CDOExplorerElement> extends SetC
         continue;
       }
 
-      T element = addElement(child, properties);
-      ((AbstractElement)element).save();
+      T element = addElement(child, properties, true);
       return element;
     }
   }
@@ -161,18 +160,23 @@ public abstract class AbstractManager<T extends CDOExplorerElement> extends SetC
     Properties properties = loadProperties(folder, getPropertiesFileName());
     if (properties != null)
     {
-      addElement(folder, properties);
+      addElement(folder, properties, false);
     }
   }
 
-  private T addElement(File folder, Properties properties)
+  private T addElement(File folder, Properties properties, boolean newElement)
   {
     String type = properties.getProperty("type");
 
     T element = createElement(type);
     ((AbstractElement)element).init(folder, type, properties);
-    LifecycleUtil.activate(element);
 
+    if (newElement)
+    {
+      ((AbstractElement)element).save();
+    }
+
+    LifecycleUtil.activate(element);
     addElement(element);
     elementMap.put(element.getID(), element);
     return element;

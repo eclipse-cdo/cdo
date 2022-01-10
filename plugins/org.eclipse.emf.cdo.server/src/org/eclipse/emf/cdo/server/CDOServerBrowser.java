@@ -776,7 +776,11 @@ public class CDOServerBrowser extends Worker
 
     protected void showBranch(PrintStream out, CDOBranch branch)
     {
-      out.println("<li>" + branch.getName() + " [" + branch.getID() + "]");
+      String name = branch.getName();
+      int id = branch.getID();
+      String timeStamp = branch.isDeleted() ? "DELETED" : CDOCommonUtil.formatTimeStamp(branch.getTimeStamp());
+
+      out.println("<li>" + name + " [" + id + ", " + timeStamp + "]");
 
       for (CDOBranch child : branch.getBranches())
       {
@@ -784,46 +788,6 @@ public class CDOServerBrowser extends Worker
         showBranch(out, child);
         out.println("</ul>");
       }
-    }
-
-    protected String showPackage(InternalCDOPackageInfo info, InternalCDOPackageRegistry packageRegistry, CDOServerBrowser browser, String param,
-        PrintStream out, String prefix)
-    {
-      EPackage ePackage = info.getEPackage();
-      out.println("<h3>" + prefix + ePackage.getName() + "&nbsp;&nbsp;[" + ePackage.getNsURI() + "]</h3>");
-
-      for (EClassifier classifier : ePackage.getEClassifiers())
-      {
-        String name = classifier.getName();
-        if (param == null)
-        {
-          param = name;
-        }
-
-        String label = name.equals(param) ? name : browser.href(name, getName(), "classifier", name);
-        out.print(prefix + "&nbsp;&nbsp;<b>" + label);
-
-        if (classifier instanceof EEnum)
-        {
-          EEnum eenum = (EEnum)classifier;
-          out.print("&nbsp;&nbsp;" + eenum.getELiterals());
-        }
-        else if (classifier instanceof EDataType)
-        {
-          EDataType eDataType = (EDataType)classifier;
-          out.print("&nbsp;&nbsp;" + eDataType.getInstanceClassName());
-        }
-
-        out.println("</b><br>");
-      }
-
-      for (EPackage sub : ePackage.getESubpackages())
-      {
-        InternalCDOPackageInfo subInfo = packageRegistry.getPackageInfo(sub);
-        param = showPackage(subInfo, packageRegistry, browser, param, out, prefix + "&nbsp;&nbsp;");
-      }
-
-      return param;
     }
   }
 

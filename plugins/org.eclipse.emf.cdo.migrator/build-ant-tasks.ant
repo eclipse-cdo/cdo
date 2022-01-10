@@ -14,13 +14,18 @@
 	<property name="jar.name" value="cdo.ant.tasks" />
 
 	<target name="build-ant-tasks">
-		<jar destfile="ant_tasks/${jar.name}.jar">
-			<fileset dir="bin">
-				<include name="**/*.class" />
-				<exclude name="**/actions/*.class" />
-				<exclude name="**/wizards/*.class" />
-				<exclude name="**/CDOImporter*.class" />
-			</fileset>
+		<fileset dir="bin" id="content">
+			<include name="**/*.class" />
+			<exclude name="**/actions/*.class" />
+			<exclude name="**/wizards/*.class" />
+			<exclude name="**/CDOImporter*.class" />
+		</fileset>
+		<!-- Make sure the file timestamps are always the same -->
+		<touch datetime="12/03/1970 12:00 AM">
+			<fileset refid="content" />
+		</touch>
+		<jar destfile="ant_tasks/${jar.name}.jar" filesetmanifest="skip">
+			<fileset refid="content" />
 		</jar>
 	</target>
 

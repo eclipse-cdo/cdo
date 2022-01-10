@@ -18,7 +18,6 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.revision.PointerCDORevision;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
@@ -28,7 +27,6 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
  * @author Esteban Dugueperoux
  */
 @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
-@CleanRepositoriesBefore(reason = "to not be disturb by branches created by others tests")
 public class Bugzilla_449171_Test extends AbstractCDOTest
 {
   private static final String RESOURCE_NAME = "test1.model1";
@@ -36,7 +34,6 @@ public class Bugzilla_449171_Test extends AbstractCDOTest
   public void testCommitNotificationIndicationCDOCommitInfoDecoding() throws Exception
   {
     CDOSession session1 = openSession();
-    String subBranchName = getBranchName("b1");
     CDOSession session2 = openSession();
     CDOTransaction txOfSession1 = session1.openTransaction();
     CDOResource resource = txOfSession1.getOrCreateResource(getResourcePath(RESOURCE_NAME));
@@ -45,7 +42,7 @@ public class Bugzilla_449171_Test extends AbstractCDOTest
     txOfSession1.close();
     session1.close();
     session1 = openSession();
-    CDOBranch subBranch = session1.getBranchManager().getMainBranch().createBranch(subBranchName);
+    CDOBranch subBranch = session1.getBranchManager().getMainBranch().createBranch(getBranchName("b1"));
     txOfSession1 = session1.openTransaction(subBranch);
     resource = txOfSession1.getResource(getResourcePath(RESOURCE_NAME));
     resource.getContents().remove(0);

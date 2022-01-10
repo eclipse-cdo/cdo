@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -32,7 +31,6 @@ import org.eclipse.net4j.util.io.IOUtil;
  * @author Eike Stepper
  */
 @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
-@CleanRepositoriesBefore(reason = "Branch creation")
 public class Bugzilla_369646_Test extends AbstractCDOTest
 {
   public void testSetBranchWithSubBranches() throws Exception

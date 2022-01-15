@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
-import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 
 import org.eclipse.net4j.buffer.BufferInputStream;
@@ -42,11 +41,9 @@ public abstract class CDOServerWriteIndication extends CDOServerIndication
 
   protected void prepareStoreThreadLocal()
   {
-    // Allocate a store writer
-    IStoreAccessor accessor = getStore().getWriter(null);
-
-    // Make the store writer available in a ThreadLocal variable
-    StoreThreadLocal.setAccessor(accessor);
     StoreThreadLocal.setSession(getSession());
+
+    // The call to setAccessor() must come after the call to setSession() !!!
+    StoreThreadLocal.setAccessor(getStore().getWriter(null));
   }
 }

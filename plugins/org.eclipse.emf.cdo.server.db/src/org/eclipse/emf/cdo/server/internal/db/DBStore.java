@@ -413,7 +413,7 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
         insertStmt.executeUpdate();
       }
 
-      sql = null;
+      sql = "COMMIT";
       connection.commit();
     }
     catch (SQLException ex)

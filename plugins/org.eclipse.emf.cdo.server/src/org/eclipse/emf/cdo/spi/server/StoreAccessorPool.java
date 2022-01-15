@@ -87,11 +87,11 @@ public class StoreAccessorPool
    *
    * @since 4.0
    */
-  public void addStoreAccessor(StoreAccessorBase storeAccessor)
+  public void addStoreAccessor(StoreAccessorBase accessor)
   {
     try
     {
-      storeAccessor.doPassivate();
+      accessor.doPassivate();
 
       boolean full = false;
       synchronized (accessors)
@@ -102,13 +102,13 @@ public class StoreAccessorPool
         }
         else
         {
-          accessors.addFirst(storeAccessor);
+          accessors.addFirst(accessor);
         }
       }
 
       if (full)
       {
-        disposeStoreAccessor(storeAccessor);
+        disposeStoreAccessor(accessor);
       }
     }
     catch (Exception ex)

@@ -467,7 +467,7 @@ public abstract class Store extends Lifecycle implements InternalStore
    * If the implementor of this method decides to create pools that are only compatible with certain sessions or views,
    * then it is his responsibility to listen to {@link Kind#REMOVED REMOVED} events sent by either the
    * {@link ISessionManager} (indicating that a session is closed) or any of its sessions (indicating that a view is
-   * closed). <b>Note:</b> Closing a session <em>implies</em> that all contained views are closed sliently without
+   * closed). <b>Note:</b> Closing a session <em>implies</em> that all contained views are closed silently without
    * firing respective events!
    *
    * @param session

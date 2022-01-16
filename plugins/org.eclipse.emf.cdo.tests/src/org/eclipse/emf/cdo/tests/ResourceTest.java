@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.lob.CDOBlob;
 import org.eclipse.emf.cdo.common.lob.CDOClob;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
+import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.util.CDODuplicateResourceException;
 import org.eclipse.emf.cdo.eresource.CDOBinaryResource;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -879,6 +880,20 @@ public class ResourceTest extends AbstractCDOTest
       assertEquals(createResourceURI(session, getResourcePath("/res2")), resource2.getURI());
       session.close();
     }
+  }
+
+  public void testPathWithSpaces() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/a path with spaces"));
+    assertEquals(getResourcePath("/a path with spaces"), resource.getPath());
+    assertEquals(createResourceURI(session, getResourcePath("/a path with spaces")), resource.getURI());
+
+    transaction.commit();
+    assertEquals(getResourcePath("/a path with spaces"), resource.getPath());
+    assertEquals(getResourcePath("/a path with spaces"), CDORevisionUtil.getResourceNodePath(resource.cdoRevision(), transaction));
+    assertEquals(createResourceURI(session, getResourcePath("/a path with spaces")), resource.getURI());
   }
 
   public void testPrefetchContents() throws Exception

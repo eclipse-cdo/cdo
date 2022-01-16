@@ -28,6 +28,7 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -72,6 +73,8 @@ public final class CDOClassInfoImpl implements InternalCDOClassInfo, Adapter.Int
   private EStructuralFeature[] allPersistentContainments;
 
   private EStructuralFeature[] allPersistentMapFeatures;
+
+  private EAttribute[] allPersistentLobAttributes;
 
   private int[] persistentFeatureIndices;
 
@@ -213,6 +216,12 @@ public final class CDOClassInfoImpl implements InternalCDOClassInfo, Adapter.Int
   }
 
   @Override
+  public EAttribute[] getAllPersistentLobAttributes()
+  {
+    return allPersistentLobAttributes;
+  }
+
+  @Override
   public int getPersistentFeatureIndex(EStructuralFeature feature) throws IllegalArgumentException
   {
     int featureID = eClass.getFeatureID(feature);
@@ -305,6 +314,7 @@ public final class CDOClassInfoImpl implements InternalCDOClassInfo, Adapter.Int
     List<EReference> persistentReferences = new ArrayList<>();
     List<EStructuralFeature> persistentContainments = new ArrayList<>();
     List<EStructuralFeature> persistentMapFeatures = new ArrayList<>();
+    List<EAttribute> persistentLobAttributes = new ArrayList<>();
 
     // Used for tests for containment
     EStructuralFeature[] containments = ((EClassImpl.FeatureSubsetSupplier)eClass.getEAllStructuralFeatures()).containments();
@@ -337,6 +347,10 @@ public final class CDOClassInfoImpl implements InternalCDOClassInfo, Adapter.Int
           {
             persistentOppositeBits.set(featureID);
           }
+        }
+        else if (CDOModelUtil.isLob(feature.getEType()))
+        {
+          persistentLobAttributes.add((EAttribute)feature);
         }
 
         if (isMap(feature))
@@ -382,6 +396,7 @@ public final class CDOClassInfoImpl implements InternalCDOClassInfo, Adapter.Int
     allPersistentReferences = persistentReferences.toArray(new EReference[persistentReferences.size()]);
     allPersistentContainments = persistentContainments.toArray(new EStructuralFeature[persistentContainments.size()]);
     allPersistentMapFeatures = persistentMapFeatures.toArray(new EStructuralFeature[persistentMapFeatures.size()]);
+    allPersistentLobAttributes = persistentLobAttributes.toArray(new EAttribute[persistentLobAttributes.size()]);
 
     persistentFeatureIndices = new int[allFeatures.size()];
     Arrays.fill(persistentFeatureIndices, NO_SLOT);

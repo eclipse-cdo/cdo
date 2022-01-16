@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.common.model;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOClassInfo;
 
 import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -71,6 +72,11 @@ public interface CDOClassInfo extends Adapter
    * @since 4.10
    */
   public EStructuralFeature[] getAllPersistentMapFeatures();
+
+  /**
+   * @since 4.16
+   */
+  public EAttribute[] getAllPersistentLobAttributes();
 
   /**
    * @deprecated As of 4.2 pushed down to {@link InternalCDOClassInfo#getPersistentFeatureIndex(EStructuralFeature)}.

@@ -43,7 +43,6 @@ import org.eclipse.emf.cdo.common.lock.CDOLockDelta;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
-import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
@@ -167,6 +166,7 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -5165,17 +5165,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     private void collectLobs(InternalCDORevision revision, Map<ByteArrayWrapper, CDOLob<?>> lobs)
     {
-      EStructuralFeature[] features = revision.getClassInfo().getAllPersistentFeatures();
-      for (int i = 0; i < features.length; i++)
+      for (EAttribute lobAttribute : revision.getClassInfo().getAllPersistentLobAttributes())
       {
-        EStructuralFeature feature = features[i];
-        if (CDOModelUtil.isLob(feature.getEType()))
+        CDOLob<?> lob = (CDOLob<?>)revision.getValue(lobAttribute);
+        if (lob != null)
         {
-          CDOLob<?> lob = (CDOLob<?>)revision.getValue(feature);
-          if (lob != null)
-          {
-            lobs.put(new ByteArrayWrapper(lob.getID()), lob);
-          }
+          lobs.put(new ByteArrayWrapper(lob.getID()), lob);
         }
       }
     }

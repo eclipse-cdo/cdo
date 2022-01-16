@@ -17,6 +17,7 @@ import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.Notifier;
 import org.eclipse.net4j.util.lifecycle.ILifecycle.DeferrableActivation;
+import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.util.concurrent.Semaphore;
@@ -36,7 +37,7 @@ public class Lifecycle extends Notifier implements ILifecycle, DeferrableActivat
 
   private static final boolean TRACE_IGNORING = false;
 
-  private static final boolean LOCKING = true;
+  private static final boolean LOCKING = OMPlatform.INSTANCE.isProperty("org.eclipse.net4j.util.lifecycle.Lifecycle.LOCKING", true);
 
   private LifecycleState lifecycleState = LifecycleState.INACTIVE;
 
@@ -106,7 +107,7 @@ public class Lifecycle extends Notifier implements ILifecycle, DeferrableActivat
 
   Exception internalDeactivate()
   {
-    boolean unlocked = true;
+    boolean locked = false;
 
     try
     {
@@ -117,10 +118,10 @@ public class Lifecycle extends Notifier implements ILifecycle, DeferrableActivat
           TRACER.trace("Deactivating " + this); //$NON-NLS-1$
         }
 
-        lock();
-        unlocked = false;
+        locked = lock();
 
         doBeforeDeactivate();
+
         IListener[] listeners = getListeners();
         if (listeners.length != 0)
         {
@@ -131,8 +132,12 @@ public class Lifecycle extends Notifier implements ILifecycle, DeferrableActivat
         doDeactivate();
 
         lifecycleState = LifecycleState.INACTIVE;
-        unlock();
-        unlocked = true;
+
+        if (locked)
+        {
+          unlock();
+          locked = false;
+        }
 
         // Get listeners again because they could have changed since the first call to getListeners().
         listeners = getListeners();
@@ -158,7 +163,7 @@ public class Lifecycle extends Notifier implements ILifecycle, DeferrableActivat
     {
       lifecycleState = LifecycleState.INACTIVE;
 
-      if (!unlocked)
+      if (locked)
       {
         unlock();
       }
@@ -315,19 +320,36 @@ public class Lifecycle extends Notifier implements ILifecycle, DeferrableActivat
   {
   }
 
-  private void lock() throws InterruptedException
+  private boolean lock()
   {
     if (LOCKING)
     {
-      lifecycleSemaphore.acquire();
+      try
+      {
+        lifecycleSemaphore.acquire();
+        return true;
+      }
+      catch (Throwable ex)
+      {
+        //$FALL-THROUGH$
+      }
     }
+
+    return false;
   }
 
   private void unlock()
   {
     if (LOCKING)
     {
-      lifecycleSemaphore.release();
+      try
+      {
+        lifecycleSemaphore.release();
+      }
+      catch (Throwable ex)
+      {
+        //$FALL-THROUGH$
+      }
     }
   }
 }

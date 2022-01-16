@@ -19,32 +19,50 @@ import java.io.InputStream;
  */
 public class LimitedInputStream extends InputStream
 {
-  private InputStream in;
+  private static final long CLOSED = Long.MIN_VALUE;
+
+  private final InputStream in;
+
+  private final boolean closeBackingStream;
 
   private long remaining;
 
-  private long remainingAtMark = 0;
+  private long remainingAtMark;
 
-  public LimitedInputStream(InputStream in, long length)
+  /**
+   * @since 3.17
+   */
+  public LimitedInputStream(InputStream in, long length, boolean closeBackingStream)
   {
     this.in = in;
     remaining = length;
+    this.closeBackingStream = closeBackingStream;
+  }
+
+  public LimitedInputStream(InputStream in, long length)
+  {
+    this(in, length, true);
   }
 
   @Override
   public int read() throws IOException
   {
-    if ((remaining -= 1) < 0)
+    checkOpen();
+
+    if (remaining <= 0)
     {
       return -1;
     }
 
+    remaining -= 1;
     return in.read();
   }
 
   @Override
   public int read(byte[] cbuf, int off, int len) throws IOException
   {
+    checkOpen();
+
     if (remaining <= 0)
     {
       return -1;
@@ -62,7 +80,7 @@ public class LimitedInputStream extends InputStream
     }
     else
     {
-      remaining -= remaining;
+      remaining = 0;
     }
 
     return len;
@@ -71,6 +89,8 @@ public class LimitedInputStream extends InputStream
   @Override
   public long skip(long n) throws IOException
   {
+    checkOpen();
+
     if (n > remaining)
     {
       n = remaining;
@@ -89,7 +109,7 @@ public class LimitedInputStream extends InputStream
   @Override
   public synchronized void mark(int readlimit)
   {
-    if (markSupported())
+    if (markSupported() && remaining != CLOSED)
     {
       in.mark(readlimit);
       remainingAtMark = remaining;
@@ -99,14 +119,30 @@ public class LimitedInputStream extends InputStream
   @Override
   public synchronized void reset() throws IOException
   {
-    in.reset();
-    remaining = remainingAtMark;
+    if (markSupported())
+    {
+      checkOpen();
+      in.reset();
+      remaining = remainingAtMark;
+    }
   }
 
   @Override
   public void close() throws IOException
   {
-    remaining = 0;
-    in.close();
+    remaining = CLOSED;
+
+    if (closeBackingStream)
+    {
+      in.close();
+    }
+  }
+
+  private void checkOpen() throws IOException
+  {
+    if (remaining == CLOSED)
+    {
+      throw new IOException("Stream is closed");
+    }
   }
 }

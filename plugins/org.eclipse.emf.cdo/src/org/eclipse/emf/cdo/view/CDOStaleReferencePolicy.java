@@ -27,12 +27,14 @@ import org.eclipse.emf.common.notify.impl.BasicNotifierImpl.EAdapterList;
 import org.eclipse.emf.common.util.Logger;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.BasicInternalEList;
 import org.eclipse.emf.ecore.util.EContentsEList;
 import org.eclipse.emf.ecore.util.ECrossReferenceEList;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
@@ -296,7 +298,15 @@ public interface CDOStaleReferencePolicy
 
     protected EClassifier getType(EObject source, EStructuralFeature feature, int index, CDOID target)
     {
-      return feature.getEType();
+      EGenericType reifiedType = EcoreUtil.getReifiedType(source.eClass(), feature.getEGenericType());
+
+      EClassifier type = reifiedType != null ? reifiedType.getEClassifier() : null;
+      if (type == null)
+      {
+        type = feature.getEType();
+      }
+
+      return type;
     }
 
     @Override

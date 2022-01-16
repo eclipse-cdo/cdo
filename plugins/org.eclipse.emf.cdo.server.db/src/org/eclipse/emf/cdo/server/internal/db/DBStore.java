@@ -702,12 +702,12 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
     String schemaName = repository.getName();
     boolean fixNullableIndexColumns = schemaVersion != FIRST_START && schemaVersion < FIRST_VERSION_WITH_NULLABLE_CHECKS;
 
-    database = DBUtil.openDatabase(dbAdapter, dbConnectionProvider, schemaName, fixNullableIndexColumns);
+    database = openDatabase(dbAdapter, dbConnectionProvider, schemaName, fixNullableIndexColumns);
     IDBSchemaTransaction schemaTransaction = database.openSchemaTransaction();
 
     try
     {
-      schemaTransaction.ensureSchema(CDODBSchema.INSTANCE);
+      ensureSchema(schemaTransaction);
       schemaTransaction.commit();
     }
     finally
@@ -959,6 +959,16 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
     {
       DBUtil.close(connection);
     }
+  }
+
+  protected IDBDatabase openDatabase(IDBAdapter adapter, IDBConnectionProvider connectionProvider, String schemaName, boolean fixNullableIndexColumns)
+  {
+    return DBUtil.openDatabase(dbAdapter, dbConnectionProvider, schemaName, fixNullableIndexColumns);
+  }
+
+  protected void ensureSchema(IDBSchemaTransaction schemaTransaction)
+  {
+    schemaTransaction.ensureSchema(CDODBSchema.INSTANCE);
   }
 
   protected IMetaDataManager createMetaDataManager()

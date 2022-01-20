@@ -3514,7 +3514,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         {
           T object = delegate.next();
           CDOObject cdoObject = CDOUtil.getCDOObject(object);
-          System.out.println(cdoObject);
 
           if (!FSMUtil.isTransient(cdoObject))
           {

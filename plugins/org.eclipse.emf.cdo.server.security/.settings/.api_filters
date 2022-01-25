@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.emf.cdo.server.security" version="2">
+    <resource path="META-INF/MANIFEST.MF">
+        <filter id="923795461">
+            <message_arguments>
+                <message_argument value="4.9.0"/>
+                <message_argument value="4.8.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/server/internal/security/SecurityManager.java" type="org.eclipse.emf.cdo.server.internal.security.SecurityManager">
         <filter id="574668824">
             <message_arguments>
@@ -22,6 +30,14 @@
             <message_arguments>
                 <message_argument value="SecurityItemContainer"/>
                 <message_argument value="ISecurityManager"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/server/spi/security/SecurityManagerFactory.java" type="org.eclipse.emf.cdo.server.spi.security.SecurityManagerFactory">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.server.spi.security.SecurityManagerFactory"/>
+                <message_argument value="DESCRIPTION_SEPARATOR"/>
             </message_arguments>
         </filter>
     </resource>

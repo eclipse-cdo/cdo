@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.server.spi.security;
 
+import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.internal.security.bundle.OM;
 import org.eclipse.emf.cdo.server.security.ISecurityManager;
 import org.eclipse.emf.cdo.server.security.SecurityManagerUtil;
@@ -35,13 +36,58 @@ public abstract class SecurityManagerFactory extends Factory
 {
   public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.security.managers";
 
+  /**
+   * @since 4.9
+   */
+  public static final String DESCRIPTION_SEPARATOR = ":";
+
+  private static final String QUALIFIED_DESCRIPTION_FORMAT = "%s" + DESCRIPTION_SEPARATOR + "%s";
+
   public SecurityManagerFactory(String type)
   {
     super(PRODUCT_GROUP, type);
   }
 
   @Override
-  public abstract ISecurityManager create(String realmPath) throws ProductCreationException;
+  public ISecurityManager create(String description) throws ProductCreationException
+  {
+    List<String> tokens = StringUtil.split(description, DESCRIPTION_SEPARATOR, "()");
+    String repositoryName = tokens.remove(0);
+    return create(repositoryName, tokens);
+  }
+
+  /**
+   * @since 4.9
+   */
+  protected ISecurityManager create(String repositoryName, List<String> description) throws ProductCreationException
+  {
+    throw new ProductCreationException("Subclasses must implement one of the create() methods");
+  }
+
+  /**
+   * @since 4.9
+   */
+  public static String getQualifiedDescription(String repositoryName, String description)
+  {
+    return String.format(QUALIFIED_DESCRIPTION_FORMAT, repositoryName, description);
+  }
+
+  /**
+   * @since 4.9
+   */
+  public static ISecurityManager get(IManagedContainer container, String type, String repositoryName, String description)
+  {
+    String qualifiedDescription = getQualifiedDescription(repositoryName, description);
+    return get(container, type, qualifiedDescription);
+  }
+
+  /**
+   * @since 4.9
+   */
+  public static ISecurityManager get(IManagedContainer container, String type, String qualifiedDescription)
+  {
+    return (ISecurityManager)container.getElement(PRODUCT_GROUP, type, qualifiedDescription);
+  }
 
   /**
    * If the meaning of this type isn't clear, there really should be more of a description here...
@@ -72,24 +118,22 @@ public abstract class SecurityManagerFactory extends Factory
     }
 
     @Override
-    public ISecurityManager create(String description) throws ProductCreationException
+    protected ISecurityManager create(String repositoryName, List<String> description) throws ProductCreationException
     {
-      List<String> tokens = StringUtil.split(description, ":", "()");
-      String repositoryName = tokens.get(0);
-      String realmPath = tokens.get(1);
+      IRepository repository = RepositoryFactory.get(container, repositoryName);
 
+      String realmPath = description.remove(0);
       ISecurityManager securityManager = SecurityManagerUtil.createSecurityManager(realmPath);
 
-      for (int i = 2; i < tokens.size(); i++)
+      for (String token : description)
       {
-        String token = tokens.get(i);
         CommitHandler handler = getHandler(container, token);
         ((InternalSecurityManager)securityManager).addCommitHandler(handler);
       }
 
       if (securityManager instanceof InternalSecurityManager)
       {
-        ((InternalSecurityManager)securityManager).setRepository((InternalRepository)RepositoryFactory.get(container, repositoryName));
+        ((InternalSecurityManager)securityManager).setRepository((InternalRepository)repository);
       }
 
       return securityManager;
@@ -123,8 +167,7 @@ public abstract class SecurityManagerFactory extends Factory
      */
     public static ISecurityManager create(IManagedContainer container, String repositoryName, String description)
     {
-      String qualifiedDescription = String.format("%s:%s", repositoryName, description); //$NON-NLS-1$
-      return (ISecurityManager)container.getElement(PRODUCT_GROUP, TYPE, qualifiedDescription);
+      return get(container, TYPE, repositoryName, description);
     }
   }
 

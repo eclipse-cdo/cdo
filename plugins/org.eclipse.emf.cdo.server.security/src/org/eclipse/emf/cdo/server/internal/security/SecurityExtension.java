@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.spi.server.IAppExtension4;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.RepositoryFactory;
 
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 
@@ -42,6 +43,8 @@ import java.io.Reader;
 public class SecurityExtension implements IAppExtension2, IAppExtension4
 {
   public static final String DEFAULT_REALM_PATH = "security";
+
+  public static final String DEFAULT_FACTORY_TYPE = SecurityManagerFactory.Default.TYPE;
 
   public SecurityExtension()
   {
@@ -83,7 +86,6 @@ public class SecurityExtension implements IAppExtension2, IAppExtension4
   public void stop() throws Exception
   {
     OM.LOG.info("Security extension stopping"); //$NON-NLS-1$
-
     OM.LOG.info("Security extension stopped"); //$NON-NLS-1$
   }
 
@@ -121,23 +123,23 @@ public class SecurityExtension implements IAppExtension2, IAppExtension4
     {
       Element securityManagerElement = (Element)securityManagers.item(0);
       String type = securityManagerElement.getAttribute("type");
-      if (type == null || type.length() == 0)
+      if (StringUtil.isEmpty(type))
       {
-        throw new IllegalStateException("Security manager type not specified for repository " + repository); //$NON-NLS-1$
+        type = DEFAULT_FACTORY_TYPE;
       }
 
       String description = securityManagerElement.getAttribute("description");
-      if (description == null || description.length() == 0)
+      if (StringUtil.isEmpty(description))
       {
         description = securityManagerElement.getAttribute("realmPath");
       }
 
-      if (description == null || description.length() == 0)
+      if (StringUtil.isEmpty(description))
       {
         description = DEFAULT_REALM_PATH;
       }
 
-      if (SecurityManagerFactory.Default.create(container, repositoryName, description) != null)
+      if (SecurityManagerFactory.get(container, type, repositoryName, description) != null)
       {
         OM.LOG.info("Security manager for repository " + repositoryName + ": " + description);
       }

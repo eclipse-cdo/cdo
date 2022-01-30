@@ -39,6 +39,7 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSession.ExceptionHandler;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
+import org.eclipse.emf.cdo.session.remote.CDORemoteTopic;
 import org.eclipse.emf.cdo.spi.common.CDORawReplicationContext;
 import org.eclipse.emf.cdo.spi.common.CDOReplicationContext;
 import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
@@ -966,14 +967,21 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
   }
 
   @Override
+  @Deprecated
   public Set<Integer> sendRemoteMessage(CDORemoteSessionMessage message, List<CDORemoteSession> recipients)
+  {
+    return sendRemoteMessage(message, null, recipients);
+  }
+
+  @Override
+  public Set<Integer> sendRemoteMessage(CDORemoteSessionMessage message, CDORemoteTopic topic, List<CDORemoteSession> recipients)
   {
     int attempt = 0;
     for (;;)
     {
       try
       {
-        return delegate.sendRemoteMessage(message, recipients);
+        return delegate.sendRemoteMessage(message, topic, recipients);
       }
       catch (Exception ex)
       {
@@ -991,6 +999,23 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
       try
       {
         return delegate.unsubscribeRemoteSessions();
+      }
+      catch (Exception ex)
+      {
+        handleException(++attempt, ex);
+      }
+    }
+  }
+
+  @Override
+  public Set<Integer> subscribeRemoteTopic(String id, boolean on)
+  {
+    int attempt = 0;
+    for (;;)
+    {
+      try
+      {
+        return delegate.subscribeRemoteTopic(id, on);
       }
       catch (Exception ex)
       {

@@ -50,6 +50,7 @@ import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
+import org.eclipse.emf.cdo.spi.server.InternalTopic;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 import org.eclipse.emf.cdo.spi.server.InternalView;
 
@@ -817,20 +818,34 @@ public class Session extends Container<IView> implements InternalSession
   }
 
   @Override
+  @Deprecated
   public void sendRemoteSessionNotification(InternalSession sender, byte opcode) throws Exception
+  {
+    sendRemoteSessionNotification(sender, null, opcode);
+  }
+
+  @Override
+  public void sendRemoteSessionNotification(InternalSession sender, InternalTopic topic, byte opcode) throws Exception
   {
     if (protocol != null)
     {
-      protocol.sendRemoteSessionNotification(sender, opcode);
+      protocol.sendRemoteSessionNotification(sender, topic, opcode);
     }
   }
 
   @Override
+  @Deprecated
   public void sendRemoteMessageNotification(InternalSession sender, CDORemoteSessionMessage message) throws Exception
+  {
+    sendRemoteMessageNotification(sender, null, message);
+  }
+
+  @Override
+  public void sendRemoteMessageNotification(InternalSession sender, InternalTopic topic, CDORemoteSessionMessage message) throws Exception
   {
     if (protocol != null)
     {
-      protocol.sendRemoteMessageNotification(sender, message);
+      protocol.sendRemoteMessageNotification(sender, topic, message);
     }
   }
 

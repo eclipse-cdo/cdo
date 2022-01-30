@@ -19,8 +19,9 @@ class CDOProtocolVersion
 
   static
   {
-    VALUE = 45; // SIGNAL_AUTHORIZE_OPERATIONS
+    VALUE = 46; // SIGNAL_REMOTE_TOPIC
 
+    // VALUE = 45; // SIGNAL_AUTHORIZE_OPERATIONS
     // VALUE = 44; // SIGNAL_VIEW_CLOSED_NOTIFICATION
     // VALUE = 43; // SIGNAL_DELETE_BRANCH
     // VALUE = 42; // CDOPrefetcherManager, see bug 576893

@@ -37,6 +37,17 @@ public interface InternalCDORemoteSessionManager extends CDORemoteSessionManager
   public void setLocalSession(InternalCDOSession localSession);
 
   /**
+   * @since 4.17
+   */
+  @Override
+  public InternalCDORemoteSession[] getRemoteSessions();
+
+  /**
+   * @since 4.17
+   */
+  public InternalCDORemoteSession getRemoteSession(int sessionID);
+
+  /**
    * @since 3.0
    */
   public InternalCDORemoteSession createRemoteSession(int sessionID, String userID, boolean subscribed);
@@ -45,10 +56,48 @@ public interface InternalCDORemoteSessionManager extends CDORemoteSessionManager
 
   public void handleRemoteSessionClosed(int sessionID);
 
+  /**
+   *@deprecated As of 4.8 use {@link #handleRemoteSessionSubscribed(int, String, boolean)}.
+   */
+  @Deprecated
   public void handleRemoteSessionSubscribed(int sessionID, boolean subscribed);
 
   /**
-   * @since 3.0
+   * @since 4.17
    */
+  public void handleRemoteSessionSubscribed(int sessionID, String topicID, boolean subscribed);
+
+  /**
+   * @since 3.0
+   * @deprecated As of 4.8 use {@link #handleRemoteSessionMessage(int, String, CDORemoteSessionMessage)}.
+   */
+  @Deprecated
   public void handleRemoteSessionMessage(int sessionID, CDORemoteSessionMessage message);
+
+  /**
+   * @since 4.17
+   */
+  public void handleRemoteSessionMessage(int sessionID, String topicID, CDORemoteSessionMessage message);
+
+  /**
+   * @since 4.17
+   */
+  @Override
+  public InternalCDORemoteTopic subscribeTopic(String id);
+
+  /**
+   * @since 4.17
+   */
+  public void unsubscribeTopic(InternalCDORemoteTopic remoteTopic);
+
+  /**
+   * @since 4.17
+   */
+  @Override
+  public InternalCDORemoteTopic[] getSubscribedTopics();
+
+  /**
+   * @since 4.17
+   */
+  public InternalCDORemoteTopic getSubscribedTopic(String id);
 }

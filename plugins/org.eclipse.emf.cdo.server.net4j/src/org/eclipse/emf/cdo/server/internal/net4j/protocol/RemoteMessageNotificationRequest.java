@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
+import org.eclipse.emf.cdo.spi.server.InternalTopic;
 
 import java.io.IOException;
 
@@ -26,12 +27,15 @@ public class RemoteMessageNotificationRequest extends CDOServerRequest
 {
   private int senderID;
 
+  private String topicID;
+
   private CDORemoteSessionMessage message;
 
-  public RemoteMessageNotificationRequest(CDOServerProtocol serverProtocol, InternalSession sender, CDORemoteSessionMessage message)
+  public RemoteMessageNotificationRequest(CDOServerProtocol serverProtocol, InternalSession sender, InternalTopic topic, CDORemoteSessionMessage message)
   {
     super(serverProtocol, CDOProtocolConstants.SIGNAL_REMOTE_MESSAGE_NOTIFICATION);
     senderID = sender.getSessionID();
+    topicID = topic == null ? null : topic.getID();
     this.message = message;
   }
 
@@ -39,6 +43,7 @@ public class RemoteMessageNotificationRequest extends CDOServerRequest
   protected void requesting(CDODataOutput out) throws IOException
   {
     out.writeXInt(senderID);
+    out.writeString(topicID);
     message.write(out);
   }
 }

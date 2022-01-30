@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionEvent;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
+import org.eclipse.emf.cdo.session.remote.CDORemoteTopic;
+import org.eclipse.emf.cdo.session.remote.CDORemoteTopicEvent;
 
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.IContainer;
@@ -300,6 +302,91 @@ public class RemoteSessionManagerTest extends AbstractCDOTest
     assertEquals(false, sent);
 
     session2.close();
+    session1.close();
+  }
+
+  public void testRemoteTopicSubscription() throws Exception
+  {
+    AsyncResult<Boolean> session2Subscribed = new AsyncResult<Boolean>();
+    AsyncResult<Boolean> session2Unsubscribed = new AsyncResult<Boolean>();
+
+    CDOSession session1 = openSession();
+    assertEquals(false, session1.getRemoteSessionManager().isSubscribed());
+    CDORemoteTopic topic1 = session1.getRemoteSessionManager().subscribeTopic("my.special.topic");
+    assertEquals(0, topic1.getRemoteSessions().length);
+    assertEquals(true, session1.getRemoteSessionManager().isSubscribed());
+
+    topic1.addListener(new ContainerEventAdapter<CDORemoteSession>()
+    {
+      @Override
+      protected void onAdded(IContainer<CDORemoteSession> container, CDORemoteSession element)
+      {
+        session2Subscribed.setValue(true);
+      }
+
+      @Override
+      protected void onRemoved(IContainer<CDORemoteSession> container, CDORemoteSession element)
+      {
+        session2Unsubscribed.setValue(true);
+      }
+    });
+
+    CDOSession session2 = openSession();
+    assertEquals(false, session2.getRemoteSessionManager().isSubscribed());
+    CDORemoteTopic topic2 = session2.getRemoteSessionManager().subscribeTopic("my.special.topic");
+    assertEquals(1, topic2.getRemoteSessions().length);
+    assertEquals(true, session2.getRemoteSessionManager().isSubscribed());
+
+    assertEquals(true, (boolean)session2Subscribed.getValue());
+    assertEquals(1, topic1.getRemoteSessions().length);
+
+    topic2.unsubscribe();
+    assertEquals(true, (boolean)session2Unsubscribed.getValue());
+    assertEquals(false, session2.getRemoteSessionManager().isSubscribed());
+
+    session2.close();
+    session1.close();
+  }
+
+  public void testRemoteTopicMessage() throws Exception
+  {
+    AsyncResult<Boolean> messageReceived = new AsyncResult<Boolean>();
+    AsyncResult<Boolean> unsubscribeReceived = new AsyncResult<Boolean>();
+
+    CDOSession session1 = openSession();
+    CDORemoteTopic topic1 = session1.getRemoteSessionManager().subscribeTopic("my.special.topic");
+    topic1.addListener(new IListener()
+    {
+      @Override
+      public void notifyEvent(IEvent event)
+      {
+        if (event instanceof CDORemoteTopicEvent.MessageReceived)
+        {
+          CDORemoteTopicEvent.MessageReceived e = (CDORemoteTopicEvent.MessageReceived)event;
+          if (e.getSource().getID().equals("my.special.topic"))
+          {
+            messageReceived.setValue(true);
+          }
+        }
+      }
+    });
+
+    topic1.addListener(new ContainerEventAdapter<CDORemoteSession>()
+    {
+      @Override
+      protected void onRemoved(IContainer<CDORemoteSession> container, CDORemoteSession element)
+      {
+        unsubscribeReceived.setValue(true);
+      }
+    });
+
+    CDOSession session2 = openSession();
+    CDORemoteTopic topic2 = session2.getRemoteSessionManager().subscribeTopic("my.special.topic");
+    topic2.sendMessage(new CDORemoteSessionMessage("my.type"));
+    assertEquals(true, (boolean)messageReceived.getValue());
+
+    session2.close();
+    assertEquals(true, (boolean)unsubscribeReceived.getValue(10000000));
     session1.close();
   }
 }

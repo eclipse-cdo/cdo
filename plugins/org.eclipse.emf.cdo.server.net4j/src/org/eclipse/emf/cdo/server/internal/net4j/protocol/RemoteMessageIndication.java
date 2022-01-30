@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
+import org.eclipse.emf.cdo.spi.server.InternalTopic;
 
 import java.io.IOException;
 import java.util.List;
@@ -35,16 +36,29 @@ public class RemoteMessageIndication extends CDOServerReadIndication
   protected void indicating(CDODataInput in) throws IOException
   {
     CDORemoteSessionMessage message = new CDORemoteSessionMessage(in);
-    int count = in.readXInt();
-
-    int[] recipients = new int[count];
-    for (int i = 0; i < recipients.length; i++)
-    {
-      recipients[i] = in.readXInt();
-    }
-
     InternalSessionManager sessionManager = getRepository().getSessionManager();
-    result = sessionManager.sendRemoteMessageNotification(getSession(), message, recipients);
+
+    String topicID = in.readString();
+    if (topicID != null)
+    {
+      InternalTopic topic = sessionManager.getTopicManager().getTopic(topicID);
+      if (topic != null)
+      {
+        result = sessionManager.sendRemoteMessageNotification(getSession(), message, topic);
+      }
+    }
+    else
+    {
+      int count = in.readXInt();
+
+      int[] recipients = new int[count];
+      for (int i = 0; i < recipients.length; i++)
+      {
+        recipients[i] = in.readXInt();
+      }
+
+      result = sessionManager.sendRemoteMessageNotification(getSession(), message, recipients);
+    }
   }
 
   @Override

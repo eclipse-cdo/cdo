@@ -29,6 +29,7 @@ import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.server.ISessionProtocol;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
+import org.eclipse.emf.cdo.spi.server.InternalTopic;
 
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
@@ -222,11 +223,18 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
   }
 
   @Override
+  @Deprecated
   public void sendRemoteSessionNotification(InternalSession sender, byte opcode) throws Exception
+  {
+    sendRemoteSessionNotification(sender, null, opcode);
+  }
+
+  @Override
+  public void sendRemoteSessionNotification(InternalSession sender, InternalTopic topic, byte opcode) throws Exception
   {
     if (LifecycleUtil.isActive(getChannel()))
     {
-      new RemoteSessionNotificationRequest(this, sender, opcode).sendAsync();
+      new RemoteSessionNotificationRequest(this, sender, topic, opcode).sendAsync();
     }
     else
     {
@@ -235,11 +243,18 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
   }
 
   @Override
+  @Deprecated
   public void sendRemoteMessageNotification(InternalSession sender, CDORemoteSessionMessage message) throws Exception
+  {
+    sendRemoteMessageNotification(sender, null, message);
+  }
+
+  @Override
+  public void sendRemoteMessageNotification(InternalSession sender, InternalTopic topic, CDORemoteSessionMessage message) throws Exception
   {
     if (LifecycleUtil.isActive(getChannel()))
     {
-      new RemoteMessageNotificationRequest(this, sender, message).sendAsync();
+      new RemoteMessageNotificationRequest(this, sender, topic, message).sendAsync();
     }
     else
     {
@@ -408,6 +423,9 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
 
     case SIGNAL_UNSUBSCRIBE_REMOTE_SESSIONS:
       return new UnsubscribeRemoteSessionsIndication(this);
+
+    case SIGNAL_REMOTE_TOPIC:
+      return new RemoteTopicIndication(this);
 
     case SIGNAL_REMOTE_MESSAGE:
       return new RemoteMessageIndication(this);

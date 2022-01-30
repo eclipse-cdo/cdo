@@ -24,6 +24,7 @@ import org.eclipse.net4j.util.event.IEvent;
 
 import org.eclipse.emf.spi.cdo.InternalCDORemoteSession;
 import org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager;
+import org.eclipse.emf.spi.cdo.InternalCDORemoteTopic;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 import java.util.ArrayList;
@@ -41,7 +42,7 @@ import java.util.Set;
  */
 public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> implements InternalCDORemoteSessionManager
 {
-  private static final CDORemoteSession[] NO_REMOTE_SESSIONS = {};
+  private static final InternalCDORemoteSession[] NO_REMOTE_SESSIONS = {};
 
   private InternalCDOSession localSession;
 
@@ -49,7 +50,9 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
 
   private boolean subscribed;
 
-  private Map<Integer, CDORemoteSession> remoteSessions = new HashMap<>();
+  private final Map<Integer, InternalCDORemoteSession> remoteSessions = new HashMap<>();
+
+  private final Map<String, InternalCDORemoteTopic> remoteTopics = new HashMap<>();
 
   public CDORemoteSessionManagerImpl()
   {
@@ -68,7 +71,16 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
   }
 
   @Override
-  public CDORemoteSession[] getRemoteSessions()
+  public InternalCDORemoteSession getRemoteSession(int sessionID)
+  {
+    synchronized (this)
+    {
+      return remoteSessions.get(sessionID);
+    }
+  }
+
+  @Override
+  public InternalCDORemoteSession[] getRemoteSessions()
   {
     synchronized (this)
     {
@@ -76,12 +88,12 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
       {
         if (subscribed)
         {
-          Collection<CDORemoteSession> values = remoteSessions.values();
-          return values.toArray(new CDORemoteSession[values.size()]);
+          Collection<InternalCDORemoteSession> values = remoteSessions.values();
+          return values.toArray(new InternalCDORemoteSession[values.size()]);
         }
 
         List<CDORemoteSession> loadedRemoteSessions = localSession.getSessionProtocol().getRemoteSessions(this, false);
-        return loadedRemoteSessions.toArray(new CDORemoteSession[loadedRemoteSessions.size()]);
+        return loadedRemoteSessions.toArray(new InternalCDORemoteSession[loadedRemoteSessions.size()]);
       }
 
       return NO_REMOTE_SESSIONS;
@@ -128,7 +140,7 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
       }
       else
       {
-        if (!hasListeners())
+        if (!hasListeners() && remoteTopics.isEmpty())
         {
           events = unsubscribe();
         }
@@ -152,24 +164,25 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
 
   private Set<CDORemoteSession> sendMessage(CDORemoteSessionMessage message, Iterator<CDORemoteSession> recipients)
   {
-    List<CDORemoteSession> subscribed = new ArrayList<>();
+    List<CDORemoteSession> subscribedSessions = new ArrayList<>();
     while (recipients.hasNext())
     {
       CDORemoteSession recipient = recipients.next();
       if (recipient.isSubscribed())
       {
-        subscribed.add(recipient);
+        subscribedSessions.add(recipient);
       }
     }
 
-    if (subscribed.isEmpty())
+    if (subscribedSessions.isEmpty())
     {
       return Collections.emptySet();
     }
 
-    Set<Integer> sessionIDs = localSession.getSessionProtocol().sendRemoteMessage(message, subscribed);
+    Set<Integer> sessionIDs = localSession.getSessionProtocol().sendRemoteMessage(message, null, subscribedSessions);
     Set<CDORemoteSession> result = new HashSet<>();
-    for (CDORemoteSession recipient : subscribed)
+    
+    for (CDORemoteSession recipient : subscribedSessions)
     {
       if (sessionIDs.contains(recipient.getSessionID()))
       {
@@ -178,6 +191,70 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
     }
 
     return result;
+  }
+
+  @Override
+  public InternalCDORemoteTopic subscribeTopic(String id)
+  {
+    InternalCDORemoteTopic remoteTopic;
+    IEvent[] events = null;
+
+    synchronized (this)
+    {
+      remoteTopic = remoteTopics.get(id);
+      if (remoteTopic == null)
+      {
+        if (!subscribed)
+        {
+          events = subscribe();
+        }
+
+        Set<Integer> remoteSessionIDs = localSession.getSessionProtocol().subscribeRemoteTopic(id, true);
+        remoteTopic = new CDORemoteTopicImpl(this, id, remoteSessionIDs);
+        remoteTopics.put(id, remoteTopic);
+      }
+    }
+
+    fireEvents(events);
+    return remoteTopic;
+  }
+
+  @Override
+  public void unsubscribeTopic(InternalCDORemoteTopic remoteTopic)
+  {
+    String id = remoteTopic.getID();
+    IEvent[] events = null;
+
+    synchronized (this)
+    {
+      localSession.getSessionProtocol().subscribeRemoteTopic(id, false);
+      remoteTopics.remove(id);
+
+      if (!forceSubscription && remoteTopics.isEmpty() && !hasListeners())
+      {
+        events = unsubscribe();
+      }
+    }
+
+    fireEvents(events);
+  }
+
+  @Override
+  public InternalCDORemoteTopic[] getSubscribedTopics()
+  {
+    synchronized (this)
+    {
+      return remoteTopics.values().toArray(new InternalCDORemoteTopic[remoteTopics.size()]);
+    }
+  }
+
+  @Override
+  public InternalCDORemoteTopic getSubscribedTopic(String id)
+  {
+    synchronized (this)
+    {
+      return remoteTopics.get(id);
+    }
   }
 
   @Override
@@ -191,7 +268,7 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
   @Override
   public void handleRemoteSessionOpened(int sessionID, String userID)
   {
-    CDORemoteSession remoteSession = createRemoteSession(sessionID, userID, false);
+    InternalCDORemoteSession remoteSession = createRemoteSession(sessionID, userID, false);
     synchronized (this)
     {
       remoteSessions.put(sessionID, remoteSession);
@@ -203,6 +280,11 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
   @Override
   public void handleRemoteSessionClosed(int sessionID)
   {
+    for (InternalCDORemoteTopic remoteTopic : getSubscribedTopics())
+    {
+      remoteTopic.handleRemoteSessionSubscribed(sessionID, false);
+    }
+
     CDORemoteSession remoteSession = null;
     synchronized (this)
     {
@@ -216,61 +298,68 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
   }
 
   @Override
+  @Deprecated
   public void handleRemoteSessionSubscribed(int sessionID, boolean subscribed)
   {
-    IEvent event = null;
-    synchronized (this)
+    handleRemoteSessionSubscribed(sessionID, null, subscribed);
+  }
+
+  @Override
+  public void handleRemoteSessionSubscribed(int sessionID, String topicID, boolean subscribed)
+  {
+    if (topicID != null)
     {
-      InternalCDORemoteSession remoteSession = (InternalCDORemoteSession)remoteSessions.get(sessionID);
-      if (remoteSession != null)
+      InternalCDORemoteTopic remoteTopic = getSubscribedTopic(topicID);
+      if (remoteTopic != null)
       {
-        remoteSession.setSubscribed(subscribed);
-        event = new SubscriptionChangedEventImpl(remoteSession, subscribed);
+        remoteTopic.handleRemoteSessionSubscribed(sessionID, subscribed);
       }
     }
-
-    if (event != null)
+    else
     {
-      fireEvent(event);
+      IEvent event = null;
+      synchronized (this)
+      {
+        InternalCDORemoteSession remoteSession = remoteSessions.get(sessionID);
+        if (remoteSession != null)
+        {
+          remoteSession.setSubscribed(subscribed);
+          event = new SubscriptionChangedEventImpl(remoteSession, subscribed);
+        }
+      }
+
+      if (event != null)
+      {
+        fireEvent(event);
+      }
     }
   }
 
   @Override
-  public void handleRemoteSessionMessage(int sessionID, final CDORemoteSessionMessage message)
+  @Deprecated
+  public void handleRemoteSessionMessage(int sessionID, CDORemoteSessionMessage message)
   {
-    IEvent event = null;
-    synchronized (this)
+    handleRemoteSessionMessage(sessionID, null, message);
+  }
+
+  @Override
+  public void handleRemoteSessionMessage(int sessionID, String topicID, final CDORemoteSessionMessage message)
+  {
+    InternalCDORemoteSession remoteSession = remoteSessions.get(sessionID);
+    if (remoteSession != null)
     {
-      final CDORemoteSessionManager source = this;
-      final InternalCDORemoteSession remoteSession = (InternalCDORemoteSession)remoteSessions.get(sessionID);
-      if (remoteSession != null)
+      if (topicID != null)
       {
-        event = new CDORemoteSessionEvent.MessageReceived()
+        InternalCDORemoteTopic topic = getSubscribedTopic(topicID);
+        if (topic != null)
         {
-          @Override
-          public CDORemoteSessionManager getSource()
-          {
-            return source;
-          }
-
-          @Override
-          public CDORemoteSession getRemoteSession()
-          {
-            return remoteSession;
-          }
-
-          @Override
-          public CDORemoteSessionMessage getMessage()
-          {
-            return message;
-          }
-        };
+          topic.handleRemoteSessionMessage(remoteSession, message);
+        }
       }
-    }
-
-    if (event != null)
-    {
-      fireEvent(event);
+      else
+      {
+        fireEvent(new MessageReceivedImpl(remoteSession, message));
+      }
     }
   }
 
@@ -295,7 +384,7 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
     IEvent[] events = null;
     synchronized (this)
     {
-      if (!forceSubscription)
+      if (!forceSubscription && remoteTopics.isEmpty())
       {
         events = unsubscribe();
       }
@@ -313,7 +402,7 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
     ContainerEvent<CDORemoteSession> event = new ContainerEvent<>(this);
     for (CDORemoteSession remoteSession : result)
     {
-      remoteSessions.put(remoteSession.getSessionID(), remoteSession);
+      remoteSessions.put(remoteSession.getSessionID(), (InternalCDORemoteSession)remoteSession);
       event.addDelta(remoteSession, IContainerDelta.Kind.ADDED);
     }
 
@@ -366,7 +455,7 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
   {
     private static final long serialVersionUID = 1L;
 
-    private boolean subscribed;
+    private final boolean subscribed;
 
     public LocalSubscriptionChangedEventImpl(boolean subscribed)
     {
@@ -394,9 +483,9 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
   {
     private static final long serialVersionUID = 1L;
 
-    private InternalCDORemoteSession remoteSession;
+    private final InternalCDORemoteSession remoteSession;
 
-    private boolean subscribed;
+    private final boolean subscribed;
 
     public SubscriptionChangedEventImpl(InternalCDORemoteSession remoteSession, boolean subscribed)
     {
@@ -421,6 +510,43 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
     public boolean isSubscribed()
     {
       return subscribed;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class MessageReceivedImpl extends Event implements CDORemoteSessionEvent.MessageReceived
+  {
+    private static final long serialVersionUID = 1L;
+
+    private final InternalCDORemoteSession remoteSession;
+
+    private final CDORemoteSessionMessage message;
+
+    public MessageReceivedImpl(InternalCDORemoteSession remoteSession, CDORemoteSessionMessage message)
+    {
+      super(CDORemoteSessionManagerImpl.this);
+      this.remoteSession = remoteSession;
+      this.message = message;
+    }
+
+    @Override
+    public CDORemoteSessionManager getSource()
+    {
+      return (CDORemoteSessionManager)super.getSource();
+    }
+
+    @Override
+    public CDORemoteSession getRemoteSession()
+    {
+      return remoteSession;
+    }
+
+    @Override
+    public CDORemoteSessionMessage getMessage()
+    {
+      return message;
     }
   }
 }

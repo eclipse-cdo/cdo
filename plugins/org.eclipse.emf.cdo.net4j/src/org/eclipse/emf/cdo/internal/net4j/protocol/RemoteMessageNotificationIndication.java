@@ -33,9 +33,10 @@ public class RemoteMessageNotificationIndication extends CDOClientIndication
   protected void indicating(CDODataInput in) throws IOException
   {
     int senderID = in.readXInt();
+    String topicID = in.readString();
     CDORemoteSessionMessage message = new CDORemoteSessionMessage(in);
 
     InternalCDORemoteSessionManager remoteSessionManager = getSession().getRemoteSessionManager();
-    remoteSessionManager.handleRemoteSessionMessage(senderID, message);
+    remoteSessionManager.handleRemoteSessionMessage(senderID, topicID, message);
   }
 }

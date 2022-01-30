@@ -40,6 +40,7 @@ import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
+import org.eclipse.emf.cdo.session.remote.CDORemoteTopic;
 import org.eclipse.emf.cdo.spi.common.CDORawReplicationContext;
 import org.eclipse.emf.cdo.spi.common.CDOReplicationContext;
 import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
@@ -501,9 +502,22 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
   }
 
   @Override
+  @Deprecated
   public Set<Integer> sendRemoteMessage(CDORemoteSessionMessage message, List<CDORemoteSession> recipients)
   {
-    return send(new RemoteMessageRequest(this, message, recipients));
+    return sendRemoteMessage(message, null, recipients);
+  }
+
+  @Override
+  public Set<Integer> sendRemoteMessage(CDORemoteSessionMessage message, CDORemoteTopic topic, List<CDORemoteSession> recipients)
+  {
+    return send(new RemoteMessageRequest(this, message, topic, recipients));
+  }
+
+  @Override
+  public Set<Integer> subscribeRemoteTopic(String id, boolean on)
+  {
+    return send(new RemoteTopicRequest(this, id, on));
   }
 
   @Override

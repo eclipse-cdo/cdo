@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
+import org.eclipse.emf.cdo.session.remote.CDORemoteTopic;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -28,12 +29,15 @@ public class RemoteMessageRequest extends CDOClientRequest<Set<Integer>>
 {
   private CDORemoteSessionMessage message;
 
+  private CDORemoteTopic topic;
+
   private List<CDORemoteSession> recipients;
 
-  public RemoteMessageRequest(CDOClientProtocol protocol, CDORemoteSessionMessage message, List<CDORemoteSession> recipients)
+  public RemoteMessageRequest(CDOClientProtocol protocol, CDORemoteSessionMessage message, CDORemoteTopic topic, List<CDORemoteSession> recipients)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_REMOTE_MESSAGE);
     this.message = message;
+    this.topic = topic;
     this.recipients = recipients;
   }
 
@@ -41,10 +45,22 @@ public class RemoteMessageRequest extends CDOClientRequest<Set<Integer>>
   protected void requesting(CDODataOutput out) throws IOException
   {
     message.write(out);
-    out.writeXInt(recipients.size());
-    for (CDORemoteSession recipient : recipients)
+
+    if (topic != null)
     {
-      out.writeXInt(recipient.getSessionID());
+      // Indicate a topic message.
+      out.writeString(topic.getID());
+    }
+    else
+    {
+      // Indicate a normal message.
+      out.writeString(null);
+      out.writeXInt(recipients.size());
+
+      for (CDORemoteSession recipient : recipients)
+      {
+        out.writeXInt(recipient.getSessionID());
+      }
     }
   }
 

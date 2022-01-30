@@ -14,6 +14,8 @@ package org.eclipse.emf.cdo.internal.net4j.protocol;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 
+import org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager;
+
 import java.io.IOException;
 
 /**
@@ -30,24 +32,28 @@ public class RemoteSessionNotificationIndication extends CDOClientIndication
   protected void indicating(CDODataInput in) throws IOException
   {
     int sessionID = in.readXInt();
+    String topicID = in.readString();
     byte opcode = in.readByte();
+
+    InternalCDORemoteSessionManager remoteSessionManager = getSession().getRemoteSessionManager();
+    
     switch (opcode)
     {
     case CDOProtocolConstants.REMOTE_SESSION_OPENED:
       String userID = in.readString();
-      getSession().getRemoteSessionManager().handleRemoteSessionOpened(sessionID, userID);
+      remoteSessionManager.handleRemoteSessionOpened(sessionID, userID);
       break;
 
     case CDOProtocolConstants.REMOTE_SESSION_CLOSED:
-      getSession().getRemoteSessionManager().handleRemoteSessionClosed(sessionID);
+      remoteSessionManager.handleRemoteSessionClosed(sessionID);
       break;
 
     case CDOProtocolConstants.REMOTE_SESSION_SUBSCRIBED:
-      getSession().getRemoteSessionManager().handleRemoteSessionSubscribed(sessionID, true);
+      remoteSessionManager.handleRemoteSessionSubscribed(sessionID, topicID, true);
       break;
 
     case CDOProtocolConstants.REMOTE_SESSION_UNSUBSCRIBED:
-      getSession().getRemoteSessionManager().handleRemoteSessionSubscribed(sessionID, false);
+      remoteSessionManager.handleRemoteSessionSubscribed(sessionID, topicID, false);
       break;
     }
   }

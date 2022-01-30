@@ -41,6 +41,7 @@ import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
+import org.eclipse.emf.cdo.session.remote.CDORemoteTopic;
 import org.eclipse.emf.cdo.spi.common.CDORawReplicationContext;
 import org.eclipse.emf.cdo.spi.common.CDOReplicationContext;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader5;
@@ -239,8 +240,20 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
   /**
    * @since 3.0
+   * @deprecated As of 4.8 use {@link #sendRemoteMessage(CDORemoteSessionMessage, CDORemoteTopic, List)}.
    */
+  @Deprecated
   public Set<Integer> sendRemoteMessage(CDORemoteSessionMessage message, List<CDORemoteSession> recipients);
+
+  /**
+   * @since 4.17
+   */
+  public Set<Integer> sendRemoteMessage(CDORemoteSessionMessage message, CDORemoteTopic topic, List<CDORemoteSession> recipients);
+
+  /**
+   * @since 4.17
+   */
+  public Set<Integer> subscribeRemoteTopic(String id, boolean on);
 
   /**
    * @since 3.0

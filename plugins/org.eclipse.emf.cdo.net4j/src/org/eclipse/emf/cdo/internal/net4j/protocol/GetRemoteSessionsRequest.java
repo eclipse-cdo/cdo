@@ -44,6 +44,7 @@ public class GetRemoteSessionsRequest extends CDOClientRequest<List<CDORemoteSes
   protected List<CDORemoteSession> confirming(CDODataInput in) throws IOException
   {
     List<CDORemoteSession> result = new ArrayList<>();
+    InternalCDORemoteSessionManager manager = getSession().getRemoteSessionManager();
 
     for (;;)
     {
@@ -55,7 +56,6 @@ public class GetRemoteSessionsRequest extends CDOClientRequest<List<CDORemoteSes
 
       String userID = in.readString();
       boolean subscribed = in.readBoolean();
-      InternalCDORemoteSessionManager manager = getSession().getRemoteSessionManager();
       CDORemoteSession remoteSession = manager.createRemoteSession(sessionID, userID, subscribed);
       result.add(remoteSession);
     }

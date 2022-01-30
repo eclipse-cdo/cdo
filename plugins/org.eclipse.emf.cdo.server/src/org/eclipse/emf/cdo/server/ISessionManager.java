@@ -43,4 +43,9 @@ public interface ISessionManager extends IContainer<ISession>
    * @since 4.2
    */
   public void setAuthenticator(IAuthenticator authenticator);
+
+  /**
+   * @since 4.17
+   */
+  public ITopicManager getTopicManager();
 }

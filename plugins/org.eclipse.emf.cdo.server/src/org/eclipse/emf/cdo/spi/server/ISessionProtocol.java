@@ -99,9 +99,27 @@ public interface ISessionProtocol extends CDOProtocol, IAuthenticationProtocol, 
    */
   public void sendCommitNotification(CommitNotificationInfo info) throws Exception;
 
+  /**
+   *@deprecated As of 4.8 use {@link #sendRemoteSessionNotification(InternalSession, InternalTopic, byte)}.
+   */
+  @Deprecated
   public void sendRemoteSessionNotification(InternalSession sender, byte opcode) throws Exception;
 
+  /**
+   * @since 4.17
+   */
+  public void sendRemoteSessionNotification(InternalSession sender, InternalTopic topic, byte opcode) throws Exception;
+
+  /**
+   * @deprecated As of 4.8 use {@link #sendRemoteMessageNotification(InternalSession, InternalTopic, CDORemoteSessionMessage)}.
+   */
+  @Deprecated
   public void sendRemoteMessageNotification(InternalSession sender, CDORemoteSessionMessage message) throws Exception;
+
+  /**
+   * @since 4.17
+   */
+  public void sendRemoteMessageNotification(InternalSession sender, InternalTopic topic, CDORemoteSessionMessage message) throws Exception;
 
   /**
    * @since 4.1

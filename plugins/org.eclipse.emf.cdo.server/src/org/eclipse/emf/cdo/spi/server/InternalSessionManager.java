@@ -30,6 +30,7 @@ import org.eclipse.net4j.util.security.DiffieHellman;
 import org.eclipse.net4j.util.security.IAuthenticator;
 import org.eclipse.net4j.util.security.IUserManager;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -46,6 +47,12 @@ public interface InternalSessionManager extends ISessionManager, IExecutorServic
   public InternalRepository getRepository();
 
   public void setRepository(InternalRepository repository);
+
+  /**
+   * @since 4.17
+   */
+  @Override
+  public InternalTopicManager getTopicManager();
 
   /**
    * @since 4.1
@@ -196,5 +203,15 @@ public interface InternalSessionManager extends ISessionManager, IExecutorServic
 
   public void sendRemoteSessionNotification(InternalSession sender, byte opcode);
 
+  /**
+   * @since 4.17
+   */
+  public void sendRemoteSessionNotification(InternalSession sender, Collection<InternalSession> recipients, InternalTopic topic, byte opcode);
+
   public List<Integer> sendRemoteMessageNotification(InternalSession sender, CDORemoteSessionMessage message, int[] recipients);
+
+  /**
+   * @since 4.17
+   */
+  public List<Integer> sendRemoteMessageNotification(InternalSession sender, CDORemoteSessionMessage message, InternalTopic topic);
 }

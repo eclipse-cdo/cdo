@@ -28,6 +28,7 @@ import java.util.Set;
  * unsubscribed to changes in the set of remote sessions. It is subscribed if at least one is true:
  * <ol>
  * <li>At least one {@link IListener listener} is registered with this remote session manager.
+ * <li>At least one {@link CDORemoteTopic topic} is subscribed with this remote session manager.
  * <li>{@link #isForceSubscription() Force subscription} is <code>true</code>.
  * </ol>
  * If this remote session manager is subscribed it eventually fires the following {@link IEvent events} to
@@ -38,7 +39,7 @@ import java.util.Set;
  * <li> {@link CDORemoteSessionEvent.SubscriptionChanged} to reflect the ability of the remote session to receive and
  * possibly handle remote messages from other sessions.
  * <li> {@link CDORemoteSessionEvent.MessageReceived} to deliver custom data
- * {@link CDORemoteSession#sendMessage(CDORemoteSessionMessage) sent} from other sessions .
+ * {@link CDORemoteSession#sendMessage(CDORemoteSessionMessage) sent} from other sessions.
  * </ul>
  *
  * @author Eike Stepper
@@ -67,10 +68,12 @@ public interface CDORemoteSessionManager extends IContainer<CDORemoteSession>
    * one is true:
    * <ol>
    * <li>At least one {@link IListener listener} is registered with this remote session manager.
+   * <li>At least one {@link CDORemoteTopic topic} is subscribed with this remote session manager.
    * <li>{@link #isForceSubscription() Force subscription} is <code>true</code>.
    * </ol>
    *
    * @see #addListener(IListener)
+   * @see #subscribeTopic(String)
    * @see #setForceSubscription(boolean)
    */
   public boolean isSubscribed();
@@ -78,18 +81,20 @@ public interface CDORemoteSessionManager extends IContainer<CDORemoteSession>
   /**
    * Returns <code>true</code> if this CDORemoteSessionManager shall be subscribed to changes in the set of remote
    * sessions and delivers {@link MessageReceived custom data events} even if no {@link IListener listener} is
-   * registered, <code>false</code> otherwise.
+   * registered and no {@link CDORemoteTopic topic} is subscribed, <code>false</code> otherwise.
    *
    * @see #addListener(IListener)
+   * @see #subscribeTopic(String)
    * @see #setForceSubscription(boolean)
    */
   public boolean isForceSubscription();
 
   /**
    * Enables or disables subscription to changes in the set of remote sessions even if no {@link IListener listener} is
-   * registered.
+   * registered and no {@link CDORemoteTopic topic} is subscribed.
    *
    * @see #addListener(IListener)
+   * @see #subscribeTopic(String)
    * @see #setForceSubscription(boolean)
    */
   public void setForceSubscription(boolean forceSubscription);
@@ -111,6 +116,21 @@ public interface CDORemoteSessionManager extends IContainer<CDORemoteSession>
    * @since 3.0
    */
   public Set<CDORemoteSession> sendMessage(CDORemoteSessionMessage message, Collection<CDORemoteSession> recipients);
+
+  /**
+   * Subscribes to the topic identified by the given <code>id</code>.
+   *
+   * @return The subscribed {@link CDORemoteTopic topic}.
+   * @since 4.17
+   */
+  public CDORemoteTopic subscribeTopic(String id);
+
+  /**
+   * Returns an array of the currently subscribed {@link CDORemoteTopic topics}.
+   *
+   * @since 4.17
+   */
+  public CDORemoteTopic[] getSubscribedTopics();
 
   /**
    * An {@link IEvent event} that is fired by a {@link #getSource() remote session manager} after the

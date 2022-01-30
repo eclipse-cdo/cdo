@@ -36,6 +36,8 @@ import org.eclipse.emf.cdo.spi.server.ISessionProtocol;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
+import org.eclipse.emf.cdo.spi.server.InternalTopic;
+import org.eclipse.emf.cdo.spi.server.InternalTopicManager;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.container.Container;
@@ -58,9 +60,12 @@ import org.eclipse.net4j.util.security.UserManagerAuthenticator;
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -78,6 +83,8 @@ public class SessionManager extends Container<ISession> implements InternalSessi
   private IAuthenticator authenticator;
 
   private IPermissionManager permissionManager;
+
+  private final InternalTopicManager topicManager = new TopicManager(this);
 
   private final Map<Integer, InternalSession> sessions = new HashMap<>();
 
@@ -194,6 +201,12 @@ public class SessionManager extends Container<ISession> implements InternalSessi
   }
 
   @Override
+  public InternalTopicManager getTopicManager()
+  {
+    return topicManager;
+  }
+
+  @Override
   public InternalSession[] getSessions()
   {
     return sessionsArray;
@@ -295,25 +308,20 @@ public class SessionManager extends Container<ISession> implements InternalSessi
 
     synchronized (sessions)
     {
-      repository.executeOutsideStartCommit(new Runnable()
-      {
-        @Override
-        public void run()
-        {
-          long openingTime = repository.getTimeStamp();
-          session.setOpeningTime(openingTime);
+      repository.executeOutsideStartCommit(() -> {
+        long openingTime = repository.getTimeStamp();
+        session.setOpeningTime(openingTime);
 
-          long firstUpdateTime = repository.getLastCommitTimeStamp();
-          session.setFirstUpdateTime(firstUpdateTime);
+        long firstUpdateTime = repository.getLastCommitTimeStamp();
+        session.setFirstUpdateTime(firstUpdateTime);
 
-          sessions.put(id, session);
-          buildSessionsArray();
-        }
+        sessions.put(id, session);
+        buildSessionsArray();
       });
     }
 
-    fireElementAddedEvent(session);
     sendRemoteSessionNotification(session, CDOProtocolConstants.REMOTE_SESSION_OPENED);
+    fireElementAddedEvent(session);
     return session;
   }
 
@@ -326,17 +334,43 @@ public class SessionManager extends Container<ISession> implements InternalSessi
   public void sessionClosed(InternalSession session)
   {
     int sessionID = session.getSessionID();
-    InternalSession removeSession = null;
+    InternalSession removedSession;
+    Set<InternalSession> recipients = new HashSet<>();
+
     synchronized (sessions)
     {
-      removeSession = sessions.remove(sessionID);
-      buildSessionsArray();
+      removedSession = sessions.remove(sessionID);
+      if (removedSession != null)
+      {
+        buildSessionsArray();
+
+        for (InternalSession remainingSession : sessions.values())
+        {
+          if (remainingSession.isSubscribed())
+          {
+            recipients.add(remainingSession);
+          }
+        }
+
+        List<InternalTopic> affectedTopics = topicManager.sessionClosed(removedSession);
+        for (InternalTopic affectedTopic : affectedTopics)
+        {
+          for (InternalSession affectedSession : affectedTopic.getSessions())
+          {
+            recipients.add(affectedSession);
+          }
+        }
+      }
     }
 
-    if (removeSession != null)
+    if (removedSession != null)
     {
-      fireElementRemovedEvent(session);
-      sendRemoteSessionNotification(session, CDOProtocolConstants.REMOTE_SESSION_CLOSED);
+      if (!recipients.isEmpty())
+      {
+        sendRemoteSessionNotification(removedSession, recipients, null, CDOProtocolConstants.REMOTE_SESSION_CLOSED);
+      }
+
+      fireElementRemovedEvent(removedSession);
     }
   }
 
@@ -527,18 +561,16 @@ public class SessionManager extends Container<ISession> implements InternalSessi
   {
     for (InternalSession session : getSessions())
     {
-      if (session == sender || session.options().getLockNotificationMode() == LockNotificationMode.OFF)
+      if (session != sender && session.options().getLockNotificationMode() != LockNotificationMode.OFF)
       {
-        continue;
-      }
-
-      try
-      {
-        session.sendLockNotification(lockChangeInfo);
-      }
-      catch (Exception ex)
-      {
-        handleNotificationProblem(session, ex);
+        try
+        {
+          session.sendLockNotification(lockChangeInfo);
+        }
+        catch (Exception ex)
+        {
+          handleNotificationProblem(session, ex);
+        }
       }
     }
   }
@@ -549,15 +581,39 @@ public class SessionManager extends Container<ISession> implements InternalSessi
   @Override
   public void sendRemoteSessionNotification(InternalSession sender, byte opcode)
   {
+    List<InternalSession> recipients = new ArrayList<>();
+    for (InternalSession session : getSessions())
+    {
+      if (session != sender && session.isSubscribed())
+      {
+        recipients.add(session);
+      }
+    }
+
+    sendRemoteSessionNotification(sender, recipients, null, opcode);
+  }
+
+  @Override
+  public void sendRemoteSessionNotification(InternalSession sender, Collection<InternalSession> recipients, InternalTopic topic, byte opcode)
+  {
+    if (recipients == null)
+    {
+      recipients = new ArrayList<>();
+      for (InternalSession session : topic.getSessions())
+      {
+        recipients.add(session);
+      }
+    }
+
     try
     {
-      for (InternalSession session : getSessions())
+      for (InternalSession session : recipients)
       {
-        if (session != sender && session.isSubscribed())
+        if (session != sender)
         {
           try
           {
-            session.sendRemoteSessionNotification(sender, opcode);
+            session.sendRemoteSessionNotification(sender, topic, opcode);
           }
           catch (Exception ex)
           {
@@ -573,6 +629,29 @@ public class SessionManager extends Container<ISession> implements InternalSessi
   }
 
   @Override
+  public List<Integer> sendRemoteMessageNotification(InternalSession sender, CDORemoteSessionMessage message, InternalTopic topic)
+  {
+    List<Integer> result = new ArrayList<>();
+    for (InternalSession recipient : topic.getSessions())
+    {
+      try
+      {
+        if (recipient != null && recipient != sender)
+        {
+          recipient.sendRemoteMessageNotification(sender, topic, message);
+          result.add(recipient.getSessionID());
+        }
+      }
+      catch (Exception ex)
+      {
+        handleNotificationProblem(recipient, ex);
+      }
+    }
+
+    return result;
+  }
+
+  @Override
   public List<Integer> sendRemoteMessageNotification(InternalSession sender, CDORemoteSessionMessage message, int[] recipients)
   {
     List<Integer> result = new ArrayList<>();
@@ -584,7 +663,7 @@ public class SessionManager extends Container<ISession> implements InternalSessi
       {
         if (recipient != null && recipient.isSubscribed())
         {
-          recipient.sendRemoteMessageNotification(sender, message);
+          recipient.sendRemoteMessageNotification(sender, null, message);
           result.add(recipient.getSessionID());
         }
       }
@@ -745,6 +824,7 @@ public class SessionManager extends Container<ISession> implements InternalSessi
   protected void doActivate() throws Exception
   {
     super.doActivate();
+    LifecycleUtil.activate(topicManager);
     initAuthentication();
   }
 
@@ -773,6 +853,7 @@ public class SessionManager extends Container<ISession> implements InternalSessi
       LifecycleUtil.deactivate(session);
     }
 
+    LifecycleUtil.deactivate(topicManager);
     super.doDeactivate();
   }
 

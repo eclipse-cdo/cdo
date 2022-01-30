@@ -338,6 +338,11 @@ public interface CDOProtocolConstants
    */
   public static final short SIGNAL_AUTHORIZE_OPERATIONS = 68;
 
+  /**
+   * @since 4.17
+   */
+  public static final short SIGNAL_REMOTE_TOPIC = 69;
+
   // //////////////////////////////////////////////////////////////////////
   // Session Refresh
 

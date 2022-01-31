@@ -1587,6 +1587,8 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
     checkState(sessionProtocol, "sessionProtocol"); //$NON-NLS-1$
     checkState(remoteSessionManager, "remoteSessionManager"); //$NON-NLS-1$
+
+    CDOSessionRegistryImpl.INSTANCE.register(this);
   }
 
   protected void doActivateAfterBranchManager() throws Exception
@@ -1597,6 +1599,8 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   @Override
   protected void doDeactivate() throws Exception
   {
+    CDOSessionRegistryImpl.INSTANCE.deregister(this);
+
     super.doDeactivate();
 
     unhookSessionProtocol();

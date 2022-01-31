@@ -1526,8 +1526,6 @@ public class CDOViewImpl extends AbstractCDOView
       sessionProtocol.openView(viewID, isReadOnly(), this);
     }
 
-    CDOViewRegistryImpl.INSTANCE.register(this);
-
     Runnable runnable = SessionUtil.getTestDelayInViewActivation();
     if (runnable != null)
     {
@@ -1568,12 +1566,15 @@ public class CDOViewImpl extends AbstractCDOView
         throw ex;
       }
     }
+
+    CDOViewRegistryImpl.INSTANCE.register(this);
   }
 
   @Override
   protected void doBeforeDeactivate() throws Exception
   {
     closing = true;
+    CDOViewRegistryImpl.INSTANCE.deregister(this);
 
     // Detach the view set from the view.
     InternalCDOViewSet viewSet = getViewSet();
@@ -1602,7 +1603,6 @@ public class CDOViewImpl extends AbstractCDOView
     unitManager.deactivate();
     commitInfoDistributor.deactivate();
 
-    CDOViewRegistryImpl.INSTANCE.deregister(this);
     LifecycleUtil.deactivate(invalidator, OMLogger.Level.WARN);
 
     try

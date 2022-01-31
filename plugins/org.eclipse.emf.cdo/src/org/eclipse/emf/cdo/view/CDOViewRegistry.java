@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.view;
 
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.view.CDOViewRegistry.Registration;
 
 import org.eclipse.net4j.util.container.IContainer;
 
@@ -23,10 +22,10 @@ import org.eclipse.net4j.util.container.IContainer;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface CDOViewRegistry extends IContainer<Registration>
+public interface CDOViewRegistry extends IContainer<CDOViewRegistry.Registration>
 {
   /**
-   * The {@link ClassLoader class loader}-wide singleton instance of the {@link CDOViewRegistry view registry}.
+   * The singleton instance of the {@link CDOViewRegistry view registry}.
    */
   public static final CDOViewRegistry INSTANCE = org.eclipse.emf.internal.cdo.view.CDOViewRegistryImpl.INSTANCE;
 
@@ -56,7 +55,7 @@ public interface CDOViewRegistry extends IContainer<Registration>
   public CDOView getView(int id);
 
   /**
-   * A bidirectional mapping between a registered {@link CDOView view} and its {@link ClassLoader class loader}-wide {@link #getID() ID}.
+   * A bidirectional mapping between a registered {@link CDOView view} and its {@link #getID() ID}.
    *
    * @author Eike Stepper
    */

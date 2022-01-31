@@ -8,10 +8,10 @@
  * Contributors:
  *   Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.internal.cdo.view;
+package org.eclipse.emf.internal.cdo.session;
 
-import org.eclipse.emf.cdo.view.CDOView;
-import org.eclipse.emf.cdo.view.CDOViewRegistry;
+import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.session.CDOSessionRegistry;
 
 import org.eclipse.emf.internal.cdo.util.AbstractRegistry;
 
@@ -19,30 +19,30 @@ import org.eclipse.emf.internal.cdo.util.AbstractRegistry;
  * @author Eike Stepper
  * @since 4.2
  */
-public class CDOViewRegistryImpl extends AbstractRegistry<CDOView, CDOViewRegistry.Registration> implements CDOViewRegistry
+public class CDOSessionRegistryImpl extends AbstractRegistry<CDOSession, CDOSessionRegistry.Registration> implements CDOSessionRegistry
 {
-  public static final CDOViewRegistryImpl INSTANCE = new CDOViewRegistryImpl();
+  public static final CDOSessionRegistryImpl INSTANCE = new CDOSessionRegistryImpl();
 
-  public CDOViewRegistryImpl()
+  public CDOSessionRegistryImpl()
   {
   }
 
   @Override
-  public CDOView[] getViews()
+  public CDOSession[] getSessions()
   {
     return getRegisteredElements();
   }
 
   @Override
-  public CDOView getView(int id)
+  public CDOSession getSession(int id)
   {
     return getElement(id);
   }
 
   @Override
-  protected CDOView[] newArray(int size)
+  protected CDOSession[] newArray(int size)
   {
-    return new CDOView[size];
+    return new CDOSession[size];
   }
 
   @Override
@@ -52,9 +52,9 @@ public class CDOViewRegistryImpl extends AbstractRegistry<CDOView, CDOViewRegist
   }
 
   @Override
-  protected Registration newRegistration(int id, CDOView view)
+  protected Registration newRegistration(int id, CDOSession session)
   {
-    return new RegistrationImpl(id, view);
+    return new RegistrationImpl(id, session);
   }
 
   @Override
@@ -64,19 +64,19 @@ public class CDOViewRegistryImpl extends AbstractRegistry<CDOView, CDOViewRegist
   }
 
   @Override
-  protected CDOView getRegisteredElement(Registration registration)
+  protected CDOSession getRegisteredElement(Registration registration)
   {
-    return registration.getView();
+    return registration.getSession();
   }
 
-  void register(CDOView view)
+  void register(CDOSession session)
   {
-    registerElement(view);
+    registerElement(session);
   }
 
-  void deregister(CDOView view)
+  void deregister(CDOSession session)
   {
-    deregisterElement(view);
+    deregisterElement(session);
   }
 
   /**
@@ -86,12 +86,12 @@ public class CDOViewRegistryImpl extends AbstractRegistry<CDOView, CDOViewRegist
   {
     private final int id;
 
-    private final CDOView view;
+    private final CDOSession session;
 
-    public RegistrationImpl(int id, CDOView view)
+    public RegistrationImpl(int id, CDOSession session)
     {
       this.id = id;
-      this.view = view;
+      this.session = session;
     }
 
     @Override
@@ -101,9 +101,9 @@ public class CDOViewRegistryImpl extends AbstractRegistry<CDOView, CDOViewRegist
     }
 
     @Override
-    public CDOView getView()
+    public CDOSession getSession()
     {
-      return view;
+      return session;
     }
   }
 }

@@ -62,6 +62,11 @@ public interface OMPlatform
 
   public void removeTraceHandler(OMTraceHandler traceHandler);
 
+  /**
+   * @since 3.18
+   */
+  public File getUserFolder();
+
   public File getStateFolder();
 
   public File getConfigFolder();

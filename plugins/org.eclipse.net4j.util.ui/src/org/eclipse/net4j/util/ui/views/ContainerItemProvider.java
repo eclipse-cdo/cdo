@@ -13,7 +13,6 @@ package org.eclipse.net4j.util.ui.views;
 import org.eclipse.net4j.ui.shared.SharedIcons;
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.IContainer;
-import org.eclipse.net4j.util.container.IContainerEvent;
 import org.eclipse.net4j.util.container.ISlow;
 import org.eclipse.net4j.util.container.SetContainer;
 import org.eclipse.net4j.util.event.EventUtil;
@@ -44,9 +43,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-/**
- * @author Eike Stepper
- */
 /**
  * @author Eike Stepper
  */
@@ -483,6 +479,11 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
 
     public Object getElement();
 
+    /**
+     * @since 3.14
+     */
+    public Object getParentElement();
+
     public Node getParent();
 
     /**
@@ -507,6 +508,12 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
     public AbstractNode(Node parent)
     {
       this.parent = parent;
+    }
+
+    @Override
+    public final Object getParentElement()
+    {
+      return parent == null ? null : parent.getElement();
     }
 
     @Override
@@ -574,7 +581,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
 
     protected Node addChild(Collection<Node> children, Object element)
     {
-      Node existing = nodes.get(element);
+      Node existing = getNode(element);
       if (existing != null)
       {
         if (!Objects.equals(existing.getParent(), this))
@@ -609,13 +616,6 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
 
     protected IListener containerListener = new ContainerEventAdapter<Object>()
     {
-      @Override
-      protected void notifyContainerEvent(IContainerEvent<Object> event)
-      {
-        super.notifyContainerEvent(event);
-        handleElementEvent(event);
-      }
-
       @Override
       protected void onAdded(IContainer<Object> container, Object element)
       {
@@ -856,8 +856,8 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
       if (!isDisposed())
       {
         EventUtil.removeListener(element, this);
-        element = null;
         super.dispose();
+        element = null;
       }
     }
 

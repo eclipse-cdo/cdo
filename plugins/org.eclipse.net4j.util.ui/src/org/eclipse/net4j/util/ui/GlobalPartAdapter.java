@@ -13,8 +13,10 @@ package org.eclipse.net4j.util.ui;
 import org.eclipse.net4j.util.collection.ConcurrentArray;
 import org.eclipse.net4j.util.internal.ui.bundle.OM;
 
+import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IPageListener;
 import org.eclipse.ui.IPartListener2;
+import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.IWindowListener;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
@@ -39,14 +41,109 @@ public class GlobalPartAdapter implements IWindowListener, IPageListener, IPartL
     }
   };
 
+  /**
+   * @since 3.14
+   */
+  public GlobalPartAdapter(boolean register)
+  {
+    if (register)
+    {
+      register();
+    }
+  }
+
   public GlobalPartAdapter()
   {
+    this(true);
+  }
+
+  /**
+   * @since 3.14
+   */
+  public void register(boolean notifyOpen)
+  {
+    if (notifyOpen)
+    {
+      IWorkbench workbench = PlatformUI.getWorkbench();
+      for (IWorkbenchWindow window : workbench.getWorkbenchWindows())
+      {
+        windowOpened(window);
+
+        for (IWorkbenchPage page : window.getPages())
+        {
+          pageOpened(page);
+
+          for (IViewReference partRef : page.getViewReferences())
+          {
+            partOpened(partRef);
+          }
+
+          for (IEditorReference partRef : page.getEditorReferences())
+          {
+            partOpened(partRef);
+          }
+        }
+      }
+    }
+
     adapters.add(this);
+  }
+
+  /**
+   * @since 3.14
+   */
+  public void register()
+  {
+    register(false);
+  }
+
+  /**
+   * @since 3.14
+   */
+  public void dispose(boolean notifyClose)
+  {
+    adapters.remove(this);
+
+    if (notifyClose)
+    {
+      IWorkbench workbench = PlatformUI.getWorkbench();
+      for (IWorkbenchWindow window : workbench.getWorkbenchWindows())
+      {
+        for (IWorkbenchPage page : window.getPages())
+        {
+          for (IEditorReference partRef : page.getEditorReferences())
+          {
+            partClosed(partRef);
+          }
+
+          for (IViewReference partRef : page.getViewReferences())
+          {
+            partClosed(partRef);
+          }
+
+          pageClosed(page);
+        }
+
+        windowClosed(window);
+      }
+    }
   }
 
   public void dispose()
   {
-    adapters.remove(this);
+    dispose(false);
+  }
+
+  @Override
+  public void windowOpened(IWorkbenchWindow window)
+  {
+    // Subclasses may override.
+  }
+
+  @Override
+  public void windowClosed(IWorkbenchWindow window)
+  {
+    // Subclasses may override.
   }
 
   @Override
@@ -62,19 +159,7 @@ public class GlobalPartAdapter implements IWindowListener, IPageListener, IPartL
   }
 
   @Override
-  public void windowClosed(IWorkbenchWindow window)
-  {
-    // Subclasses may override.
-  }
-
-  @Override
-  public void windowOpened(IWorkbenchWindow window)
-  {
-    // Subclasses may override.
-  }
-
-  @Override
-  public void pageActivated(IWorkbenchPage page)
+  public void pageOpened(IWorkbenchPage page)
   {
     // Subclasses may override.
   }
@@ -86,31 +171,7 @@ public class GlobalPartAdapter implements IWindowListener, IPageListener, IPartL
   }
 
   @Override
-  public void pageOpened(IWorkbenchPage page)
-  {
-    // Subclasses may override.
-  }
-
-  @Override
-  public void partActivated(IWorkbenchPartReference partRef)
-  {
-    // Subclasses may override.
-  }
-
-  @Override
-  public void partBroughtToTop(IWorkbenchPartReference partRef)
-  {
-    // Subclasses may override.
-  }
-
-  @Override
-  public void partClosed(IWorkbenchPartReference partRef)
-  {
-    // Subclasses may override.
-  }
-
-  @Override
-  public void partDeactivated(IWorkbenchPartReference partRef)
+  public void pageActivated(IWorkbenchPage page)
   {
     // Subclasses may override.
   }
@@ -122,13 +183,37 @@ public class GlobalPartAdapter implements IWindowListener, IPageListener, IPartL
   }
 
   @Override
-  public void partHidden(IWorkbenchPartReference partRef)
+  public void partClosed(IWorkbenchPartReference partRef)
+  {
+    // Subclasses may override.
+  }
+
+  @Override
+  public void partActivated(IWorkbenchPartReference partRef)
+  {
+    // Subclasses may override.
+  }
+
+  @Override
+  public void partDeactivated(IWorkbenchPartReference partRef)
   {
     // Subclasses may override.
   }
 
   @Override
   public void partVisible(IWorkbenchPartReference partRef)
+  {
+    // Subclasses may override.
+  }
+
+  @Override
+  public void partHidden(IWorkbenchPartReference partRef)
+  {
+    // Subclasses may override.
+  }
+
+  @Override
+  public void partBroughtToTop(IWorkbenchPartReference partRef)
   {
     // Subclasses may override.
   }
@@ -189,9 +274,9 @@ public class GlobalPartAdapter implements IWindowListener, IPageListener, IPartL
       }
 
       @Override
-      public void partBroughtToTop(IWorkbenchPartReference partRef)
+      public void partVisible(IWorkbenchPartReference partRef)
       {
-        notifyAdapters(a -> a.partBroughtToTop(partRef));
+        notifyAdapters(a -> a.partVisible(partRef));
       }
 
       @Override
@@ -201,9 +286,9 @@ public class GlobalPartAdapter implements IWindowListener, IPageListener, IPartL
       }
 
       @Override
-      public void partVisible(IWorkbenchPartReference partRef)
+      public void partBroughtToTop(IWorkbenchPartReference partRef)
       {
-        notifyAdapters(a -> a.partVisible(partRef));
+        notifyAdapters(a -> a.partBroughtToTop(partRef));
       }
 
       @Override
@@ -218,8 +303,8 @@ public class GlobalPartAdapter implements IWindowListener, IPageListener, IPartL
       @Override
       public void pageOpened(IWorkbenchPage page)
       {
-        page.addPartListener(partListener);
         notifyAdapters(a -> a.pageOpened(page));
+        page.addPartListener(partListener);
       }
 
       @Override
@@ -241,21 +326,21 @@ public class GlobalPartAdapter implements IWindowListener, IPageListener, IPartL
       @Override
       public void windowOpened(IWorkbenchWindow window)
       {
-        window.addPageListener(pageListener);
         notifyAdapters(a -> a.windowOpened(window));
+        window.addPageListener(pageListener);
       }
 
       @Override
       public void windowClosed(IWorkbenchWindow window)
       {
         window.removePageListener(pageListener);
-        notifyAdapters(a -> a.windowOpened(window));
+        notifyAdapters(a -> a.windowClosed(window));
       }
 
       @Override
       public void windowActivated(IWorkbenchWindow window)
       {
-        notifyAdapters(a -> a.windowClosed(window));
+        notifyAdapters(a -> a.windowActivated(window));
       }
 
       @Override
@@ -266,6 +351,16 @@ public class GlobalPartAdapter implements IWindowListener, IPageListener, IPartL
     };
 
     IWorkbench workbench = PlatformUI.getWorkbench();
+    for (IWorkbenchWindow window : workbench.getWorkbenchWindows())
+    {
+      window.addPageListener(pageListener);
+
+      for (IWorkbenchPage page : window.getPages())
+      {
+        page.addPartListener(partListener);
+      }
+    }
+
     workbench.addWindowListener(windowListener);
   }
 }

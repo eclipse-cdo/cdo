@@ -996,12 +996,12 @@ public class LockStateCacheTest extends AbstractCDOTest
       private void dumpActualLockState()
       {
         IOUtil.ERR().println();
-        IOUtil.ERR().println("################################################");
+        IOUtil.ERR().println("================================================");
         IOUtil.ERR().println("Actual lock state: " //
             + index(lockState.getWriteLockOwner()) + ", " //
             + index(lockState.getWriteOptionOwner()) //
             + index(lockState.getReadLockOwners()));
-        IOUtil.ERR().println("################################################");
+        IOUtil.ERR().println("================================================");
         IOUtil.ERR().println();
       }
 

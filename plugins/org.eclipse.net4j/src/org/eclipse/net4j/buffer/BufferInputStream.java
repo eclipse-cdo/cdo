@@ -347,6 +347,9 @@ public class BufferInputStream extends InputStream implements IBufferHandler
       remaining = stopTimeMillis;
     }
 
+    // int forDebuggingOnly;
+    // remaining = Long.MAX_VALUE;
+
     remaining -= System.currentTimeMillis();
     if (remaining <= 0)
     {

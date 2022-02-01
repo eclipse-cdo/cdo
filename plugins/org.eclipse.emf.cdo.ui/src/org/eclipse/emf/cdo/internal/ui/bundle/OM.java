@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.internal.ui.bundle;
 
+import org.eclipse.emf.cdo.internal.ui.views.UserInfo;
 import org.eclipse.emf.cdo.ui.CDOEditorOpener;
 import org.eclipse.emf.cdo.ui.CDOLabelDecorator;
 import org.eclipse.emf.cdo.ui.OverlayImage;
@@ -71,6 +72,18 @@ public abstract class OM
 
   public static final OMPreference<Long> PREF_LOCK_TIMEOUT = //
       PREFS.init("PREF_LOCK_TIMEOUT", 10000L); //$NON-NLS-1$
+
+  public static final OMPreference<Boolean> PREF_TOPICS_LINK_WITH_EDITOR = //
+      PREFS.init("PREF_TOPICS_LINK_WITH_EDITOR", false); //$NON-NLS-1$
+
+  public static final OMPreference<String> PREF_USER_FIRST_NAME = //
+      PREFS.init("PREF_USER_FIRST_NAME", ""); //$NON-NLS-1$
+
+  public static final OMPreference<String> PREF_USER_LAST_NAME = //
+      PREFS.init("PREF_USER_LAST_NAME", ""); //$NON-NLS-1$
+
+  public static final OMPreference<String> PREF_USER_DISPLAY_NAME = //
+      PREFS.init("PREF_USER_DISPLAY_NAME", System.getProperty("user.name")); //$NON-NLS-1$
 
   private static Boolean historySupportAvailable;
 
@@ -148,11 +161,13 @@ public abstract class OM
     protected void doStart() throws Exception
     {
       CDOEditorOpener.Registry.INSTANCE.activate();
+      UserInfo.Manager.INSTANCE.activate();
     }
 
     @Override
     protected void doStop() throws Exception
     {
+      UserInfo.Manager.INSTANCE.deactivate();
       CDOEditorOpener.Registry.INSTANCE.deactivate();
     }
   }

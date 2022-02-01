@@ -27,7 +27,7 @@ public class Topic extends Container<ISession> implements InternalTopic
 {
   private final InternalTopicManager manager;
 
-  private final Set<InternalSession> sessions = new HashSet<InternalSession>();
+  private final Set<InternalSession> sessions = new HashSet<>();
 
   private final String id;
 
@@ -97,10 +97,9 @@ public class Topic extends Container<ISession> implements InternalTopic
     if (added)
     {
       fireElementAddedEvent(session);
-      return otherSessions;
     }
 
-    return null;
+    return otherSessions;
   }
 
   @Override
@@ -126,5 +125,11 @@ public class Topic extends Container<ISession> implements InternalTopic
     }
 
     return removed;
+  }
+
+  @Override
+  public String toString()
+  {
+    return "Topic[" + id + "]";
   }
 }

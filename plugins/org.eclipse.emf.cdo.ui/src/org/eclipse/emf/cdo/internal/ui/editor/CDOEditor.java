@@ -14,12 +14,15 @@ package org.eclipse.emf.cdo.internal.ui.editor;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
+import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.ui.CDOContentProvider;
 import org.eclipse.emf.cdo.internal.ui.RunnableViewerRefresh;
@@ -37,6 +40,7 @@ import org.eclipse.emf.cdo.ui.CDOEditorInput3;
 import org.eclipse.emf.cdo.ui.CDOEventHandler;
 import org.eclipse.emf.cdo.ui.CDOInvalidRootAgent;
 import org.eclipse.emf.cdo.ui.CDOLabelProvider;
+import org.eclipse.emf.cdo.ui.CDOTopicProvider;
 import org.eclipse.emf.cdo.ui.CDOTreeExpansionAgent;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
@@ -50,6 +54,7 @@ import org.eclipse.emf.internal.cdo.view.CDOStateMachine;
 import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.collection.ConcurrentArray;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -193,13 +198,14 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * @author Eike Stepper
- * @generated
+ * @generated not
  */
-public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProvider, ISelectionProvider, IMenuListener, IViewerProvider
+public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProvider, ISelectionProvider, IMenuListener, IViewerProvider, CDOTopicProvider
 {
   /**
    * The filters for file extensions supported by the editor.
@@ -528,6 +534,17 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   };
 
   protected final AtomicBoolean pagesCreated = new AtomicBoolean();
+
+  protected final ConcurrentArray<Listener> topicListeners = new ConcurrentArray<>()
+  {
+    @Override
+    protected Listener[] newArray(int length)
+    {
+      return new Listener[length];
+    }
+  };
+
+  protected Topic currentTopic;
 
   /**
    * Handles activation of the editor or it's associated views.
@@ -1381,6 +1398,12 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       eventHandler = new CDOEventHandler(view, selectionViewer)
       {
         @Override
+        protected void viewTargetChanged(CDOBranchPoint branchPoint)
+        {
+          setCurrentTopic(createTopic());
+        }
+
+        @Override
         protected void objectInvalidated(InternalCDOObject cdoObject)
         {
           if (CDOUtil.isLegacyObject(cdoObject))
@@ -1467,6 +1490,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
           fireDirtyPropertyChange();
         }
       };
+
+      setCurrentTopic(createTopic());
     }
     catch (RuntimeException ex)
     {
@@ -2259,6 +2284,80 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     site.setSelectionProvider(this);
     site.getPage().addPartListener(partListener);
     setInputWithNotify(editorInput);
+  }
+
+  private void setCurrentTopic(Topic topic)
+  {
+    if (!Objects.equals(currentTopic, topic))
+    {
+      if (currentTopic != null)
+      {
+        for (Listener listener : topicListeners.get())
+        {
+          listener.topicRemoved(this, currentTopic);
+        }
+      }
+
+      currentTopic = topic;
+
+      if (currentTopic != null)
+      {
+        for (Listener listener : topicListeners.get())
+        {
+          listener.topicAdded(this, currentTopic);
+        }
+      }
+    }
+  }
+
+  private Topic createTopic()
+  {
+    if (view != null)
+    {
+      ResourceSet resourceSet = view.getResourceSet();
+      Resource resource = resourceSet.getResources().get(0);
+
+      if (resource instanceof CDOResource)
+      {
+        CDOResource cdoResource = (CDOResource)resource;
+        String path = cdoResource.getPath();
+
+        CDOBranch branch = view.getBranch();
+        long timeStamp = view.getTimeStamp();
+
+        String id = "org.eclipse.emf.cdo.resource" + path + "/" + branch.getID() + "/" + timeStamp;
+        Image image = getTitleImage();
+        String text = path + "  [" + branch.getName() + "/" + CDOCommonUtil.formatTimeStamp(timeStamp) + "]";
+        String description = text;
+
+        return new Topic(view.getSession(), id, image, text, description);
+      }
+    }
+
+    return null;
+  }
+
+  @Override
+  public Topic[] getTopics()
+  {
+    if (currentTopic != null)
+    {
+      return new Topic[] { currentTopic };
+    }
+
+    return new Topic[0];
+  }
+
+  @Override
+  public void addTopicListener(Listener listener)
+  {
+    topicListeners.add(listener);
+  }
+
+  @Override
+  public void removeTopicListener(Listener listener)
+  {
+    topicListeners.remove(listener);
   }
 
   /**

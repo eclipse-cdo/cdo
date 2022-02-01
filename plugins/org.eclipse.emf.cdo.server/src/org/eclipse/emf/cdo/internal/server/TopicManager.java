@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.spi.server.InternalTopic;
 import org.eclipse.emf.cdo.spi.server.InternalTopicManager;
 
 import org.eclipse.net4j.util.container.Container;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,7 +32,7 @@ public class TopicManager extends Container<ITopic> implements InternalTopicMana
 {
   private final InternalSessionManager sessionManager;
 
-  private final Map<String, InternalTopic> topics = new HashMap<String, InternalTopic>();
+  private final Map<String, InternalTopic> topics = new HashMap<>();
 
   public TopicManager(InternalSessionManager sessionManager)
   {
@@ -59,9 +60,10 @@ public class TopicManager extends Container<ITopic> implements InternalTopicMana
     synchronized (topics)
     {
       topic = topics.get(id);
-      if (topic == null)
+      if (topic == null && createOnDemand)
       {
         topic = new Topic(this, id);
+        LifecycleUtil.activate(topic);
         topics.put(id, topic);
         added = true;
       }
@@ -114,8 +116,10 @@ public class TopicManager extends Container<ITopic> implements InternalTopicMana
     InternalTopic topic = getTopic(id, false);
     if (topic != null)
     {
-      topic.removeSession(session);
-      sessionManager.sendRemoteSessionNotification(session, null, topic, CDOProtocolConstants.REMOTE_SESSION_UNSUBSCRIBED);
+      if (topic.removeSession(session))
+      {
+        sessionManager.sendRemoteSessionNotification(session, null, topic, CDOProtocolConstants.REMOTE_SESSION_UNSUBSCRIBED);
+      }
     }
   }
 
@@ -128,19 +132,18 @@ public class TopicManager extends Container<ITopic> implements InternalTopicMana
     synchronized (topics)
     {
       removedTopic = topics.remove(id);
-      if (removedTopic != topic)
+
+      if (removedTopic != null && removedTopic != topic)
       {
-        if (removedTopic != null)
-        {
-          // A new topic was registered under the same id, put it back.
-          topics.put(id, topic);
-          removedTopic = null;
-        }
+        // A new topic was registered under the same id, put it back.
+        topics.put(id, topic);
+        removedTopic = null;
       }
     }
 
     if (removedTopic != null)
     {
+      LifecycleUtil.deactivate(removedTopic);
       fireElementRemovedEvent(removedTopic);
     }
   }
@@ -148,7 +151,7 @@ public class TopicManager extends Container<ITopic> implements InternalTopicMana
   @Override
   public List<InternalTopic> sessionClosed(InternalSession session)
   {
-    List<InternalTopic> affectedTopics = new ArrayList<InternalTopic>();
+    List<InternalTopic> affectedTopics = new ArrayList<>();
 
     synchronized (topics)
     {

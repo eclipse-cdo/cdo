@@ -73,6 +73,8 @@ public abstract class AbstractBundle implements OMBundle, OMBundle.DebugSupport,
 
   private boolean shouldTranslate = true;
 
+  private String userLocation;
+
   public AbstractBundle(AbstractPlatform platform, String bundleID, Class<?> accessor)
   {
     this.platform = platform;
@@ -81,6 +83,8 @@ public abstract class AbstractBundle implements OMBundle, OMBundle.DebugSupport,
 
     boolean debug = getDebugOption("debug", false); //$NON-NLS-1$
     setDebugging(debug);
+
+    userLocation = new File(platform.getUserFolder(), bundleID).toString();
   }
 
   @Override
@@ -278,6 +282,12 @@ public abstract class AbstractBundle implements OMBundle, OMBundle.DebugSupport,
 
     IStatus status = getStatus(t);
     throw new CoreException(status);
+  }
+
+  @Override
+  public String getUserLocation()
+  {
+    return userLocation;
   }
 
   @Override

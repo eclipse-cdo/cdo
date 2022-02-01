@@ -45,13 +45,15 @@ public abstract class AbstractPlatform implements OMPlatform
 
   public static final String SYSTEM_PROPERTY_NET4J_CONFIG = "net4j.config"; //$NON-NLS-1$
 
+  public static final String SYSTEM_PROPERTY_NET4J_USER_DIR = "net4j.user.dir"; //$NON-NLS-1$
+
   static Object systemContext;
 
   private static ContextTracer __TRACER__;
 
-  private Map<String, AbstractBundle> bundles = new ConcurrentHashMap<>(0);
+  private final Map<String, AbstractBundle> bundles = new ConcurrentHashMap<>(0);
 
-  private ConcurrentArray<OMLogFilter> logFilters = new ConcurrentArray.Unique<OMLogFilter>()
+  private final ConcurrentArray<OMLogFilter> logFilters = new ConcurrentArray.Unique<OMLogFilter>()
   {
     @Override
     protected OMLogFilter[] newArray(int length)
@@ -60,7 +62,7 @@ public abstract class AbstractPlatform implements OMPlatform
     }
   };
 
-  private ConcurrentArray<OMLogHandler> logHandlers = new ConcurrentArray.Unique<OMLogHandler>()
+  private final ConcurrentArray<OMLogHandler> logHandlers = new ConcurrentArray.Unique<OMLogHandler>()
   {
     @Override
     protected OMLogHandler[] newArray(int length)
@@ -69,7 +71,7 @@ public abstract class AbstractPlatform implements OMPlatform
     }
   };
 
-  private ConcurrentArray<OMTraceHandler> traceHandlers = new ConcurrentArray.Unique<OMTraceHandler>()
+  private final ConcurrentArray<OMTraceHandler> traceHandlers = new ConcurrentArray.Unique<OMTraceHandler>()
   {
     @Override
     protected OMTraceHandler[] newArray(int length)
@@ -78,11 +80,31 @@ public abstract class AbstractPlatform implements OMPlatform
     }
   };
 
+  private final File userFolder = initUserFolder();
+
   private boolean debugging;
 
   protected AbstractPlatform()
   {
     debugging = isProperty("debug"); //$NON-NLS-1$
+  }
+
+  private File initUserFolder()
+  {
+    try
+    {
+      String userDir = System.getProperty(SYSTEM_PROPERTY_NET4J_USER_DIR);
+      if (userDir != null && userDir.length() != 0)
+      {
+        return new File(userDir);
+      }
+    }
+    catch (Throwable ex)
+    {
+      //$FALL-THROUGH$
+    }
+
+    return new File(System.getProperty("user.home"), ".eclipse");
   }
 
   @Override
@@ -164,6 +186,12 @@ public abstract class AbstractPlatform implements OMPlatform
   public void setDebugging(boolean debugging)
   {
     this.debugging = debugging;
+  }
+
+  @Override
+  public File getUserFolder()
+  {
+    return userFolder;
   }
 
   @Override

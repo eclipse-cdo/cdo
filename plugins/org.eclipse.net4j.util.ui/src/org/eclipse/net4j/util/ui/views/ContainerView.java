@@ -710,6 +710,9 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
     }
   }
 
+  /**
+   * @author Eike Stepper
+   */
   protected static enum MessageType
   {
     INFORMATION, ERROR, WARNING, CONFIRM, QUESTION

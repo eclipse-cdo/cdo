@@ -13,6 +13,7 @@ package org.eclipse.emf.spi.cdo;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 
+import org.eclipse.net4j.util.concurrent.IExecutorServiceProvider;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 
 /**
@@ -23,7 +24,7 @@ import org.eclipse.net4j.util.lifecycle.ILifecycle;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface InternalCDORemoteSessionManager extends CDORemoteSessionManager, ILifecycle
+public interface InternalCDORemoteSessionManager extends CDORemoteSessionManager, ILifecycle, IExecutorServiceProvider
 {
   /**
    * @since 3.0

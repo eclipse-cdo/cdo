@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.ui;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.internal.ui.ItemsProcessor;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -24,6 +25,7 @@ import org.eclipse.emf.cdo.view.CDOObjectHandler;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewInvalidationEvent;
 import org.eclipse.emf.cdo.view.CDOViewLocksChangedEvent;
+import org.eclipse.emf.cdo.view.CDOViewTargetChangedEvent;
 
 import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.container.IContainerEvent;
@@ -88,7 +90,12 @@ public class CDOEventHandler
     @Override
     public void notifyEvent(IEvent event)
     {
-      if (event instanceof CDOViewInvalidationEvent)
+      if (event instanceof CDOViewTargetChangedEvent)
+      {
+        CDOViewTargetChangedEvent e = (CDOViewTargetChangedEvent)event;
+        viewTargetChanged(e.getBranchPoint());
+      }
+      else if (event instanceof CDOViewInvalidationEvent)
       {
         CDOViewInvalidationEvent e = (CDOViewInvalidationEvent)event;
         // Remove detached object from selection, could incur into unwanted exceptions
@@ -372,6 +379,13 @@ public class CDOEventHandler
   }
 
   protected void viewConflict(CDOObject conflictingObject, boolean firstConflict)
+  {
+  }
+
+  /**
+   * @since 4.12
+   */
+  protected void viewTargetChanged(CDOBranchPoint branchPoint)
   {
   }
 

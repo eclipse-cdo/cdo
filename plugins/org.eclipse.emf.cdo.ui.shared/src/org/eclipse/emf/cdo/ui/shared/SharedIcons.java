@@ -172,6 +172,11 @@ public class SharedIcons
    */
   public static final String OBJ_PERSON_ME = OBJ + "person-me.gif"; //$NON-NLS-1$
 
+  /**
+   * @since 4.7
+   */
+  public static final String OBJ_TOPIC = OBJ + "topic.gif"; //$NON-NLS-1$
+
   private static final String OVR = "ovr16/"; //$NON-NLS-1$
 
   /**

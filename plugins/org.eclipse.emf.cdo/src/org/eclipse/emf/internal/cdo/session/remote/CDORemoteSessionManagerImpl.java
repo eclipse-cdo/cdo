@@ -21,7 +21,9 @@ import org.eclipse.net4j.util.container.ContainerEvent;
 import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.InternalCDORemoteSession;
 import org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager;
 import org.eclipse.emf.spi.cdo.InternalCDORemoteTopic;
@@ -36,6 +38,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
 
 /**
  * @author Eike Stepper
@@ -56,6 +59,12 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
 
   public CDORemoteSessionManagerImpl()
   {
+  }
+
+  @Override
+  public ExecutorService getExecutorService()
+  {
+    return localSession == null ? null : localSession.getExecutorService();
   }
 
   @Override
@@ -181,7 +190,7 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
 
     Set<Integer> sessionIDs = localSession.getSessionProtocol().sendRemoteMessage(message, null, subscribedSessions);
     Set<CDORemoteSession> result = new HashSet<>();
-    
+
     for (CDORemoteSession recipient : subscribedSessions)
     {
       if (sessionIDs.contains(recipient.getSessionID()))
@@ -209,8 +218,11 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
           events = subscribe();
         }
 
-        Set<Integer> remoteSessionIDs = localSession.getSessionProtocol().subscribeRemoteTopic(id, true);
+        CDOSessionProtocol sessionProtocol = localSession.getSessionProtocol();
+        Set<Integer> remoteSessionIDs = sessionProtocol.subscribeRemoteTopic(id, true);
+
         remoteTopic = new CDORemoteTopicImpl(this, id, remoteSessionIDs);
+        LifecycleUtil.activate(remoteTopic);
         remoteTopics.put(id, remoteTopic);
       }
     }
@@ -227,12 +239,16 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
 
     synchronized (this)
     {
-      localSession.getSessionProtocol().subscribeRemoteTopic(id, false);
-      remoteTopics.remove(id);
-
-      if (!forceSubscription && remoteTopics.isEmpty() && !hasListeners())
+      if (remoteTopics.remove(id) != null)
       {
-        events = unsubscribe();
+        localSession.getSessionProtocol().subscribeRemoteTopic(id, false);
+
+        if (!forceSubscription && remoteTopics.isEmpty() && !hasListeners())
+        {
+          events = unsubscribe();
+        }
+
+        LifecycleUtil.deactivate(remoteTopic);
       }
     }
 
@@ -429,6 +445,7 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
 
     remoteSessions.clear();
     subscribed = false;
+
     IEvent[] events = { new LocalSubscriptionChangedEventImpl(false), event.isEmpty() ? null : event };
     return events;
   }

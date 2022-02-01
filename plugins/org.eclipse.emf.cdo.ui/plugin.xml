@@ -22,12 +22,20 @@
 
    <extension point="org.eclipse.net4j.util.factories">
       <factory
-            class="org.eclipse.emf.cdo.internal.ui.transfer.RepositoryUIProvider$Factory"
             productGroup="org.eclipse.emf.cdo.transfer.ui.providers"
-            type="repository"/>
+            type="repository"
+            class="org.eclipse.emf.cdo.internal.ui.transfer.RepositoryUIProvider$Factory"/>
+      <factory
+            productGroup="org.eclipse.emf.cdo.ui.userInfoStorages"
+            type="preferences"
+            class="org.eclipse.emf.cdo.internal.ui.views.UserInfo$Manager$PreferencesUserInfoStorage$Factory"/>
+      <factory
+            productGroup="org.eclipse.emf.cdo.ui.userInfoStorages"
+            type="home"
+            class="org.eclipse.emf.cdo.internal.ui.views.UserInfo$Manager$HomeUserInfoStorage$Factory"/>
       <factories
-            class="org.eclipse.net4j.util.security.operations.AuthorizableOperationFactory"
-            productGroup="org.eclipse.net4j.util.security.authorizableOperations">
+            productGroup="org.eclipse.net4j.util.security.authorizableOperations"
+            class="org.eclipse.net4j.util.security.operations.AuthorizableOperationFactory">
          <type value="org.eclipse.emf.cdo.ui.RenameBranches"/>
          <type value="org.eclipse.emf.cdo.ui.DeleteBranches"/>
          <type value="org.eclipse.emf.cdo.ui.DeleteBranches"/>
@@ -79,6 +87,12 @@
             icon="platform:/plugin/org.eclipse.emf.cdo.ui.shared/icons/full/view16/cdo_remote_sessions.gif"
             id="org.eclipse.emf.cdo.ui.CDORemoteSessionsView"
             name="%view.name.2"/>
+      <view
+            category="org.eclipse.emf.cdo"
+            class="org.eclipse.emf.cdo.internal.ui.views.CDORemoteTopicsView"
+            icon="platform:/plugin/org.eclipse.emf.cdo.ui.shared/icons/full/view16/cdo_remote_topics.gif"
+            id="org.eclipse.emf.cdo.ui.CDORemoteTopicsView"
+            name="%view.name.4"/>
       <view
             category="org.eclipse.emf.cdo"
             class="org.eclipse.emf.cdo.internal.ui.views.CDOTimeMachineView"

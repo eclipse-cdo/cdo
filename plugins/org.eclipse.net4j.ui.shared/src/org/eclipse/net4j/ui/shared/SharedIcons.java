@@ -109,6 +109,16 @@ public final class SharedIcons
   public static final String ETOOL_VERTICAL = ETOOL + "vertical_layout"; //$NON-NLS-1$
 
   /**
+   * @since 4.7
+   */
+  public static final String ETOOL_LINK_WITH_EDITOR = ETOOL + "link_with_editor"; //$NON-NLS-1$
+
+  /**
+   * @since 4.7
+   */
+  public static final String ETOOL_EXPAND_ALL = ETOOL + "expand_all"; //$NON-NLS-1$
+
+  /**
    * @since 4.2
    */
   public static final String ETOOL_COLLAPSE_ALL = ETOOL + "collapse_all"; //$NON-NLS-1$

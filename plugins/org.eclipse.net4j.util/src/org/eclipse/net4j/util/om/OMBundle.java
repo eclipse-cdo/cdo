@@ -68,6 +68,11 @@ public interface OMBundle
 
   public Properties getConfigProperties();
 
+  /**
+   * @since 3.18
+   */
+  public String getUserLocation();
+
   public String getStateLocation();
 
   public InputStream getInputStream(String path) throws IOException;

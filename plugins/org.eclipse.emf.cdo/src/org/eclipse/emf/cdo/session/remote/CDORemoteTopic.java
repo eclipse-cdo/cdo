@@ -10,10 +10,10 @@
  */
 package org.eclipse.emf.cdo.session.remote;
 
+import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IContainerEvent;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
-import org.eclipse.net4j.util.event.INotifier;
 
 import java.util.Set;
 
@@ -40,8 +40,10 @@ import java.util.Set;
  *
  * @author Eike Stepper
  * @since 4.17
- */
-public interface CDORemoteTopic extends INotifier, Comparable<CDORemoteTopic>
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
+*/
+public interface CDORemoteTopic extends IContainer<CDORemoteSession>, Comparable<CDORemoteTopic>
 {
   /**
    * Returns the remote session manager that manages this remote topic.

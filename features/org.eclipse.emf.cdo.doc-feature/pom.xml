@@ -25,7 +25,7 @@
 
   <groupId>org.eclipse.emf.cdo.features</groupId>
   <artifactId>org.eclipse.emf.cdo.doc</artifactId>
-  <version>4.3.5-SNAPSHOT</version>
+  <version>4.3.6-SNAPSHOT</version>
   <packaging>eclipse-feature</packaging>
 
 </project>

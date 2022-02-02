@@ -17,6 +17,7 @@
    <extension-point id="viewProviders" name="%extension-point.name.0" schema="schema/viewProviders.exsd"/>
 
    <extension point="org.eclipse.net4j.util.productGroups">
+     <productGroup id="org.eclipse.emf.cdo.resourceSetClassNameProviders" name="CDO Resource Set Class Name Providers"/>
      <productGroup id="org.eclipse.emf.cdo.conflictHandlers" name="CDO Conflict Handlers"/>
    </extension>
 

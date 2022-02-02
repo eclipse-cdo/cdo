@@ -15,6 +15,12 @@ package org.eclipse.emf.cdo.eresource.impl;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
 
+import org.eclipse.emf.internal.cdo.bundle.OM;
+
+import org.eclipse.net4j.util.collection.CollectionUtil;
+import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.factory.ProductCreationException;
+
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -30,19 +36,15 @@ import java.util.Set;
  */
 public class CDOResourceFactoryImpl implements CDOResourceFactory
 {
-  private Set<String> resourceSetClassNames = new HashSet<>();
-
   /**
    * @since 4.0
    */
   public static final CDOResourceFactory INSTANCE = new CDOResourceFactoryImpl();
 
+  private static final Set<String> RESOURCE_SET_CLASS_NAMES = initResourceSetClassNames();
+
   public CDOResourceFactoryImpl()
   {
-    resourceSetClassNames.add(ResourceSetImpl.class.getName());
-    resourceSetClassNames.add("org.eclipse.xtext.resource.XtextResourceSet");
-    resourceSetClassNames.add("org.eclipse.xtext.resource.ResourceSetReferencingResourceSetImpl");
-    resourceSetClassNames.add("org.eclipse.xtext.resource.SynchronizedXtextResourceSet");
   }
 
   /**
@@ -50,16 +52,17 @@ public class CDOResourceFactoryImpl implements CDOResourceFactory
    */
   public Set<String> getResourceSetClassNames()
   {
-    return resourceSetClassNames;
+    return RESOURCE_SET_CLASS_NAMES;
   }
 
   @Override
   public Resource createResource(URI uri)
   {
-    boolean existing = isGetResource();
-
     CDOResourceImpl resource = createCDOResource(uri);
+
+    boolean existing = isGetResource();
     resource.setExisting(existing);
+
     return resource;
   }
 
@@ -83,7 +86,7 @@ public class CDOResourceFactoryImpl implements CDOResourceFactory
     for (int i = 3; i < elements.length; i++)
     {
       StackTraceElement element = elements[i];
-      if (resourceSetClassNames.contains(element.getClassName()))
+      if (RESOURCE_SET_CLASS_NAMES.contains(element.getClassName()))
       {
         inResourceSet = true;
       }
@@ -102,5 +105,63 @@ public class CDOResourceFactoryImpl implements CDOResourceFactory
     }
 
     return false;
+  }
+
+  private static Set<String> initResourceSetClassNames()
+  {
+    Set<String> set = new HashSet<>();
+    set.add(ResourceSetImpl.class.getName());
+    set.add("org.eclipse.xtext.resource.XtextResourceSet");
+    set.add("org.eclipse.xtext.resource.ResourceSetReferencingResourceSetImpl");
+    set.add("org.eclipse.xtext.resource.SynchronizedXtextResourceSet");
+    ResourceSetClassNameProvider.Factory.fillClassNames(set);
+    return set;
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 4.17
+   */
+  public interface ResourceSetClassNameProvider
+  {
+    public String[] getResourceSetClassNames();
+
+    /**
+     * @author Eike Stepper
+     */
+    public static abstract class Factory extends org.eclipse.net4j.util.factory.Factory
+    {
+      public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.resourceSetClassNameProviders";
+
+      public Factory(String type)
+      {
+        super(PRODUCT_GROUP, type);
+      }
+
+      @Override
+      public abstract ResourceSetClassNameProvider create(String description) throws ProductCreationException;
+
+      private static void fillClassNames(Set<String> classNames)
+      {
+        for (String type : IPluginContainer.INSTANCE.getFactoryTypes(PRODUCT_GROUP))
+        {
+          ResourceSetClassNameProvider provider = IPluginContainer.INSTANCE.getElementOrNull(PRODUCT_GROUP, type, null);
+          if (provider != null)
+          {
+            try
+            {
+              for (String className : provider.getResourceSetClassNames())
+              {
+                CollectionUtil.addNotNull(classNames, className);
+              }
+            }
+            catch (Exception ex)
+            {
+              OM.LOG.error(ex);
+            }
+          }
+        }
+      }
+    }
   }
 }

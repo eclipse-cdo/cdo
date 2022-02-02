@@ -16,8 +16,11 @@
 
    <extension-point id="viewProviders" name="%extension-point.name.0" schema="schema/viewProviders.exsd"/>
 
-   <extension
-         point="org.eclipse.net4j.util.factories">
+   <extension point="org.eclipse.net4j.util.productGroups">
+     <productGroup id="org.eclipse.emf.cdo.conflictHandlers" name="CDO Conflict Handlers"/>
+   </extension>
+
+   <extension point="org.eclipse.net4j.util.factories">
       <factory
             class="org.eclipse.emf.internal.cdo.transaction.RollbackConflictHandler$Factory"
             productGroup="org.eclipse.emf.cdo.conflictHandlers"
@@ -40,12 +43,10 @@
             genModel="model/eresource.genmodel"/>
    </extension>
 
-   <extension
-         point="org.eclipse.emf.ecore.protocol_parser">
+   <extension point="org.eclipse.emf.ecore.protocol_parser">
       <parser
             class="org.eclipse.emf.cdo.eresource.impl.CDOResourceFactoryImpl"
-            protocolName="cdo">
-      </parser>
+            protocolName="cdo"/>
    </extension>
 
    <extension point="org.eclipse.core.expressions.propertyTesters">

@@ -14,11 +14,25 @@
 
 <plugin>
 
-   <extension-point id="factories" name="%extension-point.name" schema="schema/factories.exsd"/>
-   <extension-point id="elementProcessors" name="%extension-point.name.0" schema="schema/elementProcessors.exsd"/>
+  <extension-point id="productGroups" name="%extpoint.name.productGroups" schema="schema/productGroups.exsd"/>
+  <extension-point id="factories" name="%extpoint.name.factories" schema="schema/factories.exsd"/>
+  <extension-point id="elementProcessors" name="%extpoint.name.elementProcessors" schema="schema/elementProcessors.exsd"/>
 
-   <extension
-         point="org.eclipse.net4j.util.factories">
+  <extension point="org.eclipse.net4j.util.productGroups">
+     <productGroup id="org.eclipse.net4j.util.timers" name="Timers"/>
+     <productGroup id="org.eclipse.net4j.executorServices" name="Executor Services"/>
+     <productGroup id="org.eclipse.net4j.randomizers" name="Randomizers"/>
+     <productGroup id="org.eclipse.net4j.streamWrappers" name="Stream Wrappers"/>
+     <productGroup id="org.eclipse.net4j.util.concurrent.delegateDetectors" name="Reentrant Lock Delegate Detectors"/>
+     <productGroup id="org.eclipse.net4j.userManagers" name="User Managers"/>
+     <productGroup id="org.eclipse.net4j.Negotiators" name="Negotiators"/>
+     <productGroup id="org.eclipse.net4j.authenticators" name="Authenticators"/>
+     <productGroup id="org.eclipse.net4j.util.security.credentialsProviders" name="Credentials Providers"/>
+     <productGroup id="org.eclipse.net4j.util.security.authorizableOperations" name="Authorizable Operations"/>
+     <productGroup id="org.eclipse.net4j.util.confirmationProviders" name="Confirmation Providers"/>
+  </extension>
+
+  <extension point="org.eclipse.net4j.util.factories">
       <factory
             class="org.eclipse.net4j.util.concurrent.TimerLifecycle$DaemonFactory"
             productGroup="org.eclipse.net4j.util.timers"
@@ -42,7 +56,7 @@
       <factory
             productGroup="org.eclipse.net4j.util.confirmationProviders"
             type="default"
-            class="org.eclipse.net4j.util.confirmation.IConfirmationProvider.Factory.Default"/>
-   </extension>
+            class="org.eclipse.net4j.util.confirmation.IConfirmationProvider$Factory$Default"/>
+  </extension>
 
 </plugin>

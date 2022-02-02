@@ -14,28 +14,11 @@
 
 <plugin>
 
-   <extension
-         point="org.eclipse.ui.views">
-      <category
-            id="org.eclipse.net4j.debug"
-            name="%category.name">
-      </category>
-      <view
-            category="org.eclipse.net4j.debug"
-            id="org.eclipse.net4j.util.Net4jContainerView"
-            class="org.eclipse.net4j.util.internal.ui.views.Net4jContainerView"
-            name="%view.name"
-            icon="platform:/plugin/org.eclipse.net4j.ui.shared/icons/full/view16/container.gif"/>
-      <view
-            category="org.eclipse.net4j.debug"
-            id="org.eclipse.net4j.util.Net4jIntrospectorView"
-            class="org.eclipse.net4j.util.internal.ui.views.Net4jIntrospectorView"
-            name="%view.name.0"
-            icon="platform:/plugin/org.eclipse.net4j.ui.shared/icons/full/view16/javabean.gif"/>
-   </extension>
-   
-   <extension
-         point="org.eclipse.net4j.util.factories">
+  <extension point="org.eclipse.net4j.util.productGroups">
+     <productGroup id="org.eclipse.net4j.util.ui.elementWizards" name="Element Wizards"/>
+  </extension>
+
+  <extension point="org.eclipse.net4j.util.factories">
       <factory
             class="org.eclipse.net4j.util.internal.ui.InteractiveCredentialsProviderFactory"
             productGroup="org.eclipse.net4j.util.security.credentialsProviders"
@@ -48,6 +31,24 @@
             class="org.eclipse.net4j.util.internal.ui.DisplayDelegateDetector$Factory"
             productGroup="org.eclipse.net4j.util.concurrent.delegateDetectors"
             type="display"/>
-   </extension>
+  </extension>
+   
+  <extension point="org.eclipse.ui.views">
+      <category
+            id="org.eclipse.net4j.debug"
+            name="%category.name"/>
+      <view
+            category="org.eclipse.net4j.debug"
+            id="org.eclipse.net4j.util.Net4jContainerView"
+            class="org.eclipse.net4j.util.internal.ui.views.Net4jContainerView"
+            name="%view.name"
+            icon="platform:/plugin/org.eclipse.net4j.ui.shared/icons/full/view16/container.gif"/>
+      <view
+            category="org.eclipse.net4j.debug"
+            id="org.eclipse.net4j.util.Net4jIntrospectorView"
+            class="org.eclipse.net4j.util.internal.ui.views.Net4jIntrospectorView"
+            name="%view.name.0"
+            icon="platform:/plugin/org.eclipse.net4j.ui.shared/icons/full/view16/javabean.gif"/>
+  </extension>
    
 </plugin>

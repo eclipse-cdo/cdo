@@ -13,8 +13,11 @@
 
 <plugin>
 
-   <extension
-         point="org.eclipse.net4j.util.factories">
+   <extension point="org.eclipse.net4j.util.productGroups">
+       <productGroup id="org.eclipse.emf.cdo.sessions" name="Net4j Sessions"/>
+   </extension>
+
+   <extension point="org.eclipse.net4j.util.factories">
       <factory
             class="org.eclipse.emf.cdo.internal.net4j.protocol.CDOClientProtocolFactory"
             productGroup="org.eclipse.net4j.clientProtocols"
@@ -25,14 +28,11 @@
             type="cdo"/>
    </extension>
 
-   <extension
-         point="org.eclipse.net4j.util.elementProcessors">
-      <elementProcessor
-            class="org.eclipse.emf.cdo.internal.net4j.Net4jConnectorInjector"/>
+   <extension point="org.eclipse.net4j.util.elementProcessors">
+      <elementProcessor class="org.eclipse.emf.cdo.internal.net4j.Net4jConnectorInjector"/>
    </extension>
 
-   <extension
-         point="org.eclipse.emf.ecore.protocol_parser">
+   <extension point="org.eclipse.emf.ecore.protocol_parser">
       <parser
             class="org.eclipse.emf.cdo.eresource.impl.CDOResourceFactoryImpl"
             protocolName="cdo.net4j.jvm"/>
@@ -47,8 +47,7 @@
             protocolName="cdo.net4j.ws"/>
    </extension>
 
-   <extension
-         point="org.eclipse.emf.cdo.viewProviders">
+   <extension point="org.eclipse.emf.cdo.viewProviders">
       <viewProvider
             class="org.eclipse.emf.cdo.net4j.CDONet4jViewProvider$JVM"
             priority="500"

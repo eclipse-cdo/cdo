@@ -28,6 +28,10 @@
       </product>
    </extension>
 
+   <extension point="org.eclipse.net4j.util.productGroups">
+     <productGroup id="org.eclipse.emf.cdo.explorer.ui.checkouts.contentModifiers" name="CDO Checkout Content Modifiers"/>
+   </extension>
+
    <extension point="org.eclipse.net4j.util.factories">
       <factory
             class="org.eclipse.emf.cdo.explorer.ui.checkouts.PapyrusDIFactory"

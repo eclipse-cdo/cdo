@@ -16,6 +16,15 @@
    	<extension-point id="storeFactories" name="%extension-point.name" schema="schema/storeFactories.exsd"/>
    	<extension-point id="repositoryFactories" name="%extension-point.name.0" schema="schema/repositoryFactories.exsd"/>
    	<extension-point id="appExtensions" name="%extension-point.name.1" schema="schema/appExtensions.exsd"/>
+    
+    <extension point="org.eclipse.net4j.util.productGroups">
+       <productGroup id="org.eclipse.emf.cdo.server.repositoryConfigurators" name="CDO Repository Configurators"/>
+       <productGroup id="org.eclipse.emf.cdo.server.repositoryActivityLogs" name="CDO Repository Activity Logs"/>
+       <productGroup id="org.eclipse.emf.cdo.server.queryHandlerFactories" name="CDO Query Handler Factories"/>
+       <productGroup id="org.eclipse.emf.cdo.server.commands" name="CDO Commands"/>
+       <productGroup id="org.eclipse.emf.cdo.server.browsers" name="CDO Browsers"/>
+       <productGroup id="org.eclipse.emf.cdo.server.browserPages" name="CDO Browser Pages"/>
+    </extension>
 
 		<extension point="org.eclipse.net4j.util.factories">
       	<factory

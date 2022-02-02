@@ -13,8 +13,11 @@
 
 <plugin>
 
-   <extension
-         point="org.eclipse.net4j.util.factories">
+   <extension point="org.eclipse.net4j.util.productGroups">
+       <productGroup id="org.eclipse.emf.cdo.transfer.ui.providers" name="CDO Transfer UI Providers"/>
+   </extension>
+
+   <extension point="org.eclipse.net4j.util.factories">
       <factory
             class="org.eclipse.emf.cdo.transfer.internal.ui.FileSystemUIProvider$Factory"
             productGroup="org.eclipse.emf.cdo.transfer.ui.providers"

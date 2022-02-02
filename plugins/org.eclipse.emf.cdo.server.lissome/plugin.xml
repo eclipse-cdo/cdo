@@ -13,22 +13,17 @@
 
 <plugin>
 
-   <extension
-         point="org.eclipse.net4j.util.factories">
+   <extension point="org.eclipse.net4j.util.factories">
       <factory
             class="org.eclipse.emf.cdo.server.internal.lissome.LissomeBrowserPage$Factory"
             productGroup="org.eclipse.emf.cdo.server.browserPages"
-            type="lissome">
-      </factory>
+            type="lissome"/>
    </extension>
 
-   <extension
-         point="org.eclipse.emf.cdo.server.storeFactories">
+   <extension point="org.eclipse.emf.cdo.server.storeFactories">
       <storeFactory
             class="org.eclipse.emf.cdo.server.internal.lissome.LissomeStoreFactory"
-            storeType="lissome">
-      </storeFactory>
+            storeType="lissome"/>
    </extension>
-
 
 </plugin>

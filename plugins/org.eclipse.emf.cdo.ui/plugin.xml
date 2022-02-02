@@ -16,8 +16,8 @@
 
   <extension-point id="editorOpeners" name="Editor Openers" schema="schema/editorOpeners.exsd"/>
 
-   <extension point="org.eclipse.net4j.util.elementProcessors">
-     <elementProcessor class="org.eclipse.emf.cdo.ui.CDOInteractiveExceptionHandler"/>
+   <extension point="org.eclipse.net4j.util.productGroups">
+       <productGroup id="org.eclipse.emf.cdo.ui.userInfoStorages" name="CDO User Info Storages"/>
    </extension>
 
    <extension point="org.eclipse.net4j.util.factories">
@@ -40,6 +40,10 @@
          <type value="org.eclipse.emf.cdo.ui.DeleteBranches"/>
          <type value="org.eclipse.emf.cdo.ui.DeleteBranches"/>
       </factories>
+   </extension>
+
+   <extension point="org.eclipse.net4j.util.elementProcessors">
+     <elementProcessor class="org.eclipse.emf.cdo.ui.CDOInteractiveExceptionHandler"/>
    </extension>
 
    <extension point="org.eclipse.core.expressions.propertyTesters">

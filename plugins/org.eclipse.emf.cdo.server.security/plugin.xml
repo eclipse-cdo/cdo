@@ -17,6 +17,12 @@
       <appExtension class="org.eclipse.emf.cdo.server.internal.security.SecurityExtension"/>
    </extension>
 
+   <extension point="org.eclipse.net4j.util.productGroups">
+       <productGroup id="org.eclipse.emf.cdo.server.security.managers" name="CDO Security Managers"/>
+       <productGroup id="org.eclipse.emf.cdo.server.security.commitHandlers" name="CDO Commit Handlers"/>
+       <productGroup id="org.eclipse.net4j.util.security.operationAuthorizers" name="CDO Operation Authorizers"/>
+   </extension>
+
    <extension point="org.eclipse.net4j.util.factories">
       <factory
             productGroup="org.eclipse.emf.cdo.server.security.managers"

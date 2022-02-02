@@ -15,8 +15,11 @@
 
    <extension-point id="mappingStrategies" name="%extension-point.name" schema="schema/mappingStrategies.exsd"/>
    
-   <extension
-         point="org.eclipse.net4j.util.factories">
+   <extension point="org.eclipse.net4j.util.productGroups">
+       <productGroup id="org.eclipse.emf.cdo.server.db.typeMappingProviders" name="CDO Type Mapping Providers"/>
+   </extension>
+
+   <extension point="org.eclipse.net4j.util.factories">
       <factory
             productGroup="org.eclipse.emf.cdo.server.browserPages"
             type="db-tables"
@@ -31,16 +34,13 @@
             class="org.eclipse.emf.cdo.server.internal.db.mapping.TypeMappingRegistry$Factory"/>
    </extension>
 
-   <extension
-         point="org.eclipse.emf.cdo.server.storeFactories">
+   <extension point="org.eclipse.emf.cdo.server.storeFactories">
       <storeFactory
             class="org.eclipse.emf.cdo.server.internal.db.DBStoreFactory"
-            storeType="db">
-      </storeFactory>
+            storeType="db"/>
    </extension>
 
-   <extension
-         point="org.eclipse.emf.cdo.server.db.mappingStrategies">
+   <extension point="org.eclipse.emf.cdo.server.db.mappingStrategies">
       <mappingStrategy
             class="org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalMappingStrategy"
             type="horizontal"/>

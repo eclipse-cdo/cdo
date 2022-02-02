@@ -13,16 +13,15 @@
 
 <plugin>
 
-	<extension
-    	point="org.eclipse.net4j.util.factories">
-      	<factory
+	<extension point="org.eclipse.net4j.util.factories">
+      <factory
         	class="org.eclipse.net4j.buddies.internal.chat.ChatFactory"
-            productGroup="org.eclipse.net4j.buddies.clientFacilities"
-            type="chat"/>
-      	<factory
+          productGroup="org.eclipse.net4j.buddies.clientFacilities"
+          type="chat"/>
+      <factory
         	class="org.eclipse.net4j.buddies.internal.chat.ChatRoomFactory"
-            productGroup="org.eclipse.net4j.buddies.serverFacilities"
-            type="chat"/>
+          productGroup="org.eclipse.net4j.buddies.serverFacilities"
+          type="chat"/>
 	</extension>
 
 </plugin>

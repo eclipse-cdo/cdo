@@ -14,7 +14,13 @@
 
 <plugin>
 
-	<extension point="org.eclipse.net4j.util.factories">
+   <extension point="org.eclipse.net4j.util.productGroups">
+     <productGroup id="org.eclipse.emf.cdo.server.admin.adminServers" name="CDO Administration Servers"/>
+     <productGroup id="org.eclipse.emf.cdo.server.admin.adminHandlers" name="CDO Administration Handlers"/>
+     <productGroup id="org.eclipse.emf.cdo.server.admin.repositoryConfigurationManagers" name="CDO Repository Configuration Managers"/>
+   </extension>
+
+ 	<extension point="org.eclipse.net4j.util.factories">
 		<factory
         	productGroup="org.eclipse.net4j.serverProtocols"
           type="cdo-admin"
@@ -31,7 +37,7 @@
           productGroup="org.eclipse.emf.cdo.server.admin.adminHandlers"
           type="default"
           class="org.eclipse.emf.cdo.server.internal.admin.DefaultCDOAdminHandler$Factory"/>
- 	</extension>
+ 	 </extension>
 
    <extension point="org.eclipse.emf.cdo.server.appExtensions">
       <appExtension class="org.eclipse.emf.cdo.server.internal.admin.RepositoryConfigurationManagerExtension"/>

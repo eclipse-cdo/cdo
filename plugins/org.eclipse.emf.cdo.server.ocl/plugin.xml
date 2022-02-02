@@ -13,8 +13,7 @@
 
 <plugin>
 
-   <extension
-         point="org.eclipse.net4j.util.factories">
+   <extension point="org.eclipse.net4j.util.factories">
       <factory
             class="org.eclipse.emf.cdo.server.ocl.OCLQueryHandler$Factory"
             productGroup="org.eclipse.emf.cdo.server.queryHandlerFactories"

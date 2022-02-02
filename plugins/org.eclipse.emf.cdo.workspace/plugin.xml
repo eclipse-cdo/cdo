@@ -13,8 +13,11 @@
 
 <plugin>
 
-   <extension
-         point="org.eclipse.net4j.util.factories">
+   <extension point="org.eclipse.net4j.util.productGroups">
+       <productGroup id="org.eclipse.emf.cdo.workspace.bases" name="CDO Workspace Bases"/>
+   </extension>
+
+   <extension point="org.eclipse.net4j.util.factories">
       <factory
             class="org.eclipse.emf.cdo.internal.workspace.FolderCDOWorkspaceBase$Factory"
             productGroup="org.eclipse.emf.cdo.workspace.bases"

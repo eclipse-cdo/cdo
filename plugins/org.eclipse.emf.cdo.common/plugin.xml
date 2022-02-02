@@ -13,7 +13,11 @@
 
 <plugin>
 
-   <extension point="org.eclipse.core.expressions.propertyTesters">
+  <extension point="org.eclipse.net4j.util.productGroups">
+     <productGroup id="org.eclipse.emf.cdo.common.util.uriHandlers" name="URI Handlers"/>
+  </extension>
+
+  <extension point="org.eclipse.core.expressions.propertyTesters">
       <propertyTester
          id="org.eclipse.emf.cdo.repository.properties"
          type="org.eclipse.emf.cdo.common.CDOCommonRepository"
@@ -26,6 +30,6 @@
          namespace="org.eclipse.emf.cdo.branch"
          properties="id,name,pathName,baseBranchID,baseBranchID,baseTimeStamp,deleted,local,main,proxy"
          class="org.eclipse.emf.cdo.internal.common.branch.BranchProperties$Tester"/>
-    </extension>
+  </extension>
 
 </plugin>

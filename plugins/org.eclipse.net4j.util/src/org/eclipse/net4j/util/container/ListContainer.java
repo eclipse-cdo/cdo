@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2022 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -10,52 +10,52 @@
  */
 package org.eclipse.net4j.util.container;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Consumer;
 
 /**
- * An implementation of a {@link Container container} that stores its {@link #getElements() elements} in a {@link #getSet() set}.
+ * An implementation of a {@link Container container} that stores its {@link #getElements() elements} in a {@link #getList() list}.
  *
- * @since 3.2
+ * @since 3.18
  * @author Eike Stepper
  */
-public class SetContainer<E> extends PersistableContainer<E>
+public class ListContainer<E> extends PersistableContainer<E>
 {
-  private final Set<E> set;
+  private final List<E> list;
 
-  public SetContainer(Class<E> componentType)
+  public ListContainer(Class<E> componentType)
   {
-    this(componentType, new HashSet<E>());
+    this(componentType, new ArrayList<E>());
   }
 
-  public SetContainer(Class<E> componentType, Set<E> set)
+  public ListContainer(Class<E> componentType, List<E> list)
   {
     super(componentType);
-    this.set = set;
+    this.list = list;
   }
 
-  protected Set<E> getSet()
+  protected List<E> getList()
   {
-    return set;
+    return list;
   }
 
   @Override
   protected boolean backingStoreIsEmpty()
   {
-    return set.isEmpty();
+    return list.isEmpty();
   }
 
   @Override
   protected int backingStoreSize()
   {
-    return set.size();
+    return list.size();
   }
 
   @Override
   protected E[] backingStoreToArray(E[] a)
   {
-    return set.toArray(a);
+    return list.toArray(a);
   }
 
   @Override
@@ -63,7 +63,7 @@ public class SetContainer<E> extends PersistableContainer<E>
   {
     if (consumer != null)
     {
-      for (E element : set)
+      for (E element : list)
       {
         consumer.accept(element);
       }
@@ -73,24 +73,24 @@ public class SetContainer<E> extends PersistableContainer<E>
   @Override
   protected boolean backingStoreContains(E element)
   {
-    return set.contains(element);
+    return list.contains(element);
   }
 
   @Override
   protected boolean backingStoreAdd(E element)
   {
-    return set.add(element);
+    return list.add(element);
   }
 
   @Override
   protected boolean backingStoreRemove(E element)
   {
-    return set.remove(element);
+    return list.remove(element);
   }
 
   @Override
   protected void backingStoreClear()
   {
-    set.clear();
+    list.clear();
   }
 }

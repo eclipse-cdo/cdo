@@ -26,6 +26,11 @@ import java.util.Random;
  */
 public final class UUIDGenerator
 {
+  /**
+   * @since 3.18
+   */
+  public static final int BYTES = 16;
+
   public static final int NODE_ADDRESS_BYTES = 6;
 
   public static final UUIDGenerator DEFAULT = new UUIDGenerator();
@@ -76,7 +81,7 @@ public final class UUIDGenerator
   {
     updateCurrentTime();
 
-    for (int i = 0; i < 16; i++)
+    for (int i = 0; i < BYTES; i++)
     {
       uuid[i] = this.uuid[i];
     }
@@ -366,7 +371,7 @@ public final class UUIDGenerator
 
   private byte[] createUUID()
   {
-    return new byte[16];
+    return new byte[BYTES];
   }
 
   private char[] createBuffer()

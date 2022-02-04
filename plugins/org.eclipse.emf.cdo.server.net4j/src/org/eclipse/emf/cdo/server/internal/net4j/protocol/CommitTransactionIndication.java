@@ -408,6 +408,12 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
     if (size != 0)
     {
       CDOBranchPoint securityContext = commitContext.getBranchPoint();
+      if (!session.getManager().getRepository().isSupportingAudits())
+      {
+        // Compute the permissions from HEAD if auditing is not supported. See bug 578577.
+        securityContext = securityContext.getBranch().getHead();
+      }
+
       for (int i = 0; i < size; i++)
       {
         InternalCDORevision revision = revisions[i];

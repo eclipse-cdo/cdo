@@ -12,7 +12,10 @@ package org.eclipse.net4j.internal.util.container;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.util.container.IElementProcessor;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
+
+import org.eclipse.core.runtime.IConfigurationElement;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -233,29 +236,10 @@ public class PluginElementProcessorList extends Lifecycle implements List<IEleme
       return;
     }
 
-    org.eclipse.core.runtime.IConfigurationElement[] elements = extensionRegistry.getConfigurationElementsFor(NAMESPACE, EXT_POINT);
-    for (org.eclipse.core.runtime.IConfigurationElement element : elements)
+    for (IConfigurationElement configurationElement : extensionRegistry.getConfigurationElementsFor(NAMESPACE, EXT_POINT))
     {
-      IElementProcessor processor = (IElementProcessor)element.createExecutableExtension(ATTR_CLASS);
-      processors.add(processor);
+      processors.add(new ElementProcessorDescriptor(configurationElement));
     }
-
-    org.eclipse.core.runtime.IRegistryChangeListener listener = new org.eclipse.core.runtime.IRegistryChangeListener()
-    {
-      @Override
-      public void registryChanged(org.eclipse.core.runtime.IRegistryChangeEvent event)
-      {
-        org.eclipse.core.runtime.IExtensionDelta[] deltas = event.getExtensionDeltas(NAMESPACE, EXT_POINT);
-        for (org.eclipse.core.runtime.IExtensionDelta delta : deltas)
-        {
-          // TODO Handle ExtensionDelta
-          OM.LOG.warn("ExtensionDelta not handled: " + delta); //$NON-NLS-1$
-        }
-      }
-    };
-
-    extensionRegistry.addRegistryChangeListener(listener, NAMESPACE);
-    extensionRegistryListener = listener;
   }
 
   private void doDeactivateOSGi()
@@ -267,5 +251,51 @@ public class PluginElementProcessorList extends Lifecycle implements List<IEleme
     }
 
     extensionRegistry.removeRegistryChangeListener((org.eclipse.core.runtime.IRegistryChangeListener)extensionRegistryListener);
+  }
+
+  /**
+   * A lazy descriptor for an {@link IElementProcessor element processor} that is declared in a plugin.xml.
+   * <p>
+   * <b>Note:</b> This level of indirection is required to delay class loading and plug-in activation that is triggered by
+   * IConfigurationElement.createExecutableExtension(). Upstream plug-ins may, as part of their legal activation process,
+   * call back down to PluginContainer, which is at this point still in its own activation process and has not initialized
+   * IPluginContainer.INSTANCE, yet.
+   *
+   * @author Eike Stepper
+   */
+  private static final class ElementProcessorDescriptor implements IElementProcessor
+  {
+    private final IConfigurationElement configurationElement;
+
+    private IElementProcessor delegate;
+
+    public ElementProcessorDescriptor(IConfigurationElement configurationElement)
+    {
+      this.configurationElement = configurationElement;
+    }
+
+    @Override
+    public Object process(IManagedContainer container, String productGroup, String factoryType, String description, Object element)
+    {
+      IElementProcessor elementProcessor = getElementProcessor();
+      return elementProcessor.process(container, productGroup, factoryType, description, element);
+    }
+
+    private synchronized IElementProcessor getElementProcessor()
+    {
+      if (delegate == null)
+      {
+        try
+        {
+          delegate = (IElementProcessor)configurationElement.createExecutableExtension(ATTR_CLASS);
+        }
+        catch (Exception ex)
+        {
+          OM.LOG.warn("A problem occured during element post processing", ex); //$NON-NLS-1$
+        }
+      }
+
+      return delegate;
+    }
   }
 }

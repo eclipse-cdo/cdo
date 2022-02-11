@@ -127,6 +127,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.util.LocalSelectionTransfer;
 import org.eclipse.jface.viewers.DecoratingLabelProvider;
 import org.eclipse.jface.viewers.IContentProvider;
 import org.eclipse.jface.viewers.IInputProvider;
@@ -959,7 +960,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    * This creates a context menu for the viewer and adds a listener as well registering the menu for extension. <!--
    * begin-user-doc --> <!-- end-user-doc -->
    *
-   * @generated
+   * @generated NOT
    */
   protected void createContextMenuFor(StructuredViewer viewer)
   {
@@ -971,10 +972,25 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     viewer.getControl().setMenu(menu);
     getSite().registerContextMenu(contextMenu, new UnwrappingSelectionProvider(viewer));
 
-    int dndOperations = DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_LINK;
-    Transfer[] transfers = new Transfer[] { LocalTransfer.getInstance() };
+    configureDND(viewer);
+  }
+
+  protected void configureDND(StructuredViewer viewer)
+  {
+    int dndOperations = getDNDOperations();
+    Transfer[] transfers = getDNDTransfers();
     viewer.addDragSupport(dndOperations, transfers, new ViewerDragAdapter(viewer));
     viewer.addDropSupport(dndOperations, transfers, new EditingDomainViewerDropAdapter(editingDomain, viewer));
+  }
+
+  protected int getDNDOperations()
+  {
+    return DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_LINK;
+  }
+
+  protected Transfer[] getDNDTransfers()
+  {
+    return new Transfer[] { LocalTransfer.getInstance(), LocalSelectionTransfer.getTransfer() };
   }
 
   /**
@@ -1689,10 +1705,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
         }
         catch (Exception ex)
         {
-          if (TRACER.isEnabled())
-          {
-            TRACER.trace(ex);
-          }
+          handleException(ex);
         }
 
         return PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJS_ERROR_TSK);
@@ -1717,10 +1730,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
         }
         catch (Exception ex)
         {
-          if (TRACER.isEnabled())
-          {
-            TRACER.trace(ex);
-          }
+          handleException(ex);
         }
 
         try
@@ -1935,11 +1945,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
         }
         catch (Exception ex)
         {
-          if (TRACER.isEnabled())
-          {
-            TRACER.trace(ex);
-          }
-
+          handleException(ex);
           super.selectionChanged(part, StructuredSelection.EMPTY);
         }
       }
@@ -2422,10 +2428,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       }
       catch (Exception ex)
       {
-        if (TRACER.isEnabled())
-        {
-          TRACER.trace(ex);
-        }
+        handleException(ex);
       }
     }
 
@@ -2465,11 +2468,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
           }
           catch (Exception ex)
           {
-            if (TRACER.isEnabled())
-            {
-              TRACER.trace(ex);
-            }
-
+            handleException(ex);
             text = null;
           }
 
@@ -2530,18 +2529,21 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     final IWorkbenchPage page = getSite().getPage();
     MenuManager submenuManager = new MenuManager(Messages.getString("CDOEditor.23")); //$NON-NLS-1$
 
-    NewRootMenuPopulator populator = new NewRootMenuPopulator(view.getSession().getPackageRegistry())
+    if (showNewRootMenu())
     {
-      @Override
-      protected IAction createAction(EObject object)
+      NewRootMenuPopulator populator = new NewRootMenuPopulator(view.getSession().getPackageRegistry())
       {
-        return new CreateRootAction(object);
-      }
-    };
+        @Override
+        protected IAction createAction(EObject object)
+        {
+          return new CreateRootAction(object);
+        }
+      };
 
-    if (populator.populateMenu(submenuManager))
-    {
-      menuManager.insertBefore("edit", submenuManager); //$NON-NLS-1$
+      if (populator.populateMenu(submenuManager))
+      {
+        menuManager.insertBefore("edit", submenuManager); //$NON-NLS-1$
+      }
     }
 
     Resource resource = getSelectedResource();
@@ -2596,7 +2598,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
           }
         }
 
-        if (SHOW_BULK_ADD_ACTION && !features.isEmpty())
+        if (showBulkAddMenu() && !features.isEmpty())
         {
           menuManager.insertBefore("edit", //$NON-NLS-1$
               new LongRunningAction(page, Messages.getString("CDOEditor.26") + SafeAction.INTERACTIVE) //$NON-NLS-1$
@@ -2638,6 +2640,16 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
         }
       }
     }
+  }
+
+  protected boolean showNewRootMenu()
+  {
+    return true;
+  }
+
+  protected boolean showBulkAddMenu()
+  {
+    return SHOW_BULK_ADD_ACTION;
   }
 
   /**
@@ -2909,6 +2921,14 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     }
 
     return null;
+  }
+
+  protected void handleException(Exception ex)
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace(ex);
+    }
   }
 
   /**

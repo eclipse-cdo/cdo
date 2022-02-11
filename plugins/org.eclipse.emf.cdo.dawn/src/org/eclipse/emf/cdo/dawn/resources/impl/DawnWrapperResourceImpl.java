@@ -64,13 +64,13 @@ public class DawnWrapperResourceImpl extends CDOResourceImpl implements DawnWrap
   }
 
   @Override
-  public Map<Object, Object> getDefaultLoadOptions()
+  public synchronized Map<Object, Object> getDefaultLoadOptions()
   {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public Map<Object, Object> getDefaultSaveOptions()
+  public synchronized Map<Object, Object> getDefaultSaveOptions()
   {
     throw new UnsupportedOperationException();
   }

@@ -164,6 +164,20 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
   private EList<Diagnostic> warnings;
 
   /**
+   * The storage for the default save options.
+   *
+   * @ADDED
+   */
+  private Map<Object, Object> defaultSaveOptions;
+
+  /**
+   * The storage for the default load options.
+   *
+   * @ADDED
+   */
+  private Map<Object, Object> defaultLoadOptions;
+
+  /**
    * @ADDED
    */
   private transient CDOViewProvider viewProvider;
@@ -1836,7 +1850,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
   @Override
   public String getPublicId()
   {
-    throw new UnsupportedOperationException();
+    return null;
   }
 
   /**
@@ -1845,7 +1859,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
   @Override
   public String getSystemId()
   {
-    throw new UnsupportedOperationException();
+    return null;
   }
 
   /**
@@ -1861,18 +1875,28 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
    * @since 4.4
    */
   @Override
-  public Map<Object, Object> getDefaultLoadOptions()
+  public synchronized Map<Object, Object> getDefaultLoadOptions()
   {
-    throw new UnsupportedOperationException();
+    if (defaultLoadOptions == null)
+    {
+      defaultLoadOptions = new HashMap<>();
+    }
+
+    return defaultLoadOptions;
   }
 
   /**
    * @since 4.4
    */
   @Override
-  public Map<Object, Object> getDefaultSaveOptions()
+  public synchronized Map<Object, Object> getDefaultSaveOptions()
   {
-    throw new UnsupportedOperationException();
+    if (defaultSaveOptions == null)
+    {
+      defaultSaveOptions = new HashMap<>();
+    }
+
+    return defaultSaveOptions;
   }
 
   /**

@@ -2292,7 +2292,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     setInputWithNotify(editorInput);
   }
 
-  private void setCurrentTopic(Topic topic)
+  protected void setCurrentTopic(Topic topic)
   {
     if (!Objects.equals(currentTopic, topic))
     {
@@ -2316,7 +2316,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     }
   }
 
-  private Topic createTopic()
+  protected Topic createTopic()
   {
     if (view != null)
     {
@@ -2896,7 +2896,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     }
   }
 
-  private Resource getSelectedResource()
+  protected Resource getSelectedResource()
   {
     IStructuredSelection ssel = (IStructuredSelection)editorSelection;
     if (ssel.isEmpty())
@@ -3009,7 +3009,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  private static String getString(String key)
+  protected static String getString(String key)
   {
     return PluginDelegator.INSTANCE.getString(key);
   }
@@ -3019,7 +3019,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  private static String getString(String key, Object s1)
+  protected static String getString(String key, Object s1)
   {
     return PluginDelegator.INSTANCE.getString(key, new Object[] { s1 });
   }
@@ -3171,7 +3171,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   /**
    * @author Eike Stepper
    */
-  private static final class SafeTreeViewer extends TreeViewer
+  private final class SafeTreeViewer extends TreeViewer
   {
     public SafeTreeViewer(Tree tree)
     {
@@ -3192,10 +3192,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       }
       catch (Exception ex)
       {
-        if (TRACER.isEnabled())
-        {
-          TRACER.trace(ex);
-        }
+        handleException(ex);
       }
     }
 
@@ -3208,10 +3205,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       }
       catch (Exception ex)
       {
-        if (TRACER.isEnabled())
-        {
-          TRACER.trace(ex);
-        }
+        handleException(ex);
       }
     }
 
@@ -3224,11 +3218,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       }
       catch (Exception ex)
       {
-        if (TRACER.isEnabled())
-        {
-          TRACER.trace(ex);
-        }
 
+        handleException(ex);
         return false;
       }
     }

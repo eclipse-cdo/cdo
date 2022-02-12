@@ -3007,9 +3007,9 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   /**
    * This looks up a string in the plugin's plugin.properties file.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
-  protected static String getString(String key)
+  protected String getString(String key)
   {
     return PluginDelegator.INSTANCE.getString(key);
   }
@@ -3017,9 +3017,9 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   /**
    * This looks up a string in plugin.properties, making a substitution.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
-  protected static String getString(String key, Object s1)
+  protected String getString(String key, Object s1)
   {
     return PluginDelegator.INSTANCE.getString(key, new Object[] { s1 });
   }

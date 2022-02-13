@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.eresource.CDOTextResource;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 
 import org.eclipse.net4j.util.ObjectUtil;
@@ -34,6 +35,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.function.BiFunction;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>CDO Resource Folder</b></em>'.
@@ -177,6 +179,21 @@ public class CDOResourceFolderImpl extends CDOResourceNodeImpl implements CDORes
     return null;
   }
 
+  private <T extends CDOResourceNode> T addNode(String name, BiFunction<CDOTransaction, String, T> creator)
+  {
+    StringBuilder path = new StringBuilder(getPath());
+
+    if (!name.startsWith(CDOURIUtil.SEGMENT_SEPARATOR))
+    {
+      path.append(CDOURIUtil.SEGMENT_SEPARATOR);
+    }
+
+    path.append(name);
+
+    InternalCDOTransaction transaction = cdoView().toTransaction();
+    return creator.apply(transaction, path.toString());
+  }
+
   /**
    * <!-- begin-user-doc -->
    * @since 4.0
@@ -186,7 +203,7 @@ public class CDOResourceFolderImpl extends CDOResourceNodeImpl implements CDORes
   @Override
   public CDOResourceFolder addResourceFolder(String name)
   {
-    return cdoView().toTransaction().createResourceFolder(getPath() + CDOURIUtil.SEGMENT_SEPARATOR + name);
+    return addNode(name, (transaction, path) -> transaction.createResourceFolder(path));
   }
 
   /**
@@ -198,36 +215,31 @@ public class CDOResourceFolderImpl extends CDOResourceNodeImpl implements CDORes
   @Override
   public CDOResource addResource(String name)
   {
-    InternalCDOTransaction transaction = cdoView().toTransaction();
-    return transaction.createResource(getPath() + CDOURIUtil.SEGMENT_SEPARATOR + name);
+    return addNode(name, (transaction, path) -> transaction.createResource(path));
   }
 
   /**
    * <!-- begin-user-doc -->
    * @since 4.2
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   @Override
   public CDOTextResource addTextResource(String name)
   {
-    // TODO: implement this method
-    // Ensure that you remove @generated or mark it @generated NOT
-    throw new UnsupportedOperationException();
+    return addNode(name, (transaction, path) -> transaction.createTextResource(path));
   }
 
   /**
    * <!-- begin-user-doc -->
    * @since 4.2
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   @Override
   public CDOBinaryResource addBinaryResource(String name)
   {
-    // TODO: implement this method
-    // Ensure that you remove @generated or mark it @generated NOT
-    throw new UnsupportedOperationException();
+    return addNode(name, (transaction, path) -> transaction.createBinaryResource(path));
   }
 
   /**

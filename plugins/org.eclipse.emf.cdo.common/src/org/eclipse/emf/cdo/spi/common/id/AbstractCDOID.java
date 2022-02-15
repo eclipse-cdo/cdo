@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.spi.common.id;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 
 import org.eclipse.net4j.util.io.ExtendedDataInput;
@@ -103,6 +104,12 @@ public abstract class AbstractCDOID implements CDOID
   @Override
   public final int compareTo(CDOID o)
   {
+    if (CDOIDUtil.isNull(o))
+    {
+      // All non-null IDs are greater than the null ID.
+      return 1;
+    }
+
     try
     {
       return doCompareTo(o);

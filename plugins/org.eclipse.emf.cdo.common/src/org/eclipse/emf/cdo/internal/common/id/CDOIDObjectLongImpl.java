@@ -115,7 +115,7 @@ public final class CDOIDObjectLongImpl extends AbstractCDOID implements Internal
   @Override
   protected int doCompareTo(CDOID o) throws ClassCastException
   {
-    return Long.valueOf(value).compareTo(((CDOIDObjectLongImpl)o).value);
+    return Long.compare(value, ((CDOIDObjectLongImpl)o).value);
   }
 
   private Object readResolve() throws ObjectStreamException

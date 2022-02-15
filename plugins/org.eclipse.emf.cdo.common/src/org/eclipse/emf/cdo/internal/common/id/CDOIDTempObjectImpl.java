@@ -105,18 +105,7 @@ public final class CDOIDTempObjectImpl extends AbstractCDOID implements CDOIDTem
   @Override
   protected int doCompareTo(CDOID o) throws ClassCastException
   {
-    CDOIDTempObjectImpl that = (CDOIDTempObjectImpl)o;
-    if (value < that.value)
-    {
-      return -1;
-    }
-
-    if (value > that.value)
-    {
-      return 1;
-    }
-
-    return 0;
+    return Integer.compare(value, ((CDOIDTempObjectImpl)o).value);
   }
 
   private static int getHashCode(int value)

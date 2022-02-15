@@ -115,28 +115,15 @@ public final class CDOIDObjectUUIDImpl extends AbstractCDOID implements Internal
     {
       byte thisByte = value[i];
       byte thatByte = thatValue[i];
-      if (thisByte < thatByte)
-      {
-        return -1;
-      }
 
-      if (thisByte > thatByte)
+      int result = Byte.compare(thisByte, thatByte);
+      if (result != 0)
       {
-        return 1;
+        return result;
       }
     }
 
-    if (value.length < thatValue.length)
-    {
-      return -1;
-    }
-
-    if (value.length > thatValue.length)
-    {
-      return 1;
-    }
-
-    return 0;
+    return Integer.compare(value.length, thatValue.length);
   }
 
   private Object readResolve() throws ObjectStreamException

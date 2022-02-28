@@ -107,6 +107,14 @@ public class CDOCompare
     }
   }
 
+  /**
+   * @since 4.6
+   */
+  public boolean useRCPRegistries()
+  {
+    return USE_RCP_REGISTRIES;
+  }
+
   public Comparison compare(IComparisonScope scope)
   {
     Function<EObject, String> idFunction = createIDFunction();
@@ -146,7 +154,7 @@ public class CDOCompare
   {
     Builder builder = EMFCompare.builder();
 
-    if (USE_RCP_REGISTRIES)
+    if (useRCPRegistries())
     {
       org.eclipse.emf.compare.rcp.internal.extension.IEMFCompareBuilderConfigurator configurator = //
           org.eclipse.emf.compare.rcp.internal.extension.impl.EMFCompareBuilderConfigurator.createDefault();
@@ -202,6 +210,11 @@ public class CDOCompare
 
   protected IMatchEngine.Factory.Registry createMatchEngineFactoryRegistry(IEObjectMatcher matcher, IComparisonFactory comparisonFactory)
   {
+    if (useRCPRegistries())
+    {
+      return null;
+    }
+
     IMatchEngine.Factory.Registry registry = new MatchEngineFactoryRegistryImpl();
     registry.add(new CDOMatchEngine.Factory(matcher, comparisonFactory));
     return registry;
@@ -209,6 +222,11 @@ public class CDOCompare
 
   protected IDiffEngine createDiffEngine()
   {
+    if (useRCPRegistries())
+    {
+      return null;
+    }
+
     return new CDODiffEngine();
   }
 
@@ -460,7 +478,10 @@ public class CDOCompare
    */
   public static class CDOMatchEngine extends DefaultMatchEngine
   {
-    CDOMatchEngine(IEObjectMatcher matcher, IComparisonFactory comparisonFactory)
+    /**
+     * @since 4.6
+     */
+    public CDOMatchEngine(IEObjectMatcher matcher, IComparisonFactory comparisonFactory)
     {
       super(matcher, comparisonFactory);
     }
@@ -482,6 +503,21 @@ public class CDOCompare
       private final IMatchEngine matchEngine;
 
       private int ranking;
+
+      /**
+       * Default factory configuration used by EMF Compare diff engine factory extension point
+       *
+       * @since 4.6
+       */
+      public Factory()
+      {
+        CDOCompare compare = new CDOCompare();
+        CDOIDFunction idFunction = compare.createIDFunction();
+        IdentifierEObjectMatcher matcher = compare.createMatcher(idFunction);
+        IEqualityHelperFactory equalityHelperFactory = compare.createEqualityHelperFactory();
+        IComparisonFactory comparisonFactory = compare.createComparisonFactory(equalityHelperFactory);
+        matchEngine = createMatchEngine(matcher, comparisonFactory);
+      }
 
       public Factory(IEObjectMatcher matcher, IComparisonFactory comparisonFactory)
       {

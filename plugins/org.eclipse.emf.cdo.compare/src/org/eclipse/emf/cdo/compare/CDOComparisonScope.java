@@ -27,14 +27,18 @@ import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewOpener;
 
+import org.eclipse.net4j.util.om.OMPlatform;
+
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.AbstractTreeIterator;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.compare.Match;
 import org.eclipse.emf.compare.scope.AbstractComparisonScope;
 import org.eclipse.emf.compare.scope.IComparisonScope;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.EcoreUtil.ProperContentIterator;
@@ -59,6 +63,8 @@ import java.util.Set;
 public abstract class CDOComparisonScope extends AbstractComparisonScope
 {
   private static final CDOViewOpener DEFAULT_VIEW_OPENER = CDOCompareUtil.DEFAULT_VIEW_OPENER;
+
+  private static final boolean COLLECT_RESOURCE_URIS = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.compare.CDOComparisonScope.COLLECT_RESOURCE_URIS");
 
   private boolean resolveProxies = true;
 
@@ -317,6 +323,18 @@ public abstract class CDOComparisonScope extends AbstractComparisonScope
         CDOObject object = view.getObject(id);
         if (object != null)
         {
+          if (collectResourceURIs() && object instanceof Resource)
+          {
+            URI resourceURI = ((Resource)object).getURI();
+            if (resourceURI != null)
+            {
+              Set<String> resourceURIs = getResourceURIs();
+
+              URIConverter uriConverter = view.getResourceSet().getURIConverter();
+              resourceURIs.add(uriConverter.normalize(resourceURI).toString());
+            }
+          }
+
           collectRequiredParentIDs(object, requiredParentIDs);
         }
       }
@@ -324,6 +342,14 @@ public abstract class CDOComparisonScope extends AbstractComparisonScope
       {
         //$FALL-THROUGH$
       }
+    }
+
+    /**
+     * @since 4.6
+     */
+    protected boolean collectResourceURIs()
+    {
+      return COLLECT_RESOURCE_URIS;
     }
 
     public static IComparisonScope create(CDOView leftView, CDOView rightView, CDOView[] originView)
@@ -444,7 +470,7 @@ public abstract class CDOComparisonScope extends AbstractComparisonScope
           //$FALL-THROUGH$
         }
       }
-    
+
       return null;
     }
   }

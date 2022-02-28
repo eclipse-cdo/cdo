@@ -19,4 +19,21 @@
             uri="http://www.eclipse.org/emf/compare"/>
    </extension>
 
+    <extension point="org.eclipse.emf.compare.rcp.matchEngine">
+      <engineFactory
+            class="org.eclipse.emf.cdo.compare.CDOCompare$CDOMatchEngine$Factory"
+            description="A CDO-specific match engine" 
+            label="CDO Match Engine"
+            ranking="10"/>
+   </extension>
+
+  <extension point="org.eclipse.emf.compare.rcp.diffEngine">
+      <descriptor
+            id="org.eclipse.emf.compare.rcp.cdo.diffEngine"
+            description="A diff engine that creates and uses CDO-specific feature filters"
+            impl="org.eclipse.emf.cdo.compare.CDOCompare$CDODiffEngine"
+            label="CDO Diff Engine"
+            ranking="200"/>
+   </extension>
+
 </plugin>

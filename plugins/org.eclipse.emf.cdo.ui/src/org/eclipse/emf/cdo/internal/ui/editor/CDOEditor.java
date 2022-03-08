@@ -1345,11 +1345,6 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
         }
       }
 
-      if (true)
-      {
-        viewerInput = resourceSet;
-      }
-
       Tree tree = new Tree(getContainer(), SWT.MULTI);
       selectionViewer = new SafeTreeViewer(tree);
       setCurrentViewer(selectionViewer);

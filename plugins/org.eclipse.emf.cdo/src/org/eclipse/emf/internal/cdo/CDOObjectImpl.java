@@ -459,13 +459,15 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     if (eSettings != null)
     {
       InternalCDOClassInfo classInfo = cdoClassInfo();
+      EClass eClass = classInfo.getEClass();
+
       EStructuralFeature[] persistentMapFeatures = classInfo.getAllPersistentMapFeatures();
       int length = persistentMapFeatures.length;
 
       for (int i = 0; i < length; i++)
       {
         EStructuralFeature feature = persistentMapFeatures[i];
-        int featureID = feature.getFeatureID();
+        int featureID = eClass.getFeatureID(feature);
         int index = classInfo.getSettingsFeatureIndex(featureID);
 
         CDOStoreEcoreEMap map = (CDOStoreEcoreEMap)eSettings[index];

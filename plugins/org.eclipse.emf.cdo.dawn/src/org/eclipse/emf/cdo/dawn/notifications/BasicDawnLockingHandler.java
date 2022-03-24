@@ -56,7 +56,10 @@ public class BasicDawnLockingHandler extends BasicDawnListener
       }
     }
 
-    IDawnEditorSupport dawnEditorSupport = editor.getDawnEditorSupport();
-    dawnEditorSupport.handleRemoteLockChanges(changedObjects);
+    if (!changedObjects.isEmpty())
+    {
+      IDawnEditorSupport dawnEditorSupport = editor.getDawnEditorSupport();
+      dawnEditorSupport.handleRemoteLockChanges(changedObjects);
+    }
   }
 }

@@ -205,11 +205,15 @@ public class DawnGMFEditorSupport extends DawnAbstractEditorSupport
   @Override
   public void handleRemoteLockChanges(Map<Object, DawnState> changedObjects)
   {
-    for (Object o : changedObjects.keySet())
+    if (!changedObjects.isEmpty())
     {
-      handleLock((CDOObject)o, getView());
+      for (Object o : changedObjects.keySet())
+      {
+        handleLock((CDOObject)o, getView());
+      }
+
+      refresh();
     }
-    refresh();
   }
 
   private void handleLock(CDOObject object, CDOView cdoView)

@@ -61,9 +61,9 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
 
   private RejectedExecutionHandler userHandler;
 
-  public ThreadPool(int corePoolSize, int maximumPoolSize, long keepAliveTime, ThreadFactory threadFactory)
+  public ThreadPool(int corePoolSize, int maximumPoolSize, long keepAliveSeconds, ThreadFactory threadFactory)
   {
-    super(corePoolSize, maximumPoolSize, keepAliveTime, TimeUnit.SECONDS, createWorkQueue(), threadFactory);
+    super(corePoolSize, maximumPoolSize, keepAliveSeconds, TimeUnit.SECONDS, createWorkQueue(), threadFactory);
     ((WorkQueue)getQueue()).setThreadPool(this);
 
     // Call super setter because the setter in this class is overridden to set the userHandler field.
@@ -269,7 +269,7 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
       threadGroupName = DEFAULT_THREAD_GROUP_NAME;
     }
 
-    final ThreadGroup threadGroup = new ThreadGroup(threadGroupName);
+    ThreadGroup threadGroup = new ThreadGroup(threadGroupName);
 
     ThreadFactory threadFactory = new ThreadFactory()
     {

@@ -29,13 +29,13 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLEngine;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
-import javax.security.cert.X509Certificate;
 
 import java.io.InputStream;
 import java.net.URL;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.cert.Certificate;
+import java.security.cert.X509Certificate;
 import java.util.Enumeration;
 
 /**
@@ -51,11 +51,6 @@ public class SSLUtil
    * The variable for SSL Engine
    */
   private static final String PROTOCOL = "TLSv1.2";
-
-  /**
-   * The X.509 certificate type.
-   */
-  private static final String X509_CERTIFICATE_TYPE = "X.509";
 
   private static String configFile;
 
@@ -238,10 +233,9 @@ public class SSLUtil
         {
           String alias = aliasesIter.nextElement();
           Certificate cert = keyStore.getCertificate(alias);
-          if (cert.getType() == X509_CERTIFICATE_TYPE)
+          if (cert instanceof X509Certificate)
           {
-            X509Certificate x509cert = X509Certificate.getInstance(cert.getEncoded());
-            x509cert.checkValidity();
+            ((X509Certificate)cert).checkValidity();
           }
         }
       }

@@ -29,4 +29,13 @@ public interface IQueryHandler
    * @since 3.0
    */
   public void executeQuery(CDOQueryInfo info, IQueryContext context);
+
+  /**
+   * @author Eike Stepper
+   * @since 4.18
+   */
+  public interface PotentiallySlow extends IQueryHandler
+  {
+    public boolean isSlow(CDOQueryInfo info);
+  }
 }

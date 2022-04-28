@@ -11,8 +11,10 @@
 package org.eclipse.net4j.signal;
 
 import org.eclipse.net4j.channel.IChannel;
+import org.eclipse.net4j.util.RunnableWithException;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 import org.eclipse.net4j.util.om.monitor.TimeoutMonitor;
 
 import org.eclipse.internal.net4j.bundle.OM;
@@ -64,6 +66,27 @@ public abstract class SignalReactor extends Signal
 
     monitor = new ReportingMonitor(monitorProgressSeconds, monitorTimeoutSeconds);
     return monitor;
+  }
+
+  /**
+   * @since 4.15
+   */
+  protected final void monitor(int monitorProgressSeconds, int monitorTimeoutSeconds, RunnableWithException runnable) throws Exception
+  {
+    OMMonitor monitor = createMonitor(monitorProgressSeconds, monitorTimeoutSeconds);
+    monitor.begin();
+
+    Async async = monitor.forkAsync();
+
+    try
+    {
+      runnable.run();
+    }
+    finally
+    {
+      async.stop();
+      monitor.done();
+    }
   }
 
   @Override

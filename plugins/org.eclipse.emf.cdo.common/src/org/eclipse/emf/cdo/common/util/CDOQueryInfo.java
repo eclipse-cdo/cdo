@@ -31,11 +31,17 @@ public interface CDOQueryInfo
   public static final int UNLIMITED_RESULTS = -1;
 
   /**
-   * The name of a {@link Boolean} typed {@link #getParameters() parameter} to influence automatic response flushing (the default) after each query result.
+   * The name of a {@link Boolean}-typed {@link #getParameters() parameter} to influence automatic response flushing (the default) after each query result.
    *
    * @since 4.2
    */
   public static final String PARAM_DISABLE_RESPONSE_FLUSHING = "disable.response.flushing";
+
+  /**
+   * The name of a {@link Boolean}-typed {@link #getParameters() parameter} that can suppress timeouts during slow query execution on the server.
+   * @since 4.18
+   */
+  public static final String PARAM_DISABLE_RESPONSE_TIMEOUT = "disable.response.timeout";
 
   /**
    * Returns the language identifier of this query, never <code>null</code>.

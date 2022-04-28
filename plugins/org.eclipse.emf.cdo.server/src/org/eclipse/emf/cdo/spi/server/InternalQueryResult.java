@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.spi.server;
 import org.eclipse.emf.cdo.common.util.BlockingCloseableIterator;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.util.CDOQueryQueue;
+import org.eclipse.emf.cdo.server.IQueryHandler;
 
 /**
  * If the meaning of this type isn't clear, there really should be more of a description here...
@@ -31,4 +32,9 @@ public interface InternalQueryResult extends BlockingCloseableIterator<Object>
   public InternalView getView();
 
   public CDOQueryQueue<Object> getQueue();
+
+  /**
+   * @since 4.18
+   */
+  public IQueryHandler getQueryHandler();
 }

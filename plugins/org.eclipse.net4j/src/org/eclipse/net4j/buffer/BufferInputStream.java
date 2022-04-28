@@ -354,7 +354,7 @@ public class BufferInputStream extends InputStream implements IBufferHandler
     if (remaining <= 0)
     {
       // Throw an exception so that caller can distinguish between end-of-stream and a timeout
-      throw new IOTimeoutException();
+      throw new IOTimeoutException("Buffer read timeout expired after " + getMillisBeforeTimeout() + " milliseconds");
     }
 
     return Math.min(remaining, check);

@@ -118,7 +118,9 @@ public class QueryManager extends Lifecycle implements InternalQueryManager
   @Override
   public InternalQueryResult execute(InternalView view, CDOQueryInfo queryInfo)
   {
-    InternalQueryResult queryResult = new QueryResult(view, queryInfo, getNextQueryID());
+    IQueryHandler handler = repository.getQueryHandler(queryInfo);
+
+    InternalQueryResult queryResult = new QueryResult(view, queryInfo, getNextQueryID(), handler);
     QueryContext queryContext = new QueryContext(queryResult);
     execute(queryContext);
     return queryResult;
@@ -320,10 +322,10 @@ public class QueryManager extends Lifecycle implements InternalQueryManager
 
         CDOQueryInfo info = queryResult.getQueryInfo();
         resultCount = info.getMaxResults() < 0 ? Integer.MAX_VALUE : info.getMaxResults();
-        IQueryHandler handler = repository.getQueryHandler(info);
 
         try
         {
+          IQueryHandler handler = queryResult.getQueryHandler();
           handler.executeQuery(info, this);
         }
         catch (Throwable executionException)

@@ -16,11 +16,14 @@ import org.eclipse.emf.cdo.common.id.CDOIDReference;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.common.util.CDOQueryQueue;
 import org.eclipse.emf.cdo.internal.common.CDOQueryInfoImpl;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.object.CDOObjectReferenceImpl;
+
+import org.eclipse.net4j.util.io.IORuntimeException;
 
 import org.eclipse.emf.spi.cdo.AbstractQueryIterator;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
@@ -83,13 +86,17 @@ public class QueryRequest extends CDOClientRequest<Boolean>
         resultQueue.add(element);
       }
     }
-    catch (RuntimeException ex)
+    catch (RuntimeException | Error ex)
     {
       resultQueue.setException(ex);
     }
-    catch (Throwable throwable)
+    catch (IOException ex)
     {
-      resultQueue.setException(new RuntimeException(throwable.getMessage(), throwable));
+      resultQueue.setException(new IORuntimeException(ex.getMessage(), ex));
+    }
+    catch (Throwable ex)
+    {
+      resultQueue.setException(new CDOException(ex.getMessage(), ex));
     }
     finally
     {

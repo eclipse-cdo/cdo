@@ -17,11 +17,14 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.internal.common.CDOQueryInfoImpl;
+import org.eclipse.emf.cdo.server.IQueryHandler;
+import org.eclipse.emf.cdo.server.IQueryHandler.PotentiallySlow;
 import org.eclipse.emf.cdo.spi.server.InternalQueryManager;
 import org.eclipse.emf.cdo.spi.server.InternalQueryResult;
 import org.eclipse.emf.cdo.spi.server.InternalView;
 
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * @author Simon McDuff
@@ -31,6 +34,8 @@ public class QueryIndication extends CDOServerReadIndication
   private boolean xrefs;
 
   private boolean disableResponseFlushing;
+
+  private boolean disableResponseTimeout;
 
   private InternalQueryResult queryResult;
 
@@ -44,19 +49,57 @@ public class QueryIndication extends CDOServerReadIndication
   {
     int viewID = in.readXInt();
     InternalView view = getView(viewID);
-
     CDOQueryInfo queryInfo = new CDOQueryInfoImpl(in);
-    xrefs = queryInfo.getQueryLanguage().equals(CDOProtocolConstants.QUERY_LANGUAGE_XREFS);
-
-    Object param = queryInfo.getParameters().get(CDOQueryInfo.PARAM_DISABLE_RESPONSE_FLUSHING);
-    disableResponseFlushing = xrefs || Boolean.TRUE.equals(param);
 
     InternalQueryManager queryManager = getRepository().getQueryManager();
     queryResult = queryManager.execute(view, queryInfo);
+
+    String queryLanguage = queryInfo.getQueryLanguage();
+    xrefs = queryLanguage.equals(CDOProtocolConstants.QUERY_LANGUAGE_XREFS);
+
+    Map<String, Object> parameters = queryInfo.getParameters();
+    disableResponseFlushing = xrefs || Boolean.TRUE.equals(parameters.get(CDOQueryInfo.PARAM_DISABLE_RESPONSE_FLUSHING));
+
+    disableResponseTimeout = Boolean.TRUE.equals(parameters.get(CDOQueryInfo.PARAM_DISABLE_RESPONSE_TIMEOUT));
+    if (!disableResponseTimeout)
+    {
+      IQueryHandler handler = queryResult.getQueryHandler();
+      if (handler instanceof PotentiallySlow)
+      {
+        PotentiallySlow potentiallySlow = (PotentiallySlow)handler;
+        if (potentiallySlow.isSlow(queryInfo))
+        {
+          disableResponseTimeout = true;
+        }
+      }
+    }
   }
 
   @Override
   protected void responding(CDODataOutput out) throws IOException
+  {
+    if (disableResponseTimeout)
+    {
+      try
+      {
+        monitor(1, 10, () -> doRespond(out));
+      }
+      catch (IOException | RuntimeException | Error ex)
+      {
+        throw ex;
+      }
+      catch (Exception ex)
+      {
+        throw new IOException(ex);
+      }
+    }
+    else
+    {
+      doRespond(out);
+    }
+  }
+
+  private void doRespond(CDODataOutput out) throws IOException
   {
     // Return queryID immediately.
     out.writeXInt(queryResult.getQueryID());
@@ -77,7 +120,9 @@ public class QueryIndication extends CDOServerReadIndication
       }
       catch (Throwable ex)
       {
-        object = ex;
+        out.writeBoolean(true);
+        out.writeCDORevisionOrPrimitive(ex);
+        break;
       }
 
       out.writeBoolean(true);
@@ -90,11 +135,6 @@ public class QueryIndication extends CDOServerReadIndication
       else
       {
         out.writeCDORevisionOrPrimitive(object);
-
-        if (object instanceof Throwable)
-        {
-          break;
-        }
       }
 
       try
@@ -114,7 +154,7 @@ public class QueryIndication extends CDOServerReadIndication
       }
     }
 
-    // Query is done successfully.
+    // No more results.
     out.writeBoolean(false);
   }
 

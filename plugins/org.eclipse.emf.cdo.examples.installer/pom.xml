@@ -25,7 +25,7 @@
 
   <groupId>org.eclipse.emf.cdo</groupId>
   <artifactId>org.eclipse.emf.cdo.examples.installer</artifactId>
-  <version>4.2.8-SNAPSHOT</version>
+  <version>4.2.9-SNAPSHOT</version>
   <packaging>eclipse-plugin</packaging>
 
 </project>

@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.server.internal.admin;
 
 import org.eclipse.emf.cdo.server.admin.CDORepositoryConfigurationManager;
 import org.eclipse.emf.cdo.server.internal.admin.bundle.OM;
-import org.eclipse.emf.cdo.spi.server.IAppExtension;
+import org.eclipse.emf.cdo.spi.server.IAppExtension5;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.RepositoryFactory;
 
@@ -39,7 +39,7 @@ import java.io.IOException;
  *
  * @author Christian W. Damus (CEA LIST)
  */
-public class RepositoryConfigurationManagerExtension implements IAppExtension
+public class RepositoryConfigurationManagerExtension implements IAppExtension5
 {
   private static final String DEFAULT_CATALOG_PATH = "/catalog";
 
@@ -50,10 +50,14 @@ public class RepositoryConfigurationManagerExtension implements IAppExtension
   }
 
   @Override
+  public String getName()
+  {
+    return "Repository configuration manager";
+  }
+
+  @Override
   public void start(File configFile) throws Exception
   {
-    OM.LOG.info("Repository configuration manager extension starting");
-
     IManagedContainer container = IPluginContainer.INSTANCE;
 
     Document document = getDocument(configFile);
@@ -68,16 +72,12 @@ public class RepositoryConfigurationManagerExtension implements IAppExtension
         break;
       }
     }
-
-    OM.LOG.info("Repository configuration manager extension started");
   }
 
   @Override
   public void stop() throws Exception
   {
-    OM.LOG.info("Repository configuration manager extension stopping");
     LifecycleUtil.deactivate(repositoryConfigurationManager);
-    OM.LOG.info("Repository configuration manager extension stopped");
   }
 
   protected Document getDocument(File configFile) throws ParserConfigurationException, SAXException, IOException

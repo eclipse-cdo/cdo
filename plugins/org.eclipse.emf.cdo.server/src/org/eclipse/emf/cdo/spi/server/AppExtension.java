@@ -30,12 +30,13 @@ import java.util.Objects;
  * @author Eike Stepper
  * @since 4.10
  */
-public abstract class AppExtension implements IAppExtension3
+public abstract class AppExtension implements IAppExtension3, IAppExtension5
 {
   public AppExtension()
   {
   }
 
+  @Override
   public abstract String getName();
 
   @Override
@@ -53,9 +54,6 @@ public abstract class AppExtension implements IAppExtension3
   @Override
   public void start(IRepository[] repositories, File configFile) throws Exception
   {
-    String name = getName();
-    OM.LOG.info(name + " extension starting");
-
     Document document = getDocument(configFile);
     NodeList repositoryConfigs = document.getElementsByTagName("repository"); //$NON-NLS-1$
 
@@ -77,16 +75,11 @@ public abstract class AppExtension implements IAppExtension3
         }
       }
     }
-
-    OM.LOG.info(name + " extension started");
   }
 
   @Override
   public void stop(IRepository[] repositories) throws Exception
   {
-    String name = getName();
-    OM.LOG.info(name + " extension stopping");
-
     for (IRepository repository : repositories)
     {
       try
@@ -98,8 +91,6 @@ public abstract class AppExtension implements IAppExtension3
         OM.LOG.error(ex);
       }
     }
-
-    OM.LOG.info(name + " extension stopped");
   }
 
   protected abstract void start(InternalRepository repository, Element repositoryConfig) throws Exception;

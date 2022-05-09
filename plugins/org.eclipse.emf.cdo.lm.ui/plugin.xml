@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<!--
+  Copyright (c) 2022 Eike Stepper (Loehne, Germany) and others.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+
+  Contributors:
+    Eike Stepper - initial API and implementation
+-->
+
+<plugin>
+
+    <extension point="org.eclipse.net4j.util.factories">
+       <factory
+             productGroup="org.eclipse.emf.cdo.lm.modules.targetNameProviders"
+             type="lm"
+             class="org.eclipse.emf.cdo.lm.ui.LMTargetNameProvider$Factory"/>
+       <factory
+             productGroup="org.eclipse.net4j.util.ui.menuFillers"
+             type="lm"
+             class="org.eclipse.emf.cdo.lm.ui.LMMenuFiller$Factory"/>
+       <factory
+             productGroup="org.eclipse.emf.cdo.ui.historyInputObjectModifiers"
+             type="lm"
+             class="org.eclipse.emf.cdo.lm.ui.LMHistoryInputObjectModifier$Factory"/>
+       <factory
+             productGroup="org.eclipse.emf.cdo.ui.loadResourceProviders"
+             type="lm"
+             class="org.eclipse.emf.cdo.lm.ui.LMLoadResourceProvider$Factory"/>
+    </extension>
+
+   <extension point="org.eclipse.ui.views">
+      <view
+            category="org.eclipse.emf.cdo"
+            class="org.eclipse.emf.cdo.lm.ui.views.SystemsView"
+            icon="icons/System.gif"
+            id="org.eclipse.emf.cdo.lm.SystemsView"
+            name="Systems"/>
+      <view
+            category="org.eclipse.emf.cdo"
+            class="org.eclipse.emf.cdo.lm.ui.views.AssembliesView"
+            icon="icons/Assembly.gif"
+            id="org.eclipse.emf.cdo.lm.AssembliesView"
+            name="Module Checkouts"/>
+   </extension>
+   
+   <extension point="org.eclipse.ui.decorators">
+      <decorator
+            adaptable="true"
+            class="org.eclipse.emf.cdo.lm.ui.decorators.AvailableUpdatesDecorator"
+            id="org.eclipse.emf.cdo.lm.ModuleUpdatesAvailableDecorator"
+            label="Available Updates Decorator"
+            lightweight="true"
+            state="true">
+         <enablement>
+            <or>
+              <objectClass name="org.eclipse.emf.cdo.lm.client.IAssemblyDescriptor"/>
+              <objectClass name="org.eclipse.emf.cdo.lm.assembly.AssemblyModule"/>
+            </or>
+         </enablement>
+      </decorator>
+   </extension>
+
+  <extension point="org.eclipse.ui.commands">
+      <command
+            id="org.eclipse.emf.cdo.lm.InstallUpdates"
+            name="Install Updates"
+            defaultHandler="org.eclipse.emf.cdo.lm.ui.actions.InstallUpdatesHandler"/>
+  </extension>
+
+  <extension point="org.eclipse.ui.handlers">
+      <handler
+            class="org.eclipse.emf.cdo.lm.ui.actions.InstallUpdatesHandler"
+            commandId="org.eclipse.emf.cdo.lm.InstallUpdates">
+         <activeWhen>
+            <iterate ifEmpty="false">
+                <adapt type="org.eclipse.emf.cdo.lm.client.IAssemblyDescriptor">
+                   <test property="org.eclipse.emf.cdo.lm.assembly.updatesAvailable" value="true"/>
+                </adapt>
+            </iterate>
+         </activeWhen>
+      </handler>
+  </extension>
+
+  <extension point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+         <command
+               commandId="org.eclipse.emf.cdo.lm.InstallUpdates"
+               icon="icons/Update.gif"
+               label="Install Updates..."
+               style="push"
+               tooltip="Install the available updates into the checkout">
+            <visibleWhen checkEnabled="false">
+               <with variable="activeMenuSelection">
+                  <iterate ifEmpty="false">
+                    <adapt type="org.eclipse.emf.cdo.lm.client.IAssemblyDescriptor">
+                       <test property="org.eclipse.emf.cdo.lm.assembly.updatesAvailable" value="true"/>
+                    </adapt>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+  </extension>
+
+   <extension point="org.eclipse.ui.propertyPages">
+      <page
+            class="org.eclipse.emf.cdo.lm.ui.properties.ModulePropertyPage"
+            id="org.eclipse.emf.cdo.lm.ui.properties.ModulePropertyPage"
+            name="Module">
+         <enabledWhen>
+            <adapt type="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout">
+              <test property="org.eclipse.emf.cdo.lm.checkout.isModule" value="true"/>
+            </adapt>
+         </enabledWhen>
+      </page>
+   </extension>
+
+</plugin>

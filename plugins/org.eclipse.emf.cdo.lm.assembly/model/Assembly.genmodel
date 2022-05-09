@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipse.emf.cdo.lm.assembly/src" creationIcons="false"
+    editorDirectory="" modelPluginID="org.eclipse.emf.cdo.lm.assembly" modelName="Assembly"
+    updateClasspath="false" rootExtendsInterface="org.eclipse.emf.cdo.CDOObject" rootExtendsClass="org.eclipse.emf.internal.cdo.CDOObjectImpl"
+    testsDirectory="" importerID="org.eclipse.emf.importer.cdo" featureDelegation="Dynamic"
+    minimalReflectiveMethods="false" complianceLevel="11.0" copyrightFields="false"
+    providerRootExtendsClass="org.eclipse.emf.cdo.edit.CDOItemProviderAdapter" optimizedHasChildren="true"
+    usedGenPackages="../../org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ../../org.eclipse.emf.cdo/model/etypes.genmodel#//etypes ../../org.eclipse.emf.cdo.lm.modules/model/Modules.genmodel#//modules"
+    operationReflection="true" importOrganizing="true" cleanup="true">
+  <foreignModel>Assembly.ecore</foreignModel>
+  <modelPluginVariables>CDO=org.eclipse.emf.cdo</modelPluginVariables>
+  <editPluginVariables>CDO_EDIT=org.eclipse.emf.cdo.edit</editPluginVariables>
+  <genPackages prefix="Assembly" basePackage="org.eclipse.emf.cdo.lm" resource="XML"
+      disposableProviderFactory="true" ecorePackage="Assembly.ecore#/">
+    <genClasses ecoreClass="Assembly.ecore#//Assembly">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Assembly.ecore#//Assembly/systemName"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Assembly.ecore#//Assembly/modules"/>
+    </genClasses>
+    <genClasses ecoreClass="Assembly.ecore#//AssemblyModule">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Assembly.ecore#//AssemblyModule/assembly"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Assembly.ecore#//AssemblyModule/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Assembly.ecore#//AssemblyModule/version"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Assembly.ecore#//AssemblyModule/branchPoint"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Assembly.ecore#//AssemblyModule/root"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

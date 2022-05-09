@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<!--
+  Copyright (c) 2022 Eike Stepper (Loehne, Germany) and others.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+
+  Contributors:
+    Eike Stepper - initial API and implementation
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.net4j.util.factories">
+      <factory
+         productGroup="org.eclipse.emf.cdo.common.ResourceSetConfigurers"
+         type="lm"
+         class="org.eclipse.emf.cdo.lm.internal.client.LMResourceSetConfigurer$Factory"/>
+   </extension>
+
+   <extension point="org.eclipse.core.runtime.adapters">
+      <factory adaptableType="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout" class="org.eclipse.emf.cdo.lm.internal.client.LMAdapterFactory">
+         <adapter type="org.eclipse.emf.cdo.lm.client.IAssemblyDescriptor"/>
+      </factory>
+   </extension>
+
+   <extension point="org.eclipse.core.expressions.propertyTesters">
+      <propertyTester
+         id="org.eclipse.emf.cdo.lm.checkout.properties"
+         type="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"
+         namespace="org.eclipse.emf.cdo.lm.checkout"
+         properties="isModule"
+         class="org.eclipse.emf.cdo.lm.internal.client.properties.CheckoutProperties$Tester"/>
+     <propertyTester
+         id="org.eclipse.emf.cdo.lm.assembly.properties"
+         type="org.eclipse.emf.cdo.lm.client.IAssemblyDescriptor"
+         namespace="org.eclipse.emf.cdo.lm.assembly"
+         properties="moduleName,systemName,baselineName,baselineTypeName,baselineType,updatesAvailable"
+         class="org.eclipse.emf.cdo.lm.internal.client.properties.ModuleCheckoutProperties$Tester"/>
+   </extension>
+
+</plugin>

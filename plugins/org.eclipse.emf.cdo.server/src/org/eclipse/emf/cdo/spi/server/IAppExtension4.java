@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.spi.server;
 import java.util.Comparator;
 
 /**
- * An optional extension of the {@link IAppExtension} interface for  {@link #getPriority() prioritized} app extensions.
+ * An optional extension of the {@link IAppExtension} interface for {@link #getPriority() prioritized} app extensions.
  *
  * @author Eike Stepper
  * @since 4.12

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.cdo.lm.assembly" version="2">
+    <resource path="src/org/eclipse/emf/cdo/lm/assembly/AssemblyModule.java" type="org.eclipse.emf.cdo.lm.assembly.AssemblyModule">
+        <filter id="574668824">
+            <message_arguments>
+                <message_argument value="ModelElement"/>
+                <message_argument value="AssemblyModule"/>
+                <message_argument value="CDOObject"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

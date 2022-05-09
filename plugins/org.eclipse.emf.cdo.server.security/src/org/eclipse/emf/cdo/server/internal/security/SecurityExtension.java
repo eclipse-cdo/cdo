@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.server.internal.security.bundle.OM;
 import org.eclipse.emf.cdo.server.spi.security.SecurityManagerFactory;
 import org.eclipse.emf.cdo.spi.server.IAppExtension2;
 import org.eclipse.emf.cdo.spi.server.IAppExtension4;
+import org.eclipse.emf.cdo.spi.server.IAppExtension5;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.RepositoryFactory;
 
@@ -40,7 +41,7 @@ import java.io.Reader;
 /**
  * @author Eike Stepper
  */
-public class SecurityExtension implements IAppExtension2, IAppExtension4
+public class SecurityExtension implements IAppExtension2, IAppExtension4, IAppExtension5
 {
   public static final String DEFAULT_REALM_PATH = "security";
 
@@ -48,6 +49,12 @@ public class SecurityExtension implements IAppExtension2, IAppExtension4
 
   public SecurityExtension()
   {
+  }
+
+  @Override
+  public String getName()
+  {
+    return "Security";
   }
 
   @Override
@@ -70,23 +77,17 @@ public class SecurityExtension implements IAppExtension2, IAppExtension4
 
   protected void start(Document document) throws Exception
   {
-    OM.LOG.info("Security extension starting"); //$NON-NLS-1$
-
     NodeList repositoryConfigs = document.getElementsByTagName("repository"); //$NON-NLS-1$
     for (int i = 0; i < repositoryConfigs.getLength(); i++)
     {
       Element repositoryConfig = (Element)repositoryConfigs.item(i);
       configureRepository(repositoryConfig);
     }
-
-    OM.LOG.info("Security extension started"); //$NON-NLS-1$
   }
 
   @Override
   public void stop() throws Exception
   {
-    OM.LOG.info("Security extension stopping"); //$NON-NLS-1$
-    OM.LOG.info("Security extension stopped"); //$NON-NLS-1$
   }
 
   protected Document getDocument(File configFile) throws ParserConfigurationException, SAXException, IOException

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipse.emf.cdo.lm/src" creationIcons="false"
+    editorDirectory="" modelPluginID="org.eclipse.emf.cdo.lm" modelName="LM" updateClasspath="false"
+    rootExtendsInterface="org.eclipse.emf.cdo.CDOObject" rootExtendsClass="org.eclipse.emf.internal.cdo.CDOObjectImpl"
+    testsDirectory="" importerID="org.eclipse.emf.importer.ecore" featureDelegation="Dynamic"
+    complianceLevel="11.0" copyrightFields="false" providerRootExtendsClass="org.eclipse.emf.cdo.edit.CDOItemProviderAdapter"
+    optimizedHasChildren="true" usedGenPackages="../../org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ../../org.eclipse.emf.cdo/model/etypes.genmodel#//etypes ../../org.eclipse.emf.cdo.lm.modules/model/Modules.genmodel#//modules"
+    operationReflection="true" importOrganizing="true" cleanup="true">
+  <foreignModel>LM.ecore</foreignModel>
+  <modelPluginVariables>CDO=org.eclipse.emf.cdo</modelPluginVariables>
+  <genPackages prefix="LM" basePackage="org.eclipse.emf.cdo" disposableProviderFactory="true"
+      ecorePackage="LM.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="LM.ecore#//Impact">
+      <genEnumLiterals ecoreEnumLiteral="LM.ecore#//Impact/Micro"/>
+      <genEnumLiterals ecoreEnumLiteral="LM.ecore#//Impact/Minor"/>
+      <genEnumLiterals ecoreEnumLiteral="LM.ecore#//Impact/Major"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="LM.ecore#//StreamMode">
+      <genEnumLiterals ecoreEnumLiteral="LM.ecore#//StreamMode/Development"/>
+      <genEnumLiterals ecoreEnumLiteral="LM.ecore#//StreamMode/Maintenance"/>
+      <genEnumLiterals ecoreEnumLiteral="LM.ecore#//StreamMode/Closed"/>
+    </genEnums>
+    <genDataTypes ecoreDataType="LM.ecore#//BasePoint"/>
+    <genClasses image="false" ecoreClass="LM.ecore#//SystemElement">
+      <genOperations ecoreOperation="LM.ecore#//SystemElement/getSystem"/>
+    </genClasses>
+    <genClasses ecoreClass="LM.ecore#//ProcessElement">
+      <genOperations ecoreOperation="LM.ecore#//ProcessElement/getProcess"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="LM.ecore#//ModuleElement">
+      <genOperations ecoreOperation="LM.ecore#//ModuleElement/getModule"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="LM.ecore#//StreamElement">
+      <genOperations ecoreOperation="LM.ecore#//StreamElement/getStream"/>
+    </genClasses>
+    <genClasses ecoreClass="LM.ecore#//System">
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute LM.ecore#//System/name"/>
+      <genFeatures property="None" createChild="false" ecoreFeature="ecore:EReference LM.ecore#//System/process"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LM.ecore#//System/modules"/>
+      <genOperations ecoreOperation="LM.ecore#//System/getModule">
+        <genParameters ecoreParameter="LM.ecore#//System/getModule/name"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="LM.ecore#//Process">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference LM.ecore#//Process/system"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LM.ecore#//Process/moduleTypes"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LM.ecore#//Process/dropTypes"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LM.ecore#//Process/moduleDefinitionPath"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LM.ecore#//Process/initialModuleVersion"/>
+    </genClasses>
+    <genClasses ecoreClass="LM.ecore#//ModuleType">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference LM.ecore#//ModuleType/process"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LM.ecore#//ModuleType/name"/>
+    </genClasses>
+    <genClasses ecoreClass="LM.ecore#//DropType">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference LM.ecore#//DropType/process"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LM.ecore#//DropType/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LM.ecore#//DropType/release"/>
+    </genClasses>
+    <genClasses ecoreClass="LM.ecore#//Module">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference LM.ecore#//Module/system"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LM.ecore#//Module/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LM.ecore#//Module/type"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LM.ecore#//Module/streams"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="LM.ecore#//Baseline">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference LM.ecore#//Baseline/stream"/>
+      <genFeatures property="None" createChild="false" ecoreFeature="ecore:EAttribute LM.ecore#//Baseline/floating"/>
+      <genOperations ecoreOperation="LM.ecore#//Baseline/getName"/>
+      <genOperations ecoreOperation="LM.ecore#//Baseline/getBranchPoint"/>
+      <genOperations ecoreOperation="LM.ecore#//Baseline/getBaseTimeStamp"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="LM.ecore#//FloatingBaseline">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LM.ecore#//FloatingBaseline/closed"/>
+      <genOperations ecoreOperation="LM.ecore#//FloatingBaseline/getBase"/>
+      <genOperations ecoreOperation="LM.ecore#//FloatingBaseline/getDeliveries"/>
+      <genOperations ecoreOperation="LM.ecore#//FloatingBaseline/getBranch"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="LM.ecore#//FixedBaseline">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LM.ecore#//FixedBaseline/version"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LM.ecore#//FixedBaseline/dependencies"/>
+      <genOperations ecoreOperation="LM.ecore#//FixedBaseline/getBasedChanges"/>
+    </genClasses>
+    <genClasses ecoreClass="LM.ecore#//Stream">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference LM.ecore#//Stream/module"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LM.ecore#//Stream/base"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LM.ecore#//Stream/startTimeStamp"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LM.ecore#//Stream/majorVersion"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LM.ecore#//Stream/minorVersion"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LM.ecore#//Stream/codeName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LM.ecore#//Stream/allowedChanges"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LM.ecore#//Stream/mode"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LM.ecore#//Stream/developmentBranch"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LM.ecore#//Stream/maintenanceBranch"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LM.ecore#//Stream/contents"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LM.ecore#//Stream/maintenanceTimeStamp"/>
+      <genOperations ecoreOperation="LM.ecore#//Stream/insertContent">
+        <genParameters ecoreParameter="LM.ecore#//Stream/insertContent/baseline"/>
+      </genOperations>
+      <genOperations ecoreOperation="LM.ecore#//Stream/getBranchPoint">
+        <genParameters ecoreParameter="LM.ecore#//Stream/getBranchPoint/timeStamp"/>
+      </genOperations>
+      <genOperations ecoreOperation="LM.ecore#//Stream/getFirstRelease"/>
+      <genOperations ecoreOperation="LM.ecore#//Stream/getLastRelease"/>
+      <genOperations ecoreOperation="LM.ecore#//Stream/getReleases"/>
+      <genOperations ecoreOperation="LM.ecore#//Stream/getBasedChanges"/>
+    </genClasses>
+    <genClasses ecoreClass="LM.ecore#//Change">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LM.ecore#//Change/base"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LM.ecore#//Change/label"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LM.ecore#//Change/impact"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LM.ecore#//Change/branch"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LM.ecore#//Change/deliveries"/>
+    </genClasses>
+    <genClasses ecoreClass="LM.ecore#//Delivery">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LM.ecore#//Delivery/change"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LM.ecore#//Delivery/mergeSource"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LM.ecore#//Delivery/mergeTarget"/>
+    </genClasses>
+    <genClasses ecoreClass="LM.ecore#//Drop">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LM.ecore#//Drop/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LM.ecore#//Drop/label"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LM.ecore#//Drop/branchPoint"/>
+      <genOperations ecoreOperation="LM.ecore#//Drop/isRelease"/>
+      <genOperations ecoreOperation="LM.ecore#//Drop/getBasedStreams"/>
+    </genClasses>
+    <genClasses ecoreClass="LM.ecore#//Dependency">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LM.ecore#//Dependency/target"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LM.ecore#//Dependency/versionRange"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

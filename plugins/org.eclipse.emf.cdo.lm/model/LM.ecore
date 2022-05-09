@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="lm" nsURI="http://www.eclipse.org/emf/CDO/lm/1.0.0" nsPrefix="lm">
+  <eClassifiers xsi:type="ecore:EClass" name="SystemElement" abstract="true" interface="true"
+      eSuperTypes="../../org.eclipse.emf.cdo/model/etypes.ecore#//ModelElement">
+    <eOperations name="getSystem" lowerBound="1" eType="#//System"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ProcessElement" abstract="true" interface="true"
+      eSuperTypes="#//SystemElement">
+    <eOperations name="getProcess" lowerBound="1" eType="#//Process"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ModuleElement" abstract="true" interface="true"
+      eSuperTypes="#//SystemElement">
+    <eOperations name="getModule" lowerBound="1" eType="#//Module"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StreamElement" abstract="true" interface="true"
+      eSuperTypes="#//ModuleElement">
+    <eOperations name="getStream" lowerBound="1" eType="#//Stream"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="System" eSuperTypes="../../org.eclipse.emf.cdo/model/etypes.ecore#//ModelElement">
+    <eOperations name="getModule" eType="#//Module">
+      <eParameters name="name" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="process" lowerBound="1"
+        eType="#//Process" containment="true" eOpposite="#//Process/system"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="modules" upperBound="-1"
+        eType="#//Module" containment="true" eOpposite="#//Module/system"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Process" eSuperTypes="#//SystemElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="system" lowerBound="1"
+        eType="#//System" eOpposite="#//System/process"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="moduleTypes" upperBound="-1"
+        eType="#//ModuleType" containment="true" eOpposite="#//ModuleType/process"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="dropTypes" upperBound="-1"
+        eType="#//DropType" containment="true" eOpposite="#//DropType/process"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="moduleDefinitionPath" lowerBound="1"
+        eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="initialModuleVersion" lowerBound="1"
+        eType="ecore:EDataType ../../org.eclipse.emf.cdo.lm.modules/model/Modules.ecore#//Version"
+        defaultValueLiteral="0.1.0"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ModuleType" eSuperTypes="#//ProcessElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="process" lowerBound="1"
+        eType="#//Process" eOpposite="#//Process/moduleTypes"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DropType" eSuperTypes="#//ProcessElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="process" lowerBound="1"
+        eType="#//Process" eOpposite="#//Process/dropTypes"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="release" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Module" eSuperTypes="#//SystemElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="system" lowerBound="1"
+        eType="#//System" eOpposite="#//System/modules"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//ModuleType"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="streams" upperBound="-1"
+        eType="#//Stream" containment="true" eOpposite="#//Stream/module"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Baseline" abstract="true" eSuperTypes="#//StreamElement">
+    <eOperations name="getName" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+    <eOperations name="getBranchPoint" eType="ecore:EDataType ../../org.eclipse.emf.cdo/model/etypes.ecore#//BranchPointRef"/>
+    <eOperations name="getBaseTimeStamp" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//ELong"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="stream" eType="#//Stream"
+        eOpposite="#//Stream/contents"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="floating" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        changeable="false" volatile="true" transient="true" derived="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FloatingBaseline" abstract="true" eSuperTypes="#//Baseline">
+    <eOperations name="getBase" eType="#//FixedBaseline"/>
+    <eOperations name="getDeliveries" upperBound="-1" eType="#//Delivery"/>
+    <eOperations name="getBranch" lowerBound="1" eType="ecore:EDataType ../../org.eclipse.emf.cdo/model/etypes.ecore#//BranchRef"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="closed" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FixedBaseline" abstract="true" eSuperTypes="#//Baseline">
+    <eOperations name="getBasedChanges" upperBound="-1" eType="#//Change"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" lowerBound="1"
+        eType="ecore:EDataType ../../org.eclipse.emf.cdo.lm.modules/model/Modules.ecore#//Version"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="dependencies" upperBound="-1"
+        eType="#//Dependency" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Stream" eSuperTypes="#//FloatingBaseline">
+    <eOperations name="insertContent" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EInt">
+      <eParameters name="baseline" lowerBound="1" eType="#//Baseline"/>
+    </eOperations>
+    <eOperations name="getBranchPoint" eType="ecore:EDataType ../../org.eclipse.emf.cdo/model/etypes.ecore#//BranchPointRef">
+      <eParameters name="timeStamp" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//ELong"/>
+    </eOperations>
+    <eOperations name="getFirstRelease" eType="#//Drop"/>
+    <eOperations name="getLastRelease" eType="#//Drop"/>
+    <eOperations name="getReleases" upperBound="-1" eType="#//Drop"/>
+    <eOperations name="getBasedChanges" upperBound="-1" eType="#//Change"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="module" lowerBound="1"
+        eType="#//Module" eOpposite="#//Module/streams"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="base" eType="#//Drop"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="startTimeStamp" lowerBound="1"
+        eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//ELong"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="majorVersion" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="minorVersion" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="codeName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="allowedChanges" eType="#//Impact"
+        defaultValueLiteral="Minor"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="mode" lowerBound="1" eType="#//StreamMode"
+        changeable="false" volatile="true" transient="true" derived="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="developmentBranch" lowerBound="1"
+        eType="ecore:EDataType ../../org.eclipse.emf.cdo/model/etypes.ecore#//BranchRef"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="maintenanceBranch" eType="ecore:EDataType ../../org.eclipse.emf.cdo/model/etypes.ecore#//BranchRef"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="contents" upperBound="-1"
+        eType="#//Baseline" containment="true" eOpposite="#//Baseline/stream"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="maintenanceTimeStamp" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//ELong"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Change" eSuperTypes="#//FloatingBaseline">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="base" eType="#//FixedBaseline"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="impact" lowerBound="1"
+        eType="#//Impact"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="branch" lowerBound="1"
+        eType="ecore:EDataType ../../org.eclipse.emf.cdo/model/etypes.ecore#//BranchRef"
+        defaultValueLiteral=""/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="deliveries" upperBound="-1"
+        eType="#//Delivery" eOpposite="#//Delivery/change"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Delivery" eSuperTypes="#//FixedBaseline">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="change" lowerBound="1"
+        eType="#//Change" eOpposite="#//Change/deliveries"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="mergeSource" lowerBound="1"
+        eType="ecore:EDataType ../../org.eclipse.emf.cdo/model/etypes.ecore#//BranchPointRef"
+        defaultValueLiteral=""/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="mergeTarget" lowerBound="1"
+        eType="ecore:EDataType ../../org.eclipse.emf.cdo/model/etypes.ecore#//BranchPointRef"
+        defaultValueLiteral=""/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Drop" eSuperTypes="#//FixedBaseline">
+    <eOperations name="isRelease" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
+    <eOperations name="getBasedStreams" upperBound="-1" eType="#//Stream"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" lowerBound="1" eType="#//DropType"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="branchPoint" lowerBound="1"
+        eType="ecore:EDataType ../../org.eclipse.emf.cdo/model/etypes.ecore#//BranchPointRef"
+        defaultValueLiteral=""/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Dependency" eSuperTypes="#//StreamElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="target" lowerBound="1"
+        eType="#//Module"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="versionRange" lowerBound="1"
+        eType="ecore:EDataType ../../org.eclipse.emf.cdo.lm.modules/model/Modules.ecore#//VersionRange"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Impact">
+    <eLiterals name="Micro"/>
+    <eLiterals name="Minor" value="1"/>
+    <eLiterals name="Major" value="2"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="StreamMode">
+    <eLiterals name="Development"/>
+    <eLiterals name="Maintenance" value="1"/>
+    <eLiterals name="Closed" value="2"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="BasePoint" instanceClassName="org.eclipse.emf.cdo.lm.BasePoint"
+      serializable="false"/>
+</ecore:EPackage>

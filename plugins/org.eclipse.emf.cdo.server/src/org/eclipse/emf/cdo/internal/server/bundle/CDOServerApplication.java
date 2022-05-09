@@ -10,16 +10,17 @@
  */
 package org.eclipse.emf.cdo.internal.server.bundle;
 
-import org.eclipse.emf.cdo.internal.server.messages.Messages;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.spi.server.IAppExtension;
 import org.eclipse.emf.cdo.spi.server.IAppExtension3;
 import org.eclipse.emf.cdo.spi.server.IAppExtension4;
+import org.eclipse.emf.cdo.spi.server.IAppExtension5;
 import org.eclipse.emf.cdo.spi.server.RepositoryConfigurator;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.OMBundle.TranslationSupport;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.OSGiApplication;
 
@@ -29,6 +30,7 @@ import org.eclipse.core.runtime.Platform;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -43,6 +45,10 @@ public class CDOServerApplication extends OSGiApplication
   public static final String PROP_CONFIGURATOR_DESCRIPTION = "org.eclipse.emf.cdo.server.repositoryConfiguratorDescription";
 
   public static final String PROP_BROWSER_PORT = "org.eclipse.emf.cdo.server.browser.port"; //$NON-NLS-1$
+
+  private static final String TITLE = "CDO server";
+
+  private static final TranslationSupport TS = OM.BUNDLE.getTranslationSupport();
 
   private IRepository[] repositories;
 
@@ -68,19 +74,19 @@ public class CDOServerApplication extends OSGiApplication
   @Override
   protected void doStart() throws Exception
   {
+    OM.LOG.info(TS.getString("CDOServerApplication.starting", TITLE)); //$NON-NLS-1$
     super.doStart();
-    IManagedContainer container = getApplicationContainer();
 
-    OM.LOG.info(Messages.getString("CDOServerApplication.1")); //$NON-NLS-1$
     File configFile = OMPlatform.INSTANCE.getConfigFile("cdo-server.xml"); //$NON-NLS-1$
     if (configFile != null && configFile.exists())
     {
+      IManagedContainer container = getApplicationContainer();
       RepositoryConfigurator repositoryConfigurator = getConfigurator(container);
 
       repositories = repositoryConfigurator.configure(configFile);
       if (repositories == null || repositories.length == 0)
       {
-        OM.LOG.warn(Messages.getString("CDOServerApplication.3") + " " + configFile.getAbsolutePath()); //$NON-NLS-1$
+        OM.LOG.warn(TS.getString("CDOServerApplication.noRepos") + " " + configFile.getAbsolutePath()); //$NON-NLS-1$
       }
 
       String port = OMPlatform.INSTANCE.getProperty(PROP_BROWSER_PORT);
@@ -93,23 +99,28 @@ public class CDOServerApplication extends OSGiApplication
     }
     else
     {
-      OM.LOG.warn(Messages.getString("CDOServerApplication.5") + " " + configFile.getAbsolutePath()); //$NON-NLS-1$
+      OM.LOG.warn(TS.getString("CDOServerApplication.noConfig") + " " + configFile.getAbsolutePath()); //$NON-NLS-1$
     }
 
-    OM.LOG.info(Messages.getString("CDOServerApplication.6")); //$NON-NLS-1$
+    OM.LOG.info(TS.getString("CDOServerApplication.started", TITLE)); //$NON-NLS-1$
   }
 
   @Override
   protected void doStop() throws Exception
   {
-    OM.LOG.info(Messages.getString("CDOServerApplication.7")); //$NON-NLS-1$
-
-    extensions.sort(IAppExtension4.COMPARATOR.reversed());
+    OM.LOG.info(TS.getString("CDOServerApplication.stopping", TITLE)); //$NON-NLS-1$
+    Collections.reverse(extensions);
 
     for (IAppExtension extension : extensions)
     {
       try
       {
+        if (extension instanceof IAppExtension5)
+        {
+          IAppExtension5 named = (IAppExtension5)extension;
+          OM.LOG.info(TS.getString("AppExtension.stopping", named.getName())); //$NON-NLS-1$
+        }
+
         if (extension instanceof IAppExtension3)
         {
           IAppExtension3 extension3 = (IAppExtension3)extension;
@@ -118,6 +129,12 @@ public class CDOServerApplication extends OSGiApplication
         else
         {
           extension.stop();
+        }
+
+        if (extension instanceof IAppExtension5)
+        {
+          IAppExtension5 named = (IAppExtension5)extension;
+          OM.LOG.info(TS.getString("AppExtension.stopped", named.getName())); //$NON-NLS-1$
         }
       }
       catch (Exception ex)
@@ -137,8 +154,8 @@ public class CDOServerApplication extends OSGiApplication
     IManagedContainer container = getApplicationContainer();
     container.deactivate();
 
-    OM.LOG.info(Messages.getString("CDOServerApplication.8")); //$NON-NLS-1$
     super.doStop();
+    OM.LOG.info(TS.getString("CDOServerApplication.stopped", TITLE)); //$NON-NLS-1$
   }
 
   private void startExtensions(File configFile)
@@ -168,6 +185,12 @@ public class CDOServerApplication extends OSGiApplication
     {
       try
       {
+        if (extension instanceof IAppExtension5)
+        {
+          IAppExtension5 named = (IAppExtension5)extension;
+          OM.LOG.info(TS.getString("AppExtension.starting", named.getName())); //$NON-NLS-1$
+        }
+
         if (extension instanceof IAppExtension3)
         {
           IAppExtension3 extension3 = (IAppExtension3)extension;
@@ -176,6 +199,12 @@ public class CDOServerApplication extends OSGiApplication
         else
         {
           extension.start(configFile);
+        }
+
+        if (extension instanceof IAppExtension5)
+        {
+          IAppExtension5 named = (IAppExtension5)extension;
+          OM.LOG.info(TS.getString("AppExtension.started", named.getName())); //$NON-NLS-1$
         }
       }
       catch (Exception ex)

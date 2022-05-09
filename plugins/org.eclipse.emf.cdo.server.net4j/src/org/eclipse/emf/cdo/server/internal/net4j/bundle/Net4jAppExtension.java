@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.server.internal.net4j.bundle;
 
 import org.eclipse.emf.cdo.spi.server.IAppExtension4;
+import org.eclipse.emf.cdo.spi.server.IAppExtension5;
 
 import org.eclipse.net4j.TransportConfigurator;
 import org.eclipse.net4j.acceptor.IAcceptor;
@@ -22,12 +23,18 @@ import java.io.File;
 /**
  * @author Eike Stepper
  */
-public class Net4jAppExtension implements IAppExtension4
+public class Net4jAppExtension implements IAppExtension4, IAppExtension5
 {
   private IAcceptor[] acceptors;
 
   public Net4jAppExtension()
   {
+  }
+
+  @Override
+  public String getName()
+  {
+    return "Net4j";
   }
 
   @Override
@@ -39,23 +46,17 @@ public class Net4jAppExtension implements IAppExtension4
   @Override
   public void start(File configFile) throws Exception
   {
-    OM.LOG.info("Net4j extension starting"); //$NON-NLS-1$
-
     TransportConfigurator net4jConfigurator = new TransportConfigurator(getContainer());
     acceptors = net4jConfigurator.configure(configFile);
     if (acceptors == null || acceptors.length == 0)
     {
       OM.LOG.warn("No Net4j acceptors configured" + configFile.getAbsolutePath()); //$NON-NLS-1$
     }
-
-    OM.LOG.info("Net4j extension started"); //$NON-NLS-1$
   }
 
   @Override
   public void stop() throws Exception
   {
-    OM.LOG.info("Net4j extension stopping"); //$NON-NLS-1$
-
     if (acceptors != null)
     {
       for (IAcceptor acceptor : acceptors)
@@ -63,8 +64,6 @@ public class Net4jAppExtension implements IAppExtension4
         acceptor.close();
       }
     }
-
-    OM.LOG.info("Net4j extension stopped"); //$NON-NLS-1$
   }
 
   public static IManagedContainer getContainer()

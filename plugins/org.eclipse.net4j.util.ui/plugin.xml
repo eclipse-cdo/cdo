@@ -16,6 +16,7 @@
 
   <extension point="org.eclipse.net4j.util.productGroups">
      <productGroup id="org.eclipse.net4j.util.ui.elementWizards" name="Element Wizards"/>
+     <productGroup id="org.eclipse.net4j.util.ui.menuFillers" name="Menu Fillers"/>
   </extension>
 
   <extension point="org.eclipse.net4j.util.factories">

@@ -55,6 +55,7 @@
         <setEntry value="org.eclipse.emf.cdo.epp:default"/>
         <setEntry value="org.eclipse.emf.cdo.examples:default"/>
         <setEntry value="org.eclipse.emf.cdo.license:default"/>
+        <setEntry value="org.eclipse.emf.cdo.lm:default"/>
         <setEntry value="org.eclipse.emf.cdo.migrator:default"/>
         <setEntry value="org.eclipse.emf.cdo.server.db:default"/>
         <setEntry value="org.eclipse.emf.cdo.server:default"/>

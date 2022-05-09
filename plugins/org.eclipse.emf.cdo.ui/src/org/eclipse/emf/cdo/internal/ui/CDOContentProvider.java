@@ -741,4 +741,44 @@ public abstract class CDOContentProvider<CONTEXT> implements ITreeContentProvide
   {
     Opening, Open, Closed
   }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static abstract class ContextFree extends CDOContentProvider<Object>
+  {
+    public ContextFree()
+    {
+    }
+
+    @Override
+    protected boolean isContext(Object object)
+    {
+      return false;
+    }
+
+    @Override
+    protected ContextState getContextState(Object context)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void openContext(Object context)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void closeContext(Object context)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected Object getRootObject(Object context)
+    {
+      throw new UnsupportedOperationException();
+    }
+  }
 }

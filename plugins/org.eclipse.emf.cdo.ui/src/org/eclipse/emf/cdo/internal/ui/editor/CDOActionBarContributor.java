@@ -22,7 +22,6 @@ import org.eclipse.emf.edit.ui.action.ControlAction;
 import org.eclipse.emf.edit.ui.action.CreateChildAction;
 import org.eclipse.emf.edit.ui.action.CreateSiblingAction;
 import org.eclipse.emf.edit.ui.action.EditingDomainActionBarContributor;
-import org.eclipse.emf.edit.ui.action.LoadResourceAction;
 import org.eclipse.emf.edit.ui.action.ValidateAction;
 
 import org.eclipse.jface.action.Action;
@@ -177,7 +176,7 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
   public CDOActionBarContributor()
   {
     super(ADDITIONS_LAST_STYLE);
-    loadResourceAction = new LoadResourceAction();
+    loadResourceAction = new CDOLoadResourceAction();
     loadResourceAction.setId(LOAD_RESOURCE_ID);
 
     importRootsAction = new ImportRootsAction();

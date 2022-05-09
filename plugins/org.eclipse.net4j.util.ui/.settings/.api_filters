@@ -100,6 +100,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/net4j/util/ui/SafeTreeViewer.java" type="org.eclipse.net4j.util.ui.SafeTreeViewer">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="TreeViewer"/>
+                <message_argument value="SafeTreeViewer"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/net4j/util/ui/UIUtil.java" type="org.eclipse.net4j.util.ui.UIUtil">
         <filter id="1141899266">
             <message_arguments>

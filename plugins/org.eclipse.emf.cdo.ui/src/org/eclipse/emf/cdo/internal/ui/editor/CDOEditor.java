@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.internal.ui.CDOAdapterFactoryContentProvider;
 import org.eclipse.emf.cdo.internal.ui.CDOContentProvider;
 import org.eclipse.emf.cdo.internal.ui.RunnableViewerRefresh;
 import org.eclipse.emf.cdo.internal.ui.ViewerUtil;
@@ -58,6 +59,7 @@ import org.eclipse.net4j.util.collection.ConcurrentArray;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.ui.SafeTreeViewer;
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.actions.LongRunningAction;
 import org.eclipse.net4j.util.ui.actions.SafeAction;
@@ -157,12 +159,10 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Tree;
-import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
@@ -1267,13 +1267,15 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       {
         editingDomain = (AdapterFactoryEditingDomain)domainProvider.getEditingDomain();
         commandStack = editingDomain.getCommandStack();
-        if (editingDomain.getAdapterFactory() instanceof ComposedAdapterFactory)
+
+        AdapterFactory editingDomainAdapterFactory = editingDomain.getAdapterFactory();
+        if (editingDomainAdapterFactory instanceof ComposedAdapterFactory)
         {
-          adapterFactory = (ComposedAdapterFactory)editingDomain.getAdapterFactory();
+          adapterFactory = (ComposedAdapterFactory)editingDomainAdapterFactory;
         }
         else
         {
-          adapterFactory.addAdapterFactory(editingDomain.getAdapterFactory());
+          adapterFactory.addAdapterFactory(editingDomainAdapterFactory);
         }
       }
       else
@@ -1346,7 +1348,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       }
 
       Tree tree = new Tree(getContainer(), SWT.MULTI);
-      selectionViewer = new SafeTreeViewer(tree);
+      selectionViewer = new SafeTreeViewer(tree, ex -> handleException(ex));
       setCurrentViewer(selectionViewer);
 
       selectionViewer.setContentProvider(createContentProvider());
@@ -1551,56 +1553,10 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    */
   protected IContentProvider createContentProvider()
   {
-    class DelegateContentProvider extends AdapterFactoryContentProvider
-    {
-      public DelegateContentProvider(AdapterFactory adapterFactory)
-      {
-        super(adapterFactory);
-      }
-
-      @Override
-      public void inputChanged(Viewer viewer, Object oldInput, Object newInput)
-      {
-        super.inputChanged(viewer, oldInput, newInput);
-
-        if (viewer != null)
-        {
-          viewerRefresh = new RunnableViewerRefresh(viewer);
-        }
-        else
-        {
-          viewerRefresh = null;
-        }
-      }
-
-      public RunnableViewerRefresh getViewerRefresh()
-      {
-        return (RunnableViewerRefresh)viewerRefresh;
-      }
-
-      @Override
-      public boolean hasChildren(Object object)
-      {
-        try
-        {
-          return super.hasChildren(object);
-        }
-        catch (Exception ex)
-        {
-          if (TRACER.isEnabled())
-          {
-            TRACER.trace(ex);
-          }
-
-          return false;
-        }
-      }
-    }
-
-    DelegateContentProvider delegate = new DelegateContentProvider(adapterFactory);
-
     return new CDOContentProvider<CDOView>()
     {
+      private final CDOAdapterFactoryContentProvider delegate = new CDOAdapterFactoryContentProvider(adapterFactory);
+
       @Override
       public void inputChanged(Viewer newViewer, Object oldInput, Object newInput)
       {
@@ -3101,7 +3057,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       }
       else
       {
-        TreeViewer treeViewer = new SafeTreeViewer(parent, getTreeStyle());
+        TreeViewer treeViewer = new SafeTreeViewer(parent, getTreeStyle(), ex -> handleException(ex));
         treeViewer.addSelectionChangedListener(this);
         ReflectUtil.setValue(CONTENT_OUTLINE_PAGE_VIEWER_FIELD, this, treeViewer);
       }
@@ -3160,63 +3116,6 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       }
 
       super.dispose();
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private final class SafeTreeViewer extends TreeViewer
-  {
-    public SafeTreeViewer(Tree tree)
-    {
-      super(tree);
-    }
-
-    public SafeTreeViewer(Composite parent, int style)
-    {
-      super(parent, style);
-    }
-
-    @Override
-    protected void doUpdateItem(Widget widget, Object element, boolean fullMap)
-    {
-      try
-      {
-        super.doUpdateItem(widget, element, fullMap);
-      }
-      catch (Exception ex)
-      {
-        handleException(ex);
-      }
-    }
-
-    @Override
-    protected void doUpdateItem(final Item item, Object element)
-    {
-      try
-      {
-        super.doUpdateItem(item, element);
-      }
-      catch (Exception ex)
-      {
-        handleException(ex);
-      }
-    }
-
-    @Override
-    public boolean isExpandable(Object element)
-    {
-      try
-      {
-        return super.isExpandable(element);
-      }
-      catch (Exception ex)
-      {
-
-        handleException(ex);
-        return false;
-      }
     }
   }
 

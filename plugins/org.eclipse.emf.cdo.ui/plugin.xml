@@ -17,6 +17,7 @@
   <extension-point id="editorOpeners" name="Editor Openers" schema="schema/editorOpeners.exsd"/>
 
    <extension point="org.eclipse.net4j.util.productGroups">
+       <productGroup id="org.eclipse.emf.cdo.ui.loadResourceProviders" name="CDO Load Resource Providers"/>
        <productGroup id="org.eclipse.emf.cdo.ui.userInfoStorages" name="CDO User Info Storages"/>
    </extension>
 

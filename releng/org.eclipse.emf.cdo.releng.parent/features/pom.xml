@@ -33,6 +33,7 @@ Eike Stepper - initial API and implementation
     <module>../../../features/org.eclipse.emf.cdo.all-feature</module>
     <module>../../../features/org.eclipse.emf.cdo.compare-feature</module>
     <module>../../../features/org.eclipse.emf.cdo.dawn-feature</module>
+    <module>../../../features/org.eclipse.emf.cdo.lm-feature</module>
     <module>../../../features/org.eclipse.emf.cdo.doc-feature</module>
     <module>../../../features/org.eclipse.emf.cdo.ecore.dependencies-feature</module>
     <module>../../../features/org.eclipse.emf.cdo.epp-feature</module>
